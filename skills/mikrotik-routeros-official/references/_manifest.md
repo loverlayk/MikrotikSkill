@@ -2,18 +2,1481 @@
 
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `e0dd5a78acc9ae6768772bb44b1be22cb8a3fc8f5df71b9a8c8de57b99a2f599`
-Pages in current index: 10
-Pages changed/written: 10
+Pages in current index: 1473
+Pages changed/written: 1463
 Pages removed: 0
 Pages failed: 0
 
+- [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
+- [Certificates](docs/authentication-authorization-accounting/certificates.md) `f9e1e2e2c74a`
+- [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `1cc1fd3126fa`
+- [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `0fd674338681`
+- [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `5a550cf0f64c`
+- [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `47038484e799`
+- [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
+- [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
+- [User](docs/authentication-authorization-accounting/user.md) `d68ab2a64da4`
+- [Bridging and Switching](docs/bridging-and-switching.md) `5f2577df6afa`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `ba1a8e191094`
+- [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
+- [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
+- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `c5780d59b4b5`
+- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `a61c62ea1297`
+- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `00850b67102c`
+- [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
+- [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `f6be8127808f`
+- [CSS106 (RB260) series Manual](docs/bridging-and-switching/swos/css106.md) `f33b5c108588`
+- [CSS610 series Manual](docs/bridging-and-switching/swos/css610.md) `a8341ca26a31`
+- [GPEN21 series Manual](docs/bridging-and-switching/swos/gpen21.md) `377fc092d61e`
+- [Cannot upgrade SwOS](docs/bridging-and-switching/swos/troubleshooting.md) `5879a5f026d2`
+- [Bridging and Switching Case Studies](docs/bridging-and-switching/user-guides.md) `90b544599351`
+- [Basic VLAN switching](docs/bridging-and-switching/user-guides/basic-vlan-switching.md) `d8faae377eaf`
+- [Bridge IGMP/MLD snooping](docs/bridging-and-switching/user-guides/bridge-igmp-mld-snooping.md) `ddfed5c977a1`
+- [Bridge VLAN Table](docs/bridging-and-switching/user-guides/bridge-vlan-table.md) `f28570e9a44a`
+- [CRS1xx/2xx series switch examples](docs/bridging-and-switching/user-guides/crs1xx-2xx-series-switches-examples.md) `be52875f5fa7`
+- [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `65e966865d64`
+- [Loop Protect](docs/bridging-and-switching/user-guides/loop-protect.md) `2b501fda13d9`
+- [Spanning Tree Protocol](docs/bridging-and-switching/user-guides/spanning-tree-protocol.md) `cb727779d381`
+- [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
+- [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
+- [VLAN](docs/bridging-and-switching/vlan.md) `dda05c4515ca`
+- [VXLAN](docs/bridging-and-switching/vxlan.md) `a0704e1b36b5`
+- [/address-flags](docs/cli-reference.md) `d19bb2e0aeb4`
+- [/app](docs/cli-reference/app.md) `7391a7b8a073`
+- [/app/cleanup](docs/cli-reference/app/cleanup.md) `6136ea605ac9`
+- [/app/network](docs/cli-reference/app/network.md) `59ae26ee7a1a`
+- [/app/remove](docs/cli-reference/app/remove.md) `e6a9ddf17564`
+- [/app/restart](docs/cli-reference/app/restart.md) `696fc8a3f4c5`
+- [/app/settings](docs/cli-reference/app/settings.md) `e0feb69e7075`
+- [/app/setup](docs/cli-reference/app/setup.md) `c8236859b023`
+- [/app/update](docs/cli-reference/app/update.md) `6cb2020ea775`
+- [/beep](docs/cli-reference/beep.md) `aa4883f5e9e1`
+- [/blink](docs/cli-reference/blink.md) `8394bd3f464e`
+- [/caps-man/aaa](docs/cli-reference/caps-man/aaa.md) `e91f1fe53de2`
+- [/caps-man/access-list](docs/cli-reference/caps-man/access-list.md) `e7e13f725928`
+- [/caps-man/actual-interface-configuration](docs/cli-reference/caps-man/actual-interface-configuration.md) `bd87d31cf23b`
+- [/caps-man/channel](docs/cli-reference/caps-man/channel.md) `d78585ae0d79`
+- [/caps-man/configuration](docs/cli-reference/caps-man/configuration.md) `73d9c9f6dfeb`
+- [/caps-man/datapath](docs/cli-reference/caps-man/datapath.md) `02413ab9f04f`
+- [/caps-man/interface](docs/cli-reference/caps-man/interface.md) `ab14e3a745f5`
+- [/caps-man/interface/hw-info](docs/cli-reference/caps-man/interface/hw-info.md) `bca7ce87dd11`
+- [/caps-man/interface/possible-channels](docs/cli-reference/caps-man/interface/possible-channels.md) `4120602e93a5`
+- [/caps-man/interface/reselect-channel](docs/cli-reference/caps-man/interface/reselect-channel.md) `c051ea9837c5`
+- [/caps-man/interface/scan](docs/cli-reference/caps-man/interface/scan.md) `8e5b7832e136`
+- [/caps-man/manager](docs/cli-reference/caps-man/manager.md) `3cdfea12f85b`
+- [/caps-man/manager/interface](docs/cli-reference/caps-man/manager/interface.md) `a75cc5e75ba2`
+- [/caps-man/provisioning](docs/cli-reference/caps-man/provisioning.md) `137b634d10b3`
+- [/caps-man/radio](docs/cli-reference/caps-man/radio.md) `91613dbffcbf`
+- [/caps-man/radio/hw-info](docs/cli-reference/caps-man/radio/hw-info.md) `9f0894032d1e`
+- [/caps-man/radio/provision](docs/cli-reference/caps-man/radio/provision.md) `9d1419e72c64`
+- [/caps-man/rates](docs/cli-reference/caps-man/rates.md) `4b4b88b3149a`
+- [/caps-man/registration-table](docs/cli-reference/caps-man/registration-table.md) `f95d157673e2`
+- [/caps-man/remote-cap](docs/cli-reference/caps-man/remote-cap.md) `dc86a8d4cfeb`
+- [/caps-man/remote-cap/provision](docs/cli-reference/caps-man/remote-cap/provision.md) `a39a6bf9a3d0`
+- [/caps-man/remote-cap/set-identity](docs/cli-reference/caps-man/remote-cap/set-identity.md) `43fdad05599b`
+- [/caps-man/remote-cap/upgrade](docs/cli-reference/caps-man/remote-cap/upgrade.md) `01636d8082ce`
+- [/caps-man/security](docs/cli-reference/caps-man/security.md) `c84b025a8106`
+- [/certificate](docs/cli-reference/certificate.md) `0b67a2c96159`
+- [/certificate/acme-renew](docs/cli-reference/certificate/acme-renew.md) `945946999f15`
+- [/certificate/add-acme](docs/cli-reference/certificate/add-acme.md) `24468a07244d`
+- [/certificate/add-scep](docs/cli-reference/certificate/add-scep.md) `3899aed9720f`
+- [/certificate/builtin](docs/cli-reference/certificate/builtin.md) `b0278e20cffb`
+- [/certificate/card-reinstall](docs/cli-reference/certificate/card-reinstall.md) `f077e76097f2`
+- [/certificate/card-verify](docs/cli-reference/certificate/card-verify.md) `179d16804227`
+- [/certificate/create-certificate-request](docs/cli-reference/certificate/create-certificate-request.md) `2118b4ea5ee5`
+- [/certificate/crl](docs/cli-reference/certificate/crl.md) `c6ecfb057373`
+- [/certificate/crl/download](docs/cli-reference/certificate/crl/download.md) `ae766a87507c`
+- [/certificate/crl/flush](docs/cli-reference/certificate/crl/flush.md) `d4e91ddce59b`
+- [/certificate/enable-ssl-certificate](docs/cli-reference/certificate/enable-ssl-certificate.md) `ffd6df6ceeae`
+- [/certificate/export-certificate](docs/cli-reference/certificate/export-certificate.md) `85cb38e7e357`
+- [/certificate/import](docs/cli-reference/certificate/import.md) `3e12a343c77b`
+- [/certificate/issued-revoke](docs/cli-reference/certificate/issued-revoke.md) `f6389b5e3188`
+- [/certificate/scep-renew](docs/cli-reference/certificate/scep-renew.md) `e103e0d7497c`
+- [/certificate/scep-server](docs/cli-reference/certificate/scep-server.md) `1c43b1a6616e`
+- [/certificate/scep-server/otp](docs/cli-reference/certificate/scep-server/otp.md) `3ec075d57ee1`
+- [/certificate/scep-server/otp/generate](docs/cli-reference/certificate/scep-server/otp/generate.md) `3e1ab405c82d`
+- [/certificate/scep-server/ra](docs/cli-reference/certificate/scep-server/ra.md) `52738ab5e1a3`
+- [/certificate/scep-server/ra/renew](docs/cli-reference/certificate/scep-server/ra/renew.md) `66a6ae9abd49`
+- [/certificate/scep-server/requests](docs/cli-reference/certificate/scep-server/requests.md) `2f47eb45f5fa`
+- [/certificate/scep-server/requests/grant](docs/cli-reference/certificate/scep-server/requests/grant.md) `74b64d8058f5`
+- [/certificate/settings](docs/cli-reference/certificate/settings.md) `9abf431bfdb9`
+- [/certificate/sign-certificate-request](docs/cli-reference/certificate/sign-certificate-request.md) `be56ce81e906`
+- [/certificate/sign](docs/cli-reference/certificate/sign.md) `ff7493fd2d39`
+- [/cmr](docs/cli-reference/cmr.md) `8fc3b17d5689`
+- [/cmr/alert](docs/cli-reference/cmr/alert.md) `dda1c4c57265`
+- [/cmr/alert/show-devices](docs/cli-reference/cmr/alert/show-devices.md) `76ed47a16b29`
+- [/cmr/alert/test](docs/cli-reference/cmr/alert/test.md) `aec0c2de4359`
+- [/cmr/client](docs/cli-reference/cmr/client.md) `b838a094a86c`
+- [/cmr/client/forget](docs/cli-reference/cmr/client/forget.md) `5143a0aae2b2`
+- [/cmr/client/pair](docs/cli-reference/cmr/client/pair.md) `c5b6cf5d7a4a`
+- [/cmr/client/push-button](docs/cli-reference/cmr/client/push-button.md) `4561e83c189f`
+- [/cmr/device](docs/cli-reference/cmr/device.md) `a48013b4279b`
+- [/cmr/device/apptraffic](docs/cli-reference/cmr/device/apptraffic.md) `981c333b43b3`
+- [/cmr/device/dashboard](docs/cli-reference/cmr/device/dashboard.md) `fa18a928abf5`
+- [/cmr/device/pair](docs/cli-reference/cmr/device/pair.md) `597fec745dd9`
+- [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `f9f6ce3767e7`
+- [/cmr/device/run-script](docs/cli-reference/cmr/device/run-script.md) `05e0b11ea30b`
+- [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `647cecd259d0`
+- [/cmr/device/wifi-logs](docs/cli-reference/cmr/device/wifi-logs.md) `f4241a91677e`
+- [/cmr/layout](docs/cli-reference/cmr/layout.md) `7eac06dd3424`
+- [/cmr/layout/add-devices](docs/cli-reference/cmr/layout/add-devices.md) `114ef5bad32f`
+- [/cmr/layout/link](docs/cli-reference/cmr/layout/link.md) `45f0db3b14b3`
+- [/cmr/layout/node](docs/cli-reference/cmr/layout/node.md) `733e759181b7`
+- [/cmr/layout/rebuild-links](docs/cli-reference/cmr/layout/rebuild-links.md) `513468dcd233`
+- [/cmr/push-button](docs/cli-reference/cmr/push-button.md) `1934ad7a56ea`
+- [/cmr/upgrade](docs/cli-reference/cmr/upgrade.md) `ac87dba6c261`
+- [/cmr/upgrade/job](docs/cli-reference/cmr/upgrade/job.md) `04c1135e152b`
+- [/cmr/upgrade/job/run-next](docs/cli-reference/cmr/upgrade/job/run-next.md) `9a5fe4d6d774`
+- [/cmr/upgrade/job/show-devices](docs/cli-reference/cmr/upgrade/job/show-devices.md) `844583121589`
+- [/cmr/upgrade/show-devices](docs/cli-reference/cmr/upgrade/show-devices.md) `933346c15fe1`
+- [/cmr/upgrade/trigger](docs/cli-reference/cmr/upgrade/trigger.md) `2ccc4c29a6a5`
+- [/cmr/upgrade/version-check](docs/cli-reference/cmr/upgrade/version-check.md) `d620c8d89df7`
+- [/cmr/vlan](docs/cli-reference/cmr/vlan.md) `fe87aa560b12`
+- [/cmr/wifi](docs/cli-reference/cmr/wifi.md) `70c4e120199e`
+- [/cmr/wifi/radio](docs/cli-reference/cmr/wifi/radio.md) `a40c56006af2`
+- [/console/inspect](docs/cli-reference/console/inspect.md) `fe0f79c23a99`
+- [/console/settings](docs/cli-reference/console/settings.md) `328cd2ddd5bc`
+- [/container](docs/cli-reference/container.md) `23f13fc702a5`
+- [/container/config](docs/cli-reference/container/config.md) `a38e830eebf2`
+- [/container/envs](docs/cli-reference/container/envs.md) `4a8345230e16`
+- [/container/kill](docs/cli-reference/container/kill.md) `396d9de299d5`
+- [/container/layers](docs/cli-reference/container/layers.md) `1b11ee4215b3`
+- [/container/log](docs/cli-reference/container/log.md) `6fafdf03aaa9`
+- [/container/mounts](docs/cli-reference/container/mounts.md) `862970b93024`
+- [/container/repull](docs/cli-reference/container/repull.md) `721c2d5ec623`
+- [/container/restart](docs/cli-reference/container/restart.md) `75d6af70aeaf`
+- [/container/save](docs/cli-reference/container/save.md) `6a2739c15d6e`
+- [/container/start](docs/cli-reference/container/start.md) `61f362d13995`
+- [/container/stop](docs/cli-reference/container/stop.md) `72738a585a3b`
+- [/container/update](docs/cli-reference/container/update.md) `35150a4fccd7`
+- [/disk](docs/cli-reference/disk.md) `4c390ac28e31`
+- [/disk/blink](docs/cli-reference/disk/blink.md) `4908dacfe9de`
+- [/disk/btrfs](docs/cli-reference/disk/btrfs.md) `96de6ced890f`
+- [/disk/btrfs/filesystem](docs/cli-reference/disk/btrfs/filesystem.md) `5e78088cf634`
+- [/disk/btrfs/filesystem/add-device](docs/cli-reference/disk/btrfs/filesystem/add-device.md) `27569702a2cb`
+- [/disk/btrfs/filesystem/balance-cancel](docs/cli-reference/disk/btrfs/filesystem/balance-cancel.md) `678c561ab2f1`
+- [/disk/btrfs/filesystem/balance-start](docs/cli-reference/disk/btrfs/filesystem/balance-start.md) `90a8fda22cf0`
+- [/disk/btrfs/filesystem/remove-device](docs/cli-reference/disk/btrfs/filesystem/remove-device.md) `05c6efb55478`
+- [/disk/btrfs/filesystem/replace-cancel](docs/cli-reference/disk/btrfs/filesystem/replace-cancel.md) `77b79061ec29`
+- [/disk/btrfs/filesystem/replace-device](docs/cli-reference/disk/btrfs/filesystem/replace-device.md) `3c49299e6bbd`
+- [/disk/btrfs/filesystem/reset-counters](docs/cli-reference/disk/btrfs/filesystem/reset-counters.md) `5ce7563b18fd`
+- [/disk/btrfs/filesystem/scrub-cancel](docs/cli-reference/disk/btrfs/filesystem/scrub-cancel.md) `f5c645faf55b`
+- [/disk/btrfs/filesystem/scrub-start](docs/cli-reference/disk/btrfs/filesystem/scrub-start.md) `76dcb1311a8c`
+- [/disk/btrfs/subvolume](docs/cli-reference/disk/btrfs/subvolume.md) `c37ed712673e`
+- [/disk/btrfs/transfer](docs/cli-reference/disk/btrfs/transfer.md) `47c67b7dfeaf`
+- [/disk/check](docs/cli-reference/disk/check.md) `eeab6df9b046`
+- [/disk/copy](docs/cli-reference/disk/copy.md) `a4a52b62b9a5`
+- [/disk/eject](docs/cli-reference/disk/eject.md) `da807f641aca`
+- [/disk/format](docs/cli-reference/disk/format.md) `8a7911de3347`
+- [/disk/monitor-traffic](docs/cli-reference/disk/monitor-traffic.md) `618ab93a04f5`
+- [/disk/nvme-discover](docs/cli-reference/disk/nvme-discover.md) `ac30a886f49a`
+- [/disk/raid-scrub-cancel](docs/cli-reference/disk/raid-scrub-cancel.md) `b569b056da80`
+- [/disk/raid-scrub](docs/cli-reference/disk/raid-scrub.md) `9514c54052e6`
+- [/disk/repair](docs/cli-reference/disk/repair.md) `f26605820dd5`
+- [/disk/reset-counters](docs/cli-reference/disk/reset-counters.md) `27c6975c4e48`
+- [/disk/scan](docs/cli-reference/disk/scan.md) `c91ff0d60926`
+- [/disk/settings](docs/cli-reference/disk/settings.md) `1fa08e9270c5`
+- [/disk/smart-info](docs/cli-reference/disk/smart-info.md) `56efde6adc4e`
+- [/disk/test](docs/cli-reference/disk/test.md) `9ff50293a5dc`
+- [/disk/trim](docs/cli-reference/disk/trim.md) `664341fdca6b`
+- [/dude](docs/cli-reference/dude.md) `2cdc33d387e7`
+- [/dude/agent](docs/cli-reference/dude/agent.md) `3bfbf6a6ac45`
+- [/dude/device-type](docs/cli-reference/dude/device-type.md) `b97b68b56de2`
+- [/dude/device](docs/cli-reference/dude/device.md) `9d9be8bee94f`
+- [/dude/export-db](docs/cli-reference/dude/export-db.md) `b06827388d4d`
+- [/dude/import-db](docs/cli-reference/dude/import-db.md) `1e09e5198be8`
+- [/dude/notification](docs/cli-reference/dude/notification.md) `3c7ca7f78b83`
+- [/dude/probe](docs/cli-reference/dude/probe.md) `aa0e3609fb73`
+- [/dude/ros](docs/cli-reference/dude/ros.md) `db0df50ec86b`
+- [/dude/ros/address](docs/cli-reference/dude/ros/address.md) `472a4c018181`
+- [/dude/ros/arp](docs/cli-reference/dude/ros/arp.md) `9867cf8dfb49`
+- [/dude/ros/health](docs/cli-reference/dude/ros/health.md) `5282cdd815e6`
+- [/dude/ros/interface](docs/cli-reference/dude/ros/interface.md) `c78d500c3a70`
+- [/dude/ros/lease](docs/cli-reference/dude/ros/lease.md) `4a2021c1a2c4`
+- [/dude/ros/neighbor](docs/cli-reference/dude/ros/neighbor.md) `e8377da86739`
+- [/dude/ros/queue](docs/cli-reference/dude/ros/queue.md) `a31325460c28`
+- [/dude/ros/registration-table](docs/cli-reference/dude/ros/registration-table.md) `ec2d2bda98a8`
+- [/dude/ros/resource](docs/cli-reference/dude/ros/resource.md) `a64d172f62a5`
+- [/dude/ros/route](docs/cli-reference/dude/ros/route.md) `986a285a251d`
+- [/dude/ros/routerboard](docs/cli-reference/dude/ros/routerboard.md) `770ca4990c98`
+- [/dude/service](docs/cli-reference/dude/service.md) `185780409db1`
+- [/dude/settings](docs/cli-reference/dude/settings.md) `1af1cd6fd6b8`
+- [/dude/vacuum-db](docs/cli-reference/dude/vacuum-db.md) `4014774e22d9`
+- [/environment](docs/cli-reference/environment.md) `329c6858a74d`
+- [/file](docs/cli-reference/file.md) `c564eecac59e`
+- [/file/copy](docs/cli-reference/file/copy.md) `7da0de2fc56e`
+- [/file/head](docs/cli-reference/file/head.md) `7a02c599cc24`
+- [/file/read](docs/cli-reference/file/read.md) `ac03c4f90233`
+- [/file/rsync-daemon](docs/cli-reference/file/rsync-daemon.md) `dec81ac39972`
+- [/file/sync](docs/cli-reference/file/sync.md) `6f3a536e5fff`
+- [/file/sync/monitor](docs/cli-reference/file/sync/monitor.md) `c750fc089462`
+- [/file/tail](docs/cli-reference/file/tail.md) `a84c30b31b28`
+- [/import](docs/cli-reference/import.md) `101e8333123c`
+- [/interface](docs/cli-reference/interface.md) `694b1be7c05b`
+- [/interface/6to4](docs/cli-reference/interface/6to4.md) `9aef6ed36dcb`
+- [/interface/blink](docs/cli-reference/interface/blink.md) `4c30ae93519b`
+- [/interface/bonding](docs/cli-reference/interface/bonding.md) `f5344b293b3b`
+- [/interface/bonding/monitor-slaves](docs/cli-reference/interface/bonding/monitor-slaves.md) `9ec8962033f3`
+- [/interface/bonding/monitor](docs/cli-reference/interface/bonding/monitor.md) `90a842e2f15d`
+- [/interface/bridge](docs/cli-reference/interface/bridge.md) `e64d911c5613`
+- [/interface/bridge/calea](docs/cli-reference/interface/bridge/calea.md) `690afd5316d1`
+- [/interface/bridge/calea/reset-counters-all](docs/cli-reference/interface/bridge/calea/reset-counters-all.md) `6a246b19e505`
+- [/interface/bridge/calea/reset-counters](docs/cli-reference/interface/bridge/calea/reset-counters.md) `6bfdd8a9ee4e`
+- [/interface/bridge/filter](docs/cli-reference/interface/bridge/filter.md) `fd69f86c44ee`
+- [/interface/bridge/filter/reset-counters-all](docs/cli-reference/interface/bridge/filter/reset-counters-all.md) `49e312140116`
+- [/interface/bridge/filter/reset-counters](docs/cli-reference/interface/bridge/filter/reset-counters.md) `dfabce08884a`
+- [/interface/bridge/host](docs/cli-reference/interface/bridge/host.md) `cb450d2207e3`
+- [/interface/bridge/mdb](docs/cli-reference/interface/bridge/mdb.md) `ceb2e54bcf68`
+- [/interface/bridge/monitor](docs/cli-reference/interface/bridge/monitor.md) `b102f682a722`
+- [/interface/bridge/msti](docs/cli-reference/interface/bridge/msti.md) `51d218b44dc5`
+- [/interface/bridge/msti/monitor](docs/cli-reference/interface/bridge/msti/monitor.md) `03142ebc6fe6`
+- [/interface/bridge/nat](docs/cli-reference/interface/bridge/nat.md) `e39f9857ce61`
+- [/interface/bridge/nat/reset-counters-all](docs/cli-reference/interface/bridge/nat/reset-counters-all.md) `53df5f643fb4`
+- [/interface/bridge/nat/reset-counters](docs/cli-reference/interface/bridge/nat/reset-counters.md) `0258a6b38c78`
+- [/interface/bridge/port](docs/cli-reference/interface/bridge/port.md) `cd9a98f66147`
+- [/interface/bridge/port/monitor](docs/cli-reference/interface/bridge/port/monitor.md) `7e7561f045f9`
+- [/interface/bridge/port/mst-override](docs/cli-reference/interface/bridge/port/mst-override.md) `12ceaa2f542c`
+- [/interface/bridge/port/mst-override/monitor](docs/cli-reference/interface/bridge/port/mst-override/monitor.md) `08ac95032b89`
+- [/interface/bridge/settings](docs/cli-reference/interface/bridge/settings.md) `dc951ed98955`
+- [/interface/bridge/vlan](docs/cli-reference/interface/bridge/vlan.md) `a473b95388ab`
+- [/interface/bridge/vlan/mvrp](docs/cli-reference/interface/bridge/vlan/mvrp.md) `534190b35f89`
+- [/interface/detect-internet](docs/cli-reference/interface/detect-internet.md) `de165f9934d6`
+- [/interface/detect-internet/state](docs/cli-reference/interface/detect-internet/state.md) `435dd45b3521`
+- [/interface/dot1x](docs/cli-reference/interface/dot1x.md) `654e75415860`
+- [/interface/dot1x/client](docs/cli-reference/interface/dot1x/client.md) `e3f61a0b1682`
+- [/interface/dot1x/server](docs/cli-reference/interface/dot1x/server.md) `9ae57014548a`
+- [/interface/dot1x/server/active](docs/cli-reference/interface/dot1x/server/active.md) `18ebcc2f2341`
+- [/interface/dot1x/server/state](docs/cli-reference/interface/dot1x/server/state.md) `5580efcb6978`
+- [/interface/eoip](docs/cli-reference/interface/eoip.md) `edbd98ddb3ac`
+- [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `1e89d739f9a9`
+- [/interface/ethernet](docs/cli-reference/interface/ethernet.md) `bda55c0d01bb`
+- [/interface/ethernet/blink](docs/cli-reference/interface/ethernet/blink.md) `f982fa71b065`
+- [/interface/ethernet/cable-test](docs/cli-reference/interface/ethernet/cable-test.md) `09be9a785a62`
+- [/interface/ethernet/monitor](docs/cli-reference/interface/ethernet/monitor.md) `84c81fa7f965`
+- [/interface/ethernet/poe](docs/cli-reference/interface/ethernet/poe.md) `c37b9650732b`
+- [/interface/ethernet/poe/monitor](docs/cli-reference/interface/ethernet/poe/monitor.md) `809991550214`
+- [/interface/ethernet/poe/power-cycle](docs/cli-reference/interface/ethernet/poe/power-cycle.md) `082242d9a6e4`
+- [/interface/ethernet/poe/settings](docs/cli-reference/interface/ethernet/poe/settings.md) `3e1ea025d9c8`
+- [/interface/ethernet/pon](docs/cli-reference/interface/ethernet/pon.md) `f87b38a03b81`
+- [/interface/ethernet/pon/monitor](docs/cli-reference/interface/ethernet/pon/monitor.md) `7a1af68e3ab8`
+- [/interface/ethernet/reset-counters](docs/cli-reference/interface/ethernet/reset-counters.md) `6513434466e7`
+- [/interface/ethernet/reset-mac-address](docs/cli-reference/interface/ethernet/reset-mac-address.md) `4bc43d73b592`
+- [/interface/ethernet/switch](docs/cli-reference/interface/ethernet/switch.md) `4ec6988ad6c5`
+- [/interface/ethernet/switch/acl](docs/cli-reference/interface/ethernet/switch/acl.md) `053901d82a53`
+- [/interface/ethernet/switch/acl/policer](docs/cli-reference/interface/ethernet/switch/acl/policer.md) `85f85ce62b8c`
+- [/interface/ethernet/switch/dscp-qos-map](docs/cli-reference/interface/ethernet/switch/dscp-qos-map.md) `a35b80826e09`
+- [/interface/ethernet/switch/dscp-to-dscp](docs/cli-reference/interface/ethernet/switch/dscp-to-dscp.md) `cc84e5749218`
+- [/interface/ethernet/switch/egress-vlan-tag](docs/cli-reference/interface/ethernet/switch/egress-vlan-tag.md) `f5f1f0cffc8f`
+- [/interface/ethernet/switch/egress-vlan-translation](docs/cli-reference/interface/ethernet/switch/egress-vlan-translation.md) `ee5a134e5b24`
+- [/interface/ethernet/switch/host](docs/cli-reference/interface/ethernet/switch/host.md) `28d9d1c6d880`
+- [/interface/ethernet/switch/ingress-port-policer](docs/cli-reference/interface/ethernet/switch/ingress-port-policer.md) `246a6467ba67`
+- [/interface/ethernet/switch/ingress-vlan-translation](docs/cli-reference/interface/ethernet/switch/ingress-vlan-translation.md) `d3e23216489e`
+- [/interface/ethernet/switch/l3hw-settings](docs/cli-reference/interface/ethernet/switch/l3hw-settings.md) `5145e0fa56d2`
+- [/interface/ethernet/switch/l3hw-settings/advanced](docs/cli-reference/interface/ethernet/switch/l3hw-settings/advanced.md) `f08aa7a49659`
+- [/interface/ethernet/switch/l3hw-settings/advanced/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/advanced/monitor.md) `cfa6ddb56aa7`
+- [/interface/ethernet/switch/l3hw-settings/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/monitor.md) `a4f73fea0f46`
+- [/interface/ethernet/switch/mac-based-vlan](docs/cli-reference/interface/ethernet/switch/mac-based-vlan.md) `15cea1146c2b`
+- [/interface/ethernet/switch/multicast-fdb](docs/cli-reference/interface/ethernet/switch/multicast-fdb.md) `2cf74201aa56`
+- [/interface/ethernet/switch/one2one-vlan-switching](docs/cli-reference/interface/ethernet/switch/one2one-vlan-switching.md) `73a04e46e4d6`
+- [/interface/ethernet/switch/policer-qos-map](docs/cli-reference/interface/ethernet/switch/policer-qos-map.md) `e16aa20d995b`
+- [/interface/ethernet/switch/port-isolation](docs/cli-reference/interface/ethernet/switch/port-isolation.md) `d6889ca61053`
+- [/interface/ethernet/switch/port-leakage](docs/cli-reference/interface/ethernet/switch/port-leakage.md) `85c23f3e1108`
+- [/interface/ethernet/switch/port](docs/cli-reference/interface/ethernet/switch/port.md) `d0b7befba4a2`
+- [/interface/ethernet/switch/port/reset-counters](docs/cli-reference/interface/ethernet/switch/port/reset-counters.md) `6c3929389f58`
+- [/interface/ethernet/switch/protocol-based-vlan](docs/cli-reference/interface/ethernet/switch/protocol-based-vlan.md) `90c91ac9304a`
+- [/interface/ethernet/switch/qos-group](docs/cli-reference/interface/ethernet/switch/qos-group.md) `2b6ae9a4de63`
+- [/interface/ethernet/switch/qos](docs/cli-reference/interface/ethernet/switch/qos.md) `0d25f863d4fc`
+- [/interface/ethernet/switch/qos/map](docs/cli-reference/interface/ethernet/switch/qos/map.md) `276b60f26cbf`
+- [/interface/ethernet/switch/qos/map/ip](docs/cli-reference/interface/ethernet/switch/qos/map/ip.md) `52604afa7045`
+- [/interface/ethernet/switch/qos/map/vlan](docs/cli-reference/interface/ethernet/switch/qos/map/vlan.md) `656b60233ab7`
+- [/interface/ethernet/switch/qos/monitor](docs/cli-reference/interface/ethernet/switch/qos/monitor.md) `f41dd5fa4ed1`
+- [/interface/ethernet/switch/qos/port](docs/cli-reference/interface/ethernet/switch/qos/port.md) `87ee66ce92e7`
+- [/interface/ethernet/switch/qos/port/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/port/reset-counters.md) `ac1f1738b444`
+- [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `ac639c07bab8`
+- [/interface/ethernet/switch/qos/profile](docs/cli-reference/interface/ethernet/switch/qos/profile.md) `0558eeddbbec`
+- [/interface/ethernet/switch/qos/settings](docs/cli-reference/interface/ethernet/switch/qos/settings.md) `0cb595f8f0e0`
+- [/interface/ethernet/switch/qos/tx-manager](docs/cli-reference/interface/ethernet/switch/qos/tx-manager.md) `72f0b5aca15a`
+- [/interface/ethernet/switch/qos/tx-manager/queue](docs/cli-reference/interface/ethernet/switch/qos/tx-manager/queue.md) `d186caa5b8c5`
+- [/interface/ethernet/switch/reserved-fdb](docs/cli-reference/interface/ethernet/switch/reserved-fdb.md) `4f24831add5c`
+- [/interface/ethernet/switch/reset-counters](docs/cli-reference/interface/ethernet/switch/reset-counters.md) `8fc1444335dd`
+- [/interface/ethernet/switch/rule](docs/cli-reference/interface/ethernet/switch/rule.md) `ebea674f19d4`
+- [/interface/ethernet/switch/rule/reset-counters-all](docs/cli-reference/interface/ethernet/switch/rule/reset-counters-all.md) `bb5cc8b560ad`
+- [/interface/ethernet/switch/rule/reset-counters](docs/cli-reference/interface/ethernet/switch/rule/reset-counters.md) `47fc5222a0d0`
+- [/interface/ethernet/switch/shaper](docs/cli-reference/interface/ethernet/switch/shaper.md) `e758c026aec4`
+- [/interface/ethernet/switch/stats](docs/cli-reference/interface/ethernet/switch/stats.md) `54868299eb1b`
+- [/interface/ethernet/switch/trunk](docs/cli-reference/interface/ethernet/switch/trunk.md) `b9a6de195a30`
+- [/interface/ethernet/switch/unicast-fdb](docs/cli-reference/interface/ethernet/switch/unicast-fdb.md) `ef572be7f6df`
+- [/interface/ethernet/switch/unicast-fdb/flush](docs/cli-reference/interface/ethernet/switch/unicast-fdb/flush.md) `5bfa1d31cc21`
+- [/interface/ethernet/switch/vlan](docs/cli-reference/interface/ethernet/switch/vlan.md) `0a4e9ba6938f`
+- [/interface/gre](docs/cli-reference/interface/gre.md) `0db2da96beb4`
+- [/interface/gre6](docs/cli-reference/interface/gre6.md) `61341b2f5b1a`
+- [/interface/ipip](docs/cli-reference/interface/ipip.md) `d78427d78a9f`
+- [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `7eb76c5b1e12`
+- [/interface/l2tp-client](docs/cli-reference/interface/l2tp-client.md) `9d6970e77104`
+- [/interface/l2tp-client/monitor](docs/cli-reference/interface/l2tp-client/monitor.md) `76a7f05cc670`
+- [/interface/l2tp-ether](docs/cli-reference/interface/l2tp-ether.md) `2eb8ef0b474a`
+- [/interface/l2tp-ether/monitor](docs/cli-reference/interface/l2tp-ether/monitor.md) `417c8fb14d4a`
+- [/interface/l2tp-server](docs/cli-reference/interface/l2tp-server.md) `6b8299bd69a4`
+- [/interface/l2tp-server/monitor](docs/cli-reference/interface/l2tp-server/monitor.md) `7fb847f0f39c`
+- [/interface/l2tp-server/server](docs/cli-reference/interface/l2tp-server/server.md) `fa62b4f0e5d3`
+- [/interface/list](docs/cli-reference/interface/list.md) `09c9b97c4d0f`
+- [/interface/list/member](docs/cli-reference/interface/list/member.md) `b4f35d053181`
+- [/interface/lte](docs/cli-reference/interface/lte.md) `027feca41155`
+- [/interface/lte/apn](docs/cli-reference/interface/lte/apn.md) `d769602d2617`
+- [/interface/lte/at-chat](docs/cli-reference/interface/lte/at-chat.md) `ee33ba5add96`
+- [/interface/lte/cell-monitor](docs/cli-reference/interface/lte/cell-monitor.md) `9a54b7bd7fbb`
+- [/interface/lte/esim](docs/cli-reference/interface/lte/esim.md) `f1daeae15e3a`
+- [/interface/lte/esim/activate](docs/cli-reference/interface/lte/esim/activate.md) `9f0e70cd38da`
+- [/interface/lte/esim/deactivate](docs/cli-reference/interface/lte/esim/deactivate.md) `fb48bfe91ca3`
+- [/interface/lte/esim/delete](docs/cli-reference/interface/lte/esim/delete.md) `b152c84f3697`
+- [/interface/lte/esim/esim-id](docs/cli-reference/interface/lte/esim/esim-id.md) `f1e9e00a9285`
+- [/interface/lte/esim/provision](docs/cli-reference/interface/lte/esim/provision.md) `c59cb60fd4dd`
+- [/interface/lte/esim/refresh-profile-list](docs/cli-reference/interface/lte/esim/refresh-profile-list.md) `dd90b59b64d1`
+- [/interface/lte/esim/send-notifications](docs/cli-reference/interface/lte/esim/send-notifications.md) `955be3e0db7e`
+- [/interface/lte/esim/set-nickname](docs/cli-reference/interface/lte/esim/set-nickname.md) `9a421169ebd3`
+- [/interface/lte/firmware-upgrade](docs/cli-reference/interface/lte/firmware-upgrade.md) `63ef02a5f95d`
+- [/interface/lte/monitor](docs/cli-reference/interface/lte/monitor.md) `61c3a0a96b94`
+- [/interface/lte/run-modem-update](docs/cli-reference/interface/lte/run-modem-update.md) `0de02117f60d`
+- [/interface/lte/scan](docs/cli-reference/interface/lte/scan.md) `1f778a290af0`
+- [/interface/lte/settings](docs/cli-reference/interface/lte/settings.md) `87bd00891a92`
+- [/interface/lte/show-capabilities](docs/cli-reference/interface/lte/show-capabilities.md) `0cc4c69eeb1d`
+- [/interface/macsec](docs/cli-reference/interface/macsec.md) `6bf6ae92365b`
+- [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `0dad41a8b32a`
+- [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `98dbe046e79c`
+- [/interface/macvlan](docs/cli-reference/interface/macvlan.md) `ddb4b1ffc8d8`
+- [/interface/mesh](docs/cli-reference/interface/mesh.md) `715a3eef6843`
+- [/interface/mesh/fdb](docs/cli-reference/interface/mesh/fdb.md) `abd06562903b`
+- [/interface/mesh/port](docs/cli-reference/interface/mesh/port.md) `32da38ce6942`
+- [/interface/mesh/traceroute](docs/cli-reference/interface/mesh/traceroute.md) `913459dbe7cf`
+- [/interface/monitor-traffic](docs/cli-reference/interface/monitor-traffic.md) `190db1647f34`
+- [/interface/ovpn-client](docs/cli-reference/interface/ovpn-client.md) `5b9373a363d8`
+- [/interface/ovpn-client/import-ovpn-configuration](docs/cli-reference/interface/ovpn-client/import-ovpn-configuration.md) `a54cf882c42e`
+- [/interface/ovpn-client/monitor](docs/cli-reference/interface/ovpn-client/monitor.md) `9ccb2849c835`
+- [/interface/ovpn-server](docs/cli-reference/interface/ovpn-server.md) `2faf61cb92bf`
+- [/interface/ovpn-server/monitor](docs/cli-reference/interface/ovpn-server/monitor.md) `5a4e6e2531bb`
+- [/interface/ovpn-server/server](docs/cli-reference/interface/ovpn-server/server.md) `231ddc44711c`
+- [/interface/ovpn-server/server/export-client-configuration](docs/cli-reference/interface/ovpn-server/server/export-client-configuration.md) `8724ca48b24f`
+- [/interface/ppp-client](docs/cli-reference/interface/ppp-client.md) `be7d9e15af0b`
+- [/interface/ppp-client/at-chat](docs/cli-reference/interface/ppp-client/at-chat.md) `d7065ef14f8b`
+- [/interface/ppp-client/firmware-upgrade](docs/cli-reference/interface/ppp-client/firmware-upgrade.md) `87eae5c9967e`
+- [/interface/ppp-client/info](docs/cli-reference/interface/ppp-client/info.md) `cc70786326ed`
+- [/interface/ppp-client/monitor](docs/cli-reference/interface/ppp-client/monitor.md) `7684ffa7855a`
+- [/interface/ppp-client/scan](docs/cli-reference/interface/ppp-client/scan.md) `11b40866c6dd`
+- [/interface/ppp-server](docs/cli-reference/interface/ppp-server.md) `8927c21bde19`
+- [/interface/ppp-server/monitor](docs/cli-reference/interface/ppp-server/monitor.md) `60fc62c0757b`
+- [/interface/pppoe-client](docs/cli-reference/interface/pppoe-client.md) `e48f9b224276`
+- [/interface/pppoe-client/monitor](docs/cli-reference/interface/pppoe-client/monitor.md) `a2aaaf1c919d`
+- [/interface/pppoe-client/scan](docs/cli-reference/interface/pppoe-client/scan.md) `ca4a979d8832`
+- [/interface/pppoe-server](docs/cli-reference/interface/pppoe-server.md) `c46545356f0a`
+- [/interface/pppoe-server/monitor](docs/cli-reference/interface/pppoe-server/monitor.md) `63b4f40a9dbf`
+- [/interface/pppoe-server/server](docs/cli-reference/interface/pppoe-server/server.md) `85d8e9a4f5d1`
+- [/interface/pptp-client](docs/cli-reference/interface/pptp-client.md) `25f5a864731c`
+- [/interface/pptp-client/monitor](docs/cli-reference/interface/pptp-client/monitor.md) `2b1cffd0ace5`
+- [/interface/pptp-server](docs/cli-reference/interface/pptp-server.md) `4fa09350fb0a`
+- [/interface/pptp-server/monitor](docs/cli-reference/interface/pptp-server/monitor.md) `3428bac1c2e1`
+- [/interface/pptp-server/server](docs/cli-reference/interface/pptp-server/server.md) `aad50bff0b0a`
+- [/interface/pwr-line](docs/cli-reference/interface/pwr-line.md) `b7a6f7657049`
+- [/interface/pwr-line/blink](docs/cli-reference/interface/pwr-line/blink.md) `ea846149fdf7`
+- [/interface/pwr-line/configure](docs/cli-reference/interface/pwr-line/configure.md) `d6f7c23612ac`
+- [/interface/pwr-line/join](docs/cli-reference/interface/pwr-line/join.md) `9d52244867fc`
+- [/interface/pwr-line/leave](docs/cli-reference/interface/pwr-line/leave.md) `e4a8e99a9b7e`
+- [/interface/pwr-line/monitor](docs/cli-reference/interface/pwr-line/monitor.md) `84538ccb841c`
+- [/interface/pwr-line/reset-counters](docs/cli-reference/interface/pwr-line/reset-counters.md) `7ff45f66b020`
+- [/interface/pwr-line/reset-mac-address](docs/cli-reference/interface/pwr-line/reset-mac-address.md) `bbe3dbbc9ba4`
+- [/interface/pwr-line/upgrade-firmware](docs/cli-reference/interface/pwr-line/upgrade-firmware.md) `0fb8455790ec`
+- [/interface/reset-counters](docs/cli-reference/interface/reset-counters.md) `058a81230508`
+- [/interface/sstp-client](docs/cli-reference/interface/sstp-client.md) `5130b904b4d7`
+- [/interface/sstp-client/monitor](docs/cli-reference/interface/sstp-client/monitor.md) `b4cf0592a3df`
+- [/interface/sstp-server](docs/cli-reference/interface/sstp-server.md) `f5b21b22fe4c`
+- [/interface/sstp-server/monitor](docs/cli-reference/interface/sstp-server/monitor.md) `d22e942d12ff`
+- [/interface/sstp-server/server](docs/cli-reference/interface/sstp-server/server.md) `acf600ca33d5`
+- [/interface/veth](docs/cli-reference/interface/veth.md) `d2965e53f5ee`
+- [/interface/vlan](docs/cli-reference/interface/vlan.md) `0e1b40e01790`
+- [/interface/vpls](docs/cli-reference/interface/vpls.md) `b51b597ecf6b`
+- [/interface/vpls/monitor](docs/cli-reference/interface/vpls/monitor.md) `9b57bb6933b7`
+- [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `778f65a49d7e`
+- [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `fc68e05e3676`
+- [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `c27ffd31be57`
+- [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `71b6bf9c6c73`
+- [/interface/w60g](docs/cli-reference/interface/w60g.md) `8d1e15c36739`
+- [/interface/w60g/align](docs/cli-reference/interface/w60g/align.md) `2b78f9af8ed9`
+- [/interface/w60g/monitor](docs/cli-reference/interface/w60g/monitor.md) `c7198bcbf971`
+- [/interface/w60g/reset-configuration](docs/cli-reference/interface/w60g/reset-configuration.md) `c27974b3b038`
+- [/interface/w60g/scan](docs/cli-reference/interface/w60g/scan.md) `dbe87c55bdd3`
+- [/interface/w60g/station](docs/cli-reference/interface/w60g/station.md) `80611779d550`
+- [/interface/w60g/station/monitor](docs/cli-reference/interface/w60g/station/monitor.md) `e609915c8f03`
+- [/interface/wifi](docs/cli-reference/interface/wifi.md) `f7ce778f7b41`
+- [/interface/wifi/aaa](docs/cli-reference/interface/wifi/aaa.md) `d2423784986f`
+- [/interface/wifi/access-list](docs/cli-reference/interface/wifi/access-list.md) `7f06f6c98bda`
+- [/interface/wifi/cap](docs/cli-reference/interface/wifi/cap.md) `c43456f02bad`
+- [/interface/wifi/capsman](docs/cli-reference/interface/wifi/capsman.md) `2d87555e48d9`
+- [/interface/wifi/capsman/remote-cap](docs/cli-reference/interface/wifi/capsman/remote-cap.md) `742cfe8c3f10`
+- [/interface/wifi/capsman/remote-cap/provision](docs/cli-reference/interface/wifi/capsman/remote-cap/provision.md) `8a6a702899c3`
+- [/interface/wifi/capsman/remote-cap/set-identity](docs/cli-reference/interface/wifi/capsman/remote-cap/set-identity.md) `f30a30ab4325`
+- [/interface/wifi/capsman/remote-cap/upgrade](docs/cli-reference/interface/wifi/capsman/remote-cap/upgrade.md) `341c769c7680`
+- [/interface/wifi/channel](docs/cli-reference/interface/wifi/channel.md) `711bf898ea3f`
+- [/interface/wifi/configuration](docs/cli-reference/interface/wifi/configuration.md) `c5f4e15c81ae`
+- [/interface/wifi/dashboard/settings](docs/cli-reference/interface/wifi/dashboard/settings.md) `597fe8dfb6a7`
+- [/interface/wifi/dashboard/show-clients](docs/cli-reference/interface/wifi/dashboard/show-clients.md) `f41ecf4d691f`
+- [/interface/wifi/dashboard/show-logs](docs/cli-reference/interface/wifi/dashboard/show-logs.md) `3aea811829a0`
+- [/interface/wifi/dashboard/show](docs/cli-reference/interface/wifi/dashboard/show.md) `e2d57913d29b`
+- [/interface/wifi/datapath](docs/cli-reference/interface/wifi/datapath.md) `6023edd5e7b5`
+- [/interface/wifi/devel](docs/cli-reference/interface/wifi/devel.md) `c192c065c8bb`
+- [/interface/wifi/flat-snoop](docs/cli-reference/interface/wifi/flat-snoop.md) `355fe057897b`
+- [/interface/wifi/frequency-scan](docs/cli-reference/interface/wifi/frequency-scan.md) `6e00be0b3ac2`
+- [/interface/wifi/interworking](docs/cli-reference/interface/wifi/interworking.md) `7b22dc528672`
+- [/interface/wifi/liberate](docs/cli-reference/interface/wifi/liberate.md) `1540eb1b4cca`
+- [/interface/wifi/monitor](docs/cli-reference/interface/wifi/monitor.md) `d98e3911113e`
+- [/interface/wifi/network](docs/cli-reference/interface/wifi/network.md) `3aef3c26b9bc`
+- [/interface/wifi/network/radio](docs/cli-reference/interface/wifi/network/radio.md) `2563434fa5af`
+- [/interface/wifi/provisioning](docs/cli-reference/interface/wifi/provisioning.md) `c968e7b531dc`
+- [/interface/wifi/radio](docs/cli-reference/interface/wifi/radio.md) `24b9a0e04307`
+- [/interface/wifi/radio/provision](docs/cli-reference/interface/wifi/radio/provision.md) `ca117f568581`
+- [/interface/wifi/radio/reg-info](docs/cli-reference/interface/wifi/radio/reg-info.md) `3c35ce8430a9`
+- [/interface/wifi/radio/settings](docs/cli-reference/interface/wifi/radio/settings.md) `e2d95f2a0696`
+- [/interface/wifi/registration-table](docs/cli-reference/interface/wifi/registration-table.md) `25b270093479`
+- [/interface/wifi/reset-mac-address](docs/cli-reference/interface/wifi/reset-mac-address.md) `136aa5ca08dd`
+- [/interface/wifi/roam](docs/cli-reference/interface/wifi/roam.md) `12331795cdf8`
+- [/interface/wifi/scan](docs/cli-reference/interface/wifi/scan.md) `8ad3461cb467`
+- [/interface/wifi/security](docs/cli-reference/interface/wifi/security.md) `ec7bc92860b3`
+- [/interface/wifi/security/multi-passphrase](docs/cli-reference/interface/wifi/security/multi-passphrase.md) `be12f4a17acc`
+- [/interface/wifi/sniffer](docs/cli-reference/interface/wifi/sniffer.md) `44bb684ec8cc`
+- [/interface/wifi/spectral-scan](docs/cli-reference/interface/wifi/spectral-scan.md) `0a26d1ec927a`
+- [/interface/wifi/steering](docs/cli-reference/interface/wifi/steering.md) `293ab891ca2a`
+- [/interface/wifi/steering/neighbor-group](docs/cli-reference/interface/wifi/steering/neighbor-group.md) `549da7703979`
+- [/interface/wifi/trigger-radar](docs/cli-reference/interface/wifi/trigger-radar.md) `4a3b1504f087`
+- [/interface/wifi/wps-client](docs/cli-reference/interface/wifi/wps-client.md) `95939213a396`
+- [/interface/wifi/wps-push-button](docs/cli-reference/interface/wifi/wps-push-button.md) `4e2454d19b43`
+- [/interface/wireguard](docs/cli-reference/interface/wireguard.md) `70ca998996e7`
+- [/interface/wireguard/peers](docs/cli-reference/interface/wireguard/peers.md) `8d6385f205c5`
+- [/interface/wireguard/peers/show-client-config](docs/cli-reference/interface/wireguard/peers/show-client-config.md) `18e5209bb3bf`
+- [/interface/wireguard/wg-export](docs/cli-reference/interface/wireguard/wg-export.md) `85c16ebd8ef0`
+- [/interface/wireguard/wg-import](docs/cli-reference/interface/wireguard/wg-import.md) `5bcd6b8dc260`
+- [/interface/wireless](docs/cli-reference/interface/wireless.md) `098240e36910`
+- [/interface/wireless/access-list](docs/cli-reference/interface/wireless/access-list.md) `f929dd95bf5c`
+- [/interface/wireless/align](docs/cli-reference/interface/wireless/align.md) `d45dbc730856`
+- [/interface/wireless/align/monitor](docs/cli-reference/interface/wireless/align/monitor.md) `890f502e32cd`
+- [/interface/wireless/align/test-audio](docs/cli-reference/interface/wireless/align/test-audio.md) `3528be14686c`
+- [/interface/wireless/cap](docs/cli-reference/interface/wireless/cap.md) `cd312b0882bc`
+- [/interface/wireless/channels](docs/cli-reference/interface/wireless/channels.md) `f72faf3460a1`
+- [/interface/wireless/connect-list](docs/cli-reference/interface/wireless/connect-list.md) `62dcc9f2a94f`
+- [/interface/wireless/frequency-monitor](docs/cli-reference/interface/wireless/frequency-monitor.md) `6d249589532d`
+- [/interface/wireless/info](docs/cli-reference/interface/wireless/info.md) `087c72d86604`
+- [/interface/wireless/info/allowed-channels](docs/cli-reference/interface/wireless/info/allowed-channels.md) `bb5a4526b11d`
+- [/interface/wireless/info/country-info](docs/cli-reference/interface/wireless/info/country-info.md) `067b8177612f`
+- [/interface/wireless/info/country-list](docs/cli-reference/interface/wireless/info/country-list.md) `dfb40e36f686`
+- [/interface/wireless/info/default-scan-list](docs/cli-reference/interface/wireless/info/default-scan-list.md) `4d15aac76bd7`
+- [/interface/wireless/info/hw-info](docs/cli-reference/interface/wireless/info/hw-info.md) `9cab0e36529d`
+- [/interface/wireless/info/scan-list](docs/cli-reference/interface/wireless/info/scan-list.md) `53dbb61f1244`
+- [/interface/wireless/interworking-profiles](docs/cli-reference/interface/wireless/interworking-profiles.md) `1e918777007d`
+- [/interface/wireless/manual-tx-power-table](docs/cli-reference/interface/wireless/manual-tx-power-table.md) `0d2fce69f0d9`
+- [/interface/wireless/monitor](docs/cli-reference/interface/wireless/monitor.md) `1b654131312b`
+- [/interface/wireless/nstreme-dual](docs/cli-reference/interface/wireless/nstreme-dual.md) `afcdb5b6e010`
+- [/interface/wireless/nstreme-dual/monitor](docs/cli-reference/interface/wireless/nstreme-dual/monitor.md) `06baf455f68a`
+- [/interface/wireless/nstreme-dual/reset-counters](docs/cli-reference/interface/wireless/nstreme-dual/reset-counters.md) `c7342a00ca43`
+- [/interface/wireless/nstreme](docs/cli-reference/interface/wireless/nstreme.md) `3079b84fc274`
+- [/interface/wireless/registration-table](docs/cli-reference/interface/wireless/registration-table.md) `2e2a96a527b8`
+- [/interface/wireless/registration-table/reset-counters](docs/cli-reference/interface/wireless/registration-table/reset-counters.md) `c4835f248edb`
+- [/interface/wireless/reset-configuration](docs/cli-reference/interface/wireless/reset-configuration.md) `04d67edc2ab6`
+- [/interface/wireless/reset-mac-address](docs/cli-reference/interface/wireless/reset-mac-address.md) `62912dba4af2`
+- [/interface/wireless/scan](docs/cli-reference/interface/wireless/scan.md) `f94d273f7bfd`
+- [/interface/wireless/security-profiles](docs/cli-reference/interface/wireless/security-profiles.md) `650a5c3efee9`
+- [/interface/wireless/setup-repeater](docs/cli-reference/interface/wireless/setup-repeater.md) `53598f9e1627`
+- [/interface/wireless/sniffer](docs/cli-reference/interface/wireless/sniffer.md) `33c7c51fe603`
+- [/interface/wireless/sniffer/packet](docs/cli-reference/interface/wireless/sniffer/packet.md) `d72763205ac7`
+- [/interface/wireless/sniffer/save](docs/cli-reference/interface/wireless/sniffer/save.md) `25f073764252`
+- [/interface/wireless/sniffer/sniff](docs/cli-reference/interface/wireless/sniffer/sniff.md) `fd1b5f828c63`
+- [/interface/wireless/snooper](docs/cli-reference/interface/wireless/snooper.md) `b2c0bc732fbc`
+- [/interface/wireless/snooper/flat-snoop](docs/cli-reference/interface/wireless/snooper/flat-snoop.md) `9be86cb4bdb0`
+- [/interface/wireless/snooper/snoop](docs/cli-reference/interface/wireless/snooper/snoop.md) `0f7dd19f360d`
+- [/interface/wireless/spectral-scan](docs/cli-reference/interface/wireless/spectral-scan.md) `df45cca14af3`
+- [/interface/wireless/wds](docs/cli-reference/interface/wireless/wds.md) `6c02a7c7af66`
+- [/interface/wireless/wds/monitor](docs/cli-reference/interface/wireless/wds/monitor.md) `e296e77bfad5`
+- [/interface/wireless/wps-client](docs/cli-reference/interface/wireless/wps-client.md) `68d93e68c1dc`
+- [/interface/wireless/wps-push-button](docs/cli-reference/interface/wireless/wps-push-button.md) `a970689ebef9`
+- [/interface/xfrm](docs/cli-reference/interface/xfrm.md) `749642c860da`
+- [/iot/bluetooth](docs/cli-reference/iot/bluetooth.md) `5e3cd2fb0250`
+- [/iot/bluetooth/advertisers](docs/cli-reference/iot/bluetooth/advertisers.md) `512eb7e5775f`
+- [/iot/bluetooth/advertisers/ad-structures](docs/cli-reference/iot/bluetooth/advertisers/ad-structures.md) `67a32bd143a8`
+- [/iot/bluetooth/connections](docs/cli-reference/iot/bluetooth/connections.md) `eb5ccf083fc9`
+- [/iot/bluetooth/connections/async-data](docs/cli-reference/iot/bluetooth/connections/async-data.md) `90110f1c6c42`
+- [/iot/bluetooth/connections/async-data/clear](docs/cli-reference/iot/bluetooth/connections/async-data/clear.md) `5243a0d3c26a`
+- [/iot/bluetooth/connections/characteristics](docs/cli-reference/iot/bluetooth/connections/characteristics.md) `ad51bfa94de4`
+- [/iot/bluetooth/connections/connect](docs/cli-reference/iot/bluetooth/connections/connect.md) `a7fcba5c3371`
+- [/iot/bluetooth/connections/disconnect](docs/cli-reference/iot/bluetooth/connections/disconnect.md) `814e313517e1`
+- [/iot/bluetooth/connections/read](docs/cli-reference/iot/bluetooth/connections/read.md) `039c1594ea48`
+- [/iot/bluetooth/connections/subscribe](docs/cli-reference/iot/bluetooth/connections/subscribe.md) `0e10705786d2`
+- [/iot/bluetooth/connections/unsubscribe](docs/cli-reference/iot/bluetooth/connections/unsubscribe.md) `e60b34c51c1c`
+- [/iot/bluetooth/connections/write-no-resp](docs/cli-reference/iot/bluetooth/connections/write-no-resp.md) `4a45479417cc`
+- [/iot/bluetooth/connections/write](docs/cli-reference/iot/bluetooth/connections/write.md) `66a19f9503f9`
+- [/iot/bluetooth/decode-ad](docs/cli-reference/iot/bluetooth/decode-ad.md) `e5e6a2f81c87`
+- [/iot/bluetooth/peripheral-devices](docs/cli-reference/iot/bluetooth/peripheral-devices.md) `e20e153cf8d3`
+- [/iot/bluetooth/reset-counters](docs/cli-reference/iot/bluetooth/reset-counters.md) `732d7c8ecc33`
+- [/iot/bluetooth/scanners](docs/cli-reference/iot/bluetooth/scanners.md) `ced63dd76255`
+- [/iot/bluetooth/scanners/advertisements](docs/cli-reference/iot/bluetooth/scanners/advertisements.md) `bbb636f8b5a6`
+- [/iot/bluetooth/scanners/advertisements/clear](docs/cli-reference/iot/bluetooth/scanners/advertisements/clear.md) `630279f170c2`
+- [/iot/bluetooth/whitelist](docs/cli-reference/iot/bluetooth/whitelist.md) `a038a158e128`
+- [/iot/gpio](docs/cli-reference/iot/gpio.md) `cc7f7eb937d2`
+- [/iot/gpio/analog](docs/cli-reference/iot/gpio/analog.md) `54ca06c16488`
+- [/iot/gpio/digital](docs/cli-reference/iot/gpio/digital.md) `3dc6da39a90f`
+- [/iot/lora](docs/cli-reference/iot/lora.md) `a36596afa33f`
+- [/iot/lora/channels](docs/cli-reference/iot/lora/channels.md) `17e17d53bd34`
+- [/iot/lora/joineui](docs/cli-reference/iot/lora/joineui.md) `e29910800db1`
+- [/iot/lora/netid](docs/cli-reference/iot/lora/netid.md) `ceb0e11bf4c4`
+- [/iot/lora/radios](docs/cli-reference/iot/lora/radios.md) `c94097bd7d9e`
+- [/iot/lora/reset-devices](docs/cli-reference/iot/lora/reset-devices.md) `92c15f510ea3`
+- [/iot/lora/send](docs/cli-reference/iot/lora/send.md) `24671d1c6409`
+- [/iot/lora/servers](docs/cli-reference/iot/lora/servers.md) `b07ca337b223`
+- [/iot/lora/servers/reset-servers](docs/cli-reference/iot/lora/servers/reset-servers.md) `de00cc3e67b0`
+- [/iot/lora/traffic](docs/cli-reference/iot/lora/traffic.md) `e7e15baee678`
+- [/iot/lora/traffic/clear](docs/cli-reference/iot/lora/traffic/clear.md) `2c1ede8953d1`
+- [/iot/lora/traffic/options](docs/cli-reference/iot/lora/traffic/options.md) `3b3ef43b0ac0`
+- [/iot/modbus](docs/cli-reference/iot/modbus.md) `79f50528150c`
+- [/iot/modbus/read-holding-registers](docs/cli-reference/iot/modbus/read-holding-registers.md) `e0734031a04f`
+- [/iot/modbus/security-rules](docs/cli-reference/iot/modbus/security-rules.md) `b4f1f14fa18c`
+- [/iot/modbus/transceive](docs/cli-reference/iot/modbus/transceive.md) `d63c679912e8`
+- [/iot/mqtt](docs/cli-reference/iot/mqtt.md) `97f98db4e448`
+- [/iot/mqtt/brokers](docs/cli-reference/iot/mqtt/brokers.md) `81f87be7879d`
+- [/iot/mqtt/connect](docs/cli-reference/iot/mqtt/connect.md) `4113bc3decf4`
+- [/iot/mqtt/disconnect](docs/cli-reference/iot/mqtt/disconnect.md) `b586fffa2d01`
+- [/iot/mqtt/publish](docs/cli-reference/iot/mqtt/publish.md) `68c72c36e6ab`
+- [/iot/mqtt/subscribe](docs/cli-reference/iot/mqtt/subscribe.md) `7f1cb15e0c5d`
+- [/iot/mqtt/subscriptions](docs/cli-reference/iot/mqtt/subscriptions.md) `436388fadb43`
+- [/iot/mqtt/subscriptions/monitor-data](docs/cli-reference/iot/mqtt/subscriptions/monitor-data.md) `2aea1b657f59`
+- [/iot/mqtt/subscriptions/recv](docs/cli-reference/iot/mqtt/subscriptions/recv.md) `152c3f8a2555`
+- [/iot/mqtt/subscriptions/recv/clear](docs/cli-reference/iot/mqtt/subscriptions/recv/clear.md) `5cf7e0f398ea`
+- [/iot/mqtt/unsubscribe](docs/cli-reference/iot/mqtt/unsubscribe.md) `e53db1c8bcc9`
+- [/iot/wiliot](docs/cli-reference/iot/wiliot.md) `c8e92333118d`
+- [/iot/wiliot/bluetooth-traffic](docs/cli-reference/iot/wiliot/bluetooth-traffic.md) `96cf34b64c1d`
+- [/iot/wiliot/bluetooth-traffic/clear](docs/cli-reference/iot/wiliot/bluetooth-traffic/clear.md) `da62bccfebd6`
+- [/iot/wiliot/clear](docs/cli-reference/iot/wiliot/clear.md) `783c09594dbe`
+- [/iot/wiliot/disable](docs/cli-reference/iot/wiliot/disable.md) `e8119e19c3b4`
+- [/iot/wiliot/enable](docs/cli-reference/iot/wiliot/enable.md) `70b41b613f49`
+- [/iot/wiliot/mqtt-traffic](docs/cli-reference/iot/wiliot/mqtt-traffic.md) `97c7050f6add`
+- [/iot/wiliot/mqtt-traffic/clear](docs/cli-reference/iot/wiliot/mqtt-traffic/clear.md) `3978a4dd9646`
+- [/iot/wiliot/options](docs/cli-reference/iot/wiliot/options.md) `c019edb037fa`
+- [/iot/wiliot/servers](docs/cli-reference/iot/wiliot/servers.md) `b56b77205456`
+- [/iot/wiliot/servers/defaults](docs/cli-reference/iot/wiliot/servers/defaults.md) `7f822edf269d`
+- [/ip/address](docs/cli-reference/ip/address.md) `da7b0f8d6e9d`
+- [/ip/arp](docs/cli-reference/ip/arp.md) `134be778776e`
+- [/ip/cloud](docs/cli-reference/ip/cloud.md) `5117c899bcbb`
+- [/ip/cloud/advanced](docs/cli-reference/ip/cloud/advanced.md) `1d383738699d`
+- [/ip/cloud/back-to-home-file](docs/cli-reference/ip/cloud/back-to-home-file.md) `484f331c6c1a`
+- [/ip/cloud/back-to-home-file/settings](docs/cli-reference/ip/cloud/back-to-home-file/settings.md) `ef250c300c23`
+- [/ip/cloud/back-to-home-file/settings/remove-certificate](docs/cli-reference/ip/cloud/back-to-home-file/settings/remove-certificate.md) `5592a6a50499`
+- [/ip/cloud/back-to-home-user](docs/cli-reference/ip/cloud/back-to-home-user.md) `d1e29aff2671`
+- [/ip/cloud/back-to-home-user/show-client-config](docs/cli-reference/ip/cloud/back-to-home-user/show-client-config.md) `5ae11da31c17`
+- [/ip/cloud/force-update](docs/cli-reference/ip/cloud/force-update.md) `e218e024f63a`
+- [/ip/dhcp-client](docs/cli-reference/ip/dhcp-client.md) `f4b4a310822b`
+- [/ip/dhcp-client/option](docs/cli-reference/ip/dhcp-client/option.md) `388965d0c033`
+- [/ip/dhcp-client/release](docs/cli-reference/ip/dhcp-client/release.md) `1fb161a145fd`
+- [/ip/dhcp-client/renew](docs/cli-reference/ip/dhcp-client/renew.md) `5aa3ef975587`
+- [/ip/dhcp-relay](docs/cli-reference/ip/dhcp-relay.md) `05974300cbdf`
+- [/ip/dhcp-relay/monitor](docs/cli-reference/ip/dhcp-relay/monitor.md) `e55796e0324a`
+- [/ip/dhcp-relay/reset-counters](docs/cli-reference/ip/dhcp-relay/reset-counters.md) `c402c0cb77e9`
+- [/ip/dhcp-server](docs/cli-reference/ip/dhcp-server.md) `1b36a6f5833d`
+- [/ip/dhcp-server/alert](docs/cli-reference/ip/dhcp-server/alert.md) `a8d267c2cf1b`
+- [/ip/dhcp-server/alert/reset-alert](docs/cli-reference/ip/dhcp-server/alert/reset-alert.md) `cb5cc0bedec8`
+- [/ip/dhcp-server/config](docs/cli-reference/ip/dhcp-server/config.md) `c98999f54563`
+- [/ip/dhcp-server/lease](docs/cli-reference/ip/dhcp-server/lease.md) `983b6936aeb5`
+- [/ip/dhcp-server/lease/check-status](docs/cli-reference/ip/dhcp-server/lease/check-status.md) `737c9e643078`
+- [/ip/dhcp-server/lease/make-static](docs/cli-reference/ip/dhcp-server/lease/make-static.md) `1959282d6446`
+- [/ip/dhcp-server/lease/send-reconfigure](docs/cli-reference/ip/dhcp-server/lease/send-reconfigure.md) `87e6a55dc836`
+- [/ip/dhcp-server/matcher](docs/cli-reference/ip/dhcp-server/matcher.md) `27455460f798`
+- [/ip/dhcp-server/network](docs/cli-reference/ip/dhcp-server/network.md) `bbf2fd076e6e`
+- [/ip/dhcp-server/option](docs/cli-reference/ip/dhcp-server/option.md) `b1a7c71fa2a2`
+- [/ip/dhcp-server/option/sets](docs/cli-reference/ip/dhcp-server/option/sets.md) `343f0cdc35e8`
+- [/ip/dhcp-server/setup](docs/cli-reference/ip/dhcp-server/setup.md) `eb7dc04113fd`
+- [/ip/dns](docs/cli-reference/ip/dns.md) `dd2e666d8040`
+- [/ip/dns/adlist](docs/cli-reference/ip/dns/adlist.md) `4e89456c06c0`
+- [/ip/dns/adlist/pause](docs/cli-reference/ip/dns/adlist/pause.md) `4f0f9b0d8586`
+- [/ip/dns/adlist/reload](docs/cli-reference/ip/dns/adlist/reload.md) `2995f713a9c9`
+- [/ip/dns/cache](docs/cli-reference/ip/dns/cache.md) `9b84e1aafba2`
+- [/ip/dns/cache/all](docs/cli-reference/ip/dns/cache/all.md) `6da5836588c5`
+- [/ip/dns/cache/flush](docs/cli-reference/ip/dns/cache/flush.md) `8aa1067f41c5`
+- [/ip/dns/forwarders](docs/cli-reference/ip/dns/forwarders.md) `4dfd0ead6d89`
+- [/ip/dns/static](docs/cli-reference/ip/dns/static.md) `47baa7ac33b0`
+- [/ip/firewall/address-list](docs/cli-reference/ip/firewall/address-list.md) `27cc7f94dd91`
+- [/ip/firewall/calea](docs/cli-reference/ip/firewall/calea.md) `01ef35fdd794`
+- [/ip/firewall/calea/reset-counters-all](docs/cli-reference/ip/firewall/calea/reset-counters-all.md) `d6ef845b6b27`
+- [/ip/firewall/calea/reset-counters](docs/cli-reference/ip/firewall/calea/reset-counters.md) `3c9d194ab33c`
+- [/ip/firewall/connection](docs/cli-reference/ip/firewall/connection.md) `6aa59f6df915`
+- [/ip/firewall/connection/tracking](docs/cli-reference/ip/firewall/connection/tracking.md) `2243153aa192`
+- [/ip/firewall/filter](docs/cli-reference/ip/firewall/filter.md) `b38d25432818`
+- [/ip/firewall/filter/reset-counters-all](docs/cli-reference/ip/firewall/filter/reset-counters-all.md) `db50cd36b2e1`
+- [/ip/firewall/filter/reset-counters](docs/cli-reference/ip/firewall/filter/reset-counters.md) `9a92139e4f87`
+- [/ip/firewall/layer7-protocol](docs/cli-reference/ip/firewall/layer7-protocol.md) `a81be657a58a`
+- [/ip/firewall/mangle](docs/cli-reference/ip/firewall/mangle.md) `c23a71e6c3fe`
+- [/ip/firewall/mangle/reset-counters-all](docs/cli-reference/ip/firewall/mangle/reset-counters-all.md) `684ff7dac961`
+- [/ip/firewall/mangle/reset-counters](docs/cli-reference/ip/firewall/mangle/reset-counters.md) `37300f725a2c`
+- [/ip/firewall/nat](docs/cli-reference/ip/firewall/nat.md) `0aded196ad45`
+- [/ip/firewall/nat/reset-counters-all](docs/cli-reference/ip/firewall/nat/reset-counters-all.md) `4e76f3cc281f`
+- [/ip/firewall/nat/reset-counters](docs/cli-reference/ip/firewall/nat/reset-counters.md) `35cd947b3fdf`
+- [/ip/firewall/raw](docs/cli-reference/ip/firewall/raw.md) `370a1271f848`
+- [/ip/firewall/raw/reset-counters-all](docs/cli-reference/ip/firewall/raw/reset-counters-all.md) `fb6d1512f2b7`
+- [/ip/firewall/raw/reset-counters](docs/cli-reference/ip/firewall/raw/reset-counters.md) `33a0b2269ab5`
+- [/ip/firewall/service-port](docs/cli-reference/ip/firewall/service-port.md) `23144d6ab52a`
+- [/ip/hotspot](docs/cli-reference/ip/hotspot.md) `7cf4260e5196`
+- [/ip/hotspot/active](docs/cli-reference/ip/hotspot/active.md) `75241cac93cc`
+- [/ip/hotspot/active/login](docs/cli-reference/ip/hotspot/active/login.md) `cba7e9e1d0b7`
+- [/ip/hotspot/cookie](docs/cli-reference/ip/hotspot/cookie.md) `a415b78b3160`
+- [/ip/hotspot/host](docs/cli-reference/ip/hotspot/host.md) `853a2581ca56`
+- [/ip/hotspot/host/make-binding](docs/cli-reference/ip/hotspot/host/make-binding.md) `bed12857038f`
+- [/ip/hotspot/ip-binding](docs/cli-reference/ip/hotspot/ip-binding.md) `81a087ee864b`
+- [/ip/hotspot/profile](docs/cli-reference/ip/hotspot/profile.md) `12e6eec9be99`
+- [/ip/hotspot/reset-html](docs/cli-reference/ip/hotspot/reset-html.md) `95958f68ce65`
+- [/ip/hotspot/service-port](docs/cli-reference/ip/hotspot/service-port.md) `303629eeaf4e`
+- [/ip/hotspot/setup](docs/cli-reference/ip/hotspot/setup.md) `fe7e86837074`
+- [/ip/hotspot/user](docs/cli-reference/ip/hotspot/user.md) `e1aa1c6c1098`
+- [/ip/hotspot/user/profile](docs/cli-reference/ip/hotspot/user/profile.md) `f91fb246d8f9`
+- [/ip/hotspot/user/reset-counters](docs/cli-reference/ip/hotspot/user/reset-counters.md) `eb8c43b41545`
+- [/ip/hotspot/walled-garden](docs/cli-reference/ip/hotspot/walled-garden.md) `0d7b4848d11f`
+- [/ip/hotspot/walled-garden/ip](docs/cli-reference/ip/hotspot/walled-garden/ip.md) `3f938f199ac0`
+- [/ip/hotspot/walled-garden/reset-counters-all](docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md) `2f6c31960021`
+- [/ip/hotspot/walled-garden/reset-counters](docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md) `0b0b96ece614`
+- [/ip/ipsec/active-peers](docs/cli-reference/ip/ipsec/active-peers.md) `3a15eb301db1`
+- [/ip/ipsec/active-peers/kill-connections](docs/cli-reference/ip/ipsec/active-peers/kill-connections.md) `4531c2e188ac`
+- [/ip/ipsec/identity](docs/cli-reference/ip/ipsec/identity.md) `ac75ac26d81d`
+- [/ip/ipsec/installed-sa](docs/cli-reference/ip/ipsec/installed-sa.md) `ca5833a9b4af`
+- [/ip/ipsec/installed-sa/flush](docs/cli-reference/ip/ipsec/installed-sa/flush.md) `e32cd79e680d`
+- [/ip/ipsec/key](docs/cli-reference/ip/ipsec/key.md) `a605203f4490`
+- [/ip/ipsec/key/psk](docs/cli-reference/ip/ipsec/key/psk.md) `75ca9233ff15`
+- [/ip/ipsec/key/psk/generate](docs/cli-reference/ip/ipsec/key/psk/generate.md) `018570a9ec62`
+- [/ip/ipsec/key/rsa](docs/cli-reference/ip/ipsec/key/rsa.md) `7672a19cda97`
+- [/ip/ipsec/key/rsa/export-pub-key](docs/cli-reference/ip/ipsec/key/rsa/export-pub-key.md) `b141eca773af`
+- [/ip/ipsec/key/rsa/generate-key](docs/cli-reference/ip/ipsec/key/rsa/generate-key.md) `a7a924a78662`
+- [/ip/ipsec/key/rsa/import](docs/cli-reference/ip/ipsec/key/rsa/import.md) `4fdca0074e1c`
+- [/ip/ipsec/mode-config](docs/cli-reference/ip/ipsec/mode-config.md) `544a09f832a0`
+- [/ip/ipsec/peer](docs/cli-reference/ip/ipsec/peer.md) `70f4ae1d5ffb`
+- [/ip/ipsec/policy](docs/cli-reference/ip/ipsec/policy.md) `65ed5119f9a5`
+- [/ip/ipsec/policy/group](docs/cli-reference/ip/ipsec/policy/group.md) `cbee63924684`
+- [/ip/ipsec/profile](docs/cli-reference/ip/ipsec/profile.md) `bb3f1f153fd7`
+- [/ip/ipsec/proposal](docs/cli-reference/ip/ipsec/proposal.md) `dbf8588c617b`
+- [/ip/ipsec/settings](docs/cli-reference/ip/ipsec/settings.md) `369de8d2916e`
+- [/ip/ipsec/statistics](docs/cli-reference/ip/ipsec/statistics.md) `cf06f83f8210`
+- [/ip/kid-control](docs/cli-reference/ip/kid-control.md) `dd52989f4f74`
+- [/ip/kid-control/device](docs/cli-reference/ip/kid-control/device.md) `33a282da6a87`
+- [/ip/kid-control/device/reset-counters](docs/cli-reference/ip/kid-control/device/reset-counters.md) `e50d82ff1ae2`
+- [/ip/kid-control/pause](docs/cli-reference/ip/kid-control/pause.md) `f66a6f7e6b6b`
+- [/ip/kid-control/resume](docs/cli-reference/ip/kid-control/resume.md) `a0b5689bd0ef`
+- [/ip/media](docs/cli-reference/ip/media.md) `7850670ab51a`
+- [/ip/media/settings](docs/cli-reference/ip/media/settings.md) `32731d81c48c`
+- [/ip/nat-pmp](docs/cli-reference/ip/nat-pmp.md) `8226b991db68`
+- [/ip/nat-pmp/interfaces](docs/cli-reference/ip/nat-pmp/interfaces.md) `cef39aacff66`
+- [/ip/neighbor](docs/cli-reference/ip/neighbor.md) `af708e23af4b`
+- [/ip/neighbor/discovery-settings](docs/cli-reference/ip/neighbor/discovery-settings.md) `04ca7f1c624a`
+- [/ip/neighbor/lldp](docs/cli-reference/ip/neighbor/lldp.md) `a74ca48d6ccc`
+- [/ip/packing](docs/cli-reference/ip/packing.md) `c1121497ed87`
+- [/ip/pool](docs/cli-reference/ip/pool.md) `0b547eab9eff`
+- [/ip/pool/used](docs/cli-reference/ip/pool/used.md) `b82c1b969c50`
+- [/ip/proxy](docs/cli-reference/ip/proxy.md) `4134eb45aa53`
+- [/ip/proxy/access](docs/cli-reference/ip/proxy/access.md) `64408411a5e2`
+- [/ip/proxy/access/reset-counters-all](docs/cli-reference/ip/proxy/access/reset-counters-all.md) `b349f6dff2dd`
+- [/ip/proxy/access/reset-counters](docs/cli-reference/ip/proxy/access/reset-counters.md) `f075bcbe0aec`
+- [/ip/proxy/cache-contents](docs/cli-reference/ip/proxy/cache-contents.md) `7d3626d480b8`
+- [/ip/proxy/cache](docs/cli-reference/ip/proxy/cache.md) `6abb9d6538d3`
+- [/ip/proxy/cache/reset-counters-all](docs/cli-reference/ip/proxy/cache/reset-counters-all.md) `32dd7fbb1328`
+- [/ip/proxy/cache/reset-counters](docs/cli-reference/ip/proxy/cache/reset-counters.md) `dbc475437deb`
+- [/ip/proxy/clear-cache](docs/cli-reference/ip/proxy/clear-cache.md) `e5150afe4d04`
+- [/ip/proxy/connections](docs/cli-reference/ip/proxy/connections.md) `5e6b36ffab6c`
+- [/ip/proxy/direct](docs/cli-reference/ip/proxy/direct.md) `c30b35e350f8`
+- [/ip/proxy/direct/reset-counters-all](docs/cli-reference/ip/proxy/direct/reset-counters-all.md) `609e7509323f`
+- [/ip/proxy/direct/reset-counters](docs/cli-reference/ip/proxy/direct/reset-counters.md) `1a897d48df76`
+- [/ip/proxy/inserts](docs/cli-reference/ip/proxy/inserts.md) `683964d918dc`
+- [/ip/proxy/lookups](docs/cli-reference/ip/proxy/lookups.md) `5aa7707a3e6f`
+- [/ip/proxy/monitor](docs/cli-reference/ip/proxy/monitor.md) `7cee1697b0b3`
+- [/ip/proxy/refreshes](docs/cli-reference/ip/proxy/refreshes.md) `b8aa456106fb`
+- [/ip/proxy/reset-html](docs/cli-reference/ip/proxy/reset-html.md) `9320cddf223b`
+- [/ip/reverse-proxy](docs/cli-reference/ip/reverse-proxy.md) `ef349be93809`
+- [/ip/route](docs/cli-reference/ip/route.md) `7d527fa548ad`
+- [/ip/route/check](docs/cli-reference/ip/route/check.md) `1441ead60ef8`
+- [/ip/service](docs/cli-reference/ip/service.md) `89a75d04d630`
+- [/ip/service/webserver](docs/cli-reference/ip/service/webserver.md) `d9cc5f0307c4`
+- [/ip/settings](docs/cli-reference/ip/settings.md) `a3d1c3e2c6b0`
+- [/ip/smb](docs/cli-reference/ip/smb.md) `e77bc7937030`
+- [/ip/smb/shares](docs/cli-reference/ip/smb/shares.md) `677b85728e34`
+- [/ip/smb/users](docs/cli-reference/ip/smb/users.md) `57b8b2e9c17e`
+- [/ip/socks](docs/cli-reference/ip/socks.md) `e1052190b864`
+- [/ip/socks/access](docs/cli-reference/ip/socks/access.md) `b30788d91fa9`
+- [/ip/socks/connections](docs/cli-reference/ip/socks/connections.md) `3ebe840cfe6f`
+- [/ip/socks/users](docs/cli-reference/ip/socks/users.md) `bfb7d81be78b`
+- [/ip/socksify](docs/cli-reference/ip/socksify.md) `3016730ba0a8`
+- [/ip/ssh](docs/cli-reference/ip/ssh.md) `c87c1a2ac3ee`
+- [/ip/ssh/export-host-key](docs/cli-reference/ip/ssh/export-host-key.md) `3af7f365888a`
+- [/ip/ssh/import-host-key](docs/cli-reference/ip/ssh/import-host-key.md) `8075bace72a7`
+- [/ip/ssh/known-hosts](docs/cli-reference/ip/ssh/known-hosts.md) `d26f7f185b65`
+- [/ip/ssh/regenerate-host-key](docs/cli-reference/ip/ssh/regenerate-host-key.md) `55054cdff109`
+- [/ip/tftp](docs/cli-reference/ip/tftp.md) `b24a9bdc848f`
+- [/ip/tftp/settings](docs/cli-reference/ip/tftp/settings.md) `b87e65cd8de8`
+- [/ip/traffic-flow](docs/cli-reference/ip/traffic-flow.md) `83b716f6e03b`
+- [/ip/traffic-flow/ipfix](docs/cli-reference/ip/traffic-flow/ipfix.md) `ebbefed5271b`
+- [/ip/traffic-flow/monitor](docs/cli-reference/ip/traffic-flow/monitor.md) `9e22ee37d573`
+- [/ip/traffic-flow/target](docs/cli-reference/ip/traffic-flow/target.md) `c4a7273c09fb`
+- [/ip/upnp](docs/cli-reference/ip/upnp.md) `12dd0df47440`
+- [/ip/upnp/interfaces](docs/cli-reference/ip/upnp/interfaces.md) `15b99ea88203`
+- [/ip/vrf](docs/cli-reference/ip/vrf.md) `a5def64b14cf`
+- [/ipv6/address](docs/cli-reference/ipv6/address.md) `0fbdf7c9905a`
+- [/ipv6/dhcp-client](docs/cli-reference/ipv6/dhcp-client.md) `fd14fcad694f`
+- [/ipv6/dhcp-client/option](docs/cli-reference/ipv6/dhcp-client/option.md) `3e4e72bf7c9f`
+- [/ipv6/dhcp-client/release](docs/cli-reference/ipv6/dhcp-client/release.md) `8f14b4b0e685`
+- [/ipv6/dhcp-client/renew](docs/cli-reference/ipv6/dhcp-client/renew.md) `4b14799d0008`
+- [/ipv6/dhcp-relay](docs/cli-reference/ipv6/dhcp-relay.md) `04108f21c036`
+- [/ipv6/dhcp-relay/monitor](docs/cli-reference/ipv6/dhcp-relay/monitor.md) `675c5a8301ac`
+- [/ipv6/dhcp-relay/option](docs/cli-reference/ipv6/dhcp-relay/option.md) `ed82bb853ca1`
+- [/ipv6/dhcp-relay/reset-counters](docs/cli-reference/ipv6/dhcp-relay/reset-counters.md) `7a040e9a96a5`
+- [/ipv6/dhcp-relay/routes](docs/cli-reference/ipv6/dhcp-relay/routes.md) `0714e75861e3`
+- [/ipv6/dhcp-server](docs/cli-reference/ipv6/dhcp-server.md) `a816f05c6422`
+- [/ipv6/dhcp-server/binding](docs/cli-reference/ipv6/dhcp-server/binding.md) `90e86a8f9a99`
+- [/ipv6/dhcp-server/binding/make-static](docs/cli-reference/ipv6/dhcp-server/binding/make-static.md) `41a515bd6891`
+- [/ipv6/dhcp-server/binding/send-reconfigure](docs/cli-reference/ipv6/dhcp-server/binding/send-reconfigure.md) `7e75b85b54ee`
+- [/ipv6/dhcp-server/option](docs/cli-reference/ipv6/dhcp-server/option.md) `9a1b7aee4e21`
+- [/ipv6/dhcp-server/option/sets](docs/cli-reference/ipv6/dhcp-server/option/sets.md) `2b41be7cbf71`
+- [/ipv6/firewall/address-list](docs/cli-reference/ipv6/firewall/address-list.md) `18555893b7ce`
+- [/ipv6/firewall/connection](docs/cli-reference/ipv6/firewall/connection.md) `ad54048d8b5e`
+- [/ipv6/firewall/filter](docs/cli-reference/ipv6/firewall/filter.md) `676abca3eee2`
+- [/ipv6/firewall/filter/reset-counters-all](docs/cli-reference/ipv6/firewall/filter/reset-counters-all.md) `b196d1b16d7d`
+- [/ipv6/firewall/filter/reset-counters](docs/cli-reference/ipv6/firewall/filter/reset-counters.md) `24be2d7ed56c`
+- [/ipv6/firewall/mangle](docs/cli-reference/ipv6/firewall/mangle.md) `fc07ddcf361e`
+- [/ipv6/firewall/mangle/reset-counters-all](docs/cli-reference/ipv6/firewall/mangle/reset-counters-all.md) `ae318d752709`
+- [/ipv6/firewall/mangle/reset-counters](docs/cli-reference/ipv6/firewall/mangle/reset-counters.md) `0e8e5d43e785`
+- [/ipv6/firewall/nat](docs/cli-reference/ipv6/firewall/nat.md) `cd1c627920e8`
+- [/ipv6/firewall/nat/reset-counters-all](docs/cli-reference/ipv6/firewall/nat/reset-counters-all.md) `b05411b1db1f`
+- [/ipv6/firewall/nat/reset-counters](docs/cli-reference/ipv6/firewall/nat/reset-counters.md) `113a67fe9cf8`
+- [/ipv6/firewall/raw](docs/cli-reference/ipv6/firewall/raw.md) `503c9638b315`
+- [/ipv6/firewall/raw/reset-counters-all](docs/cli-reference/ipv6/firewall/raw/reset-counters-all.md) `4ce711f15205`
+- [/ipv6/firewall/raw/reset-counters](docs/cli-reference/ipv6/firewall/raw/reset-counters.md) `f1d9002a50a1`
+- [/ipv6/nd](docs/cli-reference/ipv6/nd.md) `6ef2122ff4ec`
+- [/ipv6/nd/prefix](docs/cli-reference/ipv6/nd/prefix.md) `5f87acf00feb`
+- [/ipv6/nd/prefix/default](docs/cli-reference/ipv6/nd/prefix/default.md) `24a4f6f38961`
+- [/ipv6/nd/proxy](docs/cli-reference/ipv6/nd/proxy.md) `d76da61bd49a`
+- [/ipv6/nd/settings](docs/cli-reference/ipv6/nd/settings.md) `e4ef068c6bdc`
+- [/ipv6/neighbor](docs/cli-reference/ipv6/neighbor.md) `6a939ad20d4f`
+- [/ipv6/pool](docs/cli-reference/ipv6/pool.md) `bda7f872358f`
+- [/ipv6/pool/used](docs/cli-reference/ipv6/pool/used.md) `068ed3edc289`
+- [/ipv6/route](docs/cli-reference/ipv6/route.md) `d50d9e3c79bb`
+- [/ipv6/settings](docs/cli-reference/ipv6/settings.md) `a54f56b3f312`
+- [/lcd](docs/cli-reference/lcd.md) `266000d508d9`
+- [/lcd/backlight](docs/cli-reference/lcd/backlight.md) `fea609705953`
+- [/lcd/interface](docs/cli-reference/lcd/interface.md) `b3b33e443caf`
+- [/lcd/interface/default-wireless](docs/cli-reference/lcd/interface/default-wireless.md) `836fac3e1aab`
+- [/lcd/interface/display](docs/cli-reference/lcd/interface/display.md) `b760786fc53d`
+- [/lcd/interface/pages](docs/cli-reference/lcd/interface/pages.md) `fdf0a96ecb89`
+- [/lcd/pin](docs/cli-reference/lcd/pin.md) `13acfd4f4ecf`
+- [/lcd/recalibrate](docs/cli-reference/lcd/recalibrate.md) `77afb051498f`
+- [/lcd/screen](docs/cli-reference/lcd/screen.md) `68d3cad1d30c`
+- [/lcd/show](docs/cli-reference/lcd/show.md) `a328c8524e83`
+- [/lcd/take-screenshot](docs/cli-reference/lcd/take-screenshot.md) `fd38fab689c0`
+- [/log](docs/cli-reference/log.md) `c152b0af4e41`
+- [/mpls/forwarding-table](docs/cli-reference/mpls/forwarding-table.md) `8d2b1443a077`
+- [/mpls/interface](docs/cli-reference/mpls/interface.md) `afce568ce433`
+- [/mpls/ldp](docs/cli-reference/mpls/ldp.md) `594cfd550471`
+- [/mpls/ldp/accept-filter](docs/cli-reference/mpls/ldp/accept-filter.md) `690208d11845`
+- [/mpls/ldp/advertise-filter](docs/cli-reference/mpls/ldp/advertise-filter.md) `2c4b9dddd303`
+- [/mpls/ldp/interface](docs/cli-reference/mpls/ldp/interface.md) `7817a1fe6424`
+- [/mpls/ldp/local-mapping](docs/cli-reference/mpls/ldp/local-mapping.md) `9b7fcfb04f95`
+- [/mpls/ldp/neighbor](docs/cli-reference/mpls/ldp/neighbor.md) `4a861e7bc431`
+- [/mpls/ldp/remote-mapping](docs/cli-reference/mpls/ldp/remote-mapping.md) `363fdb70e0b3`
+- [/mpls/mangle](docs/cli-reference/mpls/mangle.md) `3f66a060641d`
+- [/mpls/mangle/reset-counters-all](docs/cli-reference/mpls/mangle/reset-counters-all.md) `633cc5e7752a`
+- [/mpls/mangle/reset-counters](docs/cli-reference/mpls/mangle/reset-counters.md) `3fc8a30d4cab`
+- [/mpls/settings](docs/cli-reference/mpls/settings.md) `cbf5e54b05c8`
+- [/mpls/traffic-eng](docs/cli-reference/mpls/traffic-eng.md) `65eaed105973`
+- [/mpls/traffic-eng/flow](docs/cli-reference/mpls/traffic-eng/flow.md) `df0620ec62e9`
+- [/mpls/traffic-eng/interface](docs/cli-reference/mpls/traffic-eng/interface.md) `4ddafa7e4b70`
+- [/mpls/traffic-eng/path](docs/cli-reference/mpls/traffic-eng/path.md) `9e38e20118d6`
+- [/mpls/traffic-eng/tunnel](docs/cli-reference/mpls/traffic-eng/tunnel.md) `e873ead3cb69`
+- [/mpls/traffic-eng/tunnel/reoptimize](docs/cli-reference/mpls/traffic-eng/tunnel/reoptimize.md) `642b5cca7bee`
+- [/openflow](docs/cli-reference/openflow.md) `eabf65f49913`
+- [/openflow/flow](docs/cli-reference/openflow/flow.md) `ac410feb3841`
+- [/openflow/group](docs/cli-reference/openflow/group.md) `85250069ba16`
+- [/openflow/meter](docs/cli-reference/openflow/meter.md) `ba86c5473710`
+- [/openflow/port](docs/cli-reference/openflow/port.md) `e320bc6ade3a`
+- [/partitions](docs/cli-reference/partitions.md) `9666e4306fa9`
+- [/partitions/activate](docs/cli-reference/partitions/activate.md) `d5eb67cc0902`
+- [/partitions/copy-to](docs/cli-reference/partitions/copy-to.md) `8874ba206f83`
+- [/partitions/repartition](docs/cli-reference/partitions/repartition.md) `32729f43a783`
+- [/partitions/restore-config-from](docs/cli-reference/partitions/restore-config-from.md) `9acbc698e1d6`
+- [/partitions/save-config-to](docs/cli-reference/partitions/save-config-to.md) `d3ec890aba26`
+- [/password](docs/cli-reference/password.md) `0d9b7abe2edd`
+- [/port](docs/cli-reference/port.md) `49e865c6c178`
+- [/port/remote-access](docs/cli-reference/port/remote-access.md) `b5a5100ad370`
+- [/ppp/aaa](docs/cli-reference/ppp/aaa.md) `1eced85c430a`
+- [/ppp/active](docs/cli-reference/ppp/active.md) `bc9b37a7884c`
+- [/ppp/l2tp-secret](docs/cli-reference/ppp/l2tp-secret.md) `a128c8e9c656`
+- [/ppp/profile](docs/cli-reference/ppp/profile.md) `c6626e37bfb0`
+- [/ppp/secret](docs/cli-reference/ppp/secret.md) `eaa3c7e8f490`
+- [/queue/interface](docs/cli-reference/queue/interface.md) `4b6a0ef359f5`
+- [/queue/monitor](docs/cli-reference/queue/monitor.md) `d2b5eeb63b98`
+- [/queue/simple](docs/cli-reference/queue/simple.md) `2ef09e2fe15d`
+- [/queue/simple/reset-counters-all](docs/cli-reference/queue/simple/reset-counters-all.md) `bdaba52dd969`
+- [/queue/simple/reset-counters](docs/cli-reference/queue/simple/reset-counters.md) `4d5040062098`
+- [/queue/tree](docs/cli-reference/queue/tree.md) `8c931e80a1cd`
+- [/queue/tree/reset-counters-all](docs/cli-reference/queue/tree/reset-counters-all.md) `f9a8dab18e79`
+- [/queue/tree/reset-counters](docs/cli-reference/queue/tree/reset-counters.md) `8584a4ccb3d5`
+- [/queue/type](docs/cli-reference/queue/type.md) `13fb9caf046e`
+- [/quit](docs/cli-reference/quit.md) `dce55e7a1e7e`
+- [/radius](docs/cli-reference/radius.md) `c4118720775f`
+- [/radius/incoming](docs/cli-reference/radius/incoming.md) `6dc6e0a905fb`
+- [/radius/incoming/monitor](docs/cli-reference/radius/incoming/monitor.md) `8c737ec9274f`
+- [/radius/incoming/reset-counters](docs/cli-reference/radius/incoming/reset-counters.md) `b1952e2b8a80`
+- [/radius/monitor](docs/cli-reference/radius/monitor.md) `f1b47319a153`
+- [/radius/reset-counters](docs/cli-reference/radius/reset-counters.md) `4f4986d94f82`
+- [/redo](docs/cli-reference/redo.md) `7f9e0426397e`
+- [/root/terminal](docs/cli-reference/root/terminal.md) `aa21ab7e0597`
+- [/routing/bfd/authentication](docs/cli-reference/routing/bfd/authentication.md) `cbd7608fc94f`
+- [/routing/bfd/configuration](docs/cli-reference/routing/bfd/configuration.md) `bc139ce28917`
+- [/routing/bfd/session](docs/cli-reference/routing/bfd/session.md) `0a43287d1290`
+- [/routing/bgp](docs/cli-reference/routing/bgp.md) `26f45242d001`
+- [/routing/bgp/advertisements](docs/cli-reference/routing/bgp/advertisements.md) `d5d9abe5277a`
+- [/routing/bgp/connection](docs/cli-reference/routing/bgp/connection.md) `dd2c672f15df`
+- [/routing/bgp/evpn](docs/cli-reference/routing/bgp/evpn.md) `f17b42a5390b`
+- [/routing/bgp/instance](docs/cli-reference/routing/bgp/instance.md) `d0bb66528d75`
+- [/routing/bgp/session](docs/cli-reference/routing/bgp/session.md) `59a471e4e8b4`
+- [/routing/bgp/session/clear](docs/cli-reference/routing/bgp/session/clear.md) `af2062adb68c`
+- [/routing/bgp/session/dump-saved-advertisements](docs/cli-reference/routing/bgp/session/dump-saved-advertisements.md) `3df7facced24`
+- [/routing/bgp/session/refresh](docs/cli-reference/routing/bgp/session/refresh.md) `1655cf8a9b2c`
+- [/routing/bgp/session/resend](docs/cli-reference/routing/bgp/session/resend.md) `c9bdff8f46f5`
+- [/routing/bgp/session/stop](docs/cli-reference/routing/bgp/session/stop.md) `7489c2b8ad87`
+- [/routing/bgp/template](docs/cli-reference/routing/bgp/template.md) `18f4451d8b60`
+- [/routing/bgp/vpls](docs/cli-reference/routing/bgp/vpls.md) `f7ae3bbce217`
+- [/routing/bgp/vpn](docs/cli-reference/routing/bgp/vpn.md) `16c281091754`
+- [/routing/discourse](docs/cli-reference/routing/discourse.md) `a75d19d57dd5`
+- [/routing/fantasy](docs/cli-reference/routing/fantasy.md) `e80747b17f20`
+- [/routing/filter/chain](docs/cli-reference/routing/filter/chain.md) `9ee9924d7f8a`
+- [/routing/filter/community-ext-list](docs/cli-reference/routing/filter/community-ext-list.md) `50d5cfce7af8`
+- [/routing/filter/community-large-list](docs/cli-reference/routing/filter/community-large-list.md) `5ecbd54c7854`
+- [/routing/filter/community-list](docs/cli-reference/routing/filter/community-list.md) `e4d8aef7bec0`
+- [/routing/filter/filter-wizard](docs/cli-reference/routing/filter/filter-wizard.md) `107021ea4eba`
+- [/routing/filter/num-list](docs/cli-reference/routing/filter/num-list.md) `3515959668e0`
+- [/routing/filter/rule](docs/cli-reference/routing/filter/rule.md) `9ed4a09320b5`
+- [/routing/filter/select-rule](docs/cli-reference/routing/filter/select-rule.md) `3f61e9675c21`
+- [/routing/filter/sync](docs/cli-reference/routing/filter/sync.md) `f6aa9794b527`
+- [/routing/filter/test-as-path-regexp](docs/cli-reference/routing/filter/test-as-path-regexp.md) `907a3defac68`
+- [/routing/gmp](docs/cli-reference/routing/gmp.md) `9e2bed0507c5`
+- [/routing/id](docs/cli-reference/routing/id.md) `9f1b97d555eb`
+- [/routing/igmp-proxy](docs/cli-reference/routing/igmp-proxy.md) `0d4c27bc4b37`
+- [/routing/igmp-proxy/interface](docs/cli-reference/routing/igmp-proxy/interface.md) `92a6d2b53ac5`
+- [/routing/igmp-proxy/mfc](docs/cli-reference/routing/igmp-proxy/mfc.md) `bf015079476a`
+- [/routing/isis/instance](docs/cli-reference/routing/isis/instance.md) `276a6465d8be`
+- [/routing/isis/interface-template](docs/cli-reference/routing/isis/interface-template.md) `7bbafa639144`
+- [/routing/isis/interface](docs/cli-reference/routing/isis/interface.md) `327295b66ef7`
+- [/routing/isis/lsp](docs/cli-reference/routing/isis/lsp.md) `a1596d470fb7`
+- [/routing/isis/neighbor](docs/cli-reference/routing/isis/neighbor.md) `3b326241dd47`
+- [/routing/nexthop](docs/cli-reference/routing/nexthop.md) `538040299279`
+- [/routing/nexthop/dump-dot](docs/cli-reference/routing/nexthop/dump-dot.md) `4a3e0569533b`
+- [/routing/ospf/area](docs/cli-reference/routing/ospf/area.md) `23ce0a6ffb13`
+- [/routing/ospf/area/range](docs/cli-reference/routing/ospf/area/range.md) `c4e10dfa5306`
+- [/routing/ospf/instance](docs/cli-reference/routing/ospf/instance.md) `a2dd89f92549`
+- [/routing/ospf/interface-template](docs/cli-reference/routing/ospf/interface-template.md) `05840eab5df5`
+- [/routing/ospf/interface](docs/cli-reference/routing/ospf/interface.md) `58ce2a1743fa`
+- [/routing/ospf/lsa](docs/cli-reference/routing/ospf/lsa.md) `c56405b9b6c4`
+- [/routing/ospf/neighbor](docs/cli-reference/routing/ospf/neighbor.md) `33757f6e9daa`
+- [/routing/ospf/static-neighbor](docs/cli-reference/routing/ospf/static-neighbor.md) `d423ee268549`
+- [/routing/pimsm](docs/cli-reference/routing/pimsm.md) `48f0e1e7e330`
+- [/routing/pimsm/bsr](docs/cli-reference/routing/pimsm/bsr.md) `e00547b8f487`
+- [/routing/pimsm/bsr/candidate](docs/cli-reference/routing/pimsm/bsr/candidate.md) `a91d21370dfa`
+- [/routing/pimsm/bsr/rp-candidate](docs/cli-reference/routing/pimsm/bsr/rp-candidate.md) `2790b131e9c2`
+- [/routing/pimsm/bsr/rp-set](docs/cli-reference/routing/pimsm/bsr/rp-set.md) `ad3dca755974`
+- [/routing/pimsm/igmp-interface-template](docs/cli-reference/routing/pimsm/igmp-interface-template.md) `a20cd8bdfc89`
+- [/routing/pimsm/instance](docs/cli-reference/routing/pimsm/instance.md) `2b4dc09e1a6d`
+- [/routing/pimsm/interface-template](docs/cli-reference/routing/pimsm/interface-template.md) `6679e47446e3`
+- [/routing/pimsm/interface](docs/cli-reference/routing/pimsm/interface.md) `82d307fa6247`
+- [/routing/pimsm/neighbor](docs/cli-reference/routing/pimsm/neighbor.md) `0fe05c17aad4`
+- [/routing/pimsm/static-rp](docs/cli-reference/routing/pimsm/static-rp.md) `3b855a107c88`
+- [/routing/pimsm/uib-g](docs/cli-reference/routing/pimsm/uib-g.md) `f9e4ea38f684`
+- [/routing/pimsm/uib-sg](docs/cli-reference/routing/pimsm/uib-sg.md) `107b9b6e6015`
+- [/routing/rip/instance](docs/cli-reference/routing/rip/instance.md) `f3348991b742`
+- [/routing/rip/interface-template](docs/cli-reference/routing/rip/interface-template.md) `2fc19953455b`
+- [/routing/rip/interface](docs/cli-reference/routing/rip/interface.md) `bcf1d1cfa884`
+- [/routing/rip/keys](docs/cli-reference/routing/rip/keys.md) `f362bac53b82`
+- [/routing/rip/neighbor](docs/cli-reference/routing/rip/neighbor.md) `1a90f26b76bb`
+- [/routing/rip/static-neighbor](docs/cli-reference/routing/rip/static-neighbor.md) `8f9ba3ad2b6e`
+- [/routing/route](docs/cli-reference/routing/route.md) `e874810463e2`
+- [/routing/rpki](docs/cli-reference/routing/rpki.md) `489f8133ed9a`
+- [/routing/rpki/rpki-check](docs/cli-reference/routing/rpki/rpki-check.md) `4a2b11e7b31c`
+- [/routing/rpki/rpki-query](docs/cli-reference/routing/rpki/rpki-query.md) `09d9cf7f463c`
+- [/routing/rpki/session](docs/cli-reference/routing/rpki/session.md) `94587cb2d33c`
+- [/routing/rule](docs/cli-reference/routing/rule.md) `a057a218578e`
+- [/routing/settings](docs/cli-reference/routing/settings.md) `43e99e95505b`
+- [/routing/stats/memory](docs/cli-reference/routing/stats/memory.md) `7233dc67eccc`
+- [/routing/stats/origin](docs/cli-reference/routing/stats/origin.md) `ce0201b5abad`
+- [/routing/stats/pcap](docs/cli-reference/routing/stats/pcap.md) `f63b3b43b05c`
+- [/routing/stats/process](docs/cli-reference/routing/stats/process.md) `20a701950ddf`
+- [/routing/stats/process/kill](docs/cli-reference/routing/stats/process/kill.md) `1e3e075fbba1`
+- [/routing/stats/step](docs/cli-reference/routing/stats/step.md) `7e59f256874f`
+- [/routing/table](docs/cli-reference/routing/table.md) `4bc71be2e7a6`
+- [/safe-mode](docs/cli-reference/safe-mode.md) `370b1bceb1ee`
+- [/snmp](docs/cli-reference/snmp.md) `4c7ae1f15ebb`
+- [/snmp/community](docs/cli-reference/snmp/community.md) `459f9442c8bf`
+- [/snmp/send-trap](docs/cli-reference/snmp/send-trap.md) `ad1a5cfca873`
+- [/special-login](docs/cli-reference/special-login.md) `58d417a0ddc8`
+- [/system/backup/cloud](docs/cli-reference/system/backup/cloud.md) `6423febfd6f5`
+- [/system/backup/cloud/download-file](docs/cli-reference/system/backup/cloud/download-file.md) `2473d70be2f7`
+- [/system/backup/cloud/remove-file](docs/cli-reference/system/backup/cloud/remove-file.md) `e1e914e72383`
+- [/system/backup/cloud/upload-file](docs/cli-reference/system/backup/cloud/upload-file.md) `59ffd56b0d82`
+- [/system/backup/load](docs/cli-reference/system/backup/load.md) `fedf63b34fc4`
+- [/system/backup/save](docs/cli-reference/system/backup/save.md) `e8dd5f282e95`
+- [/system/check-disk](docs/cli-reference/system/check-disk.md) `8db136fa642b`
+- [/system/check-installation](docs/cli-reference/system/check-installation.md) `445d503e3977`
+- [/system/clock](docs/cli-reference/system/clock.md) `23d47a37869d`
+- [/system/clock/manual](docs/cli-reference/system/clock/manual.md) `121658c731e2`
+- [/system/console](docs/cli-reference/system/console.md) `162d14d87d22`
+- [/system/console/screen](docs/cli-reference/system/console/screen.md) `678076c73202`
+- [/system/dashboard/settings](docs/cli-reference/system/dashboard/settings.md) `2d8d0d70af6f`
+- [/system/dashboard/show](docs/cli-reference/system/dashboard/show.md) `23b0de233e1a`
+- [/system/default-configuration](docs/cli-reference/system/default-configuration.md) `2c4e2cdff49b`
+- [/system/default-configuration/caps-mode-script](docs/cli-reference/system/default-configuration/caps-mode-script.md) `d048f2966d96`
+- [/system/default-configuration/custom-script](docs/cli-reference/system/default-configuration/custom-script.md) `38f5e1031b5d`
+- [/system/default-configuration/script](docs/cli-reference/system/default-configuration/script.md) `9439389f0538`
+- [/system/default-configuration/wps-sync-mode-script](docs/cli-reference/system/default-configuration/wps-sync-mode-script.md) `f54b91378288`
+- [/system/device-mode](docs/cli-reference/system/device-mode.md) `b90d3fb472da`
+- [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `15ceb3cadebe`
+- [/system/gps](docs/cli-reference/system/gps.md) `8f8fed59f131`
+- [/system/gps/monitor](docs/cli-reference/system/gps/monitor.md) `403a982bce5f`
+- [/system/health](docs/cli-reference/system/health.md) `25dfed9745bc`
+- [/system/health/settings](docs/cli-reference/system/health/settings.md) `cbbf3d1aaafa`
+- [/system/health/settings/detect-fans](docs/cli-reference/system/health/settings/detect-fans.md) `fe180bbd4d2e`
+- [/system/history](docs/cli-reference/system/history.md) `d6acdfff6b5e`
+- [/system/identity](docs/cli-reference/system/identity.md) `e8b081373727`
+- [/system/keymat-provider](docs/cli-reference/system/keymat-provider.md) `3cae65eb767f`
+- [/system/keymat-provider/qkd-get-key-with-ids](docs/cli-reference/system/keymat-provider/qkd-get-key-with-ids.md) `10b7803edf44`
+- [/system/keymat-provider/qkd-get-key](docs/cli-reference/system/keymat-provider/qkd-get-key.md) `1ddc56a95290`
+- [/system/keymat-provider/qkd-get-status](docs/cli-reference/system/keymat-provider/qkd-get-status.md) `07d42f3a3d90`
+- [/system/leds](docs/cli-reference/system/leds.md) `209cbea2c467`
+- [/system/leds/settings](docs/cli-reference/system/leds/settings.md) `7e67b2863859`
+- [/system/license](docs/cli-reference/system/license.md) `94d899f5fa48`
+- [/system/license/generate-new-id](docs/cli-reference/system/license/generate-new-id.md) `641b3741d977`
+- [/system/license/output](docs/cli-reference/system/license/output.md) `d988924b9dd5`
+- [/system/license/renew](docs/cli-reference/system/license/renew.md) `1637c4f414ed`
+- [/system/logging](docs/cli-reference/system/logging.md) `b9d29a473dc6`
+- [/system/logging/action](docs/cli-reference/system/logging/action.md) `867bde44fcef`
+- [/system/logging/action/clear](docs/cli-reference/system/logging/action/clear.md) `b969b980f94f`
+- [/system/note](docs/cli-reference/system/note.md) `3fabbab23d33`
+- [/system/ntp/client](docs/cli-reference/system/ntp/client.md) `bdd170a4b769`
+- [/system/ntp/client/reset-freq-drift](docs/cli-reference/system/ntp/client/reset-freq-drift.md) `fe73dff7bd0b`
+- [/system/ntp/client/servers](docs/cli-reference/system/ntp/client/servers.md) `9e9ba2f3ac08`
+- [/system/ntp/key](docs/cli-reference/system/ntp/key.md) `7596bb288612`
+- [/system/ntp/monitor-peers](docs/cli-reference/system/ntp/monitor-peers.md) `12553c7a7407`
+- [/system/ntp/server](docs/cli-reference/system/ntp/server.md) `2158747cb9c1`
+- [/system/package](docs/cli-reference/system/package.md) `802632d6f747`
+- [/system/package/apply-changes](docs/cli-reference/system/package/apply-changes.md) `aabbe4e86b70`
+- [/system/package/disable](docs/cli-reference/system/package/disable.md) `f7387651ecfc`
+- [/system/package/downgrade](docs/cli-reference/system/package/downgrade.md) `f244a2d97506`
+- [/system/package/enable](docs/cli-reference/system/package/enable.md) `fe3c3b9b4be6`
+- [/system/package/local-update](docs/cli-reference/system/package/local-update.md) `01751ead949c`
+- [/system/package/local-update/download-all](docs/cli-reference/system/package/local-update/download-all.md) `fdf7e129f8b4`
+- [/system/package/local-update/download](docs/cli-reference/system/package/local-update/download.md) `a0a739658eae`
+- [/system/package/local-update/mirror](docs/cli-reference/system/package/local-update/mirror.md) `c3add4a21480`
+- [/system/package/local-update/mirror/force-check](docs/cli-reference/system/package/local-update/mirror/force-check.md) `d545c1519799`
+- [/system/package/local-update/refresh](docs/cli-reference/system/package/local-update/refresh.md) `c12bc5a1cbde`
+- [/system/package/local-update/update-package-source](docs/cli-reference/system/package/local-update/update-package-source.md) `1c64c8db1b1e`
+- [/system/package/uninstall](docs/cli-reference/system/package/uninstall.md) `e2c6b5d35803`
+- [/system/package/unschedule](docs/cli-reference/system/package/unschedule.md) `59c9d422cc23`
+- [/system/package/update](docs/cli-reference/system/package/update.md) `c6320a14e787`
+- [/system/package/update/cancel](docs/cli-reference/system/package/update/cancel.md) `98661128dba4`
+- [/system/package/update/check-for-updates](docs/cli-reference/system/package/update/check-for-updates.md) `a1ee0aad0846`
+- [/system/package/update/download](docs/cli-reference/system/package/update/download.md) `480d9f619597`
+- [/system/package/update/install](docs/cli-reference/system/package/update/install.md) `e67d2ba60a3b`
+- [/system/ptp](docs/cli-reference/system/ptp.md) `1822e7da8040`
+- [/system/ptp/monitor](docs/cli-reference/system/ptp/monitor.md) `a24cdb9d08dc`
+- [/system/ptp/port](docs/cli-reference/system/ptp/port.md) `a8cbff452f16`
+- [/system/ptp/status](docs/cli-reference/system/ptp/status.md) `2b4449404cba`
+- [/system/reboot](docs/cli-reference/system/reboot.md) `7c0dac4cb6f0`
+- [/system/regulatory](docs/cli-reference/system/regulatory.md) `b2fec9e67ae9`
+- [/system/reset-configuration](docs/cli-reference/system/reset-configuration.md) `df8de202f002`
+- [/system/resource](docs/cli-reference/system/resource.md) `f6eda5d54413`
+- [/system/resource/cpu](docs/cli-reference/system/resource/cpu.md) `52555926c6d5`
+- [/system/resource/hardware](docs/cli-reference/system/resource/hardware.md) `8264866836e7`
+- [/system/resource/hardware/authorize](docs/cli-reference/system/resource/hardware/authorize.md) `933101f7d4ee`
+- [/system/resource/hardware/usb-power-reset](docs/cli-reference/system/resource/hardware/usb-power-reset.md) `b949809201a5`
+- [/system/resource/hardware/usb-settings](docs/cli-reference/system/resource/hardware/usb-settings.md) `391c0309a617`
+- [/system/resource/irq](docs/cli-reference/system/resource/irq.md) `04b369b71df8`
+- [/system/resource/irq/rps](docs/cli-reference/system/resource/irq/rps.md) `da53d886e6f3`
+- [/system/resource/monitor](docs/cli-reference/system/resource/monitor.md) `6ad05c8d1339`
+- [/system/routerboard](docs/cli-reference/system/routerboard.md) `16370c3684d3`
+- [/system/routerboard/mode-button](docs/cli-reference/system/routerboard/mode-button.md) `dd7fe8f121ad`
+- [/system/routerboard/reset-button](docs/cli-reference/system/routerboard/reset-button.md) `62ab8a93514e`
+- [/system/routerboard/settings](docs/cli-reference/system/routerboard/settings.md) `a607916edccc`
+- [/system/routerboard/settings/keep-frequency](docs/cli-reference/system/routerboard/settings/keep-frequency.md) `6b19237d29c4`
+- [/system/routerboard/upgrade](docs/cli-reference/system/routerboard/upgrade.md) `5c39a5eed501`
+- [/system/routerboard/usb](docs/cli-reference/system/routerboard/usb.md) `3c86e722b4e0`
+- [/system/routerboard/usb/power-reset](docs/cli-reference/system/routerboard/usb/power-reset.md) `f71f844dc345`
+- [/system/routerboard/wps-button](docs/cli-reference/system/routerboard/wps-button.md) `f02ef9e1bd9c`
+- [/system/rtrace](docs/cli-reference/system/rtrace.md) `c13b2ce23071`
+- [/system/rtrace/start](docs/cli-reference/system/rtrace/start.md) `3fe7d3837781`
+- [/system/rtrace/stop](docs/cli-reference/system/rtrace/stop.md) `8dfd9fe06659`
+- [/system/scheduler](docs/cli-reference/system/scheduler.md) `234ac0fc2a0d`
+- [/system/script](docs/cli-reference/system/script.md) `785ae141cac6`
+- [/system/script/environment](docs/cli-reference/system/script/environment.md) `da6c23e2cdf4`
+- [/system/script/job](docs/cli-reference/system/script/job.md) `631100894afa`
+- [/system/serial-terminal](docs/cli-reference/system/serial-terminal.md) `78c7e667a04e`
+- [/system/shutdown](docs/cli-reference/system/shutdown.md) `e4c2467635d7`
+- [/system/ssh-exec](docs/cli-reference/system/ssh-exec.md) `8570b840ceed`
+- [/system/ssh](docs/cli-reference/system/ssh.md) `1a24c1e94214`
+- [/system/sup-output](docs/cli-reference/system/sup-output.md) `68b8e9493ac2`
+- [/system/swos](docs/cli-reference/system/swos.md) `cad9f838dec6`
+- [/system/swos/load-config](docs/cli-reference/system/swos/load-config.md) `b542bb16e422`
+- [/system/swos/password](docs/cli-reference/system/swos/password.md) `d55c3f5bbff2`
+- [/system/swos/reset-config](docs/cli-reference/system/swos/reset-config.md) `2d9e995ed0e0`
+- [/system/swos/save-config](docs/cli-reference/system/swos/save-config.md) `ad6d94d7156e`
+- [/system/swos/upgrade](docs/cli-reference/system/swos/upgrade.md) `317c2a19d38d`
+- [/system/telnet](docs/cli-reference/system/telnet.md) `2eedff7c091c`
+- [/system/ups](docs/cli-reference/system/ups.md) `9722a001b4ee`
+- [/system/ups/beep](docs/cli-reference/system/ups/beep.md) `709c2f04b4fd`
+- [/system/ups/monitor](docs/cli-reference/system/ups/monitor.md) `d9128ccff3d1`
+- [/system/ups/rtc](docs/cli-reference/system/ups/rtc.md) `48b8e102440f`
+- [/system/ups/self-test](docs/cli-reference/system/ups/self-test.md) `b270037cf352`
+- [/system/watchdog](docs/cli-reference/system/watchdog.md) `26b992bfaa74`
+- [/task](docs/cli-reference/task.md) `e331be20a3f5`
+- [/task/add](docs/cli-reference/task/add.md) `b5ddf3544eaf`
+- [/task/next](docs/cli-reference/task/next.md) `8c529f12b1a9`
+- [/task/terminate](docs/cli-reference/task/terminate.md) `037636186dd7`
+- [/tool/apptraffic](docs/cli-reference/tool/apptraffic.md) `a8d42387856e`
+- [/tool/apptraffic/stats](docs/cli-reference/tool/apptraffic/stats.md) `66e9d70d4e73`
+- [/tool/apptraffic/stats/categories](docs/cli-reference/tool/apptraffic/stats/categories.md) `c8a51fc8ba26`
+- [/tool/apptraffic/stats/clear](docs/cli-reference/tool/apptraffic/stats/clear.md) `cc74022c3727`
+- [/tool/bandwidth-server](docs/cli-reference/tool/bandwidth-server.md) `ee826ce259ed`
+- [/tool/bandwidth-server/session](docs/cli-reference/tool/bandwidth-server/session.md) `7d0241db0b2f`
+- [/tool/bandwidth-test](docs/cli-reference/tool/bandwidth-test.md) `062e5c5c51db`
+- [/tool/calea](docs/cli-reference/tool/calea.md) `a0da6a9ad441`
+- [/tool/dns-update](docs/cli-reference/tool/dns-update.md) `23e3b03d89ef`
+- [/tool/e-mail](docs/cli-reference/tool/e-mail.md) `57c13e2d31f0`
+- [/tool/e-mail/send](docs/cli-reference/tool/e-mail/send.md) `0a11c2036703`
+- [/tool/fetch](docs/cli-reference/tool/fetch.md) `104f7e3e6eda`
+- [/tool/flood-ping](docs/cli-reference/tool/flood-ping.md) `1b212e2b16d1`
+- [/tool/graphing](docs/cli-reference/tool/graphing.md) `a4fc368b88be`
+- [/tool/graphing/interface](docs/cli-reference/tool/graphing/interface.md) `95dc70ad6258`
+- [/tool/graphing/queue](docs/cli-reference/tool/graphing/queue.md) `af44b8e87786`
+- [/tool/graphing/resource](docs/cli-reference/tool/graphing/resource.md) `4659e7c99d10`
+- [/tool/ip-scan](docs/cli-reference/tool/ip-scan.md) `be497a401c08`
+- [/tool/mac-scan](docs/cli-reference/tool/mac-scan.md) `741876c1f6fa`
+- [/tool/mac-server](docs/cli-reference/tool/mac-server.md) `568a654bf393`
+- [/tool/mac-server/mac-winbox](docs/cli-reference/tool/mac-server/mac-winbox.md) `f59e47a2fb78`
+- [/tool/mac-server/ping](docs/cli-reference/tool/mac-server/ping.md) `9061dd693936`
+- [/tool/mac-server/sessions](docs/cli-reference/tool/mac-server/sessions.md) `40890a5f1282`
+- [/tool/mac-telnet](docs/cli-reference/tool/mac-telnet.md) `3f22130478b2`
+- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `d46ea5639ad4`
+- [/tool/ping-speed](docs/cli-reference/tool/ping-speed.md) `a9642af639ea`
+- [/tool/ping](docs/cli-reference/tool/ping.md) `863cbc1bab4f`
+- [/tool/profile](docs/cli-reference/tool/profile.md) `d53e03d9c273`
+- [/tool/romon](docs/cli-reference/tool/romon.md) `2ab76c3711bc`
+- [/tool/romon/discover](docs/cli-reference/tool/romon/discover.md) `13a9275f28ec`
+- [/tool/romon/ping](docs/cli-reference/tool/romon/ping.md) `973eaab096f6`
+- [/tool/romon/port](docs/cli-reference/tool/romon/port.md) `4074898f7be7`
+- [/tool/romon/ssh](docs/cli-reference/tool/romon/ssh.md) `922edb5e1165`
+- [/tool/sms](docs/cli-reference/tool/sms.md) `40b577cb55ff`
+- [/tool/sms/inbox](docs/cli-reference/tool/sms/inbox.md) `567bb47495de`
+- [/tool/sms/send](docs/cli-reference/tool/sms/send.md) `cbc23ef7c6e5`
+- [/tool/sniffer](docs/cli-reference/tool/sniffer.md) `b4bf81e2db99`
+- [/tool/sniffer/connection](docs/cli-reference/tool/sniffer/connection.md) `f8c59fd505d0`
+- [/tool/sniffer/host](docs/cli-reference/tool/sniffer/host.md) `2de93b5a505e`
+- [/tool/sniffer/packet](docs/cli-reference/tool/sniffer/packet.md) `0359eac69dfd`
+- [/tool/sniffer/protocol](docs/cli-reference/tool/sniffer/protocol.md) `ff0ed90f60d1`
+- [/tool/sniffer/quick](docs/cli-reference/tool/sniffer/quick.md) `3ae667013ac1`
+- [/tool/sniffer/save](docs/cli-reference/tool/sniffer/save.md) `643c32bc0af6`
+- [/tool/sniffer/start](docs/cli-reference/tool/sniffer/start.md) `1740e0acea1c`
+- [/tool/sniffer/stop](docs/cli-reference/tool/sniffer/stop.md) `bd9c318f24fa`
+- [/tool/snmp-get](docs/cli-reference/tool/snmp-get.md) `8b00b75006c1`
+- [/tool/snmp-walk](docs/cli-reference/tool/snmp-walk.md) `e95cdf70488c`
+- [/tool/speed-test](docs/cli-reference/tool/speed-test.md) `af925141f480`
+- [/tool/torch](docs/cli-reference/tool/torch.md) `9434224495ba`
+- [/tool/traceroute](docs/cli-reference/tool/traceroute.md) `960be20bd575`
+- [/tool/traffic-generator](docs/cli-reference/tool/traffic-generator.md) `b7cb4d494725`
+- [/tool/traffic-generator/inject-pcap](docs/cli-reference/tool/traffic-generator/inject-pcap.md) `13737888d8a2`
+- [/tool/traffic-generator/inject](docs/cli-reference/tool/traffic-generator/inject.md) `055f4bdb6e37`
+- [/tool/traffic-generator/packet-template](docs/cli-reference/tool/traffic-generator/packet-template.md) `75a3bd1d93d8`
+- [/tool/traffic-generator/port](docs/cli-reference/tool/traffic-generator/port.md) `3e34eea67bfc`
+- [/tool/traffic-generator/quick](docs/cli-reference/tool/traffic-generator/quick.md) `eca35199ba9d`
+- [/tool/traffic-generator/raw-packet-template](docs/cli-reference/tool/traffic-generator/raw-packet-template.md) `7bc8bcc204f7`
+- [/tool/traffic-generator/start](docs/cli-reference/tool/traffic-generator/start.md) `31f694260bcb`
+- [/tool/traffic-generator/stats/latency-distribution](docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md) `2ca63566ab66`
+- [/tool/traffic-generator/stats/port](docs/cli-reference/tool/traffic-generator/stats/port.md) `c7e3059bb3d3`
+- [/tool/traffic-generator/stats/raw](docs/cli-reference/tool/traffic-generator/stats/raw.md) `252c1bc8b338`
+- [/tool/traffic-generator/stats/stream](docs/cli-reference/tool/traffic-generator/stats/stream.md) `d54d8af4c67e`
+- [/tool/traffic-generator/stop](docs/cli-reference/tool/traffic-generator/stop.md) `5343f3c43504`
+- [/tool/traffic-generator/stream](docs/cli-reference/tool/traffic-generator/stream.md) `400475763808`
+- [/tool/traffic-monitor](docs/cli-reference/tool/traffic-monitor.md) `a7af9715161b`
+- [/tool/wol](docs/cli-reference/tool/wol.md) `1f14fc2d2f5a`
+- [/tr069-client](docs/cli-reference/tr069-client.md) `9d04ecc3b23c`
+- [/tr069-client/reset-tr069-config](docs/cli-reference/tr069-client/reset-tr069-config.md) `993d7977d027`
+- [/undo](docs/cli-reference/undo.md) `c657ae47abdc`
+- [/user-manager](docs/cli-reference/user-manager.md) `30fdd9d7943c`
+- [/user-manager/advanced](docs/cli-reference/user-manager/advanced.md) `12a76069c2e5`
+- [/user-manager/attribute](docs/cli-reference/user-manager/attribute.md) `aa755908f1ca`
+- [/user-manager/database](docs/cli-reference/user-manager/database.md) `b9446ff381a4`
+- [/user-manager/database/load](docs/cli-reference/user-manager/database/load.md) `292c7600c654`
+- [/user-manager/database/migrate-legacy-db](docs/cli-reference/user-manager/database/migrate-legacy-db.md) `3081c97a11ed`
+- [/user-manager/database/optimize-db](docs/cli-reference/user-manager/database/optimize-db.md) `b418d898582a`
+- [/user-manager/database/save](docs/cli-reference/user-manager/database/save.md) `a9d25165492b`
+- [/user-manager/generate-report](docs/cli-reference/user-manager/generate-report.md) `7ad32b347cd5`
+- [/user-manager/limitation](docs/cli-reference/user-manager/limitation.md) `641512146bb5`
+- [/user-manager/monitor](docs/cli-reference/user-manager/monitor.md) `6d4d000ad878`
+- [/user-manager/payment](docs/cli-reference/user-manager/payment.md) `c756c75736d9`
+- [/user-manager/profile-limitation](docs/cli-reference/user-manager/profile-limitation.md) `64614507789e`
+- [/user-manager/profile](docs/cli-reference/user-manager/profile.md) `468dca21a862`
+- [/user-manager/router](docs/cli-reference/user-manager/router.md) `ddc025c07dfb`
+- [/user-manager/router/monitor](docs/cli-reference/user-manager/router/monitor.md) `f731a50ac53f`
+- [/user-manager/router/reset-counters](docs/cli-reference/user-manager/router/reset-counters.md) `df6ac94ab917`
+- [/user-manager/session](docs/cli-reference/user-manager/session.md) `2e819ba56783`
+- [/user-manager/session/close-session](docs/cli-reference/user-manager/session/close-session.md) `7613a6c5b4a8`
+- [/user-manager/user-profile](docs/cli-reference/user-manager/user-profile.md) `9013283ec0bb`
+- [/user-manager/user-profile/activate-user-profile](docs/cli-reference/user-manager/user-profile/activate-user-profile.md) `5070fbf972b1`
+- [/user-manager/user](docs/cli-reference/user-manager/user.md) `c0c95f30f6ae`
+- [/user-manager/user/add-batch-users](docs/cli-reference/user-manager/user/add-batch-users.md) `6e1de73d2943`
+- [/user-manager/user/generate-voucher](docs/cli-reference/user-manager/user/generate-voucher.md) `7bdc8fb17dad`
+- [/user-manager/user/group](docs/cli-reference/user-manager/user/group.md) `a2c32ebf8211`
+- [/user-manager/user/monitor](docs/cli-reference/user-manager/user/monitor.md) `63f70488eecc`
+- [/user](docs/cli-reference/user.md) `5cf8ebbb38b0`
+- [/user/aaa](docs/cli-reference/user/aaa.md) `56bc134b8afd`
+- [/user/active](docs/cli-reference/user/active.md) `60fda5842d54`
+- [/user/expire-password](docs/cli-reference/user/expire-password.md) `e16bbf9602fd`
+- [/user/group](docs/cli-reference/user/group.md) `57cd4e9da8df`
+- [/user/settings](docs/cli-reference/user/settings.md) `8dd866c9469e`
+- [/user/ssh-keys](docs/cli-reference/user/ssh-keys.md) `d7d49cd48f94`
+- [/user/ssh-keys/import](docs/cli-reference/user/ssh-keys/import.md) `59a016593824`
+- [/user/ssh-keys/private](docs/cli-reference/user/ssh-keys/private.md) `8906370a3e2c`
+- [/user/ssh-keys/private/import](docs/cli-reference/user/ssh-keys/private/import.md) `5458de277e9c`
+- [/zerotier](docs/cli-reference/zerotier.md) `c29193bf230c`
+- [/zerotier/controller](docs/cli-reference/zerotier/controller.md) `232d45ccd320`
+- [/zerotier/controller/member](docs/cli-reference/zerotier/controller/member.md) `eb6133ccb8bc`
+- [/zerotier/interface](docs/cli-reference/zerotier/interface.md) `60f970a40438`
+- [/zerotier/peer](docs/cli-reference/zerotier/peer.md) `b0a980eca26b`
+- [/zerotier/peer/hint](docs/cli-reference/zerotier/peer/hint.md) `e7651d2f1df5`
+- [Container](docs/containers.md) `7ec652bf8fd7`
+- [Apps](docs/containers/apps.md) `4822b560ebb3`
+- [List of available Apps](docs/containers/apps/available-apps.md) `b8d97c9264da`
+- [Pair Claire with Home Assistant on hAP beÂ³ Media](docs/containers/user-guides/claire-homeassistant.md) `fa1f01ea8765`
+- [Container - freeradius server](docs/containers/user-guides/container-freeradius-server.md) `06382d817af5`
+- [Container - HAProxy](docs/containers/user-guides/container-haproxy.md) `5b5e6ddc70e9`
+- [Container - HomeAssistant](docs/containers/user-guides/container-homeassistant.md) `57c5d435e267`
+- [Container - Matrix (Synapse)](docs/containers/user-guides/container-matrix-synapse.md) `c5d5f294f52d`
+- [Container - mosquitto MQTT server](docs/containers/user-guides/container-mosquitto-mqtt-server.md) `4fb29d1c7bd5`
+- [Container - Postgres](docs/containers/user-guides/container-postgres.md) `5f4275a37f44`
+- [Container - ThingsBoard MQTT/HTTP server](docs/containers/user-guides/container-thingsboard-mqtt-http-server.md) `a4dd608d0558`
+- [VETH](docs/containers/veth.md) `188f661131f7`
+- [Developer Guides](docs/developer-guides.md) `6d2cd691b4f0`
+- [API](docs/developer-guides/api.md) `1c158af4fe1e`
+- [Python3 Example](docs/developer-guides/api/python3-example.md) `8130b21f5271`
+- [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
+- [Scripting](docs/developer-guides/scripting.md) `1a9269410b63`
+- [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `20526f530694`
+- [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `11b0bbbb7989`
+- [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
+- [Bandwidth test](docs/diagnostics-monitoring-and-troubleshooting/bandwidth-test.md) `0db5fcd82074`
+- [Detect Internet](docs/diagnostics-monitoring-and-troubleshooting/detect-internet.md) `0bd628a65463`
+- [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `0265391647a1`
+- [DNS update](docs/diagnostics-monitoring-and-troubleshooting/dynamic-dns.md) `cc242fcb4e80`
+- [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
+- [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `50fda08234ce`
+- [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `ee82bfa57019`
+- [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `f64d56a041f2`
+- [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
+- [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `34e4ee660426`
+- [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `f6de0b02c4c3`
+- [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `2e65908aa00a`
+- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `f77f6b98b532`
+- [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
+- [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
+- [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `a645e319c30f`
+- [Resource](docs/diagnostics-monitoring-and-troubleshooting/resource.md) `8a6b4793b991`
+- [SNMP](docs/diagnostics-monitoring-and-troubleshooting/snmp.md) `059a04269947`
+- [Speed Test](docs/diagnostics-monitoring-and-troubleshooting/speed-test.md) `db838309dc20`
+- [Torch](docs/diagnostics-monitoring-and-troubleshooting/torch.md) `cb819e03c33b`
+- [Traceroute](docs/diagnostics-monitoring-and-troubleshooting/traceroute.md) `d3fab637c39f`
+- [Traffic Flow](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md) `acf3a36e9636`
+- [NetFlow analysis with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md) `159123bccd08`
+- [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `4445b3d6f291`
+- [Watchdog](docs/diagnostics-monitoring-and-troubleshooting/watchdog.md) `cfa0097ec733`
+- [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `1b12f5885941`
+- [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `6ab6c5b43569`
+- [Firewall](docs/firewall-and-quality-of-service/firewall.md) `dfc0407bb1ad`
+- [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a9883ddfaab1`
+- [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `34389ca56b9b`
+- [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `a5a7a777eb06`
+- [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `fa803d9a0c54`
+- [Mangle](docs/firewall-and-quality-of-service/firewall/mangle.md) `3e2f19250e8d`
+- [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
+- [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
+- [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `bd4325702588`
+- [Queues](docs/firewall-and-quality-of-service/queues.md) `1df41f5f9723`
+- [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `11546cfc0044`
+- [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `2654133b74d5`
+- [Queue Burst](docs/firewall-and-quality-of-service/queues/queue-burst.md) `0d9f5551f49f`
+- [Queue size](docs/firewall-and-quality-of-service/queues/queue-size.md) `819af2a73a29`
+- [Queue types](docs/firewall-and-quality-of-service/queues/queue-types.md) `9d3abca71d59`
+- [CAKE](docs/firewall-and-quality-of-service/queues/queue-types/cake.md) `345741a92cdf`
+- [PFIFO,BFIFO](docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md) `40358a1696dd`
+- [UPnP](docs/firewall-and-quality-of-service/upnp.md) `f54adefa8b3d`
+- [Firewall and QoS Case Studies](docs/firewall-and-quality-of-service/user-guides.md) `a7386d01da90`
+- [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `c112c2785a40`
+- [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `aec9b9732524`
+- [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `4c2276a4d875`
+- [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `2d4b362ea4b5`
+- [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
+- [Configuration Management](docs/getting-started/configuration-management.md) `26ea4017a207`
+- [Backup](docs/getting-started/configuration-management/backup.md) `4cff48470879`
+- [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `fb6534eeba8c`
+- [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `b147d93e9dcd`
+- [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `17dbd8d42e83`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
 - [CHR: Installation](docs/getting-started/installation-and-upgrade/install/chr-installation.md) `0660f15b38dc`
+- [CHR: AWS Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/aws.md) `e38dec1c2072`
+- [CHR: VMWare ESXi Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/esxi.md) `8ac030d14217`
+- [CHR: Hetzner Cloud Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/hetzner.md) `4e11782a105f`
+- [CHR: Hyper-V Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/hyperv.md) `f3f44a0a8349`
+- [CHR: Proxmox VE Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/proxmox.md) `addafff1bd61`
+- [CHR: Troubleshooting](docs/getting-started/installation-and-upgrade/install/chr-installation/troubleshooting.md) `a2199c155796`
+- [CHR: VirtualBox Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/virtualbox.md) `70b5cd529662`
+- [CHR: Vultr Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/vultr.md) `7a0daae9db28`
+- [x86 Installation](docs/getting-started/installation-and-upgrade/install/x86-installation.md) `104ce80ee421`
+- [Netinstall](docs/getting-started/installation-and-upgrade/netinstall.md) `f6e39420cea3`
+- [Netinstall for Linux](docs/getting-started/installation-and-upgrade/netinstall/netinstall-linux.md) `59581b941367`
+- [Netinstall package](docs/getting-started/installation-and-upgrade/netinstall/netinstall-package.md) `83d76c780e49`
+- [Netinstall for Windows](docs/getting-started/installation-and-upgrade/netinstall/netinstall-windows.md) `6cdd02503856`
+- [Packages](docs/getting-started/installation-and-upgrade/packages.md) `a87ae6145041`
+- [RouterBOOT](docs/getting-started/installation-and-upgrade/routerboot.md) `4421c390ae2b`
+- [Upgrade](docs/getting-started/installation-and-upgrade/upgrade.md) `0856202de3fd`
 - [Manual Network Setup (No Default Configuration)](docs/getting-started/manual-network-setup.md) `b81f9c607125`
 - [Networking Fundamentals](docs/getting-started/networking-fundamentals.md) `917b5ac55299`
 - [IPv6 Addresses](docs/getting-started/networking-fundamentals/ipv6-addresses.md) `94be12b6cde0`
 - [IPv6 Neighbor Discovery](docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md) `710426742e98`
+- [RouterOS License Keys](docs/getting-started/routeros-licensing.md) `de36dbf8ce17`
+- [Cloud Hosted Router, CHR](docs/getting-started/routeros-licensing/chr.md) `0bcd31a4cd70`
+- [CHR: Licensing](docs/getting-started/routeros-licensing/chr/chr-licensing.md) `e0eb272d014f`
+- [MikroTik Hardware Licensing](docs/getting-started/routeros-licensing/mikrotik-hardware.md) `e49cea0c6f0b`
+- [x86 Licensing](docs/getting-started/routeros-licensing/x86.md) `6a05ba586215`
 - [Securing your router](docs/getting-started/securing-your-router.md) `0fbb40e2a923`
+- [Software Specifications](docs/getting-started/software-specifications.md) `2c9f2d329c32`
+- [Feature support based on architecture](docs/getting-started/software-specifications/feature-support-based-on-architecture.md) `6f63c766792f`
+- [Supout.rif](docs/getting-started/supout-rif.md) `b97bf397987a`
+- [Upgrading to v7](docs/getting-started/upgrading-to-v7.md) `cd1193596f52`
+- [Hardware](docs/hardware.md) `dc40fe2dedcc`
+- [Disks](docs/hardware/disks.md) `d7605362042a`
+- [S.M.A.R.T. info](docs/hardware/disks/smart.md) `5e49180ccb83`
+- [Grounding](docs/hardware/grounding.md) `db88ceb6857c`
+- [LCD Touchscreen](docs/hardware/lcd-touchscreen.md) `0815e06cfe11`
+- [LEDs](docs/hardware/leds.md) `1f3ef930b395`
+- [MTU in RouterOS](docs/hardware/mtu-in-routeros.md) `c546f3da880a`
+- [Peripherals](docs/hardware/peripherals.md) `449d8eb09ad5`
+- [PoE-Out](docs/hardware/poe-out.md) `cc66429d8b2f`
+- [Ports](docs/hardware/ports.md) `57be74b6b121`
+- [Product Naming](docs/hardware/product-naming.md) `146063d0b48b`
+- [RouterBOARD](docs/hardware/routerboard.md) `da12d1d070ab`
+- [S+RJ10 general guidance](docs/hardware/s-plus-rj10-general-guidance.md) `8ee401bde01e`
+- [Try Before RMA](docs/hardware/try-before-rma.md) `720e1b72cbd9`
+- [USB Features](docs/hardware/usb-features.md) `ebadd3a1ed08`
+- [High Availability Solutions](docs/high-availability-solutions.md) `8b14eea47d66`
+- [Bonding](docs/high-availability-solutions/bonding.md) `b40619919f25`
+- [Load Balancing](docs/high-availability-solutions/load-balancing.md) `182c27a3b77b`
+- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `36a5c389a4b4`
+- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `9a658aaa58d9`
+- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `24720d3f18f1`
+- [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
+- [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `047977ef8412`
+- [VRRP](docs/high-availability-solutions/vrrp.md) `cb3ff5d085a1`
+- [Internet of Things](docs/internet-of-things.md) `345029d5fceb`
+- [Bluetooth](docs/internet-of-things/bluetooth.md) `d699afba1d02`
+- [MikroTik Beacon Manager](docs/internet-of-things/bluetooth/mikrotik-beacon-manager.md) `d2eb11a878b9`
+- [MikroTik Beacon Manager for Android devices](docs/internet-of-things/bluetooth/mikrotik-beacon-manager/mikrotik-beacon-manager-android-devices.md) `2dd6f0abd286`
+- [MikroTik Beacon Manager for iOS devices](docs/internet-of-things/bluetooth/mikrotik-beacon-manager/mikrotik-beacon-manager-for-ios-devices.md) `843a699362b5`
+- [MikroTik Bluetooth TG-BT5-XX tag changelog](docs/internet-of-things/bluetooth/mikrotik-beacon-manager/mikrotik-bluetooth-tg-bt5-xx-tag.md) `395c1be48c0a`
+- [MikroTik Tag advertisement formats](docs/internet-of-things/bluetooth/mikrotik-beacon-manager/mikrotik-tag-advertisement-formats.md) `6ecd39b9696d`
+- [Bluetooth tag-tracking using MQTT and ThingsBoard](docs/internet-of-things/bluetooth/user-guides/bluetooth-tag-tracking-mqtt-thingsboard.md) `b24ba5ae48e8`
+- [Email notification on the MikroTik BLE tag's accelerometer triggers](docs/internet-of-things/bluetooth/user-guides/email-notification-mikrotik-ble-tag-s.md) `cf73d591af13`
+- [HTTPS post and Azure configuration](docs/internet-of-things/bluetooth/user-guides/https-post-and-azure-configuration.md) `26097ba24e79`
+- [IFTTT app notifications on BLE tag appearance in KNOT's range](docs/internet-of-things/bluetooth/user-guides/ifttt-app-notifications-ble-tag.md) `c8f4a19b6519`
+- [MQTT and Azure configuration](docs/internet-of-things/bluetooth/user-guides/mqtt-and-azure-configuration.md) `7411b0aa3be5`
+- [MQTT/HTTPS and AWS configuration](docs/internet-of-things/bluetooth/user-guides/mqtt-https-and-aws-configuration.md) `8ccd4c71c94d`
+- [Sending temperature readings from the TG-BT5-OUT tag to ThingsBoard](docs/internet-of-things/bluetooth/user-guides/sending-temperature-readings-from-tg.md) `fde82d83751c`
+- [GPIO](docs/internet-of-things/gpio.md) `17a1f8c38974`
+- [Using the GPIO as pulse input from a meter device](docs/internet-of-things/gpio/using-gpio-as-pulse-input-from-meter.md) `ebcdd683bf3f`
+- [Lora](docs/internet-of-things/lora.md) `4024fd7ea0e8`
+- [General Properties](docs/internet-of-things/lora/general-properties.md) `24df2be70ca5`
+- [User Guides](docs/internet-of-things/lora/user-guides.md) `66e80fe7e41e`
+- [AWS LoRaWAN configuration](docs/internet-of-things/lora/user-guides/aws-lorawan-configuration.md) `5031df37ec30`
+- [ChirpStack](docs/internet-of-things/lora/user-guides/chirpstack.md) `15a4bd1b157e`
+- [Step by step installation](docs/internet-of-things/lora/user-guides/step-by-step-installation.md) `ed4383ae11c7`
+- [TG-LR setup guide](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `856ed0878376`
+- [The Things Stack](docs/internet-of-things/lora/user-guides/the-things-stack.md) `170871bf71d5`
+- [Modbus](docs/internet-of-things/modbus.md) `fb03d1372638`
+- [MQTT](docs/internet-of-things/mqtt.md) `38e9d2c599fa`
+- [Kaa IoT setup](docs/internet-of-things/mqtt/kaa-iot-setup.md) `ce400fcb5fed`
+- [MQTT and ThingsBoard configuration](docs/internet-of-things/mqtt/mqtt-and-thingsboard-configuration.md) `3a672eceb2a9`
+- [Wiliot](docs/internet-of-things/wiliot.md) `5352c1b01bbe`
 - [Introduction](docs/introduction.md) `3953044df5d5`
+- [Management Tools](docs/management-tools.md) `b5508836446b`
+- [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
+- [CMR](docs/management-tools/cmr.md) `35dcd232c392`
+- [CMR-Client](docs/management-tools/cmr/client.md) `59c7a03b3b03`
+- [Console](docs/management-tools/console.md) `55964efcaf71`
+- [Dude](docs/management-tools/dude.md) `b29b19f874f5`
+- [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
+- [MAC server](docs/management-tools/mac-server.md) `a8e56d47c9f4`
+- [MikroTik mobile app](docs/management-tools/mikrotik-mobile-app.md) `e80dd37a4295`
+- [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
+- [RoMON](docs/management-tools/romon.md) `a7b07c79ac39`
+- [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
+- [SSH](docs/management-tools/ssh.md) `0fbbd5b10ab2`
+- [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
+- [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
+- [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`
+- [WinBox](docs/management-tools/winbox.md) `cc650a169e88`
+- [Mobile Networking](docs/mobile-networking.md) `57faec629ff5`
+- [BG77 modem AT commands](docs/mobile-networking/bg77-modem-at-commands.md) `9a1290367d49`
+- [WWAN and GNSS priority automatization](docs/mobile-networking/bg77-modem-at-commands/wwan-and-gnss-priority-automatization.md) `5dbf2cee94a0`
+- [Dual SIM Application](docs/mobile-networking/dual-sim-application.md) `c5a541a687a6`
+- [GPS](docs/mobile-networking/gps.md) `900a51942f5a`
+- [GPS-tracking using HTTP POST](docs/mobile-networking/gps/gps-tracking-using-http-post.md) `465ccd56b5a6`
+- [GPS-tracking using MQTT and ThingsBoard](docs/mobile-networking/gps/gps-tracking-using-mqtt-and-thingsboard.md) `0b73ad750e45`
+- [LTE/5G](docs/mobile-networking/lte-5g.md) `78ddb23324e0`
+- [MikroTik Connectivity](docs/mobile-networking/mikrotik-connectivity.md) `27e529909722`
+- [PPP](docs/mobile-networking/ppp.md) `a6b8a3a1f7b9`
+- [SMS](docs/mobile-networking/sms.md) `89ba0073e173`
+- [Network Services](docs/network-management.md) `1ec129b3ecc8`
+- [Cloud](docs/network-management/cloud.md) `2393886d1893`
+- [Back To Home](docs/network-management/cloud/back-to-home.md) `ddafd933b2c2`
+- [Cloud backup](docs/network-management/cloud/cloud-backup.md) `c05c2e8c33cb`
+- [Communication with MikroTik Cloud Services](docs/network-management/cloud/communication-mikrotik-cloud-servers.md) `308563d86640`
+- [File Share](docs/network-management/cloud/file-share.md) `85800eebd9f1`
+- [DHCP](docs/network-management/dhcp.md) `be0cc5da9940`
+- [DHCP Client](docs/network-management/dhcp/client.md) `7afe334746f5`
+- [DHCPv6 Client](docs/network-management/dhcp/dhcpv6-client.md) `7503645537b8`
+- [DHCPv6 Server](docs/network-management/dhcp/dhcpv6-server.md) `c389b3aea07c`
+- [DHCP Relay](docs/network-management/dhcp/relay.md) `a6200eedeb60`
+- [DHCP Server](docs/network-management/dhcp/server.md) `993d78ac03a9`
+- [DNS](docs/network-management/dns.md) `6ddff02d0dd8`
+- [Openflow](docs/network-management/openflow.md) `66930df30509`
+- [Proxy](docs/network-management/proxy.md) `9a6f70829eef`
+- [Reverse Proxy](docs/network-management/proxy/reverse-proxy.md) `a5f9b5adc222`
+- [Web Proxy](docs/network-management/proxy/web-proxy.md) `c18bde24b066`
+- [SOCKS](docs/network-management/socks.md) `5088b70b47d3`
+- [Socksify](docs/network-management/socks/socksify.md) `05ede0211b0a`
+- [Storage](docs/storage.md) `e9261f1ccb0b`
+- [index](docs/storage/btrfs.md) `525632bff2b0`
+- [Btrfs maintenance](docs/storage/btrfs/maintenance.md) `f64eef2b7125`
+- [raid](docs/storage/btrfs/raid.md) `4039554bf99b`
+- [Btrfs subvolumes and snapshots](docs/storage/btrfs/snapshots.md) `f5c1ba386891`
+- [DLNA Media Server](docs/storage/dlna.md) `d3f657dad9fb`
+- [Encrypted storage (dm-crypt)](docs/storage/encrypted-storage.md) `e36c462b7c13`
+- [iSCSI](docs/storage/iscsi.md) `839d53d6072c`
+- [NFS](docs/storage/nfs.md) `02407485efd6`
+- [NVMe over TCP](docs/storage/nvme-over-tcp.md) `3f902e4f7cd4`
+- [RAID](docs/storage/raid.md) `eecb01cb2cfd`
+- [Setting a hot spare disk](docs/storage/raid/hot-spare.md) `2bb3709b8c2b`
+- [Moving your RAID array to a different device](docs/storage/raid/moving-array.md) `0dacbe7a8447`
+- [Ramdisk](docs/storage/ramdisk.md) `5acef2166bb5`
+- [Rsync](docs/storage/rsync.md) `5742fd83b554`
+- [Self-encrypting drives (SED)](docs/storage/self-encrypting-drives.md) `87af90024211`
+- [SMB](docs/storage/smb.md) `a8cb0f7d6ed5`
+- [SSHFS](docs/storage/sshfs.md) `0fb374b708e8`
+- [Tmpfs](docs/storage/tmpfs.md) `9bf0010a7fb9`
+- [System Information and Utilities](docs/system-information-and-utilities.md) `caef2ea86a02`
+- [Clock](docs/system-information-and-utilities/clock.md) `002bee56629c`
+- [Device mode](docs/system-information-and-utilities/device-mode.md) `42df7cf3d2ee`
+- [Email](docs/system-information-and-utilities/e-mail.md) `9a48fcce472e`
+- [Fetch](docs/system-information-and-utilities/fetch.md) `7d8f76ce995c`
+- [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`
+- [Identity](docs/system-information-and-utilities/identity.md) `8406769474c7`
+- [IP Packing](docs/system-information-and-utilities/ip-packing.md) `d318e99a766c`
+- [Neighbor Discovery](docs/system-information-and-utilities/neighbor-discovery.md) `faca8b36d693`
+- [Note](docs/system-information-and-utilities/note.md) `867a690d3d73`
+- [NTP](docs/system-information-and-utilities/ntp.md) `b69e9cb7bdfc`
+- [Partitions](docs/system-information-and-utilities/partitions.md) `befa6fd378db`
+- [Precision Time Protocol](docs/system-information-and-utilities/precision-time-protocol.md) `db2fc3515980`
+- [Scheduler](docs/system-information-and-utilities/scheduler.md) `95690cce2374`
+- [Services](docs/system-information-and-utilities/services.md) `f8feaab0e16e`
+- [TFTP](docs/system-information-and-utilities/tftp.md) `d78c41d44619`
+- [UPS](docs/system-information-and-utilities/ups.md) `5a0cf860051f`
+- [Wake on LAN](docs/system-information-and-utilities/wake-on-lan.md) `f4bb45c338f6`
+- [User Guides](docs/user-guides.md) `6ef0c2245008`
+- [Routing and Networking Protocols](docs/user-guides/routing-and-networking-protocols.md) `2d1e920b63dd`
+- [Moving from ROSv6 to ROSv7](docs/user-guides/routing-and-networking-protocols/moving-from-rosv6-to-rosv7.md) `4b7416dfb1b6`
+- [MPLS](docs/user-guides/routing-and-networking-protocols/mpls.md) `c5cd03d99a97`
+- [EXP bit and MPLS Queuing](docs/user-guides/routing-and-networking-protocols/mpls/exp-bit-and-mpls-queuing.md) `967a733c250c`
+- [LDP](docs/user-guides/routing-and-networking-protocols/mpls/ldp.md) `295abc5bab9f`
+- [Traffic Eng](docs/user-guides/routing-and-networking-protocols/mpls/traffic-eng.md) `58e2c533c57a`
+- [VPLS](docs/user-guides/routing-and-networking-protocols/mpls/vpls.md) `fe6131485383`
+- [Control Word](docs/user-guides/routing-and-networking-protocols/mpls/vpls/control-word.md) `2b5e1d80fa06`
+- [Multicast Routing Protocols](docs/user-guides/routing-and-networking-protocols/multicast.md) `e2ead27d9f57`
+- [Group Management Protocol](docs/user-guides/routing-and-networking-protocols/multicast/group-management-protocol.md) `9ceca20dc562`
+- [IGMP Proxy](docs/user-guides/routing-and-networking-protocols/multicast/igmp-proxy.md) `ab5099d4ac78`
+- [PIM-SM](docs/user-guides/routing-and-networking-protocols/multicast/pim-sm.md) `e49ffc552e9e`
+- [Policy Routing](docs/user-guides/routing-and-networking-protocols/policy-routing.md) `d9a16d300d1d`
+- [Route Distinguisher and Route Target](docs/user-guides/routing-and-networking-protocols/route-distinguisher-and-route-target.md) `dfd6c662f0c6`
+- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `a8be8159d596`
+- [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `8ccb2434ded5`
+- [Routing Protocol Multi-core Support](docs/user-guides/routing-and-networking-protocols/routing-protocol-multi-core-support.md) `569856e98d6d`
+- [Unicast routing protocols](docs/user-guides/routing-and-networking-protocols/unicast.md) `3797cce0f171`
+- [BFD](docs/user-guides/routing-and-networking-protocols/unicast/bfd.md) `5a56348ad18f`
+- [BGP](docs/user-guides/routing-and-networking-protocols/unicast/bgp.md) `ed7536e2f509`
+- [FAQ](docs/user-guides/routing-and-networking-protocols/unicast/bgp/faq.md) `c11a80757e76`
+- [Nexthop Selection](docs/user-guides/routing-and-networking-protocols/unicast/bgp/nexthop-selection.md) `6c9215f28770`
+- [Peering Sessions](docs/user-guides/routing-and-networking-protocols/unicast/bgp/peering-sessions.md) `3e1d1f670bd3`
+- [Route Leak Prevention](docs/user-guides/routing-and-networking-protocols/unicast/bgp/route-leak-prevention.md) `4469a0e22ec2`
+- [Understanding BGP](docs/user-guides/routing-and-networking-protocols/unicast/bgp/understanding-bgp.md) `a582d7ee7746`
+- [EVPN](docs/user-guides/routing-and-networking-protocols/unicast/evpn.md) `e91a7144e05f`
+- [IS-IS](docs/user-guides/routing-and-networking-protocols/unicast/is-is.md) `62c2c7e3c4df`
+- [OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf.md) `f12eec7d2b69`
+- [Areas and Virtual Links](docs/user-guides/routing-and-networking-protocols/unicast/ospf/areas-and-virtual-links.md) `d0343a0d0cf1`
+- [FAQ](docs/user-guides/routing-and-networking-protocols/unicast/ospf/faq.md) `556a329668aa`
+- [Neighbor Relationship](docs/user-guides/routing-and-networking-protocols/unicast/ospf/neighbour-relationship.md) `deccb6cbe463`
+- [Routing Table Calculation](docs/user-guides/routing-and-networking-protocols/unicast/ospf/routing-calculation.md) `0d2c7d5803ba`
+- [Understanding OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf/understanding-ospf.md) `85551c60d0dc`
+- [RIP](docs/user-guides/routing-and-networking-protocols/unicast/rip.md) `cdfb0e3cc272`
+- [RPKI](docs/user-guides/routing-and-networking-protocols/unicast/rpki.md) `7011ec661c96`
+- [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `34fa57d21e48`
+- [Virtual Private Networks](docs/virtual-private-networks.md) `0e9c42e1a2f2`
+- [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`
+- [EoIP](docs/virtual-private-networks/eoip.md) `32731e5ad3b7`
+- [GRE](docs/virtual-private-networks/gre.md) `129b28d8cae0`
+- [IPIP](docs/virtual-private-networks/ipip.md) `6f1df6c98353`
+- [IPsec](docs/virtual-private-networks/ipsec.md) `45559f60f0be`
+- [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`
+- [QKD Integration in RouterOS IPsec (PPK)](docs/virtual-private-networks/ipsec/qkd-integration-in-routeros-ipsec-ppk.md) `8c24ee335038`
+- [L2TP](docs/virtual-private-networks/l2tp.md) `307b4bed8475`
+- [LAC and LNS setup with Cisco as LAC](docs/virtual-private-networks/l2tp/lac-and-lns-setup-with-cisco-as-lac.md) `ed49da94e4a9`
+- [OpenVPN](docs/virtual-private-networks/openvpn.md) `7973c1c4a64f`
+- [PPPoE](docs/virtual-private-networks/pppoe.md) `850d209cc357`
+- [IPv6 PD over PPP](docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md) `538fb7ab9b7b`
+- [MLPPP over single and multiple links](docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md) `ec3daa96dc9e`
+- [PPTP](docs/virtual-private-networks/pptp.md) `85e617e82de7`
+- [SSTP](docs/virtual-private-networks/sstp.md) `22e4e7d4c9c3`
+- [WireGuard](docs/virtual-private-networks/wireguard.md) `dae1f955b845`
+- [ZeroTier](docs/virtual-private-networks/zerotier.md) `690c5a15399b`
+- [Wired Connections](docs/wired-connections.md) `5e4863bfb3b0`
+- [Ethernet](docs/wired-connections/ethernet.md) `497bf5f5244a`
+- [MikroTik wired interface compatibility](docs/wired-connections/mikrotik-wired-interface-compatibility.md) `ca220af5be26`
+- [PWR Line](docs/wired-connections/pwr-line.md) `642aaefd7226`
+- [Wireless](docs/wireless.md) `01bb0ea8c71d`
+- [802.11 a/b/g/n](docs/wireless/abgn.md) `e9f66d51ea82`
+- [CAPsMAN](docs/wireless/abgn/capsman.md) `52bd2172a58f`
+- [AP Controller (CAPsMAN)](docs/wireless/abgn/capsman/ap-controller-capsman.md) `cca88d03e966`
+- [CAPsMAN with VLANs](docs/wireless/abgn/capsman/capsman-with-vlans.md) `8f675abd5fb1`
+- [HWMPplus mesh](docs/wireless/abgn/hwmpplus-mesh.md) `76d673101139`
+- [Interworking Profiles](docs/wireless/abgn/interworking-profiles.md) `a12b5cfde455`
+- [Nv2](docs/wireless/abgn/nv2.md) `6dfdf788d737`
+- [Spectral scan](docs/wireless/abgn/spectral-scan.md) `62ed1bbc69e6`
+- [VLANs on Wireless](docs/wireless/abgn/vlans-on-wireless.md) `d74ad666d41b`
+- [Wireless Interface](docs/wireless/abgn/wireless-interface.md) `fb73922faeb4`
+- [Wireless Troubleshooting](docs/wireless/abgn/wireless-troubleshooting.md) `8ff4b7750c81`
+- [Case studies](docs/wireless/user-guides.md) `1d0504001873`
+- [Enterprise wireless security with User Manager v5](docs/wireless/user-guides/enterprise-wireless-security-user.md) `cb6ba6701922`
+- [Wireless Station Modes](docs/wireless/user-guides/wireless-station-modes.md) `bb21b77476d2`
+- [W60G](docs/wireless/w60g.md) `d25db07f3d8f`
+- [Distance guide](docs/wireless/w60g/distance-guide.md) `4d75e2d4b661`
+- [Fail-over PtMP CLI example](docs/wireless/w60g/fail-over-ptmp-cli-example.md) `d2605870232b`
+- [Fail-over PtP CLI example](docs/wireless/w60g/fail-over-ptp-cli-example.md) `e7765904de5e`
+- [Fail-over PtP GUI example](docs/wireless/w60g/fail-over-ptp-gui-example.md) `9848438ff319`
+- [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
+- [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
+- [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
+- [Wi-Fi 6 / 7 (802.11ax/be)](docs/wireless/wifi.md) `edfbdc4a7a0f`
+- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `7b320a7578af`
+- [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
+- [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
+- [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
+- [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
