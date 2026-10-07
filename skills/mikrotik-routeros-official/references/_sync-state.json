@@ -1,0 +1,65 @@
+{
+  "index_sha256": "e0dd5a78acc9ae6768772bb44b1be22cb8a3fc8f5df71b9a8c8de57b99a2f599",
+  "pages": {
+    "https://manual.mikrotik.com/docs/introduction.md": {
+      "title": "Introduction",
+      "markdown_url": "https://manual.mikrotik.com/docs/introduction.md",
+      "path": "docs/introduction.md",
+      "sha256": "3953044df5d52128a99bd0d17b7e63ea59ba94e981590a27805ef716543e70c3"
+    },
+    "https://manual.mikrotik.com/docs/getting-started.md": {
+      "title": "Getting Started",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started.md",
+      "path": "docs/getting-started.md",
+      "sha256": "2de4665c77fedf0b4f2e7bfd48dfc85d337165f3986ae983533f2a5c64956ba7"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/first-time-configuration.md": {
+      "title": "First Time Configuration",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/first-time-configuration.md",
+      "path": "docs/getting-started/first-time-configuration.md",
+      "sha256": "17dbd8d42e83d35b9032143857eabfc1bca0132e46d4d6e267620ddf7d599d0e"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/manual-network-setup.md": {
+      "title": "Manual Network Setup (No Default Configuration)",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/manual-network-setup.md",
+      "path": "docs/getting-started/manual-network-setup.md",
+      "sha256": "b81f9c6071257033cb6b8c3b6fe0796951d6ebd223ae1724622dd08f281ff632"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/securing-your-router.md": {
+      "title": "Securing your router",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/securing-your-router.md",
+      "path": "docs/getting-started/securing-your-router.md",
+      "sha256": "0fbb40e2a92304bbeb325db3e0102b2a30838c900dbd4f8e3b8611aeb8821afb"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals.md": {
+      "title": "Networking Fundamentals",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals.md",
+      "path": "docs/getting-started/networking-fundamentals.md",
+      "sha256": "917b5ac552994392525239d46d0ab7ea31ccdd527c83e0faa09cbecad5aadc61"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals/ipv6-addresses.md": {
+      "title": "IPv6 Addresses",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals/ipv6-addresses.md",
+      "path": "docs/getting-started/networking-fundamentals/ipv6-addresses.md",
+      "sha256": "94be12b6cde01ac3490cafc9d49194cefbe7f63c8ee2f94f809308f035f868d8"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md": {
+      "title": "IPv6 Neighbor Discovery",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md",
+      "path": "docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md",
+      "sha256": "710426742e98c91b9efb5f497aaf2ccbfd6e26cfc2dbdd505afbefc61c69e975"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade.md": {
+      "title": "Installation and Upgrade",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade.md",
+      "path": "docs/getting-started/installation-and-upgrade.md",
+      "sha256": "c7e3eaaaea09f669a1309e6ec45e6e61fe664658a6441b0c7554db0f4580c4d8"
+    },
+    "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade/install/chr-installation.md": {
+      "title": "CHR: Installation",
+      "markdown_url": "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade/install/chr-installation.md",
+      "path": "docs/getting-started/installation-and-upgrade/install/chr-installation.md",
+      "sha256": "0660f15b38dcf561b89f5de7e4fcf7887eb5e56e2adebe444d064cd27ed73f0e"
+    }
+  }
+}
