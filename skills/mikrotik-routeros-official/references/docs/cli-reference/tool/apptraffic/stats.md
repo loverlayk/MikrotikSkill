@@ -5,7 +5,7 @@
 -----------
 
 ## tool/apptraffic/stats 
-**Conditions:** !mmips, !powerpc, !smips, !mipsel
+**Conditions:** !mmips, !powerpc, !smips
 **Type:** Directory
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

@@ -16,9 +16,9 @@ One upgrade job is one upgrade run. Jobs are created from upgrade rules, and the
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="labels" typ="object" unset="1">Devices the job covers, selected by labels.</ArgTableRow>
+<ArgTableRow arg="labels" typ="object" unset="1">Devices the job covers, selected by labels. Empty for a job that `/cmr/device/upgrade` started for devices selected by number.</ArgTableRow>
 <ArgTableRow arg="order" typ="object">Execution order of the label groups, used with `continue-order`.</ArgTableRow>
-<ArgTableRow arg="channel" typ="alt">Upgrade channel or the pinned version the job installs.</ArgTableRow>
+<ArgTableRow arg="channel" typ="alt">Upgrade channel or the pinned version the job installs. Empty when each device upgrades on its own upgrade channel.</ArgTableRow>
 <ArgTableRow arg="strategy" typ="enum ()" unset="1">How the job upgrades devices: `parallel` all at the same time, `sequential` one after another. With `continue-order` the devices are processed per label group in the order given by `order`.</ArgTableRow>
 <ArgTableRow arg="fail-policy" typ="enum ()" unset="1">Behaviour of the job if a device fails: `continue`, `stop`, or `continue-order`. `stop` halts the whole job on the first failure; `continue-order` continues with the next label group in `order`.</ArgTableRow>
 <ArgTableRow arg="schedule-time" typ="date" unset="1">When the job is scheduled to run, in the same format as the rule's `schedule-time`.</ArgTableRow>

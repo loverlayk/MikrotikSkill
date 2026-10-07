@@ -20,5 +20,5 @@ Configuration for a specific link in a topology.
 <ArgTableRow arg="links" typ="multi { array-id, array-id, link: super { port1: object
 , [port2] --object
  }
- }">Detailed information about the link state, such as PoE status, interface names, and traffic information. Example: `ether1(,tx=85.9KiB,rx=10.8KiB)--ether23(poe=powered-on,tx=10.9KiB,rx=86.8KiB)`</ArgTableRow>
+ }">Detailed information about the link state, such as PoE status, interface names, and traffic information. A `*` before a port name marks a direct, physical link. Example: `ether1(,tx=85.9KiB,rx=10.8KiB)--ether23(poe=powered-on,tx=10.9KiB,rx=86.8KiB)`</ArgTableRow>
 </ArgTable>

@@ -5,7 +5,7 @@
 -----------
 
 ## cmr/client 
-**Conditions:** !mipsel, !smips, !powerpc
+**Conditions:** !smips, !powerpc
 **Type:** Settings Directory
 
 For an overview of the CMR-client and its usage, see the [CMR-Client](../../../management-tools/cmr/client) documentation.
@@ -17,10 +17,10 @@ For an overview of the CMR-client and its usage, see the [CMR-Client](../../../m
 <ArgTableRow arg="pairing-requirement" typ="enum (none | password)" unset="1">
 Defines what the remote device must do before this device accepts the pairing:
 - **none** - this device accepts pairing automatically, without additional checks
-- **password** - the remote device may approve pairing by proving that it knows the pairing password configured on this device
+- **password** (default) - the remote device may approve pairing by giving the username and password of a RouterOS user on this device; CMR has no separate pairing password
 </ArgTableRow>
 <ArgTableRow arg="controller-addresses" typ="multi { array-id, address: address (flags=46D)
- }" unset="1">Specifies the controller IP addresses to use. This setting is optional when the client can discover the controller automatically through DHCP or neighbor discovery, but must be configured when the controller address cannot be determined automatically.</ArgTableRow>
+ }" unset="1">Specifies the controller IP addresses to use. This setting is optional when the client can discover the controller automatically through neighbor discovery or DNS (`_cmr._tcp.lan`, or `_cmr._tcp.` followed by the domain name from DHCP), but must be configured when the controller address cannot be determined automatically.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

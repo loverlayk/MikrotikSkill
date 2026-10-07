@@ -14,7 +14,7 @@ Rate limiting only slows an attacker down. The following measures remove the ris
 
 - Reach the router through a VPN, for example [WireGuard](../../virtual-private-networks/wireguard), and keep SSH closed on the WAN side.
 - Allow SSH only from the addresses you manage the router from, as described in [Securing your router](../../getting-started/securing-your-router#opening-management-access-from-wan-advanced).
-- Log in with [SSH keys](../../management-tools/ssh#enabling-pki-authentication) and turn off password logins with `/ip/ssh/set password-authentication=no`. Password guessing then has nothing to find. With the default setting, `yes-if-no-key`, only users without a key can log in with a password.
+- Log in with [SSH keys](../../management-tools/ssh#log-in-with-a-public-key) and turn off password logins with `/ip/ssh/set password-authentication=no`. Password guessing then has nothing to find. With the default setting, `yes-if-no-key`, only users without a key can log in with a password.
 - Hide the port behind [port knocking](port-knocking), so that SSH opens only for a client that knows the knock sequence.
 
 Use the rules on this page when SSH must stay reachable from the internet, or as an extra layer on top of these measures.

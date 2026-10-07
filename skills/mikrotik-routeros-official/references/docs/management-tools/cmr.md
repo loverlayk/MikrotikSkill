@@ -7,7 +7,7 @@
 CMR is a centralized monitoring platform for fleets of RouterOS devices, allowing updates, monitoring, and alert management across the whole fleet.
 
 :::info
-The `cmr` [package](../../getting-started/installation-and-upgrade/packages#extra-packages) is supported only on devices with the **arm**, **arm64**, and **x86** architectures. The CMR client is part of RouterOS, so every device can be a CMR client, except devices with the **mipsel**, **smips**, and **powerpc** architectures.
+The `cmr` [package](../../getting-started/installation-and-upgrade/packages#extra-packages) is supported only on devices with the **arm**, **arm64**, and **x86** architectures. The CMR client is part of RouterOS, so every device can be a CMR client, except devices with the **smips** and **powerpc** architectures.
 :::
 
 ## Overview
@@ -34,8 +34,8 @@ CMR manages a fleet of RouterOS devices from one of them. One device runs the CM
 
 ### How it works
 
-- The server runs on a device with the `cmr` package. The client is part of RouterOS, so every device can be a client, except devices with the **mipsel**, **smips**, and **powerpc** architectures.
-- A client finds the server through neighbor discovery or DHCP, or connects to the addresses set in `controller-addresses`. The server does not need to be the gateway, and clients can connect across routed networks, including through NAT or a VPN.
+- The server runs on a device with the `cmr` package. The client is part of RouterOS, so every device can be a client, except devices with the **smips** and **powerpc** architectures.
+- A client finds the server through neighbor discovery (MNDP) or DNS, or connects to the addresses set in `controller-addresses`. For DNS, the client resolves `_cmr._tcp.lan` and `_cmr._tcp.<domain>`, where `<domain>` is the domain name it receives from DHCP (option 15, `domain-name`). The server does not need to be the gateway, and clients can connect across routed networks, including through NAT or a VPN.
 - Both devices must agree before a client is managed. This is called pairing. After pairing, the server collects status data from the client and sends it configuration, for example WiFi networks.
 - The configuration that CMR sends is stored on the client as managed objects, marked with the **Y** flag. They cannot be changed on the client, and they stay in effect when the server is unreachable. Disabling the client removes them.
 - Use WinBox 4 or WebFig for the CMR menus. WinBox 3 does not support them.
@@ -70,15 +70,17 @@ After you enable the server, the router is the management controller for the con
 
 The [`/cmr`](../../cli-reference/cmr) menu also controls how the clients find the server and what the server collects from them:
 
-- `controller-addresses` - server IP addresses sent to the devices when they cannot discover the server automatically through neighbor discovery (MNDP) or DHCP.
+- `controller-addresses` - server IP addresses sent to the devices when they cannot discover the server automatically through neighbor discovery (MNDP) or DNS.
 - `track-topology` - fetches routes, the WiFi registration table, the ARP table, neighbors, DHCP state, and interface states from the clients. The automatic links of network topology layouts depend on this data. Default: `yes`.
 - `fetch-comments` - fetches the comments of interfaces, ports, and WiFi registration table entries from the clients. Default: `yes`.
 - `auto-labels` - selects which automatic labels the server fetches from the clients: any of `version`, `architecture`, `model`, `board-name`, `identity`, and `address`, or `all` or `none`. Default: `all`.
-- `apptraffic-devices` - selects, by labels, the devices to collect application traffic statistics from.
-- `upgrade-check-interval` - how often the server checks the update servers for new versions. The minimum is 1 minute.
+- `apptraffic-devices` - selects, by labels, the devices to collect application traffic statistics from. Default: `gateway`, the devices with the `gateway` label. Set `all` to select every device.
+- `upgrade-check-interval` - how often the server checks the update servers for new versions. The minimum is 1 minute. Default: `10h`.
 - `packages-directory`, `packages-cache-type`, and `packages-cache-limit` - where the server takes and stores upgrade packages. The Upgrade sources section describes them.
 
-For now, `/cmr/get` returns an empty value for settings that are not set, instead of their default.
+For now, `/cmr/get` returns an empty value for settings that are not set, instead of their default. To return a setting to its default, put `!` before its name, for example `/cmr set !upgrade-check-interval`.
+
+For now, changing `packages-directory`, `upgrade-check-interval`, or `pairing-requirement` restarts CMR on the server: every client reconnects, and state alerts that still match run their actions again.
 
 ## Pairing
 
@@ -166,7 +168,7 @@ The device menu provides commands that operate on the selected devices, together
 
 - [`run-script`](../../cli-reference/cmr/device/run-script) - run a single-line RouterOS script on each selected device and show its output. The script runs with limited permissions: commands that need the `policy` permission, for example adding a user, fail with "not enough permissions (9)".
 - [`upgrade`](../../cli-reference/cmr/device/upgrade) - start an upgrade job for the selected devices, regardless of the schedule of their upgrade rule.
-- [`reboot`](../../cli-reference/cmr/device/reboot) - reboot the selected devices.
+- [`reboot`](../../cli-reference/cmr/device/reboot) - reboot the selected devices. The command returns right away, and the server logs `<device> rebooted` when a device has restarted, where `<device>` is `identity@address`.
 - [`pair`](../../cli-reference/cmr/device/pair) - start pairing with the selected devices.
 - [`wifi-logs`](../../cli-reference/cmr/device/wifi-logs) - monitor the WiFi logs of the selected devices. Filter the entries by `event` (`connected`, `disconnected`, or `failed`), by client MAC address (`address`), by `bssid`, or by a time range (`time-start` and `time-end`). The events of access points managed by CAPsMAN are logged by the CAPsMAN device and appear under it. For now, the device selection does not limit the output: the entries of all devices that log WiFi events are shown.
 - [`apptraffic`](../../cli-reference/cmr/device/apptraffic) - application traffic monitor for the selected devices.
@@ -256,7 +258,7 @@ Each argument sets one property of the rule:
 - `labels=all` selects every connected device. Giving `all` explicitly is the same as omitting `labels`.
 - `channel=stable` selects the upgrade channel: `long-term`, `stable`, `testing`, or `development`. To pin a specific version, set the version directly as the channel value, for example `channel=7.24.4`.
 - `strategy=sequential` upgrades the devices one after another and waits for each to finish. The alternative is `parallel`, which upgrades all covered devices at the same time.
-- `fail-policy=continue` skips a failed device and continues with the rest. `fail-policy` defaults to `continue` when unset. The other fail policies are `stop` and `continue-order`.
+- `fail-policy=continue` skips a failed device and continues with the rest. Without `fail-policy`, a rule uses `stop`. The third fail policy is `continue-order`.
 - `schedule-time="00:00:00"` triggers this rule every day at midnight. `schedule-time` is a time with an optional weekday, for example `14:00:00` (every day at 14:00) or `00:00:00@sat` (every Saturday at midnight). Multiple times are comma-separated, for example `00:00:00@sat,00:00:00@sun`. Separate the weekday with `@`: with a space, for example `"14:00 sat"`, the weekday is dropped and the rule runs every day.
 
 <center>![](../img/cmr_upgrade_rule_nightly.webp)</center>
@@ -270,7 +272,7 @@ A weekly rule is created the same way. For example, this rule upgrades two label
 ```
 
 - `schedule-time="14:00:00@sat"` starts the upgrade every Saturday at 14:00. The weekday comes after `@` and can be `sun`, `mon`, `tue`, `wed`, `thu`, `fri`, or `sat`.
-- `order=Group1,Group2` sets the label groups and the order in which they are processed. `fail-policy=stop` combined with `strategy=parallel` requires `order`.
+- `order=Group1,Group2` sets the label groups and the order in which they are processed.
 - `fail-policy=stop` stops the whole upgrade when a device fails. In this example, a failed device in `Group1` stops the upgrade, and `Group2` is not upgraded.
 
 <center>![](../img/cmr_upgrade_rule_weekly.webp)</center>
@@ -290,8 +292,8 @@ To change the position of a rule, use [`move`](../../cli-reference/cmr/upgrade),
 After you create a rule, a job is scheduled according to its `schedule-time`. You can start an upgrade without waiting for the schedule:
 
 - [`/cmr/upgrade/trigger`](../../cli-reference/cmr/upgrade/trigger) - start the job of a chosen rule right away and upgrade its covered devices early, without waiting for the schedule-time.
-- [`/cmr/upgrade/job/run-next`](../../cli-reference/cmr/upgrade/job/run-next) - run a scheduled job right away. The scheduled job remains scheduled and the run is added as a new job.
-- [`/cmr/device/upgrade`](../../cli-reference/cmr/device/upgrade) - upgrade selected devices immediately, by their label, regardless of the schedule of their rule.
+- [`/cmr/upgrade/job/run-next`](../../cli-reference/cmr/upgrade/job/run-next) - run a scheduled job right away. For a job of an upgrade rule, the scheduled job remains scheduled and the run is added as a new job. A job scheduled with `/cmr/device/upgrade` has no schedule to keep, so `run-next` starts that job itself.
+- [`/cmr/device/upgrade`](../../cli-reference/cmr/device/upgrade) - upgrade selected devices regardless of the schedule of their rule: right away, or at the next occurrence of `schedule-time`. Without `channel`, each device upgrades on its own upgrade channel, the `channel` value shown in `/cmr/device`.
 
 Only one upgrade job runs at a time. Triggering a second job while another one is in progress places the new job in the `queued` state until the running job finishes. Use [`/cmr/upgrade/version-check`](../../cli-reference/cmr/upgrade/version-check) to see the newest version available for the channels configured in your upgrade rules.
 
@@ -326,11 +328,13 @@ A version set as the channel is installed even when it is earlier than the insta
 
 Jobs are listed in the [`/cmr/upgrade/job`](../../cli-reference/cmr/upgrade/job) menu and represent a single upgrade run. A job goes through the states `scheduled`, `queued`, `waiting devices`, `version check`, `processing`, and finally `done` or `cancelled`. The `success` counter is `upgraded/total`, for example `6/7`.
 
+A job that `/cmr/device/upgrade` starts for devices selected by number has no `labels`, and it shows a `channel` only when a version was given. Its devices are listed by [`/cmr/upgrade/job/show-devices`](../../cli-reference/cmr/upgrade/job/show-devices).
+
 :::note
 The `success` counter counts only the devices the job actually upgraded. The job does not upgrade when a device covered by the rule is already on the target version (left `pending` with the note **no upgrade available**) or is disabled. For now, a device is also left `pending` with the error **no upgrade available** when the packages for a pinned version are neither in `packages-directory` nor on the update servers.
 :::
 
-A job can be removed to cancel it. Remove a job with [`/cmr/upgrade/job/remove`](../../cli-reference/cmr/upgrade/job). Removing a queued job marks it `cancelled`. Removing a processing job stops the run and marks the remaining devices `cancelled`. An interrupted install is still able to finish when the device reboots.
+A job can be removed to cancel it. Remove a job with [`/cmr/upgrade/job/remove`](../../cli-reference/cmr/upgrade/job). Removing a scheduled or queued job marks it `cancelled`, and the job stays in the list. Removing a processing job stops the run and marks the remaining devices `cancelled`. An interrupted install is still able to finish when the device reboots. Removing a `cancelled` job deletes it from the list.
 
 ### Strategy and failure handling
 
@@ -342,7 +346,7 @@ A job can be removed to cancel it. Remove a job with [`/cmr/upgrade/job/remove`]
 The `fail-policy` controls what happens when a device fails:
 
 - `continue` - skip the failed device and continue with the rest.
-- `stop` - stop the whole upgrade on the first failure. The job does not continue with the remaining devices or with the next label group in `order`. With `strategy=parallel` it requires `order`. `parallel` combined with `stop` without `order` is rejected.
+- `stop` - stop the whole upgrade on the first failure. The job does not continue with the remaining devices or with the next label group in `order`. This is the default.
 - `continue-order` - skip the failed device and continue with the next label group in `order`. Requires `order`, which lists the labels to process one group after another. `continue-order` is not accepted without it. How the failed device's group is handled depends on the `strategy`:
   - **sequential** - the rest of the group is skipped (devices not yet started stay `pending`) and the job continues with the next group in `order`.
   - **parallel** - only the failed device is abandoned. Devices already in progress in the same group finish, and the job continues with the next group in `order`.
@@ -351,6 +355,7 @@ The `fail-policy` controls what happens when a device fails:
 
 - Removing an upgrade rule does not cancel its already-started or queued jobs. Cancel a job explicitly with `/cmr/upgrade/job/remove`.
 - Both [`/cmr/upgrade/show-devices`](../../cli-reference/cmr/upgrade/show-devices) and [`/cmr/upgrade/job/show-devices`](../../cli-reference/cmr/upgrade/job/show-devices) list the per-device coverage and state of a rule or job. They show per-device notes such as the "upgrade available" and "no upgrade available" states described in the previous sections.
+- The server writes the result of each device upgrade to the log with the `cmr` topic, for example `<device> has successfully upgraded to version <version>` or `<device> failed to upgrade from <version> to <version>, error: <reason>`. When the upgrade channel of a device offers it a new version, the server logs `<device> has new version available <version>`.
 
 ## Alert rules
 
@@ -442,10 +447,10 @@ Action text supports `[variable]` expansion, for example `[identity]`, `[severit
 | `[arch]`, `[serial]` | Device architecture and serial number. |
 | `[packages]` | Comma-separated list of the installed packages. |
 | `[labels]` | Comma-separated list of the user and automatic labels. |
-| `[state]` | The device state, for example the pairing or upgrade state. |
+| `[state]` | The device state, for example the pairing or upgrade state. Empty for a paired device with nothing in progress. |
 | `[available-version]` | The newer RouterOS version available for the device, or `unknown`. |
 | `[upgrade-state]` | The current upgrade progress or result, or `unknown`. |
-| `[cpu-usage]`, `[mem-usage]`, `[hdd-usage]` | CPU, RAM, and disk usage in percent. |
+| `[cpu-usage]`, `[mem-usage]`, `[hdd-usage]` | CPU, RAM, and disk usage in percent, or `unknown` until the device reports them after it connects. |
 | `[<sensor>]` | Current reading of the health sensor named by the rule, for example `[cpu-temperature]`. |
 
 **Event variables** are available when the event condition of the rule matches:
@@ -453,10 +458,10 @@ Action text supports `[variable]` expansion, for example `[identity]`, `[severit
 | Placeholder | Value |
 | --- | --- |
 | `[iface-name]`, `[iface-type]`, `[iface-change]` | Interface name, type, and change (`running`, `not-running`, `added`, or `removed`) of an interface-change condition. |
-| `[upgrade-version]`, `[upgrade-error]`, `[upgrade-state]` | Version, error, and final state of the upgrade reported by an upgrade-finished condition. |
+| `[upgrade-version]`, `[upgrade-error]`, `[upgrade-state]` | Version, error, and final state of the upgrade reported by an upgrade-finished condition. `[upgrade-error]` is the reason a device was not upgraded, for example `no upgrade available`, and is empty after a successful upgrade. `[upgrade-state]` is the final state of the device in the job, for example `done`, or `pending` for a device the job did not upgrade. |
 | `[message]`, `[message-topics]` | Message and topics of a matching log line for a log-line condition. |
 | `[job-device-count]`, `[job-success-count]` | Total devices and successfully upgraded devices of an upgrade-job-finished event. |
-| `[job-start-time]`, `[job-end-time]`, `[job-run-time]` | Start time, end time, and duration in seconds of the finished job. |
+| `[job-start-time]`, `[job-end-time]`, `[job-run-time]` | Start time and end time of the finished job, for example `2026.10.06-14:20:36`, and its duration in seconds. |
 
 :::note
 An upgrade-job-finished event is a system event with no device context, so the device variables in the table above are not available for it. The other event conditions fire for a device, and the device variables are available alongside the event variables.
@@ -477,6 +482,8 @@ A placeholder that does not apply to a rule is rendered as `unknown`. A placehol
 ### How a rule fires
 
 A newly created state alert fires immediately for every paired device that already matches its conditions. When a device disconnects, a state alert keeps its state for that device by default; set `reset-on-disconnect=yes` to clear the state on disconnect, so that the device fires the rule again after it reconnects and still matches. State alerts are evaluated only for paired devices. Event alerts have no persistent state to reset and fire on each matching occurrence, including an unpaired connection for `unpaired-device-connected`.
+
+When CMR restarts on the server, for example after a reboot or a change of `packages-directory`, it evaluates the state alerts again: the alerts that still match become active again and run their actions. Changing an enabled rule, even only its comment, has the same effect for that rule: its state alert becomes active again on the devices that match and runs its actions.
 
 Every rule has a `severity` (`critical`, `high`, `medium`, or `low`, default `medium`) and a `category` that the controller assigns according to the rule's conditions (for example `performance`, `availability`, or `version`); the category can be changed. The read-only values describe the state of a rule:
 
@@ -557,13 +564,13 @@ A link connects two nodes of a layout. Links created by [`rebuild-links`](../../
      links=*ether6(poe=powered-on,tx=0,rx=0)--*ether1(,tx=0,rx=0)
 ```
 
-Here `ether2` on `CRS354` is linked to `ether1` on `RB5009UPr`, and `*ether6` hands PoE power to `ether1` on `hAP` (`*` marks the port that provides PoE; `poe=powered-on` and `poe=waiting-for-load` show the PoE state of each side, and `tx`/`rx` show the traffic counters). A link that only connects two layouts, such as the link between `CRS354` and `To_Floor_1`, carries no ports.
+Here `ether2` on `CRS354` is linked to `ether1` on `RB5009UPr`, and `ether6` hands PoE power to `ether1` on `hAP`. A `*` before a port name marks a direct, physical link between the two ports; `poe=powered-on` and `poe=waiting-for-load` show the PoE state of each side, and `tx`/`rx` show the traffic counters. A link that only connects two layouts, such as the link between `CRS354` and `To_Floor_1`, carries no ports.
 
-Node coordinates are relative to the center of the layout and can be negative. The `print` output shows the coordinates as signed numbers, for example `y=-113`.
+Node coordinates are relative to the layout center, so `x=0, y=0` marks the center and negative values are allowed. `x` increases to the right and `y` increases downward, so a smaller `y` places a node higher on the map: in the screenshot above, the node with `y=-113` is near the top and the node with `y=227` is at the bottom. The `print` output shows the coordinates as signed numbers, for example `y=-113`.
 
 ## Application traffic
 
-CMR can collect application traffic statistics from selected devices. Select the devices by labels with the `apptraffic-devices` setting in the [`/cmr`](../../cli-reference/cmr) menu; the server then enables the application traffic classifier (`/tool/apptraffic`) on the selected devices:
+CMR can collect application traffic statistics from selected devices. Select the devices by labels with the `apptraffic-devices` setting in the [`/cmr`](../../cli-reference/cmr) menu, which by default selects the devices with the `gateway` label; the server then enables the application traffic classifier (`/tool/apptraffic`) on the selected devices:
 
 ```ros
 [admin@MikroTik] > /cmr set apptraffic-devices=gateway
@@ -573,7 +580,7 @@ The classifier sees the traffic that the device routes. An access point that bri
 
 The statistics are shown in the GUI under **CMR > Traffic**, per application or per category, with the traffic in and out for the last minute, hour, day, and week. For now, the CLI views ([`/cmr/device/apptraffic`](../../cli-reference/cmr/device/apptraffic) and `/tool/apptraffic/stats`) list only the detected applications and categories, without the traffic counters.
 
-The classifier is not available on devices with **mmips**, **mipsel**, **smips**, and **powerpc** architecture.
+The classifier is not available on devices with the **mmips**, **smips**, and **powerpc** architectures.
 
 ## WiFi configuration
 
@@ -606,11 +613,11 @@ The arguments of a network mirror the [`/interface/wifi`](../../wireless/wifi) n
 
 - `labels` - the devices the network is applied to.
 - `ssid` - the network name broadcast to clients.
-- `mode` - the operating mode: `ap`, `station`, `station-bridge`, `station-pseudobridge`, or `meshpoint`.
+- `mode` - the operating mode: `ap`, `station`, `station-bridge`, or `station-pseudobridge`.
 - `vlan-id` - the VLAN that the client traffic is tagged with.
 - `security.authentication-types` - the authentication methods, for example `wpa2-psk`, `wpa3-psk`, or `owe`.
 - `security.encryption` - the allowed ciphers, for example `ccmp` or `gcmp`.
-- `security.passphrase` - the network password for the personal authentication types. The passphrase is a sensitive value and does not appear in the print output.
+- `security.passphrase` - the network password for the personal authentication types. The passphrase is a sensitive value and does not appear in the print output. The REST API returns it to users with the `sensitive` policy.
 
 Disable a network to stop applying it without deleting it. A disabled network is marked with the `X` flag:
 

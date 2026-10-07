@@ -5,7 +5,7 @@
 -----------
 
 ## system/routerboard/usb/power-reset 
-**Conditions:** !i386, !i386, !mipsel, !powerpc
+**Conditions:** !i386, !i386, !powerpc
 **Type:** Command
 
 <ArgTable c1="Argument" c2="Type" c3="Description">

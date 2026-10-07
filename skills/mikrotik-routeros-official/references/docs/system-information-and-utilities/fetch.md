@@ -41,7 +41,7 @@ You can put the address, credentials and path into a single URL; the mode is the
 ```
 
 :::note
-SSH host key validation is off by default, so fetch accepts any SFTP host key. To verify servers, enable `known-hosts-validation` in [`/ip/ssh`](../cli-reference/ip/ssh/) and add their keys to [`/ip/ssh/known-hosts`](../cli-reference/ip/ssh/known-hosts). A fetch to an unknown host then fails with `host key not trusted`; `sftp-known-hosts-ignore=yes` bypasses this for a single transfer, and `known-hosts-trusted-subnets` skips the check for whole subnets.
+SFTP host key validation is enabled on new installations and kept disabled on upgraded routers (the `known-hosts-validation` setting in [`/ip/ssh`](../cli-reference/ip/ssh/)). With validation enabled, a fetch to a server whose key is not in [`/ip/ssh/known-hosts`](../cli-reference/ip/ssh/known-hosts) fails with `host key not trusted`; `sftp-known-hosts-ignore=yes` bypasses this for a single transfer, and `known-hosts-trusted-subnets` skips the check for whole subnets.
 :::
 
 ## Make HTTP requests

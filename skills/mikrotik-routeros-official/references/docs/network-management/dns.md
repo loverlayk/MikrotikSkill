@@ -256,6 +256,7 @@ Names are matched in lower case. The cache answers with the remaining TTL.
 
 - Each line holds one name, alone or after an address (`0.0.0.0`, `127.0.0.1` or `::1`) as in a hosts file. Lines and line ends starting with `#` are comments. Names must be in lower case, and wildcards such as `*.example.com` are not supported.
 - Only the listed name is blocked, not the names below it. Blocked answers have a TTL of 2 seconds.
+- Disabling an adlist does not free the cache memory its names use; they still count against `cache-size`. Only removing the list releases it.
 - The router verifies the certificate of an HTTPS adlist URL (`ssl-verify=yes`). For a server with a self-signed certificate, import its CA certificate into `/certificate`, or set `ssl-verify=no`.
 - The router checks all lists for changes every 4 hours; `/ip/dns/adlist/reload` checks them at once. The router stores the lists on its disk.
 - A router can have up to 64 adlists.

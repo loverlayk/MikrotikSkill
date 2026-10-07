@@ -26,7 +26,7 @@ For RouterOS v7 the `ignore-direct-modem` parameter was renamed to `mode` and mo
 | Property | Description |
 | :-- | :-- |
 | **allow-roaming** (*yes \| no*; Default: **no**) | Enable data roaming for connecting to other countries' data-providers. Not all LTE modems support this feature. Some modems, that do not fully support this feature, will connect to the network but will not establish an IP data connection with allow-roaming set to no. |
-| **apn-profiles** (*string*; Default: **default**) | Which APN profile to use for this interface |
+| **apn-profile** (*string*; Default: **default**) | Which APN profile to use for this interface (old deprecated value "apn-profiles" still accepted for single APN configuration, for multi-apn see the [Multi APN](#multi-apn) section)|
 | **band** (*integer list*; Default: **""**) | LTE Frequency band used in communication `LTE Bands and bandwidths` |
 | **nr-band** (*integer list*; Default: "") | 5G NR Frequency band used in communication `5G NR Bands and bandwidths` |
 | **comment** (*string*; Default: **""**) | Descriptive name of an item |
@@ -435,7 +435,7 @@ Start with network settings - Add new connection parameters under the LTE apn pr
 Select the newly created profile for an LTE connection:
 
 ```ros
-/interface/lte/set [find] apn-profiles=profile1
+/interface/lte/set [find] apn-profile=profile1
 ```
 
 The LTE interface should appear with the running (R) flag:
@@ -480,6 +480,124 @@ After the interface is added, you can use the "info" command to see what paramet
               sinr: 6dB
 ```
 
+### Multi APN
+
+Some LTE modems support multiple simultaneous APN connections. Each connection receives its own IP configuration, and in RouterOS every extra connection is exposed as a separate **APN slave LTE interface** bound to the physical modem interface (`master`).
+
+#### Capability check
+
+Before configuring multiple APNs, verify that the modem supports them:
+
+```ros
+[admin@MikroTik] > /interface/lte/show-capabilities lte1
+            ...
+       max-apn-count: 8
+    framed-route-apn: any
+```
+
+| Capability | Description |
+| :-- | :-- |
+| **max-apn-count** | Maximum number of APN connections that can be active simultaneously. Multi APN is only available when this value is greater than `1` |
+| **framed-route-apn** | Which APN supports framed routing (routing behind) in a multi APN setup |
+
+#### Configuration
+
+For every additional APN, create a new LTE slave interface and attach it to the physical LTE interface(master):
+
+```ros
+/interface/lte/add apn-profile=default master=lte1
+```
+
+| Property | Description |
+| :-- | :-- |
+| **name** | Descriptive name of the new slave interface (optional parameter, by default will create a new name using the set apn-profile) |
+| **apn-profile** | APN profile to be used for the additional connection |
+| **master** | The physical LTE interface that the modem is attached to (for example `lte1`) |
+
+The slave interface behaves like a regular LTE interface: it receives its own IP configuration and can be used in routes, firewall and NAT rules independently of the master interface.
+
+#### Example: three simultaneous APNs
+
+Given that the router currently has default configuration, with only the default APN profile present and one lte interface:
+
+```ros
+[admin@MikroTik] > interface/lte/apn/print
+Flags: * - DEFAULT
+Columns: NAME, APN, IP-TYPE, ADD-DEFAULT-ROUTE, DEFAULT-ROUTE-DISTANCE
+#   NAME     APN       IP-TYPE  ADD-DEFAULT-ROUTE  DEFAULT-ROUTE-DISTANCE
+0 * default  internet  auto     yes                                     2
+
+[admin@MikroTik] > interface/lte/print
+Flags: R - RUNNING
+Columns: NAME, MTU, NETWORK-MODE, APN-PROFILE
+#   NAME   MTU  NETWORK-MODE  APN-PROFILE
+0 R lte1  1500  3g            default
+                lte
+                5g
+```
+
+First add the new APN profiles:
+
+```ros
+[admin@MikroTik] > /interface/lte/apn add apn=internet2
+[admin@MikroTik] > /interface/lte/apn add apn=internet3
+```
+
+Then add the new slave APN interfaces using the previously added APN profiles:
+
+```ros
+[admin@MikroTik] > /interface/lte/add apn-profile=internet2 master=lte1
+[admin@MikroTik] > /interface/lte/add apn-profile=internet3 master=lte1
+```
+
+```ros
+[admin@D53G] > interface/lte/print
+Flags: R - RUNNING
+Columns: NAME, MASTER, MTU, NETWORK-MODE, APN-PROFILE
+#   NAME              MASTER   MTU  NETWORK-MODE  APN-PROFILE
+0 R lte1                      1500  3g            default
+                                    lte
+                                    5g
+1 R lte1.1.internet2  lte1    1500                internet2
+2 R lte1.2.internet3  lte1    1500                internet3
+```
+
+#### Removing slave APN interfaces
+
+The same as you can add new slave APN interface you can remove them with the `remove` command. In case of using 3 or more APN interfaces you can only remove starting from the last added interface, so in this case it is `lte1.2.internet3` or `numbers=2`. Trying to remove the not last interface will give an error. In 2 APN setup there is only one slave interface so there is no issues with this, but do keep this in mind for 3 and more APN setups.
+
+```ros
+[admin@MikroTik] > interface/lte/remove lte1.1.internet2
+failure: only the last slave apn interface can be removed
+
+[admin@MikroTik] > /interface/lte/remove lte1.2.internet3
+
+[admin@MikroTik] > interface/lte/print
+Flags: R - RUNNING
+Columns: NAME, MASTER, MTU, NETWORK-MODE, APN-PROFILE
+#   NAME              MASTER   MTU  NETWORK-MODE  APN-PROFILE
+0 R lte1                      1500  3g            default
+                                    lte
+                                    5g
+1 R lte1.1.internet2  lte1    1500                internet2
+```
+
+#### Changes from the previous method
+
+Before 7.26beta1 version multiple APNs were configured by attaching several APN profiles to a single LTE interface with `apn-profiles` parameter which created dynamic slave interfaces:
+
+```ros
+/interface/lte/apn/add name=apn1 apn=provider1
+/interface/lte/apn/add name=apn2 apn=provider2
+/interface/lte/set lte1 apn-profiles=apn1,apn2
+```
+
+:::note
+**Deprecation:** the `apn-profiles` parameter is deprecated starting with RouterOS 7.26. It still accepts a single APN value, but it will be removed in a future release - use `apn-profile` in new configurations.
+
+**Configuration conversion:** On upgrade from old multi-APN configuration will automatically be converted to the new add/remove method and on downgrade will be converted back to the dynamic.
+:::
+
 ### Passthrough Example
 
 Some LTE interfaces support the LTE Passthrough feature where the IP configuration is applied directly to the client device. In this case, modem firmware is responsible for the IP configuration, and the router is used only to configure modem settings - APN, Network Technologies, and IP-Type. In this configuration, the router will not get IP configuration from the modem. The LTE Passthrough modem can pass both IPv4 and IPv6 addresses if that is supported by the modem. Some modems support multiple APNs where you can pass the traffic from each APN to a specific router interface.
@@ -504,14 +622,14 @@ To configure Passthrough on ether1:
 
 ```ros
 [admin@MikroTik] > /interface/lte/apn/add apn=apn1 passthrough-interface=ether1
-[admin@MikroTik] > /interface/lte/set lte1 apn-profiles=apn1
+[admin@MikroTik] > /interface/lte/set lte1 apn-profile=apn1
 ```
 
 To configure the Passthrough on ether1 host 00:0C:42:03:06:AB:
 
 ```ros
 [admin@MikroTik] > /interface/lte/apn/add apn=apn1 passthrough-interface=ether1 passthrough-mac=00:0C:42:03:06:AB
-[admin@MikroTik] > /interface/lte/set lte1 apn-profiles=apn1
+[admin@MikroTik] > /interface/lte/set lte1 apn-profile=apn1
 ```
 
 To configure multiple APNs on ether1 and ether2:
@@ -519,7 +637,7 @@ To configure multiple APNs on ether1 and ether2:
 ```ros
 [admin@MikroTik] > /interface/lte/apn/add apn=apn1 passthrough-interface=ether1
 [admin@MikroTik] > /interface/lte/apn/add apn=apn2 passthrough-interface=ether2
-[admin@MikroTik] > /interface/lte/set lte1 apn-profiles=apn1,apn2
+[admin@MikroTik] > /interface/lte/set lte1 apn-profile=apn1,apn2
 ```
 
 To configure multiple APNs with the same APN for different interfaces:
@@ -527,8 +645,8 @@ To configure multiple APNs with the same APN for different interfaces:
 ```ros
 [admin@MikroTik] > /interface/lte/apn/add name=interface1 apn=apn1
 [admin@MikroTik] > /interface/lte/apn/add name=interface2 apn=apn1 passthrough-interface=ether1
-[admin@MikroTik] > /interface/lte/set lte1 apn-profiles=interface1
-[admin@MikroTik] > /interface/lte/set lte2 apn-profiles=interface2
+[admin@MikroTik] > /interface/lte/set lte1 apn-profile=interface1
+[admin@MikroTik] > /interface/lte/set lte2 apn-profile=interface2
 ```
 
 Additionally, you can override the default dynamic dhcp server parameters/options by creating a DHCP server manually on the same passthrough-interface. For example, the default lease-time is 1 minute:

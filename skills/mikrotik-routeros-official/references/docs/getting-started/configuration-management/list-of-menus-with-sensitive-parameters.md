@@ -23,9 +23,9 @@ Below you can find a list of menus where sensitive (shown only when [show-sensit
 | `/interface/pppoe-client` | password | [PPPoE#PPPoEClient](../../virtual-private-networks/pppoe/index.md) |
 | `/ppp/secret` | password | [PPP AAA#UserDatabase](../../authentication-authorization-accounting/ppp-aaa.md) |
 | `/ppp/l2tp-secret` | secret | Work in Progress |
-| `/ip/ssh/export-host-key`  `/ip/ssh/import-host-key` | passphrase | [SSH#SSHServer](../../management-tools/ssh.md) |
+| `/ip/ssh/export-host-key`  `/ip/ssh/import-host-key` | passphrase | [SSH](../../management-tools/ssh#server-host-key) |
 | `/ip/ipsec` | auth-key, enc-key, ppk-secret, secret, password, passphrase, key | auth-key, enc-key - [IPsec InstalledSA](../../cli-reference/ip/ipsec/installed-sa/installed-sa.md)  secret, password - [IPsec Identity](../../cli-reference/ip/ipsec/identity.md)  ppk-secret - Work in Progress [IPsec Peer](../../cli-reference/ip/ipsec/peer.md)  key, passphrase - Work in Progress IPsec Keys|
-| `/system/ssh-exec` | password | [SSH#SSHexec](../../management-tools/ssh.md) |
+| `/system/ssh-exec` | password | [SSH](../../management-tools/ssh#run-remote-commands-from-scripts) |
 | `/user` | password, passphrase | [User](../../authentication-authorization-accounting/user.md) |
 | `/disk` | nvme-tcp-server-password, nvme-tcp-password, smb-server-password, smb-password, self-encryption-password, encryption-key, sshfs-password | nvme-tcp-server-password, nvme-tcp-password - [NVMe over TCP](../../storage/nvme-over-tcp.md)  sshfs-password - Work in Progress  smb-server-password, smb-password - [SMB](../../storage/smb.md)  self-encryption-password, encryption-key - [Self-Encrypting Drives](../../storage/self-encrypting-drives.md)|
 | `/interface/vrrp` | password | [VRRP#Parameters](../../high-availability-solutions/vrrp.md) |

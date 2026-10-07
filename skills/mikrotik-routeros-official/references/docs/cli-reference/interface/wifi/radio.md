@@ -39,7 +39,7 @@
 <ArgTableRow arg="max-station-interfaces" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="max-peers" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="hw-type" typ="string" unset="1"></ArgTableRow>
-<ArgTableRow arg="hw-caps" typ="multi { array-id, hw-cap: enum (sniffer | qos-classifier-dscp | spectral | channel-switch | mlo | hw-protection-mode | beacon-protection | meshpoint)
+<ArgTableRow arg="hw-caps" typ="multi { array-id, hw-cap: enum (sniffer | qos-classifier-dscp | spectral | channel-switch | mlo | hw-protection-mode | beacon-protection)
  }" unset="1"></ArgTableRow>
 <ArgTableRow arg="ml-group" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="interface" typ="iface_enum" unset="1"></ArgTableRow>

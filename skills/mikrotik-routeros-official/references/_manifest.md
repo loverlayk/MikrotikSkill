@@ -1,10 +1,10 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `e0dd5a78acc9ae6768772bb44b1be22cb8a3fc8f5df71b9a8c8de57b99a2f599`
-Pages in current index: 1473
-Pages changed/written: 1463
-Pages removed: 0
+Index SHA-256: `7fd22442f144de8fff18625a8c5fac661f3aee65ebf998a6f20ec44e8797858a`
+Pages in current index: 1472
+Pages changed/written: 31
+Pages removed: 1
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
@@ -102,31 +102,31 @@ Pages failed: 0
 - [/certificate/settings](docs/cli-reference/certificate/settings.md) `9abf431bfdb9`
 - [/certificate/sign-certificate-request](docs/cli-reference/certificate/sign-certificate-request.md) `be56ce81e906`
 - [/certificate/sign](docs/cli-reference/certificate/sign.md) `ff7493fd2d39`
-- [/cmr](docs/cli-reference/cmr.md) `8fc3b17d5689`
+- [/cmr](docs/cli-reference/cmr.md) `32fdfc44929e`
 - [/cmr/alert](docs/cli-reference/cmr/alert.md) `dda1c4c57265`
 - [/cmr/alert/show-devices](docs/cli-reference/cmr/alert/show-devices.md) `76ed47a16b29`
 - [/cmr/alert/test](docs/cli-reference/cmr/alert/test.md) `aec0c2de4359`
-- [/cmr/client](docs/cli-reference/cmr/client.md) `b838a094a86c`
-- [/cmr/client/forget](docs/cli-reference/cmr/client/forget.md) `5143a0aae2b2`
-- [/cmr/client/pair](docs/cli-reference/cmr/client/pair.md) `c5b6cf5d7a4a`
+- [/cmr/client](docs/cli-reference/cmr/client.md) `2829afe8dd00`
+- [/cmr/client/forget](docs/cli-reference/cmr/client/forget.md) `b3bdd8697a57`
+- [/cmr/client/pair](docs/cli-reference/cmr/client/pair.md) `de9af0320afc`
 - [/cmr/client/push-button](docs/cli-reference/cmr/client/push-button.md) `4561e83c189f`
 - [/cmr/device](docs/cli-reference/cmr/device.md) `a48013b4279b`
 - [/cmr/device/apptraffic](docs/cli-reference/cmr/device/apptraffic.md) `981c333b43b3`
 - [/cmr/device/dashboard](docs/cli-reference/cmr/device/dashboard.md) `fa18a928abf5`
 - [/cmr/device/pair](docs/cli-reference/cmr/device/pair.md) `597fec745dd9`
-- [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `f9f6ce3767e7`
+- [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `566433efc5c4`
 - [/cmr/device/run-script](docs/cli-reference/cmr/device/run-script.md) `05e0b11ea30b`
-- [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `647cecd259d0`
+- [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `ecd368dc09f1`
 - [/cmr/device/wifi-logs](docs/cli-reference/cmr/device/wifi-logs.md) `f4241a91677e`
 - [/cmr/layout](docs/cli-reference/cmr/layout.md) `7eac06dd3424`
 - [/cmr/layout/add-devices](docs/cli-reference/cmr/layout/add-devices.md) `114ef5bad32f`
-- [/cmr/layout/link](docs/cli-reference/cmr/layout/link.md) `45f0db3b14b3`
+- [/cmr/layout/link](docs/cli-reference/cmr/layout/link.md) `15fbf16ca6f3`
 - [/cmr/layout/node](docs/cli-reference/cmr/layout/node.md) `733e759181b7`
 - [/cmr/layout/rebuild-links](docs/cli-reference/cmr/layout/rebuild-links.md) `513468dcd233`
 - [/cmr/push-button](docs/cli-reference/cmr/push-button.md) `1934ad7a56ea`
-- [/cmr/upgrade](docs/cli-reference/cmr/upgrade.md) `ac87dba6c261`
-- [/cmr/upgrade/job](docs/cli-reference/cmr/upgrade/job.md) `04c1135e152b`
-- [/cmr/upgrade/job/run-next](docs/cli-reference/cmr/upgrade/job/run-next.md) `9a5fe4d6d774`
+- [/cmr/upgrade](docs/cli-reference/cmr/upgrade.md) `50148222978a`
+- [/cmr/upgrade/job](docs/cli-reference/cmr/upgrade/job.md) `041de7dbf478`
+- [/cmr/upgrade/job/run-next](docs/cli-reference/cmr/upgrade/job/run-next.md) `f131349a7216`
 - [/cmr/upgrade/job/show-devices](docs/cli-reference/cmr/upgrade/job/show-devices.md) `844583121589`
 - [/cmr/upgrade/show-devices](docs/cli-reference/cmr/upgrade/show-devices.md) `933346c15fe1`
 - [/cmr/upgrade/trigger](docs/cli-reference/cmr/upgrade/trigger.md) `2ccc4c29a6a5`
@@ -430,7 +430,7 @@ Pages failed: 0
 - [/interface/wifi/network](docs/cli-reference/interface/wifi/network.md) `3aef3c26b9bc`
 - [/interface/wifi/network/radio](docs/cli-reference/interface/wifi/network/radio.md) `2563434fa5af`
 - [/interface/wifi/provisioning](docs/cli-reference/interface/wifi/provisioning.md) `c968e7b531dc`
-- [/interface/wifi/radio](docs/cli-reference/interface/wifi/radio.md) `24b9a0e04307`
+- [/interface/wifi/radio](docs/cli-reference/interface/wifi/radio.md) `1bd677ef4487`
 - [/interface/wifi/radio/provision](docs/cli-reference/interface/wifi/radio/provision.md) `ca117f568581`
 - [/interface/wifi/radio/reg-info](docs/cli-reference/interface/wifi/radio/reg-info.md) `3c35ce8430a9`
 - [/interface/wifi/radio/settings](docs/cli-reference/interface/wifi/radio/settings.md) `e2d95f2a0696`
@@ -588,7 +588,7 @@ Pages failed: 0
 - [/ip/dhcp-server/option/sets](docs/cli-reference/ip/dhcp-server/option/sets.md) `343f0cdc35e8`
 - [/ip/dhcp-server/setup](docs/cli-reference/ip/dhcp-server/setup.md) `eb7dc04113fd`
 - [/ip/dns](docs/cli-reference/ip/dns.md) `dd2e666d8040`
-- [/ip/dns/adlist](docs/cli-reference/ip/dns/adlist.md) `4e89456c06c0`
+- [/ip/dns/adlist](docs/cli-reference/ip/dns/adlist.md) `04fc33ffd055`
 - [/ip/dns/adlist/pause](docs/cli-reference/ip/dns/adlist/pause.md) `4f0f9b0d8586`
 - [/ip/dns/adlist/reload](docs/cli-reference/ip/dns/adlist/reload.md) `2995f713a9c9`
 - [/ip/dns/cache](docs/cli-reference/ip/dns/cache.md) `9b84e1aafba2`
@@ -701,10 +701,10 @@ Pages failed: 0
 - [/ip/socks/connections](docs/cli-reference/ip/socks/connections.md) `3ebe840cfe6f`
 - [/ip/socks/users](docs/cli-reference/ip/socks/users.md) `bfb7d81be78b`
 - [/ip/socksify](docs/cli-reference/ip/socksify.md) `3016730ba0a8`
-- [/ip/ssh](docs/cli-reference/ip/ssh.md) `c87c1a2ac3ee`
-- [/ip/ssh/export-host-key](docs/cli-reference/ip/ssh/export-host-key.md) `3af7f365888a`
+- [/ip/ssh](docs/cli-reference/ip/ssh.md) `0f0e1c0e73d8`
+- [/ip/ssh/export-host-key](docs/cli-reference/ip/ssh/export-host-key.md) `712cca89d3e6`
 - [/ip/ssh/import-host-key](docs/cli-reference/ip/ssh/import-host-key.md) `8075bace72a7`
-- [/ip/ssh/known-hosts](docs/cli-reference/ip/ssh/known-hosts.md) `d26f7f185b65`
+- [/ip/ssh/known-hosts](docs/cli-reference/ip/ssh/known-hosts.md) `56d9a2331416`
 - [/ip/ssh/regenerate-host-key](docs/cli-reference/ip/ssh/regenerate-host-key.md) `55054cdff109`
 - [/ip/tftp](docs/cli-reference/ip/tftp.md) `b24a9bdc848f`
 - [/ip/tftp/settings](docs/cli-reference/ip/tftp/settings.md) `b87e65cd8de8`
@@ -997,10 +997,9 @@ Pages failed: 0
 - [/system/routerboard/mode-button](docs/cli-reference/system/routerboard/mode-button.md) `dd7fe8f121ad`
 - [/system/routerboard/reset-button](docs/cli-reference/system/routerboard/reset-button.md) `62ab8a93514e`
 - [/system/routerboard/settings](docs/cli-reference/system/routerboard/settings.md) `a607916edccc`
-- [/system/routerboard/settings/keep-frequency](docs/cli-reference/system/routerboard/settings/keep-frequency.md) `6b19237d29c4`
 - [/system/routerboard/upgrade](docs/cli-reference/system/routerboard/upgrade.md) `5c39a5eed501`
-- [/system/routerboard/usb](docs/cli-reference/system/routerboard/usb.md) `3c86e722b4e0`
-- [/system/routerboard/usb/power-reset](docs/cli-reference/system/routerboard/usb/power-reset.md) `f71f844dc345`
+- [/system/routerboard/usb](docs/cli-reference/system/routerboard/usb.md) `1a436ecd77ae`
+- [/system/routerboard/usb/power-reset](docs/cli-reference/system/routerboard/usb/power-reset.md) `4806eccfc8bb`
 - [/system/routerboard/wps-button](docs/cli-reference/system/routerboard/wps-button.md) `f02ef9e1bd9c`
 - [/system/rtrace](docs/cli-reference/system/rtrace.md) `c13b2ce23071`
 - [/system/rtrace/start](docs/cli-reference/system/rtrace/start.md) `3fe7d3837781`
@@ -1011,8 +1010,8 @@ Pages failed: 0
 - [/system/script/job](docs/cli-reference/system/script/job.md) `631100894afa`
 - [/system/serial-terminal](docs/cli-reference/system/serial-terminal.md) `78c7e667a04e`
 - [/system/shutdown](docs/cli-reference/system/shutdown.md) `e4c2467635d7`
-- [/system/ssh-exec](docs/cli-reference/system/ssh-exec.md) `8570b840ceed`
-- [/system/ssh](docs/cli-reference/system/ssh.md) `1a24c1e94214`
+- [/system/ssh-exec](docs/cli-reference/system/ssh-exec.md) `4767f27eb519`
+- [/system/ssh](docs/cli-reference/system/ssh.md) `022839cca7ac`
 - [/system/sup-output](docs/cli-reference/system/sup-output.md) `68b8e9493ac2`
 - [/system/swos](docs/cli-reference/system/swos.md) `cad9f838dec6`
 - [/system/swos/load-config](docs/cli-reference/system/swos/load-config.md) `b542bb16e422`
@@ -1031,10 +1030,10 @@ Pages failed: 0
 - [/task/add](docs/cli-reference/task/add.md) `b5ddf3544eaf`
 - [/task/next](docs/cli-reference/task/next.md) `8c529f12b1a9`
 - [/task/terminate](docs/cli-reference/task/terminate.md) `037636186dd7`
-- [/tool/apptraffic](docs/cli-reference/tool/apptraffic.md) `a8d42387856e`
-- [/tool/apptraffic/stats](docs/cli-reference/tool/apptraffic/stats.md) `66e9d70d4e73`
-- [/tool/apptraffic/stats/categories](docs/cli-reference/tool/apptraffic/stats/categories.md) `c8a51fc8ba26`
-- [/tool/apptraffic/stats/clear](docs/cli-reference/tool/apptraffic/stats/clear.md) `cc74022c3727`
+- [/tool/apptraffic](docs/cli-reference/tool/apptraffic.md) `1f4d02a8290e`
+- [/tool/apptraffic/stats](docs/cli-reference/tool/apptraffic/stats.md) `839e52e8e443`
+- [/tool/apptraffic/stats/categories](docs/cli-reference/tool/apptraffic/stats/categories.md) `89f3cc55ed27`
+- [/tool/apptraffic/stats/clear](docs/cli-reference/tool/apptraffic/stats/clear.md) `c5f10479c932`
 - [/tool/bandwidth-server](docs/cli-reference/tool/bandwidth-server.md) `ee826ce259ed`
 - [/tool/bandwidth-server/session](docs/cli-reference/tool/bandwidth-server/session.md) `7d0241db0b2f`
 - [/tool/bandwidth-test](docs/cli-reference/tool/bandwidth-test.md) `062e5c5c51db`
@@ -1209,7 +1208,7 @@ Pages failed: 0
 - [PFIFO,BFIFO](docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md) `40358a1696dd`
 - [UPnP](docs/firewall-and-quality-of-service/upnp.md) `f54adefa8b3d`
 - [Firewall and QoS Case Studies](docs/firewall-and-quality-of-service/user-guides.md) `a7386d01da90`
-- [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `c112c2785a40`
+- [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `64baf17452a7`
 - [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `aec9b9732524`
 - [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `4c2276a4d875`
 - [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `2d4b362ea4b5`
@@ -1219,7 +1218,7 @@ Pages failed: 0
 - [Backup](docs/getting-started/configuration-management/backup.md) `4cff48470879`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `fb6534eeba8c`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `b147d93e9dcd`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `68c9dea64b61`
 - [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `17dbd8d42e83`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
@@ -1310,8 +1309,8 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `35dcd232c392`
-- [CMR-Client](docs/management-tools/cmr/client.md) `59c7a03b3b03`
+- [CMR](docs/management-tools/cmr.md) `a0e768ab9be3`
+- [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
 - [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
@@ -1320,7 +1319,7 @@ Pages failed: 0
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
 - [RoMON](docs/management-tools/romon.md) `a7b07c79ac39`
 - [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
-- [SSH](docs/management-tools/ssh.md) `0fbbd5b10ab2`
+- [SSH](docs/management-tools/ssh.md) `192eaa91411d`
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
 - [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`
@@ -1332,7 +1331,7 @@ Pages failed: 0
 - [GPS](docs/mobile-networking/gps.md) `900a51942f5a`
 - [GPS-tracking using HTTP POST](docs/mobile-networking/gps/gps-tracking-using-http-post.md) `465ccd56b5a6`
 - [GPS-tracking using MQTT and ThingsBoard](docs/mobile-networking/gps/gps-tracking-using-mqtt-and-thingsboard.md) `0b73ad750e45`
-- [LTE/5G](docs/mobile-networking/lte-5g.md) `78ddb23324e0`
+- [LTE/5G](docs/mobile-networking/lte-5g.md) `241fe0a7047d`
 - [MikroTik Connectivity](docs/mobile-networking/mikrotik-connectivity.md) `27e529909722`
 - [PPP](docs/mobile-networking/ppp.md) `a6b8a3a1f7b9`
 - [SMS](docs/mobile-networking/sms.md) `89ba0073e173`
@@ -1348,7 +1347,7 @@ Pages failed: 0
 - [DHCPv6 Server](docs/network-management/dhcp/dhcpv6-server.md) `c389b3aea07c`
 - [DHCP Relay](docs/network-management/dhcp/relay.md) `a6200eedeb60`
 - [DHCP Server](docs/network-management/dhcp/server.md) `993d78ac03a9`
-- [DNS](docs/network-management/dns.md) `6ddff02d0dd8`
+- [DNS](docs/network-management/dns.md) `68e6af0386e7`
 - [Openflow](docs/network-management/openflow.md) `66930df30509`
 - [Proxy](docs/network-management/proxy.md) `9a6f70829eef`
 - [Reverse Proxy](docs/network-management/proxy/reverse-proxy.md) `a5f9b5adc222`
@@ -1378,7 +1377,7 @@ Pages failed: 0
 - [Clock](docs/system-information-and-utilities/clock.md) `002bee56629c`
 - [Device mode](docs/system-information-and-utilities/device-mode.md) `42df7cf3d2ee`
 - [Email](docs/system-information-and-utilities/e-mail.md) `9a48fcce472e`
-- [Fetch](docs/system-information-and-utilities/fetch.md) `7d8f76ce995c`
+- [Fetch](docs/system-information-and-utilities/fetch.md) `e89233b353ab`
 - [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`
 - [Identity](docs/system-information-and-utilities/identity.md) `8406769474c7`
 - [IP Packing](docs/system-information-and-utilities/ip-packing.md) `d318e99a766c`
@@ -1480,3 +1479,7 @@ Pages failed: 0
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
+
+## Removed pages
+
+- `docs/cli-reference/system/routerboard/settings/keep-frequency.md`
