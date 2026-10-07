@@ -6,7 +6,6 @@ import hashlib
 import html
 import json
 import re
-import shutil
 import sys
 import time
 from pathlib import Path
@@ -21,16 +20,19 @@ REFS = ROOT / "references"
 STATE = REFS / "_sync-state.json"
 MANIFEST = REFS / "_manifest.md"
 HEADERS = {
-    "User-Agent": "mikrotik-routeros-hermes-skill/1.1",
+    "User-Agent": "mikrotik-routeros-hermes-skill/1.1.1",
     "Accept": "text/markdown,text/plain;q=0.9,*/*;q=0.5",
 }
+
 
 def sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
+
 def safe(s: str) -> str:
     s = re.sub(r"[^A-Za-z0-9._-]+", "-", s.strip())
     return s.strip(".- ") or "page"
+
 
 def out_path(url: str) -> Path:
     p = urlparse(url).path.strip("/")
@@ -40,9 +42,11 @@ def out_path(url: str) -> Path:
         p = "introduction"
     return Path(*[safe(x) for x in p.split("/") if x]).with_suffix(".md")
 
+
 def discover(text: str):
     seen = set()
     pages = []
+
     for title, url in re.findall(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", text):
         url = html.unescape(url).rstrip(".,")
         if "manual.mikrotik.com" not in url:
@@ -52,7 +56,9 @@ def discover(text: str):
         if url not in seen:
             seen.add(url)
             pages.append((title.strip(), url))
+
     return pages
+
 
 def markdown_url(url: str) -> str:
     p = urlparse(url).path
@@ -60,14 +66,19 @@ def markdown_url(url: str) -> str:
         return f"{BASE}{p}.md"
     return url
 
+
 def load_state():
     if STATE.exists():
         return json.loads(STATE.read_text(encoding="utf-8"))
     return {"index_sha256": "", "pages": {}}
 
+
 def save_state(state):
-    STATE.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n",
-                     encoding="utf-8")
+    STATE.write_text(
+        json.dumps(state, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -92,6 +103,9 @@ def main():
     index_text = r.text
     index_hash = sha256(index_text)
 
+    # Capture this before replacing state, so index_changed is meaningful.
+    index_changed = state.get("index_sha256", "") != index_hash
+
     pages = discover(index_text)
     if args.limit:
         pages = pages[:args.limit]
@@ -112,6 +126,7 @@ def main():
             response = session.get(url, timeout=60)
             response.raise_for_status()
             content = response.text.strip()
+
             if not content:
                 raise RuntimeError("empty response")
 
@@ -136,19 +151,31 @@ def main():
 
         time.sleep(0.08)
 
-    # Remove pages no longer in llms.txt.
     removed = []
-    for source, meta in state["pages"].items():
-        if source not in desired:
-            path = REFS / meta.get("path", "")
-            if path.exists() and path.is_file():
-                path.unlink()
-                removed.append(str(path.relative_to(REFS)))
-                print("REMOVED", path.relative_to(REFS))
+
+    # Only remove pages that were previously known and are absent from the
+    # current official index. With --limit, do not treat the unprocessed pages
+    # as removed.
+    if not args.limit:
+        for source, meta in state["pages"].items():
+            if source not in desired:
+                path = REFS / meta.get("path", "")
+                if path.exists() and path.is_file():
+                    path.unlink()
+                    removed.append(str(path.relative_to(REFS)))
+                    print("REMOVED", path.relative_to(REFS))
+
+    # With a limited test, preserve existing state entries so the test does
+    # not accidentally replace a complete sync state with only N pages.
+    if args.limit:
+        merged_pages = dict(state["pages"])
+        merged_pages.update(desired)
+    else:
+        merged_pages = desired
 
     state = {
         "index_sha256": index_hash,
-        "pages": desired,
+        "pages": merged_pages,
     }
     save_state(state)
 
@@ -181,19 +208,25 @@ def main():
     MANIFEST.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     summary = {
-        "index_changed": state["index_sha256"] != index_hash,
+        "index_changed": index_changed,
         "pages": len(desired),
         "changed": len(changed),
         "removed": len(removed),
         "failed": len(failed),
     }
-    Path(REFS / "_sync-summary.json").write_text(
-        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+
+    (REFS / "_sync-summary.json").write_text(
+        json.dumps(summary, indent=2) + "\n",
+        encoding="utf-8",
     )
 
     print("\nSYNC SUMMARY")
     print(json.dumps(summary, indent=2))
-    return 1 if failed and not desired else 0
+
+    # Any failed page makes the sync fail. This prevents GitHub Actions from
+    # reporting Success when the corpus is only partially synchronized.
+    return 1 if failed else 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
