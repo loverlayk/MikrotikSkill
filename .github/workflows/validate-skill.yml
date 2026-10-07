@@ -1,0 +1,45 @@
+name: Validate Hermes Skill
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f skills/mikrotik-routeros-official/SKILL.md
+          test -f skills/mikrotik-routeros-official/scripts/sync_mikrotik_manual.py
+
+      - name: Validate SKILL.md
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("skills/mikrotik-routeros-official/SKILL.md")
+          text = path.read_text(encoding="utf-8")
+
+          assert text.startswith("---"), "Missing frontmatter"
+
+          for key in (
+              "name:",
+              "description:",
+              "version:",
+              "author:",
+              "license:"
+          ):
+              assert key in text, f"Missing {key}"
+
+          print("SKILL.md validation passed")
+          PY
+
+      - name: Compile sync script
+        run: |
+          python3 -m py_compile \
+            skills/mikrotik-routeros-official/scripts/sync_mikrotik_manual.py
