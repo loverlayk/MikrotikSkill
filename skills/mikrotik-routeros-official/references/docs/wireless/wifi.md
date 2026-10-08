@@ -359,7 +359,7 @@ Possible types of classified interference:
 The wps-client command enables obtaining authentication information from a WPS-enabled AP.
 
 ```ros
-/interface/wifi/wps-client/wifi1
+/interface/wifi/wps-client wifi1
 ```
 
 ### WPS server
@@ -549,7 +549,7 @@ Parameters relating to authentication.
 
 | Property | Description |
 | :-- | :-- |
-| **authentication-types** (*list of wpa-psk, wpa2-psk, wpa2-psk-sha2, wpa-eap, wpa2-eap, wpa3-psk, owe, wpa3-eap, wpa3-eap-192*) | Authentication types to enable on the interface.  The default value is an empty list (no authentication, an open network).  Configuring a passphrase adds to the default list the *wpa2-psk* authentication method (if the interface is an AP) or both *wpa-psk* and *wpa2-psk* (if the interface is a station).  Configuring an *eap-username* and an *eap-password* adds to the default list the *wpa-eap and wpa2-eap* authentication methods. |
+| **authentication-types** (*list of wpa-psk, wpa2-psk, wpa2-psk-sha2, wpa-eap, wpa2-eap, wpa3-psk, wpa3-psk-gd, owe, wpa3-eap, wpa3-eap-192*) | Authentication types to enable on the interface.  Interfaces without a configured passphrase default to an empty list (no authentication, an open network).  Interfaces with a configured passphrase default to a set of passphrase-based authentication types, which depends on their supported WiFi standard, frequency band and interface mode. APs operating in the 6-7GHz band default to wpa3-psk and wpa3-psk-gd. WiFi 7 APs operating in the 2.4 and 5 GHz bands default to wpa2-psk,wpa3-psk and wpa3-psk-gd. WiFi 5 and 6 APs operating in the 2.4 and 5 GHz bands default wpa2-psk. Station-mode interfaces default to wpa-psk and wpa2-psk.  Station-mode interfaces with a configured *eap-username* and an *eap-password* default to wpa-eap and wpa2-eap authentication methods. |
 | **beacon-protection** (*disabled*\| *enabled*) | Whether to enable beacon integrity protection. Support depends on 'beacon-protection' radio capability.  Enabled by default for 802.11be interfaces. |
 | **connect-group** ( *string*) | APs within the same connect group do not allow more than 1 client device with the same MAC address. This is to prevent malicious authorized users from intercepting traffic intended for other users ('MacStealer' attack) or performing a denial of service attack by spoofing the MAC address of a victim.  Handling of new connections with duplicate MAC addresses depends on the connect-priority of AP interfaces involved.  By default, all APs are assigned the same connect-group. |
 | **connect-priority** (accept-priority/hold-priority (*integers*)) | These parameters determine how a connection is handled if the MAC address of the client device is the same as that of another active connection to another AP. If (accept-priority of AP2) < (hold-priority of AP1), a connection to AP2 will cause the client to be dropped from AP1. If (accept-priority of AP2) = (hold-priority of AP1), a connection to AP2 will be allowed only if the MAC address can no longer be reached via AP1. If (accept-priority of AP2) > (hold-priority of AP1), a connection to AP2 will not be accepted.  If omitted, hold-priority is the same as accept-priority. By default, APs, which perform user authentication, have higher priority (lower integer value), than open APs. |
@@ -773,7 +773,7 @@ Command parameters:
 
 ### WPS
 
-`/interface/wifi/wps-client/wifi` 
+`/interface/wifi/wps-client` 
 Command parameters:
 
 | Parameters | Description |
@@ -796,7 +796,7 @@ Information about the capabilities of each radio can be gained by running the `/
 | **bands** (*list of strings*) | Supported frequency bands, wireless standards, and channel widths. |
 | **ciphers** (*list of strings*) | Supported encryption ciphers. |
 | **countries** (*list of strings*) | Regulatory domains supported by the interface. |
-| **hw-caps** (*list of strings*) | Additional supported features (e.g. sniffer, qos-classifier-dscp). |
+| **hw-caps** (*list of strings*) | Strings representing radio firmware support for certain features.  **channel-switch** - ability to switch radio operating channel without interrupting connections established on the current channel  **hw-protection-mode** - ability to force a given RTS/CTS policy via the configuration.hw-protection-mode parameter.  **qos-classifier-dscp** - ability to perform traffic classification based on IP DSCP when configuration.qos-classifier is set to 'dscp-high-3-bits'  **sniffer** - ability to operate in monitor mode, capturing 802.11 frames  **spectral** - ability to operate as a spectroscope when required by the spectral-scan and spectral-history utilities.|
 | **hw-type** (*string*) | Radio hardware model number. |
 | **max-interfaces** (*integer*) | Maximum number of logical interfaces. |
 | **max-peers** (*integer*) | Maximum number of associated peers (connected stations). |
@@ -808,6 +808,16 @@ Information about the capabilities of each radio can be gained by running the `/
 | **radio-mac** (*MAC*) | MAC address of the radio interface. Can be used to match radios to interface configurations. |
 | **rx-chains** (*list of integers*) | IDs for radio chains available for receiving radio signals. |
 | **tx-chains** (*list of integers*) | IDs for radio chains available for transmitting radio signals. |
+
+#### Radio settings
+
+Several radio-related settings can be changed in the `/interface/wifi/radio/settings` menu.
+
+| Property | Description |
+| :-- | :-- |
+| **default-country** (*name of a country*) | The regulatory domain to apply, if no other value is set for the master interface of any managed radio |
+| **external-antenna** (*yes* \| *no*; *default*: **no**) | Whether to switch to the external antenna connector on devices such as LtAP ax, where both an internal antenna and an external antenna connector is available. |
+| **wifi-band** (*2.4GHz* \| *5GHz*; *default*: **2GHz**) | The frequency band to use on multi-band radios. |
 
 ### Registration table
 

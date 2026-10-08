@@ -193,6 +193,24 @@ MikroTik@192.168.1.100  success   name: MikroTik
 
 The command first lists the selected devices as `running`, then shows each device's `STATUS` and `OUTPUT` when the script finishes. `run-script` refuses an empty selection: without `numbers` or `labels` it fails with "numbers and/or labels required", and with labels that match no device it fails with "no devices selected". Here, `labels` follows the same label syntax as everywhere in CMR: a comma-separated list where plain labels are combined with OR, a label that starts with `+` must also match (AND), and a label that starts with `-` excludes devices (AND NOT). For example, `labels=office,+ap` selects devices with both labels, and `labels=all,-core` selects all devices except those with the `core` label. Without the comma, `office+ap` is read as a single label name.
 
+#### run-script permissions
+
+Scripts sent with [`/cmr/device/run-script`](../../cli-reference/cmr/device/run-script) run on each client with the `read`, `write`, `test`, and `reboot` policies, without a user session. Commands that need other policies fail with "not enough permissions (9)", for example `/user add` needs the `policy` policy, and `/tool sniffer` needs the `sniff` policy. `/export` fails for the same reason: exporting the configuration needs the `policy` policy. Sensitive values are not readable, they are shown as `*`, but they can be set, for example the PPP secret password.
+
+Scripts and scheduler entries created by `run-script` are saved with the same four policies, shown as `policy=reboot,read,write,test`. The `owner` is the system user (`*sys`), not the controller user. The policy set cannot be changed on the client: a script that tries to grant a wider policy has its `policy` reduced to the four policies. The table shows what each policy can do under `run-script`:
+
+| Policy | Example command | Result |
+| --- | --- | --- |
+| `read` | `:put [/system identity get name]` | OK, the value is returned. |
+| `write` | `/file add contents=x`, `/ip service set telnet port=2323`, `/tool romon set enabled=no` | OK, the configuration is changed. |
+| `write` | `/system script add`, `/system scheduler add` | OK, the entries are saved with `policy=reboot,read,write,test`. |
+| `write` | `/ppp secret add name=test password=abc` | OK, the password is set even though the `sensitive` policy is missing. |
+| `test` | `/ping`, `/tool traceroute` | OK |
+| `reboot` | `/system reboot` | OK, the client reboots and reconnects to the server. |
+| `policy` | `/user add`, `/user group add` | Fail with "not enough permissions (9)". |
+| `sniff` | `/tool sniffer quick` | Fail with "not enough permissions (9)". |
+| `sensitive` | `:put [/ppp secret get ... password]` | The value is shown as `*`. |
+
 ## Dashboard
 
 The [`/cmr/device/dashboard`](../../cli-reference/cmr/device/dashboard) command opens a live view of the selected devices: how many are connected, the CPU, memory, and disk usage, the interface state, and the traffic throughput. The view repeats every few seconds until you stop it. Press `m`, `l`, `a`, `p`, `w`, or `s` to switch between the main, alerts, devices, ports, WiFi, and resources views, `D` to dump the current view, and `Q` to quit:
@@ -603,7 +621,7 @@ The network appears in the list. The settings of a group have dotted names. In t
    .authentication-types=wpa2-psk vlan-id=10
 ```
 
-{/* Screenshot placeholder — add `../img/cmr_wifi_network.webp` when the WinBox screenshot is available:
+{/* Screenshot placeholder â€” add `../img/cmr_wifi_network.webp` when the WinBox screenshot is available:
 <center>![](../img/cmr_wifi_network.webp)</center>
 <center>**The image shows the WiFi network as configured in the WinBox GUI.**</center>
 

@@ -87,10 +87,13 @@ Some MikroTik PoE-Out devices support the global PoE settings
 | Property | Description |
 | :-- | :-- |
 | **ether1-poe-in-long-cable** (*yes \| no*) | Setting it to "yes" will disable short detection on all poe-out ports. This is a potentially dangerous setting and should be used with caution.  This feature disables strict input/output current monitoring (short detection) to allow the use of PoE-Out with long ethernet cables and/or avoiding improper short-circuit detection. It  can also affect PoE-Out behavior on a PSE which is powered using a DC connector |
-| **psuX-max-power** | Specifies the maximum power in watts that the PSU can draw.  **default - 96W**  psu1 - RB5009UPr+S+IN  = DC-jack | RB5009UPr+S+OUT - 2-PIN  psu2 - RB5009UPr+S+IN  = 2-PIN terminal | RB5009UPr+S+OUT - not available  This command is designed specifically for RB5009UPr+S+ to ensure the safety and optimal performance of the Power Supply Unit (PSU). It allows users to set the maximum power limit for the PSU, preventing potential overload that could compromise the stability and longevity of the system. |
+| **psuX-max-power**  **jack-max-power**  **2pin-max-power** | Specifies the maximum power in watts that the PSU can draw. **default - 96W** |
+| **poe-in-max-power** | Specifies the maximum power in watts that the PoE injector (e.g., 802.3bt) can deliver, when the device (PSE) itself is powered via PoE-In |
 | **routerboard-max-self-power** | Specifies how much power the device reserves for itself for powering. |
+| **routerboard-max-total-power** | Read-only. Maximum power consumption of the board itself, without PoE-Out. It is used to calculate the PoE-Out budget on devices where the budget is determined by PSU power (PoE budget = PSU power − routerboard power) |
 | **poe-out-limit-power** | PoE-Out budget limit |
-| **psuX-poe-out-max-power** | PoE-Out limit in watts per PSU |
+| **psuX-poe-out-max-power**  **jack-poe-out-max-power**  **2pin-poe-out-max-power**  **poe-in-poe-out-max-power** | Read-only. PoE-Out limit in watts per power source (PSU, DC jack, 2-pin terminal or PoE-In injector) |
+| **version** | Read-only. PoE controller (ATtiny) firmware version |
 
 #### Port Settings
 
@@ -136,14 +139,20 @@ SwOS interface provides basic PoE-Out configuration and monitoring options, see 
 | Property | Description |
 | :-- | :-- |
 | **name** () | Name of an interface |
+| **port-type** () | Shows whether the interface is capable of PoE-Out, PoE-In, or both (**poe-out**, **poe-in**, **poe-in/poe-out**) |
 | **poe-out** () | Shows PoE-Out state |
-| **poe-out-status** () | Shows the current PoE-Out status on the portpowered-on - Power is applied to the port, and PoE-Out is operating normally.waiting-for-load - PSE attempts to detect if power can be applied to the port. For powering, there should be resistance in the range from 3kΩ to 26.5kΩ;short-circuit - Short-circuit is detected on the PoE-Out port, power is switched off, and only the detection with low voltage takes place. This can also mean that PoE is not supported on the connected device.overload - The PoE-Out current limit is exceeded, and power is switched off on the PoE-Out port. For port limits, see each model's specifications.voltage-too-low - PD can not be powered with the voltage provided from PSE.voltage-too-high - The connected device is detected as a PoE-In device, but the output voltage from the PSE is higher than the range supported by the PD;current-too-low - current-too-low means that PD draws less current (&lt;10mA) than a normal PoE-Out device shouldno_valid_psu - No valid power supply unit is detected. The PSE does not have a sufficient/power-capable power source to provide PoE-Out on the port, so power is not applied. Check that the device is powered from a supported power source. If the device PoE-In port supports IEEE 802.3bt (PoE++), then it should be powered from an 802.3bt (BT) PSE or a 4-pair (4P) PoE Injector. Powering the device from an 802.3af/at PSE or a passive 2-pair injector is not considered a valid power source for PoE-Out;lldp-power-off - Indicates the board is powered via PoE-In and the LLDP-approved power budget received from the upstream PSE is insufficient to power the board's own PoE-Out port(s).low-voltage-pd-detected - The connected PD supports only low voltage and cannot be powered from this PSE with the existing powered voltage. Power is not applied, to avoid damage to the PD. Power the PD from a low-voltage PSE, or switch the port to low voltage (poe-voltage=low) on PSEs with switchable voltage modes;power-limiting port - The PD is powered with limited power, because the power approved by LLDP negotiation is below the power requested by the PD. This status is possible when the device itself is powered via PoE-In.voltage_on_poe-in - Shows the voltage currently present on the PoE-Out port. This status indicates that the PoE-Out port has detected an unexpected voltage input, which can occur in two cases:External Power Source – Another device is supplying power to the port (PoE-In voltage).Internal Fault – The PoE-Out circuitry on the port may be damaged. The delivered voltage at PD is too low for normal powering (for example, Vmin =>30V, but 24V is provided);  PD uses a second power source which has a higher voltage than PSE, so all current is taken from the second DC source, not the PSE PoE-Out port. off - all detection and power is turned off for this port;power_reset - PSE controller is resetting the power, for example, when executing the power cycle command or when pings fail (power-cycle-ping);controller_init - PSE controller initialization;controller_upgrade - PSE controller is being upgraded;controller_error - PSE controller does not respond. |
+| **poe-voltage** () | Shows PoE-Out voltage selection (**auto**, **low**, **high**) |
+| **poe-out-status** () | Shows the current PoE-Out status on the portpowered-on - Power is applied to the port, and PoE-Out is operating normally.waiting-for-load - PSE attempts to detect if power can be applied to the port. For powering, there should be resistance in the range from 3kΩ to 26.5kΩ;short-circuit - Short-circuit is detected on the PoE-Out port, power is switched off, and only the detection with low voltage takes place. This can also mean that PoE is not supported on the connected device.overload - The PoE-Out current limit is exceeded, and power is switched off on the PoE-Out port. For port limits, see each model's specifications.voltage-too-low - PD can not be powered with the voltage provided from the PSE (for example, Vmin =>30V, but only 24V is provided - this can be caused by voltage drop on long cables).voltage-too-high - The connected device is detected as a PoE-In device, but the output voltage from the PSE is higher than the range supported by the PD;current-too-low - current-too-low means that PD draws less current (&lt;10mA) than a normal PoE-Out device shouldno-valid-PSU - No valid power supply unit is detected. The PSE does not have a sufficient/power-capable power source to provide PoE-Out on the port, so power is not applied. Check that the device is powered from a supported power source. If the device PoE-In port supports IEEE 802.3bt (PoE++), then it should be powered from an 802.3bt (BT) PSE or a 4-pair (4P) PoE Injector. Powering the device from an 802.3af/at PSE or a passive 2-pair injector is not considered a valid power source for PoE-Out;lldp-power-off - Indicates the board is powered via PoE-In and the LLDP-approved power budget received from the upstream PSE is insufficient to power the board's own PoE-Out port(s).low-voltage-pd-detected - The connected PD supports only low voltage and cannot be powered from this PSE with the existing powered voltage. Power is not applied, to avoid damage to the PD. Power the PD from a low-voltage PSE, or switch the port to low voltage (poe-voltage=low) on PSEs with switchable voltage modes;voltage-on-poe-in - Shows the voltage currently present on the PoE-Out port. This status indicates that the PoE-Out port has detected an unexpected voltage input, which can occur in two cases:External Power Source – Another device is supplying power to the port (PoE-In voltage) - for example, the PD uses a second power source with a higher voltage than the PSE, so all current is taken from the second DC source instead of the PSE PoE-Out port.Internal Fault – The PoE-Out circuitry on the port may be damaged.low-voltage-too-low - The low input voltage on the PSE is too low to power the PD, power is not applied;disabled - all detection and power is turned off for this port (poe-out=off);power_reset - PSE controller is resetting the power, for example, during a PoE controller upgrade, or when executing the power cycle command or when pings fail (power-cycle-ping);controller-init - PSE controller initialization;controller-upgrade - PSE controller is being upgraded;controller-error - PSE controller does not respond. |
 | **poe-out-voltage** () | Displays PoE Voltage which is applied to the PD. |
 | **poe-out-current** () | Displays the port current (mA) which is drawn by the PD. |
 | **poe-out-power** () | Displays PD power consumption |
 | **poe-out-power-pair()** | Displays on which power pair PSE is delivering power to PD. (**a** = 1,2(+)  3,6(-) ; **b** = 4,5(+)  7,8(-) ; **bt** = all 4 pairs). |
 
 If the `power-cycle-ping` feature is used, `/interface/ethernet/poe/monitor [find]` will show additional fields:
+
+:::note
+When monitoring a **PoE-In** port (the device itself is powered via PoE-In), the monitor may display a `"power-limiting port"` message. It means the PD (this device) is powered with limited power, because the power approved by LLDP negotiation is below the power requested by the PD.
+:::
 
 ### SNMP
 
@@ -364,16 +373,14 @@ PoE-Out ports can be monitored using a command `/interface/ethernet/poe/monitor 
 
 :::info
 
-```
-[admin@MikroTik] > /interface/ethernet/poe/monitor ether9  
-                name: ether9      
-             poe-out: auto-on     
+admin@MikroTik > /interface/ethernet/poe/monitor ether9  
+                name: ether9
+             poe-out: auto-on
       poe-out-status: powered-on  
-     poe-out-voltage: 54.2V       
-     poe-out-current: 449mA       
-       poe-out-power: 24.3W       
-  poe-out-power-pair: b       
-```
+     poe-out-voltage: 54.2V
+     poe-out-current: 449mA
+       poe-out-power: 24.3W
+  poe-out-power-pair: b
 
 :::
 
@@ -416,4 +423,4 @@ In cases where a PD does not power-up or reboots unexpectedly when powered from 
 
 PoE-Out devices which are running RouterOS 5.x can also hold old PoE-Out controller firmware; an upgrade to RouterOS 6.x will automatically update the PoE-Out firmware. Changes between 1.x and 2.x PoE-Out controller firmware will result in higher Max-port limits (0.5A to 1A) if it's supported by the hardware, and will also provide some additional data which can be monitored, and allow to use PoE-Out priorities.
 
-All MikroTik devices which come with RouterOS 6.x already support the latest PoE-Out firmware.
+All MikroTik devices which come with RouterOS 6.x already support the latest PoE-Out firmware

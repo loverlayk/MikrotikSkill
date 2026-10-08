@@ -3,8 +3,8 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `7fd22442f144de8fff18625a8c5fac661f3aee65ebf998a6f20ec44e8797858a`
 Pages in current index: 1472
-Pages changed/written: 31
-Pages removed: 1
+Pages changed/written: 3
+Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
@@ -1261,7 +1261,7 @@ Pages failed: 0
 - [LEDs](docs/hardware/leds.md) `1f3ef930b395`
 - [MTU in RouterOS](docs/hardware/mtu-in-routeros.md) `c546f3da880a`
 - [Peripherals](docs/hardware/peripherals.md) `449d8eb09ad5`
-- [PoE-Out](docs/hardware/poe-out.md) `cc66429d8b2f`
+- [PoE-Out](docs/hardware/poe-out.md) `bf9dff0ca318`
 - [Ports](docs/hardware/ports.md) `57be74b6b121`
 - [Product Naming](docs/hardware/product-naming.md) `146063d0b48b`
 - [RouterBOARD](docs/hardware/routerboard.md) `da12d1d070ab`
@@ -1309,7 +1309,7 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `a0e768ab9be3`
+- [CMR](docs/management-tools/cmr.md) `a8fa9f34d100`
 - [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
@@ -1473,13 +1473,9 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi 6 / 7 (802.11ax/be)](docs/wireless/wifi.md) `edfbdc4a7a0f`
+- [Wi-Fi 6 / 7 (802.11ax/be)](docs/wireless/wifi.md) `fa6019665b34`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `7b320a7578af`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
-
-## Removed pages
-
-- `docs/cli-reference/system/routerboard/settings/keep-frequency.md`

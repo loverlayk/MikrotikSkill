@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "a0e768ab9be3c963feefab626632d44c8128e0c65e62b9808330ba24b3070e76"
+      "sha256": "a8fa9f34d100767728284bd4d464119f3cdd5e39a97c46c6fbc0e51c67b0e44d"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -665,7 +665,7 @@
       "title": "PoE-Out",
       "markdown_url": "https://manual.mikrotik.com/docs/hardware/poe-out.md",
       "path": "docs/hardware/poe-out.md",
-      "sha256": "cc66429d8b2fc1fe00b3a1413b9bab600610e1f29636929d8c968caf0a033961"
+      "sha256": "bf9dff0ca318d97492592e8f1579c8866828b6e58cc6396f8346ca521f280ceb"
     },
     "https://manual.mikrotik.com/docs/hardware/ports.md": {
       "title": "Ports",
@@ -737,7 +737,7 @@
       "title": "Wi-Fi 6 / 7 (802.11ax/be)",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi.md",
       "path": "docs/wireless/wifi.md",
-      "sha256": "edfbdc4a7a0fb71f087525852f7cfeaa5e4fe1d0d989526ae7449b2a70145428"
+      "sha256": "fa6019665b347069e0b2c32d79d5e8c8834da760facc9a0d4006689c23ac59d4"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md": {
       "title": "WiFi CAPsMAN",
