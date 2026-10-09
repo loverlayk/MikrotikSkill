@@ -109,6 +109,10 @@ The requirements on the two devices are independent. The client accepts pairing 
 - CMR server: **confirm**, client: **none** - the client accepts automatically, but the `pair` command must be run on the server.
 - CMR server: **confirm**, client: **password** - the client accepts when the server gives the credentials of a user on the client, but the `pair` command must also be run on the server.
 
+Each `pair` command takes the username and password of the **other** device: on the server, [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) takes a user of the device being paired, and on the client, [`/cmr/client/pair`](../../cli-reference/cmr/client/pair) takes a user of the server. Running `pair` without credentials approves this device's side, and that satisfies both sides when the remote side's requirement is `none`. Pairing can usually be completed from one console: at the server, `/cmr/device/pair` already approves the server's side, so the server's own `password` is only ever typed at the client's console, never at the server. The server's `password` requirement matters only when pairing is started from the client. `confirm` is the one requirement that forces action on the server console; with it set, pairing cannot complete from the client alone.
+
+Pairing by password also finds the device for you: the server presents the `username` and `password` to every selected device, so you do not need to know which device has which password. When the devices of a site each carry a different stock password and you have their boxes in front of you, run [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) `username=admin password=<password from one box>` once per box: each run pairs the device that has that password, and the others stay pending. Use `labels` instead of `all` to limit a pairing run to part of the fleet.
+
 To start the pairing, run the `pair` command on one of the devices: [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) on the CMR server or [`/cmr/client/pair`](../../cli-reference/cmr/client/pair) on the client. Pairing can also be performed by using the physical reset button: [`/cmr/push-button`](../../cli-reference/cmr/push-button) on the server or [`/cmr/client/push-button`](../../cli-reference/cmr/client/push-button) on the client.
 
 ## Managing devices
@@ -621,7 +625,7 @@ The network appears in the list. The settings of a group have dotted names. In t
    .authentication-types=wpa2-psk vlan-id=10
 ```
 
-{/* Screenshot placeholder â€” add `../img/cmr_wifi_network.webp` when the WinBox screenshot is available:
+{/* Screenshot placeholder — add `../img/cmr_wifi_network.webp` when the WinBox screenshot is available:
 <center>![](../img/cmr_wifi_network.webp)</center>
 <center>**The image shows the WiFi network as configured in the WinBox GUI.**</center>
 

@@ -291,34 +291,34 @@ Menu: `/interface/wifi/capsman`
 
 | Property | Description |
 | :-- | :-- |
-| **ca-certificate** (*auto \| certificate name*) | Device CA certificate, CAPsMAN server requires a certificate, certificate on CAP is optional. |
-| **certificate** (*auto \| certificate name \| none*; Default: **none**) | Device certificate |
-| **enabled** *(no* \| *yes*) | Disable or enable CAPsMAN functionality |
+| **ca-certificate** (*auto* \| *certificate name*; default: **auto**) | Device CA certificate, CAPsMAN server requires a certificate, certificate on CAP is optional. |
+| **certificate** (*auto* \| *certificate name* \| *none*; default: **none**) | Device certificate |
+| **enabled** (*no* \| *yes*) | Disable or enable CAPsMAN functionality |
 | **package-path** (*string*) | Folder location for the RouterOS packages. For example, use "/upgrade" to specify the upgrade folder from the files section. If an empty string is set, CAPsMAN can use built-in RouterOS packages. Note that in this case only CAPs with the same architecture as CAPsMAN will be upgraded. |
-| **require-peer-certificate** (*yes \| no; Default: **no**)* | Require all connecting CAPs to have a valid certificate |
-| **upgrade-policy** *(none \| require-same-version \| suggest-same-upgrade; Default: **none**)* | Upgrade policy options none - do not perform upgraderequire-same-version - CAPsMAN suggests upgrading the CAP RouterOS version and, if it fails, it will not provision the CAP. (Manual provision is still possible)suggest-same-version - CAPsMAN suggests upgrading the CAP RouterOS version and if it fails, it will still be provisioned |
-| **interfaces** *(all \| interface name \| none; Default: **all**)* | Interfaces on which CAPsMAN will listen for layer 2 CAP connections |
+| **require-peer-certificate** (*yes* \| *no*; default: **no**) | Require all connecting CAPs to have a valid certificate |
+| **upgrade-policy** (*none* \| *require-same-version* \| *suggest-same-upgrade*; default: **none**) | Upgrade policy options none - do not perform upgraderequire-same-version - CAPsMAN suggests upgrading the CAP RouterOS version and, if it fails, it will not provision the CAP. (Manual provision is still possible)suggest-same-version - CAPsMAN suggests upgrading the CAP RouterOS version and if it fails, it will still be provisioned |
+| **interfaces** (*all* \| *interface name* \| *none*; default: **all**) | Interfaces on which CAPsMAN will listen for layer 2 CAP connections |
 
-### CAPsMAN Provisioning
+### Provisioning
 
 Provisioning rules for matching radios are configured in `/interface/wifi/provisioning/` menu:
 
 | Property | Description |
 | :-- | :-- |
-| **action** (*create-disabled \| create-enabled \| create-dynamic-enabled \| none; Default: **none**)* | Action to take if rule matches are specified by the following settings:create-disabled - create disabled static interfaces for radio. I.e., the interfaces will be bound to the radio, but the radio will not be operational until the interface is manually enabled;create-enabled - create enabled static interfaces. I.e., the interfaces will be bound to the radio and the radio will be operational;create-dynamic-enabled - create enabled dynamic interfaces. I.e., the interfaces will be bound to the radio, and the radio will be operational;none - do nothing, leaves radio in the non-provisioned state; The basic difference between enabled and dynamic-enabled, is that dynamic interfaces can't be manually edited to override settings and can't be referenced in firewall or other menus, since they will be recreated. In both cases any `/interface/wifi/configuration` changes will be pushed to CAP automatically. |
+| **action** (*create-disabled* \| *create-enabled* \| *create-dynamic-enabled* \| none; default: **none**) | Action to take if rule matches are specified by the following settings:create-disabled - create disabled static interfaces for radio. I.e., the interfaces will be bound to the radio, but the radio will not be operational until the interface is manually enabled;create-enabled - create enabled static interfaces. I.e., the interfaces will be bound to the radio and the radio will be operational;create-dynamic-enabled - create enabled dynamic interfaces. I.e., the interfaces will be bound to the radio, and the radio will be operational;none - do nothing, leaves radio in the non-provisioned state; The basic difference between enabled and dynamic-enabled, is that dynamic interfaces can't be manually edited to override settings and can't be referenced in firewall or other menus, since they will be recreated. In both cases any `/interface/wifi/configuration` changes will be pushed to CAP automatically. |
 | **comment** (*string*) | Short description of the Provisioning rule |
 | **common-name-regexp** (*string*) | Regular expression to match radios by common name. Each CAP's common name identifier can be found under `/interface/wifi/radio` as value "REMOTE-CAP-NAME" |
-| **supported-bands** (*2ghz-ax \| 2ghz-be \| 2ghz-g \| 2ghz-n \| 5ghz-a \| 5ghz-ac \| 5ghz-ax \| 5ghz-be \| 5ghz-n \| 60ghz-ad \| 6ghz-ax \| 6ghz-be*) | Match radios by supported wireless modes. This parameter accepts one or more bands as a comma-separated list (for example, *supported-bands=5ghz-ac,5ghz-ax*). When multiple bands are specified, the device must support all listed bands for the match to succeed and for the defined configuration to be applied. |
-| **supported-hw-caps** (*beacon-protection \| channel-switch \| hw-protection-mode \| mlo \| qos-qualifier \| sniffer \| spectral*) | Matches radios by their supported additional features, as reported in the *hw-caps* field under `/interface/wifi/radio`. Accepts one or more comma-separated values. A radio must support all listed capabilities to match this provisioning rule. |
+| **supported-bands** (*2ghz-ax* \| *2ghz-be* \| *2ghz-g* \| *2ghz-n* \| *5ghz-a* \| *5ghz-ac* \| *5ghz-ax* \| *5ghz-be* \| *5ghz-n* \| *60ghz-ad* \| *6ghz-ax* \| *6ghz-be*) | Match radios by supported wireless modes. This parameter accepts one or more bands as a comma-separated list (for example, *supported-bands=5ghz-ac,5ghz-ax*). When multiple bands are specified, the device must support all listed bands for the match to succeed and for the defined configuration to be applied. |
+| **supported-hw-caps** (*beacon-protection* \| *channel-switch* \| *hw-protection-mode* \| *mlo* \| *qos-qualifier* \| *sniffer* \| *spectral*) | Matches radios by their supported additional features, as reported in the *hw-caps* field under `/interface/wifi/radio`. Accepts one or more comma-separated values. A radio must support all listed capabilities to match this provisioning rule. |
 | **identity-regexp** (*string*) | Regular expression to match radios by router identity |
 | **address-ranges** (*IpAddressRange[,IpAddressRanges] max 100x*;) | Match CAPs with IPs within the configured address range. Will only work for CAPs that joined CAPsMAN using IP, not MAC address. |
 | **master-configuration** (*string*) | If **action** specifies to create interfaces, then a new master interface with its configuration set to this configuration profile will be created |
-| **multi-link-mode** (*all \| auto \| disabled \| master; Default: **disabled**)* | Controls MLO (Multi-Link Operation) behavior during provisioning.all  or auto - CAPsMAN will automatically assign the provisioned WiFi interfaces as affiliated links of an MLD interface. If a matching MLD interface does not already exist, one will be created using the corresponding configuration. This applies to both master and slave interfaces;disabled - no MLD interface is created or assigned during provisioning;master - same behavior as **all** or **auto**, but only the master interface is added as an affiliated MLD link; |
+| **multi-link-mode** (*all* \| *auto* \| *disabled* \| *master*; default: **disabled**) | Controls MLO (Multi-Link Operation) behavior during provisioning.all  or auto - CAPsMAN will automatically assign the provisioned WiFi interfaces as affiliated links of an MLD interface. If a matching MLD interface does not already exist, one will be created using the corresponding configuration. This applies to both master and slave interfaces;disabled - no MLD interface is created or assigned during provisioning;master - same behavior as **all** or **auto**, but only the master interface is added as an affiliated MLD link; |
 | **name-format** (*string*) | Base string to use when constructing names of provisioned interfaces. Each new interface will be created by taking the base string and appending a number to the end of it. A number will only be appended if the string is not unique.  If included in the string, the character sequence **%I** will be replaced by the system identity of the cAP, **%C** will be replaced with the cAP's TLS certificate's Common Name, **%R**, or **%r** for lowercase, will be replaced with the CAP's radio MAC  Default: "cap-wifi" |
 | **slave-name-format** (*string*) | Base string to use when constructing names of virtual interfaces. Each new interface will be created by taking the base string and appending a number to the end of it. A number will only be appended if the string is not unique.  If included in the string, the character sequence  **%v** will be replaced with "virtual", the character sequence  **%m** will be replaced with the name of the master interface, if included in the string, the character sequence **%I** will be replaced by the system identity of the cAP, **%C** will be replaced with the cAP's TLS certificate's Common Name, **%R**, or **%r** for lowercase, will be replaced with the CAP's radio MAC  Default: "*master-interface-name*-virtual" |
 | **radio-mac** (*MAC address*) | MAC address of radio to be matched. No default value. |
 | **slave-configurations** (*string*) | If the **action** specifies to create interfaces, then a new slave interface for each configuration profile in this list is created. |
-| **disabled** (*yes* *\| no*) | Specifies if the provision rule is disabled. |
+| **disabled** (*yes* \| *no*) | Specifies if the provision rule is disabled. |
 
 ### CAP configuration
 
@@ -326,19 +326,19 @@ Menu: `/interface/wifi/cap`
 
 | Property | Description |
 | :-- | :-- |
-| **caps-man-addresses** *(list of IP addresses or host names; Default:*  \_capsman.\_tcp.lan) | List of comma-separated Manager IP addresses or host names that CAP will attempt to contact during discovery |
-| **caps-man-names** () | An ordered list of CAPs Manager names that the CAP will connect to, if empty - CAP does not check Manager name |
+| **caps-man-addresses** (*list of IP addresses or host names* ; default: **_capsman._tcp.lan**) | List of comma-separated Manager IP addresses or host names that CAP will attempt to contact during discovery |
+| **caps-man-names** () | An ordered list of CAPs Manager names that the CAP will connect to, if empty - CAP does not check manager name |
 | **discovery-interfaces** (*list of interfaces*) | List of interfaces over which CAP should attempt to discover the Manager |
-| **lock-to-caps-man** (*yes \| no; Default: **no***) | Sets if CAP should lock to the first CAPsMAN it connects to. |
-| **slaves-static** (*yes \| no; Default: **no***) | Creates Static Virtual Interfaces and allows the possibility to assign IP configuration to those interfaces. MAC address is used to remember each static-interface when applying the configuration from the CAPsMAN. |
-| **mld-static** (*yes \| no; Default: **no***) | When set to yes, MLD interfaces created on cAP by CAPsMAN ar static; otherwise, they are dynamic. Static interfaces have persistent internal IDs and can be manually manipulated, added to bridges, referenced in firewall rules etc. Dynamic interfaces do not persist between reboots. They should be assigned an appopriate datapath profile. |
+| **lock-to-caps-man** (*yes* \| no; default: **no**) | Sets if CAP should lock to the first CAPsMAN it connects to. |
+| **slaves-static** (*yes* \| *no*; default: **no**) | Creates Static Virtual Interfaces and allows the possibility to assign IP configuration to those interfaces. MAC address is used to remember each static-interface when applying the configuration from the CAPsMAN. |
+| **mld-static** (*yes* \| *no*; default: **no**) | When set to yes, MLD interfaces created on cAP by CAPsMAN ar static; otherwise, they are dynamic. Static interfaces have persistent internal IDs and can be manually manipulated, added to bridges, referenced in firewall rules etc. Dynamic interfaces do not persist between reboots. They should be assigned an appopriate datapath profile. |
 | **caps-man-certificate-common-names** () | List of Manager certificate CommonNames that CAP will connect to, if empty - CAP does not check Manager certificate CommonName |
 | **certificate** () | Certificate to use for authenticating |
-| **enabled** (*yes \| no; Default: **no***) | Disable or enable the CAP feature |
+| **enabled** (*yes* \| *no*; default: **no**) | Disable or enable the CAP feature |
 | **current-caps-man-address** () | Shows currently used CAPsMAN address |
 | **current-caps-man-identity** () | Shows currently used CAPsMAN identity |
-| **slaves-datapath** *(datapath profile)* | Datapath profile to apply to the slave interfaces. Primarily used to designate a bridge that slave interfaces are automatically added to on the CAP. Required when using local forwarding (*traffic-processing=on-cap*), since in that mode all routing and forwarding decisions are made by the CAP itself — CAPsMAN does not include those interfaces in its own bridge, so a datapath must be set either here or manually on the CAP. |
-| **mld-datapath** *(datapath profile)* | Datapath profile to apply to the MLD interfaces created by CAPsMAN. Determines how traffic is forwarded on the MLD interface, including which bridge it is added to and whether forwarding is handled locally on the CAP or centrally by CAPsMAN. Has effect only when MLD is in use. |
+| **slaves-datapath** (*datapath profile*) | Datapath profile to apply to the slave interfaces. Primarily used to designate a bridge that slave interfaces are automatically added to on the CAP. Required when using local forwarding (*traffic-processing=on-cap*), since in that mode all routing and forwarding decisions are made by the CAP itself — CAPsMAN does not include those interfaces in its own bridge, so a datapath must be set either here or manually on the CAP. |
+| **mld-datapath** (*datapath profile*) | Datapath profile to apply to the MLD interfaces created by CAPsMAN. Determines how traffic is forwarded on the MLD interface, including which bridge it is added to and whether forwarding is handled locally on the CAP or centrally by CAPsMAN. Has effect only when MLD is in use. |
 
 ### Remote CAP
 

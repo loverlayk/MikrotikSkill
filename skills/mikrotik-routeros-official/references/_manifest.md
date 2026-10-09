@@ -1,7 +1,7 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `7fd22442f144de8fff18625a8c5fac661f3aee65ebf998a6f20ec44e8797858a`
+Index SHA-256: `fef06dd966259832beab1ea95df462e44ddb92fc0e4f8def9f242f07f302f7d8`
 Pages in current index: 1472
 Pages changed/written: 3
 Pages removed: 0
@@ -1309,7 +1309,7 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `a8fa9f34d100`
+- [CMR](docs/management-tools/cmr.md) `c5f69b483147`
 - [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
@@ -1473,8 +1473,8 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi 6 / 7 (802.11ax/be)](docs/wireless/wifi.md) `fa6019665b34`
-- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `7b320a7578af`
+- [Wi-Fi](docs/wireless/wifi.md) `bc36ec845299`
+- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `7624d97e4aac`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`

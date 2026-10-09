@@ -1,5 +1,5 @@
 {
-  "index_sha256": "7fd22442f144de8fff18625a8c5fac661f3aee65ebf998a6f20ec44e8797858a",
+  "index_sha256": "fef06dd966259832beab1ea95df462e44ddb92fc0e4f8def9f242f07f302f7d8",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "a8fa9f34d100767728284bd4d464119f3cdd5e39a97c46c6fbc0e51c67b0e44d"
+      "sha256": "c5f69b483147e48beb2c549cc9ea031ab4d495eae5826a2764b8d539ed8a24a3"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -734,16 +734,16 @@
       "sha256": "01bb0ea8c71dfdfe0f8291e32a580711571a0e7e77a911cc1d724a6d7ff189ea"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi.md": {
-      "title": "Wi-Fi 6 / 7 (802.11ax/be)",
+      "title": "Wi-Fi",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi.md",
       "path": "docs/wireless/wifi.md",
-      "sha256": "fa6019665b347069e0b2c32d79d5e8c8834da760facc9a0d4006689c23ac59d4"
+      "sha256": "bc36ec84529914a5ef924478aa1f2ba7e7394c99c11477c1cf2f9d769ff00a36"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md": {
       "title": "WiFi CAPsMAN",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md",
       "path": "docs/wireless/wifi/capsman.md",
-      "sha256": "7b320a7578af5eb38e54035cbca63ebf7eba6e4cad4502a0f11e2cf8fdc9b05b"
+      "sha256": "7624d97e4aacc485fd76af6c2cc3532189b3565a4ae298fd9ab1e69b2179a446"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",

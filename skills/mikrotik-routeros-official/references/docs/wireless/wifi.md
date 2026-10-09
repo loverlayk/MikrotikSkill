@@ -1,10 +1,14 @@
-# Wi-Fi 6 / 7 (802.11ax/be)
+# Wi-Fi
 
 > This page introduces the WiFi configuration menu in RouterOS, covering basic setup for password-protected and OWE transition mode access points. It explains configuration profiles, security settings, and includes...
 
-# Wi-Fi 6 / 7 (802.11ax/be)
+# Wi-Fi
 
-This section covers MikroTik **Wi-Fi 6 / 6E / 7 (802.11ax/be)** devices, all configured through the shared **`/interface/wifi`** menu. Which driver package a device needs depends on its wireless chipset and standard. The same menu also covers **Wi-Fi 5 (802.11ac)** devices running the **`wifi-qcom-ac`** package.
+This section covers management of **Wi-Fi 6 and later** (802.11ax/be) interfaces as well as **Wi-Fi HaLow** (802.11ah) interfaces and Wi-Fi 5 (802.11ac) devices running the *wifi-qcom-ac* driver package.
+
+These interfaces are configured in the  **`/interface/wifi`** menu.
+
+Which driver package a device needs, depends on its wireless chipset and standard.
 
 :::tip[Is this the right section for my device?]
 This menu (and this manual) is used by every device running one of these driver packages:
@@ -43,56 +47,69 @@ Before we move on let's familiarize ourselves with terms important for understan
 - **Configuration** **profile** - configuration preset defined under `/interface/wifi/configuration`, it can reference various profiles.
 - **Station** - wireless client.
 
-## Basic Configuration
+## Network
 
-The easiest way to fully configure a compatible device is through the `/interface/wifi/network` menu, which bundles SSID, security, datapath and radio settings into a single configuration entity. Alternatively, settings can be applied per-interface as shown in the examples further below.
+The easiest way to fully configure a compatible device is through the `/interface/wifi/network` menu, which bundles SSID, security, datapath and radio settings into a single configuration entity.
 
-### Network
-
-A network applies to WiFi interfaces that match its `labels`. If `labels` are not specified, the network's configuration gets applied to all interfaces.
+A network provisions interface configurations to radios, which match its `labels`.
 
 For an example of network configuration usage, see the following:
 
 ```ros
-# Creating a network preset with SSID, security and datapath settings, which gets applied to all available interfaces
+# A network provisioned to all radios
 /interface/wifi/network
-add ssid=MikroTik mode=ap security.authentication-types=wpa2-psk,wpa3-psk security.passphrase="strong_password" datapath.bridge=bridge1 disabled=no
+add ssid=MikroTik security.authentication-types=wpa2-psk,wpa3-psk security.passphrase=[:rndstr] datapath.bridge=bridge
 
-# Create a network radio preset, which gets applied to the whole radio.
+# Set the regulatory domain of all radios
 /interface/wifi/network/radio
 add configuration.country=Latvia
 ```
 
-An example with Multi-Link Operation (MLO) enabled:
-
-```ros
-/interface/wifi/network
-add datapath.bridge=bridge1 disabled=no mlo=yes mode=ap security.authentication-types=wpa3-psk ssid="MikroTik" security.passphrase="strong_password"
-```
+### Network properties
 
 | Property | Description |
 | :-- | :-- |
-| **mlo** (*no* \| *yes; default: **yes***) | Enables Multi-Link Operation for Wi-Fi 7. |
-| **labels** (*comma-separated strings*) | Enables the network config on radios which match any of the provided labels. |
+| **mlo** (*no* \| *yes*; default: **yes**) | Enables multi-link operation for compatible (WiFi 7 and later) radios. |
+| **labels** (*comma-separated strings*; default: **all**) | Enables the network config on radios which match any of the specified labels.RouterOS automatically assigns each radio a label such as *2ghz*, *5ghz* or *6ghz*, depending on its frequency band, as well as a label equal to its (capitalized) MAC address.The *all* label matches all radios.Additional labels can be assigned to a radio via the `extra-labels` parameter in the network radio section.Preceding a label with a *-* (the minus sign), negates its match.|
 | **ssid** (*string*) | The wireless network name (ESSID). |
-| **mode** (*ap* \| *station* \| *station-bridge* \| *station-pseudobridge*; default: **ap***) | Interface operation mode. |
-| **disabled** (*no* \| *yes; default: **no***) | Whether the network is disabled. |
+| **mode** (*ap* \| *station* \| *station-bridge* \| *station-pseudobridge*; default: **ap**) | Interface operation mode. |
 
-All security, authentication and encryption parameters (passphrase, WPA3/SAE, EAP, etc.) share the same properties described in [Security Properties](#security-properties). Datapath parameters (bridge, VLAN, client isolation, traffic processing) follow [Datapath Properties](#datapath-properties).
+All security, authentication and encryption parameters share the same properties described in [Security Properties](#security-properties). Datapath parameters (bridge, VLAN, client isolation, traffic processing) follow [Datapath Properties](#datapath-properties).
 
-#### Network radio properties
+### Network radio properties
 
 Per-radio settings under `/interface/wifi/network/radio`:
 
 | Property | Description |
 | :-- | :-- |
 | **labels** (*object*) | Matches the radio config to physical radios with the given labels. |
-| **extra-labels** (*multi string*) | Additional labels for matching, extending the primary `labels` field. |
-| **disabled** (*no* \| *yes; default: **no***) | Whether the radio entry is disabled. |
+| **extra-labels** (*comma-separated strings*) | Additional labels to assign to matched radios. |
 
 Radio parameters (country, band, frequency, width, chains, power, etc.) use the same properties described in [Channel Properties](#channel-properties) and [Configuration Properties](#configuration-properties).
 
-### Basic password-protected AP
+### Converting to/from network-managed Wi-Fi
+
+To determine, what to do with a given radio, RouterOS takes the following steps:
+1) The `/interface/wifi` menu is checked for an existing interface configuration entry for the radio's MAC address. If found, it is applied.
+2) If no such entry is found, the `/interface/wifi/provisioning` menu is consulted for explicit provisioning instructions. If one is found, it is followed.
+3) If neither an existing static configuration, nor an explicit provisioning instruction is found, the `/interface/wifi/network` menu is consulted to see if it specifies any networks for the radio.
+4) Finally, if no explicit instructions were found in the previous steps, a static disabled configuration stub is created for the radio MAC.
+
+WiFi network configurations will only affect radios already managed by a wifi network (radios whose master configuration is marked with the *N* flag) or radios whose master configurations are disabled and marked as having been created by step #4 described earlier.
+
+Adding a wifi network will therefore **NOT** cause a corresponding interface configuration to be created on any radios which either have an enabled non-network master interface configuration, or configurations created by explicit provisioniong rules.
+
+To convert such radios to be managed by wifi network configurations, remove any explicit provisioning rules and re-provision them.
+
+```ros
+/interface/wifi/provisioning/remove [find]
+/interface/wifi/radio/provision [find]
+```
+
+Interfaces created by a wifi network cannot be adjusted by other configuration methods.
+To convert a network-managed interface to a static interface configuration, use the `/interface/wifi/liberate` command.
+
+## Basic password-protected AP
 
 Direct per-interface setup works on every device and remains fully supported when the `/interface/wifi/network` menu is unavailable or when per-interface overrides are needed.
 
@@ -293,14 +310,12 @@ Spectral scan is supported only by the wifi-qcom driver; it is not supported by 
 :::
 
 ```ros
-/interface/wifi/spectral-scan <wifiinterface name> range=
+/interface/wifi/spectral-scan <wifi interface name>
 ```
 
 ![](./img/wifi-spectral-scan.png)
 
 This command continuously monitors spectral data. This command uses the same data source as `spectral-history`, and shares many parameters.
-
-To use spectral scan, you must use the `range=` attribute.
 
 Each line displays one spectrogram bucket -- frequency, magnitude (dBm), peak, and a character graphic bar. A bar shows power value with ':' characters and average peak hold with '.' characters.
 
@@ -327,7 +342,7 @@ Possible types of classified interference:
 ## Spectral history
 
 ```ros
-/interface/wifi/spectral-history <wifi interface name> range=
+/interface/wifi/spectral-history <wifi interface name>
 ```
 
 ![](./img/wifi-spectral-history.png)
@@ -335,7 +350,6 @@ Possible types of classified interference:
 Plots a spectrogram. Power values that fall in different ranges are printed as different colored characters with the same foreground and background color, so it is possible to copy and paste the terminal output of this command.
 
 `data` - min/max/avg, by default average is used for data. The average should be used in most scenarios, but in some cases "min" can be useful to check if there are any frequencies that have a constant signal output on them. Max will show the strongest signal that was detected, instead of the average signal.  
-`interv` - interval of how often to update the data values;  
 `interval` - interval at which spectrogram lines are printed;  
 `duration` - terminate command after a specified time. Default is indefinite;  
 `range` - scan a specific range, required;  
@@ -479,14 +493,14 @@ All other characters are used without interpreting them in any way. For examples
 
 | Property | Description |
 | :-- | :-- |
-| **called-format** (*format-string*; *Default: **II-II-II-II-II-II:S**)* | Format for the value of the Called-Station-Id RADIUS attribute, in AP's messages to RADIUS servers. |
-| **calling-format** (*format-string*; *Default: **AA:AA:AA:AA:AA:AA**)* | Format for the value of the Calling-Station-Id RADIUS attribute, in AP's messages to RADIUS servers. |
-| **interim-update** (*time interval; Default: ****5m****)* | Interval at which to send interim updates about traffic accounting to the RADIUS server. |
-| **mac-caching** (*time interval;* *Default: **disabled**)* | Length of time to cache RADIUS server replies, when MAC address authentication is enabled. This resolves issues with client device authentication timing out due to comparatively high latency of RADIUS server replies. |
-| **name** (*string*; *Default: **no**)* | A unique name for the AAA profile. |
+| **called-format** (*format-string*; default: **II-II-II-II-II-II:S**) | Format for the value of the Called-Station-Id RADIUS attribute, in AP's messages to RADIUS servers. |
+| **calling-format** (*format-string*; default: **AA:AA:AA:AA:AA:AA**) | Format for the value of the Calling-Station-Id RADIUS attribute, in AP's messages to RADIUS servers. |
+| **interim-update** (*time interval*; default: **5m**) | Interval at which to send interim updates about traffic accounting to the RADIUS server. |
+| **mac-caching** (*time interval*; default: **disabled**) | Length of time to cache RADIUS server replies, when MAC address authentication is enabled. This resolves issues with client device authentication timing out due to comparatively high latency of RADIUS server replies. |
+| **name** (*string*; default: **no**) | A unique name for the AAA profile. |
 | **nas-identifier** (*string*) | Value of the NAS-Identifier attribute, in AP's messages to RADIUS servers. Defaults to the host name of the device (/system/identity). |
 | **password-format** (*format-string*) | Format for the value to use in calculating the value of the User-Password attribute in AP's messages to RADIUS servers when performing MAC address authentication.  Default value: "" (an empty string). |
-| **username-format** (*format-string*; *Default: **AA:AA:AA:AA:AA:AA**)* | Format for the value of the User-Name attribute in AP's messages to RADIUS servers when performing MAC address authentication. |
+| **username-format** (*format-string*; default: **AA:AA:AA:AA:AA:AA**) | Format for the value of the User-Name attribute in AP's messages to RADIUS servers when performing MAC address authentication. |
 
 ### Channel properties
 
@@ -497,11 +511,11 @@ Properties in this category specify the desired radio channel.
 | **band** (*2ghz-g* \| *2ghz-n* \| *2ghz-ax*\| *2ghz-be* \| *5ghz-a* \| *5ghz-ac* \| *5ghz-an* \| *5ghz-ax* \| *5ghz-be*\| *6ghz-ax* \| *6ghz-be*) | Frequency band and wireless standard that will be used by the AP. Defaults to newest supported standard. **Note that band support is limited by radio capabilities.**  |
 | **deprioritize-unii-3-4** (*no* \| *yes*) | Whether to assign lower priority to channels with a control frequency of 5720 or 5825-5885 MHz. These channels are unsupported by some client devices, making their automatic selection undesirable. Defaults to 'yes' in ETSI regulatory domains, elsewhere to 'no'.  |
 | **frequency** (*list of numbers or number ranges*) | For an interface in AP mode, specifies frequencies (in MHz) to consider when picking control channel center frequency.  For an interface in station mode, specifies frequencies on which to scan for APs.  Leave unset (default) to consider all frequencies supported by the radio and permitted by the applicable regulatory profile.  The parameter can contain 1 or more comma-separated values of decimal numbers or, optionally, ranges of numbers denoted using the syntax RangeBeginning-RangeEnd:RangeStep  Examples of valid channel.frequency values: 24122412,2432,24725180-5240:20,5500-5580:20 |
-| **preamble-puncturing** (*no \| yes; Default: **no***) |  Enables puncturing support on this interface for DFS/radar (802.11be only).  When set, the access point may disable ("puncture") only the affected 20 MHz part of a wide 80/160 MHz channel when  radar signal presence is detected, instead of switching the whole channel.  For 80 MHz channels a single 20 MHz sub-channel may be punctured.  For 160 MHz channels either one 20 MHz sub-channel or one 40 MHz block may be punctured.    The current puncturing state can be observed in `/interface/wifi/monitor` output for this interface,  where punctured sub-channels are marked with the letter `o`.  |
-| **reselect-interval** (*time interval; Default: **disabled***) | Specifies the interval when the interface should run "rescan channel availability" and select the most appropriate one to use. Specifying the interval will allow the system to select this interval dynamically and randomly. This helps to avoid a situation when many APs at the same time scan the network, select the same channel, and prefer to use it at the same time. reselect-interval uses a background scan.  The reselect process will choose the most suitable channel considering the number of networks in the channel, channel usage, and overlap with networks in adjacent channels. It can be used with a list of frequencies defined, or with `frequency` not set - using all supported frequencies.  Example: 01:00..01:30 → Would set the rescan of channels to run every 1 hour + random time up to 30 minutes. The first time, it could run a rescan after "1 hour and 15 minutes", later, it could be "1 hour and 1 second", then, it could be "1 hour, 29 minutes and 59 seconds" ...at random, a rescan will happen between every 1 hour and 1 hour 30 minutes. |
-| **reselect-time** (*time interval; Default: **disabled***) | Specifies the clock time when the interface should run "rescan channel availability" and select the most appropriate one to use. Specifying the clock time will allow the system to select this time dynamically and randomly. This helps to avoid a situation when many APs at the same time scan the network, select the same channel, and prefer to use it at the same time. reselect-time uses a background scan.  The reselect process will choose the most suitable channel considering the number of networks in the channel, channel usage, and overlap with networks in adjacent channels. It can be used with a list of frequencies defined, or with `frequency` not set - using all supported frequencies.  Example: 01:00..01:30 → Would set the rescan of channels to run every night, once, randomly, between 01:00 AM and 01:30 AM, system clock time.14:00..14:30 → Would set the rescan of channels to run every day (after midday), once, randomly between 14:00:00 and 14:30:00 (or 2 PM to 2:30 PM), system clock time. |
-| **secondary-frequency** (*list of integers* \| *Default: **disabled***) | For split 80+80MHz channels, specifies permitted center frequencies for the secondary 80MHz segment.  For 320MHz channels, specifies permitted 320MHz channel centers.  When unset (default), does not limit channel selection.  E.g.  'width=20/40/80+80mhz frequency=5180' would allow combining channel 42 with any other supported 80MHz channel. 'width=20/40/80+80mhz frequency=5180 secondary-frequency=5530' would only allow combining channels 42 and 106.  'width=20/40/80/160/320mhz frequency=6115' would allow use of either channel 31 or 63.  'width=20/40/80/160/320mhz frequency=6115 secondary-frequency=6265' allows use of only channel 63.  Refer here for lists of valid [5GHz](https://en.wikipedia.org/wiki/List_of_WLAN_channels#5_GHz_(802.11a/h/n/ac/ax/be)) and [6GHz](https://en.wikipedia.org/wiki/List_of_WLAN_channels#6_GHz_(802.11ax_and_802.11be)) channels. |
-| **skip-dfs-channels**  (*10min-cac* \| *all* \| *disabled; Default: **disabled***) | Whether to avoid using channels, on which channel availability check (listening for presence of radar signals) is required. 10min-cac - interface will avoid using channels, on which 10 minute long CAC is requiredall - interface will avoid using all channels, on which CAC is requireddisabled  - interface may select any supported channel, regardless of CAC requirements |
+| **preamble-puncturing** (*no* \| *yes*; default: **no**) |  Enables puncturing support on this interface for DFS/radar (802.11be only).  When set, the access point may disable ("puncture") only the affected 20 MHz part of a wide 80/160 MHz channel when  radar signal presence is detected, instead of switching the whole channel.  For 80 MHz channels a single 20 MHz sub-channel may be punctured.  For 160 MHz channels either one 20 MHz sub-channel or one 40 MHz block may be punctured.    The current puncturing state can be observed in `/interface/wifi/monitor` output for this interface,  where punctured sub-channels are marked with the letter `o`.  |
+| **reselect-interval** (*time interval*; default: **disabled**) | Specifies the interval when the interface should run "rescan channel availability" and select the most appropriate one to use. Specifying the interval will allow the system to select this interval dynamically and randomly. This helps to avoid a situation when many APs at the same time scan the network, select the same channel, and prefer to use it at the same time. reselect-interval uses a background scan.  The reselect process will choose the most suitable channel considering the number of networks in the channel, channel usage, and overlap with networks in adjacent channels. It can be used with a list of frequencies defined, or with `frequency` not set - using all supported frequencies.  Example: 01:00..01:30 → Would set the rescan of channels to run every 1 hour + random time up to 30 minutes. The first time, it could run a rescan after "1 hour and 15 minutes", later, it could be "1 hour and 1 second", then, it could be "1 hour, 29 minutes and 59 seconds" ...at random, a rescan will happen between every 1 hour and 1 hour 30 minutes. |
+| **reselect-time** (*time interval*; default: **disabled**) | Specifies the clock time when the interface should run "rescan channel availability" and select the most appropriate one to use. Specifying the clock time will allow the system to select this time dynamically and randomly. This helps to avoid a situation when many APs at the same time scan the network, select the same channel, and prefer to use it at the same time. reselect-time uses a background scan.  The reselect process will choose the most suitable channel considering the number of networks in the channel, channel usage, and overlap with networks in adjacent channels. It can be used with a list of frequencies defined, or with `frequency` not set - using all supported frequencies.  Example: 01:00..01:30 → Would set the rescan of channels to run every night, once, randomly, between 01:00 AM and 01:30 AM, system clock time.14:00..14:30 → Would set the rescan of channels to run every day (after midday), once, randomly between 14:00:00 and 14:30:00 (or 2 PM to 2:30 PM), system clock time. |
+| **secondary-frequency** (*list of integers* \| default: **disabled**) | For split 80+80MHz channels, specifies permitted center frequencies for the secondary 80MHz segment.  For 320MHz channels, specifies permitted 320MHz channel centers.  When unset (default), does not limit channel selection.  E.g.  'width=20/40/80+80mhz frequency=5180' would allow combining channel 42 with any other supported 80MHz channel. 'width=20/40/80+80mhz frequency=5180 secondary-frequency=5530' would only allow combining channels 42 and 106.  'width=20/40/80/160/320mhz frequency=6115' would allow use of either channel 31 or 63.  'width=20/40/80/160/320mhz frequency=6115 secondary-frequency=6265' allows use of only channel 63.  Refer here for lists of valid [5GHz](https://en.wikipedia.org/wiki/List_of_WLAN_channels#5_GHz_(802.11a/h/n/ac/ax/be)) and [6GHz](https://en.wikipedia.org/wiki/List_of_WLAN_channels#6_GHz_(802.11ax_and_802.11be)) channels. |
+| **skip-dfs-channels**  (*10min-cac* \| *all* \| *disabled*; default: **disabled**) | Whether to avoid using channels, on which channel availability check (listening for presence of radar signals) is required. 10min-cac - interface will avoid using channels, on which 10 minute long CAC is requiredall - interface will avoid using all channels, on which CAC is requireddisabled  - interface may select any supported channel, regardless of CAC requirements |
 | **width** ( *20mhz* \| *20/40mhz* \| *20/40mhz-Ce* \| *20/40mhz-eC* \| *20/40/80mhz* \| *20/40/80+80mhz* \| *20/40/80/160mhz*\| *20/40/80/160/320mhz*) | Width of radio channel. Defaults to widest channel supported by the radio hardware. |
 
 ### Configuration properties
@@ -511,21 +525,21 @@ This section includes properties relating to the operation of the interface and 
 | Property | Description |
 | :-- | :-- |
 | **antenna-gain** (*integer 0..30*) | Overrides the default antenna gain. The *master* interface of each radio sets the antenna gain for every interface which uses the same radio.  This setting cannot override the antenna gain to be lower than the minimum antenna gain of a radio. No default value.  |
-| **beacon-interval** (*time interval 100ms..1s; default: **100ms***) | Interval between beacon frames of an AP. 🛈 **Important:** The 802.11 standard defines beacon interval in terms of *time units* (1 TU = 1.024 ms). The actual interval between beacons will be 1 TU for every 1 ms configured.  ⚠️ **Warning:** Every AP running on the same radio (i.e. a master AP and all its 'virtual'/'slave' APs) must use the same beacon interval.  |
+| **beacon-interval** (*time interval 100ms..1s*; default: **100ms**) | Interval between beacon frames of an AP.  ⚠️ **Warning:** Every AP running on the same radio (i.e. a master AP and all its 'virtual'/'slave' APs) must use the same beacon interval. |
 | **chains** (*list of integer 0..7* ) | [Radio chains](https://en.wikipedia.org/wiki/RF_chain) to use for receiving signals. Defaults to all chains available to the corresponding radio hardware. |
-| **country** (*name of a country; default: **Latvia***) | Determines which regulatory domain restrictions are applied to an interface. ⚠️ **Warning:** It is important to set this value correctly to comply with local regulations and ensure interoperability with other devices.   In a controlled environment or if you have a special permission to use it in your region, you can select `country=Superchannel` (with this country profile, router's Tx output power will not be restricted by the software, and the router will output as much power as its hardware chip allows, unless manual `tx-power` is configured to lower it). Does not work for **wifi-qcom-ac** drivers. |
-| **distance** () | Maximum link distance in kilometers, needs to be set for long-range outdoor links. The value should reflect the distance to the AP or station that is furthest from the device. Unconfigured value allows usage of 2 km links. ⚠️ **Warning:** `distance` is not used by the wifi-qcom-ac package. Setting `distance` above the actual needed value can have detrimental effects on throughput and latency.  |
-| **dtim-period** (*integer 1..255; default: **1***) | DTIM is a part of the beacon frame that informs power saving (sleeping) stations about incoming multicast and broadcast traffic.  The setting configures a period at which to transmit multicast or broadcast traffic, when there are client devices in power save mode connected to the AP. Expressed as a multiple of the beacon interval (e.g. with default values `dtim-period=1` and `beacon-interval=100ms`, it is sent every 1 x 100 ms = 100 ms).  Higher values enable client devices to save more energy, but increase network latency. Lower values enable clients to wake up more often, using more energy. |
-| **hide-ssid** (*no \| yes; default: **no***) | yes - AP does not include its SSID in beacon frames, and does not reply to probe requests that have broadcast SSID.no - AP includes its SSID in the beacon frames, and replies to probe requests that have broadcast SSID. |
+| **country** (*name of a country*; default: **Latvia**) | Determines which regulatory domain restrictions are applied to an interface. ⚠️ **Warning:** It is important to set this value correctly to comply with local regulations and ensure interoperability with other devices.   In a controlled environment or if you have a special permission to use it in your region, you can select `country=Superchannel` (with this country profile, router's Tx output power will not be restricted by the software, and the router will output as much power as its hardware chip allows, unless manual `tx-power` is configured to lower it). Does not work for **wifi-qcom-ac** drivers. |
+| **distance** (*decimal number*) | Maximum link distance in kilometers, needs to be set for long-range outdoor links. The value should reflect the distance to the AP or station that is furthest from the device. Default value depends on chipset. Typically no more than 2 km. ⚠️ **Warning:** Not all chipsets support adjusting the maximum distance. Setting the value above the actual needed value may have detrimental effects on link performance. |
+| **dtim-period** (*integer 1..255*; default: **1**) | DTIM is a part of the beacon frame that informs power saving (sleeping) stations about incoming multicast and broadcast traffic.  The setting configures a period at which to transmit multicast or broadcast traffic, when there are client devices in power save mode connected to the AP. Expressed as a multiple of the beacon interval (e.g. with default values `dtim-period=1` and `beacon-interval=100ms`, it is sent every 1 x 100 ms = 100 ms).  Higher values enable client devices to save more energy, but increase network latency. Lower values enable clients to wake up more often, using more energy. |
+| **hide-ssid** (*no \| yes*; default: **no**) | yes - AP does not include its SSID in beacon frames, and does not reply to probe requests that have broadcast SSID.no - AP includes its SSID in the beacon frames, and replies to probe requests that have broadcast SSID. |
 | **hw-protection-mode** (*cts-to-self* \| none \| *rts-cts)* | To reduce frame collisions, you can use: cts-to-self  - Interface sends CTS frame to own address before transmitting an MPDU (to notify nearby devices to hold off talking over each other);none  - Interface does not use any hardware protection mechanism;rts-cts - Interface sends an RTS frame before each MPDU (RTS is followed by a CTS from a receiver and the communication happens after that - both RTS and CTS frames can hold off other devices); Default (unset): interface sends RTS frames before re-transmitted MPDUs. |
 | **installation** (*indoor*\|*outdoor*; *default*: **indoor**) | Devices installed outdoors will avoid use of indoor-only radio channels. |
 | **manager** (*capsman* \|*capsman-or-local* \| *local*; default: **local**) | capsman - the interface will act as CAP only; this option should **not** be passed via provisioning rules to the CAP  capsman-or-local - the interface will get configuration via CAPsMAN or use its own, if `/interface/wifi/cap` is not enabled.  local - interface won't contact CAPsMAN in order to get configuration. |
 | **max-clients** (*integer 1..1000; default: **1000**)* | Maximum number of associated clients. |
 | **mode** (*ap* \| *station*) | Interface operation mode ap (default) - interface operates as an access pointstation - interface acts as a client device, scanning for access points advertising the configured SSIDstation-bridge - interface acts as a client device and enables support for a 4-address frame format, so that the interface can be used as a bridge portstation-pseudobridge - the interface keeps track of outgoing IP connections and performs MAC address translation similarly to how IP masquerading works🛈  **Important:** The 'wifi' station-bridge mode is incompatible with APs running the older 'wireless' package and vice versa.     |
-| **multicast-enhance** (*enabled*\| *disabled; default: **disabled***) | With the multicast-enhance feature enabled, an AP will convert every multicast-addressed IP or IPv6 packet into multiple unicast-addressed frames for each connected station. This may improve link throughput and reliability since, unlike multicast frames, unicasts are acknowledged by stations and transmitted using a higher data rate. |
-| **qos-classifier** (*dscp-high-3-bits*\| *priority; default: **priority***) | Specify which WMM ruleset to follow. APs and clients classify packets based on the priority assigned to them (as per WMM specification) → 1,2 - background; 0,3 - best effort; 4,5 - video; 6,7 - voice. "Better" access category has a higher probability of getting access to medium (e.g. voice frames will have a shorter "back off" time after medium becomes "idle", ensuring that they are more likely to be sent out sooner than "worse" category frames). dscp-high-3-bits - interface will transmit data packets using a WMM priority equal to the value of the 3 most significant bits of the IP DSCP fieldpriority - interface will transmit data packets using a WMM priority equal to that set by IP firewall or bridge filter🛈  **Important:** 802.11ac wireless chipsets do not support the dscp-high-3-bits classifier mode. For 802.11ac interfaces, please see [DSCP from priority](../../bridging-and-switching/user-guides/wmm-and-vlan-priority.md#set-vlan-or-wmm-priority-from-dscp).     |
-| **ssid** *(string; default: **no**)* | The name of the wireless network, aka the (E)SSID. |
-| **station-roaming** *(no \| yes; Default: **no**)* | The Wifi interface running in station or station-bridge mode will periodically scan for AP candidates to roam to. The weaker the signal to the AP is, the more often the scan will be performed. If an AP with a better signal is found, the station will roam to it. FT is supported, and the station will respond to BSS Transition Request if `steering.wnm` is enabled. |
+| **multicast-enhance** (*enabled*\| *disabled*; default: **disabled**) | With the multicast-enhance feature enabled, an AP will convert every multicast-addressed IP or IPv6 packet into multiple unicast-addressed frames for each connected station. This may improve link throughput and reliability since, unlike multicast frames, unicasts are acknowledged by stations and transmitted using a higher data rate. |
+| **qos-classifier** (*dscp-high-3-bits*\| *priority*; default: **priority**) | Specify which WMM ruleset to follow. APs and clients classify packets based on the priority assigned to them (as per WMM specification) → 1,2 - background; 0,3 - best effort; 4,5 - video; 6,7 - voice. "Better" access category has a higher probability of getting access to medium (e.g. voice frames will have a shorter "back off" time after medium becomes "idle", ensuring that they are more likely to be sent out sooner than "worse" category frames). dscp-high-3-bits - interface will transmit data packets using a WMM priority equal to the value of the 3 most significant bits of the IP DSCP fieldpriority - interface will transmit data packets using a WMM priority equal to that set by IP firewall or bridge filter🛈  **Important:** 802.11ac wireless chipsets do not support the dscp-high-3-bits classifier mode. For 802.11ac interfaces, please see [DSCP from priority](../../bridging-and-switching/user-guides/wmm-and-vlan-priority.md#set-vlan-or-wmm-priority-from-dscp).     |
+| **ssid** (*string*; default: **no**) | The name of the wireless network, aka the (E)SSID. |
+| **station-roaming** (*no* \| *yes*; default: **no**) | The Wifi interface running in station or station-bridge mode will periodically scan for AP candidates to roam to. The weaker the signal to the AP is, the more often the scan will be performed. If an AP with a better signal is found, the station will roam to it. FT is supported, and the station will respond to BSS Transition Request if `steering.wnm` is enabled. |
 | **tx-chains** (*list of integer 0..7*) | [Radio chains](https://en.wikipedia.org/wiki/RF_chain) to use for transmitting signals. Defaults to all chains available to the corresponding radio hardware. |
 | **tx-power** (*integer 0..40*) | A limit on the transmit power (in dBm) of the interface. Can not be used to set power above limits imposed by the regulatory profile. Unset by default. |
 
@@ -536,12 +550,12 @@ Parameters relating to forwarding packets to and from wireless client devices.
 | Property | Description |
 | :-- | :-- |
 | **bridge** (*bridge interface*) | Bridge interface to add interface to, as a bridge port. Virtual ('slave') interfaces are by default added to the same bridge, if any, as the corresponding master interface. Master interfaces are not by default added to any bridge. |
-| **bridge-cost** (*integer; default: **10***) | Bridge port cost to use when adding as bridge port. |
-| **bridge-horizon** (*none* \| *integer; default: **none**)* | Bridge horizon to use when adding as bridge port. |
-| **client-isolation** (*no* \| *yes; default: **no***) | Determines whether client devices connecting to this interface are (by default) isolated from others or not. This policy can be overridden on a per-client basis using access list rules, so an AP can have a mixture of isolated and non-isolated clients. Traffic from an isolated client will not be forwarded to other clients and unicast traffic from a non-isolated client will not be forwarded to an isolated one. |
-| **interface-list** (*interface list; default: **no***) | List to which to add the interface as a member. |
-| **traffic-processing** (*on-cap \| on-capsman \| on-capsman-secure*) | 🛈  **Important:** This setting is only available starting with **7.21beta2** version.  <code>on-cap</code>, will make it so that the CAP itself is responsible for handling all WiFi traffic (same as any standalone AP would);<code>on-capsman</code>, will make it so that the CAP's WiFi traffic is forwarded to a pseudo-tunnel to the CAPSMAN and the CAPsMAN becomes responsible for CAP's traffic handling;<code>on-capsman-secure</code>, will make it so that the CAP's WiFi traffic is forwarded to an encrypted pseudo-tunnel to the CAPSMAN and the CAPsMAN becomes responsible for CAP's traffic handling. 🛈  **Important:** When using `traffic-processing=on-capsman` setting, be aware that since all the CAP's WiFi traffic now gets handled by the CAPsMAN (gets pushed into the CAPsMAN), it will increase CAPSMAN's resource consumption (CPU and RAM usage).     |
-| **vlan-id** (none \| integer 1..4095; default: **none**) | Default VLAN ID to assign to client devices connecting to this interface (only relevant to interfaces in AP mode). When a client is assigned a VLAN ID, traffic coming from the client is automatically tagged with the ID and only packets tagged with this ID are forwarded to the client.  ⚠️ **Warning:** 802.11ac chipsets do not support this type of VLAN tagging, but they can be [configured](../../bridging-and-switching/index.md#vlan-example-trunk-and-access-ports) as VLAN access ports in bridge settings.  |
+| **bridge-cost** (*integer*; default: **10**) | Bridge port cost to use when adding as bridge port. |
+| **bridge-horizon** (*none* \| *integer*; default: **none**) | Bridge horizon to use when adding as bridge port. |
+| **client-isolation** (*no* \| *yes*; default: **no**) | Determines whether client devices connecting to this interface are (by default) isolated from others or not. This policy can be overridden on a per-client basis using access list rules, so an AP can have a mixture of isolated and non-isolated clients. Traffic from an isolated client will not be forwarded to other clients and unicast traffic from a non-isolated client will not be forwarded to an isolated one. |
+| **interface-list** (*interface list*; default: **no**) | List to which to add the interface as a member. |
+| **traffic-processing** (*on-cap \| on-capsman \| on-capsman-secure*) | . <code>on-cap</code>, will make it so that the CAP itself is responsible for handling all WiFi traffic (same as any standalone AP would);<code>on-capsman</code>, will make it so that the CAP's WiFi traffic is forwarded to a pseudo-tunnel to the CAPSMAN and the CAPsMAN becomes responsible for CAP's traffic handling;<code>on-capsman-secure</code>, will make it so that the CAP's WiFi traffic is forwarded to an encrypted pseudo-tunnel to the CAPSMAN and the CAPsMAN becomes responsible for CAP's traffic handling. 🛈  **Important:** When using `traffic-processing=on-capsman` setting, be aware that since all the CAP's WiFi traffic now gets handled by the CAPsMAN (gets pushed into the CAPsMAN), it will increase CAPSMAN's resource consumption (CPU and RAM usage).     |
+| **vlan-id** (none \| integer 1..4095; default: **none**) | Default VLAN ID to assign to client devices connecting to this interface (only relevant to interfaces in AP mode). When a client is assigned a VLAN ID, traffic coming from the client is automatically tagged with the ID and only packets tagged with this ID are forwarded to the client.  ⚠️ **Warning:** Some radio drivers do not support VLAN offloading to wifi. Examples include 802.11ah HaLow and wifi-qcom-ac APs. Such devices can be [configured](../../bridging-and-switching/index.md#vlan-example-trunk-and-access-ports) as VLAN access ports in bridge settings.  |
 
 ### Security Properties
 
@@ -554,33 +568,33 @@ Parameters relating to authentication.
 | **connect-group** ( *string*) | APs within the same connect group do not allow more than 1 client device with the same MAC address. This is to prevent malicious authorized users from intercepting traffic intended for other users ('MacStealer' attack) or performing a denial of service attack by spoofing the MAC address of a victim.  Handling of new connections with duplicate MAC addresses depends on the connect-priority of AP interfaces involved.  By default, all APs are assigned the same connect-group. |
 | **connect-priority** (accept-priority/hold-priority (*integers*)) | These parameters determine how a connection is handled if the MAC address of the client device is the same as that of another active connection to another AP. If (accept-priority of AP2) < (hold-priority of AP1), a connection to AP2 will cause the client to be dropped from AP1. If (accept-priority of AP2) = (hold-priority of AP1), a connection to AP2 will be allowed only if the MAC address can no longer be reached via AP1. If (accept-priority of AP2) > (hold-priority of AP1), a connection to AP2 will not be accepted.  If omitted, hold-priority is the same as accept-priority. By default, APs, which perform user authentication, have higher priority (lower integer value), than open APs. |
 | **dh-groups** (*list of 19, 20, 21*) | Identifiers of [elliptic curve cryptography groups](http://www.iana.org/assignments/ipsec-registry/ipsec-registry.xhtml#ipsec-registry-10) to use in SAE (WPA3) authentication. |
-| **disable-pmkid** (*no* \| *yes; default: **no***) | For interfaces in AP mode, disables inclusion of a PMKID in EAPOL frames. Disabling PMKID can cause compatibility issues with client devices that make use of it.yes - Do not include PMKID in EAPOL frames.no  - Include PMKID in EAPOL frames. |
-| **eap-accounting** (*no* \| *yes; default: **no***) | Send accounting information to RADIUS server for EAP-authenticated peers. ⚠️ **Warning:** Properties related to EAP are only relevant to interfaces in station mode. APs delegate (passthrough) EAP authentication to the RADIUS server.  |
-| **eap-anonymous-identity** (*string; default: **none***) | Optional anonymous identity for EAP outer authentication. |
-| **eap-certificate-mode** (*dont-verify-certificate* \| *no-certificates* \| *verify-certificate* \| *verify-certificate-with-crl; default: **dont-verify-certificate***) | Policy for handling the TLS certificate of the RADIUS server. verify-certificate - require server to have a valid certificate. Check that it is signed by a trusted certificate authority.dont-verify-certificate - Do not perform any checks on the certificate.no-certificates - Attempt to establish the TLS tunnel by performing anonymous Diffie-Hellman key exchange. To be used if the RADIUS server has no certificate at all.verify-certificate-with-crl - Same as verify-certificate, but also checks if the certificate is valid by checking the Certificate Revocation List. |
+| **disable-pmkid** (*no* \| *yes*; default: **no**) | For interfaces in AP mode, disables inclusion of a PMKID in EAPOL frames. Disabling PMKID can cause compatibility issues with client devices that make use of it.yes - Do not include PMKID in EAPOL frames.no  - Include PMKID in EAPOL frames. |
+| **eap-accounting** (*no* \| *yes*; default: **no**) | Send accounting information to RADIUS server for EAP-authenticated peers.|
+| **eap-anonymous-identity** (*string*; default: **none**) | Optional anonymous identity for EAP outer authentication.  🛈  Properties related to EAP are only relevant to interfaces in station mode. APs delegate (passthrough) EAP authentication to the RADIUS server.|
+| **eap-certificate-mode** (*dont-verify-certificate* \| *no-certificates* \| *verify-certificate* \| *verify-certificate-with-crl*; default: **dont-verify-certificate**) | Policy for handling the TLS certificate of the RADIUS server. verify-certificate - require server to have a valid certificate. Check that it is signed by a trusted certificate authority.dont-verify-certificate - Do not perform any checks on the certificate.no-certificates - Attempt to establish the TLS tunnel by performing anonymous Diffie-Hellman key exchange. To be used if the RADIUS server has no certificate at all.verify-certificate-with-crl - Same as verify-certificate, but also checks if the certificate is valid by checking the Certificate Revocation List. |
 | **eap-methods** (*list of* *peap, tls, ttls*) | EAP methods to consider for authentication. Defaults to all supported methods. |
-| **eap-password** (*string; default: **none***) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Password to use, when the chosen EAP method requires one. |
-| **eap-tls-certificate** (*certificate; *default: **none***)* | Name or id of a certificate in the device's certificate store to use, when the chosen EAP authentication method requires one. |
-| **eap-username** (*string; *default: **none***)* | Username to use when the chosen EAP method requires one. ⚠️ **Caution:** Take care when configuring encryption ciphers.  All client devices MUST support the group encryption cipher used by the AP to connect, and some client devices (notably, Intel® 8260) will also fail to connect if the list of unicast ciphers includes any they don't support.  |
-| **encryption** (*list of  ccmp, ccmp-256, gcmp, gcmp-256, tkip; default: **ccmp***) | A list of ciphers to support for encrypting unicast traffic.  Defaults to *ccmp*. ⚠️ **Warning:** For a client device to successfully roam between 2 APs, the APs need to be managed by the same instance of RouterOS. For information on how to centrally manage multiple APs, see [CAPsMAN](./capsman.md)  |
-| **ft** (*no \| yes: default: **no***) | Whether to enable 802.11r fast BSS transitions (roaming). |
-| **ft-mobility-domain** (*integer 0..65535; default: **44484 (0xADC4)***) | The fast BSS transition mobility domain ID. |
+| **eap-password** (*string*; default: **none**) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Password to use, when the chosen EAP method requires one. |
+| **eap-tls-certificate** (*certificate*; default: **none**) | Name or id of a certificate in the device's certificate store to use, when the chosen EAP authentication method requires one. |
+| **eap-username** (*string*; default: **none**) | Username to use when the chosen EAP method requires one. |
+| **encryption** (*list of  ccmp, ccmp-256, gcmp, gcmp-256, tkip*; default: **ccmp**) | A list of ciphers to support for encrypting unicast traffic.  Defaults to *ccmp*.⚠️ **Caution:** Take care when configuring encryption ciphers.  All client devices MUST support the group encryption cipher used by the AP to connect, and some client devices (notably, Intel® 8260) will also fail to connect if the list of unicast ciphers includes any they don't support.  |
+| **ft** (*no \| yes*; default: **no**) | Whether to enable 802.11r fast BSS transitions (roaming).  ⚠️ **Warning:** For a client device to successfully roam between 2 APs, the APs need to be managed by the same instance of RouterOS. For information on how to centrally manage multiple APs, see [CAPsMAN](./capsman.md)  |
+| **ft-mobility-domain** (*integer 0..65535*; default: **44484 (0xADC4)**) | The fast BSS transition mobility domain ID. |
 | **ft-nas-identifier** (string of *2..96 hex characters*) | Fast BSS transition PMK-R0 key holder identifier. Default: MAC address of the interface. |
-| **ft-over-ds** (*no* \| *yes; *default: **no****) | Whether to enable fast BSS transitions over DS (distributed system). |
+| **ft-over-ds** (*no* \| *yes*; *default: **no**) | Whether to enable fast BSS transitions over DS (distributed system). |
 | **ft-preserve-vlanid** (*no* \| *yes* ) | no - when a client connects to this AP via 802.11r fast BSS transition, it is assigned a VLAN ID according to the access and/or interface settingsyes (default) - when a client connects to this AP via 802.11r fast BSS transition, it retains the VLAN ID, which it was assigned during initial authentication The default behavior is essential when relying on a RADIUS server to assign VLAN IDs to users, since a RADIUS server is only used for initial authentication.  Not supported by **wifi-qcom-ac** drivers. |
-| **ft-r0-key-lifetime** (*time interval 1s..6w3d12h15m; Default: **600000s (~7 days)***) | Lifetime of the fast BSS transition PMK-R0 encryption key. |
-| **ft-reassociation-deadline** (*time interval 0..70s; default: **20s***) | Fast BSS transition reassociation deadline. |
-| **group-encryption** (*ccmp* \| *ccmp-256* \| *gcmp* \| *gcmp-256* \| *tkip; default: **ccmp***) | Cipher to use for encrypting multicast traffic. |
-| **group-key-update** (*time interval; default: **24 hours***) | The interval at which the group temporal key (key for encrypting broadcast traffic) is renewed. |
-| **management-encryption** (*cmac* \| *cmac-256* \| *gmac* \| *gmac-256; default: **cmac***) | Cipher to use for encrypting protected management frames. |
-| **management-protection** (*allowed* \| *disabled* \| *required*) | Whether to use 802.11w management frame protection. **Incompatible with management frame protection in standard wireless package**.  The default value depends on the value of the selected authentication type. WPA2 allows the use of management protection, WPA3 requires it. |
+| **ft-r0-key-lifetime** (*time interval 1s..6w3d12h15m*; default: **600000s (~7 days)**) | Lifetime of the fast BSS transition PMK-R0 encryption key. |
+| **ft-reassociation-deadline** (*time interval 0..70s*; default: **20s**) | Fast BSS transition reassociation deadline. |
+| **group-encryption** (*ccmp* \| *ccmp-256* \| *gcmp* \| *gcmp-256* \| *tkip*; default: **ccmp**) | Cipher to use for encrypting multicast traffic. |
+| **group-key-update** (*time interval*; default: **24 hours**) | The interval at which the group temporal key (key for encrypting broadcast traffic) is renewed. |
+| **management-encryption** (*cmac* \| *cmac-256* \| *gmac* \| *gmac-256*; default: **cmac**) | Cipher to use for encrypting protected management frames. |
+| **management-protection** (*allowed* \| *disabled* \| *required*) | Whether to use 802.11w management frame protection.  The default value depends on the value of the selected authentication type. WPA2 allows the use of management protection, WPA3 requires it. |
 | **multi-passphrase-group** (*string*) | Name of `/interface/wifi/security/multi-passphrase/` group that will be used. Only a single group can be defined under the security profile. |
-| **owe-transition-interface** (*interface* \| *auto*) | Name of an interface whose MAC address and SSID to advertise as the matching AP when running in OWE transition mode.  Setting the value to 'auto' will make RouterOS try to automatically match open and OWE APs on the same radio.  Required for setting up open APs that offer OWE, but also work with older devices that don't support the standard. See [configuration example above](#basic-configuration). |
+| **owe-transition-interface** (*interface* \| *auto*) | Name of an interface whose MAC address and SSID to advertise as the matching AP when running in OWE transition mode.  Setting the value to 'auto' will make RouterOS try to automatically match open and OWE APs on the same radio.  Required for setting up open APs that offer OWE, but also work with older devices that don't support the standard. See [configuration example above](#open-ap-with-owe-transition-mode). |
 | **passphrase** (*string of up to 63 characters*) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | The passphrase to use for PSK authentication types. Defaults to an empty string - "".  WPA-PSK and WPA2-PSK authentication requires a minimum of 8 chars, while WPA3-PSK does not have a minimum passphrase length. |
-| **sae-anti-clogging-threshold** (*disabled* \| *integer; default: **5***) | Due to SAE (WPA3) associations being CPU resource intensive, overwhelming an AP with bogus authentication requests makes for a feasible denial-of-service attack.  This parameter provides a way to mitigate such attacks by specifying a threshold of in-progress SAE authentications, at which the AP will start requesting that client devices include a cookie bound to their MAC address in their authentication requests. It will then only process authentication requests that contain valid cookies. |
-| **sae-max-failure-rate** (*disabled* \| *integer; default: **40***) | Rate of failed SAE (WPA3) associations per minute, at which the AP will stop processing new association requests. |
-| **sae-pwe** (*both* \| *hash-to-element* \| *hunting-and-pecking; default: **both***) | Methods to support for deriving SAE password element. |
-| **wps** (*disabled* \| *push-button; default: **push-button***) | push-button - AP will accept WPS authentication for 2 minutes after the 'wps-push-button' command is called. Physical WPS button functionality is not yet implemented.disabled - AP will not accept WPS authentication |
+| **sae-anti-clogging-threshold** (*disabled* \| *integer*; default: **5**) | Due to SAE (WPA3) associations being CPU resource intensive, overwhelming an AP with bogus authentication requests makes for a feasible denial-of-service attack.  This parameter provides a way to mitigate such attacks by specifying a threshold of in-progress SAE authentications, at which the AP will start requesting that client devices include a cookie bound to their MAC address in their authentication requests. It will then only process authentication requests that contain valid cookies. |
+| **sae-max-failure-rate** (*disabled* \| *integer*; default: **40**) | Rate of failed SAE (WPA3) associations per minute, at which the AP will stop processing new association requests. |
+| **sae-pwe** (*both* \| *hash-to-element* \| *hunting-and-pecking*; default: **both**) | Methods to support for deriving SAE password element. |
+| **wps** (*disabled* \| *push-button*; default: **push-button**) | push-button - AP will accept WPS authentication for 2 minutes after the 'wps-push-button' command is called. Physical WPS button functionality is not yet implemented.disabled - AP will not accept WPS authentication |
 
 ### Security multi-passphrase properties
 
@@ -603,10 +617,10 @@ multi-passphrase is not supported for the WPA3-PSK authentication type.
 | :-- | :-- |
 | **group** (*string*) | assigning the group to a security profile or an access list will enable use of all passphrases defined under it |
 | **passphrase** (*string of up to 63 characters*) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | The passphrase to use for PSK authentication types. Multiple users can use the same passphrase.  Not compatible with WPA3-PSK. |
-| **vlan-id** (*integer 0..4095; Default: **none***) | vlan-id that will be assigned to clients using this passphrase   ⚠️ **Caution:** Only supported on wifi-qcom interfaces. If wifi-qcom-ac AP has a client that uses a passphrase with an associated vlan-id, the client will not be able to join. |
+| **vlan-id** (*integer 0..4095*; default: **none**) | vlan-id that will be assigned to clients using this passphrase   ⚠️ **Caution:** Devices, which do not support VLAN offloading (such as HaLow or wifi-qcom-ac APs) will refuse connection to clients assigned a vlan-id. |
 | **expires** (*date and time*; "YYYY-MM-DD HH:SS") | The expiration date and time for the passphrase specified in this entry doesn't affect the whole group. Once the date is reached, existing clients using this passphrase will be disconnected, and new clients will not be able to connect using it. If not set, the passphrase can be used indefinitely. |
-| **isolation** (*yes* \| *no*; Default: **no**) | Determines whether the client device using this passphrase is isolated from other clients on the AP. Traffic from an isolated client will not be forwarded to other clients and unicast traffic from a non-isolated client will not be forwarded to an isolated one. |
-| **disabled** (*yes* \| *no*; Default: **no**) |  |
+| **isolation** (*yes* \| *no*; default: **no**) | Determines whether the client device using this passphrase is isolated from other clients on the AP. Traffic from an isolated client will not be forwarded to other clients and unicast traffic from a non-isolated client will not be forwarded to an isolated one. |
+| **disabled** (*yes* \| *no*; default: **no**) |  |
 
 ### Steering properties
 
@@ -618,15 +632,15 @@ Properties in this category govern mechanisms for advertising potential roaming 
 
 | Property | Description |
 | :-- | :-- |
-| **2g-probe-delay**(*no* \| *yes*; Default: *no*) | If This property is set to yes on a 2.4GHz AP andsaid AP is in a steering neighbor group with at least one 5GHz AP then the 2.4GHz AP will forego responding to the first 3 probe requests from each client in a 60 second interval which have a signal-to-noise ratio of > 35 dB.  |
+| **2g-probe-delay**(*no* \| *yes*; default: **no**) | If This property is set to yes on a 2.4GHz AP andsaid AP is in a steering neighbor group with at least one 5GHz AP then the 2.4GHz AP will forego responding to the first 3 probe requests from each client in a 60 second interval which have a signal-to-noise ratio of > 35 dB.  |
 | **neighbor-group** (*string*) | When sending neighbor reports and BSS transition management requests, an AP will list all other APs within its neighbor group as potential roaming candidates.  By default, a dynamic neighbor group is created for each set of APs with the same SSID and authentication settings. APs operating in the 5GHz band are indicated to be preferable to ones operating in the 2.4GHz band.  A dynamic neighbor group will not be created if EAP is used; it needs to be defined manually.    |
-| **rrm** (*no* \| *yes; Default: **yes***) | Enables sending of 802.11k neighbor reports.  The client may request the "neighbor report" from the AP, when the device wants to "explore/map" its surroundings (the client device can store the report, and it can use it to roam at once or later). |
-| **transition-threshold** (*integer; Default: **-80***) | Sets an RSSI threshold for sending unsolicited 802.11v BSS transition management requests. If the client device sits "below" the configured threshold for the duration of `transition-threshold-time`, it gets marked as a "transition candidate". |
-| **transition-threshold-time** (*time interval; Default: **10***) | Defines a time, in seconds, for how long the client device can sit "below" the configured `transition-threshold` value, to be marked as "transition candidate". |
-| **transition-request-period** (*time interval; Default: **30***) | Defines an interval in seconds, using which, the AP will send unsolicited 802.11v BSS transition management requests to the client device, if it is a "transition candidate".  E.g., using the default value (30s), a request will be sent to the client every 30 seconds for `transition-request-count` number of total requests. |
-| **transition-request-count** (*count, unlimited; Default: **3***) | Defines how many unsolicited 802.11v BSS transition management requests should be sent out to the client marked as a "transition candidate". One request is sent out immediately after the client gets "transition candidate" status ("-1" count), and the remaining "count" will be sent every `transition-request-period`.  E.g., using the default value (3), the 1st request gets sent when a client gets "transition candidate" status; the second request gets sent after `transition-request-period` seconds and the third (last one), after another `transition-request-period`.  Set to `unlimited` if you want to send requests without a count limit. |
-| **transition-time** (*time interval, immediate \| unlimited; Default: **unlimited***) | Defines the time, for how long the client device can be a "transition candidate" before it gets forcefully deauthenticated. It can be a `time interval` in seconds (to deauthenticate the client after the time, which starts running/counting as soon as the device becomes a "transition candidate", expires), it can be `immediate` (to instantly deauthenticate the client after it becomes a "transition candidate") or `unlimited` (to never force the client and to continue sending transition requests for the `transition-request-count` amount, every `transition-request-period` seconds). 🛈  **Important:** Note that with `transition-time=immediate`, `transition-request-period` and `transition-request-count` become useless, as the client will get deauthenticated instantly after `transition-threshold-time`.     |
-| **wnm** (*no* \| *yes; Default: **yes***) | Enables sending of solicited 802.11v BSS transition management requests.  A client may request a "roaming suggestion" packet that contains "neighbor list", to help the device switch APs. The client device may accept the suggestion and roam at once, or it can ignore the suggestion and keep its current connection. |
+| **rrm** (*no* \| *yes*; default: **yes**) | Enables sending of 802.11k neighbor reports.  The client may request the "neighbor report" from the AP, when the device wants to "explore/map" its surroundings (the client device can store the report, and it can use it to roam at once or later). |
+| **transition-threshold** (*integer*; default: **-80**) | Sets an RSSI threshold for sending unsolicited 802.11v BSS transition management requests. If the client device sits "below" the configured threshold for the duration of `transition-threshold-time`, it gets marked as a "transition candidate". |
+| **transition-threshold-time** (*time interval*; default: **10**) | Defines a time, in seconds, for how long the client device can sit "below" the configured `transition-threshold` value, to be marked as "transition candidate". |
+| **transition-request-period** (*time interval*; default: **30**) | Defines an interval in seconds, using which, the AP will send unsolicited 802.11v BSS transition management requests to the client device, if it is a "transition candidate".  E.g., using the default value (30s), a request will be sent to the client every 30 seconds for `transition-request-count` number of total requests. |
+| **transition-request-count** (*integer*, unlimited; default: **3**) | Defines how many unsolicited 802.11v BSS transition management requests should be sent out to the client marked as a "transition candidate". One request is sent out immediately after the client gets "transition candidate" status ("-1" count), and the remaining "count" will be sent every `transition-request-period`.  E.g., using the default value (3), the 1st request gets sent when a client gets "transition candidate" status; the second request gets sent after `transition-request-period` seconds and the third (last one), after another `transition-request-period`.  Set to `unlimited` if you want to send requests without a count limit. |
+| **transition-time** (*time interval* \| *immediate* \| *unlimited*; default: **unlimited**) | Defines the time, for how long the client device can be a "transition candidate" before it gets forcefully deauthenticated. It can be a `time interval` in seconds (to deauthenticate the client after the time, which starts running/counting as soon as the device becomes a "transition candidate", expires), it can be `immediate` (to instantly deauthenticate the client after it becomes a "transition candidate") or `unlimited` (to never force the client and to continue sending transition requests for the `transition-request-count` amount, every `transition-request-period` seconds). 🛈  **Important:** Note that with `transition-time=immediate`, `transition-request-period` and `transition-request-count` become useless, as the client will get deauthenticated instantly after `transition-threshold-time`.     |
+| **wnm** (*no* \| *yes*; default: **yes**) | Enables sending of solicited 802.11v BSS transition management requests.  A client may request a "roaming suggestion" packet that contains "neighbor list", to help the device switch APs. The client device may accept the suggestion and roam at once, or it can ignore the suggestion and keep its current connection. |
 
 :::info
 Please understand that **the client can ignore BSS transition management requests**. BSS transition request is a "suggestion" for the client to look for other-better signal APs. After receiving the transition request, it is 100% up to the client to decide whether it wants to switch APs or whether it wants to stay connected to the current AP.
@@ -654,16 +668,16 @@ The value in `transition-time` defines for how long the client device can stay a
 
 | Property | Description |
 | :-- | :-- |
-| **arp** (*disabled* \| *enabled* \| *local-proxy-arp*  \| *proxy-arp* \| *reply-only; default: **enabled**)* | Address Resolution Protocol mode:disabled - the interface will not use ARPenabled - the interface will use ARPlocal-proxy-arp - the router performs proxy ARP on the interface and sends replies to the same interfaceproxy-arp - the router performs proxy ARP on the interface and sends replies to other interfacesreply-only - the interface will only reply to requests originated from matching IP address/MAC address combinations which are entered as static entries in the  ARP table. No dynamic entries will be automatically stored in the ARP table. Therefore for communications to be successful, a valid static entry must already exist. |
-| **arp-timeout** (*time interval* \| *'auto'; default: **30s***) | Determines how long a dynamically added ARP table entry is considered valid since the last packet was received from the respective IP address. Value *auto* equals the value of*arp-timeout* in*`/ip/settings`*, which defaults to 30s. |
-| **disable-running-check** *(no* \| *yes; default: **no***) | yes - interface's running property will be true whenever the interface is not disabledno - interface's running property will only be true when it has established a link to another device |
-| **disabled** *(no \| yes; default: **yes**)* |  |
+| **arp** (*disabled* \| *enabled* \| *local-proxy-arp*  \| *proxy-arp* \| *reply-only*; default: **enabled**) | Address Resolution Protocol mode:disabled - the interface will not use ARPenabled - the interface will use ARPlocal-proxy-arp - the router performs proxy ARP on the interface and sends replies to the same interfaceproxy-arp - the router performs proxy ARP on the interface and sends replies to other interfacesreply-only - the interface will only reply to requests originated from matching IP address/MAC address combinations which are entered as static entries in the  ARP table. No dynamic entries will be automatically stored in the ARP table. Therefore for communications to be successful, a valid static entry must already exist. |
+| **arp-timeout** (*time interval* \| *auto*; default: **30s**) | Determines how long a dynamically added ARP table entry is considered valid since the last packet was received from the respective IP address. Value *auto* equals the value of*arp-timeout* in*`/ip/settings`*, which defaults to 30s. |
+| **disable-running-check** (*no* \| *yes*; default: **no**) | yes - interface's running property will be true whenever the interface is not disabledno - interface's running property will only be true when it has established a link to another device |
+| **disabled** (*no* \| *yes*; default: **yes**) |  |
 | **mac-address** (*MAC*) | MAC address (BSSID) to use for an interface.  Hardware interfaces default to the MAC address of the associated radio interface.  Default MAC addresses for virtual interfaces are generated by Taking the MAC address of the associated master interfaceSetting the second-least-significant bit of the first octet to 1, resulting in a locally administered MAC addressIf needed, incrementing the last octet of the address to ensure it doesn't overlap with the address of another interface on the device |
-| **mtu** *(integer [32..2290]; Default: **1500**)* | Layer 3 Maximum transmission unit. |
-| **mld-interface** (*interface; default: **none***) | Specifies the affiliated MLD (Multi-Link Device) interface. When two or more wifi interfaces are assigned the same MLD interface (e.g. *mld-interface=mld1*), they operate together as a single logical AP MLD, enabling Multi-Link Operation (MLO). The MLD interface is the logical data forwarding point — traffic is handled at the MLD interface level rather than on the individual affiliated WiFi interfaces. All affiliated WiFi interfaces must share the same SSID, and all participating radios must belong to the same device. MLO requires compatible Wi-Fi 7 (802.11be) hardware. |
+| **mtu** (*integer [32..2290]*; default: **1500**) | Layer 3 Maximum transmission unit. |
+| **mld-interface** (*interface*; default: **none**) | Specifies the affiliated MLD (Multi-Link Device) interface. When two or more wifi interfaces are assigned the same MLD interface (e.g. *mld-interface=mld1*), they operate together as a single logical AP MLD, enabling Multi-Link Operation (MLO). The MLD interface is the logical data forwarding point — traffic is handled at the MLD interface level rather than on the individual affiliated WiFi interfaces. All affiliated WiFi interfaces must share the same SSID, and all participating radios must belong to the same device. MLO requires compatible Wi-Fi 7 (802.11be) hardware. |
 | **mld-name** (*string*) | A unique identifier that designates this interface as an MLD interface. Must be unique and explicitly set when creating an MLD interface manually. |
-| **l2mtu** *(integer [32..2290]; Default: **2290**)* | Layer 2 Maximum transmission unit. |
-| **master-interface** (*interface; default: **none***) | Multiple interface configurations can be run simultaneously on every wireless radio.  Only one of them determines the radio's state (whether it is enabled, what frequency it's using, etc). This 'master' interface is *bound* to a radio with the corresponding *radio-mac.*  To create additional ('virtual') interface configurations on a radio, they need to be *bound* to the corresponding master interface. |
+| **l2mtu** (*integer [32..2290]*; default: **2290**) | Layer 2 Maximum transmission unit. |
+| **master-interface** (*interface*; default: **none**) | Multiple interface configurations can be run simultaneously on every wireless radio.  Only one of them determines the radio's state (whether it is enabled, what frequency it's using, etc). This 'master' interface is *bound* to a radio with the corresponding *radio-mac.*  To create additional ('virtual') interface configurations on a radio, they need to be *bound* to the corresponding master interface. |
 | **name** (*string*) | A name for the interface. Defaults to *wifiN*, where *N* is the lowest integer that has not yet been used for naming an interface. |
 
 ### Read-only properties
@@ -684,9 +698,9 @@ Filtering parameters:
 
 | Parameter | Description |
 | :-- | :-- |
-| **interface** (*interface* \| *interface-list* \| *any; default: **any***) | Match if the connection takes place on the specified interface or an interface belonging to a specified list. |
-| **mac-address** (*MAC address; default: **none***) | Match if the client device has the specified MAC address. |
-| **mac-address-mask** (*MAC address*) | Modifies the **mac-address** parameter to match if it is equal to the result of performing a bit-wise AND operation on the client MAC address and the given address mask.  Default: FF:FF:FF:FF:FF:FF (i.e. client's MAC address must match value of **mac-address** exactly) |
+| **interface** (*interface* \| *interface-list* \| *any*; default: **any**) | Match if the connection takes place on the specified interface or an interface belonging to a specified list. |
+| **mac-address** (*MAC address*; default: **none**) | Match if the client device has the specified MAC address. |
+| **mac-address-mask** (*MAC address*) | Modifies the **mac-address** parameter to match if it is equal to the result of performing a bit-wise AND operation on the client MAC address and the given address mask.  default: FF:FF:FF:FF:FF:FF (i.e. client's MAC address must match value of **mac-address** exactly) |
 | **signal-range** (*min..max*) | Match if the strength of the received signal from the client device is within the given range. Allowed values: '-120..120' |
 | **ssid-regexp** (*regex*) | Match if the given regular expression matches the SSID. |
 | **time** (*start-end,days*) | Match during the specified time of day and (optionally) days of the week. Allowed values: 0s-1d |
@@ -696,12 +710,12 @@ Action parameters:
 
 | Parameter | Description |
 | :-- | :-- |
-| **allow-signal-out-of-range** *(time period \| always; default: **0s**)* | The length of time which a connected peer's signal strength is allowed to be outside the range required by the **signal-range** parameter, before it is disconnected.  If the value is set to 'always', peer signal strength is only checked during association. |
-| **action** (*accept* \| *reject* \| *query-radius; default: **accept***) | Whether to authorize a connection accept - connection is allowedreject - connection is not allowedquery-radius -  connection is allowed if MAC address authentication of the client's MAC address succeeds |
-| **client-isolation** (*no* \| *yes; default: **none***) | Whether to [isolate](./#datapath-properties) the client from others connected to the same AP. |
-| **passphrase** (*string; *default: **none***) [sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Override the default passphrase with the given value. |
-| **radius-accounting** (*no* \| *yes; *default: **none***)* | Override the default RADIUS accounting policy with the given value. |
-| **vlan-id** (*none* \| *integer 1..4095; *default: **none***)* | Assign the given [VLAN ID](./#datapath-properties) to matched clients. |
+| **allow-signal-out-of-range** (*time period* \| *always*; default: **0s**) | The length of time which a connected peer's signal strength is allowed to be outside the range required by the **signal-range** parameter, before it is disconnected.  If the value is set to 'always', peer signal strength is only checked during association. |
+| **action** (*accept* \| *reject* \| *query-radius*; default: **accept**) | Whether to authorize a connection accept - connection is allowedreject - connection is not allowedquery-radius -  connection is allowed if MAC address authentication of the client's MAC address succeeds |
+| **client-isolation** (*no* \| *yes*; default: **none**) | Whether to [isolate](./#datapath-properties) the client from others connected to the same AP. |
+| **passphrase** (*string*; default: **none**) [sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Override the default passphrase with the given value. |
+| **radius-accounting** (*no* \| *yes*; default: **none**) | Override the default RADIUS accounting policy with the given value. |
+| **vlan-id** (*none* \| *integer 1..4095*; default: **none**) | Assign the given [VLAN ID](./#datapath-properties) to matched clients. |
 
 ### Frequency scan
 
@@ -710,8 +724,8 @@ Command parameters:
 
 | Parameter | Description |
 | :-- | :-- |
-| **duration** (*time interval; *default: **none***)* | Length of time to perform the scan for before exiting. Useful for non-interactive use. |
-| **freeze-frame-interval** (*time interval; default: **1s**)* | Time interval at which to update command output. |
+| **duration** (*time interval*; default: **none**) | Length of time to perform the scan for before exiting. Useful for non-interactive use. |
+| **freeze-frame-interval** (*time interval*; default: **1s**) | Time interval at which to update command output. |
 | **frequency** (*list of frequencies/ranges)* | Frequencies to perform the scan on. See [channel.frequency parameter syntax](#channel-properties) above for more detail. Defaults to all supported frequencies. |
 | **number** (*string*; *default*: **none**) | Either the name or internal id of the interface to perform the scan with. Required. |
 | **rounds** (*integer*; *default*: **none**) | Number of times to go through the list of scannable frequencies before exiting. Useful for non-interactive use. |
@@ -739,7 +753,7 @@ Output parameters:
 | :-- | :-- |
 | **duration** (*time interval*; *default*: **none**) | Length of time to perform the scan before exiting. Useful for non-interactive use. |
 | **filter-type** (*bss \| frequency \| stas*) | bss - list of active APs and their parameters.  frequency - list of station and AP count per scanned frequency  stas - a detailed list of stations on each scanned frequency  If filter-type is unspecified, all types will be returned. |
-| **freeze-frame-interval** (*time interval; default: **1s**)* | Time interval at which to update command output. |
+| **freeze-frame-interval** (*time interval*; default: **1s**) | Time interval at which to update command output. |
 
 ### Scan command
 
@@ -763,12 +777,12 @@ Command parameters:
 
 | Parameters | Description |
 | :-- | :-- |
-| **duration** (*time interval*; **default: **none***)* | Automatically interrupt the sniffer after the specified time has passed. |
+| **duration** (*time interval*; default: **none**) | Automatically interrupt the sniffer after the specified time has passed. |
 | **filter** (*string*) | A string that specifies a filter to apply to captured frames. Only frames matched by the filter expression will be displayed, saved or streamed.  This works similarly to filter strings in libpcap, for example.  The filter can match Address fields (addr1, addr2, addr3)Wireless frame type and subtype, including shortcuts such as 'beacon' (type == 0 &amp;&amp; subtype == 8)Flags (to-ds, from-ds, retry, power, protected) A string can include the following operators: == (exact match)!= (does not equal)&amp;&amp; (logical AND) \|\|  (logical OR)() (for grouping filter expressions) |
 | **number** (*interface*)  | Interface to use for sniffing. |
 | **pcap-file** (*string*) | Save captured frames to a file with the given name. No default value (captured frames are not saved to a file by default). |
 | **pcap-size-limit** (*integer*; *default*: **none**) | File size limit (in bytes) when storing captured frames locally. When this limit has been reached, no new frames are added to the capture file. |
-| **stream-address** (*IP address*; *default*: **none**) | Stream captured packets via the TZSP protocol to the given address. No default value (captured packets are not streamed anywhere by default). |
+| **stream-address** (*IP address*; default: **none**) | Stream captured packets via the TZSP protocol to the given address. No default value (captured packets are not streamed anywhere by default). |
 | **stream-rate** (*integer*) | Limit the rate (in packets per second) at which captured frames are streamed via TZSP. |
 
 ### WPS
@@ -779,10 +793,10 @@ Command parameters:
 | Parameters | Description |
 | :-- | :-- |
 | **duration** (*time interval*) | Length of time after which the command will time out if no AP is found. Unlimited by default. |
-| **interval** (*time interval; default: **1s***) | Time interval at which to update command output. Default: 1s. |
-| **mac-address** (*MAC*; *default*: **none**) | Only attempt connecting to the AP with the specified MAC (BSSID). |
-| **number** (*string; default: **none***) | Name or internal id of the interface with which to attempt a connection. |
-| **ssid** (*string; default: **none***) | Only attempt to connect to APs with the specified SSID. |
+| **interval** (*time interval*; default: **1s**) | Time interval at which to update command output. Default: 1s. |
+| **mac-address** (*MAC*; default: **none**) | Only attempt connecting to the AP with the specified MAC (BSSID). |
+| **number** (*string*; default: **none**) | Name or internal id of the interface with which to attempt a connection. |
+| **ssid** (*string*; default: **none**) | Only attempt to connect to APs with the specified SSID. |
 
 ### Radios
 
