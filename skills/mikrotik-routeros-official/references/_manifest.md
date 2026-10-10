@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `fef06dd966259832beab1ea95df462e44ddb92fc0e4f8def9f242f07f302f7d8`
+Index SHA-256: `615e27106e9378a73e53dea29c552e2955462f7def47e907558c9eb43313bced`
 Pages in current index: 1472
-Pages changed/written: 3
+Pages changed/written: 41
 Pages removed: 0
 Pages failed: 0
 
@@ -212,7 +212,7 @@ Pages failed: 0
 - [/file/sync/monitor](docs/cli-reference/file/sync/monitor.md) `c750fc089462`
 - [/file/tail](docs/cli-reference/file/tail.md) `a84c30b31b28`
 - [/import](docs/cli-reference/import.md) `101e8333123c`
-- [/interface](docs/cli-reference/interface.md) `694b1be7c05b`
+- [/interface](docs/cli-reference/interface.md) `fa7f820562d8`
 - [/interface/6to4](docs/cli-reference/interface/6to4.md) `9aef6ed36dcb`
 - [/interface/blink](docs/cli-reference/interface/blink.md) `4c30ae93519b`
 - [/interface/bonding](docs/cli-reference/interface/bonding.md) `f5344b293b3b`
@@ -348,7 +348,7 @@ Pages failed: 0
 - [/interface/mesh/fdb](docs/cli-reference/interface/mesh/fdb.md) `abd06562903b`
 - [/interface/mesh/port](docs/cli-reference/interface/mesh/port.md) `32da38ce6942`
 - [/interface/mesh/traceroute](docs/cli-reference/interface/mesh/traceroute.md) `913459dbe7cf`
-- [/interface/monitor-traffic](docs/cli-reference/interface/monitor-traffic.md) `190db1647f34`
+- [/interface/monitor-traffic](docs/cli-reference/interface/monitor-traffic.md) `01ae780c7452`
 - [/interface/ovpn-client](docs/cli-reference/interface/ovpn-client.md) `5b9373a363d8`
 - [/interface/ovpn-client/import-ovpn-configuration](docs/cli-reference/interface/ovpn-client/import-ovpn-configuration.md) `a54cf882c42e`
 - [/interface/ovpn-client/monitor](docs/cli-reference/interface/ovpn-client/monitor.md) `9ccb2849c835`
@@ -708,10 +708,10 @@ Pages failed: 0
 - [/ip/ssh/regenerate-host-key](docs/cli-reference/ip/ssh/regenerate-host-key.md) `55054cdff109`
 - [/ip/tftp](docs/cli-reference/ip/tftp.md) `b24a9bdc848f`
 - [/ip/tftp/settings](docs/cli-reference/ip/tftp/settings.md) `b87e65cd8de8`
-- [/ip/traffic-flow](docs/cli-reference/ip/traffic-flow.md) `83b716f6e03b`
-- [/ip/traffic-flow/ipfix](docs/cli-reference/ip/traffic-flow/ipfix.md) `ebbefed5271b`
-- [/ip/traffic-flow/monitor](docs/cli-reference/ip/traffic-flow/monitor.md) `9e22ee37d573`
-- [/ip/traffic-flow/target](docs/cli-reference/ip/traffic-flow/target.md) `c4a7273c09fb`
+- [/ip/traffic-flow](docs/cli-reference/ip/traffic-flow.md) `fe0099fd5456`
+- [/ip/traffic-flow/ipfix](docs/cli-reference/ip/traffic-flow/ipfix.md) `56fd33a950cd`
+- [/ip/traffic-flow/monitor](docs/cli-reference/ip/traffic-flow/monitor.md) `060fbf5240dd`
+- [/ip/traffic-flow/target](docs/cli-reference/ip/traffic-flow/target.md) `d4eb7fb3ff89`
 - [/ip/upnp](docs/cli-reference/ip/upnp.md) `12dd0df47440`
 - [/ip/upnp/interfaces](docs/cli-reference/ip/upnp/interfaces.md) `15b99ea88203`
 - [/ip/vrf](docs/cli-reference/ip/vrf.md) `a5def64b14cf`
@@ -933,9 +933,9 @@ Pages failed: 0
 - [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `15ceb3cadebe`
 - [/system/gps](docs/cli-reference/system/gps.md) `8f8fed59f131`
 - [/system/gps/monitor](docs/cli-reference/system/gps/monitor.md) `403a982bce5f`
-- [/system/health](docs/cli-reference/system/health.md) `25dfed9745bc`
-- [/system/health/settings](docs/cli-reference/system/health/settings.md) `cbbf3d1aaafa`
-- [/system/health/settings/detect-fans](docs/cli-reference/system/health/settings/detect-fans.md) `fe180bbd4d2e`
+- [/system/health](docs/cli-reference/system/health.md) `adca4b3c64c4`
+- [/system/health/settings](docs/cli-reference/system/health/settings.md) `318323236799`
+- [/system/health/settings/detect-fans](docs/cli-reference/system/health/settings/detect-fans.md) `8863817a1424`
 - [/system/history](docs/cli-reference/system/history.md) `d6acdfff6b5e`
 - [/system/identity](docs/cli-reference/system/identity.md) `e8b081373727`
 - [/system/keymat-provider](docs/cli-reference/system/keymat-provider.md) `3cae65eb767f`
@@ -977,22 +977,22 @@ Pages failed: 0
 - [/system/package/update/check-for-updates](docs/cli-reference/system/package/update/check-for-updates.md) `a1ee0aad0846`
 - [/system/package/update/download](docs/cli-reference/system/package/update/download.md) `480d9f619597`
 - [/system/package/update/install](docs/cli-reference/system/package/update/install.md) `e67d2ba60a3b`
-- [/system/ptp](docs/cli-reference/system/ptp.md) `1822e7da8040`
-- [/system/ptp/monitor](docs/cli-reference/system/ptp/monitor.md) `a24cdb9d08dc`
-- [/system/ptp/port](docs/cli-reference/system/ptp/port.md) `a8cbff452f16`
-- [/system/ptp/status](docs/cli-reference/system/ptp/status.md) `2b4449404cba`
+- [/system/ptp](docs/cli-reference/system/ptp.md) `db73e2e0d678`
+- [/system/ptp/monitor](docs/cli-reference/system/ptp/monitor.md) `0f0b4e6a08be`
+- [/system/ptp/port](docs/cli-reference/system/ptp/port.md) `8348118b7c13`
+- [/system/ptp/status](docs/cli-reference/system/ptp/status.md) `b479f6a5dee5`
 - [/system/reboot](docs/cli-reference/system/reboot.md) `7c0dac4cb6f0`
 - [/system/regulatory](docs/cli-reference/system/regulatory.md) `b2fec9e67ae9`
 - [/system/reset-configuration](docs/cli-reference/system/reset-configuration.md) `df8de202f002`
-- [/system/resource](docs/cli-reference/system/resource.md) `f6eda5d54413`
-- [/system/resource/cpu](docs/cli-reference/system/resource/cpu.md) `52555926c6d5`
-- [/system/resource/hardware](docs/cli-reference/system/resource/hardware.md) `8264866836e7`
-- [/system/resource/hardware/authorize](docs/cli-reference/system/resource/hardware/authorize.md) `933101f7d4ee`
-- [/system/resource/hardware/usb-power-reset](docs/cli-reference/system/resource/hardware/usb-power-reset.md) `b949809201a5`
-- [/system/resource/hardware/usb-settings](docs/cli-reference/system/resource/hardware/usb-settings.md) `391c0309a617`
-- [/system/resource/irq](docs/cli-reference/system/resource/irq.md) `04b369b71df8`
-- [/system/resource/irq/rps](docs/cli-reference/system/resource/irq/rps.md) `da53d886e6f3`
-- [/system/resource/monitor](docs/cli-reference/system/resource/monitor.md) `6ad05c8d1339`
+- [/system/resource](docs/cli-reference/system/resource.md) `2dc5cf2bc2e1`
+- [/system/resource/cpu](docs/cli-reference/system/resource/cpu.md) `7038f713f4cf`
+- [/system/resource/hardware](docs/cli-reference/system/resource/hardware.md) `9b8f6b2105f9`
+- [/system/resource/hardware/authorize](docs/cli-reference/system/resource/hardware/authorize.md) `0cd222914e26`
+- [/system/resource/hardware/usb-power-reset](docs/cli-reference/system/resource/hardware/usb-power-reset.md) `9a945c863719`
+- [/system/resource/hardware/usb-settings](docs/cli-reference/system/resource/hardware/usb-settings.md) `257fed6f1bcd`
+- [/system/resource/irq](docs/cli-reference/system/resource/irq.md) `3056b01bad21`
+- [/system/resource/irq/rps](docs/cli-reference/system/resource/irq/rps.md) `1296b0aba1c1`
+- [/system/resource/monitor](docs/cli-reference/system/resource/monitor.md) `1defd61836aa`
 - [/system/routerboard](docs/cli-reference/system/routerboard.md) `16370c3684d3`
 - [/system/routerboard/mode-button](docs/cli-reference/system/routerboard/mode-button.md) `dd7fe8f121ad`
 - [/system/routerboard/reset-button](docs/cli-reference/system/routerboard/reset-button.md) `62ab8a93514e`
@@ -1054,15 +1054,15 @@ Pages failed: 0
 - [/tool/mac-server/ping](docs/cli-reference/tool/mac-server/ping.md) `9061dd693936`
 - [/tool/mac-server/sessions](docs/cli-reference/tool/mac-server/sessions.md) `40890a5f1282`
 - [/tool/mac-telnet](docs/cli-reference/tool/mac-telnet.md) `3f22130478b2`
-- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `d46ea5639ad4`
+- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `a60c82e56b5c`
 - [/tool/ping-speed](docs/cli-reference/tool/ping-speed.md) `a9642af639ea`
 - [/tool/ping](docs/cli-reference/tool/ping.md) `863cbc1bab4f`
-- [/tool/profile](docs/cli-reference/tool/profile.md) `d53e03d9c273`
-- [/tool/romon](docs/cli-reference/tool/romon.md) `2ab76c3711bc`
-- [/tool/romon/discover](docs/cli-reference/tool/romon/discover.md) `13a9275f28ec`
-- [/tool/romon/ping](docs/cli-reference/tool/romon/ping.md) `973eaab096f6`
-- [/tool/romon/port](docs/cli-reference/tool/romon/port.md) `4074898f7be7`
-- [/tool/romon/ssh](docs/cli-reference/tool/romon/ssh.md) `922edb5e1165`
+- [/tool/profile](docs/cli-reference/tool/profile.md) `5bcb9eadbffd`
+- [/tool/romon](docs/cli-reference/tool/romon.md) `cf39c3e9e03a`
+- [/tool/romon/discover](docs/cli-reference/tool/romon/discover.md) `c9ca9abedafd`
+- [/tool/romon/ping](docs/cli-reference/tool/romon/ping.md) `bdb381285573`
+- [/tool/romon/port](docs/cli-reference/tool/romon/port.md) `ee13e0d112eb`
+- [/tool/romon/ssh](docs/cli-reference/tool/romon/ssh.md) `4c6441caf389`
 - [/tool/sms](docs/cli-reference/tool/sms.md) `40b577cb55ff`
 - [/tool/sms/inbox](docs/cli-reference/tool/sms/inbox.md) `567bb47495de`
 - [/tool/sms/send](docs/cli-reference/tool/sms/send.md) `cbc23ef7c6e5`
@@ -1094,7 +1094,7 @@ Pages failed: 0
 - [/tool/traffic-generator/stats/stream](docs/cli-reference/tool/traffic-generator/stats/stream.md) `d54d8af4c67e`
 - [/tool/traffic-generator/stop](docs/cli-reference/tool/traffic-generator/stop.md) `5343f3c43504`
 - [/tool/traffic-generator/stream](docs/cli-reference/tool/traffic-generator/stream.md) `400475763808`
-- [/tool/traffic-monitor](docs/cli-reference/tool/traffic-monitor.md) `a7af9715161b`
+- [/tool/traffic-monitor](docs/cli-reference/tool/traffic-monitor.md) `6434e3f7f998`
 - [/tool/wol](docs/cli-reference/tool/wol.md) `1f14fc2d2f5a`
 - [/tr069-client](docs/cli-reference/tr069-client.md) `9d04ecc3b23c`
 - [/tr069-client/reset-tr069-config](docs/cli-reference/tr069-client/reset-tr069-config.md) `993d7977d027`
@@ -1167,22 +1167,22 @@ Pages failed: 0
 - [DNS update](docs/diagnostics-monitoring-and-troubleshooting/dynamic-dns.md) `cc242fcb4e80`
 - [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
 - [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `50fda08234ce`
-- [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `ee82bfa57019`
-- [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `f64d56a041f2`
+- [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `e00b31a1e483`
+- [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `2408219795d0`
 - [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
-- [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `34e4ee660426`
+- [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `b7e081ceaee3`
 - [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `f6de0b02c4c3`
 - [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `2e65908aa00a`
-- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `f77f6b98b532`
+- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `a745d6060c79`
 - [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
-- [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `a645e319c30f`
-- [Resource](docs/diagnostics-monitoring-and-troubleshooting/resource.md) `8a6b4793b991`
+- [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `c53f192eea99`
+- [Resource](docs/diagnostics-monitoring-and-troubleshooting/resource.md) `eac3290027ea`
 - [SNMP](docs/diagnostics-monitoring-and-troubleshooting/snmp.md) `059a04269947`
 - [Speed Test](docs/diagnostics-monitoring-and-troubleshooting/speed-test.md) `db838309dc20`
 - [Torch](docs/diagnostics-monitoring-and-troubleshooting/torch.md) `cb819e03c33b`
 - [Traceroute](docs/diagnostics-monitoring-and-troubleshooting/traceroute.md) `d3fab637c39f`
-- [Traffic Flow](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md) `acf3a36e9636`
+- [Traffic Flow](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md) `8eed810811dc`
 - [NetFlow analysis with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md) `159123bccd08`
 - [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `4445b3d6f291`
 - [Watchdog](docs/diagnostics-monitoring-and-troubleshooting/watchdog.md) `cfa0097ec733`
@@ -1261,7 +1261,7 @@ Pages failed: 0
 - [LEDs](docs/hardware/leds.md) `1f3ef930b395`
 - [MTU in RouterOS](docs/hardware/mtu-in-routeros.md) `c546f3da880a`
 - [Peripherals](docs/hardware/peripherals.md) `449d8eb09ad5`
-- [PoE-Out](docs/hardware/poe-out.md) `bf9dff0ca318`
+- [PoE](docs/hardware/poe-out.md) `5e0f32b66608`
 - [Ports](docs/hardware/ports.md) `57be74b6b121`
 - [Product Naming](docs/hardware/product-naming.md) `146063d0b48b`
 - [RouterBOARD](docs/hardware/routerboard.md) `da12d1d070ab`
@@ -1317,7 +1317,7 @@ Pages failed: 0
 - [MAC server](docs/management-tools/mac-server.md) `a8e56d47c9f4`
 - [MikroTik mobile app](docs/management-tools/mikrotik-mobile-app.md) `e80dd37a4295`
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
-- [RoMON](docs/management-tools/romon.md) `a7b07c79ac39`
+- [RoMON](docs/management-tools/romon.md) `adc02146a57b`
 - [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
 - [SSH](docs/management-tools/ssh.md) `192eaa91411d`
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
@@ -1381,11 +1381,11 @@ Pages failed: 0
 - [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`
 - [Identity](docs/system-information-and-utilities/identity.md) `8406769474c7`
 - [IP Packing](docs/system-information-and-utilities/ip-packing.md) `d318e99a766c`
-- [Neighbor Discovery](docs/system-information-and-utilities/neighbor-discovery.md) `faca8b36d693`
+- [Neighbor Discovery](docs/system-information-and-utilities/neighbor-discovery.md) `658319ee8b3d`
 - [Note](docs/system-information-and-utilities/note.md) `867a690d3d73`
 - [NTP](docs/system-information-and-utilities/ntp.md) `b69e9cb7bdfc`
 - [Partitions](docs/system-information-and-utilities/partitions.md) `befa6fd378db`
-- [Precision Time Protocol](docs/system-information-and-utilities/precision-time-protocol.md) `db2fc3515980`
+- [Precision Time Protocol](docs/system-information-and-utilities/precision-time-protocol.md) `196e264c3219`
 - [Scheduler](docs/system-information-and-utilities/scheduler.md) `95690cce2374`
 - [Services](docs/system-information-and-utilities/services.md) `f8feaab0e16e`
 - [TFTP](docs/system-information-and-utilities/tftp.md) `d78c41d44619`

@@ -1,5 +1,5 @@
 {
-  "index_sha256": "fef06dd966259832beab1ea95df462e44ddb92fc0e4f8def9f242f07f302f7d8",
+  "index_sha256": "615e27106e9378a73e53dea29c552e2955462f7def47e907558c9eb43313bced",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -311,7 +311,7 @@
       "title": "RoMON",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/romon.md",
       "path": "docs/management-tools/romon.md",
-      "sha256": "a7b07c79ac3963f613f7e998e4fc0ffb193796dd9df44f9331f41f46eb8ff3a2"
+      "sha256": "adc02146a57bf9bfe9192b15e9cfd38dd535940cb93f8a19d218bdb5d20c0a58"
     },
     "https://manual.mikrotik.com/docs/management-tools/mac-server.md": {
       "title": "MAC server",
@@ -401,7 +401,7 @@
       "title": "Neighbor Discovery",
       "markdown_url": "https://manual.mikrotik.com/docs/system-information-and-utilities/neighbor-discovery.md",
       "path": "docs/system-information-and-utilities/neighbor-discovery.md",
-      "sha256": "faca8b36d6935f66ee081935d4b97e0705ff507a5f254c84b281fbfc98c9cb9b"
+      "sha256": "658319ee8b3d9483edda88e9132f76add0aa65b4cea50e65c72172f012d6fdc5"
     },
     "https://manual.mikrotik.com/docs/system-information-and-utilities/note.md": {
       "title": "Note",
@@ -425,7 +425,7 @@
       "title": "Precision Time Protocol",
       "markdown_url": "https://manual.mikrotik.com/docs/system-information-and-utilities/precision-time-protocol.md",
       "path": "docs/system-information-and-utilities/precision-time-protocol.md",
-      "sha256": "db2fc3515980643b3a1471071bdf2e338472a91da992458ee79842cb319c3607"
+      "sha256": "196e264c32194c14704fdcda5da7984eeb48f37a216952e533bfd95da5748fd4"
     },
     "https://manual.mikrotik.com/docs/system-information-and-utilities/scheduler.md": {
       "title": "Scheduler",
@@ -509,7 +509,7 @@
       "title": "Interface stats and monitor-traffic",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md",
-      "sha256": "f64d56a041f2d9a3a96605b725c2311fecbacd05e3becc79d2eacf04d42a14ea"
+      "sha256": "2408219795d0581e31014f4417b136cbbdaefa3c8b7705ad7224071234176cee"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md": {
       "title": "Traffic Generator",
@@ -521,7 +521,7 @@
       "title": "Netwatch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
-      "sha256": "f77f6b98b532f19b93d9bca0e26af185525f47de6a591ad516b560ab4b836904"
+      "sha256": "a745d6060c797853b9a3852b8695601cf918141b71dc56117c158517e01133ea"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/graphing.md": {
       "title": "Graphing",
@@ -539,19 +539,19 @@
       "title": "Health",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/health.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/health.md",
-      "sha256": "ee82bfa5701933cfb468017637227ccd451e0c80c251eabea4635c6ea0cb61e5"
+      "sha256": "e00b31a1e48331bcf17e88e5b054e6b250ee5354aefdf0a50e5cd8b0575328d5"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/resource.md": {
       "title": "Resource",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/resource.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/resource.md",
-      "sha256": "8a6b4793b99111ea263d7aa49c976a110a0abf1e60d005b8cdb431be3c2ea700"
+      "sha256": "eac3290027ea53e3ffe39011017078c17f590b73e6af840819bd1ef155f023ec"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/profiler.md": {
       "title": "Profiler",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/profiler.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/profiler.md",
-      "sha256": "a645e319c30fceca21d1024aff2d02566cb40a87e1e93289c730ee5376db4ec3"
+      "sha256": "c53f192eea99be0391d24aa59b37d8f8a5f135700d7991f117b2a69707b7055b"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md": {
       "title": "IP Scan",
@@ -587,7 +587,7 @@
       "title": "Log",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/log.md",
-      "sha256": "34e4ee660426a5c98f562dde3a1e0565e52893a90ea4285f1a30b522200389aa"
+      "sha256": "b7e081ceaee39d63df7630d5d65eff876e6294852f8f3a740ae5f77b28fc9e50"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md": {
       "title": "CEF with Elasticsearch",
@@ -605,7 +605,7 @@
       "title": "Traffic Flow",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md",
-      "sha256": "acf3a36e9636cad4010ef7b4c6ec3041da55802582c63f912364464003bd0e5d"
+      "sha256": "8eed810811dca2fad0a28a674415ac541a86f908db3221f0d46c46d170c1c402"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md": {
       "title": "NetFlow analysis with Elasticsearch",
@@ -662,10 +662,10 @@
       "sha256": "449d8eb09ad5e87e65fbebe610ba90832a0c12e9cb3c8fe4b4ce87932c6277a3"
     },
     "https://manual.mikrotik.com/docs/hardware/poe-out.md": {
-      "title": "PoE-Out",
+      "title": "PoE",
       "markdown_url": "https://manual.mikrotik.com/docs/hardware/poe-out.md",
       "path": "docs/hardware/poe-out.md",
-      "sha256": "bf9dff0ca318d97492592e8f1579c8866828b6e58cc6396f8346ca521f280ceb"
+      "sha256": "5e0f32b6660802f40d6221e485c1df4e5fd9a17dae0ff392ca9b6ee62d3977ef"
     },
     "https://manual.mikrotik.com/docs/hardware/ports.md": {
       "title": "Ports",
@@ -3257,7 +3257,7 @@
       "title": "/interface",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface.md",
       "path": "docs/cli-reference/interface.md",
-      "sha256": "694b1be7c05b4bb5cc647ae7abc8a59985376e32bd66f6b082339a369bdf94c5"
+      "sha256": "fa7f820562d8dbbd0145eacc4afeee21ea7a93dd43d24944f46f3736bbbe078f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/6to4.md": {
       "title": "/interface/6to4",
@@ -4073,7 +4073,7 @@
       "title": "/interface/monitor-traffic",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/monitor-traffic.md",
       "path": "docs/cli-reference/interface/monitor-traffic.md",
-      "sha256": "190db1647f34b087de47c1395553379d4c9958983fad54cb13805ec2dd7b9fee"
+      "sha256": "01ae780c74522e59a693c0ddf52a84a9c8eafdf17cbf790285181456a20b371c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ovpn-client.md": {
       "title": "/interface/ovpn-client",
@@ -6233,25 +6233,25 @@
       "title": "/ip/traffic-flow",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow.md",
       "path": "docs/cli-reference/ip/traffic-flow.md",
-      "sha256": "83b716f6e03bca1dc53f94191280e9b4e6f9d01b79c6a89367627f59c733f737"
+      "sha256": "fe0099fd54560680931fad3e2194d9692040705dc224a4ef2571ad94f6e4ccf2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/ipfix.md": {
       "title": "/ip/traffic-flow/ipfix",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/ipfix.md",
       "path": "docs/cli-reference/ip/traffic-flow/ipfix.md",
-      "sha256": "ebbefed5271bd846504387f6ca313733bfb6f3af30e57e94c4117e6ee4b4632e"
+      "sha256": "56fd33a950cdcfd3cb4d033c75bf00482c453ef486ccab29537cefcb75b9f423"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/monitor.md": {
       "title": "/ip/traffic-flow/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/monitor.md",
       "path": "docs/cli-reference/ip/traffic-flow/monitor.md",
-      "sha256": "9e22ee37d573ced8a1f658fae2b9de9ff8a1e52b8969aed50f32156d382b29d1"
+      "sha256": "060fbf5240dda5e112ad3557b6e273c5b56b3edccee09e6a7cd8225678d6a939"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/target.md": {
       "title": "/ip/traffic-flow/target",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/traffic-flow/target.md",
       "path": "docs/cli-reference/ip/traffic-flow/target.md",
-      "sha256": "c4a7273c09fbfc29074d22cf1a071418be28dd23e9bc214693d34f6bc768863d"
+      "sha256": "d4eb7fb3ff89c5e45692abf26d58534ac134f578d3f76144b805feb6c3d45bdc"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/upnp.md": {
       "title": "/ip/upnp",
@@ -7583,19 +7583,19 @@
       "title": "/system/health",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/health.md",
       "path": "docs/cli-reference/system/health.md",
-      "sha256": "25dfed9745bcbff8a1963644abca00c078234f23e989a987bcd77370ab933dce"
+      "sha256": "adca4b3c64c43f8d3911d0923e9d9c764d40aab9b4505da5a4002b4b9a33a67a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/health/settings.md": {
       "title": "/system/health/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/health/settings.md",
       "path": "docs/cli-reference/system/health/settings.md",
-      "sha256": "cbbf3d1aaafadc05fff211836c628fddffb84656e514293e7e21ea9bec99f095"
+      "sha256": "318323236799763549b4f56fa97825491b580dca48e6c6788bab60e20b9d69b0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/health/settings/detect-fans.md": {
       "title": "/system/health/settings/detect-fans",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/health/settings/detect-fans.md",
       "path": "docs/cli-reference/system/health/settings/detect-fans.md",
-      "sha256": "fe180bbd4d2eb64f50b4c5735435a4048c1ad4323fb7f3baa0825efa6ef1a72d"
+      "sha256": "8863817a142497aa8e3c9aea7520ebb3d8305468a7c0f79b0e6d736cecf4dcd4"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/history.md": {
       "title": "/system/history",
@@ -7847,25 +7847,25 @@
       "title": "/system/ptp",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/ptp.md",
       "path": "docs/cli-reference/system/ptp.md",
-      "sha256": "1822e7da80401d0dd83f04c11cc1c9905fb20b907381563b1c4293a95c6d8ffe"
+      "sha256": "db73e2e0d6788d3491a5a3a56dd948769195ed957b428d5e76ad6b825cadba13"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/ptp/monitor.md": {
       "title": "/system/ptp/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/ptp/monitor.md",
       "path": "docs/cli-reference/system/ptp/monitor.md",
-      "sha256": "a24cdb9d08dcc21b5a8329145d43f4bff664633e514e61a15b3c70ade0f9c40a"
+      "sha256": "0f0b4e6a08be55210222079575978851d902d114657aac230a78fbf78ca6edb9"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/ptp/port.md": {
       "title": "/system/ptp/port",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/ptp/port.md",
       "path": "docs/cli-reference/system/ptp/port.md",
-      "sha256": "a8cbff452f16677fccf8e22ad48484110b3df69b302b5641fa59b9b79725d853"
+      "sha256": "8348118b7c130301cbebcdb05072edc898558129945e43758819e63860d84320"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/ptp/status.md": {
       "title": "/system/ptp/status",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/ptp/status.md",
       "path": "docs/cli-reference/system/ptp/status.md",
-      "sha256": "2b4449404cbadadf61d16d6e76ebd542ebe9194ddcc63e79da99e53f7e947b64"
+      "sha256": "b479f6a5dee5cbebc2e97fe8d23af3291bc9a4118f82b635967de6de086293ca"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/reboot.md": {
       "title": "/system/reboot",
@@ -7889,55 +7889,55 @@
       "title": "/system/resource",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource.md",
       "path": "docs/cli-reference/system/resource.md",
-      "sha256": "f6eda5d544132f301bb59f98a8bdbb2343b48654c6f864a9ac45633c532daccc"
+      "sha256": "2dc5cf2bc2e1fc1f68d685184c5d587592e6d905862eff4642d0d4e4fd09cce7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/cpu.md": {
       "title": "/system/resource/cpu",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/cpu.md",
       "path": "docs/cli-reference/system/resource/cpu.md",
-      "sha256": "52555926c6d568addd7957af059a7c95ebd49011067a3f1b73d088767e1367c4"
+      "sha256": "7038f713f4cfe7d9ab7fbfaa47d7c8887a0e0e705d9794fe71b98d7f73f0578e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware.md": {
       "title": "/system/resource/hardware",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware.md",
       "path": "docs/cli-reference/system/resource/hardware.md",
-      "sha256": "8264866836e7c6e585a5beff148857650b05698df8608c01b876c67f3114509c"
+      "sha256": "9b8f6b2105f97a73c6d6bada2769fc7e0cfd2a88d35cb5fbaa71cb372071d88d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/authorize.md": {
       "title": "/system/resource/hardware/authorize",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/authorize.md",
       "path": "docs/cli-reference/system/resource/hardware/authorize.md",
-      "sha256": "933101f7d4eee68be4f28a03ad3704b44540356cecdd72ded42acc4815ae6385"
+      "sha256": "0cd222914e26fc395eec1ec5f93b46bafaacf8a0a4a9bf7434c459f955c3bb52"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/usb-power-reset.md": {
       "title": "/system/resource/hardware/usb-power-reset",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/usb-power-reset.md",
       "path": "docs/cli-reference/system/resource/hardware/usb-power-reset.md",
-      "sha256": "b949809201a55d26f7bb31cdd3f320474a55836b54f7bdf12cb646ca49faeec9"
+      "sha256": "9a945c8637198034d21769763a2efe1903fd9b14df0be1f9bea55d14cac795c8"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/usb-settings.md": {
       "title": "/system/resource/hardware/usb-settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/hardware/usb-settings.md",
       "path": "docs/cli-reference/system/resource/hardware/usb-settings.md",
-      "sha256": "391c0309a617cdfefaf07cf0f5189289f0f71f699dc8e7438706b01cd0018a55"
+      "sha256": "257fed6f1bcd7f74c0279ea7aaeeb7a2b8c59c34147b4a17d9c3422e92acaca2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/irq.md": {
       "title": "/system/resource/irq",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/irq.md",
       "path": "docs/cli-reference/system/resource/irq.md",
-      "sha256": "04b369b71df88eb0ecf4c44c2613a92894b3a8e5509b583b8a099a7c51bd325e"
+      "sha256": "3056b01bad21e7ad55f45ba1f579b8b175d77aaf24dc00f989942371d59c56e6"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/irq/rps.md": {
       "title": "/system/resource/irq/rps",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/irq/rps.md",
       "path": "docs/cli-reference/system/resource/irq/rps.md",
-      "sha256": "da53d886e6f36f5ed4305dae7d55e39309fa5c99a461b09e2909886a34812937"
+      "sha256": "1296b0aba1c147730a0f99b0729221a6befa24ebd12ef54d20b6909604086426"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/resource/monitor.md": {
       "title": "/system/resource/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/resource/monitor.md",
       "path": "docs/cli-reference/system/resource/monitor.md",
-      "sha256": "6ad05c8d133919e55518e9f773a86bd1d40200f19e777261565c09828e6ac500"
+      "sha256": "1defd61836aa4bb49e917f868a14a3b4e5dd4c6ddf97060cb8a6438c0f863257"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/routerboard.md": {
       "title": "/system/routerboard",
@@ -8309,7 +8309,7 @@
       "title": "/tool/netwatch",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/netwatch.md",
       "path": "docs/cli-reference/tool/netwatch.md",
-      "sha256": "d46ea5639ad4c6c33801b11d0e24b8a3b51075c9bf2ccfcb2e255674b1441e21"
+      "sha256": "a60c82e56b5c13c4acd641b0456f83ae3436a0bfe0b949d0778103bf1b0ccb13"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/ping-speed.md": {
       "title": "/tool/ping-speed",
@@ -8327,37 +8327,37 @@
       "title": "/tool/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/profile.md",
       "path": "docs/cli-reference/tool/profile.md",
-      "sha256": "d53e03d9c273cfb92e60fdf45b278fc303123c4ce5444aaf3fc7d8a267001dd0"
+      "sha256": "5bcb9eadbffd9f93d14ebdc0f3e3c152c19d65368a411ccd721f9e2c3adac587"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/romon.md": {
       "title": "/tool/romon",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/romon.md",
       "path": "docs/cli-reference/tool/romon.md",
-      "sha256": "2ab76c3711bc5b05ea2631a78f4aa939321db21a1014d3e6c31cf5b7acb58fd4"
+      "sha256": "cf39c3e9e03a3faff7c8217522fd3f4047dc1c6ef85e046b4286d5192161e098"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/romon/discover.md": {
       "title": "/tool/romon/discover",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/romon/discover.md",
       "path": "docs/cli-reference/tool/romon/discover.md",
-      "sha256": "13a9275f28ec228816f00ff2198aa4b10dade51476dedb16488b910e9824f7ec"
+      "sha256": "c9ca9abedafdc0c6a8739a18cf8b6f3ff1cf2b2e8528bad98e73d5dd4e9928d0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/romon/ping.md": {
       "title": "/tool/romon/ping",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/romon/ping.md",
       "path": "docs/cli-reference/tool/romon/ping.md",
-      "sha256": "973eaab096f6eebe5143e3c4c97c614d40d2225c6d6ac87224af3a82e7f61174"
+      "sha256": "bdb381285573002709e8cc86b11b0f6426c2726324a3dbb8e636267439e822b2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/romon/port.md": {
       "title": "/tool/romon/port",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/romon/port.md",
       "path": "docs/cli-reference/tool/romon/port.md",
-      "sha256": "4074898f7be7b5c299e2619e71c0516130742129fea609eae591ae804c21b975"
+      "sha256": "ee13e0d112ebe51e9240f678cbb9fd536cd11295ae98e0fbb2d84f922f440a49"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/romon/ssh.md": {
       "title": "/tool/romon/ssh",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/romon/ssh.md",
       "path": "docs/cli-reference/tool/romon/ssh.md",
-      "sha256": "922edb5e1165398b7eb1f0b7431a3af37348e8b1355039f81d488b9465139b3e"
+      "sha256": "4c6441caf389f43dd0965d0f52f6403081a36c5e5ac7d5b53be2491ea8134cf5"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/sms.md": {
       "title": "/tool/sms",
@@ -8549,7 +8549,7 @@
       "title": "/tool/traffic-monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-monitor.md",
       "path": "docs/cli-reference/tool/traffic-monitor.md",
-      "sha256": "a7af9715161b4071cd1c3a056462198975ff699c8c9175fa4c52ec8fc328b18e"
+      "sha256": "6434e3f7f9981b8a450a102cf2bcb9119bd8b84ea0df7d1470bc09bb17d9fd7d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/wol.md": {
       "title": "/tool/wol",

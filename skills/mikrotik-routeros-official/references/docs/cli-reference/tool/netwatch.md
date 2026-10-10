@@ -1,19 +1,21 @@
 # netwatch
 
-> RouterOS directory reference for /tool/netwatch.
+> Monitor network hosts with simple, ICMP, TCP, HTTP, HTTPS and DNS probes, and run scripts on state changes. See the Netwatch guide.
 
 -----------
 
 ## tool/netwatch 
 **Type:** Directory
 
+Monitor network hosts with simple, ICMP, TCP, HTTP, HTTPS and DNS probes, and run scripts on state changes. See the [Netwatch](../../diagnostics-monitoring-and-troubleshooting/netwatch) guide.
+
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">disabled</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
-<ArgTableRow arg="name" typ="string">The name of the Netwatch probe.</ArgTableRow>
-<ArgTableRow arg="host" typ="address (flags=46viD)" mandatory="1">The IP address or domain name of the server to be probed. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
+<ArgTableRow arg="name" typ="string">The name of the Netwatch probe; named probes are identified by it in log lines (unnamed probes log their type and host instead).</ArgTableRow>
+<ArgTableRow arg="host" typ="address (flags=46viD)" mandatory="1">The IP address or domain name of the server to be probed. Accepts an address with a VRF suffix (`192.0.2.1@vrf1`) and a link-local IPv6 address with an interface suffix (`fe80::1%ether1`). See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
 <ArgTableRow arg="type" typ="enum (simple | icmp | tcp-conn | http-get | https-get | dns)">
 Type of the probe (default value: **"simple"**) :
 - simple - simplified ICMP probe, with fewer options than "ICMP" type, used for backward compatibility with the older Netwatch version
@@ -24,7 +26,7 @@ Type of the probe (default value: **"simple"**) :
 - dns - do a specified DNS query for the domain name
 </ArgTableRow>
 <ArgTableRow arg="src-address" typ="address (flags=46)" unset="1">Source IP address which the Netwatch will try to use in order to reach the host. If the address is not configured on the router or was lost, then the host will be considered as "down". See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
-<ArgTableRow arg="interval" typ="time" unset="1">The time interval between probe tests. (default value: **10s**)</ArgTableRow>
+<ArgTableRow arg="interval" typ="time" unset="1">The time interval between probe tests. (default value: **10s**, except `simple` probes: **60s**)</ArgTableRow>
 <ArgTableRow arg="timeout" typ="time" unset="1">Max time limit to wait for a response. (default value: **3s**)</ArgTableRow>
 <ArgTableRow arg="start-delay" typ="time" unset="1">Time to wait before starting the probe. (default value: **3s**) (on add, enable, or system startup in cases when "startup-delay" value is smaller then "start-delay" value)</ArgTableRow>
 <ArgTableRow arg="startup-delay" typ="time" unset="1">Time to wait until starting the Netwatch probe after system startup. (default value: **5m**)</ArgTableRow>
@@ -41,8 +43,8 @@ Type of the probe (default value: **"simple"**) :
 <ArgTableRow arg="packet-size" typ="num" unset="1">Total size of the IP ICMP packet. This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **50**)</ArgTableRow>
 <ArgTableRow arg="ttl" typ="num" unset="1">Manually sets the time to live value for the ICMP packet. This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **255**)</ArgTableRow>
 <ArgTableRow arg="accept-icmp-time-exceeded" typ="bool" unset="1">If the ICMP "time exceeded" message should be considered a valid response. This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **no**)</ArgTableRow>
-<ArgTableRow arg="early-success-detection" typ="bool" unset="1">Netwatch will not wait for all the packets to be processed to change probe status if it is already known that the host will be considered "Down". This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **no**)</ArgTableRow>
-<ArgTableRow arg="early-failure-detection" typ="bool" unset="1">Netwatch will not wait for all the packets to be processed to change probe status if it is already known that the host will be considered "Down". This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **no**)</ArgTableRow>
+<ArgTableRow arg="early-success-detection" typ="bool" unset="1">Netwatch reports the "Up" state before the whole packet train is processed once the result is certain, for example when the remaining packets can no longer push the loss past `thr-loss-count`. This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **no**)</ArgTableRow>
+<ArgTableRow arg="early-failure-detection" typ="bool" unset="1">Netwatch reports the "Down" state before the whole packet train is processed once failure is certain, for example as soon as the loss crosses `thr-loss-count`. This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **no**)</ArgTableRow>
 <ArgTableRow arg="thr-max" typ="time" unset="1">Fail threshold for rtt-max. (a value above thr-max is a probe fail) This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **1s**)</ArgTableRow>
 <ArgTableRow arg="thr-avg" typ="time" unset="1">Fail threshold for rtt-avg. (round trip time-avg) This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **100ms**)</ArgTableRow>
 <ArgTableRow arg="thr-stdev" typ="time" unset="1">Fail threshold for rtt-stdev. (standard deviation of round trip time) This parameter is specific to the [**ICMP**](../../diagnostics-monitoring-and-troubleshooting/netwatch#icmp-probe) probe type. (default value: **250ms**)</ArgTableRow>
@@ -57,7 +59,7 @@ Type of the probe (default value: **"simple"**) :
 <ArgTableRow arg="certificate" typ="enum (none) { none:0 }" unset="1">Certificate from the local store that should be used for host verification. This parameter is specific to the [**HTTPS-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#https-get-probe) probe type.</ArgTableRow>
 <ArgTableRow arg="check-certificate" typ="bool" unset="1">Enables trust chain validation from the local certificate store. This parameter is specific to the [**HTTPS-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#https-get-probe) probe type. (default value: **no**)</ArgTableRow>
 <ArgTableRow arg="record-type" typ="enum (A | AAAA | MX | NS)" unset="1">Record type that will be used for DNS probe. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. (default value: **A**)</ArgTableRow>
-<ArgTableRow arg="dns-server" typ="address (flags=46)" unset="1">The DNS server that the probe should send its requests to; if not specified, it will use the value from `/ip/dns`. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
+<ArgTableRow arg="dns-server" typ="address (flags=46)" unset="1">The DNS server that the probe should send its requests to; if not specified, it will use the value from `/ip/dns`. The probe is paced by its own `timeout`, not by the `query-server-timeout` of `/ip/dns`. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

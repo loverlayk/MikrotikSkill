@@ -1,194 +1,112 @@
 # Resource
 
-> The Resource menu in RouterOS provides overview of system statistics including uptime, memory, disk usage, and hardware details like CPU model and frequency. It also offers submenus for detailed per-CPU usage, IRQ,...
+> The /system/resource menu shows the router's identity and usage: uptime, RouterOS version, memory, disk/NAND, CPU model and load; submenus break load down per core (cpu), per interrupt (irq), steer packet handling...
 
 # Resource
 
-### General
-
-**Sub-menu:** `/system/resource`
-
-The general resource menu shows overall resource usage and router statistics like uptime, memory usage, disk usage, version, etc.
-
-It also has several sub-menus for more detailed hardware statistics like CPU, IRQ, and Hardware.
+The [`/system/resource`](../cli-reference/system/resource) menu shows the overall resource usage and identity of the router: uptime, version, memory, disk, CPU model, architecture and the bad-block percentage of the NAND. All values are read-only.
 
 ```ros
-[admin@MikroTik] > /system/resource/print 
-                   uptime: 29s
-                  version: 7.24rc2
-               build-time: 2023-08-31 13:55:47
-          minimum-version: 7.6
-              free-memory: 94.2MiB
-             total-memory: 224.0MiB
-                      cpu: ARM
-                cpu-count: 2
-            cpu-frequency: 800MHz
-                 cpu-load: 2%
-           free-hdd-space: 93.5MiB
-          total-hdd-space: 128.5MiB
-  write-sect-since-reboot: 85
-         write-sect-total: 222100
+[admin@MikroTik] > /system/resource/print
+                   uptime: 2h31m3s
+                  version: 7.26beta1
+               build-time: 2026-10-01 13:29:47
+          minimum-version: 7.0.9
+              free-memory: 678.7MiB
+             total-memory: 1024.0MiB
+                      cpu: ARM64
+                cpu-count: 4
+            cpu-frequency: 864MHz
+                 cpu-load: 0%
+           free-hdd-space: 91.9MiB
+          total-hdd-space: 128.0MiB
+  write-sect-since-reboot: 437
+         write-sect-total: 263060
                bad-blocks: 0%
-        architecture-name: arm
-               board-name: hAP ax lite LTE6
+        architecture-name: arm64
+               board-name: hAP ax^2
                  platform: MikroTik
-
 ```
 
-All properties are read-only
+The properties (uptime, version, build-time, memory, hdd space, write-sector and bad-block counters, board and platform names) are described in the [`/system/resource`](../cli-reference/system/resource) CLI reference page.
 
-| Property | Description |
-| :-- | :-- |
-| **architecture-name** (*string*) | CPU architecture |
-| **bad-blocks** (*percent*) | Shows percentage of bad blocks on the NAND. |
-| **board-name** (*string*) | RouterBOARD model name |
-| **build-time**(*string*) | Installed RouterOS version build-time |
-| **cpu** (*string*) | CPU model that is on the board |
-| **cpu-count** (*integer*) | Number of CPUs present on the system. Each core is a separate CPU, Intel HT is also a separate CPU. |
-| **cpu-frequency** (*string*) | Current CPU frequency |
-| **cpu-load** (*percent*) | Percentage of used CPU resources. Combines all CPUs. Per-core CPU usage can be seen in [CPU submenu](#cpu) |
-| **minimum-version**(*string*) | Minimum RouterOS version (was 'factory-software') |
-| **free-hdd-space** (*string*) | Free space on hard drive or NAND |
-| **free-memory** (*string*) | The unused amount of RAM |
-| **platform** (*string*) | Platform name |
-| **total-hdd-space** (*string*) | Size of the hard drive or NAND |
-| **total-memory** (*string*) | Amount of installed RAM |
-| **uptime** (*time*) | Time interval passed since boot-up |
-| **version** (*string*) | Installed RouterOS version number |
-| **write-sect-since-reboot** (*integer*) | The number of sector writes in HDD or NAND since the router was last rebooted |
-| **write-sect-total** (*integer*) | The number of sector writes in total |
+## Watch usage live
 
-### CPU
-
-**Sub-menu:** `/system/resource/cpu`
-
-This submenu shows per-cpu usage, as well as IRQ and Disk usage.
+`/system/resource/monitor` prints a live-updating view of CPU usage per core and the free memory (the table refreshes continuously; bound it with `duration`):
 
 ```ros
-[admin@RB1100test] /system/resource/cpu> print 
-CPU LOAD IRQ DISK 
-0 5% 0% 0% 
-[admin@RB1100test] /system/resource/cpu> 
-
+[admin@MikroTik] > /system/resource/monitor duration=2
+           cpu-used: 0%
+  cpu-used-per-core: 1%
+                     0%
+                     0%
+                     0%
+        free-memory: 694948KiB
 ```
 
-## Properties
+`free-memory` here is in KiB (694948 KiB ≈ 678.7 MiB shown by `print`).
 
-### Read-only properties
+## Read per-core breakdown
 
-| Property | Description |
-| :-- | :-- |
-| **cpu** (*integer*) | Identification number of the CPU whose usage is shown. |
-| **load** (*percent*) | CPU usage in percent |
-| **irq** (*percent*) | IRQ usage in percent |
-| **disk** (*percent*) | Disk usage in percent |
-
-### IRQ
-
-**Sub-menu:** `/system/resource/irq`
-
-The menu shows all used IRQs on the router. It is possible to set up [IRQ load balancing](#irq) on multicore systems by assigning an IRQ to a specific core. IRQ assignments are done by hardware and cannot be changed from RouterOS. For example, if all Ethernets are assigned to one IRQ, then you have to deal with hardware: upgrade motherboard's BIOS, reassign IRQs manually in BIOS, if none of the above helps then change the hardware.
-
-#### Properties
-
-| Property | Description |
-| :-- | :-- |
-| **cpu** (*auto \| integer*; Default: ) | Specifies which CPU is assigned to the IRQ.auto - picks a CPU based on the number of interrupts. Uses NAPI to optimize interrupts. |
-
-**Read-only properties**
-
-| Property | Description |
-| :-- | :-- |
-| **active-cpu** (*integer*) | Shows active CPU in multicore systems. |
-| **count** (*integer*) | The number of interrupts. On ethernet interfaces interrupt=packet. |
-| **irq** (*integer*) | IRQ identification number |
-| **users** (*string*) | Process assigned to IRQ |
-
-### RPS
-
-**Sub-menu:** `/system/resource/irq/rps`
-
-Receive Packet Steering (RPS) is similar to Receive Side Scaling (RSS) in that it is used to direct packets to specific CPUs for processing. However, RPS is implemented at the software level, and helps to prevent the hardware queue of a single network interface card from becoming a bottleneck in network traffic.  
-  
-RPS is useful when packets require additional processing that uses a relatively large amount of CPU time, such as PPP tunnel termination, VPLS, or firewall processing. The CPU resources spent by RPS on classifying and forwarding packets to another CPU are then outweighed by the additional processing required. Unfortunately, RPS cannot always replace several lines in Ethernet drivers, as forwarding packets to another CPU is expensive in itself.
-  
-For network devices with multiple queues, there is typically no benefit to configuring both RPS and RSS, as RSS is configured to map a CPU to each receive queue by default. However, RPS may still be beneficial if there are fewer hardware queues than CPUs, depending on the traffic handled by the device.
-
-#### Properties
-
-| Property | Description |
-| :-- | :-- |
-| **disable***(number)* | Disable RPS for selected entries |
-| **edit** *(number)* | Edit properties of an existing entry |
-| **enable** *(number)* | Enable RPS for selected entries |
-| **reset***(number)* | Reset properties to default values |
-
-### **Hardware**
-
-Shows detected hardware devices connected via PCI, USB, or SCSI buses.
-
-Flags:
+`/system/resource/cpu` shows usage per core, split into user load (`load`), interrupt handling (`irq`) and disk I/O (`disk`):
 
 ```ros
-I - inactive   Device is present but not active
+[admin@MikroTik] > /system/resource/cpu/print
+Columns: CPU, LOAD, IRQ, DISK
+#  CPU   LOAD  IRQ  DISK
+0  cpu0  0%    0%   0%
+1  cpu1  0%    0%   0%
+2  cpu2  1%    0%   0%
+3  cpu3  0%    0%   0%
 ```
 
-**Sub-menu:** `/system/resource/hardware`
+## Interrupts (IRQ)
 
-#### Properties
+The [`/system/resource/irq`](../cli-reference/system/resource/irq) menu shows all used IRQs on the router, including the CPU the IRQ is assigned to and the interrupt counter rows for each device:
 
-| Property | Description |
-| :-- | :-- |
-| **location** (*string*) | Device location in system topology |
-| **parent** (*enum*) | Parent bus or controller |
-| **type** (usb\|pci\|scsi\|serial) | Bus type of the device |
-| **vendor** (*string*) | Device vendor name |
-| **name** (*string*) | Device name or model |
-| **serial-number** (*string*) | Device serial number |
-| **vendor-id**(string) | Vendor identifier (VID) |
-| **device-id** (string) | Device identifier (PID / Device ID) |
-| **speed** (*string*) | Negotiated device speed |
-| **ports***(number)* | Number of ports provided by the device |
-| **usb-version** (*string*) | Supported USB version |
-| **owner** (*string*) | Subsystem or driver owning the device |
-| **device-path** (*string*) | Device path from root bus to endpoint |
+```ros
+[admin@MikroTik] > /system/resource/irq/print where count>0
+Flags: o - READ-ONLY
+Columns: IRQ, USERS, CPU, ACTIVE-CPU, COUNT
+ #   IRQ  USERS                                CPU   ACTIVE-CPU   COUNT
+ 0     6  bam_dma                              auto           0      68
+ 1     8  78b5000.spi                          auto           2     157
+ 2     9  glink-native                         auto           3     116
+```
 
-**Read-only properties**
+IRQ assignment with `cpu=auto` is done by the interrupt routing (which uses [NAPI](https://docs.kernel.org/networking/napi.html) interrupt consolidation). The `o` flag marks hardware-fixed IRQs, whose CPU assignment cannot be changed.
 
-| Property | Description |
-| :-- | :-- |
-| **category** (*string*) | Device category |
-| **irq** (*number*) | Assigned interrupt number |
+To pin an IRQ to a specific core:
 
-### Device authorization
+```ros
+/system/resource/irq/set [find irq=6] cpu=2
+```
 
-Controls the authorization state of a hardware device.
+### Receive packet steering
 
-**Sub-menu:** `/system/resource/hardware/authorize`
+[`/system/resource/irq/rps`](../cli-reference/system/resource/irq/rps) is Receive Packet Steering (RPS), similar to Receive Side Scaling (RSS), but implemented in software: it directs packet processing work of an interface to a chosen CPU. RPS is useful when packets require additional processing that uses a relatively large amount of CPU time, such as PPP tunnel termination, VPLS, or firewall processing: the cost of RPS steering is outweighed by spreading the heavy work over the cores.
 
-#### Properties
+RPS does not always pay off. If a network device has multiple hardware queues, its receive side scaling (RSS) already maps queues to CPUs, and RPS steering costs more than it saves. Configure RPS when the hardware has fewer queues than CPUs, or when RSS does not cover the path (for example packets decapsulated off a tunnel interface).
 
-| Property | Description |
-| :-- | :-- |
-| **allow** (*yes\|no*) | Enable or disable USB device authorization |
+## Hardware map
 
-### Global USB subsystem settings
+`/system/resource/hardware` lists devices attached over the PCI, USB and SCSI buses with their bus location, vendor/device identifiers, firmware-reported name, driver owner, negotiated speed, USB version and so on. A board with no enumeration-capable bus (for example the hAP ax²) prints an empty list.
 
-**Sub-menu:** `/system/resource/hardware/usb-settings`
+### USB device authorization
 
-#### Properties
+When USB device authorization is turned on globally (`authorization=yes` in [`/system/resource/hardware/usb-settings`](../cli-reference/system/resource/hardware/usb-settings)), newly attached USB devices stay disabled until the administrator allows them in [`/system/resource/hardware/authorize`](../cli-reference/system/resource/hardware/authorize).
 
-| Property | Description |
-| :-- | :-- |
-| **authorization** (*yes\|no*) | Enable or disable USB device authorization |
-| **numbers** (*number*) |  |
+### Reset USB devices
 
-**Sub-menu:** `/system/resource/hardware/usb-power-reset`
+To reset a misbehaving USB modem or drive without rebooting the router, power-cycle its USB port with [`/system/resource/hardware/usb-power-reset`](../cli-reference/system/resource/hardware/usb-power-reset) (the `bus` and `slot` come from the device's `/system/resource/hardware` row):
 
-#### Properties
+```ros
+/system/resource/hardware/usb-power-reset bus=1 slot=2 duration=5s
+```
 
-| Property | Description |
-| :-- | :-- |
-| **duration** (time) | Power-off duration before re-enabling USB |
-| **bus**(number) | USB bus number |
-| **slot**(number) | USB port/slot number on the bus |
+## Technical details
+
+- `cpu-load` sums the usage of all cores of the CPU; use `/system/resource/cpu` or `monitor` for the per-core breakdown.
+- `write-sect-since-reboot`/`write-sect-total` and `bad-blocks` help spot flash wear on NAND devices (together with the [Health](health) readings and `.65`-style early warnings).
+
+For all parameters and their defaults, see the [`/system/resource`](../cli-reference/system/resource), [`cpu`](../cli-reference/system/resource/cpu), [`irq`](../cli-reference/system/resource/irq), [`irq/rps`](../cli-reference/system/resource/irq/rps), [`hardware`](../cli-reference/system/resource/hardware), [`usb-settings`](../cli-reference/system/resource/hardware/usb-settings), [`authorize`](../cli-reference/system/resource/hardware/authorize) and [`usb-power-reset`](../cli-reference/system/resource/hardware/usb-power-reset) CLI reference pages.

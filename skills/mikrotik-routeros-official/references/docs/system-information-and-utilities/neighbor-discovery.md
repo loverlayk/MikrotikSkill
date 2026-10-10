@@ -1,18 +1,22 @@
 # Neighbor Discovery
 
-> Neighbor discovery protocols enable detection of devices using MNDP, CDP, or LLDP in Layer2 domains, displaying connected neighbors' IP/MAC addresses and interfaces. Configuration options include protocol selection,...
+> Neighbor discovery finds MikroTik and third-party devices on the Layer 2 network using MNDP, CDP and LLDP: the neighbor list, per-protocol settings, interface participation, LLDP TLVs and the LLDP-MED voice VLAN example.
 
 # Neighbor Discovery
 
 Neighbor Discovery protocols allow you to find devices compatible with MNDP (MikroTik Neighbor Discovery Protocol), CDP (Cisco Discovery Protocol), or LLDP (Link Layer Discovery Protocol) in the Layer 2 broadcast domain. They can be used to map out your network.
 
-All read-only neighbor parameters are documented in the [`/ip/neighbor`](../cli-reference/ip/neighbor) CLI reference.
+`/ip/neighbor` lists all discovered neighbors, whichever of the protocols announced them (the `discovered-by` value shows which). The read-only [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp) menu shows only LLDP-discovered entries. All read-only neighbor parameters are described in the [`/ip/neighbor`](../cli-reference/ip/neighbor) CLI reference:
 
-LLDP-discovered neighbors are shown in a separate read-only menu in [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp).
+```ros
+[admin@MikroTik] > /ip/neighbor/print where identity="Router-A"
+Columns: INTERFACE, ADDRESS4, ADDRESS6, MAC-ADDRESS
+#  INTERFACE  ADDRESS4       ADDRESS6                   MAC-ADDRESS
+0  ether2     192.168.88.24  fe80::de2c:6eff:fee7:106a  DC:2C:6E:E7:10:6B
+   bridge
+```
 
-Unlike the general `/ip/neighbor` menu which aggregates neighbors from all discovery protocols (MNDP, CDP, and LLDP), `/ip/neighbor/lldp` shows only LLDP-discovered entries.
-
-The `lldpRemTable` SNMP table reports only neighbors discovered through LLDP. Entries discovered exclusively by CDP or MNDP are excluded from the SNMP LLDP-MIB.
+The neighbor list keeps entries while the device announces itself. A device announces its presence every 30 seconds (the default `discover-interval`); when announcements stop, the entry is dropped after it ages out. The `lldpRemTable` SNMP table reports only neighbors discovered through LLDP; entries discovered exclusively by CDP or MNDP are not part of the SNMP LLDP-MIB.
 
 ## View and configure discovery in WinBox
 
@@ -25,33 +29,26 @@ Open **IP > Neighbors** to see discovered devices and the interfaces through whi
 
 The screenshot shows an existing configuration. Choose the interface list for your network rather than copying its selection.
 
-Discovery settings are configured in the [`/ip/neighbor/discovery-settings`](../cli-reference/ip/neighbor/discovery-settings) menu.
+## Choose which interfaces participate
 
-You can change whether an interface participates in neighbor discovery by using an [interface list](../cli-reference/interface/list). If the interface is included in the discovery interface list, it will send out basic information about the system and process received discovery packets broadcast in the Layer 2 network. Removing an interface from the interface list will disable both the discovery of neighbors on this interface and the possibility of discovering this device itself on that interface.
-
-Neighbor discovery works on individual slave interfaces. When a master interface (e.g. bonding or bridge) is included in the discovery interface list, all its slave interfaces will automatically participate in neighbor discovery. To allow neighbor discovery only on some slave interfaces, include the particular slave interface in the list and make sure the master interface is not included.
+Discovery settings are configured in the [`/ip/neighbor/discovery-settings`](../cli-reference/ip/neighbor/discovery-settings) menu:
 
 ```ros
-/interface/bonding
-add name=bond1 slaves=ether5,ether6
-/interface/list
-add name=only-ether5
-/interface/list/member
-add interface=ether5 list=only-ether5
-/ip/neighbor/discovery-settings
-set discover-interface-list=only-ether5
+/ip/neighbor/discovery-settings/print
 ```
 
-Now the neighbor list shows a master interface and the actual slave interface on which a discovery message was received:
+Discovery runs on the interfaces of the `discover-interface-list` [interface list](../cli-reference/interface/list) (`static` by default). An interface in the list both announces the router (sends discovery packets) and accepts neighbors heard on it. Removing an interface from the list disables discovery on it in both directions: the router no longer announces itself there and stops accepting neighbors heard on it. Setting the list to `none` switches discovery off altogether: announcements stop (on other devices this router's entries age out — their `age` value keeps growing until the entries disappear) and this router's own neighbor list empties. To only stop announcing but keep seeing neighbors (for example on a WAN), set `mode=rx-only`.
+
+Neighbor discovery works on individual slave interfaces. When a master interface (bonding or bridge) is included in the discovery interface list, all its slave interfaces participate automatically. The neighbor list shows both the master interface and the slave interface on which the announcement arrived (see the `ether2` + `bridge` entry in the example above). To allow neighbor discovery only on some slave interfaces, include only those slave interfaces in the list and make sure the master interface is not included:
 
 ```ros
-[admin@R2] > ip neighbor print
- # INTERFACE ADDRESS                                           MAC-ADDRESS       IDENTITY   VERSION    BOARD         
- 0 ether5    192.168.88.1                                      CC:2D:E0:11:22:33 R1         6.45.4 ... CCR1036-8G-2S+
-    bond1    
+/interface/bonding add name=bond1 slaves=ether5,ether6
+/interface/list add name=only-ether5
+/interface/list/member add interface=ether5 list=only-ether5
+/ip/neighbor/discovery-settings set discover-interface-list=only-ether5
 ```
 
-### LLDP-MED Network Policy VLAN example
+## LLDP-MED Network Policy VLAN example
 
 This example configures a switch port for a VoIP phone that daisy-chains a PC. The phone uses tagged traffic for voice, assigned through the LLDP-MED Network Policy TLV. The PC uses untagged traffic, which is assigned to a different VLAN by the bridge port PVID.
 
@@ -98,9 +95,7 @@ Enable VLAN filtering on the bridge:
 The LLDP-MED Network Policy TLV is sent only on interfaces where an LLDP-MED-capable device is discovered. It is not broadcast on interfaces without MED-capable neighbors.
 :::
 
-:::info
 For more details on bridge VLAN configuration, see [Bridge VLAN Filtering](../bridging-and-switching/index.md#bridge-vlan-filtering).
-:::
 
 ## LLDP
 
@@ -112,7 +107,7 @@ Depending on RouterOS configuration, different type-length-values (TLVs) can be 
 - System Name (system identity).
 - System Description (platform - MikroTik, software version - RouterOS version, hardware name - RouterBoard name).
 - Management Address (all IP addresses configured on the port).
-- System Capabilities (enabled system capabilities, e.g. bridge or router).
+- System Capabilities (enabled system capabilities, for example bridge or router).
 - Port Description (combined interface name like "bridge/ether1" if the sending interface is part of a bridge or bond, or interface name the same as Port ID).
 - IEEE 802.1 Port VLAN ID.
 - IEEE 802.1 Port And Protocol VLAN ID.
@@ -124,3 +119,12 @@ Depending on RouterOS configuration, different type-length-values (TLVs) can be 
 - LLDP-MED Network Policy (assigned VLAN ID for voice traffic).
 - LLDP-MED Extended Power via MDI.
 - End of LLDPDU.
+
+## Technical details
+
+- Devices announce every `discover-interval` (30s by default); on the receiving side an entry is removed when no announcement arrives in time. CDP and LLDP announcements carry a TTL of `(discover-interval * 4) + 1`.
+- The announcement contents and optional TLVs are controlled by the [`/ip/neighbor/discovery-settings`](../cli-reference/ip/neighbor/discovery-settings) parameters, including PoE TLVs (`lldp-poe-power`, `lldp-poe-in-power`) and DCBX (`lldp-dcbx`).
+- `dying-gasp` sends a discovery packet with TTL=0 before a graceful reboot, shutdown or upgrade so neighbors remove the entry immediately.
+- `add-dns-entries` creates dynamic DNS entries for discovered neighbors by identity; see [DNS](../network-management/dns).
+
+For all parameters and read-only values, see the [`/ip/neighbor`](../cli-reference/ip/neighbor), [`/ip/neighbor/discovery-settings`](../cli-reference/ip/neighbor/discovery-settings) and [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp) CLI reference pages.

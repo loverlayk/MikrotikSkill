@@ -331,7 +331,7 @@ Each entry has one or more topics. Usually one names the feature that wrote the 
 | `ospf` | OSPF. |
 | `ovpn` | OpenVPN. |
 | `pim` | PIM-SM. |
-| `poe-in` | PoE input. |
+| `poe-in` | PoE-In events, for example LLDP power negotiation when the device itself is powered via PoE. |
 | `poe-out` | PoE output. |
 | `pon` | PON SFP modules. |
 | `ppp` | PPP. |

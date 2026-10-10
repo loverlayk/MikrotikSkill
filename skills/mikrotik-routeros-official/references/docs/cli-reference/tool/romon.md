@@ -1,11 +1,13 @@
 # romon
 
-> RouterOS settings reference for /tool/romon.
+> Settings of the RoMON (Router Management Overlay Network) service. See the RoMON guide.
 
 -----------
 
 ## tool/romon 
 **Type:** Settings Directory
+
+Settings of the RoMON (Router Management Overlay Network) service. See the [RoMON](../../../management-tools/romon) guide.
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="enabled" typ="bool">Disable or enable the RoMON feature.</ArgTableRow>
