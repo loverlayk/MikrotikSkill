@@ -1,5 +1,5 @@
 {
-  "index_sha256": "615e27106e9378a73e53dea29c552e2955462f7def47e907558c9eb43313bced",
+  "index_sha256": "2a83928b7e8446d4ceed6da05fc873e48ae1c4475e259aa032541e094f7e2861",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -1958,10 +1958,10 @@
       "sha256": "ed4383ae11c7bd5b1d256bdec76619f294100f116e74d45c9c113e04bfc197d0"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md": {
-      "title": "TG-LR setup guide",
+      "title": "TG-LR setup",
       "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
       "path": "docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
-      "sha256": "856ed08783760c3cf2229972e4b640c07b9507893d097e689a7bd5996a143dd4"
+      "sha256": "d8c70c4374d3f18e1659cfd21378c62c46edb277113956cd1db1c8699645b2cd"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/the-things-stack.md": {
       "title": "The Things Stack",

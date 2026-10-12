@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `615e27106e9378a73e53dea29c552e2955462f7def47e907558c9eb43313bced`
+Index SHA-256: `2a83928b7e8446d4ceed6da05fc873e48ae1c4475e259aa032541e094f7e2861`
 Pages in current index: 1472
-Pages changed/written: 41
+Pages changed/written: 1
 Pages removed: 0
 Pages failed: 0
 
@@ -1299,7 +1299,7 @@ Pages failed: 0
 - [AWS LoRaWAN configuration](docs/internet-of-things/lora/user-guides/aws-lorawan-configuration.md) `5031df37ec30`
 - [ChirpStack](docs/internet-of-things/lora/user-guides/chirpstack.md) `15a4bd1b157e`
 - [Step by step installation](docs/internet-of-things/lora/user-guides/step-by-step-installation.md) `ed4383ae11c7`
-- [TG-LR setup guide](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `856ed0878376`
+- [TG-LR setup](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `d8c70c4374d3`
 - [The Things Stack](docs/internet-of-things/lora/user-guides/the-things-stack.md) `170871bf71d5`
 - [Modbus](docs/internet-of-things/modbus.md) `fb03d1372638`
 - [MQTT](docs/internet-of-things/mqtt.md) `38e9d2c599fa`
