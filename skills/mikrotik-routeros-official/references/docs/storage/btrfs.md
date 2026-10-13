@@ -1,12 +1,12 @@
-# index
+# Btrfs
 
 > Btrfs is a stable copy-on-write file system with features like bitrot protection, subvolumes, and snapshots. It is available with the Storage package and supports RAID configurations, subvolume management, and...
+
+# Btrfs
 
 :::info
 This feature requires the [Storage](../) package.
 :::
-
-# Btrfs
 
 Btrfs is a feature-rich copy-on-write file system. It is the default file system for some popular Linux distributions such as [Fedora](https://en.wikipedia.org/wiki/Fedora_Linux) and is used by many large companies such as. Over the years it has proven itself to be stable and more flexible than other popular file systems. The most significant features are:
 

@@ -1,12 +1,12 @@
-# raid
+# Btrfs RAID
 
-> This page provides step-by-step instructions for setting up a Btrfs RAID1 array using two disks in RouterOS, covering disk preparation, formatting, adding devices, balancing data, and ensuring consistent RAID profiles.
+> This page provides step-by-step instructions for setting up a Btrfs RAID array in RouterOS, covering disk preparation, formatting, adding devices, balancing data, expanding the array, replacing members, and ensuring...
+
+# Btrfs RAID
 
 :::info
 This feature requires the [Storage](../) package.
 :::
-
-# Btrfs RAID
 
 A Btrfs file system can span multiple disks with different *storage profiles* per data kind (`data`, `meta`, `system`). Converting a one-disk file system into RAID1 or RAID10 takes two steps: add the disks with [`add-device`](../../cli-reference/disk/btrfs/filesystem/add-device), then convert the profiles with [`balance-start`](../../cli-reference/disk/btrfs/filesystem/balance-start) - all without unmounting and without losing data.
 
@@ -264,6 +264,74 @@ In case of a disk failure or you need to replace a disk in your existing Btrfs R
    :::info
    Ensure that your Btrfs RAID array does not have inconsistent Btrfs profiles for `data` , `system`  or `meta` . The desired profiles will depend on your specific setup. For RAID1 setups you will most likely want these profiles to match, but in a RAID10 setup these values can be different. In any RAID setup there should not be a `single` profile for either `data` , `system`  or `meta` .
    :::
+
+## Expanding Btrfs-RAID
+
+Btrfs is a live filesystem which can be expanded easily by adding additional members to the RAID.
+
+### Adding additional members to the RAID
+
+Adding disks increases both capacity and redundancy. For example, you can expand the two-disk RAID1 array from the [first section](#two-disk-btrfs-raid-raid1) into a four-disk RAID10 array. Data stays online throughout the process:
+
+1. Add the new disks to the file system. [`add-device`](../../cli-reference/disk/btrfs/filesystem/add-device) registers each disk at its full size, but does not move any data to it yet:  
+
+   ```routeros
+   /disk/btrfs/filesystem/add-device [find where label=BtrfsRAID] device=<disk-name-3>
+   /disk/btrfs/filesystem/add-device [find where label=BtrfsRAID] device=<disk-name-4>
+   ```
+
+   ```routeros
+   > /disk/btrfs/filesystem/print
+   ...
+   disk1:1.02TB, used:0%
+   disk2:1.02TB, used:0%
+   disk3:1.02TB, used:0%
+   disk4:1.02TB, used:0%
+   data,raid1:3.22GB disk1:3.22GB disk2:3.22GB, used:0%
+   system,raid1:33.6MB disk1:33.6MB disk2:33.6MB, used:0%
+   meta,raid1:1.07GB disk1:1.07GB disk2:1.07GB, used:0%
+   ```
+
+   All chunks are still on the first two disks.
+2. Convert the profiles to RAID10. The balance rewrites every chunk to the new profile and spreads the data over all four disks:  
+
+   ```routeros
+   /disk/btrfs/filesystem/balance-start [find where label=BtrfsRAID] data-profile=raid10 metadata-profile=raid1c4 system-profile=raid1c4
+   ```
+
+3. **IMPORTANT:** Check the `spaces` output for leftover chunks with the previous profile. A profile conversion can leave behind a chunk in the old profile:  
+
+   ```routeros
+   > /disk/btrfs/filesystem/print
+   ...
+   data,raid10:6.44GB disk1:6.44GB disk2:6.44GB disk3:6.44GB disk4:6.44GB, used:0%
+   data,raid1:1.07GB disk3:1.07GB disk4:1.07GB, used:0%
+   system,raid1c4:33.6MB disk1:33.6MB disk2:33.6MB disk3:33.6MB disk4:33.6MB, used:0%
+   meta,raid1c4:1.07GB disk1:1.07GB disk2:1.07GB disk3:1.07GB disk4:1.07GB, used:0%
+   ```
+
+   :::danger
+   If you notice, for example, in the output `data,raid1:1.07GB` alongside `data,raid10:...` , then execute the `/disk/btrfs/filesystem/balance-start` command again until every `data` , `system`  and `meta`  chunk has the target profile. Until then the array does not have RAID10 redundancy for those chunks.
+   :::
+
+   The desired state has a single profile per data kind:  
+
+   ```routeros
+   > /disk/btrfs/filesystem/print
+   ...
+   data,raid10:2.15GB disk1:2.15GB disk2:2.15GB disk3:2.15GB disk4:2.15GB, used:0%
+   system,raid1c4:33.6MB disk1:33.6MB disk2:33.6MB disk3:33.6MB disk4:33.6MB, used:0%
+   meta,raid1c4:1.07GB disk1:1.07GB disk2:1.07GB disk3:1.07GB disk4:1.07GB, used:0%
+   ```
+
+4. Set `mount-filesystem=no` for the newly added disks to prevent the files from showing up twice:  
+
+   ```routeros
+   /disk/set <disk-name-3> mount-filesystem=no
+   /disk/set <disk-name-4> mount-filesystem=no
+   ```
+
+The usable capacity grows with the new profile as soon as the balance finishes: a RAID10 array of four equal disks holds twice the data of the previous two-disk RAID1 array. Your files remain accessible the whole time.
 
 ## Creating Btrfs-RAID check
 

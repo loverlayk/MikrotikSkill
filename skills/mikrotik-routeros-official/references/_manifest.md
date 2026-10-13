@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `2a83928b7e8446d4ceed6da05fc873e48ae1c4475e259aa032541e094f7e2861`
+Index SHA-256: `d86d6bc4eb3bc3a150becf5018a255d1b9a76470d423dd72f2257f19d3389148`
 Pages in current index: 1472
-Pages changed/written: 1
+Pages changed/written: 3
 Pages removed: 0
 Pages failed: 0
 
@@ -1242,7 +1242,7 @@ Pages failed: 0
 - [Manual Network Setup (No Default Configuration)](docs/getting-started/manual-network-setup.md) `b81f9c607125`
 - [Networking Fundamentals](docs/getting-started/networking-fundamentals.md) `917b5ac55299`
 - [IPv6 Addresses](docs/getting-started/networking-fundamentals/ipv6-addresses.md) `94be12b6cde0`
-- [IPv6 Neighbor Discovery](docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md) `710426742e98`
+- [IPv6 Neighbor Discovery](docs/getting-started/networking-fundamentals/ipv6-neighbor-discovery.md) `62dbace45a1e`
 - [RouterOS License Keys](docs/getting-started/routeros-licensing.md) `de36dbf8ce17`
 - [Cloud Hosted Router, CHR](docs/getting-started/routeros-licensing/chr.md) `0bcd31a4cd70`
 - [CHR: Licensing](docs/getting-started/routeros-licensing/chr/chr-licensing.md) `e0eb272d014f`
@@ -1355,9 +1355,9 @@ Pages failed: 0
 - [SOCKS](docs/network-management/socks.md) `5088b70b47d3`
 - [Socksify](docs/network-management/socks/socksify.md) `05ede0211b0a`
 - [Storage](docs/storage.md) `e9261f1ccb0b`
-- [index](docs/storage/btrfs.md) `525632bff2b0`
+- [Btrfs](docs/storage/btrfs.md) `9ecc686ed65e`
 - [Btrfs maintenance](docs/storage/btrfs/maintenance.md) `f64eef2b7125`
-- [raid](docs/storage/btrfs/raid.md) `4039554bf99b`
+- [Btrfs RAID](docs/storage/btrfs/raid.md) `b01294eb3096`
 - [Btrfs subvolumes and snapshots](docs/storage/btrfs/snapshots.md) `f5c1ba386891`
 - [DLNA Media Server](docs/storage/dlna.md) `d3f657dad9fb`
 - [Encrypted storage (dm-crypt)](docs/storage/encrypted-storage.md) `e36c462b7c13`

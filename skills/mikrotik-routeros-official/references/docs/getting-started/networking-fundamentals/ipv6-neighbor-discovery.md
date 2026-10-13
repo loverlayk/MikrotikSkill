@@ -91,7 +91,7 @@ Nodes use ND to:
 RFC 4861 defines five ND message types: Router Solicitation (RS), Router Advertisement (RA), Neighbor Solicitation (NS), Neighbor Advertisement (NA), and Redirect. Adding an interface to [`/ipv6/nd`](../../cli-reference/ipv6/nd) activates only the router-side messages:
 
 - Router Solicitation (RS) – The router listens for an RS sent by hosts and replies with a Router Advertisement.
-- Router Advertisement (RA) – The router sends periodic unsolicited RAs and also responds to any RS it receives. The content of the RA (prefixes, flag bitmaps, lifetime, MTU, timer values) is taken from the per‑interface [`/ipv6/nd`](../../cli-reference/ipv6/nd) settings and any [`/ipv6/nd/prefix`](../../cli-reference/ipv6/nd/prefix) entries.
+- Router Advertisement (RA) – The router sends periodic unsolicited RAs and also responds to any RS it receives. The content of the RA (prefixes, flag bitmaps, lifetime, MTU, timer values) is taken from the per‑interface [`/ipv6/nd`](../../cli-reference/ipv6/nd) settings and any [`/ipv6/nd/prefix`](../../cli-reference/ipv6/nd/prefix) entries. The [`/ipv6/nd`](../../cli-reference/ipv6/nd) list has interface option 'all' which has lower priority than entry configured for a particular interface.
 - Neighbor Solicitation (NS) – The router replies with a Neighbor Advertisement when it receives an NS for any of its own addresses on that interface (link‑local, SLAAC, or static). This also covers Duplicate Address Detection (DAD) for the router's own address.
 - Neighbor Advertisement (NA) – Sent in response to an NS (as above). Unsolicited NAs are not sent unless explicitly enabled.
 
