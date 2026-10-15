@@ -1309,7 +1309,7 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `c5f69b483147`
+- [CMR](docs/management-tools/cmr.md) `8f3f4d3f713f`
 - [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
@@ -1323,7 +1323,7 @@ Pages failed: 0
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
 - [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`
-- [WinBox](docs/management-tools/winbox.md) `cc650a169e88`
+- [WinBox](docs/management-tools/winbox.md) `9472c7237823`
 - [Mobile Networking](docs/mobile-networking.md) `57faec629ff5`
 - [BG77 modem AT commands](docs/mobile-networking/bg77-modem-at-commands.md) `9a1290367d49`
 - [WWAN and GNSS priority automatization](docs/mobile-networking/bg77-modem-at-commands/wwan-and-gnss-priority-automatization.md) `5dbf2cee94a0`
@@ -1406,7 +1406,7 @@ Pages failed: 0
 - [PIM-SM](docs/user-guides/routing-and-networking-protocols/multicast/pim-sm.md) `e49ffc552e9e`
 - [Policy Routing](docs/user-guides/routing-and-networking-protocols/policy-routing.md) `d9a16d300d1d`
 - [Route Distinguisher and Route Target](docs/user-guides/routing-and-networking-protocols/route-distinguisher-and-route-target.md) `dfd6c662f0c6`
-- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `a8be8159d596`
+- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `fb18e857d1c0`
 - [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `8ccb2434ded5`
 - [Routing Protocol Multi-core Support](docs/user-guides/routing-and-networking-protocols/routing-protocol-multi-core-support.md) `569856e98d6d`
 - [Unicast routing protocols](docs/user-guides/routing-and-networking-protocols/unicast.md) `3797cce0f171`

@@ -218,7 +218,7 @@ Changes are saved and persist between sessions.
 
 ### Resources section
 
-Show routerss general information and resources.
+Shows general router information and resources. Some fields are interactive - clicking a field opens the relevant section in the configuration interface.
 
 #### Figure 10 - Resources section
 

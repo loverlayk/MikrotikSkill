@@ -202,8 +202,12 @@ Address lists by design are matching host addresses which means that it will mat
 | `includes-list` | returns true if the route's property value includes all communities from the specified `communities-list` |  |
 | `subset` | returns true if the route's community subset matches communities from the list | `1:1,3:3` will match `1:1,2:2,3:3` |
 | `subset-list` | the same as `subset`, but matches communities from the community list. |  |
-| `any-regexp` | the same as `any`, but matched by regexp |  |
-| `subset-regexp` | the same as `subset`, but matched by regexp |  |
+| `any-regexp` | the same as `any`, but matched by [regexp](#community-regexp-matching) |  |
+| `subset-regexp` | the same as `subset`, but matched by [regexp](#community-regexp-matching) |  |
+
+:::info
+If the route does not carry the community attribute (the attribute is empty or absent), the "any" matchers (`any`, `any-list`, `any-regexp`) return false — there is no community to match. The "subset" matchers (`subset`, `subset-list`, `subset-regexp`) return true for an empty attribute, as an empty set is a subset of any set. To explicitly check for an empty attribute, use `bgp-communities-empty`, `bgp-ext-communities-empty` or `bgp-large-communities-empty`.
+:::
 
 ##### String Operators
 
@@ -220,17 +224,17 @@ Routing filters allow clearing BGP communities by using the `delete` command. Th
   - `wk` - Will match and remove well-known communities.
   - `other` - Will match and remove other communities that are not well known.
   - `regexp` - regexp pattern to match communities that should be deleted.
-  - `<community-list name>` - Deletes communities from specified `community-list`.
+  - `<community-list name>` - Deletes communities from specified `community-list`, including communities matching `regexp` entries of the list.
 - **ext-communities**:
   - `rt` - Will match and remove **RouteTarget**.
   - `soo` - Will match and remove **Site-of-Origin**.
   - `other` - Will match and remove other ext communities that are not **RT** or **SOO**.
   - `regexp` - regexp pattern to match ext communities that should be deleted.
-  - `<community-ext-list name>` - Deletes communities from specified `community-ext-list`.
+  - `<community-ext-list name>` - Deletes communities from specified `community-ext-list`, including extended communities matching `regexp` entries of the list.
 - **large-communities**:
   - `all` - Removes everything.
   - `regexp` - regexp pattern to match large communities that should be deleted.
-  - `<community-large-list name>` - Deletes large communities from specified `community-large-list`.
+  - `<community-large-list name>` - Deletes large communities from specified `community-large-list`, including large communities matching `regexp` entries of the list.
 
 It is possible to specify multiple community types, for example delete all SOOs, other types of ext communities and specific RTs from the community-ext list:
 
@@ -239,6 +243,13 @@ It is possible to specify multiple community types, for example delete all SOOs,
 add list=myRTList communities="rt:1.1.1.1:222"
 /routing/filter/rule
 add chain=myChain rule="delete bgp-ext-communities soo,other,myRTList;"
+```
+
+For example, delete all large communities belonging to administrative domain 65551, regardless of the remaining values:
+
+```ros
+/routing/filter/rule
+add chain=myChain rule="delete bgp-large-communities regexp \"^65551:[0-9]+:[0-9]+$\""
 ```
 
 ### AS-PATH Regexp Matching
@@ -318,6 +329,36 @@ add communities=111:222 list=myCommunityList
 /routing/filter/rule
 add chain=myChain rule="if (bgp-communities equal-list myCommunityList) {delete bgp-communities wk,other; accept;}"
 ```
+
+Each entry in a community list is either a set of concrete community values (the `communities` parameter) or a regular expression pattern (the `regexp` parameter), the two parameters are mutually exclusive per entry. A single list can mix both types of entries:
+
+```ros
+/routing/filter/community-list/add list=myList communities=65551:100
+/routing/filter/community-list/add list=myList regexp="^65551:.*"
+```
+
+### Community Regexp Matching
+
+Unlike AS-path regexp matching, which operates on AS numbers, community regexp matching operates on the **string representation** of the attribute. The regexp is applied to the printed form of **each individual community** in the attribute, i.e. the same form that is shown in the route `print detail` output:
+
+| Community type | String representation | Examples |
+| :-- | :-- | :-- |
+| BGP communities (RFC 1997) | `asn:value`, both fields in decimal. Well-known communities are represented by their name: `internet`, `graceful-shutdown`, `accept-own`, `accept-own-nh`, `filter-4`, `filter-6`, `filter-xlate-4`, `filter-xlate-6`, `LLGR-stale`, `no-LLGR`, `blackhole`, `no-export`, `no-advertise`, `local-as`, `nopeer` | `65551:100`  `no-export` |
+| BGP extended communities (RFC 4360) | Typed form: `rt:` (route target) or `soo:` (site of origin) prefix followed by the value in `asn:value`, `ipv4:value` or `asn4:value` form (a two-octet AS number written in the four-octet field is printed with an `L` suffix). Other recognized types print as `encap:`, `es-label:`, `es-import:` or `mobility:` values; all other extended communities print as `raw:<hex>` | `rt:65551:100`  `soo:1.2.3.4:5`  `rt:65000L:10` |
+| BGP large communities (RFC 8092) | `global-admin:local-part-1:local-part-2`, each field printed as a decimal 32-bit integer. All three fields are always present, including zero values | `65551:0:100` |
+
+The regexp uses the RouterOS regular expression implementation, the same one that is used for the `regexp` string operator and the `comment regexp` matcher in routing filters. Its syntax is POSIX ERE-like and supports `^`, `$`, `.`, `*`, `+`, `?`, `|`, `()` and character classes `[ ]`, `[^ ]`. Repetition bounds `{n,m}` are not supported.
+
+For example, reject routes that carry any large community from administrative domain 7010:
+
+```ros
+/routing/filter/community-large-list/add list=lcom7010 regexp="^7010:[0-9]+:[0-9]+$"
+
+/routing/filter/rule
+add chain=bgp-in rule="if (bgp-large-communities any-list lcom7010) {reject;}"
+```
+
+Regexp entries in community lists can be used for matching (`any-list`, `includes-list`, `subset-list`, `equal-list`) and with the `delete`/`filter` commands, in the latter case communities matching a regexp entry from the list are removed. Only the entries with concrete community values are written by `append` and `set` commands, a regexp is a matching pattern, not values that could be written into the attribute. Note that `set` with a list that contains no concrete values (an empty or regexp-only list) replaces the attribute with an empty set (clears it), while `append` in that case does nothing.
 
 ## Route Selection
 

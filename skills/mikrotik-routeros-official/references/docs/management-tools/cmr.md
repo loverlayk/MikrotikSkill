@@ -199,13 +199,14 @@ The command first lists the selected devices as `running`, then shows each devic
 
 #### run-script permissions
 
-Scripts sent with [`/cmr/device/run-script`](../../cli-reference/cmr/device/run-script) run on each client with the `read`, `write`, `test`, and `reboot` policies, without a user session. Commands that need other policies fail with "not enough permissions (9)", for example `/user add` needs the `policy` policy, and `/tool sniffer` needs the `sniff` policy. `/export` fails for the same reason: exporting the configuration needs the `policy` policy. Sensitive values are not readable, they are shown as `*`, but they can be set, for example the PPP secret password.
+Scripts sent with [`/cmr/device/run-script`](../../cli-reference/cmr/device/run-script) run on each client with the `read`, `write`, `test`, and `reboot` policies, without a user session. Commands that need other policies fail with "not enough permissions (9)", for example `/user add` needs the `policy` policy, and `/tool sniffer` needs the `sniff` policy. `/system backup save`, `/system reset-configuration` and `/file copy` fail with the same error. `/export` works: it returns the configuration of the client in the output, so `run-script` can collect configuration exports from the fleet. Sensitive values are not readable: `/export` leaves them out, `/export show-sensitive` does not show their values either, and `get` shows them as `*`. They can still be set, for example the PPP secret password.
 
 Scripts and scheduler entries created by `run-script` are saved with the same four policies, shown as `policy=reboot,read,write,test`. The `owner` is the system user (`*sys`), not the controller user. The policy set cannot be changed on the client: a script that tries to grant a wider policy has its `policy` reduced to the four policies. The table shows what each policy can do under `run-script`:
 
 | Policy | Example command | Result |
 | --- | --- | --- |
 | `read` | `:put [/system identity get name]` | OK, the value is returned. |
+| `read` | `/export` | OK, the configuration is returned without sensitive values. |
 | `write` | `/file add contents=x`, `/ip service set telnet port=2323`, `/tool romon set enabled=no` | OK, the configuration is changed. |
 | `write` | `/system script add`, `/system scheduler add` | OK, the entries are saved with `policy=reboot,read,write,test`. |
 | `write` | `/ppp secret add name=test password=abc` | OK, the password is set even though the `sensitive` policy is missing. |

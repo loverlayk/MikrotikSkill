@@ -263,7 +263,7 @@
       "title": "WinBox",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/winbox.md",
       "path": "docs/management-tools/winbox.md",
-      "sha256": "cc650a169e88bbadeb61d2b4514b2c5aac5504c011a63ee4bfeed49f6e25d3f2"
+      "sha256": "9472c72378237b22c5b92df924d02655b474bd89d85993dfbeb5206c91a18511"
     },
     "https://manual.mikrotik.com/docs/management-tools/winbox-legacy.md": {
       "title": "WinBox v3 (Legacy)",
@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "c5f69b483147e48beb2c549cc9ea031ab4d495eae5826a2764b8d539ed8a24a3"
+      "sha256": "8f3f4d3f713f119d2201aee125bae8114574acfdedf6d89c752e4db50ffdd0ca"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -1445,7 +1445,7 @@
       "title": "Route Selection and Filtering",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
       "path": "docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
-      "sha256": "a8be8159d596592a09da22ebdc6a06a3ce5f8dbf946a699883fa8246e2c829da"
+      "sha256": "fb18e857d1c03300e41f6d834eb9822ef9f5c0c98b238e0a42f1539c924c0b48"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service.md": {
       "title": "Firewall and Quality of Service",
