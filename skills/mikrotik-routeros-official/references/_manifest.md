@@ -1,7 +1,7 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `d86d6bc4eb3bc3a150becf5018a255d1b9a76470d423dd72f2257f19d3389148`
+Index SHA-256: `d802135e6216820e25ff06d69d645f69c235485a9c49420f59c7f5f86c43d3bd`
 Pages in current index: 1472
 Pages changed/written: 3
 Pages removed: 0
@@ -929,8 +929,8 @@ Pages failed: 0
 - [/system/default-configuration/custom-script](docs/cli-reference/system/default-configuration/custom-script.md) `38f5e1031b5d`
 - [/system/default-configuration/script](docs/cli-reference/system/default-configuration/script.md) `9439389f0538`
 - [/system/default-configuration/wps-sync-mode-script](docs/cli-reference/system/default-configuration/wps-sync-mode-script.md) `f54b91378288`
-- [/system/device-mode](docs/cli-reference/system/device-mode.md) `b90d3fb472da`
-- [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `15ceb3cadebe`
+- [/system/device-mode](docs/cli-reference/system/device-mode.md) `4c3478d1e19c`
+- [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `86e086584c3d`
 - [/system/gps](docs/cli-reference/system/gps.md) `8f8fed59f131`
 - [/system/gps/monitor](docs/cli-reference/system/gps/monitor.md) `403a982bce5f`
 - [/system/health](docs/cli-reference/system/health.md) `adca4b3c64c4`
@@ -1375,7 +1375,7 @@ Pages failed: 0
 - [Tmpfs](docs/storage/tmpfs.md) `9bf0010a7fb9`
 - [System Information and Utilities](docs/system-information-and-utilities.md) `caef2ea86a02`
 - [Clock](docs/system-information-and-utilities/clock.md) `002bee56629c`
-- [Device mode](docs/system-information-and-utilities/device-mode.md) `42df7cf3d2ee`
+- [Device mode](docs/system-information-and-utilities/device-mode.md) `813a838bc1c7`
 - [Email](docs/system-information-and-utilities/e-mail.md) `9a48fcce472e`
 - [Fetch](docs/system-information-and-utilities/fetch.md) `e89233b353ab`
 - [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`

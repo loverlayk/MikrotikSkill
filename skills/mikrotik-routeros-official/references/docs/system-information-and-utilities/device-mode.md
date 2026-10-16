@@ -1,14 +1,14 @@
 # Device mode
 
-> The device-mode feature restricts router access and limits configuration options to enhance security, available in advanced, home, basic, or ros modes depending on device type and RouterOS version. Changes require...
+> Device-mode restricts RouterOS features to protect the router from misuse; changing it requires physical confirmation. Covers the modes, per-feature switches, allowed versions and the flagged state.
 
 # Device mode
 
-The **device-mode** is a feature which sets specific limitations on a device, or limits access to specific configuration options. It helps to protect your router and network from attackers who might gain unauthorized access and use it as a gateway for attacks to other networks.
+The **device-mode** limits access to specific configuration options. It protects the router and the network from attackers who gain unauthorized access and use the device as a gateway to attack other networks.
 
-Available device-modes are `advanced`, `home`, `basic` and `rose`. Device-mode configuration is factory pre-installed on routers (for devices with MikroTik RouterOS v7.17 or later). `Advanced` (previously called `enterprise`) mode is configured for CCR and 1100 series devices, `home` mode is configured for home routers and `basic` mode is configured for any other type of device. For devices running versions prior to RouterOS version 7.17, all devices use the *advanced/enterprise* mode.
+The available modes are `advanced`, `home`, `basic` and `rose`. Devices shipped with RouterOS 7.17 or later come with a mode configured at the factory: `advanced` (previously `enterprise`) on CCR and 1100 series devices, `home` on home routers and `basic` on other devices. Routers upgraded from an older version keep `advanced`.
 
-The device-mode is configured from [`/system/device-mode`](../cli-reference/system/device-mode) menu.
+Check the current settings in the [`/system/device-mode`](../cli-reference/system/device-mode) menu.
 
 ```ros
 [admin@MikroTik] > /system/device-mode/print 
@@ -34,12 +34,11 @@ The device-mode is configured from [`/system/device-mode`](../cli-reference/syst
             container: no           
   install-any-version: no           
            partitions: no           
-          routerboard: yes          
+          routerboard: no          
         attempt-count: 0   
 ```
 
-The device-mode parameters can be changed by the authorized RouterOS user, but physical access to the device is required to approve the changes.  
-After changing the device-mode, you need to confirm it by pressing a button on the device itself, or perform a "cold reboot" — that is, unplug the power. When the change is confirmed, regardless of confirmation mode, the **device will be rebooted**.
+An authorized user can change the device-mode parameters, but physical access is required to approve the change. Confirm it with the reset or mode button on the device, or with a "cold reboot" — unplug the power. A regular reboot does not confirm the change. After confirmation, regardless of the method, the **device reboots**.
 
 ## Check device mode in WinBox
 
@@ -50,93 +49,98 @@ Open **System > Device Mode** to inspect the restrictions:
 
 ![WinBox Device Mode overview with the current mode and per-tool restrictions](./img/device-mode-winbox.webp)
 
-The screenshot shows this router's existing `rose` configuration; it is not a factory default for every device. The overview is read-only. The **Update** action starts a mode-change procedure, which requires physical confirmation and reboots the device as described in the next section.
+The screenshot shows a router with an existing `rose` configuration; it is not a factory default. The overview is read-only. The **Update** action starts a mode change, which requires physical confirmation and reboots the device (see the next section).
 
-## Changing device-mode
+## Change device-mode
 
-Available modes or specific features can be changed with [`update`](../cli-reference/system/device-mode/update) command.
+Change the mode or individual features with the [`update`](../cli-reference/system/device-mode/update) command.
 
-For example, change mode to `home`:
+Change the mode to `home`:
 
 ```ros
-[admin@MikroTik] > /system/device-mode/update mode=home 
-  update: please activate by turning power off or pressing reset or mode button 
-          in 5m00s
--- [Q quit|D dump|C-z pause]
+[admin@MikroTik] > /system/device-mode/update mode=home
+  update: turn off power or reboot by pressing reset or mode button in 5m to activate changes
 ```
 
-If no power off or button press is performed within the specified time, the mode change is canceled. If another update command is run in parallel, both will be canceled.
+If the update is not confirmed in time, the mode change is canceled. A new update request cancels the pending one.
 
-:::danger
-There are several EOL products which do not confirm mode changes with a reset button press. These routers can confirm a mode change only with a power cycle.
+:::note
+Some EOL products confirm mode changes only with a power cycle, not with a button press.
 :::
 
-To protect the device against an attacker who might silently gain access to your router, abuse it with some scripts and simply try to wait until you reboot your router and not even know that at that time you are accepting changes requested by some intruder, you can update the mode only three times. A counter tracks how many update attempts are made and will not allow any more updates. This counter can be reset only when the administrator does a power cycle or presses a button when seeing a warning on mode settings update attempt (same as with accepting any updates).
+An attacker with access can prepare a device-mode change and leave it pending. The change activates on the next button press or power cycle, even when the administrator does not know what it is. To limit that risk, only three update attempts are allowed without a reset. Every `update` request increments the **attempt-count** counter, including refused ones. When the counter reaches 3, further requests are refused and a reset window equal to the `activation-timeout` of that request opens. The counter resets after a confirmed update, or after a button press or power cycle inside the reset window. An expired request and a plain reboot do not reset it.
 
 ```ros
 [admin@MikroTik] > /system/device-mode/update container=yes 
-  update: too many unsuccessful attempts, turn off power or reboot by pressing reset or mode button in 4m55s to reset attempt-count
+  update: too many unsuccessful attempts, turn off power or reboot by pressing reset or mode button in 5m to reset attempt-count
 ```
 
-If the update command specifies any of the mode parameters, this update replaces the entire device-mode configuration. In this case, all per-feature settings will be lost, except those specified with this command. For instance:
+A command that specifies `mode` replaces the entire device-mode configuration: all per-feature settings are lost except those given in the same command. The `print config` output shows only the settings that differ from the mode defaults.
 
 ```ros
 [admin@MikroTik] > /system/device-mode/update mode=home email=yes fetch=yes
-[admin@MikroTik] > /system/device-mode/print config
-   mode: home
-  fetch: yes
-  email: yes
-[admin@MikroTik] > /system/device-mode/update mode=advanced sniffer=no
+  update: turn off power or reboot by pressing reset or mode button in 5m to activate changes
 -- reboot --
 [admin@MikroTik] > /system/device-mode/print config
-     mode: advanced
-  sniffer: no
-
+              mode: home
+  allowed-versions: 7.13+,6.49.8+
+             fetch: yes
+             email: yes
+[admin@MikroTik] > /system/device-mode/update mode=advanced sniffer=no
+  update: turn off power or reboot by pressing reset or mode button in 5m to activate changes
+-- reboot --
+[admin@MikroTik] > /system/device-mode/print config
+              mode: advanced
+  allowed-versions: 7.13+,6.49.8+
+           sniffer: no
 ```
 
-We see that `fetch` = yes and `email` = yes are missing, as they were overridden with the mode change. However, specifying only per-feature settings will change only those:
+The `fetch` and `email` overrides are gone, because the second mode change replaced them. A command that specifies only per-feature settings changes only those:
 
 ```ros
 [admin@MikroTik] > /system/device-mode/update hotspot=no
+  update: turn off power or reboot by pressing reset or mode button in 5m to activate changes
 -- reboot --
 [admin@MikroTik] > /system/device-mode/print config
-     mode: advanced
-  sniffer: no
-  hotspot: no
+              mode: advanced
+  allowed-versions: 7.13+,6.49.8+
+           sniffer: no
+           hotspot: no
 ```
 
-If the feature is disabled, an error message is displayed for interactive commands:
+A disabled feature rejects interactive commands:
 
 ```ros
 [admin@MikroTik] > /system/device-mode/print config
-     mode: advanced
-  sniffer: no
-  hotspot: no
+              mode: advanced
+  allowed-versions: 7.13+,6.49.8+
+           sniffer: no
+           hotspot: no
 [admin@MikroTik] > /tool/sniffer/quick 
 failure: not allowed by device-mode
 ```
 
-However, it is possible to add configuration to a disabled feature, but there will be a comment showing the disabled feature in the device-mode:
+Configuration for a disabled feature can still be added; the entry is created disabled, with a comment that the device-mode does not allow it:
 
 ```ros
 [admin@MikroTik] > /ip/hotspot/add interface=ether1 
 [admin@MikroTik] > /ip/hotspot/print 
-Flags: X, S - HTTPS
+Flags: X - DISABLED
 Columns: NAME, INTERFACE, PROFILE, IDLE-TIMEOUT
 #   NAME      INTERFACE  PROFILE  IDLE-TIMEOUT
 ;;; inactivated, not allowed by device-mode
 0 X hotspot1  ether1     default  5m          
 ```
 
-## Changing device-mode settings using Netinstall or FlashFig
+## Configure device-mode with Netinstall or FlashFig
 
-Starting from RouterOS 7.22, it is possible to configure **device-mode** and **protected-routerboot** and other settings.
+Netinstall and FlashFig configure **device-mode**, **protected-routerboot** and other settings on RouterOS 7.22 and later.
 
-For more information, see the [Netinstall](../getting-started/installation-and-upgrade/netinstall/index.md) and [FlashFig](../management-tools/flashfig.md) documentation.
+See the [Netinstall](../getting-started/installation-and-upgrade/netinstall/) and [FlashFig](../management-tools/flashfig) documentation for details.
 
 ## Available device-mode modes
 
-There are four device modes available for configuration (*advanced* is the default), each mode has a subset of features that are not allowed when it is used. No mode has all features enabled — certain features need to be enabled even when you have *advanced* mode enabled. ROSE device-mode is very similar to advanced mode, but it is made for RDS and similar devices with a wider option to use disks, supporting container installations from the factory. See the table below for more details about what each feature controls. As the table below shows, **traffic-gen**, **container**, **partitions**, and **routerboard** features are always disabled, unless specifically enabled by the admin user.
+Four modes are available (`advanced` is the default); each disables a subset of features. No mode has all features enabled — some features must be enabled explicitly even in `advanced` mode. `rose` is similar to `advanced`, intended for RDS and similar devices with broad disk use and factory container support. The table lists what each feature controls. **traffic-gen**, **container**, **partitions** and **routerboard** are disabled in every mode unless enabled explicitly.
 
 | Feature / Property | Actions/unavailable menus | Home | Basic | Advanced | ROSE |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -145,7 +149,7 @@ There are four device modes available for configuration (*advanced* is the defau
 | [**Email**](./e-mail.md) | `/tool/e-mail` | No | Yes | Yes | Yes |
 | [**Fetch**](./fetch.md) | `/tool/fetch` | No | Yes | Yes | Yes |
 | [**Hotspot**](../authentication-authorization-accounting/hotspot-captive-portal/index.md) | `/ip/hotspot` | No | No | Yes | Yes |
-| **Install Any Version** | RouterOS will no longer allow installation of versions below the **allowed-versions** list. | No | No | No | No |
+| **Install Any Version** | RouterOS will no longer allow installation of versions outside the **allowed-versions** list. | No | No | No | No |
 | [**IPsec**](../virtual-private-networks/ipsec/index.md) | `/ip/ipsec` | Yes | Yes | Yes | Yes |
 | [**L2TP**](../virtual-private-networks/l2tp/index.md) | `/interface/l2tp-server`, `/interface/l2tp-client` | Yes | Yes | Yes | Yes |
 | [**Partitions**](./partitions.md) | `/partitions` — does not allow changing the count of partitions. If your router is unable to boot, it will still be able to boot into your other partitions. No restriction for crash recovery. | No | No | No | No |
@@ -160,19 +164,19 @@ There are four device modes available for configuration (*advanced* is the defau
 | [**Traffic Generator**](../diagnostics-monitoring-and-troubleshooting/traffic-generator.md) | `/tool/traffic-generator`, `/tool/flood-ping`, `/tool/ping-speed` | No | No | No | No |
 | [**ZeroTier**](../virtual-private-networks/zerotier.md) | `/zerotier` | No | No | Yes | Yes |
 
-More specific control over the available features is possible. Each of the features controlled by device-mode can be specifically turned on or off.
+Each feature controlled by device-mode can be enabled or disabled individually.
 
-For instance, **scheduler** won't allow performing any action in `/system/scheduler`. The used device-mode disables all listed features, for instance, if **mode**=home is used, but **zerotier** is required for your setup, a device-mode update `/system/device-mode/update` zerotier=yes will be required with physical access to the device to push the button or cut the power.
+For example, with **scheduler** disabled, `/system/scheduler` cannot perform any action. If the device runs in `home` mode but your setup needs `zerotier`, run `/system/device-mode/update zerotier=yes` and confirm it with physical access to the device. On dual-boot devices, device-mode restricts the SwOS/RouterOS transition; enable it with `/system/device-mode/update routerboard=yes`.
 
 ## Allowed versions
 
-Device mode lists in its parameters an argument called **allowed-versions**. This is a list of versions which MikroTik considers as secure and which do not include any serious vulnerabilities that an attacker could exploit.
+The **allowed-versions** parameter lists the RouterOS versions MikroTik considers secure, without serious vulnerabilities that an attacker could exploit.
 
-This setting does not depend on the installed RouterOS version and works as a separate protection layer, to prevent an attacker from downgrading the version step-by-step to reach a known vulnerable RouterOS release. When you upgrade RouterOS to a release where a newer **allowed-versions** list is available, the oldest list will be overwritten. If you downgrade RouterOS, the **allowed-versions** list will not change and will remain updated to the latest list. The list is ignored if device-mode **install-any-version** is enabled.
+The list works as a separate protection layer, independent of the installed version, to prevent an attacker from downgrading step by step to a known vulnerable release. An upgrade to a release with a newer **allowed-versions** list overwrites the old one; a downgrade leaves the list unchanged. The list is ignored when **install-any-version** is enabled.
 
 ## Flagged status
 
-Along with the device-mode feature, RouterOS can analyze the whole configuration at system startup, to determine if there are any signs of unauthorized access to your router. If suspicious configuration is detected, it will be disabled and the **flagged** parameter will be set to *yes*. The device now has a flagged state and enforces certain limitations.
+RouterOS analyzes the whole configuration at startup for signs of unauthorized access. If it finds suspicious configuration, the device disables it and sets **flagged** to *yes*, which enforces additional limitations.
 
 ```ros
 [admin@MikroTik] > /system/device-mode/print 
@@ -181,24 +185,25 @@ Along with the device-mode feature, RouterOS can analyze the whole configuration
 ...
 ```
 
-If the system has this flagged status, the current configuration works, but it is not possible to perform the following actions:
+In the flagged state, the current configuration keeps working, but these actions are not possible:
 
-- bandwidth-test, traffic-generator, and sniffer
-- Configuration actions that enable or create new entries (it will still be possible to disable or delete them) for: system scheduler, SOCKS proxy, PPTP, L2TP, IPsec, proxy, and SMB.
+- bandwidth-test, traffic-generator and sniffer
+- configuration actions that enable or create entries (disabling or deleting them still works) in system scheduler, SOCKS proxy, PPTP, L2TP, IPsec, proxy and SMB.
 
-When performing the aforementioned actions while the router has the flagged state, you will receive an error message:
+Attempting them returns an error:
 
 ```ros
 [admin@MikroTik] > /tool/sniffer/quick 
 failure: configuration flagged, check all router configuration for unauthorized changes and update device-mode
-[admin@MikroTik] > /int l2tp-client/add connect-to=1.1.1.1 user=user
+[admin@MikroTik] > /interface/l2tp-client/add connect-to=192.0.2.1 user=user1
 failure: configuration flagged, check all router configuration for unauthorized changes and update device-mode
 ```
 
-To exit the flagged state, you must perform the command `/system/device-mode/update flagged=no`. The system will ask you to either press a button, or issue a hard reboot (cut power physically or do a hard reboot of the virtual machine).
+To exit the flagged state, run `/system/device-mode/update flagged=no` and confirm it with a button press or a hard reboot — cut the power, or reboot a virtual machine.
 
-**Important!** Although the system has disabled any malicious-looking rules that triggered the flagged state, it is crucial to inspect all of your configuration for other unknown things before exiting the flagged state. If your system has been flagged, assume that your system has been compromised and do a full audit of all settings before re-enabling the system for use. After completing the audit, change all the system passwords and upgrade to the latest RouterOS version.
-
-:::warning
-Starting from RouterOS version 7.17, device-mode restricts SwOS/RouterOS transition for dual-boot devices. To enable it: `/system/device-mode/update` routerboard=yes
+:::danger
+Although the system has disabled any malicious-looking rules that triggered the flagged state, inspect
+all of your configuration for other unknown entries before exiting the flagged state. If your system
+has been flagged, assume that it has been compromised and audit all settings before re-enabling it for
+use. After the audit, change all system passwords and upgrade to the latest RouterOS version.
 :::

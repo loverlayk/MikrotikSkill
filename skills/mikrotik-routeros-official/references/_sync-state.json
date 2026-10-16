@@ -1,5 +1,5 @@
 {
-  "index_sha256": "d86d6bc4eb3bc3a150becf5018a255d1b9a76470d423dd72f2257f19d3389148",
+  "index_sha256": "d802135e6216820e25ff06d69d645f69c235485a9c49420f59c7f5f86c43d3bd",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -365,7 +365,7 @@
       "title": "Device mode",
       "markdown_url": "https://manual.mikrotik.com/docs/system-information-and-utilities/device-mode.md",
       "path": "docs/system-information-and-utilities/device-mode.md",
-      "sha256": "42df7cf3d2ee34636b7a8049018bd7c19d103b7279cf605e4a3a6a9b5cab2c5a"
+      "sha256": "813a838bc1c74f6ce0ffd913ef382c84608d166dfe6662550142d07ac138a4db"
     },
     "https://manual.mikrotik.com/docs/system-information-and-utilities/e-mail.md": {
       "title": "Email",
@@ -7559,13 +7559,13 @@
       "title": "/system/device-mode",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/device-mode.md",
       "path": "docs/cli-reference/system/device-mode.md",
-      "sha256": "b90d3fb472da4ef0073d3b4f915957ec4bcf045534283b60c1a8cdd8a71c9d0b"
+      "sha256": "4c3478d1e19c3565a06ea7df438a1267c55f33d03e5f834d2c180c0503269114"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/device-mode/update.md": {
       "title": "/system/device-mode/update",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/device-mode/update.md",
       "path": "docs/cli-reference/system/device-mode/update.md",
-      "sha256": "15ceb3cadebec0ba4905fd0a2d3d209604feb052100cac23803f25ff70cbfc9c"
+      "sha256": "86e086584c3d5e88faa6da91db40ed2516557c319fe859e5d1270766e29492b3"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/gps.md": {
       "title": "/system/gps",
