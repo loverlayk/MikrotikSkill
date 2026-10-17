@@ -1,13 +1,13 @@
 # update
 
-> Starts a device-mode configuration change. The change activates after a button press or power cycle and reboots the device; if it is not confirmed within activation-timeout, it is canceled. Running a new update...
+> Starts a device-mode configuration change. The change activates after a button press or power cycle and reboots the device; if it is not confirmed within activation-timeout, it is canceled. A regular reboot also...
 
 -----------
 
 ## system/device-mode/update 
 **Type:** Command
 
-Starts a device-mode configuration change. The change activates after a button press or power cycle and reboots the device; if it is not confirmed within `activation-timeout`, it is canceled. Running a new `update` cancels a pending one. See the [Device mode](../../../system-information-and-utilities/device-mode) guide.
+Starts a device-mode configuration change. The change activates after a button press or power cycle and reboots the device; if it is not confirmed within `activation-timeout`, it is canceled. A regular reboot also cancels it. Running `update` without parameters cancels a pending update; an `update` with parameters while another is pending cancels the pending one and is not applied itself. See the [Device mode](../../../system-information-and-utilities/device-mode) guide.
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="mode" typ="enum">

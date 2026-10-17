@@ -4,6 +4,6 @@
 
 # Developer Guides
 
-Cover RouterOS automation and integration interfaces, including the API, scripting, and REST API. Use this section when building tools, scripts, or applications that interact with RouterOS.
+This section covers RouterOS automation and integration interfaces — the API, scripting, and the REST API. Use it when building tools, scripts, or applications that interact with RouterOS. The API and the REST API let external tools talk to the router over the network; scripting runs on the router itself.
 
 <DocCardList />

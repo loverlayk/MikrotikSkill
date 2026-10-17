@@ -39,5 +39,5 @@ Current device mode.
 <ArgTableRow arg="install-any-version" typ="bool">Whether installing RouterOS versions outside the `allowed-versions` list is permitted.</ArgTableRow>
 <ArgTableRow arg="partitions" typ="bool">Whether changing the partition count (`/partitions`) is allowed.</ArgTableRow>
 <ArgTableRow arg="routerboard" typ="bool">Whether changing `/system/routerboard/settings` options (except auto-upgrade) and the SwOS/RouterOS transition on dual-boot devices is allowed.</ArgTableRow>
-<ArgTableRow arg="attempt-count" typ="num">Number of unsuccessful device-mode update attempts since the last reset. After three, an `update` is refused and a reset window opens for the time set by the last `activation-timeout`; a button press or power cycle inside the window resets the counter. A confirmed update also resets it. Default: 0.</ArgTableRow>
+<ArgTableRow arg="attempt-count" typ="num">Number of unsuccessful device-mode update attempts since the last reset; a request that cancels a pending update does not count. After three, an `update` is refused and a reset window opens for the time set by the last `activation-timeout`; a button press or power cycle inside the window resets the counter. A confirmed update also resets it. Default: 0.</ArgTableRow>
 </ArgTable>

@@ -6,9 +6,9 @@
 
 **Application Programming Interface (API)** lets users create custom software solutions to communicate with RouterOS for information gathering, adjusting configuration, and managing the router. The API closely follows the syntax of the **command-line interface (CLI)**. You can use it to create translated or custom configuration tools that make it easier to run and manage RouterOS routers.
 
-The API service must be enabled before you try to establish a connection. By default, the API uses TCP ports **8728** and **8729** (secure).
+The API service must be enabled before you try to establish a connection — enable it with `/ip/service set api disabled=no`. By default, the API uses TCP ports **8728** and **8729** (secure).
 
-The **API-SSL** service can operate in two modes: with or without a certificate. Without a certificate provided in the `/ip service` settings, the client must use an anonymous Diffie-Hellman cipher to establish a connection. If the service uses a certificate, the client can establish a TLS session.
+The **API-SSL** service can operate in two modes: with or without a certificate. Without a certificate configured for the service, the service offers only anonymous Diffie-Hellman ciphers, which current TLS clients do not accept, so the connection fails with a handshake error. With a certificate configured for the service, the client can establish a regular TLS session. For the service settings, see [the `ip/service` CLI reference](../../cli-reference/ip/service).
 
 ## Protocol
 
@@ -38,7 +38,7 @@ If a zero-length word is not provided, the router will not start evaluating the 
 
 - Words are grouped into sentences. A zero-length word terminates a sentence.
 - Each word is encoded as a length followed by that many bytes of content.
-- The scheme allows encoding of lengths up to **0xFFFFFFFF**; only four-byte lengths are supported.
+- The encoding supports lengths up to **0xFFFFFFFF**; the five-byte form (`0xF0` + four bytes) encodes the largest lengths.
 - **len** bytes are sent most significant first (network order).
 - If the first byte of the word is **>= 0xF8**, it is a reserved control byte. After receiving an unknown control byte, an API client cannot proceed because it does not know how to interpret the following bytes.
 - Currently, control bytes are not used.
@@ -119,7 +119,7 @@ Some attribute examples (excluding encoded length prefix):
 
 The value can contain *equal* (`=`) symbols:
 
-```
+```ros
 =name=iu=c3Eeg
 
 ```
@@ -179,27 +179,59 @@ It is only sent by the router in response to the full sentence received from the
 
 ## Initial login
 
-- The client sends a username and password in the first message. In our example, we use `admin` with an empty password:
+The `login` command supports two authentication methods.
 
-  ```ros
-  /login
-  =name=admin
-  =password=
-  ```
+Plain-text password — the method used by accounts created with the current password format:
 
-  The router replies with `!done` if authentication is successful.
+```ros
+/login
+=name=admin
+=password=
+```
 
-- The password is sent in plain text.
-- If an error occurs, the reply contains `=message=<error message>`.
-- After a successful login, the client can start issuing commands.
+The router replies with `!done` if authentication is successful. The password is sent in plain text. After a successful login, the client can start issuing commands.
+
+If the credentials are wrong or the account cannot use the API, the router replies with an error:
+
+```ros
+!trap
+=message=invalid user name or password
+
+!done
+```
+
+Legacy challenge-response — the method used by accounts created with the older password format:
+
+When the router answers a login with `=ret=<challenge>` instead of a plain `!done`, the login uses the legacy method. A login sentence without a password is answered with a challenge, for example:
+
+```ros
+/login
+
+!done
+=ret=93b438ec9b80057c06dd9fe67d56aa9a
+```
+
+The client answers in the second message with the user name and the challenge response: the two characters `00` followed by the lowercase hex MD5 digest of the `0x00` byte, the password and the received challenge.
+
+```ros
+/login
+=name=admin
+=response=00e134102a9d330dd7b1849fedfea3cb57
+
+!done
+```
+
+Accounts with the current password format cannot complete the legacy exchange; the router rejects the response.
+
+Closing the TCP connection ends the API session.
 
 ## Tags
 
-The **API** allows running several commands simultaneously without waiting for the previous one to complete. If the API client does this and needs to differentiate command responses, it can use the `tag` parameter in the command sentences.
+The **API** allows running several commands simultaneously without waiting for the previous one to complete. To tell the replies apart, add the API attribute word `.tag=<value>` to the command sentence; every reply for that sentence then carries the same `.tag=<value>` word.
 
-If a sentence contains a `tag`, each reply for that sentence will carry the same tag value.
+If you omit the `.tag` word or leave its value empty, replies for the command carry no tag.
 
-If you omit the `tag` parameter or leave it empty, responses for the command will not include a tag parameter.
+Note the distinction between the tag and an argument named `tag`: the tag is an API attribute word (`.tag=`), while a command argument such as `/cancel`'s `=tag=` is a regular attribute word (`=name=value`).
 
 ## Command description
 
@@ -212,7 +244,7 @@ If you omit the `tag` parameter or leave it empty, responses for the command wil
 - `listen`
   - The `listen` command is available wherever the CLI `print` command is available, but it may not work everywhere.
   - `!re` sentences are generated when something changes in a particular item list.
-  - When an item is deleted or disappears, the `!re` sentence includes the value `=.dead=yes`.
+  - When an item is deleted or disappears, the `!re` sentence includes the boolean value `=.dead=true`.
   - This command does not terminate on its own; use the `/cancel` command to stop it.
 
 - `getall`
@@ -286,39 +318,60 @@ Examples:
 
 The `print` command can return OID values for properties that are available in SNMP.
 
-In the CLI, OID values can be seen by running the `print oid` command. In the API, these properties have names that end with `.oid` and can be retrieved by adding their names to the value of `.proplist`. An example:
+In the CLI, OID values can be seen by running the `print oid` command. In the API, properties that have an OID expose it through a property whose name ends with `.oid`; add those names to the value of `.proplist` to retrieve them. An example:
 
 ```ros
 /system/resource/print
-=.proplist=uptime,cpu-load,uptime.oid,cpu-load.oid
+=.proplist=uptime,cpu-frequency,uptime.oid,cpu-frequency.oid
 ```
 
 The router sends a reply:
 
 ```ros
 !re
-=uptime=01:22:53
-=cpu-load=0
+=uptime=16m44s
+=cpu-frequency=864
 =uptime.oid=.1.3.6.1.2.1.1.3.0
-=cpu-load.oid=.1.3.6.1.2.1.25.3.3.1.2.1
+=cpu-frequency.oid=.1.3.6.1.4.1.14988.1.1.3.14.0
 
 !done
 ```
 
+Not every SNMP property is exposed through the API. The properties that have an OID are the ones the router shows with the `print oid` command; a property without an OID, such as `cpu-load` for the system resources, has no `.oid` counterpart.
+
 ### !trap
 
-When an API sentence fails for any reason, the router returns a trap accompanied by a:
+When an API sentence fails, the router returns a trap sentence. The trap carries a `message` attribute with details about the failure; some traps also carry a `category` attribute with the error category:
 
-- A `message` attribute that provides more details about the failure.
-- A `category` attribute. If the error is general, the router returns the error category. Possible values for this attribute are:
-  - 0 - missing item or command
-  - 1 - argument value failure
-  - 2 - execution of command interrupted
-  - 3 - scripting related failure
-  - 4 - a general failure
-  - 5 - API related failure
-  - 6 - TTY related failure
-  - 7 - value generated with :return command
+- 0 - missing item or command
+- 1 - argument value failure
+- 2 - execution of command interrupted
+- 3 - scripting related failure
+- 4 - a general failure
+- 5 - API related failure
+- 6 - TTY related failure
+- 7 - value generated with :return command
+
+For example, an unknown command returns a trap with `=category=0`:
+
+```ros
+/foobar/print
+```
+
+Router reply with:
+
+```ros
+!trap
+=category=0
+=message=no such command or directory (foobar)
+
+!trap
+=message=no such command prefix
+
+!done
+```
+
+A wrong argument value returns a trap with only a `message`:
 
 ```ros
 /ip/address/add
@@ -328,16 +381,17 @@ When an API sentence fails for any reason, the router returns a trap accompanied
 
 Router reply with:
 
-```bash
+```ros
 !trap
-=category=1
 =message=input does not match any value of interface
+
+!done
 ```
 
 ## Modify existing items
 
-Like its CLI counterpart, the API has a `set` command that accepts an item's ID and parameters to set.
-The only exception is that the API does not accept queries directly with the `set` command. For example, CLI command to set MTU value on all ethernet interfaces:
+Like its CLI counterpart, the API has a `set` command that accepts an item's ID and parameters to set. The value of the `.id` attribute can be the internal number (for example `*1`) or, for items that have a name, the name (for example `ether1`).
+The only exception is that the API does not accept queries directly with the `set` command. For example, the CLI command to set the MTU on all ethernet interfaces:
 
 ```ros
 /interface set [find where type=ether] mtu=1500
@@ -373,27 +427,33 @@ Now you need to loop through returned IDs and send the `set` command for each:
 =mtu=1500
 ```
 
+The router answers a successful `set` with a single `!done` (no data), and with `!trap` if the item was not found.
+
 ## Command examples
 
-### `/user/active/listen`
+### listen notifications
+
+Start listening for changes in the interface list:
 
 ```ros
-/user/active/listen
-
-!re
-=.id=*68
-=radius=no
-=when=2006-10-24 08:40:42
-=name=admin
-=address=0.0.0.0
-=via=console
-
-!re
-=.id=*68
-=.dead=yes
-
-... more !re sentences ...
+/interface/listen
 ```
+
+The router sends an `!re` sentence whenever an item appears or changes. When an item is removed, the `!re` sentence carries the boolean `=.dead=true`:
+
+```ros
+!re
+=.id=*1
+=name=ether1
+=disabled=false
+=running=true
+
+!re
+=.id=*1
+=.dead=true
+```
+
+Stop listening with `/cancel`.
 
 ### /cancel, simultaneous commands
 
@@ -404,81 +464,73 @@ Start listening for interface changes (tag is 2):
 .tag=2
 ```
 
-Send a command to disable interface (tag is 3):
+Send a command to disable the interface (tag is 3):
 
 ```ros
 /interface/set
-=disabled=yes
+=disabled=true
 =.id=ether1
 .tag=3
 ```
 
-The router replies with `!done` for the `disable` command (executed with tag 3):
-
-```ros
-!done
-.tag=3
-```
-
-Enable interface (tag is 4):
-
-```ros
-/interface/set
-=disabled=no
-=.id=ether1
-.tag=4
-```
-
-Client receives from the router an update for the `listen` command generated by a change made by the first `set` command (executed with tag 3):
+The router replies with `!done` for the `disable` command (executed with tag 3); the change also generates an update for the `listen` command (tag 2):
 
 ```ros
 !re
 =.id=*1
-=disabled=yes
-=dynamic=no
-=running=no
+=disabled=true
+=dynamic=false
+=running=false
 =name=ether1
 =mtu=1500
 =type=ether
 .tag=2
+
+!done
+.tag=3
 ```
 
-Followed by `done` for `enable` command (executed with tag 4):
+Enable the interface (tag is 4):
 
 ```ros
+/interface/set
+=disabled=false
+=.id=ether1
+.tag=4
+```
+
+The change generates another update for the `listen` command, followed by `done` for the `enable` command:
+
+```ros
+!re
+=.id=*1
+=disabled=false
+=dynamic=false
+=running=true
+=name=ether1
+=mtu=1500
+=type=ether
+.tag=2
+
 !done
 .tag=4
 ```
 
-Send a command to get interface list (tag is 5):
+Send a command to get the interface list (tag is 5):
 
 ```ros
 /interface/getall
 .tag=5
 ```
 
-Client receives updates generated by a change made by the second `set` command (executed with tag 4):
+The client receives replies to the `getall` command (executed with tag 5):
 
 ```ros
 !re
 =.id=*1
-=disabled=no
-=dynamic=no
-=running=yes
-=name=ether1
-=mtu=1500
-=type=ether
-.tag=2
-```
-
-Client receives replies to `getall` command (executed with tag 5):
-
-```ros
-!re
-=.id=*1
-=disabled=no
-=dynamic=no
-=running=yes
+=disabled=false
+=dynamic=false
+=running=true
 =name=ether1
 =mtu=1500
 =type=ether
@@ -486,9 +538,9 @@ Client receives replies to `getall` command (executed with tag 5):
 
 !re
 =.id=*2
-=disabled=no
-=dynamic=no
-=running=yes
+=disabled=false
+=dynamic=false
+=running=true
 =name=ether2
 =mtu=1500
 =type=ether
@@ -498,7 +550,7 @@ Client receives replies to `getall` command (executed with tag 5):
 .tag=5
 ```
 
-Stop listening - request to cancel command with tag 2, `cancel` itself uses tag 7:
+Stop listening — request cancelling the command with tag 2; `cancel` itself uses tag 7:
 
 ```ros
 /cancel
@@ -531,35 +583,4 @@ Stop listening - request to cancel command with tag 2, `cancel` itself uses tag 
 
 ## Example client
 
-A simple [API client in Python3](./python3-example.md)
-
-Example output with the old login method:
-
-```bash
-debian@localhost:~/api-test$ ./api.py 10.0.0.1 admin ''
-<<< /login
-<<<
->>> !done
->>> =ret=93b438ec9b80057c06dd9fe67d56aa9a
->>>
-<<< /login
-<<< =name=admin
-<<< =response=00e134102a9d330dd7b1849fedfea3cb57
-<<<
->>> !done
->>>
-/user/getall
-
-<<< /user/getall
-<<<
->>> !re
->>> =.id=*1
->>> =disabled=no
->>> =name=admin
->>> =group=full
->>> =address=0.0.0.0/0
->>> =netmask=0.0.0.0
->>>
->>> !done
->>>
-```
+A simple [API client in Python3](./python3-example.md) that supports both login methods and prints the whole exchange on the terminal.

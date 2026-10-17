@@ -6,7 +6,7 @@
 
 The **device-mode** limits access to specific configuration options. It protects the router and the network from attackers who gain unauthorized access and use the device as a gateway to attack other networks.
 
-The available modes are `advanced`, `home`, `basic` and `rose`. Devices shipped with RouterOS 7.17 or later come with a mode configured at the factory: `advanced` (previously `enterprise`) on CCR and 1100 series devices, `home` on home routers and `basic` on other devices. Routers upgraded from an older version keep `advanced`.
+The available modes are `advanced`, `home`, `basic` and `rose`. New devices come with a mode configured at the factory: `advanced` (previously `enterprise`) on CCR and 1100 series devices, `home` on home routers and `basic` on other devices. Devices from before the factory modes were introduced use `advanced`, and upgrading RouterOS keeps it.
 
 Check the current settings in the [`/system/device-mode`](../cli-reference/system/device-mode) menu.
 
@@ -38,7 +38,7 @@ Check the current settings in the [`/system/device-mode`](../cli-reference/syste
         attempt-count: 0   
 ```
 
-An authorized user can change the device-mode parameters, but physical access is required to approve the change. Confirm it with the reset or mode button on the device, or with a "cold reboot" — unplug the power. A regular reboot does not confirm the change. After confirmation, regardless of the method, the **device reboots**.
+An authorized user can change the device-mode parameters, but physical access is required to approve the change. Confirm it with the reset or mode button on the device, or with a "cold reboot" — unplug the power. A regular reboot does not confirm the change; it cancels it. After confirmation, regardless of the method, the **device reboots**.
 
 ## Check device mode in WinBox
 
@@ -62,13 +62,13 @@ Change the mode to `home`:
   update: turn off power or reboot by pressing reset or mode button in 5m to activate changes
 ```
 
-If the update is not confirmed in time, the mode change is canceled. A new update request cancels the pending one.
+If the update is not confirmed in time, the mode change is canceled. To cancel a pending update yourself, run `/system/device-mode/update` without parameters; it reports `canceled previous update`. An `update` with parameters while another update is pending cancels the pending one and is not applied itself; run it again to start a new update.
 
 :::note
 Some EOL products confirm mode changes only with a power cycle, not with a button press.
 :::
 
-An attacker with access can prepare a device-mode change and leave it pending. The change activates on the next button press or power cycle, even when the administrator does not know what it is. To limit that risk, only three update attempts are allowed without a reset. Every `update` request increments the **attempt-count** counter, including refused ones. When the counter reaches 3, further requests are refused and a reset window equal to the `activation-timeout` of that request opens. The counter resets after a confirmed update, or after a button press or power cycle inside the reset window. An expired request and a plain reboot do not reset it.
+An attacker with access can prepare a device-mode change and leave it pending. The change activates on the next button press or power cycle, even when the administrator does not know what it is. To limit that risk, only three update attempts are allowed without a reset. Every `update` request with parameters increments the **attempt-count** counter, including refused ones; a request that cancels a pending update does not. When the counter reaches 3, further requests are refused and a reset window equal to the `activation-timeout` of that request opens. The counter resets after a confirmed update, or after a button press or power cycle inside the reset window. An expired request and a plain reboot do not reset it.
 
 ```ros
 [admin@MikroTik] > /system/device-mode/update container=yes 
@@ -134,7 +134,7 @@ Columns: NAME, INTERFACE, PROFILE, IDLE-TIMEOUT
 
 ## Configure device-mode with Netinstall or FlashFig
 
-Netinstall and FlashFig configure **device-mode**, **protected-routerboot** and other settings on RouterOS 7.22 and later.
+Netinstall and FlashFig can set **device-mode**, **protected-routerboot** and other settings when they provision a device.
 
 See the [Netinstall](../getting-started/installation-and-upgrade/netinstall/) and [FlashFig](../management-tools/flashfig) documentation for details.
 
@@ -199,7 +199,7 @@ failure: configuration flagged, check all router configuration for unauthorized 
 failure: configuration flagged, check all router configuration for unauthorized changes and update device-mode
 ```
 
-To exit the flagged state, run `/system/device-mode/update flagged=no` and confirm it with a button press or a hard reboot — cut the power, or reboot a virtual machine.
+To exit the flagged state, run `/system/device-mode/update flagged=no` and confirm it with a button press or a power cycle: cut the power, or do a hard reboot of the virtual machine.
 
 :::danger
 Although the system has disabled any malicious-looking rules that triggered the flagged state, inspect

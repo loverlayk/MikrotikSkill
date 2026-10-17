@@ -51,7 +51,7 @@ To download this router's backup to its storage:
 /system/backup/cloud/download-file action=download number=0
 ```
 
-The router saves the file as `<name>.backup`, or under the name you give in `dst-file`. To restore the configuration from it, use [`/system/backup/load`](../../getting-started/configuration-management/backup#loading-a-backup).
+The router saves the file as `<name>.backup`, or under the name you give in `dst-file`. To restore the configuration from it, use [`/system/backup/load`](../../getting-started/configuration-management/backup#restore-a-backup).
 
 To download and restore in one step, give the backup password. The router restores the configuration and reboots:
 

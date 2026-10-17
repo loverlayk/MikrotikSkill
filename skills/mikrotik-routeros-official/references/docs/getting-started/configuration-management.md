@@ -131,8 +131,6 @@ If too many changes are made while in safe mode, and there's no room in history 
 
 [System backup](./backup.md) is the way to completely clone the router configuration in binary format.
 
-More information about Backup and Restore is found [here](./backup.md).
-
 ## Configuration Export and Import
 
 RouterOS allows exporting and importing parts of the configuration in plain text format. This method can be used to copy bits of configuration between different devices, for example, clone the whole firewall from one router to another.

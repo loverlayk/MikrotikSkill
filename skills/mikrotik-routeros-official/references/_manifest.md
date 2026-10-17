@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `d802135e6216820e25ff06d69d645f69c235485a9c49420f59c7f5f86c43d3bd`
+Index SHA-256: `107ee6a12160b93c3de05ecfddb96a4d3d8c8e25fc9773a26b8261e481bd11bb`
 Pages in current index: 1472
-Pages changed/written: 3
+Pages changed/written: 19
 Pages removed: 0
 Pages failed: 0
 
@@ -116,7 +116,7 @@ Pages failed: 0
 - [/cmr/device/pair](docs/cli-reference/cmr/device/pair.md) `597fec745dd9`
 - [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `566433efc5c4`
 - [/cmr/device/run-script](docs/cli-reference/cmr/device/run-script.md) `05e0b11ea30b`
-- [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `ecd368dc09f1`
+- [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `875b8b5bd620`
 - [/cmr/device/wifi-logs](docs/cli-reference/cmr/device/wifi-logs.md) `f4241a91677e`
 - [/cmr/layout](docs/cli-reference/cmr/layout.md) `7eac06dd3424`
 - [/cmr/layout/add-devices](docs/cli-reference/cmr/layout/add-devices.md) `114ef5bad32f`
@@ -906,16 +906,16 @@ Pages failed: 0
 - [/routing/stats/step](docs/cli-reference/routing/stats/step.md) `7e59f256874f`
 - [/routing/table](docs/cli-reference/routing/table.md) `4bc71be2e7a6`
 - [/safe-mode](docs/cli-reference/safe-mode.md) `370b1bceb1ee`
-- [/snmp](docs/cli-reference/snmp.md) `4c7ae1f15ebb`
-- [/snmp/community](docs/cli-reference/snmp/community.md) `459f9442c8bf`
-- [/snmp/send-trap](docs/cli-reference/snmp/send-trap.md) `ad1a5cfca873`
+- [/snmp](docs/cli-reference/snmp.md) `ea8f5c07c93f`
+- [/snmp/community](docs/cli-reference/snmp/community.md) `b8d70d719613`
+- [/snmp/send-trap](docs/cli-reference/snmp/send-trap.md) `65e4e0012cf8`
 - [/special-login](docs/cli-reference/special-login.md) `58d417a0ddc8`
 - [/system/backup/cloud](docs/cli-reference/system/backup/cloud.md) `6423febfd6f5`
 - [/system/backup/cloud/download-file](docs/cli-reference/system/backup/cloud/download-file.md) `2473d70be2f7`
 - [/system/backup/cloud/remove-file](docs/cli-reference/system/backup/cloud/remove-file.md) `e1e914e72383`
 - [/system/backup/cloud/upload-file](docs/cli-reference/system/backup/cloud/upload-file.md) `59ffd56b0d82`
-- [/system/backup/load](docs/cli-reference/system/backup/load.md) `fedf63b34fc4`
-- [/system/backup/save](docs/cli-reference/system/backup/save.md) `e8dd5f282e95`
+- [/system/backup/load](docs/cli-reference/system/backup/load.md) `d43a8ce74dfa`
+- [/system/backup/save](docs/cli-reference/system/backup/save.md) `3f9fd2e7d367`
 - [/system/check-disk](docs/cli-reference/system/check-disk.md) `8db136fa642b`
 - [/system/check-installation](docs/cli-reference/system/check-installation.md) `445d503e3977`
 - [/system/clock](docs/cli-reference/system/clock.md) `23d47a37869d`
@@ -929,8 +929,8 @@ Pages failed: 0
 - [/system/default-configuration/custom-script](docs/cli-reference/system/default-configuration/custom-script.md) `38f5e1031b5d`
 - [/system/default-configuration/script](docs/cli-reference/system/default-configuration/script.md) `9439389f0538`
 - [/system/default-configuration/wps-sync-mode-script](docs/cli-reference/system/default-configuration/wps-sync-mode-script.md) `f54b91378288`
-- [/system/device-mode](docs/cli-reference/system/device-mode.md) `4c3478d1e19c`
-- [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `86e086584c3d`
+- [/system/device-mode](docs/cli-reference/system/device-mode.md) `c16c214bd7a5`
+- [/system/device-mode/update](docs/cli-reference/system/device-mode/update.md) `2fb3bd9573e0`
 - [/system/gps](docs/cli-reference/system/gps.md) `8f8fed59f131`
 - [/system/gps/monitor](docs/cli-reference/system/gps/monitor.md) `403a982bce5f`
 - [/system/health](docs/cli-reference/system/health.md) `adca4b3c64c4`
@@ -1075,8 +1075,8 @@ Pages failed: 0
 - [/tool/sniffer/save](docs/cli-reference/tool/sniffer/save.md) `643c32bc0af6`
 - [/tool/sniffer/start](docs/cli-reference/tool/sniffer/start.md) `1740e0acea1c`
 - [/tool/sniffer/stop](docs/cli-reference/tool/sniffer/stop.md) `bd9c318f24fa`
-- [/tool/snmp-get](docs/cli-reference/tool/snmp-get.md) `8b00b75006c1`
-- [/tool/snmp-walk](docs/cli-reference/tool/snmp-walk.md) `e95cdf70488c`
+- [/tool/snmp-get](docs/cli-reference/tool/snmp-get.md) `b6a04e30f09c`
+- [/tool/snmp-walk](docs/cli-reference/tool/snmp-walk.md) `c46ff946201e`
 - [/tool/speed-test](docs/cli-reference/tool/speed-test.md) `af925141f480`
 - [/tool/torch](docs/cli-reference/tool/torch.md) `9434224495ba`
 - [/tool/traceroute](docs/cli-reference/tool/traceroute.md) `960be20bd575`
@@ -1153,9 +1153,9 @@ Pages failed: 0
 - [Container - Postgres](docs/containers/user-guides/container-postgres.md) `5f4275a37f44`
 - [Container - ThingsBoard MQTT/HTTP server](docs/containers/user-guides/container-thingsboard-mqtt-http-server.md) `a4dd608d0558`
 - [VETH](docs/containers/veth.md) `188f661131f7`
-- [Developer Guides](docs/developer-guides.md) `6d2cd691b4f0`
-- [API](docs/developer-guides/api.md) `1c158af4fe1e`
-- [Python3 Example](docs/developer-guides/api/python3-example.md) `8130b21f5271`
+- [Developer Guides](docs/developer-guides.md) `e69d65dac54c`
+- [API](docs/developer-guides/api.md) `f8d42b5b8390`
+- [Python3 Example](docs/developer-guides/api/python3-example.md) `2ced4466d04a`
 - [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
 - [Scripting](docs/developer-guides/scripting.md) `1a9269410b63`
 - [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `20526f530694`
@@ -1178,7 +1178,7 @@ Pages failed: 0
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
 - [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `c53f192eea99`
 - [Resource](docs/diagnostics-monitoring-and-troubleshooting/resource.md) `eac3290027ea`
-- [SNMP](docs/diagnostics-monitoring-and-troubleshooting/snmp.md) `059a04269947`
+- [SNMP](docs/diagnostics-monitoring-and-troubleshooting/snmp.md) `02a608133ebb`
 - [Speed Test](docs/diagnostics-monitoring-and-troubleshooting/speed-test.md) `db838309dc20`
 - [Torch](docs/diagnostics-monitoring-and-troubleshooting/torch.md) `cb819e03c33b`
 - [Traceroute](docs/diagnostics-monitoring-and-troubleshooting/traceroute.md) `d3fab637c39f`
@@ -1214,8 +1214,8 @@ Pages failed: 0
 - [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `2d4b362ea4b5`
 - [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
-- [Configuration Management](docs/getting-started/configuration-management.md) `26ea4017a207`
-- [Backup](docs/getting-started/configuration-management/backup.md) `4cff48470879`
+- [Configuration Management](docs/getting-started/configuration-management.md) `72075b3124d1`
+- [Backup](docs/getting-started/configuration-management/backup.md) `35543b82e148`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `fb6534eeba8c`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
 - [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `68c9dea64b61`
@@ -1309,7 +1309,7 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `8f3f4d3f713f`
+- [CMR](docs/management-tools/cmr.md) `0fe2aaa1fa0a`
 - [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
@@ -1338,7 +1338,7 @@ Pages failed: 0
 - [Network Services](docs/network-management.md) `1ec129b3ecc8`
 - [Cloud](docs/network-management/cloud.md) `2393886d1893`
 - [Back To Home](docs/network-management/cloud/back-to-home.md) `ddafd933b2c2`
-- [Cloud backup](docs/network-management/cloud/cloud-backup.md) `c05c2e8c33cb`
+- [Cloud backup](docs/network-management/cloud/cloud-backup.md) `3c437b2ca22b`
 - [Communication with MikroTik Cloud Services](docs/network-management/cloud/communication-mikrotik-cloud-servers.md) `308563d86640`
 - [File Share](docs/network-management/cloud/file-share.md) `85800eebd9f1`
 - [DHCP](docs/network-management/dhcp.md) `be0cc5da9940`
@@ -1375,7 +1375,7 @@ Pages failed: 0
 - [Tmpfs](docs/storage/tmpfs.md) `9bf0010a7fb9`
 - [System Information and Utilities](docs/system-information-and-utilities.md) `caef2ea86a02`
 - [Clock](docs/system-information-and-utilities/clock.md) `002bee56629c`
-- [Device mode](docs/system-information-and-utilities/device-mode.md) `813a838bc1c7`
+- [Device mode](docs/system-information-and-utilities/device-mode.md) `aa925f309c58`
 - [Email](docs/system-information-and-utilities/e-mail.md) `9a48fcce472e`
 - [Fetch](docs/system-information-and-utilities/fetch.md) `e89233b353ab`
 - [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`

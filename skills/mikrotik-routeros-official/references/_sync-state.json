@@ -1,5 +1,5 @@
 {
-  "index_sha256": "d802135e6216820e25ff06d69d645f69c235485a9c49420f59c7f5f86c43d3bd",
+  "index_sha256": "107ee6a12160b93c3de05ecfddb96a4d3d8c8e25fc9773a26b8261e481bd11bb",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -161,13 +161,13 @@
       "title": "Configuration Management",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management.md",
       "path": "docs/getting-started/configuration-management.md",
-      "sha256": "26ea4017a207bebcf9befb285dd7fa93014639bb6bbd4f75898e91f44fa79b97"
+      "sha256": "72075b3124d15f802d6cb4057a4b0ccd29763e388424a9680b92c7c2867e7fd7"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/backup.md": {
       "title": "Backup",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/backup.md",
       "path": "docs/getting-started/configuration-management/backup.md",
-      "sha256": "4cff48470879f5414f68237f44d25b292a5e4beeae35bea286ef61008ff2292e"
+      "sha256": "35543b82e148e69460c337a94dd70599e1bfb73b339b030de33e59cc1210538d"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/default-configuration-passwords.md": {
       "title": "Default Configuration Passwords",
@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "8f3f4d3f713f119d2201aee125bae8114574acfdedf6d89c752e4db50ffdd0ca"
+      "sha256": "0fe2aaa1fa0a02269b5330f9917d4ba94024a69db4563d2e382c3fe7e728b764"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -365,7 +365,7 @@
       "title": "Device mode",
       "markdown_url": "https://manual.mikrotik.com/docs/system-information-and-utilities/device-mode.md",
       "path": "docs/system-information-and-utilities/device-mode.md",
-      "sha256": "813a838bc1c74f6ce0ffd913ef382c84608d166dfe6662550142d07ac138a4db"
+      "sha256": "aa925f309c58abaf0229ec485ece34bc8a0e6d65393241c36f4d1b4686ac8387"
     },
     "https://manual.mikrotik.com/docs/system-information-and-utilities/e-mail.md": {
       "title": "Email",
@@ -533,7 +533,7 @@
       "title": "SNMP",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/snmp.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/snmp.md",
-      "sha256": "059a042699478a7f67f617fbd62fc36df77461a1497f66a39e3c1d290d9a9b4d"
+      "sha256": "02a608133ebbfe88b49ce587bc5f69f49135a6274cb2ffeed3f28d37bc7915bb"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/health.md": {
       "title": "Health",
@@ -1139,7 +1139,7 @@
       "title": "Cloud backup",
       "markdown_url": "https://manual.mikrotik.com/docs/network-management/cloud/cloud-backup.md",
       "path": "docs/network-management/cloud/cloud-backup.md",
-      "sha256": "c05c2e8c33cbdd89451e208c39cd1bdddade13fc9390dae4357454be43d14236"
+      "sha256": "3c437b2ca22be2274b984f471b3295f0e16245336c3f6f785eca3b7d5db13fca"
     },
     "https://manual.mikrotik.com/docs/network-management/cloud/communication-mikrotik-cloud-servers.md": {
       "title": "Communication with MikroTik Cloud Services",
@@ -2189,19 +2189,19 @@
       "title": "Developer Guides",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides.md",
       "path": "docs/developer-guides.md",
-      "sha256": "6d2cd691b4f072e15c9b21259bd893e6ce7c95e8f5c868e7b0614b8bf7222ea8"
+      "sha256": "e69d65dac54cc426503cc14aa60d3c870d8e35a94f47aba2f713e06a25d62475"
     },
     "https://manual.mikrotik.com/docs/developer-guides/api.md": {
       "title": "API",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/api.md",
       "path": "docs/developer-guides/api.md",
-      "sha256": "1c158af4fe1e35d34d1eb4ecb7b065db73d848a9bb8769e156dce39119b5f222"
+      "sha256": "f8d42b5b8390f5d25c03ae081f779e87f2fddf3f029e98b1b7065186c06872de"
     },
     "https://manual.mikrotik.com/docs/developer-guides/api/python3-example.md": {
       "title": "Python3 Example",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/api/python3-example.md",
       "path": "docs/developer-guides/api/python3-example.md",
-      "sha256": "8130b21f52711e65925172e979c53ebe903e0baa3f8610db98cbdfc452f4cbf0"
+      "sha256": "2ced4466d04af0b246e9692fe8946c1874c45a92b45b61bd377aa5eae0bf8bf8"
     },
     "https://manual.mikrotik.com/docs/developer-guides/rest-api.md": {
       "title": "REST API",
@@ -2681,7 +2681,7 @@
       "title": "/cmr/device/upgrade",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/device/upgrade.md",
       "path": "docs/cli-reference/cmr/device/upgrade.md",
-      "sha256": "ecd368dc09f1b7133e5755f7ea1b22ba742b3dc16d519c2ad8105d37e99a537d"
+      "sha256": "875b8b5bd62080474fb8b3cb5103196b5f47e9033854e979269ebcecac2e31ad"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/device/wifi-logs.md": {
       "title": "/cmr/device/wifi-logs",
@@ -7421,19 +7421,19 @@
       "title": "/snmp",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/snmp.md",
       "path": "docs/cli-reference/snmp.md",
-      "sha256": "4c7ae1f15ebb31504ac6b11ff74927f25e288254498ad0f70efa7716908e8065"
+      "sha256": "ea8f5c07c93ffac3717bc5902a502a8a758ff5ee0d915803725b887f0ddb54f1"
     },
     "https://manual.mikrotik.com/docs/cli-reference/snmp/community.md": {
       "title": "/snmp/community",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/snmp/community.md",
       "path": "docs/cli-reference/snmp/community.md",
-      "sha256": "459f9442c8bfecee46602b10eb4707a2f1018d248b7fbdf0e43d1ddb54cd0ac3"
+      "sha256": "b8d70d719613a5214ea786d652f8a9ecc1256da3daf78135aecb8940c9afa381"
     },
     "https://manual.mikrotik.com/docs/cli-reference/snmp/send-trap.md": {
       "title": "/snmp/send-trap",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/snmp/send-trap.md",
       "path": "docs/cli-reference/snmp/send-trap.md",
-      "sha256": "ad1a5cfca873f1580075f0283a6d215aa5bca2fb7ecc36f6b7c45d7b9f49141b"
+      "sha256": "65e4e0012cf8991a719d262da7a3d18b0bf87ea6d7397840bc0cdf63caba71fc"
     },
     "https://manual.mikrotik.com/docs/cli-reference/special-login.md": {
       "title": "/special-login",
@@ -7469,13 +7469,13 @@
       "title": "/system/backup/load",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/backup/load.md",
       "path": "docs/cli-reference/system/backup/load.md",
-      "sha256": "fedf63b34fc49120e14f304f5e3c3a3b2d776d8d7bbdd208e9fa2b7d45878234"
+      "sha256": "d43a8ce74dfa0a361a34add4fd8317d63957125dbae3d5984359a9d479bd2532"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/backup/save.md": {
       "title": "/system/backup/save",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/backup/save.md",
       "path": "docs/cli-reference/system/backup/save.md",
-      "sha256": "e8dd5f282e95707b39974653c5ee8d6de01afdc18feaccb9e4041159c8ef5d74"
+      "sha256": "3f9fd2e7d367f2e3a798bbb7eed0225b42d96e7fa0622cdb044257d35333f6a3"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/check-disk.md": {
       "title": "/system/check-disk",
@@ -7559,13 +7559,13 @@
       "title": "/system/device-mode",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/device-mode.md",
       "path": "docs/cli-reference/system/device-mode.md",
-      "sha256": "4c3478d1e19c3565a06ea7df438a1267c55f33d03e5f834d2c180c0503269114"
+      "sha256": "c16c214bd7a5c9907351f1c74cec5e8bf5bf83c0025ca159455f23095949b9ac"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/device-mode/update.md": {
       "title": "/system/device-mode/update",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/system/device-mode/update.md",
       "path": "docs/cli-reference/system/device-mode/update.md",
-      "sha256": "86e086584c3d5e88faa6da91db40ed2516557c319fe859e5d1270766e29492b3"
+      "sha256": "2fb3bd9573e0b94a279982a3c44f447082565ac3720aa86567e7c0359b843e27"
     },
     "https://manual.mikrotik.com/docs/cli-reference/system/gps.md": {
       "title": "/system/gps",
@@ -8435,13 +8435,13 @@
       "title": "/tool/snmp-get",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/snmp-get.md",
       "path": "docs/cli-reference/tool/snmp-get.md",
-      "sha256": "8b00b75006c19cb6d90663713bfa02e631ef917e1bd221e4547f591078b68fd5"
+      "sha256": "b6a04e30f09cc467537a930aa5a5b054d84512429f8075e92bd272a169e39f80"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/snmp-walk.md": {
       "title": "/tool/snmp-walk",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/snmp-walk.md",
       "path": "docs/cli-reference/tool/snmp-walk.md",
-      "sha256": "e95cdf70488c982088c431dd1a85ed375cd1c39a5869531ecea0cb2c685acb7a"
+      "sha256": "c46ff946201e0565c3bff0404e51c459dcb405ddedaa354aef2f238e2afbadaa"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/speed-test.md": {
       "title": "/tool/speed-test",

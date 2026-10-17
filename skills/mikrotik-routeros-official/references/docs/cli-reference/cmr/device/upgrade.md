@@ -1,6 +1,6 @@
 # upgrade
 
-> Starts an upgrade (job) for the selected devices. The upgrade runs as a job in /cmr/upgrade/job, with the same job states and result counters.
+> Starts an upgrade (job) for the selected devices. The upgrade runs as a job in /cmr/upgrade/job, with the same job states and result counters. On the console, the command shows the job's devices and their states...
 
 -----------
 
@@ -8,7 +8,7 @@
 **Package:** cmr
 **Type:** Command
 
-Starts an upgrade (job) for the selected devices. The upgrade runs as a job in [`/cmr/upgrade/job`](../upgrade/job), with the same job states and result counters.
+Starts an upgrade (job) for the selected devices. The upgrade runs as a job in [`/cmr/upgrade/job`](../upgrade/job), with the same job states and result counters. On the console, the command shows the job's devices and their states until you press <kbd>Control</kbd>+<kbd>C</kbd> or the time given in `duration` ends; the job continues on the server. With `order`, the label groups are upgraded one after another; list the devices that others connect through, such as switches and gateways, last.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="L" typ="controller">Include the CMR server itself (self-client).</ArgTableRow>

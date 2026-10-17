@@ -318,6 +318,8 @@ After you create a rule, a job is scheduled according to its `schedule-time`. Yo
 - [`/cmr/upgrade/job/run-next`](../../cli-reference/cmr/upgrade/job/run-next) - run a scheduled job right away. For a job of an upgrade rule, the scheduled job remains scheduled and the run is added as a new job. A job scheduled with `/cmr/device/upgrade` has no schedule to keep, so `run-next` starts that job itself.
 - [`/cmr/device/upgrade`](../../cli-reference/cmr/device/upgrade) - upgrade selected devices regardless of the schedule of their rule: right away, or at the next occurrence of `schedule-time`. Without `channel`, each device upgrades on its own upgrade channel, the `channel` value shown in `/cmr/device`.
 
+On the console, `/cmr/device/upgrade` shows the devices of the job it starts and their states until you press <kbd>Control</kbd>+<kbd>C</kbd> or the time given in `duration` ends. Stopping the output does not stop the job, which continues on the server. Follow it later with [`/cmr/upgrade/job/show-devices`](../../cli-reference/cmr/upgrade/job/show-devices).
+
 Only one upgrade job runs at a time. Triggering a second job while another one is in progress places the new job in the `queued` state until the running job finishes. Use [`/cmr/upgrade/version-check`](../../cli-reference/cmr/upgrade/version-check) to see the newest version available for the channels configured in your upgrade rules.
 
 ### Upgrade sources
@@ -343,6 +345,10 @@ Upload `routeros-<version>-arm.npk` and `wifi-qcom-<version>-arm.npk` into `cmr-
 
 The `packages-directory` value is selected from the existing directories and ends with `/`. For now, changing `packages-directory` restarts CMR on the server and all clients reconnect, so start upgrade jobs after the clients show as connected again in `/cmr/device`.
 
+If the directory is deleted after it is selected, `/cmr print` still shows it without a warning, and the server keeps the packages it downloads in RAM. Create the directory again with the same name, for example `/file add name=cmr-packages type=directory`, and place the packages in it. The setting does not change, so CMR does not restart.
+
+Before you upgrade a group of devices to a pinned version, upgrade one device of the group first. If a package is missing from the directory, the job leaves the device `pending` with the error **no upgrade available** and does not restart it.
+
 :::warning
 A version set as the channel is installed even when it is earlier than the installed version, so a pinned channel can downgrade devices.
 :::
@@ -356,6 +362,8 @@ A job that `/cmr/device/upgrade` starts for devices selected by number has no `l
 :::note
 The `success` counter counts only the devices the job actually upgraded. The job does not upgrade when a device covered by the rule is already on the target version (left `pending` with the note **no upgrade available**) or is disabled. For now, a device is also left `pending` with the error **no upgrade available** when the packages for a pinned version are neither in `packages-directory` nor on the update servers.
 :::
+
+When the server upgrades itself, its job ends as `done` with `0/1`, and `show-devices` keeps the server in the `rebooting` state, even when the upgrade succeeded: the server restarts before it records the result. Check the installed version in `/system/resource` or in the `version` of the server's own entry in `/cmr/device`. For now, the `start-time` of such a job is shown in UTC.
 
 A job can be removed to cancel it. Remove a job with [`/cmr/upgrade/job/remove`](../../cli-reference/cmr/upgrade/job). Removing a scheduled or queued job marks it `cancelled`, and the job stays in the list. Removing a processing job stops the run and marks the remaining devices `cancelled`. An interrupted install is still able to finish when the device reboots. Removing a `cancelled` job deletes it from the list.
 
@@ -373,6 +381,22 @@ The `fail-policy` controls what happens when a device fails:
 - `continue-order` - skip the failed device and continue with the next label group in `order`. Requires `order`, which lists the labels to process one group after another. `continue-order` is not accepted without it. How the failed device's group is handled depends on the `strategy`:
   - **sequential** - the rest of the group is skipped (devices not yet started stay `pending`) and the job continues with the next group in `order`.
   - **parallel** - only the failed device is abandoned. Devices already in progress in the same group finish, and the job continues with the next group in `order`.
+
+#### Upgrade in network order
+
+A device restarts during its upgrade. While it restarts, the devices that reach the server through it lose their connection to the server too. If a switch or a gateway is upgraded before the devices behind it, those devices disconnect in the middle of the job. The server does not derive the order from the network topology: `order` defines it.
+
+Give the devices labels by their place in the network, and list the labels in `order` from the edge of the network toward the server. For example, with access points labeled `ap`, the switches they connect through labeled `switch`, and the gateway labeled `gw`:
+
+```ros
+[admin@MikroTik] > /cmr/upgrade/add name=fleet labels=ap,switch,gw order=ap,switch,gw channel=stable strategy=sequential fail-policy=stop
+```
+
+- `order=ap,switch,gw` upgrades the access points first, then the switches, and the gateway last.
+- `strategy=sequential` upgrades one device at a time, so only one part of the network restarts at once.
+- `fail-policy=stop` stops the job when a device fails, before the devices it connects through are upgraded.
+
+Upgrade the CMR server itself after the job of the fleet is done, with a rule of its own or with `/cmr/device/upgrade`.
 
 ### Notes
 
