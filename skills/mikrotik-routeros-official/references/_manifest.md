@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `107ee6a12160b93c3de05ecfddb96a4d3d8c8e25fc9773a26b8261e481bd11bb`
-Pages in current index: 1472
-Pages changed/written: 19
+Index SHA-256: `dcff242150af7ae29d14e530b8c22a9e63392c883058aa95edc4f6145bb63060`
+Pages in current index: 1473
+Pages changed/written: 33
 Pages removed: 0
 Pages failed: 0
 
@@ -134,6 +134,7 @@ Pages failed: 0
 - [/cmr/vlan](docs/cli-reference/cmr/vlan.md) `fe87aa560b12`
 - [/cmr/wifi](docs/cli-reference/cmr/wifi.md) `70c4e120199e`
 - [/cmr/wifi/radio](docs/cli-reference/cmr/wifi/radio.md) `a40c56006af2`
+- [/compare-versions](docs/cli-reference/compare-versions.md) `4eac1a1b6193`
 - [/console/inspect](docs/cli-reference/console/inspect.md) `fe0f79c23a99`
 - [/console/settings](docs/cli-reference/console/settings.md) `328cd2ddd5bc`
 - [/container](docs/cli-reference/container.md) `23f13fc702a5`
@@ -247,8 +248,8 @@ Pages failed: 0
 - [/interface/dot1x/server](docs/cli-reference/interface/dot1x/server.md) `9ae57014548a`
 - [/interface/dot1x/server/active](docs/cli-reference/interface/dot1x/server/active.md) `18ebcc2f2341`
 - [/interface/dot1x/server/state](docs/cli-reference/interface/dot1x/server/state.md) `5580efcb6978`
-- [/interface/eoip](docs/cli-reference/interface/eoip.md) `edbd98ddb3ac`
-- [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `1e89d739f9a9`
+- [/interface/eoip](docs/cli-reference/interface/eoip.md) `11336c25dd57`
+- [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `17e94191801b`
 - [/interface/ethernet](docs/cli-reference/interface/ethernet.md) `bda55c0d01bb`
 - [/interface/ethernet/blink](docs/cli-reference/interface/ethernet/blink.md) `f982fa71b065`
 - [/interface/ethernet/cable-test](docs/cli-reference/interface/ethernet/cable-test.md) `09be9a785a62`
@@ -308,8 +309,8 @@ Pages failed: 0
 - [/interface/ethernet/switch/unicast-fdb](docs/cli-reference/interface/ethernet/switch/unicast-fdb.md) `ef572be7f6df`
 - [/interface/ethernet/switch/unicast-fdb/flush](docs/cli-reference/interface/ethernet/switch/unicast-fdb/flush.md) `5bfa1d31cc21`
 - [/interface/ethernet/switch/vlan](docs/cli-reference/interface/ethernet/switch/vlan.md) `0a4e9ba6938f`
-- [/interface/gre](docs/cli-reference/interface/gre.md) `0db2da96beb4`
-- [/interface/gre6](docs/cli-reference/interface/gre6.md) `61341b2f5b1a`
+- [/interface/gre](docs/cli-reference/interface/gre.md) `8b0c2d995163`
+- [/interface/gre6](docs/cli-reference/interface/gre6.md) `b50c5920b3cb`
 - [/interface/ipip](docs/cli-reference/interface/ipip.md) `d78427d78a9f`
 - [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `7eb76c5b1e12`
 - [/interface/l2tp-client](docs/cli-reference/interface/l2tp-client.md) `9d6970e77104`
@@ -1080,20 +1081,20 @@ Pages failed: 0
 - [/tool/speed-test](docs/cli-reference/tool/speed-test.md) `af925141f480`
 - [/tool/torch](docs/cli-reference/tool/torch.md) `9434224495ba`
 - [/tool/traceroute](docs/cli-reference/tool/traceroute.md) `960be20bd575`
-- [/tool/traffic-generator](docs/cli-reference/tool/traffic-generator.md) `b7cb4d494725`
-- [/tool/traffic-generator/inject-pcap](docs/cli-reference/tool/traffic-generator/inject-pcap.md) `13737888d8a2`
-- [/tool/traffic-generator/inject](docs/cli-reference/tool/traffic-generator/inject.md) `055f4bdb6e37`
-- [/tool/traffic-generator/packet-template](docs/cli-reference/tool/traffic-generator/packet-template.md) `75a3bd1d93d8`
-- [/tool/traffic-generator/port](docs/cli-reference/tool/traffic-generator/port.md) `3e34eea67bfc`
-- [/tool/traffic-generator/quick](docs/cli-reference/tool/traffic-generator/quick.md) `eca35199ba9d`
-- [/tool/traffic-generator/raw-packet-template](docs/cli-reference/tool/traffic-generator/raw-packet-template.md) `7bc8bcc204f7`
-- [/tool/traffic-generator/start](docs/cli-reference/tool/traffic-generator/start.md) `31f694260bcb`
-- [/tool/traffic-generator/stats/latency-distribution](docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md) `2ca63566ab66`
-- [/tool/traffic-generator/stats/port](docs/cli-reference/tool/traffic-generator/stats/port.md) `c7e3059bb3d3`
-- [/tool/traffic-generator/stats/raw](docs/cli-reference/tool/traffic-generator/stats/raw.md) `252c1bc8b338`
-- [/tool/traffic-generator/stats/stream](docs/cli-reference/tool/traffic-generator/stats/stream.md) `d54d8af4c67e`
-- [/tool/traffic-generator/stop](docs/cli-reference/tool/traffic-generator/stop.md) `5343f3c43504`
-- [/tool/traffic-generator/stream](docs/cli-reference/tool/traffic-generator/stream.md) `400475763808`
+- [/tool/traffic-generator](docs/cli-reference/tool/traffic-generator.md) `da0f327a36a3`
+- [/tool/traffic-generator/inject-pcap](docs/cli-reference/tool/traffic-generator/inject-pcap.md) `c3e79953350a`
+- [/tool/traffic-generator/inject](docs/cli-reference/tool/traffic-generator/inject.md) `c2a180fc8134`
+- [/tool/traffic-generator/packet-template](docs/cli-reference/tool/traffic-generator/packet-template.md) `98f4bd13a6f0`
+- [/tool/traffic-generator/port](docs/cli-reference/tool/traffic-generator/port.md) `cfee775d4c41`
+- [/tool/traffic-generator/quick](docs/cli-reference/tool/traffic-generator/quick.md) `37761b00ad31`
+- [/tool/traffic-generator/raw-packet-template](docs/cli-reference/tool/traffic-generator/raw-packet-template.md) `bbd4e9227dd4`
+- [/tool/traffic-generator/start](docs/cli-reference/tool/traffic-generator/start.md) `cd7c1bdd93c7`
+- [/tool/traffic-generator/stats/latency-distribution](docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md) `55052ec1e492`
+- [/tool/traffic-generator/stats/port](docs/cli-reference/tool/traffic-generator/stats/port.md) `807fe30673ef`
+- [/tool/traffic-generator/stats/raw](docs/cli-reference/tool/traffic-generator/stats/raw.md) `7407a9d512b9`
+- [/tool/traffic-generator/stats/stream](docs/cli-reference/tool/traffic-generator/stats/stream.md) `95aef25cfbe9`
+- [/tool/traffic-generator/stop](docs/cli-reference/tool/traffic-generator/stop.md) `b0be62a2dcfb`
+- [/tool/traffic-generator/stream](docs/cli-reference/tool/traffic-generator/stream.md) `f826c8ac65d8`
 - [/tool/traffic-monitor](docs/cli-reference/tool/traffic-monitor.md) `6434e3f7f998`
 - [/tool/wol](docs/cli-reference/tool/wol.md) `1f14fc2d2f5a`
 - [/tr069-client](docs/cli-reference/tr069-client.md) `9d04ecc3b23c`
@@ -1154,16 +1155,16 @@ Pages failed: 0
 - [Container - ThingsBoard MQTT/HTTP server](docs/containers/user-guides/container-thingsboard-mqtt-http-server.md) `a4dd608d0558`
 - [VETH](docs/containers/veth.md) `188f661131f7`
 - [Developer Guides](docs/developer-guides.md) `e69d65dac54c`
-- [API](docs/developer-guides/api.md) `f8d42b5b8390`
-- [Python3 Example](docs/developer-guides/api/python3-example.md) `2ced4466d04a`
+- [API](docs/developer-guides/api.md) `40f0f636b33a`
+- [Python3 Example](docs/developer-guides/api/python3-example.md) `e056b7f9eda6`
 - [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
-- [Scripting](docs/developer-guides/scripting.md) `1a9269410b63`
-- [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `20526f530694`
-- [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `11b0bbbb7989`
+- [Scripting](docs/developer-guides/scripting.md) `be10cb9f69bc`
+- [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `87a15948365a`
+- [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `8b61e0af2544`
 - [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
 - [Bandwidth test](docs/diagnostics-monitoring-and-troubleshooting/bandwidth-test.md) `0db5fcd82074`
 - [Detect Internet](docs/diagnostics-monitoring-and-troubleshooting/detect-internet.md) `0bd628a65463`
-- [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `0265391647a1`
+- [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `bc239bf6e8ef`
 - [DNS update](docs/diagnostics-monitoring-and-troubleshooting/dynamic-dns.md) `cc242fcb4e80`
 - [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
 - [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `50fda08234ce`
@@ -1171,8 +1172,8 @@ Pages failed: 0
 - [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `2408219795d0`
 - [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
 - [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `b7e081ceaee3`
-- [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `f6de0b02c4c3`
-- [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `2e65908aa00a`
+- [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `bd664c964077`
+- [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `a168d6ee93e2`
 - [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `a745d6060c79`
 - [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
@@ -1183,8 +1184,8 @@ Pages failed: 0
 - [Torch](docs/diagnostics-monitoring-and-troubleshooting/torch.md) `cb819e03c33b`
 - [Traceroute](docs/diagnostics-monitoring-and-troubleshooting/traceroute.md) `d3fab637c39f`
 - [Traffic Flow](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md) `8eed810811dc`
-- [NetFlow analysis with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md) `159123bccd08`
-- [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `4445b3d6f291`
+- [NetFlow analysis with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md) `fe9df8913ddb`
+- [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `22032cf2b327`
 - [Watchdog](docs/diagnostics-monitoring-and-troubleshooting/watchdog.md) `cfa0097ec733`
 - [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `1b12f5885941`
 - [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `6ab6c5b43569`
@@ -1216,9 +1217,9 @@ Pages failed: 0
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
 - [Configuration Management](docs/getting-started/configuration-management.md) `72075b3124d1`
 - [Backup](docs/getting-started/configuration-management/backup.md) `35543b82e148`
-- [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `fb6534eeba8c`
+- [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `ee72052ed4f1`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `68c9dea64b61`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `27762e9130bd`
 - [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `17dbd8d42e83`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
@@ -1430,8 +1431,8 @@ Pages failed: 0
 - [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `34fa57d21e48`
 - [Virtual Private Networks](docs/virtual-private-networks.md) `0e9c42e1a2f2`
 - [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`
-- [EoIP](docs/virtual-private-networks/eoip.md) `32731e5ad3b7`
-- [GRE](docs/virtual-private-networks/gre.md) `129b28d8cae0`
+- [EoIP](docs/virtual-private-networks/eoip.md) `22ebede54bc3`
+- [GRE](docs/virtual-private-networks/gre.md) `253b82ced2fb`
 - [IPIP](docs/virtual-private-networks/ipip.md) `6f1df6c98353`
 - [IPsec](docs/virtual-private-networks/ipsec.md) `45559f60f0be`
 - [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`

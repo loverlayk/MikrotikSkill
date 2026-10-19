@@ -6,7 +6,7 @@
 
 Let's start with the basics. When you work from the terminal, you are used to the following syntax for accessing parameters:
 
-```
+```text
 [admin@r1] /interface> print
 Flags: D - dynamic, X - disabled, R - running, S - slave
  #     NAME                                TYPE       ACTUAL-MTU L2MTU  MAX-L2MTU
@@ -54,7 +54,7 @@ Note that using internal numbers directly is not recommended, because items can 
 
 Let's say we want to print a specific address:
 
-```
+```text
 [admin@r1] /ip address> print where address=111.111.1.1/24
 Flags: X - disabled, I - invalid, D - dynamic
  #   ADDRESS            NETWORK         INTERFACE
@@ -65,7 +65,7 @@ We know that such an address exists, so why is there no output?
 
 Because the scripting engine tries to convert variable types as aggressively as it can, but it does not always succeed. Let's look closely at why this particular example fails. First, let's check what variable type the `address` is:
 
-```
+```text
 [admin@r1] /ip address> :put [:typeof ([print as-value]->0->"address")]
 str
 
@@ -73,7 +73,7 @@ str
 
 So obviously we are comparing string to ip-prefix and conversion from ip-prefix to string does not happen automatically. To fix the problem we need to convert variable to correct format:
 
-```
+```text
 [admin@r1] /ip address> print where address=[:tostr 111.111.1.1/24]
 
 Flags: X - disabled, I - invalid, D - dynamic
@@ -84,7 +84,7 @@ Flags: X - disabled, I - invalid, D - dynamic
 
 Or use a string directly by placing the query value in double quotes:
 
-```
+```text
 [admin@r1] /ip address> print where address="111.111.1.1/24"
 
 Flags: X - disabled, I - invalid, D - dynamic
@@ -141,7 +141,9 @@ Setting no value for an existing parameter unsets it; for example:
 
 ## Get values for properties if 'get' command is not available
 
-For example, to get usable output for scripting from `/interface wireless info hw-info` command, use `as-value` parameter:
+Some menus, such as the interactive `info` commands, have no `get` subcommand — use the `as-value` parameter to get a usable value for scripting.
+
+The example below uses the legacy `wireless` package (`/interface wireless info`), which is available only on devices with the legacy wireless stack. Devices with the newer `wifi` package (for example, hAP ax²) do not have these menus:
 
 ```ros
 [admin@1p_DUT_wAP ac] /interface wireless info> :put [hw-info wlan1 as-value ]
@@ -264,22 +266,23 @@ Let's say we have one script that declares a variable and sets its value:
 /system script add name=script1 source={
   :global myVar "hello!"
 }
-
 ```
 
-If we want to write the value of that variable in the log from another script, adding `/log info $myVar` will fail to return correct value, because second script does not know anything about variables defined in another scripts. To make it work properly variable need to be defined:
+Global variables are shared between all scripts of the same user. Another script can read the value of `myVar` even without declaring it first:
 
 ```ros
 /system script add name=script2 source={
-  :global myVar;
   :log info "value is: $myVar"
 }
-
 ```
+
+Declaring the variable (`:global myVar;`) before using it is still good practice — it makes the dependency explicit. In either case, the variable holds a value only after `script1` has been run at least once; reading a variable that was never set returns an empty value.
+
+To **change** the value of a global variable from a script, the variable must be declared first — see the example in the next section.
 
 ## Accessing global variable from function
 
-Logically you might think that globally defined variables should be accessible in functions, but that is not the case. Let's look at an example:
+A function can read a global variable (or call another function) that is defined earlier in the same session or script, without declaring it inside the function:
 
 ```ros
 :global myVar "test"
@@ -287,73 +290,61 @@ Logically you might think that globally defined variables should be accessible i
   :put "global var=$myVar"
 }
 [$myFunc]
-
-```
-
-Output is:
-
-```
-global var=
-
-```
-
-Output is empty, because global variable is not accessible directly. To make it work we need do declare global variable inside the function:
-
-```ros
-:global myVar "test"
-:global myFunc do={
-  :global myVar;
-  :put "global var=$myVar"
-}
-[$myFunc]
-
 ```
 
 Output:
 
-```
+```text
 global var=test
-
 ```
 
-## Running function from another function
-
-If you want to run a function from another function then it need to be declared.
+You need to declare the variable inside the function only when you want to **change** its value:
 
 ```ros
-:global test do={
+:global myVar "test"
+:global myFunc do={
+  :global myVar;
+  :set myVar "new value";
+  :put "global var=$myVar"
+}
+[$myFunc]
+```
+
+Output:
+
+```text
+global var=new value
+```
+
+Assigning a value to a variable that is not declared in the function (`:set myVar "new value"` without `:global myVar;`) results in a compilation error.
+
+## Running a function from another function
+
+A function defined earlier in the current session or script can be called from another function directly, without declaring it:
+
+```ros
+:global addOne do={
   :return ($1 + 1)
 }
 
-:global testtest do={
+:global addOneAndReport do={
   :local x 5
-  :local y [$test $x]
+  :local y [$addOne $x]
   :put "typeof = $[:typeof $y]"
-  :put "testets_res=$y"
+  :put "result=$y"
 }
 
+$addOneAndReport
 ```
 
-Code above will not work as expected, output will be:
+Output:
 
+```text
+typeof = num
+result=6
 ```
-typeof = nil
-testets_res=
 
-```
-
-To fix this we need to declare global "test" in "testtest" function:
-
-```ros
-:global testtest do={
-  :global test
-  :local x 5
-  :local y [$test $x]
-  :put "typeof = $[:typeof $y]"
-  :put "testets_res=$y"
-}
-
-```
+The same applies when the called function is defined in another script of the same user — as long as that script has been run at least once, the function is available by name. Declaring the name (`:global addOne;`) inside the calling function is optional and only makes the dependency explicit.
 
 ## Always use unique variable names
 
@@ -370,7 +361,7 @@ $myFunc my2=1234
 
 Output will be:
 
-```
+```text
 1234
 lala
 global value 123

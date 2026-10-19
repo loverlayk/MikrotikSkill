@@ -1,5 +1,5 @@
 {
-  "index_sha256": "107ee6a12160b93c3de05ecfddb96a4d3d8c8e25fc9773a26b8261e481bd11bb",
+  "index_sha256": "dcff242150af7ae29d14e530b8c22a9e63392c883058aa95edc4f6145bb63060",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -173,7 +173,7 @@
       "title": "Default Configuration Passwords",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/default-configuration-passwords.md",
       "path": "docs/getting-started/configuration-management/default-configuration-passwords.md",
-      "sha256": "fb6534eeba8c85b53fd5eedba41b751d098ebfeae80cb156da15b393e1286932"
+      "sha256": "ee72052ed4f1f1ba3a8ee9f9e4b0963f62c6fde325f304ae05cdd50971c19651"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/default-configurations.md": {
       "title": "Default configurations",
@@ -185,7 +185,7 @@
       "title": "List of menus with sensitive parameters",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
       "path": "docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
-      "sha256": "68c9dea64b613b46699179e4975409069a775ccd7b6b6a23ef1fba32b41704da"
+      "sha256": "27762e9130bddad883440c8f65c9f332c45586da14f87d5dadec25fa04c02855"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/routeros-configuration-reset.md": {
       "title": "RouterOS configuration reset",
@@ -515,7 +515,7 @@
       "title": "Traffic Generator",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md",
-      "sha256": "4445b3d6f29146f2565545084e867e7afec91dbbfaceed86ff97cc124d424fc2"
+      "sha256": "22032cf2b327cc1ff412292aa074ca694966d7001088c467e9ddbaaa7e6afb1a"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/netwatch.md": {
       "title": "Netwatch",
@@ -581,7 +581,7 @@
       "title": "Downgrading RouterOS",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md",
-      "sha256": "0265391647a1689b54f500b749aac2f5b80aae8cc67ca187daedb9eaeed4f8cb"
+      "sha256": "bc239bf6e8efaeb6b0cd8f8f60718b2cc74ace34abd3e52a208d52befd2c14a6"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log.md": {
       "title": "Log",
@@ -593,13 +593,13 @@
       "title": "CEF with Elasticsearch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md",
-      "sha256": "f6de0b02c4c3be0ce842e9d25dfde68a263802f66c7a224aefdc9587edbe9293"
+      "sha256": "bd664c96407749a1a72e5239557a0f0c32789e842953adec616c616596bb71d8"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md": {
       "title": "Syslog with Elasticsearch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md",
-      "sha256": "2e65908aa00a61af12e4209e96e4f06621463a7d9501018e5a1f6e5d63629504"
+      "sha256": "a168d6ee93e231193e56b0b9a903d824d21cfd849359f39e80c436be38eb7bbf"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-flow.md": {
       "title": "Traffic Flow",
@@ -611,7 +611,7 @@
       "title": "NetFlow analysis with Elasticsearch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md",
-      "sha256": "159123bccd08d35c7b54e481b781507cae1ec79dc6cf0ab45bddf16d852d61c6"
+      "sha256": "fe9df8913ddbfb2b205cc81a3280c05ae440112571b35ba4aca55a3c66c4b27e"
     },
     "https://manual.mikrotik.com/docs/hardware.md": {
       "title": "Hardware",
@@ -1625,13 +1625,13 @@
       "title": "EoIP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/eoip.md",
       "path": "docs/virtual-private-networks/eoip.md",
-      "sha256": "32731e5ad3b741d1801bd4a275b3046a66adfe98aea4281866dfe13958dc653b"
+      "sha256": "22ebede54bc3f4778f1daf775b91a002e64e1c087851ec85e45e7b6efec871bc"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/gre.md": {
       "title": "GRE",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/gre.md",
       "path": "docs/virtual-private-networks/gre.md",
-      "sha256": "129b28d8cae09975508aadb10114111e9c918490b54a28dc5d3b01e3afab266d"
+      "sha256": "253b82ced2fb51d63bf0b3548d7bf3796efe043a9e2bab7d4208d63236330f1a"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/ipip.md": {
       "title": "IPIP",
@@ -2195,13 +2195,13 @@
       "title": "API",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/api.md",
       "path": "docs/developer-guides/api.md",
-      "sha256": "f8d42b5b8390f5d25c03ae081f779e87f2fddf3f029e98b1b7065186c06872de"
+      "sha256": "40f0f636b33ac93989ec13b970283794147dd10222d4ef0cbcb4bd2c0df0c08a"
     },
     "https://manual.mikrotik.com/docs/developer-guides/api/python3-example.md": {
       "title": "Python3 Example",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/api/python3-example.md",
       "path": "docs/developer-guides/api/python3-example.md",
-      "sha256": "2ced4466d04af0b246e9692fe8946c1874c45a92b45b61bd377aa5eae0bf8bf8"
+      "sha256": "e056b7f9eda61402c7cebb62ff5685a3b9c9241098d11d3f0439fcabeee20ae3"
     },
     "https://manual.mikrotik.com/docs/developer-guides/rest-api.md": {
       "title": "REST API",
@@ -2213,25 +2213,31 @@
       "title": "Scripting",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting.md",
       "path": "docs/developer-guides/scripting.md",
-      "sha256": "1a9269410b636ffc65c9d413094f4567ce606671648f352660d29dff11e72d8a"
+      "sha256": "be10cb9f69bc79eec3ea876d05f5c32090b71a08333107467d2b1563be0b14b4"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-examples.md": {
       "title": "Scripting examples",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-examples.md",
       "path": "docs/developer-guides/scripting/scripting-examples.md",
-      "sha256": "20526f5306942180e4e29c5de5e62442fd39847d0c307b45bb9d9461a31cba7b"
+      "sha256": "87a15948365a2612ae46687b74cae53908943eff48b082df4534f63f1331959e"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-tips-and-tricks.md": {
       "title": "Scripting Tips and Tricks",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-tips-and-tricks.md",
       "path": "docs/developer-guides/scripting/scripting-tips-and-tricks.md",
-      "sha256": "11b0bbbb79895ae81fe64f4a2bb5d62111bbe0935a1bea073b6d87c219ff66e5"
+      "sha256": "8b61e0af25442eec0d72e294597e9314e197f471dee02d6c146efc25edbfd4fc"
     },
     "https://manual.mikrotik.com/docs/cli-reference.md": {
       "title": "/address-flags",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference.md",
       "path": "docs/cli-reference.md",
       "sha256": "d19bb2e0aeb40496d3c3dafc0d2cd1c6eefaceb09ba56ed1bc4c304abe3243d7"
+    },
+    "https://manual.mikrotik.com/docs/cli-reference/compare-versions.md": {
+      "title": "/compare-versions",
+      "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/compare-versions.md",
+      "path": "docs/cli-reference/compare-versions.md",
+      "sha256": "4eac1a1b619355870e1084271169d33521de3e9e464cfe97c67f6710161faea9"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app.md": {
       "title": "/app",
@@ -3467,13 +3473,13 @@
       "title": "/interface/eoip",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/eoip.md",
       "path": "docs/cli-reference/interface/eoip.md",
-      "sha256": "edbd98ddb3acac6e00ee89f870caefc8a8b367959bf2aa2ff709ea07366e2866"
+      "sha256": "11336c25dd577bae9edd7f8a51b968ba66a1a7c05e943e43847d49a98e65bcd7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/eoipv6.md": {
       "title": "/interface/eoipv6",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/eoipv6.md",
       "path": "docs/cli-reference/interface/eoipv6.md",
-      "sha256": "1e89d739f9a9c3d16281fd66905d9ef6bc74ee0822749ec6563418d7124c4831"
+      "sha256": "17e94191801b9cc97bfc7e42d1d9a05edbd0b562292d97edd8886b4cb5aab0ad"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet.md": {
       "title": "/interface/ethernet",
@@ -3833,13 +3839,13 @@
       "title": "/interface/gre",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/gre.md",
       "path": "docs/cli-reference/interface/gre.md",
-      "sha256": "0db2da96beb4f9aa490f501e5e22bd1919f60ab2eb096e82894fd688598b93a3"
+      "sha256": "8b0c2d9951637bf0854cba47bd69318e7ee38db58b0a264ed613bdb4c3f30ff8"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/gre6.md": {
       "title": "/interface/gre6",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/gre6.md",
       "path": "docs/cli-reference/interface/gre6.md",
-      "sha256": "61341b2f5b1a33ba13d140acd32414ddafaa393ca048b65cf89c53004bce4d7a"
+      "sha256": "b50c5920b3cb779cb8a54d55ef25d7e45bc9a123952253b7ea42f95bbcd707c6"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ipip.md": {
       "title": "/interface/ipip",
@@ -8465,85 +8471,85 @@
       "title": "/tool/traffic-generator",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator.md",
       "path": "docs/cli-reference/tool/traffic-generator.md",
-      "sha256": "b7cb4d49472591e10de52b8a2ce28145b14055b87edb68b3845884222d5fc733"
+      "sha256": "da0f327a36a33d70d77fcc347a6cacb2caebc745c82847260eb690fe9c095ddb"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/inject-pcap.md": {
       "title": "/tool/traffic-generator/inject-pcap",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/inject-pcap.md",
       "path": "docs/cli-reference/tool/traffic-generator/inject-pcap.md",
-      "sha256": "13737888d8a29d3a15fd05dfc7350528065754f4bea71f2a016b21e176c993a3"
+      "sha256": "c3e79953350a24bc81fd72bddf321201dbec7581bbe185cdea6f42a5772cd611"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/inject.md": {
       "title": "/tool/traffic-generator/inject",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/inject.md",
       "path": "docs/cli-reference/tool/traffic-generator/inject.md",
-      "sha256": "055f4bdb6e3785ba0331245d184f2b5ddd088e397661783f3bc585638e9fed7b"
+      "sha256": "c2a180fc813418873aed36e82344886f1fdb9d128f0b6742e9f5b13e9f1a4d37"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/packet-template.md": {
       "title": "/tool/traffic-generator/packet-template",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/packet-template.md",
       "path": "docs/cli-reference/tool/traffic-generator/packet-template.md",
-      "sha256": "75a3bd1d93d8a3a5f2e190822f88e1951329372108a6b1883ef25f87aee4831d"
+      "sha256": "98f4bd13a6f082d21743dc2653fa7b25448ea449b74610dc12ab9592291d065a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/port.md": {
       "title": "/tool/traffic-generator/port",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/port.md",
       "path": "docs/cli-reference/tool/traffic-generator/port.md",
-      "sha256": "3e34eea67bfcd0981342d15bc6f3ad107be9d0dd67e018aa7a07c75f0ba55f1a"
+      "sha256": "cfee775d4c41b889ff015d67c8d1265263810d5c1c41ae6d36b9f6c2e818c870"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/quick.md": {
       "title": "/tool/traffic-generator/quick",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/quick.md",
       "path": "docs/cli-reference/tool/traffic-generator/quick.md",
-      "sha256": "eca35199ba9d730e6e658b89e7f7f823d53f19fec461ce1bd06caf82c521323a"
+      "sha256": "37761b00ad319e5b6ac868946066c352323a69240c6f55a16408ee4c487f4f6c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/raw-packet-template.md": {
       "title": "/tool/traffic-generator/raw-packet-template",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/raw-packet-template.md",
       "path": "docs/cli-reference/tool/traffic-generator/raw-packet-template.md",
-      "sha256": "7bc8bcc204f752bba1c2e42759789cdfa29217af60fd7944fe02538fdd34f31a"
+      "sha256": "bbd4e9227dd471136ea092d7fb0759eb4704c9719a1343d4e5a81f108e53d31c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/start.md": {
       "title": "/tool/traffic-generator/start",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/start.md",
       "path": "docs/cli-reference/tool/traffic-generator/start.md",
-      "sha256": "31f694260bcb1d7e44fdd447643c263e9c0875d39757cf6180261b7a9b40c831"
+      "sha256": "cd7c1bdd93c7942887fade8e52d03074a4d86ec2de3ac4dc6c4049d83d54733e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md": {
       "title": "/tool/traffic-generator/stats/latency-distribution",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md",
       "path": "docs/cli-reference/tool/traffic-generator/stats/latency-distribution.md",
-      "sha256": "2ca63566ab66274cafa10baae960a4fcb6e80069a19bb1d04088262fe1303cfd"
+      "sha256": "55052ec1e492a7591eb238a18ab4c7b4cb3e8288137c55cd2c16463160ae22ff"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/port.md": {
       "title": "/tool/traffic-generator/stats/port",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/port.md",
       "path": "docs/cli-reference/tool/traffic-generator/stats/port.md",
-      "sha256": "c7e3059bb3d3df9c06b8861839653848781e83c40e1dbbe6135f426ab4924729"
+      "sha256": "807fe30673ef1969b4bf58c9f02925f4d8081512e7086696344aadd845109505"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/raw.md": {
       "title": "/tool/traffic-generator/stats/raw",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/raw.md",
       "path": "docs/cli-reference/tool/traffic-generator/stats/raw.md",
-      "sha256": "252c1bc8b338e35786bd1a0c26a4a28b7341f5e7413da357ac6e4cd723a62d45"
+      "sha256": "7407a9d512b9217be39413195c36bcdc242fc847aa1436891b9b9279817b428a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/stream.md": {
       "title": "/tool/traffic-generator/stats/stream",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stats/stream.md",
       "path": "docs/cli-reference/tool/traffic-generator/stats/stream.md",
-      "sha256": "d54d8af4c67eccf1995e48aac7288f77984e475d2cb630b3ff3ff445759f4a77"
+      "sha256": "95aef25cfbe9fd898ab4cc288c83df8ccd120d0de79ef4192df9b5324c855bed"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stop.md": {
       "title": "/tool/traffic-generator/stop",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stop.md",
       "path": "docs/cli-reference/tool/traffic-generator/stop.md",
-      "sha256": "5343f3c435046f4522f3366d9b2dd50ecadb6321d9929580796cad979c9da1d8"
+      "sha256": "b0be62a2dcfb20ede2a65b5deaf2c8247326ed80c0ea730327011de9d469230c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stream.md": {
       "title": "/tool/traffic-generator/stream",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-generator/stream.md",
       "path": "docs/cli-reference/tool/traffic-generator/stream.md",
-      "sha256": "400475763808f8b3a79356d498d08b05430b6282a62aaab46d3e9032712d23ad"
+      "sha256": "f826c8ac65d8d5033d2f1ea6f084e3189c7ec5bac5c28b5a2b62cebd811533a5"
     },
     "https://manual.mikrotik.com/docs/cli-reference/tool/traffic-monitor.md": {
       "title": "/tool/traffic-monitor",

@@ -26,7 +26,7 @@ Some MikroTik [indoor wireless](https://mikrotik.com/products/indoor-wireless) d
 
 :::warning
 
-Always check for these stickers before contacting support. The password is printed only on physical materials — it is not stored digitally in any online system.
+Always check for these stickers before contacting support. There is no public lookup for the default password — the only digital source is the password database kept by the distributor that supplied the device (see below).
 
 :::
 

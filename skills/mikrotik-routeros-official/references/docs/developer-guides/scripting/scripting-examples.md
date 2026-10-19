@@ -238,11 +238,35 @@ Script code:
 }
 ```
 
+:::note Alternative approach
+Instead of scanning the DNS cache, you can match the hostname directly in the firewall. For HTTPS traffic, use the SNI-based `tls-host` matcher, which requires `protocol=tcp`:
+
+```ros
+/ip firewall filter
+add chain=forward protocol=tcp tls-host=*.youtube.com action=drop
+```
+
+For plaintext HTTP, match the payload with the `content` parameter:
+
+```ros
+/ip firewall filter
+add chain=forward content=youtube.com action=drop
+```
+
+These matchers inspect the traffic itself, so they do not depend on the router resolving the client's DNS queries or on the DNS cache being populated — the DNS-cache method above only catches sites that were recently queried through the router.
+
+`tls-host=*.youtube.com` matches the subdomains, such as `www.youtube.com`; to match `youtube.com` itself, add a second rule with `tls-host=youtube.com`. `tls-host` sees only TLS over TCP: a browser that reaches the site over QUIC (HTTP/3 on UDP port 443) is not matched. Browsers fall back to TCP when UDP port 443 is blocked.
+:::
+
 ## Parse file to add ppp secrets
 
 This script requires that entries inside the file are in the following format:
 
 username,password,local\_address,remote\_address,profile,service
+
+:::note
+The file must use CR/LF line endings (Windows format), because the script searches for the `\r\n` sequence between lines. A file with bare `\n` line endings, such as a file uploaded in Unix format or written by a script with `\n`, does not match.
+:::
 
 For example:
 

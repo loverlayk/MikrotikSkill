@@ -179,9 +179,9 @@ It is only sent by the router in response to the full sentence received from the
 
 ## Initial login
 
-The `login` command supports two authentication methods.
+The `login` command supports two authentication methods: the plain-text method and the legacy challenge-response method of older RouterOS versions.
 
-Plain-text password — the method used by accounts created with the current password format:
+Plain-text password:
 
 ```ros
 /login
@@ -195,14 +195,14 @@ If the credentials are wrong or the account cannot use the API, the router repli
 
 ```ros
 !trap
-=message=invalid user name or password
+=message=invalid user name or password (6)
 
 !done
 ```
 
-Legacy challenge-response — the method used by accounts created with the older password format:
+Legacy challenge-response, used by older RouterOS versions:
 
-When the router answers a login with `=ret=<challenge>` instead of a plain `!done`, the login uses the legacy method. A login sentence without a password is answered with a challenge, for example:
+When the router answers a login with `=ret=<challenge>` instead of a plain `!done`, it expects the legacy method. A login sentence without a password is answered with a challenge, for example:
 
 ```ros
 /login
@@ -221,7 +221,7 @@ The client answers in the second message with the user name and the challenge re
 !done
 ```
 
-Accounts with the current password format cannot complete the legacy exchange; the router rejects the response.
+Current RouterOS still answers a login sentence without a password with a challenge, but it rejects the legacy response with `invalid user name or password`. Use the plain-text method.
 
 Closing the TCP connection ends the API session.
 

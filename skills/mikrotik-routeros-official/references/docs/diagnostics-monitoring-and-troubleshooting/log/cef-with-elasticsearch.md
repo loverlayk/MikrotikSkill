@@ -27,20 +27,20 @@ It is possible to install Elasticsearch, Kibana, Fleet Server and CEF logs integ
 
 ## Prerequisites
 
-- [Setup Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html).  
+- [Set up Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html).  
   :::info
   Elasticsearch is widely supported on many platforms. It is recommended to set up a cluster of Elasticsearch nodes.
   :::
-- [Setup Kibana](https://www.elastic.co/guide/en/kibana/current/setup.html).  
+- [Set up Kibana](https://www.elastic.co/guide/en/kibana/current/setup.html).  
   :::info
   Kibana can be installed on the same device on which you installed Elasticsearch, but it can also be installed on a separate device for performance reasons. While it is possible to analyze CEF logs without Kibana, it requires writing your own API requests. Kibana is very easy to use and has a wide range of features.
   :::
-- [Setup Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html).  
+- [Set up Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html).  
   :::info
   It is possible to set up Fleet Server on the same device on which you installed Elasticsearch and/or Kibana. It is recommended to install Fleet Server on a different device. Refer to the Elasticsearch manual for recommendations on hardware and topology requirements.
   :::
 
-## Setup
+## Set up
 
 The setup instructions are divided into two parts: Elastic (configuration regarding Elasticsearch, Kibana and Fleet Server) and RouterOS (configuration that is relevant to your RouterOS device).
 
@@ -76,7 +76,7 @@ Some steps might change over time, refer to Elastic's manual to find the most up
 - Press the "[Add integration](https://www.elastic.co/guide/en/fleet/current/agent-policy.html#add-integration)" button.
 - Search for "[Common Event Format (CEF)](https://www.elastic.co/docs/reference/integrations/cef)" and press "Add Common Event Format (CEF)".
 - Adjust configuration, make sure:  
-  - Under the "Collect CEF application logs (input: udp)" section set "Syslog Host" to "0.0.0.0".  
+  - Under the "Collect CEF application logs (input: udp)" section set "Syslog Host" to "0.0.0.0" and keep the default listen port 9003/UDP.  
   - Under the "Collect CEF application logs (input: tcp)" section set "Syslog Host" to "0.0.0.0".
 - Save the integration.
 - Press the "[Add Elastic Agent to your host](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation.html)" button.
@@ -123,20 +123,22 @@ Some steps might change over time, refer to Elastic's manual to find the most up
 
    ```ros
    /system/logging/action
-   add cef-event-delimiter="\n" name=syslog remote=10.0.0.2 \
+   add cef-event-delimiter="\n" name=cef remote=10.0.0.2 \
        remote-log-format=cef remote-port=9003 \
        syslog-time-format=iso8601 target=remote
    ```
+
+   The name can be any letters-and-numbers name (for example `cef`); the router sends the logs to the `remote` address and port you set.
 
 2. Add a rule for each of the [topics](../log/#topics) you want to receive from your RouterOS device (10.0.0.1), for example:
 
    ```ros
    /system/logging
-   add action=syslog topics=info
-   add action=syslog topics=error
-   add action=syslog topics=critical
-   add action=syslog topics=warning
-   add action=syslog topics=bridge,stp
+   add action=cef topics=info
+   add action=cef topics=error
+   add action=cef topics=critical
+   add action=cef topics=warning
+   add action=cef topics=bridge,stp
    ```
 
 3. You should now start to see CEF logs being ingested.
@@ -156,7 +158,7 @@ Kibana allows you to search the ingested CEF logs. To see ingested logs, do the 
    Select a value: cef.log
    ```
 
-4. For simplicity we recommend [searching for fields](https://www.elastic.co/guide/en/kibana/current/discover-get-started.html#explore-fields-in-your-data) in the  Discover menu and searching for "message", then adding the field to the view.
-5. We also recommend searching for the "host.name" field and adding to the view as well.
+4. For simplicity we recommend [searching for fields](https://www.elastic.co/guide/en/kibana/current/discover-get-started.html#explore-fields-in-your-data) in the Discover menu and searching for "message", then adding it to the view.
+5. We also recommend searching for the "host.name" field and adding it to the view as well.
 6. Consider [saving the search](https://www.elastic.co/guide/en/kibana/current/save-open-search.html#_save_a_search) for easier access later.
 7. Done!

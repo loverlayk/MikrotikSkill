@@ -1,10 +1,12 @@
 # List of menus with sensitive parameters
 
-> This page lists MikroTik RouterOS menus where sensitive parameters such as passwords, keys, and secrets are configured, with links to detailed documentation for each.
+> This page lists RouterOS menus where sensitive parameters such as passwords, keys, and secrets are configured, with links to detailed documentation for each.
 
 # List of menus with sensitive parameters
 
-Below you can find a list of menus where sensitive (shown only when [show-sensitive parameter](./index.md#configuration-export) is used or alternatively hidden when "Hide password" is enabled in WinBox settings) parameters can be configured. For more detailed information, please refer to the corresponding menu documentation pages.
+Sensitive parameters — passwords, keys and secrets — are left out of `export` and `print` output unless you use the [`show-sensitive`](./#configuration-export) flag. WinBox hides them when the "Hide password" option is enabled. The one exception is `user` passwords: they are stored hashed and are never exported, not even with `show-sensitive`.
+
+The table lists the menus where sensitive parameters can be configured, the parameter names, and links to the menu documentation.
 
 | Menu | Parameter names | Page link |
 | :-- | :-- | :-- |
@@ -26,7 +28,7 @@ Below you can find a list of menus where sensitive (shown only when [show-sensit
 | `/ip/ssh/export-host-key`  `/ip/ssh/import-host-key` | passphrase | [SSH](../../management-tools/ssh#server-host-key) |
 | `/ip/ipsec` | auth-key, enc-key, ppk-secret, secret, password, passphrase, key | auth-key, enc-key - [IPsec InstalledSA](../../cli-reference/ip/ipsec/installed-sa/installed-sa.md)  secret, password - [IPsec Identity](../../cli-reference/ip/ipsec/identity.md)  ppk-secret - Work in Progress [IPsec Peer](../../cli-reference/ip/ipsec/peer.md)  key, passphrase - Work in Progress IPsec Keys|
 | `/system/ssh-exec` | password | [SSH](../../management-tools/ssh#run-remote-commands-from-scripts) |
-| `/user` | password, passphrase | [User](../../authentication-authorization-accounting/user.md) |
+| `/user` | password | [User](../../authentication-authorization-accounting/user.md) |
 | `/disk` | nvme-tcp-server-password, nvme-tcp-password, smb-server-password, smb-password, self-encryption-password, encryption-key, sshfs-password | nvme-tcp-server-password, nvme-tcp-password - [NVMe over TCP](../../storage/nvme-over-tcp.md)  sshfs-password - Work in Progress  smb-server-password, smb-password - [SMB](../../storage/smb.md)  self-encryption-password, encryption-key - [Self-Encrypting Drives](../../storage/self-encrypting-drives.md)|
 | `/interface/vrrp` | password | [VRRP#Parameters](../../high-availability-solutions/vrrp.md) |
 | `/interface/dot1x` | password | [Dot1X#Client](../../authentication-authorization-accounting/dot1x.md) |

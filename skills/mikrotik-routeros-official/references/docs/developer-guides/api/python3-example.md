@@ -26,11 +26,16 @@ $ ./api.py 10.0.0.1 admin '' False
 <<< =password=
 <<<
 >>> !done
+>>>
+/system/identity/print
+
 <<< /system/identity/print
 <<<
 >>> !re
 >>> =name=MyRouter
+>>>
 >>> !done
+>>>
 ```
 
 ```py
@@ -244,7 +249,10 @@ if __name__ == "__main__":
 The example above is interactive. To script it, use the client classes directly:
 
 ```python
-s = open_socket("192.168.88.24", 8728)
+
+from api import ApiRos, open_socket  # the client above, saved as api.py
+
+s = open_socket("10.0.0.1", 8728)
 api = ApiRos(s)
 if not api.login("admin", "S3cret"):
     sys.exit("login failed")

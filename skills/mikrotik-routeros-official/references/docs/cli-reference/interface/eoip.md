@@ -16,27 +16,27 @@
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="name" typ="string">Interface name.</ArgTableRow>
-<ArgTableRow arg="mtu" typ="num">Layer3 maximum transmission unit.</ArgTableRow>
-<ArgTableRow arg="mac-address" typ="macAddr">Media Access Control number of an interface. The address numeration authority IANA allows the use of MAC addresses in the range from 00:00:5E:80:00:00 - 00:00:5E:FF:FF:FF freely.</ArgTableRow>
-<ArgTableRow arg="local-address" typ="ipAddr">Source address of the tunnel packets, local to the router.</ArgTableRow>
+<ArgTableRow arg="mtu" typ="num">Layer3 maximum transmission unit. Default: `auto` — the router subtracts the 42-byte EoIP/IPv4 overhead from the path MTU (actual-mtu is 1458 on a 1500-byte path).</ArgTableRow>
+<ArgTableRow arg="mac-address" typ="macAddr">Media Access Control number of an interface. Any value is accepted; the auto-generated address is a locally administered one. IANA allows free use of the range from 00:00:5E:80:00:00 to 00:00:5E:FF:FF:FF (private unicast).</ArgTableRow>
+<ArgTableRow arg="local-address" typ="ipAddr">Source address of the tunnel packets, local to the router. Default `0.0.0.0` — the address of the interface used to reach the remote end.</ArgTableRow>
 <ArgTableRow arg="remote-address" typ="address (flags=4Dv)" mandatory="1">IP address of the remote end of the EoIP tunnel.</ArgTableRow>
 <ArgTableRow arg="tunnel-id" typ="num" mandatory="1">Unique tunnel identifier, which must match the other side of the tunnel.</ArgTableRow>
 <ArgTableRow arg="keepalive" typ="super { keepalive-interval: time [1 .. ]
 , [keepalive-retries] [ ,num [1 .. ]]
  }">
-The keepalive parameter sets the time interval in which the tunnel running flag remains even if the remote end of the tunnel goes down. If the configured time and retries fail, the interface running flag is removed.  
+The router removes the interface running flag when the remote end does not answer for `KeepaliveInterval × KeepaliveRetries`.  
 Parameters are written in the following format: `KeepaliveInterval,KeepaliveRetries`  
- where KeepaliveInterval is the time interval and KeepaliveRetries is the number of retry attempts.  
-By default keepalive is set to 10 seconds and 10 retries.
+where KeepaliveInterval is the time interval and KeepaliveRetries is the number of retry attempts.  
+Keepalive is enabled by default (`10s,10`). Setting it to a disabled value (`0,0`, `off`, `none`) is rejected; unsetting `keepalive` turns it off entirely — the running flag is then no longer removed when the remote end stops answering.
 </ArgTableRow>
 <ArgTableRow arg="dscp" typ="num">DSCP value of the packet. Inherited means the DSCP value is inherited from the packet to be encapsulated.</ArgTableRow>
 <ArgTableRow arg="clamp-tcp-mss" typ="bool">Controls whether to change MSS size for received TCP SYN packets. When enabled, the router changes the MSS size for received TCP SYN packets if the current MSS size exceeds the tunnel interface MTU (taking into account the TCP/IP overhead). The received encapsulated packet still contains the original MSS, and only after decapsulation the MSS is changed.</ArgTableRow>
 <ArgTableRow arg="dont-fragment" typ="bool">
-Whether to include the DF bit in related packets.
+Whether to include the DF bit in related packets. Default: `no`.
 - `no` - fragment if needed.
 - `inherit` - use the DF flag of the original packet.
 </ArgTableRow>
-<ArgTableRow arg="ipsec-secret" typ="string" syscap="security">When a secret is specified, the router adds a dynamic IPsec peer to remote-address with a pre-shared key and policy (by default phase2 uses sha1/aes128cbc).</ArgTableRow>
+<ArgTableRow arg="ipsec-secret" typ="string" syscap="security">When a secret is specified, the router adds a dynamic IPsec peer to remote-address with a pre-shared key and policy (by default phase2 uses sha1/aes128cbc). IPsec and fast path are mutually exclusive — `allow-fast-path` must be set to `no`.</ArgTableRow>
 <ArgTableRow arg="allow-fast-path" typ="bool">Whether to allow FastPath processing. Must be disabled if IPsec tunneling is used.</ArgTableRow>
 <ArgTableRow arg="arp" typ="enum (disabled | enabled | proxy-arp | reply-only | local-proxy-arp) { disabled:0, enabled:1, proxy-arp:2, reply-only:3, local-proxy-arp:4 }">[Address Resolution Protocol](../../getting-started/networking-fundamentals/index.md#arp-and-tying-it-all-together) mode.</ArgTableRow>
 <ArgTableRow arg="arp-timeout" typ="alt { arp-timeout: enum (auto) { auto:0 }
@@ -50,7 +50,7 @@ Whether to include the DF bit in related packets.
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="actual-mtu" typ="num">Actual maximum transmission unit of the tunnel.</ArgTableRow>
-<ArgTableRow arg="l2mtu" typ="num">[Layer2 maximum transmission unit](../../hardware/mtu-in-routeros.md). Not configurable for EoIP.</ArgTableRow>
+<ArgTableRow arg="l2mtu" typ="num">[Layer2 maximum transmission unit](../../hardware/mtu-in-routeros.md). Not configurable for EoIP; reports 65535.</ArgTableRow>
 <ArgTableRow arg="current-remote-address" typ="ipAddr">Current IPv4 address of the remote end.</ArgTableRow>
 <ArgTableRow arg="loop-protect-status" typ="enum (off | on | disabled) { off:1, on:2, disabled:3 }">
 Loop protection status:

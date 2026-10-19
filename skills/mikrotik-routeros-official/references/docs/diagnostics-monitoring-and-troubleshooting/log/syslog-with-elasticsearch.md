@@ -35,12 +35,12 @@ It is possible to install Elasticsearch, Kibana, Fleet Server and Custom UDP log
   :::info
   Kibana can be installed on the same device on which you installed Elasticsearch, but it can also be installed on a separate device for performance reasons. While it is possible to analyze Syslog data without Kibana, it requires writing your own API requests, but Kibana is very easy to use and has a wide range of features.
   :::
-- [Setup Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html).  
+- [Set up Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html).  
   :::info
-  It is possible to set up Fleet Server on the same device on which you installed Elasticsearch and/or Kibana. It is recommended to install Fleet Server on a different device. Refer to Elasticsearch manual for recommendations on hardware and topology requirements.
+  It is possible to set up Fleet Server on the same device on which you installed Elasticsearch and/or Kibana. It is recommended to install Fleet Server on a different device. Refer to the Elasticsearch manual for recommendations on hardware and topology requirements.
   :::
 
-## Setup
+## Set up
 
 The setup instructions are divided into two parts: Elastic (configuration regarding Elasticsearch, Kibana and Fleet Server) and RouterOS (configuration that is relevant to your RouterOS device).
 
@@ -492,7 +492,7 @@ Kibana allows you to search the ingested Syslog data. To see ingested logs, do t
    Select a value: routeros
    ```
 
-4. For simplicity we recommend [searching for fields](https://www.elastic.co/guide/en/kibana/current/discover-get-started.html#explore-fields-in-your-data) in the  Discover menu and searching for "message", then adding the field to the view.
+4. For simplicity we recommend [searching for fields](https://www.elastic.co/guide/en/kibana/current/discover-get-started.html#explore-fields-in-your-data) in the Discover menu and searching for "message", then adding it to the view.
 5. We also recommend searching for the "log.syslog.hostname" field and adding it to the view as well.
 6. Consider [saving the search](https://www.elastic.co/guide/en/kibana/current/save-open-search.html#_save_a_search) for easier access later.
 7. Done.

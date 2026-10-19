@@ -13,7 +13,7 @@ There are many possible configurations that can be made with Elasticsearch, but 
 - A Fleet Server (10.0.0.3) stores the data in [Elasticsearch](https://www.elastic.co/elasticsearch) (10.0.0.4).
 - [Kibana](https://www.elastic.co/kibana) (10.0.0.5) retrieves data from Elasticsearch (10.0.0.4), analyzes it and allows you to search the data.
 
-![](./img/netflow-analysis-with-elasticsearch-01.webp)
+![NetFlow topology diagram](./img/netflow-analysis-with-elasticsearch-01.webp)
 
 :::info
 This guide will not use [Logstash](https://www.elastic.co/logstash) as a part of analyzing NetFlow data; it has been replaced by a Fleet Server.
@@ -23,20 +23,20 @@ This guide will not use [Logstash](https://www.elastic.co/logstash) as a part of
 
 ## Prerequisites
 
-- [Setup Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html)  
+- [Set up Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html)  
   :::info
-  Elasticsearch is widely supported on many platforms. It is recommended to setup a cluster of Elasticsearch nodes.
+  Elasticsearch is widely supported on many platforms. It is recommended to set up a cluster of Elasticsearch nodes.
   :::
-- [Setup kibana](https://www.elastic.co/guide/en/kibana/current/setup.html)  
+- [Set up Kibana](https://www.elastic.co/guide/en/kibana/current/setup.html)  
   :::info
   Kibana can be installed on the same device on which you installed Elasticsearch, but it can also be installed on a separate device for performance reasons. While it is possible to analyze NetFlow data without Kibana, it requires writing your own API requests. Kibana is very easy to use and has a wide range of features.
   :::
-- [Setup Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html)  
+- [Set up Fleet Server](https://www.elastic.co/guide/en/fleet/current/add-fleet-server-on-prem.html)  
   :::info
-  It is possible to setup Fleet Server on the same device on which you installed Elasticsearch and/or Kibana. It is recommended to install Fleet Server on a different device. Refer to the Elasticsearch manual for recommendations on hardware and topology requirements.
+  It is possible to set up Fleet Server on the same device on which you installed Elasticsearch and/or Kibana. It is recommended to install Fleet Server on a different device. Refer to the Elasticsearch manual for recommendations on hardware and topology requirements.
   :::
 
-## Setup
+## Set up
 
 The setup instructions are divided into two parts: Elastic (configuration regarding Elasticsearch, Kibana and Fleet Server) and RouterOS (configuration that is relevant to your RouterOS device).
 
@@ -104,7 +104,7 @@ You should now see multiple NetFlow Dashboards. For example, try opening the "[L
 
 Another useful Dashboard is the "[Logs Netflow] Flow records", which shows you exact NetFlow records. A very useful feature is the filtering option (the + button on top), that allows you to add filters to NetFlow data, for example, you can filter the records to show only a single IP address:
 
-![](./img/netflow-analysis-with-elasticsearch-02.webp)
+![Kibana NetFlow records view with a filter applied](./img/netflow-analysis-with-elasticsearch-02.webp)
 
 There are other options such as searching for a specific time range. You should read more about [Discover](https://www.elastic.co/guide/en/kibana/current/discover-get-started.html#find-the-data-you-want-to-use) to understand the possibilities better.
 
