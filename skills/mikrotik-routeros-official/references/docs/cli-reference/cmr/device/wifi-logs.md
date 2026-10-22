@@ -1,6 +1,6 @@
 # wifi-logs
 
-> WiFi log monitor for the selected devices.
+> WiFi log monitor for the selected devices. Press c to switch to the clients view and l to return to the log entries.
 
 -----------
 
@@ -8,7 +8,7 @@
 **Package:** cmr
 **Type:** Command
 
-WiFi log monitor for the selected devices.
+WiFi log monitor for the selected devices. Press `c` to switch to the clients view and `l` to return to the log entries.
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="labels" typ="object" unset="1">Select the devices to monitor using labels. Supports + and - signs as AND and AND NOT operators, respectively; if no sign is provided, the OR operator is used.</ArgTableRow>

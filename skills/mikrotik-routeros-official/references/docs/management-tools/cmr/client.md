@@ -36,7 +36,7 @@ The client contacts the server and reports its pairing status. The current state
   controller-address: 192.168.88.1
 ```
 
-The client logs each change of its `status` with the `cmr` topic, for example `client status changed: paired,connected`. When the connection to the server drops, for example while CMR restarts on the server, the client reconnects with its existing pairing.
+The client logs each change of its `status` with the `cmr` topic, for example `client status changed: paired,connected 192.168.88.1`, followed by the address of the server. When the connection to the server drops, for example while CMR restarts on the server, the client reconnects with its existing pairing.
 
 ## Pair the client to the server
 

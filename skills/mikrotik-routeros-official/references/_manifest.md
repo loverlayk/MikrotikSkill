@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `dcff242150af7ae29d14e530b8c22a9e63392c883058aa95edc4f6145bb63060`
+Index SHA-256: `a898fe70bd2f0770e2bd6796f1215a91fa50a182113d5f0be9f5b472fb219305`
 Pages in current index: 1473
-Pages changed/written: 33
+Pages changed/written: 8
 Pages removed: 0
 Pages failed: 0
 
@@ -41,7 +41,7 @@ Pages failed: 0
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
 - [VLAN](docs/bridging-and-switching/vlan.md) `dda05c4515ca`
 - [VXLAN](docs/bridging-and-switching/vxlan.md) `a0704e1b36b5`
-- [/address-flags](docs/cli-reference.md) `d19bb2e0aeb4`
+- [/address-flags](docs/cli-reference.md) `1de97ad65172`
 - [/app](docs/cli-reference/app.md) `7391a7b8a073`
 - [/app/cleanup](docs/cli-reference/app/cleanup.md) `6136ea605ac9`
 - [/app/network](docs/cli-reference/app/network.md) `59ae26ee7a1a`
@@ -103,7 +103,7 @@ Pages failed: 0
 - [/certificate/sign-certificate-request](docs/cli-reference/certificate/sign-certificate-request.md) `be56ce81e906`
 - [/certificate/sign](docs/cli-reference/certificate/sign.md) `ff7493fd2d39`
 - [/cmr](docs/cli-reference/cmr.md) `32fdfc44929e`
-- [/cmr/alert](docs/cli-reference/cmr/alert.md) `dda1c4c57265`
+- [/cmr/alert](docs/cli-reference/cmr/alert.md) `9bcbba72797c`
 - [/cmr/alert/show-devices](docs/cli-reference/cmr/alert/show-devices.md) `76ed47a16b29`
 - [/cmr/alert/test](docs/cli-reference/cmr/alert/test.md) `aec0c2de4359`
 - [/cmr/client](docs/cli-reference/cmr/client.md) `2829afe8dd00`
@@ -114,10 +114,10 @@ Pages failed: 0
 - [/cmr/device/apptraffic](docs/cli-reference/cmr/device/apptraffic.md) `981c333b43b3`
 - [/cmr/device/dashboard](docs/cli-reference/cmr/device/dashboard.md) `fa18a928abf5`
 - [/cmr/device/pair](docs/cli-reference/cmr/device/pair.md) `597fec745dd9`
-- [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `566433efc5c4`
+- [/cmr/device/reboot](docs/cli-reference/cmr/device/reboot.md) `88476556b9f0`
 - [/cmr/device/run-script](docs/cli-reference/cmr/device/run-script.md) `05e0b11ea30b`
 - [/cmr/device/upgrade](docs/cli-reference/cmr/device/upgrade.md) `875b8b5bd620`
-- [/cmr/device/wifi-logs](docs/cli-reference/cmr/device/wifi-logs.md) `f4241a91677e`
+- [/cmr/device/wifi-logs](docs/cli-reference/cmr/device/wifi-logs.md) `a573aabbd2bf`
 - [/cmr/layout](docs/cli-reference/cmr/layout.md) `7eac06dd3424`
 - [/cmr/layout/add-devices](docs/cli-reference/cmr/layout/add-devices.md) `114ef5bad32f`
 - [/cmr/layout/link](docs/cli-reference/cmr/layout/link.md) `15fbf16ca6f3`
@@ -331,7 +331,7 @@ Pages failed: 0
 - [/interface/lte/esim/deactivate](docs/cli-reference/interface/lte/esim/deactivate.md) `fb48bfe91ca3`
 - [/interface/lte/esim/delete](docs/cli-reference/interface/lte/esim/delete.md) `b152c84f3697`
 - [/interface/lte/esim/esim-id](docs/cli-reference/interface/lte/esim/esim-id.md) `f1e9e00a9285`
-- [/interface/lte/esim/provision](docs/cli-reference/interface/lte/esim/provision.md) `c59cb60fd4dd`
+- [/interface/lte/esim/provision](docs/cli-reference/interface/lte/esim/provision.md) `4db3d7c0b663`
 - [/interface/lte/esim/refresh-profile-list](docs/cli-reference/interface/lte/esim/refresh-profile-list.md) `dd90b59b64d1`
 - [/interface/lte/esim/send-notifications](docs/cli-reference/interface/lte/esim/send-notifications.md) `955be3e0db7e`
 - [/interface/lte/esim/set-nickname](docs/cli-reference/interface/lte/esim/set-nickname.md) `9a421169ebd3`
@@ -1310,8 +1310,8 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `0fe2aaa1fa0a`
-- [CMR-Client](docs/management-tools/cmr/client.md) `022dbaf99448`
+- [CMR](docs/management-tools/cmr.md) `89a95ea70d13`
+- [CMR-Client](docs/management-tools/cmr/client.md) `f5080756ca52`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
 - [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
@@ -1332,7 +1332,7 @@ Pages failed: 0
 - [GPS](docs/mobile-networking/gps.md) `900a51942f5a`
 - [GPS-tracking using HTTP POST](docs/mobile-networking/gps/gps-tracking-using-http-post.md) `465ccd56b5a6`
 - [GPS-tracking using MQTT and ThingsBoard](docs/mobile-networking/gps/gps-tracking-using-mqtt-and-thingsboard.md) `0b73ad750e45`
-- [LTE/5G](docs/mobile-networking/lte-5g.md) `241fe0a7047d`
+- [LTE/5G](docs/mobile-networking/lte-5g.md) `1498dac8f2fa`
 - [MikroTik Connectivity](docs/mobile-networking/mikrotik-connectivity.md) `27e529909722`
 - [PPP](docs/mobile-networking/ppp.md) `a6b8a3a1f7b9`
 - [SMS](docs/mobile-networking/sms.md) `89ba0073e173`

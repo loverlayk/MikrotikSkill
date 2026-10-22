@@ -128,7 +128,7 @@ Alert when a device that is not paired to the controller connects.
 Default: no.
 </ArgTableRow>
 <ArgTableRow arg="rebooted" typ="bool" unset="1">
-Event condition that fires when the device unexpectedly reboots.
+Event condition that fires when the device reboots, also when the reboot is part of an upgrade or comes from `/cmr/device/reboot`.
 
 Default: no.
 </ArgTableRow>
@@ -142,7 +142,7 @@ Default: no.
  }" unset="1">
 Log topics to write the message to.
 
-Default: `cmr,info`.
+Default: `cmr,info`, and `cmr,warning` for a log-line condition.
 </ArgTableRow>
 <ArgTableRow arg="action.log-prefix" typ="string" unset="1">Prefix for the log message. When set, the prefix is prepended to the message without a separator; when unset the message is written as it is.</ArgTableRow>
 <ArgTableRow arg="action.script" typ="enum" unset="1">Run a named system script when the alert fires. The script must allow itself to run with reduced rights; otherwise the action fails with `executing script ... from cmr failed ... (not enough permissions)`. Set the script's `dont-require-permissions` to yes.</ArgTableRow>

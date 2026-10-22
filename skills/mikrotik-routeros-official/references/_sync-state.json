@@ -1,5 +1,5 @@
 {
-  "index_sha256": "dcff242150af7ae29d14e530b8c22a9e63392c883058aa95edc4f6145bb63060",
+  "index_sha256": "a898fe70bd2f0770e2bd6796f1215a91fa50a182113d5f0be9f5b472fb219305",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -335,13 +335,13 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "0fe2aaa1fa0a02269b5330f9917d4ba94024a69db4563d2e382c3fe7e728b764"
+      "sha256": "89a95ea70d1310c8199e8ae49f697c81818e64fdcfd15e569bc3be5572e88d94"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr/client.md",
       "path": "docs/management-tools/cmr/client.md",
-      "sha256": "022dbaf99448aa1bf641649f8e2a77935bf0e1859f406e7bf2fadc41b76384c3"
+      "sha256": "f5080756ca52ac8b974cdad267d792bdcc3df4fbf9c446eaf3f2ec718c24ae04"
     },
     "https://manual.mikrotik.com/docs/management-tools/branding.md": {
       "title": "Branding",
@@ -911,7 +911,7 @@
       "title": "LTE/5G",
       "markdown_url": "https://manual.mikrotik.com/docs/mobile-networking/lte-5g.md",
       "path": "docs/mobile-networking/lte-5g.md",
-      "sha256": "241fe0a7047d891030d79bf6f7d812b12bbcceedaf97c83b3242d0db648a0785"
+      "sha256": "1498dac8f2fa270abdc6a02ceb59c0401923bc1ccf703921fa9f1dd04f183af7"
     },
     "https://manual.mikrotik.com/docs/mobile-networking/gps.md": {
       "title": "GPS",
@@ -2231,7 +2231,7 @@
       "title": "/address-flags",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference.md",
       "path": "docs/cli-reference.md",
-      "sha256": "d19bb2e0aeb40496d3c3dafc0d2cd1c6eefaceb09ba56ed1bc4c304abe3243d7"
+      "sha256": "1de97ad65172715f292db2e03aff98a9968ef16c5debb2859e2c4a88f5752733"
     },
     "https://manual.mikrotik.com/docs/cli-reference/compare-versions.md": {
       "title": "/compare-versions",
@@ -2609,7 +2609,7 @@
       "title": "/cmr/alert",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/alert.md",
       "path": "docs/cli-reference/cmr/alert.md",
-      "sha256": "dda1c4c57265a6e19792877d90a54c44e365e7b5b7becc48cae8f1a626078813"
+      "sha256": "9bcbba72797cd6517b178a6ac5a9c7872cccee367d2c61c1d6cfeb8aee33468f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/alert/show-devices.md": {
       "title": "/cmr/alert/show-devices",
@@ -2675,7 +2675,7 @@
       "title": "/cmr/device/reboot",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/device/reboot.md",
       "path": "docs/cli-reference/cmr/device/reboot.md",
-      "sha256": "566433efc5c4aaff7dc956aeb01926e2d5c3804ef0c10d8822ce2f25af4c09fc"
+      "sha256": "88476556b9f0b2677528fcb31f1f89b2fc5d181ed99135ca74502ec23db134e7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/device/run-script.md": {
       "title": "/cmr/device/run-script",
@@ -2693,7 +2693,7 @@
       "title": "/cmr/device/wifi-logs",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/device/wifi-logs.md",
       "path": "docs/cli-reference/cmr/device/wifi-logs.md",
-      "sha256": "f4241a91677ef2c68256c7fe777f1cf4e2409de47caa25f5e74b326e360a4f67"
+      "sha256": "a573aabbd2bf89304bb0e9de2162a8a5169f61ce00d8f19b6e95b5d953fde591"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/layout.md": {
       "title": "/cmr/layout",
@@ -3971,7 +3971,7 @@
       "title": "/interface/lte/esim/provision",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/lte/esim/provision.md",
       "path": "docs/cli-reference/interface/lte/esim/provision.md",
-      "sha256": "c59cb60fd4ddeb24b0a52574bb3113c9b17178e4f14b68eb51a289c5a9dba93c"
+      "sha256": "4db3d7c0b6635653bb9c3f8f45405c8755ac8911bdd27ed24bba270184a96283"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/lte/esim/refresh-profile-list.md": {
       "title": "/interface/lte/esim/refresh-profile-list",

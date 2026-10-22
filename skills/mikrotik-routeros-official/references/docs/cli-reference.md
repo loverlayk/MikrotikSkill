@@ -33,6 +33,7 @@ The CLI reference documents RouterOS command menus and properties by console pat
 - **pic** — picture/bitmap value
 - **range** — numeric range (e.g. a set of ports)
 - **remote** — reference to a remote object (e.g. a routing filter rule)
+- **script** — script source code; parameters rendered as `alt { script: string }` accept either the name of an existing script from `/system script`, or inline script source code
 - **string** — text string
 - **super** — composite type accepting multiple different argument types; sub-types are listed in braces, e.g. `super { bool, time }`
 - **switch** — on/off toggle without an explicit value argument
@@ -43,6 +44,22 @@ The CLI reference documents RouterOS command menus and properties by console pat
 - **varName** — variable name reference (used in scripting)
 
 Argument types can be nested, for example `super {num, time, super {bool, ip}}`.
+
+## Standard list entry properties
+
+List menus (menus whose entries can be added, removed and reordered) share a set of properties and commands that behave the same way everywhere, so they are not repeated in the Argument tables of each menu page:
+
+- **`comment`** — free-form text comment for the entry
+- **`disabled`** — when `yes`, the entry is inactive but kept in the configuration; such entries are flagged with `X` in listings. The `enable` and `disable` commands toggle this state
+- **`copy-from`** — argument of the `add` command: creates the new entry as a copy of an existing entry
+- **`place-before`** — argument of the `add` and `move` commands: positions the entry before another entry in the list
+
+## Standard print modifiers
+
+The `print` command accepts output modifiers that are likewise not listed on each menu page:
+
+- **`detail`** — prints all properties of each entry, instead of the brief summary
+- **`as-value`** — returns the output as values rather than formatted strings, for use in scripts
 
 ## address-flags
 

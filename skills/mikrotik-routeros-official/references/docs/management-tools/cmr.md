@@ -117,10 +117,10 @@ To start the pairing, run the `pair` command on one of the devices: [`/cmr/devic
 
 ## Managing devices
 
-The [`/cmr/device`](../../cli-reference/cmr/device) menu lists the devices managed by the server. A device appears in the list as soon as it connects to the server; until the pairing is approved it is marked with the **P** (pending) flag. The server itself is shown as the device with the **L** flag. Each entry shows the device identity, board, RouterOS version, labels, and uptime. For the devices currently connected, the print output also includes the connection address when you filter the list with `where`:
+The [`/cmr/device`](../../cli-reference/cmr/device) menu lists the devices managed by the server. A device appears in the list as soon as it connects to the server; until the pairing is approved it is marked with the **P** (pending) flag. The server itself is shown as the device with the **L** flag. Each entry shows the device identity, board, RouterOS version, labels, and uptime. For connected devices, the list also shows the connection address. A narrow console leaves out the columns that do not fit, so the address can be missing there, and `print detail` shows every value:
 
 ```ros
-[admin@MikroTik] > /cmr/device/print where labels=Group2
+[admin@MikroTik] > /cmr/device/print where labels~"Group2"
 Flags: C - CONNECTED; U - UPGRADE-AVAILABLE
 Columns: IDENTITY, BOARD, VERSION, LABELS, UPTIME, ADDRESS
  #    IDENTITY  BOARD       VERSION  LABELS  UPTIME   ADDRESS
@@ -142,7 +142,7 @@ You can change the following properties of a managed device from the server:
 - `port-labels` - assign labels per port. Quote the label, for example `port-labels=ether1:"uplink"`. The `port-labels` of a `/cmr/vlan` rule select ports by these labels or by interface name.
 - `pairing-requirement` - override the server's pairing requirement for a single device.
 
-Filter the list with `where` on any of these properties, for example `/cmr/device/print where connected` or `/cmr/device/print where labels=office`. To remove all labels from a device, set `labels` to an empty value.
+Filter the list with `where` on any of these properties, for example `/cmr/device/print where connected` or `/cmr/device/print where labels~"office"`. Use `~` for labels, because a device can have several labels: `labels=office` matches only a device whose whole label list is `office`. To remove all labels from a device, set `labels` to an empty value.
 
 ### Labels and device selection
 
@@ -172,9 +172,9 @@ The device menu provides commands that operate on the selected devices, together
 
 - [`run-script`](../../cli-reference/cmr/device/run-script) - run a single-line RouterOS script on each selected device and show its output. The script runs with limited permissions: commands that need the `policy` permission, for example adding a user, fail with "not enough permissions (9)".
 - [`upgrade`](../../cli-reference/cmr/device/upgrade) - start an upgrade job for the selected devices, regardless of the schedule of their upgrade rule.
-- [`reboot`](../../cli-reference/cmr/device/reboot) - reboot the selected devices. The command returns right away, and the server logs `<device> rebooted` when a device has restarted, where `<device>` is `identity@address`.
+- [`reboot`](../../cli-reference/cmr/device/reboot) - reboot the selected devices. The command returns right away. When a device has restarted, the `rebooted` example alert rule logs `<device> rebooted`, where `<device>` is `identity@address`.
 - [`pair`](../../cli-reference/cmr/device/pair) - start pairing with the selected devices.
-- [`wifi-logs`](../../cli-reference/cmr/device/wifi-logs) - monitor the WiFi logs of the selected devices. Filter the entries by `event` (`connected`, `disconnected`, or `failed`), by client MAC address (`address`), by `bssid`, or by a time range (`time-start` and `time-end`). The events of access points managed by CAPsMAN are logged by the CAPsMAN device and appear under it. For now, the device selection does not limit the output: the entries of all devices that log WiFi events are shown.
+- [`wifi-logs`](../../cli-reference/cmr/device/wifi-logs) - monitor the WiFi logs of the selected devices. Filter the entries by `event` (`connected`, `disconnected`, or `failed`), by client MAC address (`address`), by `bssid`, or by a time range (`time-start` and `time-end`). The events of access points managed by CAPsMAN are logged by the CAPsMAN device and appear under it. Without a device selection, the entries of all devices that log WiFi events are shown. Select the devices with `labels` to show only their entries. Press `c` to switch to the clients view, which lists each client with its last access point, its connect, disconnect, and failure counts, its IP address, SSID, and signal, and `l` to return to the log entries.
 - [`apptraffic`](../../cli-reference/cmr/device/apptraffic) - application traffic monitor for the selected devices.
 - [`dashboard`](../../cli-reference/cmr/device/dashboard) - a live view of the selected devices.
 
@@ -195,7 +195,7 @@ MikroTik@192.168.1.99   success   name: MikroTik
 MikroTik@192.168.1.100  success   name: MikroTik
 ```
 
-The command first lists the selected devices as `running`, then shows each device's `STATUS` and `OUTPUT` when the script finishes. `run-script` refuses an empty selection: without `numbers` or `labels` it fails with "numbers and/or labels required", and with labels that match no device it fails with "no devices selected". Here, `labels` follows the same label syntax as everywhere in CMR: a comma-separated list where plain labels are combined with OR, a label that starts with `+` must also match (AND), and a label that starts with `-` excludes devices (AND NOT). For example, `labels=office,+ap` selects devices with both labels, and `labels=all,-core` selects all devices except those with the `core` label. Without the comma, `office+ap` is read as a single label name.
+The command first lists the selected devices as `running`, then shows each device's `STATUS` and `OUTPUT` when the script finishes. `run-script` refuses an empty selection: without `numbers` or `labels` it fails with "numbers and/or labels required", and with labels that match no device it fails with "no devices selected". Here, `labels` follows the same label syntax as everywhere in CMR: a comma-separated list where plain labels are combined with OR, a label that starts with `+` must also match (AND), and a label that starts with `-` excludes devices (AND NOT). For example, `labels=office,+ap` selects devices with both labels, and `labels=all,-core` selects all devices except those with the `core` label. Without the comma, `office+ap` is read as a single label name. For now, in a script, `as-value` combined with `labels` fails with `no such item`. Select the devices with `numbers` there, for example `numbers=[find where identity="Office-AP1"]`.
 
 #### run-script permissions
 
@@ -218,29 +218,35 @@ Scripts and scheduler entries created by `run-script` are saved with the same fo
 
 ## Dashboard
 
-The [`/cmr/device/dashboard`](../../cli-reference/cmr/device/dashboard) command opens a live view of the selected devices: how many are connected, the CPU, memory, and disk usage, the interface state, and the traffic throughput. The view repeats every few seconds until you stop it. Press `m`, `l`, `a`, `p`, `w`, or `s` to switch between the main, alerts, devices, ports, WiFi, and resources views, `D` to dump the current view, and `Q` to quit:
+The [`/cmr/device/dashboard`](../../cli-reference/cmr/device/dashboard) command opens a live view of the selected devices: how many are connected, the CPU, memory, and disk usage, the interface state, the traffic throughput, and the access points and their stations. The view repeats every few seconds until you stop it. Press `m`, `l`, `a`, `p`, `w`, or `s` to switch between the main, alerts, devices, ports, WiFi, and resources views, `D` to write the current view to the `console-dump.txt` file, <kbd>Control</kbd>+<kbd>Z</kbd> to pause it, and `Q` to quit. In the devices view, `m` returns to the main view:
 
 ```ros
-[admin@MikroTik] > /cmr/device/dashboard numbers=[find where [:find $labels "Group2"]>=0]
-DEVICES          TOTAL  PAIRED  ONLINE
-                 3      3       3
-RESOURCES                MIN  AVG  MAX
-CPU        ------------  0    0    0
-Memory     ===---------  33   33   34
-HDD        ===========-  96   96   97
-3      Ethernet
-3      Enabled   =====================
-3      Running   =====================
-3      Wifi
-3      Enabled   =====================
-                              TX  RX
-Total                         0   480
-Uplink                        0   480
-Ethernet                      0   480
-Wifi                          0   0
+[admin@MikroTik] > /cmr/device/dashboard labels=Group2
+DEVICES          TOTAL  PAIRED  ONLINE  RESOURCES                MIN  AVG  MAX
+                 3      3       3       CPU        ------------  0    0    1
+                                        Memory     =====-------  21   46   85
+                                        HDD        ==----------  15   23   29
+
+NETWORK INTERFACES -------------------  BANDWIDTH ----------------------------
+16     Ethernet                                             TX        RX
+16     Enabled   =====================  Total               336.9KiB  194.1KiB
+8      Running   =============--------  Uplink              37.9KiB   78.0KiB
+7      Wifi                             Ethernet            169.3KiB  173.0KiB
+7      Enabled   =====================  Wifi                167.5KiB  21.1KiB
+
+ACCESS POINTS ------------------------  STATIONS -----------------------------
+7      Total                            18     Total
+3      Slave                            16     2.4GHz  =====================--
+7      Running  ======================  2      5GHz    ==---------------------
+3      2.4GHz   ============----------  17     N       ======================-
+3      5GHz     ============----------  1      OFDM    -----------------------
+1      6GHz     ====------------------  18     WPA2    =======================
+2      BE       ========--------------
+2      AX       ========--------------
+3      N        ============----------
 ```
 
-For now, `dashboard` and `wifi-logs` return `no such item` when devices are selected with `labels`. Select the devices with `numbers` instead, as in the example: `[find where [:find $labels "Group2"]>=0]` selects the devices that have the `Group2` label, and `[find where identity~"Office"]` selects devices by identity. The [`/cmr/device/dashboard`](../../cli-reference/cmr/device/dashboard) CLI reference lists all its arguments.
+The `labels` argument accepts the same label syntax as the rest of CMR, so `labels=Group2` shows the devices with the `Group2` label, and `labels=house,-ap` shows the devices with the `house` label except those with the `ap` label. The [`/cmr/device/dashboard`](../../cli-reference/cmr/device/dashboard) CLI reference lists all its arguments.
 
 The same live view is shown in the WebFig GUI:
 
@@ -355,12 +361,14 @@ A version set as the channel is installed even when it is earlier than the insta
 
 ### Job states and results
 
-Jobs are listed in the [`/cmr/upgrade/job`](../../cli-reference/cmr/upgrade/job) menu and represent a single upgrade run. A job goes through the states `scheduled`, `queued`, `waiting devices`, `version check`, `processing`, and finally `done` or `cancelled`. The `success` counter is `upgraded/total`, for example `6/7`.
+Jobs are listed in the [`/cmr/upgrade/job`](../../cli-reference/cmr/upgrade/job) menu and represent a single upgrade run. A job goes through the states `scheduled`, `queued`, `waiting devices`, `version check`, `processing`, and finally `done` or `cancelled`. The `success` counter is `upgraded/total`, for example `6/7`. A job that an upgrade rule starts is marked with the `R` flag.
 
 A job that `/cmr/device/upgrade` starts for devices selected by number has no `labels`, and it shows a `channel` only when a version was given. Its devices are listed by [`/cmr/upgrade/job/show-devices`](../../cli-reference/cmr/upgrade/job/show-devices).
 
 :::note
-The `success` counter counts only the devices the job actually upgraded. The job does not upgrade when a device covered by the rule is already on the target version (left `pending` with the note **no upgrade available**) or is disabled. For now, a device is also left `pending` with the error **no upgrade available** when the packages for a pinned version are neither in `packages-directory` nor on the update servers.
+The `success` counter counts only the devices the job actually upgraded. A covered device that the job cannot upgrade is left `pending` with an error: **no upgrade available** when it is already on the target version or disabled, or when the packages for a pinned version are neither in `packages-directory` nor on the update servers, and **disconnected** when it is not connected to the server.
+
+Such a device counts as a failure. With `fail-policy=stop`, it stops the job before any device is upgraded, and the other devices are left `pending` with **skipped by fail-policy**. Use `fail-policy=continue`, or select only the devices that are connected and have an upgrade available, for example with `/cmr/device/upgrade`.
 :::
 
 When the server upgrades itself, its job ends as `done` with `0/1`, and `show-devices` keeps the server in the `rebooting` state, even when the upgrade succeeded: the server restarts before it records the result. Check the installed version in `/system/resource` or in the `version` of the server's own entry in `/cmr/device`. For now, the `start-time` of such a job is shown in UTC.
@@ -394,7 +402,7 @@ Give the devices labels by their place in the network, and list the labels in `o
 
 - `order=ap,switch,gw` upgrades the access points first, then the switches, and the gateway last.
 - `strategy=sequential` upgrades one device at a time, so only one part of the network restarts at once.
-- `fail-policy=stop` stops the job when a device fails, before the devices it connects through are upgraded.
+- `fail-policy=stop` stops the job when a device fails, before the devices it connects through are upgraded. A covered device that is already up to date or not connected also counts as a failure, as the note in the Job states and results section describes.
 
 Upgrade the CMR server itself after the job of the fleet is done, with a rule of its own or with `/cmr/device/upgrade`.
 
@@ -402,7 +410,7 @@ Upgrade the CMR server itself after the job of the fleet is done, with a rule of
 
 - Removing an upgrade rule does not cancel its already-started or queued jobs. Cancel a job explicitly with `/cmr/upgrade/job/remove`.
 - Both [`/cmr/upgrade/show-devices`](../../cli-reference/cmr/upgrade/show-devices) and [`/cmr/upgrade/job/show-devices`](../../cli-reference/cmr/upgrade/job/show-devices) list the per-device coverage and state of a rule or job. They show per-device notes such as the "upgrade available" and "no upgrade available" states described in the previous sections.
-- The server writes the result of each device upgrade to the log with the `cmr` topic, for example `<device> has successfully upgraded to version <version>` or `<device> failed to upgrade from <version> to <version>, error: <reason>`. When the upgrade channel of a device offers it a new version, the server logs `<device> has new version available <version>`.
+- The example alert rules write the result of each device upgrade to the log with the `cmr` topic, for example `<device> has successfully upgraded to version <version>` or `<device> failed to upgrade from <version> to <version>, error: <reason>`, and log `<device> has new version available` when the upgrade channel of a device offers it a new version. The Example rules section of Alert rules describes them.
 
 ## Alert rules
 
@@ -418,6 +426,12 @@ The configured conditions determine whether a rule is a **state alert** or an **
 | Active alerts and dashboard counters | Remains visible and counted while active. | Does not appear as an active alert or add to active-alert counters. |
 | Conditions per rule | Multiple state conditions, combined with logical AND. | At most one event condition. |
 
+### Example rules
+
+The server comes with example rules, marked with the comment `example`. They include rules for CPU usage above 95%, memory usage above 90%, failed and successful upgrades, available upgrades, unpaired devices that connect, and reboots. Each writes a log message, for example `[device] has successfully upgraded to version [version]` or `[device] rebooted`, so the log records these events without further configuration. Change, disable, or remove them like your own rules.
+
+The `upgrade available` example rule writes its message with `[upgrade-version]`, which only an upgrade-finished event fills, so the logged message ends with `unknown`. Use `[available-version]` for the offered version in a rule of your own.
+
 ### Create an alert rule
 
 A rule needs at least one condition and one action. For example, create a state alert that logs a warning when the CPU load of any device rises above 95%:
@@ -425,8 +439,7 @@ A rule needs at least one condition and one action. For example, create a state 
 ```ros
 [admin@MikroTik] > /cmr/alert/add name=cpu-load labels=all cpu-above=95 action.log="[device] CPU usage is above 95% ([cpu-usage]%)" action.log-topics=cmr,warning severity=high category=performance
 [admin@MikroTik] > /cmr/alert/print where name=cpu-load
-11  ;;; example
-    name="cpu-load" labels=all cpu-above=95
+11  name="cpu-load" labels=all cpu-above=95
     action.log="[device] CPU usage is above 95% ([cpu-usage]%)"
     .log-topics=cmr,warning severity=high category=performance devices=9
     devices-on=0 fired=0 action-failures=0
@@ -459,12 +472,12 @@ For example, a matching log message can cause CMR to write a log entry, run a sc
 
 Event conditions include:
 
-- **Interfaces** - `interface-change` fires when an interface becomes `running` or `not-running`, or is `added` or `removed`. Optionally filter by `interface-type` (`ethernet`, `wifi`, or `bridge`). For now, disabling or enabling a CAPsMAN-managed WiFi interface does not fire an `interface-type=wifi` rule.
+- **Interfaces** - `interface-change` fires when an interface becomes `running` or `not-running`, or is `added` or `removed`. Optionally filter by `interface-type` (`ethernet`, `wifi`, or `bridge`). For now, disabling or enabling a CAPsMAN-managed WiFi interface on the access point does not fire an `interface-type=wifi` rule, because the interface stays running. Its `running` and `not-running` changes, for example while the access point restarts, fire the rule.
 - **Device upgrades** - `upgrade-done` fires when a device upgrade finishes. Select successful upgrades, failed upgrades, or both.
 - **Upgrade jobs** - `upgrade-job-done` fires when a multi-device upgrade job finishes as a whole. Select successful jobs, failed jobs, or both.
-- **Unexpected reboots** - `rebooted` fires when a device unexpectedly reboots.
+- **Reboots** - `rebooted` fires when a device reboots, also when the reboot is part of an upgrade or comes from the `reboot` command.
 - **Unpaired connections** - `unpaired-device-connected` fires when an unpaired device connects.
-- **Log lines** - `log-topics` and `log-regex` define one log-message event condition, matching the configured topics and message regular expression. CMR automatically instructs the device to forward matching log messages. The matched values are available as `[message]` and `[message-topics]`.
+- **Log lines** - `log-topics` and `log-regex` define one log-message event condition, matching the configured topics and message regular expression. CMR automatically instructs the device to forward matching log messages. The forwarded messages also appear in the server's log, with the `cmrclnt` topic added to their own topics, for example `cmrclnt,script,info`. The matched values are available as `[message]` and `[message-topics]`.
 
 ### Device and system scope
 
@@ -477,7 +490,7 @@ Alert scope is separate from the state/event distinction:
 
 When a rule fires, it runs every action that is set:
 
-- `action.log` with the optional `action.log-prefix` and `action.log-topics` writes a message to the CMR log. The default topics are `cmr,info`. For a log-line condition, the message starts with the device that sent the log line, as `identity|board|address:`, so `[message]` alone is enough as the message text, for example `action.log="[message]"`.
+- `action.log` with the optional `action.log-prefix` and `action.log-topics` writes a message to the CMR log. The default topics are `cmr,info`, and `cmr,warning` for a log-line condition. For a log-line condition, the message starts with the device that sent the log line, as `identity|board|address:`, so `[message]` alone is enough as the message text, for example `action.log="[message]"`.
 - `action.script` runs a named system script and `action.script-vars` gives it the values for the device that fired. The script must allow itself to run with reduced rights (`dont-require-permissions=yes`) or the action logs "not enough permissions".
 - `action.http-url`, `action.http-method`, `action.http-body`, and `action.http-headers` call an HTTP or HTTPS webhook. Placeholders in the request body are substituted per device. The call does not set a `Content-Type` header by itself, so add one with `action.http-headers` when the receiver expects it (for example `Content-Type: application/json` for a JSON body). A failed call is written to the `cmr` topic with `warning` and counts in `action-failures`, for example `alert "name" HTTP action failed: request failed: Connection refused`. The webhook works also when the device mode of the server does not allow `fetch`.
 
@@ -530,7 +543,7 @@ A placeholder that does not apply to a rule is rendered as `unknown`. A placehol
 
 A newly created state alert fires immediately for every paired device that already matches its conditions. When a device disconnects, a state alert keeps its state for that device by default; set `reset-on-disconnect=yes` to clear the state on disconnect, so that the device fires the rule again after it reconnects and still matches. State alerts are evaluated only for paired devices. Event alerts have no persistent state to reset and fire on each matching occurrence, including an unpaired connection for `unpaired-device-connected`.
 
-When CMR restarts on the server, for example after a reboot or a change of `packages-directory`, it evaluates the state alerts again: the alerts that still match become active again and run their actions. Changing an enabled rule, even only its comment, has the same effect for that rule: its state alert becomes active again on the devices that match and runs its actions.
+When CMR restarts on the server, for example after a reboot or a change of `packages-directory`, it evaluates the state alerts again: the alerts that still match become active again and run their actions. Changing an enabled rule, even only its comment, has the same effect for that rule: its state alert becomes active again on the devices that match and runs its actions. Its `fired` counter starts again from zero.
 
 Every rule has a `severity` (`critical`, `high`, `medium`, or `low`, default `medium`) and a `category` that the controller assigns according to the rule's conditions (for example `performance`, `availability`, or `version`); the category can be changed. The read-only values describe the state of a rule:
 
@@ -604,8 +617,9 @@ A link connects two nodes of a layout. Links created by [`rebuild-links`](../../
 ```ros
 [admin@MikroTik] > /cmr/layout/link/print detail where layout=Example
  0  layout=Example node1=CRS354 node2=RB5009UPr
-     links=*ether47(poe=waiting-for-load,tx=520,rx=0)--*ether2(poe=waiting-for-
-        load,tx=132.0KiB,rx=160.9KiB),ether49(,tx=913.0KiB,rx=30.8KiB)--
+     links=*ether47(poe=waiting-for-load,tx=520,rx=0)--
+        *ether2(poe=waiting-for-load,tx=132.0KiB,rx=160.9KiB),
+        ether49(,tx=913.0KiB,rx=30.8KiB)--
         ether1(poe=waiting-for-load,tx=350.7KiB,rx=67.5KiB)
  1  layout=Example node1=RB5009UPr node2=hAP
      links=*ether6(poe=powered-on,tx=0,rx=0)--*ether1(,tx=0,rx=0)
@@ -625,7 +639,7 @@ CMR can collect application traffic statistics from selected devices. Select the
 
 The classifier sees the traffic that the device routes. An access point that bridges its clients' traffic in the bridge fast path sees only its own traffic, such as its DNS queries and management sessions. Select the routers that route the network's traffic, for example the gateway, to see the applications of the clients.
 
-The statistics are shown in the GUI under **CMR > Traffic**, per application or per category, with the traffic in and out for the last minute, hour, day, and week. For now, the CLI views ([`/cmr/device/apptraffic`](../../cli-reference/cmr/device/apptraffic) and `/tool/apptraffic/stats`) list only the detected applications and categories, without the traffic counters.
+The statistics are shown in the GUI under **CMR > Traffic**, per application or per category, with the traffic in and out for the last minute, hour, day, and week. The CLI view ([`/cmr/device/apptraffic`](../../cli-reference/cmr/device/apptraffic)) lists each detected application with its traffic for the last minute, hour, day, and week. A narrow console leaves out the columns that do not fit.
 
 The classifier is not available on devices with the **mmips**, **smips**, and **powerpc** architectures.
 

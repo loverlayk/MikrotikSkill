@@ -116,7 +116,7 @@ If a 3rd party modem with embedded eSIM chip is used, please consult the modem m
 | **activate** | Activate (enable) eSIM profile. `/interface/lte/esim/activate number=0` |
 | **delete** | Permanently delete eSIM profile from the eSIM card. `/interface/lte/esim/delete number=0` |
 | **print** | List the eSIM profiles installed on the eSIM `/interface/lte/esim/print` |
-| **provision** | Provision new eSIM profile. The command takes four parameters: interface - the interface for which the eSIM profile will be enabled.matching-id - an activation code token. Example:  matching-id=ABCD10EFGHI5KL6Msm-dp-plus - SM-DP+ server hostnameconfirmation-code - confirmation code (a one-time password that is required in some cases)activate - Activate the newly created profile after it is provisioned (yes\|no; default: yes) [Available starting from 7.20beta6 version. Before 7.20beta6, profiles do not get activated by default after provisioning.] Example eSIM LPA string decoded from QR: **LPA:1$server.example.io$ABCD10EFGHI5KL6M** `/interface/lte/esim/provision interface=lte1 sm-dp-plus=server.example.io matching-id=ABCD10EFGHI5KL6M` |
+| **provision** | Provision new eSIM profile. The command takes four parameters: interface - the interface for which the eSIM profile will be enabled.matching-id - an activation code token. Example:  matching-id=ABCD10EFGHI5KL6Msm-dp-plus - SM-DP+ server hostnameconfirmation-code - confirmation code (a one-time password that is required in some cases)activate - Activate the newly created profile after it is provisioned (yes\|no; default: yes) [Available starting from 7.20beta6 version. Before 7.20beta6, profiles do not get activated by default after provisioning.]force-confirmation - if set to yes, the command does not wait for user confirmation and automatically accepts the profile provision (yes\|no; default: no) Example eSIM LPA string decoded from QR: **LPA:1$server.example.io$ABCD10EFGHI5KL6M** `/interface/lte/esim/provision interface=lte1 sm-dp-plus=server.example.io matching-id=ABCD10EFGHI5KL6M` |
 | **esim-id** | Query the eSIM ID. The command takes one parameter: interface - select the interface for which to query the eSIM ID.`/interface/lte/esim/esim-id interface=lte1   eid: 8903302342630000000004181FFFFFFF` |
 | **set-nickname** | Set a nickname for an eSIM profile. `/interface/lte/esim/set-nickname number=0 nickname=nickname1` |
 | **refresh-profile-list** | Re-query the eSIM profile list. The command takes one parameter: interface - Select an interface for which the eSIM profiles will be re-queried. |
@@ -132,7 +132,11 @@ https://mikrotik.com/connectivity
 | :-- | :-- |
 | S53UG+5HaxD2HaxD-TC&RG650E-EU | RG650E-EU |
 | ATLGM&RG520F-EU | RG520F-EU |
+| LAMPGM&RG520F-EU | RG520F-EU |
 | EC25-EU&KNe | EC25-EU |
+| EG25-G&KNe | EG25-G|
+| EC25-EU&SXTsq | EC25-EU |
+| EG25-G&SXTsq | EG25-G|
 
 ##### Modem eSIM management support table
 
@@ -1127,3 +1131,15 @@ Replace PUK\_code and NEW\_PIN with matching values.
 :::warning
 The command for sim slot selection changes in v6.45.1 and again in v7. Some device models like SXT have SIM slots named "a" and "b" instead of "up" and "down"
 :::
+
+#### Site-local DNS address (IPv6)
+
+When IPv6 is provided through the modem control channel, RouterOS used to automatically add the site-local IPv6 address `fec0:0:0:ffff::1/64` to the LAN interface `ipv6-interface`. This address was meant to act as a DNS server for very old Windows clients. This is probably not necessary anymore.
+
+Since this address is no longer added automatically, add it manually if you still have such clients:
+
+```ros
+/ipv6/address/add address=fec0:0:0:ffff::1/64 interface=bridge advertise=no
+```
+
+Replace `bridge` with the `ipv6-interface` name.
