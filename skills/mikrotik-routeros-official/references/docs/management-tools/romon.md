@@ -149,8 +149,24 @@ winbox.exe --romon 192.168.88.24 F4:1E:57:46:89:89 admin ""
 ## Technical details
 
 - Discovery, ping and RoMON SSH all run over raw Ethernet frames, so they keep working without any IP configuration.
-- RoMON frames are not special for the [packet sniffer](../diagnostics-monitoring-and-troubleshooting/packet-sniffer): capture them with `filter-mac-protocol=romon` (EtherType 0x88BF).
+- The [packet sniffer](../diagnostics-monitoring-and-troubleshooting/packet-sniffer) and [Torch](../diagnostics-monitoring-and-troubleshooting/torch) show only the RoMON frames that the router sends; received RoMON frames are not shown.
 - `hops`, `path` and `cost` in the discovery table describe the RoMON path: routers that run RoMON forward the overlay traffic, so a target several segments away shows the intermediate IDs in `path`.
 - A `[find default=yes]` wildcard port entry always exists: it cannot be removed, disabled or enabled — only its `cost`, `forbid` and `secrets` can be changed ("failure: only cost, forbid and secrets can be changed for preset"). Setting it to `forbid=yes` turns the default into "deny all".
+
+The sniffer and Torch see RoMON frames (EtherType 0x88BF) only in the `tx` direction. Received RoMON frames do not appear in a capture or in Torch, not even with `mac-protocol=romon` or `direction=rx`, so a capture on a router that answers another router's discovery holds only the frames it sends:
+
+```ros
+[admin@MikroTik] > /tool/sniffer/start interface=ether2 mac-protocol=romon
+[admin@MikroTik] > /tool/sniffer/stop
+[admin@MikroTik] > /tool/sniffer/packet/print proplist=time,direction,src-mac,dst-mac,protocol,size
+Columns: TIME, DIRECTION, SRC-MAC, DST-MAC, PROTOCOL, SIZE
+#  TIME      DIRECTION  SRC-MAC            DST-MAC            PROTOCOL  SIZE
+0  0.449619  tx         DC:2C:6E:E7:10:6B  F4:1E:57:46:89:89  romon      171
+1  0.44973   tx         DC:2C:6E:E7:10:6B  F4:1E:57:46:89:89  romon      145
+2  0.950712  tx         DC:2C:6E:E7:10:6B  F4:1E:57:46:89:89  romon      171
+3  0.951016  tx         DC:2C:6E:E7:10:6B  F4:1E:57:46:89:89  romon      145
+```
+
+To see both directions of a RoMON exchange, capture on a device between the two routers, for example through a mirror port of a switch.
 
 For all parameters, see the [`/tool/romon`](../cli-reference/tool/romon), [`/tool/romon/port`](../cli-reference/tool/romon/port), [`/tool/romon/discover`](../cli-reference/tool/romon/discover), [`/tool/romon/ping`](../cli-reference/tool/romon/ping) and [`/tool/romon/ssh`](../cli-reference/tool/romon/ssh) CLI reference pages.

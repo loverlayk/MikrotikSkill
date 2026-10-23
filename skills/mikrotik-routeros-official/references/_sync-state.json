@@ -311,7 +311,7 @@
       "title": "RoMON",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/romon.md",
       "path": "docs/management-tools/romon.md",
-      "sha256": "adc02146a57bf9bfe9192b15e9cfd38dd535940cb93f8a19d218bdb5d20c0a58"
+      "sha256": "8eab6f0e22358d51ddac549f9d8e9c083c02e55d39ab1443274d4c74a6b6d6ac"
     },
     "https://manual.mikrotik.com/docs/management-tools/mac-server.md": {
       "title": "MAC server",
@@ -335,13 +335,13 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "89a95ea70d1310c8199e8ae49f697c81818e64fdcfd15e569bc3be5572e88d94"
+      "sha256": "9d08f8093bcee5008987e1b5af2997ddb135e50045747acbb740712e072a395d"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr/client.md",
       "path": "docs/management-tools/cmr/client.md",
-      "sha256": "f5080756ca52ac8b974cdad267d792bdcc3df4fbf9c446eaf3f2ec718c24ae04"
+      "sha256": "69b99e59fd006949928f8a17cc1063bc16a1f212d28f9faebb8d385fe7a12959"
     },
     "https://manual.mikrotik.com/docs/management-tools/branding.md": {
       "title": "Branding",
@@ -521,7 +521,7 @@
       "title": "Netwatch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
-      "sha256": "a745d6060c797853b9a3852b8695601cf918141b71dc56117c158517e01133ea"
+      "sha256": "bce89033e66c7a64318a38ac0c5ae155534eaaf66d5c6951ad32b1ee39a2d59c"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/graphing.md": {
       "title": "Graphing",
@@ -1727,7 +1727,7 @@
       "title": "Certificates",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates.md",
       "path": "docs/authentication-authorization-accounting/certificates.md",
-      "sha256": "f9e1e2e2c74a56eebe20839e31ab0af5c0afc8775a1d05574ef39f560060afc4"
+      "sha256": "055d81deb19c29637cdd59c84b5c9307b742561f672a7e608af39f98c2ea5620"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/dot1x.md": {
       "title": "Dot1X",
@@ -2213,7 +2213,7 @@
       "title": "Scripting",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting.md",
       "path": "docs/developer-guides/scripting.md",
-      "sha256": "be10cb9f69bc79eec3ea876d05f5c32090b71a08333107467d2b1563be0b14b4"
+      "sha256": "039a31e8fd6dc6d0ef378820d51b225afa39be54adec400fc4308da9b64917c1"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-examples.md": {
       "title": "Scripting examples",
@@ -2627,7 +2627,7 @@
       "title": "/cmr/client",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/client.md",
       "path": "docs/cli-reference/cmr/client.md",
-      "sha256": "2829afe8dd00b9b0e65c3c42f415440422a43223a6ac2fc12b06f9314a4c1a37"
+      "sha256": "132456e940f863c6f3229aec94218485cbaad566d31c2155c412613a38c530fb"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/client/forget.md": {
       "title": "/cmr/client/forget",

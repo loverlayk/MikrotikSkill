@@ -3,12 +3,12 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `a898fe70bd2f0770e2bd6796f1215a91fa50a182113d5f0be9f5b472fb219305`
 Pages in current index: 1473
-Pages changed/written: 8
+Pages changed/written: 7
 Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
-- [Certificates](docs/authentication-authorization-accounting/certificates.md) `f9e1e2e2c74a`
+- [Certificates](docs/authentication-authorization-accounting/certificates.md) `055d81deb19c`
 - [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `1cc1fd3126fa`
 - [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `0fd674338681`
 - [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `5a550cf0f64c`
@@ -106,7 +106,7 @@ Pages failed: 0
 - [/cmr/alert](docs/cli-reference/cmr/alert.md) `9bcbba72797c`
 - [/cmr/alert/show-devices](docs/cli-reference/cmr/alert/show-devices.md) `76ed47a16b29`
 - [/cmr/alert/test](docs/cli-reference/cmr/alert/test.md) `aec0c2de4359`
-- [/cmr/client](docs/cli-reference/cmr/client.md) `2829afe8dd00`
+- [/cmr/client](docs/cli-reference/cmr/client.md) `132456e940f8`
 - [/cmr/client/forget](docs/cli-reference/cmr/client/forget.md) `b3bdd8697a57`
 - [/cmr/client/pair](docs/cli-reference/cmr/client/pair.md) `de9af0320afc`
 - [/cmr/client/push-button](docs/cli-reference/cmr/client/push-button.md) `4561e83c189f`
@@ -1158,7 +1158,7 @@ Pages failed: 0
 - [API](docs/developer-guides/api.md) `40f0f636b33a`
 - [Python3 Example](docs/developer-guides/api/python3-example.md) `e056b7f9eda6`
 - [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
-- [Scripting](docs/developer-guides/scripting.md) `be10cb9f69bc`
+- [Scripting](docs/developer-guides/scripting.md) `039a31e8fd6d`
 - [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `87a15948365a`
 - [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `8b61e0af2544`
 - [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
@@ -1174,7 +1174,7 @@ Pages failed: 0
 - [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `b7e081ceaee3`
 - [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `bd664c964077`
 - [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `a168d6ee93e2`
-- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `a745d6060c79`
+- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `bce89033e66c`
 - [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
 - [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `c53f192eea99`
@@ -1310,15 +1310,15 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `89a95ea70d13`
-- [CMR-Client](docs/management-tools/cmr/client.md) `f5080756ca52`
+- [CMR](docs/management-tools/cmr.md) `9d08f8093bce`
+- [CMR-Client](docs/management-tools/cmr/client.md) `69b99e59fd00`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
 - [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
 - [MAC server](docs/management-tools/mac-server.md) `a8e56d47c9f4`
 - [MikroTik mobile app](docs/management-tools/mikrotik-mobile-app.md) `e80dd37a4295`
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
-- [RoMON](docs/management-tools/romon.md) `adc02146a57b`
+- [RoMON](docs/management-tools/romon.md) `8eab6f0e2235`
 - [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
 - [SSH](docs/management-tools/ssh.md) `192eaa91411d`
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`

@@ -6,9 +6,9 @@
 
 RouterOS includes a powerful scripting language for automating maintenance tasks. You create user-defined scripts and bind them to events.
 
-You can store scripts in the¬†Script repository or write them directly in the CLI. Common triggers include the System Scheduler, Traffic Monitoring Tool, and Netwatch Tool events.
+You can store scripts in the Script repository or write them directly in the CLI. Common triggers include the System Scheduler, Traffic Monitoring Tool, and Netwatch Tool events.
 
-If you are already familiar with scripting in RouterOS, you might want to see our¬†[Tips & Tricks](./scripting-tips-and-tricks.md).
+If you are already familiar with scripting in RouterOS, you might want to see our [Tips & Tricks](./scripting-tips-and-tricks.md).
 
 ## Line structure
 
@@ -20,20 +20,20 @@ The RouterOS CLI uses the following command syntax:
 
 `[prefix] [path] command [uparam] [param=[value]] .. [param=[value]]`
 
-- [prefix] - `:` or `/` character indicates if following word is¬†a [global command](#global-commands)¬†or a path. Prefix is not required when called from root menu or from the menu relative to the called path/command.
+- [prefix] - `:` or `/` character indicates if following word is a [global command](#global-commands) or a path. Prefix is not required when called from root menu or from the menu relative to the called path/command.
 - [path] - relative path to the desired menu level. It may not be required.
-- command - one of the¬†[commands](#commands)¬†available at the specified menu level.
+- command - one of the [commands](#commands) available at the specified menu level.
 - [uparam] - unnamed parameter, must be specified if the command requires it.
 - [params] - a sequence of named parameters followed by values (if a parameter requires a value).
 
-The end of the command line is represented by the token¬†`;`¬†or¬†*NEWLINE*.
-A command enclosed in `()`, `[]` or `{}`¬†does not require any end-of-command character. The end of the command is determined by the content of the whole script
+The end of the command line is represented by the token `;` or *NEWLINE*.
+A command enclosed in `()`, `[]` or `{}` does not require any end-of-command character. The end of the command is determined by the content of the whole script
 
 ```ros
-:if ( true ) do={¬†:put "lala" }
+:if ( true ) do={ :put "lala" }
 ```
 
-Each command line inside another command line starts and ends with square brackets `[]`¬†[(command concatenation operator)](#other-operators).
+Each command line inside another command line starts and ends with square brackets `[]` [(command concatenation operator)](#other-operators).
 
 ```ros
 :put [/ip route get [find gateway=1.1.1.1]];
@@ -47,15 +47,15 @@ Notice that the code above contains three command lines:
 
 Notice that menu specific `find` command does not require a full path because the path is derived from the parent command's path.
 
-A command line can be constructed from more than one physical line by following¬†[line joining rules](#line-joining).
+A command line can be constructed from more than one physical line by following [line joining rules](#line-joining).
 
 ### Physical Line
 
 A physical line is a sequence of characters terminated by an end-of-line (**EOL**) sequence. Any of the standard platform line termination sequences can be used:
 
-- **Unix**¬†‚Äď ASCII LF;
-- **Windows**¬†‚Äď ASCII CR LF;
-- **mac**¬†‚Äď ASCII CR;
+- **Unix** – ASCII LF;
+- **Windows** – ASCII CR LF;
+- **mac** – ASCII CR;
 
 Standard C conventions for newline characters can be used ( `\n`, `\r\n` characters).
 
@@ -99,11 +99,11 @@ The following rules apply to using backslash as a line-joining tool:
 Whitespace can be used to separate tokens. Whitespace is necessary between two tokens only if their concatenation could be interpreted as a different token. Example:
 
 ```ros
-{ ¬†
+{  
 	:local a true; :local b false;
 # whitespace is not required
 	:put (a&&b);
-# whitespace is required ¬†
+# whitespace is required  
 	:put (a and b);
 }
 
@@ -118,11 +118,11 @@ Example:
 
 ```ros
 #incorrect:
-:for i from = 1 to = 2 do = {¬†:put $i }
+:for i from = 1 to = 2 do = { :put $i }
 
 #correct syntax:
-:for i from=1 to=2 do={¬†:put $i }
-:for i from= 1 to= 2 do={¬†:put $i }
+:for i from=1 to=2 do={ :put $i }
+:for i from= 1 to= 2 do={ :put $i }
 
 #incorrect
 /ip route add gateway = 3.3.3.3
@@ -135,7 +135,7 @@ Example:
 
 Variables can be used only in certain regions of the script called scopes. These regions determine the visibility of the variable. A local variable declared within a block is accessible only within that block and its nested blocks, and only after the declaration point. A global variable is not limited by the block it is declared in.
 
-There are two types of scopes‚ÄĮ‚ÄĒ‚ÄĮ**global** and **local**.
+There are two types of scopes — **global** and **local**.
 
 #### Global scope
 
@@ -167,24 +167,33 @@ myVar=3
 You can define groups to limit variable access; these are called local scopes. Each local scope is enclosed in curly braces (`{}`).
 
 ```ros
-{ ¬†
+{  
     :local a 3;
-    { ¬†
-	:local b 4; ¬†
+    {  
+	:local b 4;  
 	:put ($a+$b);
-    } #line below will show variable b in light red color since it is not defined in this scope ¬†
+    } #line below will show variable b in light red color since it is not defined in this scope  
     :put ($a+$b);
 }
 
 ```
 
-Variable¬†`b`¬†is declared in a local scope and is not accessible after the closing curly brace.
+Variable `b` is declared in a local scope and is not accessible after the closing curly brace.
 
-In the interactive CLI, a local variable defined on one command line stays visible on the following command lines for the rest of the console session:
+Each line written in the interactive CLI is treated as a local scope. For example, a local variable defined on one command line is not visible on the next command line, where it reads as an empty value (type `nothing`). This does not work:
 
 ```ros
 [admin@MikroTik] > :local myVar a;
 [admin@MikroTik] > :put $myVar
+
+[admin@MikroTik] > :put [:typeof $myVar]
+nothing
+```
+
+To use a local variable in several commands, put them on one line or enclose them in a block:
+
+```ros
+[admin@MikroTik] > { :local myVar a; :put $myVar }
 a
 ```
 
@@ -192,7 +201,7 @@ a
 Declare **global** variables at the top level of the script. A global variable declared inside a **local** scope (a block) is still global, but declaring it there makes the script harder to read.
 :::
 
-A global variable is not limited by the block in which it is declared ‚ÄĒ it is visible everywhere after the declaration point:
+A global variable is not limited by the block in which it is declared — it is visible everywhere after the declaration point:
 
 ```ros
 {   
@@ -220,7 +229,7 @@ and       or       in
 The following tokens serve as delimiters in the grammar:
 
 ```text
-()  []  {} ¬†:  ¬†;   $   /
+()  []  {}  :   ;   $   /
 
 ```
 
@@ -231,7 +240,7 @@ RouterOS scripting language has the following data types:
 | Type                 | Description                                           |
 |:--|:--|
 | **num (number)**     | 64bit signed integer, possible hexadecimal input;     |
-| **bool (boolean)**   | values can be¬†`true`¬†or¬†`false`.                     |
+| **bool (boolean)**   | values can be `true` or `false`.                     |
 | **str (string)**     | character sequence.                                   |
 | **ip**               | IP address.                                           |
 | **ip-prefix**        | IP prefix.                                            |
@@ -259,7 +268,7 @@ Following escape sequences can be used to define certain special characters with
 | **\b**  | Backspace (0x08).                                                  |
 | **\f**  | Form feed (0x0C).                                                  |
 | **\v**  | Insert vertical tab.                                               |
-| **\xx** | A print character from a hex value: two hex digits, with the letters A‚ÄďF in uppercase. `\4A` is the letter `J`, and `\4a` produces a syntax error. A single-character escape letter (`a`, `b`, `f`, `n`, `r`, `t`, `v`) after `\` takes precedence: `\ff` is the form feed (`\f`) followed by the letter `f`. |
+| **\xx** | A print character from a hex value: two hex digits, with the letters A–F in uppercase. `\4A` is the letter `J`, and `\4a` produces a syntax error. A single-character escape letter (`a`, `b`, `f`, `n`, `r`, `t`, `v`) after `\` takes precedence: `\ff` is the form feed (`\f`) followed by the letter `f`. |
 
 For example:
 
@@ -289,11 +298,11 @@ Common arithmetic operators are supported in the RouterOS scripting language:
 | **`+`**    | binary addition       | `:put (3+4);`                  |
 | **`-`**    | binary subtraction    | `:put (1-6);`                  |
 | **`*`**    | binary multiplication | `:put (4*5);`                  |
-| **`/`**    | binary division       | `:put (10 / 2);¬†:put ((10)/2)` |
-| **`%`**    | modulo operation      | `:put (5¬†% 3);`                |
-| **`-`**    | unary negation        | `{¬†:local a 1;¬†:put (-a); }`   |
+| **`/`**    | binary division       | `:put (10 / 2); :put ((10)/2)` |
+| **`%`**    | modulo operation      | `:put (5 % 3);`                |
+| **`-`**    | unary negation        | `{ :local a 1; :put (-a); }`   |
 
-Note that¬†for the division to work, you have to use braces or spaces around the dividend so it is not mistaken as an IP address.
+Note that for the division to work, you have to use braces or spaces around the dividend so it is not mistaken as an IP address.
 
 ### Relational Operators
 
@@ -329,14 +338,14 @@ Or to do the opposite, you can use `<expression>=true`:
 
 ### Bitwise Operators
 
-Bitwise operators work on integer numbers and on IP and IPv6 address [data types](#data-types). The only exception is the bit inversion operator (`~`), which works only on IP and IPv6 address data types ‚ÄĒ inverting an integer number produces an error.
+Bitwise operators work on integer numbers and on IP and IPv6 address [data types](#data-types). The only exception is the bit inversion operator (`~`), which works only on IP and IPv6 address data types — inverting an integer number produces an error.
 
 | Operator   | Description      | Example                                      |
 |:--|:--|:--|
 | **`~`**    | Bit inversion.   | `:put (~0.0.0.0)` `:put (~::ffff)`           |
-| **`\|`**   | Bitwise OR performs logical OR operation on each pair of corresponding bits. In each pair the result is ‚Äú1‚ÄĚ if one of the bits or both bits is ‚Äú1‚ÄĚ, otherwise the result is ‚Äú0‚ÄĚ. | `:put (192.168.88.0\|0.0.0.255)` `:put (2001::1\|::ffff)` |
-| **`^`**    | Bitwise XOR is the same as OR, but the result in each position is ‚Äú1‚ÄĚ if two bits are not equal, and ‚Äú0‚ÄĚ if the bits are equal. | `:put (1.1.1.1^255.255.0.0)` `:put (2001::ffff:1^::ffff:0)` |
-| **`&`**    | Bitwise AND result is ‚Äú1‚ÄĚ if the first and second bit is ‚Äú1‚ÄĚ. Otherwise, the result is ‚Äú0‚ÄĚ. | `:put (192.168.88.77&255.255.255.0)` `:put (2001::1111&ffff::)` |
+| **`\|`**   | Bitwise OR performs logical OR operation on each pair of corresponding bits. In each pair the result is “1” if one of the bits or both bits is “1”, otherwise the result is “0”. | `:put (192.168.88.0\|0.0.0.255)` `:put (2001::1\|::ffff)` |
+| **`^`**    | Bitwise XOR is the same as OR, but the result in each position is “1” if two bits are not equal, and “0” if the bits are equal. | `:put (1.1.1.1^255.255.0.0)` `:put (2001::ffff:1^::ffff:0)` |
+| **`&`**    | Bitwise AND result is “1” if the first and second bit is “1”. Otherwise, the result is “0”. | `:put (192.168.88.77&255.255.255.0)` `:put (2001::1111&ffff::)` |
 | **`<<`**   | Left shift by a given amount of bits. | `:put (192.168.88.77<<8)` `:put (::1<<8)` |
 | **`>>`**   | Right shift by a given amount of bits. | `:put (192.168.88.77>>24)` `:put (::ffff>>4)` |
 
@@ -393,25 +402,25 @@ Using `$[]` and `$()` you can execute expressions and insert the resulting value
 :local b 6;
 :put " 5x6 = $($a * $b)";
 
-:put " We have $[¬†:len [/ip route find] ] routes";
+:put " We have $[ :len [/ip route find] ] routes";
 ```
 
 ### Other Operators
 
 | Operator   | Description       | Example                                     |
 |:--|:--|:--|
-| **`[]`**   | Command substitution can contain only a single command line` | `:put [¬†:len "my test string"; ];` |
+| **`[]`**   | Command substitution can contain only a single command line` | `:put [ :len "my test string"; ];` |
 | **`()`**   | Subexpression or grouping operator. | `:put ( "value is " . (4+5));` |
-| **`$`**    | Substitution operator. | `:global a 5;¬†:put $a;` |
+| **`$`**    | Substitution operator. | `:global a 5; :put $a;` |
 | **`~`**    | The binary operator that matches value against POSIX extended regular expression. | Print all routes whose gateway ends with 202: `/ip/route/print where gateway~"^[0-9 \\.]*202\$"` |
-| **`->`**   | Get an array element by key. | `[admin@x86] >:global aaa {a=1;b=2}``[admin@x86] >¬†:put ($aaa->"a")``1``[admin@x86] >¬†:put ($aaa->"b")``2` |
+| **`->`**   | Get an array element by key. | `[admin@x86] >:global aaa {a=1;b=2}``[admin@x86] > :put ($aaa->"a")``1``[admin@x86] > :put ($aaa->"b")``2` |
 
 ## Variables
 
 The scripting language has two types of variables:
 
-- **global**¬†- Accessible from all scripts created by the current user, defined by¬†[`global`](#global-scope)¬†keyword.
-- **local**¬†- Accessible only within the current¬†[scope](#local-scope), defined by¬†`local`¬†keyword.
+- **global** - Accessible from all scripts created by the current user, defined by [`global`](#global-scope) keyword.
+- **local** - Accessible only within the current [scope](#local-scope), defined by `local` keyword.
 
 Variables may be undefined. When that happens, the parser looks for built-in variables provided by the application. For example, the DHCP `lease-script` supplies several built-in variables:
 
@@ -454,7 +463,7 @@ Valid characters in variable names are letters and digits. If a variable name co
 :global "my-var";
 ```
 
-If a variable is initially defined without a value, the¬†[variable data type](#data-types)¬†is set to¬†***nil***; otherwise, the scripting engine determines the data type automatically. Sometimes conversion from one data type to another is required. It can be achieved using¬†[data conversion commands](#global-commands). Example:
+If a variable is initially defined without a value, the [variable data type](#data-types) is set to ***nil***; otherwise, the scripting engine determines the data type automatically. Sometimes conversion from one data type to another is required. It can be achieved using [data conversion commands](#global-commands). Example:
 
 ```ros
 #convert string to array
@@ -515,20 +524,20 @@ Every global command should start with the **`:`** token; otherwise it is treate
 | **/**           |            | Go to the root menu. |                        |
 | **..**          |            | Go back by one menu level. |                  |
 | **?**           |            | List all available menu commands and brief descriptions. |  |
-| **global**      | `:global <var> [<value>]` | Define a global variable. | `:global myVar "something";¬†:put $myVar;` |
+| **global**      | `:global <var> [<value>]` | Define a global variable. | `:global myVar "something"; :put $myVar;` |
 | **local**       | `:local <var> [<value>]` | Define the local variable. | `{ :local myLocalVar "I am local"; :put $myLocalVar; }` |
 | **beep**        | `:beep frequency=[num] length=[num]` | Beep the built-in speaker. |  |
 | **convert**     | `:convert from=[arg] to=[arg] transform=[arg]` | Converts specified value from one format to another. By default uses an automatically parsed value, if the `from` format is not specified (for example, "001" becomes "1", "10.1" becomes "10.0.0.1", etc.).  **`from`** - Specifies the format of the value: *base32, base64, bit-array-lsb, bit-array-msb, byte-array, hex, num, raw, url*.  **`to`** - Specifies the format of the output value: *base32, base64, bit-array-lsb, bit-array-msb, byte-array, hex, num, raw, url*.   **`transform`** - Specifies how to transform values: *lc (transforms value to be in lowercases), uc (uppercases), lcfirst (first value to lowercase), ucfirst (first value to uppercase), crlf, ed25519-private-to-x25519-private, none, rot 13, x25519-private-to-x25519-public, ed25519-private-to-ed25519-public, ed25519-public-to-x25519-public, md5, reverse (reverses text), sha512.* | `:put [:convert 001 to=hex ]`  `31`  `:put [:convert [/ip dhcp-client/option/get hostname raw-value] from=hex to=raw ]`  `MikroTik`  `:put [:convert transform=lc "AAA"]`  `aaa` |
 | **delay**       | `:delay <time>` | Do nothing for a given period of time. |  |
-| **environment** | `:environment print <start>` | Print initialized variable information. | `:global myVar true;¬†:environment print;` |
+| **environment** | `:environment print <start>` | Print initialized variable information. | `:global myVar true; :environment print;` |
 | **error**       | `:error <output>` | Generate console error and stop executing the script. |  |
-| **execute**     | `:execute <expression>` | Execute the script in the background. The result can be written in the file by setting a `file` parameter or printed to the CLI by setting `as-string`.  When using the `as-string` parameter executed script is blocked (not executed in the background).  Executed scripts cannot be larger than¬†64‚ÄĮkB. | `{ :local j [:execute {/interface print follow where [:log info ~Sname~]}]; :delay 10s; :onerror e {/system script job remove $j}}` |
+| **execute**     | `:execute <expression>` | Execute the script in the background. The result can be written in the file by setting a `file` parameter or printed to the CLI by setting `as-string`.  When using the `as-string` parameter executed script is blocked (not executed in the background).  Executed scripts cannot be larger than 64 kB. | `{ :local j [:execute {/interface print follow where [:log info ~Sname~]}]; :delay 10s; :onerror e {/system script job remove $j}}` |
 | **find**        | `:find <arg> <arg> <start>` | Return position of a substring or array element. | `:put [:find "abc" "a" -1];` |
-| **grep**        | `:grep script=[str] pattern=[expression]¬†after=[num] before=[num] filename=[str]` | Execute provided `script` in the terminal and print the lines matched by a given `pattern`. Parameters `after` and `before` sets how many lines to print additionaly before and after the matched line. Results can be directly saved into a file with `filename` parameter. | `:grep script="/interface print" pattern="ether" after=1 before=1 filename=results.txt` |
+| **grep**        | `:grep script=[str] pattern=[expression] after=[num] before=[num] filename=[str]` | Execute provided `script` in the terminal and print the lines matched by a given `pattern`. Parameters `after` and `before` sets how many lines to print additionaly before and after the matched line. Results can be directly saved into a file with `filename` parameter. | `:grep script="/interface print" pattern="ether" after=1 before=1 filename=results.txt` |
 | **jobname**     | :jobname   | Return current script name. | **Limit script execution to single instance**  ` :if ([/system script job print count-only as-value where script=[:jobname] ] > 1) do={  :error "script instance already running"  }`|
 | **len**         | `:len <expression>` | Return the string length or the array element count. | `:put [:len "length=8"];` |
-| **log**         | `:log <topic> <message>` | Write a message to the¬†[system log](../../diagnostics-monitoring-and-troubleshooting/log/index.md). Available topics are¬†`debug`, `error`, `info` and `warning`. | `:log info "Hello from script";` |
-| **onerror**     | `:onerror <var_name> in={<command>} do={<expression>}` | Catch errors and get error details. The **`do={...}`** block is executed, when **`in={...}`** block has an error, ¬†and error details are written in `<var_name>` variable.¬†  Parameter order is important. The `error` parameter must be set before `do` block, otherwise `do` block will not see the local variable.  `:onerror` will return `false` (if there is no error) and `true` (if there is an error) unless otherwise specified (with commands such as `:return` or `:error`), so it can be used in¬†**`:if`** condition statement scripts. | `:onerror errorName in={ :error "failure" } do={ :put "Critical $errorName" }` |
+| **log**         | `:log <topic> <message>` | Write a message to the [system log](../../diagnostics-monitoring-and-troubleshooting/log/index.md). Available topics are `debug`, `error`, `info` and `warning`. | `:log info "Hello from script";` |
+| **onerror**     | `:onerror <var_name> in={<command>} do={<expression>}` | Catch errors and get error details. The **`do={...}`** block is executed, when **`in={...}`** block has an error,  and error details are written in `<var_name>` variable.   Parameter order is important. The `error` parameter must be set before `do` block, otherwise `do` block will not see the local variable.  `:onerror` will return `false` (if there is no error) and `true` (if there is an error) unless otherwise specified (with commands such as `:return` or `:error`), so it can be used in **`:if`** condition statement scripts. | `:onerror errorName in={ :error "failure" } do={ :put "Critical $errorName" }` |
 | **parse**       | `:parse <expression>` | Parse the string and return parsed console commands. Can be used as a function. | `:global myFunc [:parse ":put hello!"]; $myFunc;` |
 | **pick**        | `:pick <var> <start> [<end>]`                                                     | Return range of elements or substring. If the count is not specified, it will return only one element from an array. `var` - value to pick elements from.`start` - element to start picking from (the first element index is 0).`end` - terminating index (element at this index is not included). | `[admin@MikroTik] > :put [:pick "abcde" 1 3]``bc` |
 | **put**         | `:put <expression>` | Print the supplied argument to the terminal. | `:put "Hello world"` |
@@ -537,12 +546,12 @@ Every global command should start with the **`:`** token; otherwise it is treate
 | **retry**       | `:onerror e {:retry command=<expr> delay=[num] max=[num]} do={<expr>}` | Try to execute the given command `max` amount of times with a given `delay` in seconds between tries. On failure, execute the command in the `do={}` block. | `:onerror e {:retry command={abc} delay=1 max=2} do={:put "got error"}` |
 | **typeof**      | `:typeof <var>` | Return data type of the given variable. | `:put [:typeof 4];` |
 | **rndnum**      | `:rndnum from=[num] to=[num]` | Random number generator. | `:put [:rndnum from=1 to=99];` |
-| **rndstr**      | `:rndstr from=[str] length=[num]` | Random string generator.  **`from`** specifies characters to construct the string from and defaults to all ASCII letters and numerals.  **`length`** specifies the length of the string to create and defaults to 16. | `:put [:rndstr¬†from="abcdef%^&``" length=33];` |
-| **set**         | `:set <var> [<value>]` | Assign value to a declared variable. | `:global a;¬†:set a true;` |
-| **serialize**   | `:serialize [<value>] to=[arg]` | Serialize specified value/array to JSON or dsv (delimiter separated values) format.  **`value`** specifies which values to process.  **`to`** specifies the format -¬†*json, dsv*  **`delimiter`** sets the "separator".  **`order`** specifies the order for variables.  **`options`** specifies additional options*:* json.pretty¬† - makes the JSON output more visually appealing;json.no-string-conversion - prevents implicit conversions from console string type to json number type;dsv.wrap-strings - wraps string values inside quotation marks;dsv.ignore-size -¬†if array values have different sizes, e.g.¬†<code>a=(1,2);b=(3,4);c=(5,6,7)</code>, this option will work around <code>array size mismatch</code> error and set "empty" values in those slots.dsv.remap - merges array of dictionaries into a single dictionary (useful when working with "<code>print as-value</code>") **file-name** enables the option to generate command's output into a file (available for download in the "/files" section). | `:put [:serialize value=a,b,c to=json]``["a","b","c"]``:local test {a=(1,2,3);b=(4,5,6);c=(7,"text",9)}; :put [ :serialize to=dsv delimiter=";" value=$test order=("c","a","b") ]``c;a;b``7;1;4``text;2;5``9;3;6``:global var ({ "string"="1234"; "number"=1234 });:put [ :serialize to=json value=$var ]``{"number":1234,"string":1234.000000}``:put [ :serialize to=json value=$var options=json.no-string-conversion  ]``{"number":1234,"string":"1234"}``:put [:serialize to=dsv options=dsv.remap delimiter="#" [/ip/address/print as-value]]``.id#address#comment#interface#network``*1#192.168.88.1/24#defconf#bridge#192.168.88.0``*2#192.168.69.190/24##ether1#192.168.69.0`|
-| **deserialize** | `:deserialize [<value>] from=[arg]` | Deserialize specified value/array from JSON or dsv (delimiter separated values) format.  **`from`** specifies the format -¬†*json, dsv*  **`delimiter`** sets the "separator".  **`options`** specifies additional options*:* dsv.plain - deserializes every line as an array (input does not have a header or column names);dsv.array - expects a header (column names) and will return an array of dictionaries, where values are mapped to column names provided in the header.json.no-string-conversion - prevents implicit conversions from json string type to console values (number, ip, etc.). | `:put [:deserialize from=json value="[\"a\",\"b\",\"c\"]"]``a;b;c``:put ([ :deserialize from=dsv delimiter=";" value="a;b;c\n1;findme;3" options=dsv.plain ]->1->1)` `findme``:put ([ :deserialize from=dsv delimiter=";" value="a;b;c\n1;findme;3" options=dsv.plain ]->0->1)   ``b``:put ([:deserialize from=dsv "a;b;c\n1;2;3\n4;5;6" delimiter=";" options=dsv.array]->1->"b") ``5``:put ([:deserialize from=dsv "a;b;c\n1;2;3\n4;5;6" delimiter=";" options=dsv.array]->0->"c")    ``3``:put [typeof ([:deserialize "{ \"str\": \"123\" }" from=json options=json.no-string-conversion]->"str")]``str``:deserialize [/file/get file.json contents] from=json` |
-| **time**        | `:time <expression>` | Return interval of time needed to execute the provided expression. | `:put [:time {:for i from=1 to=10 do={¬†:delay 100ms }}];` |
-| **timestamp**   | `:timestamp [use-tz]` | Returns the¬†time since `epoch`, where `epoch` is January 1, 1970 (Thursday), not counting leap seconds. The time is returned in UTC by default. Use the `use-tz` parameter to return the timestamp adjusted for the configured time zone on the router. | `[admin@MikroTik] > :put [:timestamp]``2735w21:41:43.481891543`or, on a later day of the week:`2735w1d21:41:43.481891543` |
+| **rndstr**      | `:rndstr from=[str] length=[num]` | Random string generator.  **`from`** specifies characters to construct the string from and defaults to all ASCII letters and numerals.  **`length`** specifies the length of the string to create and defaults to 16. | `:put [:rndstr from="abcdef%^&``" length=33];` |
+| **set**         | `:set <var> [<value>]` | Assign value to a declared variable. | `:global a; :set a true;` |
+| **serialize**   | `:serialize [<value>] to=[arg]` | Serialize specified value/array to JSON or dsv (delimiter separated values) format.  **`value`** specifies which values to process.  **`to`** specifies the format - *json, dsv*  **`delimiter`** sets the "separator".  **`order`** specifies the order for variables.  **`options`** specifies additional options*:* json.pretty  - makes the JSON output more visually appealing;json.no-string-conversion - prevents implicit conversions from console string type to json number type;dsv.wrap-strings - wraps string values inside quotation marks;dsv.ignore-size - if array values have different sizes, e.g. <code>a=(1,2);b=(3,4);c=(5,6,7)</code>, this option will work around <code>array size mismatch</code> error and set "empty" values in those slots.dsv.remap - merges array of dictionaries into a single dictionary (useful when working with "<code>print as-value</code>") **file-name** enables the option to generate command's output into a file (available for download in the "/files" section). | `:put [:serialize value=a,b,c to=json]``["a","b","c"]``:local test {a=(1,2,3);b=(4,5,6);c=(7,"text",9)}; :put [ :serialize to=dsv delimiter=";" value=$test order=("c","a","b") ]``c;a;b``7;1;4``text;2;5``9;3;6``:global var ({ "string"="1234"; "number"=1234 });:put [ :serialize to=json value=$var ]``{"number":1234,"string":1234.000000}``:put [ :serialize to=json value=$var options=json.no-string-conversion  ]``{"number":1234,"string":"1234"}``:put [:serialize to=dsv options=dsv.remap delimiter="#" [/ip/address/print as-value]]``.id#address#comment#interface#network``*1#192.168.88.1/24#defconf#bridge#192.168.88.0``*2#192.168.69.190/24##ether1#192.168.69.0`|
+| **deserialize** | `:deserialize [<value>] from=[arg]` | Deserialize specified value/array from JSON or dsv (delimiter separated values) format.  **`from`** specifies the format - *json, dsv*  **`delimiter`** sets the "separator".  **`options`** specifies additional options*:* dsv.plain - deserializes every line as an array (input does not have a header or column names);dsv.array - expects a header (column names) and will return an array of dictionaries, where values are mapped to column names provided in the header.json.no-string-conversion - prevents implicit conversions from json string type to console values (number, ip, etc.). | `:put [:deserialize from=json value="[\"a\",\"b\",\"c\"]"]``a;b;c``:put ([ :deserialize from=dsv delimiter=";" value="a;b;c\n1;findme;3" options=dsv.plain ]->1->1)` `findme``:put ([ :deserialize from=dsv delimiter=";" value="a;b;c\n1;findme;3" options=dsv.plain ]->0->1)   ``b``:put ([:deserialize from=dsv "a;b;c\n1;2;3\n4;5;6" delimiter=";" options=dsv.array]->1->"b") ``5``:put ([:deserialize from=dsv "a;b;c\n1;2;3\n4;5;6" delimiter=";" options=dsv.array]->0->"c")    ``3``:put [typeof ([:deserialize "{ \"str\": \"123\" }" from=json options=json.no-string-conversion]->"str")]``str``:deserialize [/file/get file.json contents] from=json` |
+| **time**        | `:time <expression>` | Return interval of time needed to execute the provided expression. | `:put [:time {:for i from=1 to=10 do={ :delay 100ms }}];` |
+| **timestamp**   | `:timestamp [use-tz]` | Returns the time since `epoch`, where `epoch` is January 1, 1970 (Thursday), not counting leap seconds. The time is returned in UTC by default. Use the `use-tz` parameter to return the timestamp adjusted for the configured time zone on the router. | `[admin@MikroTik] > :put [:timestamp]``2735w21:41:43.481891543`or, on a later day of the week:`2735w1d21:41:43.481891543` |
 | **toarray**     | `:toarray <var>` | Convert a variable to an array. |       |
 | **tobool**      | `:tobool <var>` | Convert a variable to a boolean. |       |
 | **toid**        | `:toid <var>` | Convert a variable to internal ID. |       |
@@ -551,7 +560,7 @@ Every global command should start with the **`:`** token; otherwise it is treate
 | **tonum**       | `:tonum <var>` | Convert a variable to an integer. |       |
 | **tostr**       | `:tostr <var>` | Convert a variable to a string. |         |
 | **totime**      | `:totime <var>` | Convert a variable to time. |            |
-| **tonsec**      | `:tonsec <var>` | Convert a time to a nanoseconds. | `:put [:tonsec value=10:00] ¬† ¬† ¬† ¬† ¬† ¬† ¬†  36000000000000` |
+| **tonsec**      | `:tonsec <var>` | Convert a time to a nanoseconds. | `:put [:tonsec value=10:00]                36000000000000` |
 | **tocrlf**      | `:tocrlf <var>` | Converts line endings to CRLFs. | `:put [:tocrlf  "AAA\r\nBBB\r\nCCC" ]``AAA``BBB``CCC`|
 | **tolf**        | `:tolf <var>` | Converts line endings to LFs. | `:put [:tolf  "AAA\nBBB\nCCC" ]``AAA``BBB``CCC`|
 | **nothing**     | `:nothing`  | Return a value of nothing (nil). `:put [:nothing]` prints an empty line. In comparisons a nil value sorts below zero: `[:nothing] = 0` and `[:nothing] > 0` return `false`, while `[:nothing] < 0` returns `true`. | `:put [:nothing]`*(prints an empty line)* |
@@ -582,7 +591,7 @@ The following commands are available from most sub-menus:
 
 #### import
 
-The import command is available from the root menu and is used to import configuration from files created by an¬†[export](#common-commands)¬†command or written manually by hand.
+The import command is available from the root menu and is used to import configuration from files created by an [export](#common-commands) command or written manually by hand.
 
 ```ros
 [admin@admin] > do { import test.rsc } on-error={ :put "Failure" }
@@ -622,7 +631,7 @@ Several common parameters are available for `print` command:
 | **follow**         | Print all current entries and track new entries until <kbd>ctrl</kbd>-<kbd>c</kbd> is pressed. Could be used when viewing, for example, log entries. | `/log print follow` |
 | **follow-only**    | Print and track only new entries until <kbd>ctrl</kbd>-<kbd>c</kbd> is pressed. Could be used when, for example, trying to see new log entries. | `/log print follow-only` |
 | **from**           | Print parameters only from a specified item. | `/user print from=admin` |
-| **interval**       | Continuously print output in a selected time interval, useful to track down changes where¬†`follow`¬†is not acceptable | `/interface print interval=2` |
+| **interval**       | Continuously print output in a selected time interval, useful to track down changes where `follow` is not acceptable | `/interface print interval=2` |
 | **terse**          | Show details in a compact and machine-friendly format. |  |
 | **value-list**     | Data is displayed in a table, where parameters are split by lines and available items are split by columns (can be used for parsing purposes). |  |
 | **order-by**        | Sort output by one or more properties. Prefix the property name with `-` for descending order. Up to three sorting fields can be specified. | `/ip/arp/print order-by=address``/interface/print order-by=-link-downs proplist=name,link-downs``/interface/ethernet/print stats order-by=-driver-rx-packet where running` |
@@ -647,14 +656,14 @@ More than one parameter can be specified at a time, for example, `/ip route prin
 
 | Command   | Syntax | Description |
 |:--|:--|:--|
-| **`if`**    | `:if (<condition>) do={<commands>} else={<commands>}` | If a given condition is¬†`true`¬†then execute commands in the¬†`do`¬†block, otherwise execute commands in the¬†`else`¬†block (if specified). |
+| **`if`**    | `:if (<condition>) do={<commands>} else={<commands>}` | If a given condition is `true` then execute commands in the `do` block, otherwise execute commands in the `else` block (if specified). |
 
 Example:
 
 ```ros
-{ ¬†
-	:local myBool true; ¬†
-	:if ($myBool = false) do={¬†:put "value is false" } else={¬†:put "value is true" }
+{  
+	:local myBool true;  
+	:if ($myBool = false) do={ :put "value is false" } else={ :put "value is true" }
 }
 ```
 
@@ -676,7 +685,7 @@ output:
 hello from function
 
 #pass arguments to the function
-:global myFunc do={:put "arg a=$a";¬†:put "arg '1'=$1"}
+:global myFunc do={:put "arg a=$a"; :put "arg '1'=$1"}
 $myFunc a="this is arg a value" "this is arg1 value"
 
 output:
@@ -716,7 +725,7 @@ For example:
 ```ros
 :global my2 "123"
 
-:global myFunc do={¬†:global my2;¬†:put $my2;¬†:set my2 "lala";¬†:put $my2 }
+:global myFunc do={ :global my2; :put $my2; :set my2 "lala"; :put $my2 }
 $myFunc my2=1234
 :put "global value $my2"
 ```
@@ -733,9 +742,9 @@ global value 123
 To call one function from another (a nested function), refer to it by name. Declaring its name inside the calling function, as you would a variable, is optional, but it makes the dependency explicit:
 
 ```ros
-:global funcA do={¬†:return 5 }
-:global funcB do={ ¬†
-	:global funcA; ¬†
+:global funcA do={ :return 5 }
+:global funcB do={  
+	:global funcA;  
 	:return ([$funcA] + 4)
 }
 :put [$funcB]
@@ -753,7 +762,7 @@ The called function must be defined before the calling function runs: earlier in
 RouterOS scripting allows to catch runtime errors, which otherwise would exit script unexpectedly. For example, the `:resolve` command will throw an error and break the script if failed.
 
 ```text
-[admin@MikroTik] > {¬†:put [:resolve www.example.com];¬†:put "lala";}
+[admin@MikroTik] > { :put [:resolve www.example.com]; :put "lala";}
 failure: dns name does not exist
 
 ```
@@ -772,7 +781,7 @@ print after failure
 
 ## Operations with Arrays
 
-If a¬†key name in an array contains any character other than a lowercase character, it should be put in quotes.
+If a key name in an array contains any character other than a lowercase character, it should be put in quotes.
 For example:
 
 ```ros

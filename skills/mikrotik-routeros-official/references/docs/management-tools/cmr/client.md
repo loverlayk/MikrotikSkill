@@ -51,7 +51,7 @@ ADDRESS         STATUS
 
 The client pairs with the server at `controller-addresses`. A username and password are only needed to satisfy the server's requirement when the server is configured with `pairing-requirement=password`. They are the credentials of a RouterOS user on the server; CMR has no separate pairing password. By giving them, the client satisfies the server's requirement remotely.
 
-The client also has its own `pairing-requirement` in the `/cmr/client` menu, which defines what the server must do before the client accepts the pairing. The client supports `none` and `password`, and the default is `password`. The CMR server also supports `confirm`. The [Pairing](./#pairing) section explains how the requirements on both devices combine.
+The client also has its own `pairing-requirement` in the `/cmr/client` menu, which defines what the server must do before the client accepts the pairing. The client supports `none`, `password`, and `confirm`, like the CMR server, and the default is `password`. With `confirm`, the pairing completes only after `/cmr/client/pair` is run on the client. The [Pairing](./#pairing) section explains how the requirements on both devices combine.
 
 ## Disconnect the client
 

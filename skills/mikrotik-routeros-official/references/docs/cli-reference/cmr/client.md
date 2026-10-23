@@ -18,6 +18,7 @@ For an overview of the CMR-client and its usage, see the [CMR-Client](../../../m
 Defines what the remote device must do before this device accepts the pairing:
 - **none** - this device accepts pairing automatically, without additional checks
 - **password** (default) - the remote device may approve pairing by giving the username and password of a RouterOS user on this device; CMR has no separate pairing password
+- **confirm** - pairing must be approved locally with [`/cmr/client/pair`](pair) on this device; approval from the remote side is not possible
 </ArgTableRow>
 <ArgTableRow arg="controller-addresses" typ="multi { array-id, address: address (flags=46D)
  }" unset="1">Specifies the controller IP addresses to use. This setting is optional when the client can discover the controller automatically through neighbor discovery or DNS (`_cmr._tcp.lan`, or `_cmr._tcp.` followed by the domain name from DHCP), but must be configured when the controller address cannot be determined automatically.</ArgTableRow>

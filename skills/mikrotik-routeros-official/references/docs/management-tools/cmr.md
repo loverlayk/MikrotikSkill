@@ -73,7 +73,7 @@ The [`/cmr`](../../cli-reference/cmr) menu also controls how the clients find th
 - `controller-addresses` - server IP addresses sent to the devices when they cannot discover the server automatically through neighbor discovery (MNDP) or DNS.
 - `track-topology` - fetches routes, the WiFi registration table, the ARP table, neighbors, DHCP state, and interface states from the clients. The automatic links of network topology layouts depend on this data. Default: `yes`.
 - `fetch-comments` - fetches the comments of interfaces, ports, and WiFi registration table entries from the clients. Default: `yes`.
-- `auto-labels` - selects which automatic labels the server fetches from the clients: any of `version`, `architecture`, `model`, `board-name`, `identity`, and `address`, or `all` or `none`. Default: `all`.
+- `auto-labels` - selects which automatic labels the server fetches from the clients: any of `version`, `architecture`, `model`, `board-name`, `identity`, `address`, and `ssid`, or `all` or `none`. Default: `all`.
 - `apptraffic-devices` - selects, by labels, the devices to collect application traffic statistics from. Default: `gateway`, the devices with the `gateway` label. Set `all` to select every device.
 - `upgrade-check-interval` - how often the server checks the update servers for new versions. The minimum is 1 minute. Default: `10h`.
 - `packages-directory`, `packages-cache-type`, and `packages-cache-limit` - where the server takes and stores upgrade packages. The Upgrade sources section describes them.
@@ -86,11 +86,11 @@ For now, changing `packages-directory`, `upgrade-check-interval`, or `pairing-re
 
 Pairing is established only when both devices agree to it. Each device has its own `pairing-requirement` setting, which defines what the remote device must do before this device accepts the pairing. Because each side has its own requirement, pairing succeeds only after the requirements of both devices have been satisfied.
 
-Running the `pair` command locally always approves the pairing from this device, regardless of its configured requirement. The CMR server supports `pairing-requirement=none`, `password`, and `confirm`; the client supports `none` and `password`:
+Running the `pair` command locally always approves the pairing from this device, regardless of its configured requirement. Both the CMR server and the client support `pairing-requirement=none`, `password`, and `confirm`:
 
 - **none** - no additional approval is required. This device accepts pairing automatically.
 - **password** - the remote device can approve pairing by giving the username and password of a RouterOS user on this device, with the `username` and `password` arguments of the `pair` command. CMR has no separate pairing password. Pairing can also be approved locally with the `pair` command.
-- **confirm** - on the CMR server, pairing must be approved locally by running `/cmr/device/pair`; approval from the remote side is not possible.
+- **confirm** - pairing must be approved locally with the `pair` command of this device, `/cmr/device/pair` on the server or `/cmr/client/pair` on the client; approval from the remote side is not possible.
 
 Think of `pairing-requirement` as what must happen before this device agrees to the pairing. Pairing completes only after both devices have agreed.
 
@@ -100,7 +100,7 @@ Think of `pairing-requirement` as what must happen before this device agrees to 
 - **confirm** forces explicit local approval on the server: discovering a new client is not enough by itself; an administrator must run the `pair` command on the server before it accepts that client.
 - **password** suits when remote approval is needed but physical or administrative access to both devices is inconvenient. For example, a client can use **password**, allowing the CMR server to satisfy the client's requirement remotely with the credentials of a user on the client.
 
-The requirements on the two devices are independent. The client accepts pairing automatically (`none`) or when the server gives the credentials of a user on the client (`password`). For example:
+The requirements on the two devices are independent. The client accepts pairing automatically (`none`), when the server gives the credentials of a user on the client (`password`), or only after `/cmr/client/pair` is run on the client (`confirm`). For example:
 
 - CMR server: **none**, client: **none** - both devices accept automatically.
 - CMR server: **none**, client: **password** - the client accepts when the server gives the credentials of a user on the client.
@@ -109,7 +109,7 @@ The requirements on the two devices are independent. The client accepts pairing 
 - CMR server: **confirm**, client: **none** - the client accepts automatically, but the `pair` command must be run on the server.
 - CMR server: **confirm**, client: **password** - the client accepts when the server gives the credentials of a user on the client, but the `pair` command must also be run on the server.
 
-Each `pair` command takes the username and password of the **other** device: on the server, [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) takes a user of the device being paired, and on the client, [`/cmr/client/pair`](../../cli-reference/cmr/client/pair) takes a user of the server. Running `pair` without credentials approves this device's side, and that satisfies both sides when the remote side's requirement is `none`. Pairing can usually be completed from one console: at the server, `/cmr/device/pair` already approves the server's side, so the server's own `password` is only ever typed at the client's console, never at the server. The server's `password` requirement matters only when pairing is started from the client. `confirm` is the one requirement that forces action on the server console; with it set, pairing cannot complete from the client alone.
+Each `pair` command takes the username and password of the **other** device: on the server, [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) takes a user of the device being paired, and on the client, [`/cmr/client/pair`](../../cli-reference/cmr/client/pair) takes a user of the server. Running `pair` without credentials approves this device's side, and that satisfies both sides when the remote side's requirement is `none`. Pairing can usually be completed from one console: at the server, `/cmr/device/pair` already approves the server's side, so the server's own `password` is only ever typed at the client's console, never at the server. The server's `password` requirement matters only when pairing is started from the client. `confirm` is the one requirement that forces action on a device's own console: set on the server, pairing cannot complete from the client alone, and set on the client, it cannot complete from the server alone.
 
 Pairing by password also finds the device for you: the server presents the `username` and `password` to every selected device, so you do not need to know which device has which password. When the devices of a site each carry a different stock password and you have their boxes in front of you, run [`/cmr/device/pair`](../../cli-reference/cmr/device/pair) `username=admin password=<password from one box>` once per box: each run pairs the device that has that password, and the others stay pending. Use `labels` instead of `all` to limit a pairing run to part of the fleet.
 
@@ -139,10 +139,12 @@ You can change the following properties of a managed device from the server:
 
 - `identity` - rename the device. The new identity is applied to the device itself.
 - `labels` - assign labels to group devices. Labels are the common selection mechanism across CMR: upgrade rules, alert rules, `run-script`, and the other device commands select devices by label.
-- `port-labels` - assign labels per port. Quote the label, for example `port-labels=ether1:"uplink"`. The `port-labels` of a `/cmr/vlan` rule select ports by these labels or by interface name.
+- `port-labels` - assign labels per port. Write each port as `port:label`, separate the labels of one port with `/` and the ports with `,`, for example `port-labels=ether1:uplink/trunk,ether5:office`. The print output separates the ports with `;`. The `port-labels` of a `/cmr/vlan` rule select ports by these labels or by interface name.
 - `pairing-requirement` - override the server's pairing requirement for a single device.
 
 Filter the list with `where` on any of these properties, for example `/cmr/device/print where connected` or `/cmr/device/print where labels~"office"`. Use `~` for labels, because a device can have several labels: `labels=office` matches only a device whose whole label list is `office`. To remove all labels from a device, set `labels` to an empty value.
+
+`/cmr/device/export` prints the device list as `add` commands, one for each device with its `identity`, `ids`, `labels`, and `pairing-requirement`, and `/cmr/device/add` creates a device entry from these values.
 
 ### Labels and device selection
 

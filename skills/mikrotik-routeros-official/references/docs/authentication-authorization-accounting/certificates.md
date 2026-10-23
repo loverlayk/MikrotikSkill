@@ -297,6 +297,10 @@ To generate a Let's Encrypt certificate for an [IP Cloud](../network-management/
 The Let's Encrypt directory is used if `directory-url` is not provided.
 :::
 
+:::note
+A certificate cannot be removed while its update is in progress. If an ACME certificate fails to renew and remains in an error state, the `remove` command fails with `cannot remove certificate while acme update is in progress`. Restart the router, and remove the certificate afterwards.
+:::
+
 ## SCEP
 
 SCEP is using the HTTP protocol and base64 encoded GET requests. Most of the requests are without authentication and cipher, however, important ones can be protected if necessary (ciphered or signed using a received public key).
