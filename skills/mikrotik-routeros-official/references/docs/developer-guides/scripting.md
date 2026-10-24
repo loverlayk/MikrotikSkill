@@ -197,23 +197,23 @@ To use a local variable in several commands, put them on one line or enclose the
 a
 ```
 
-:::tip
-Declare **global** variables at the top level of the script. A global variable declared inside a **local** scope (a block) is still global, but declaring it there makes the script harder to read.
-:::
-
-A global variable is not limited by the block in which it is declared — it is visible everywhere after the declaration point:
+A global variable is not limited by blocks. Declare it at the top level of the script and it is visible in every block that follows, nested ones included:
 
 ```ros
-{   
+:global b 4;
+{
     :local a 3;
-    {   
-        :global b 4;
-    }   
-    :put ($a+$b);
+    {
+        :put ($a+$b);
+    }
 }
 ```
 
-The code outputs `7` because `b` is a global variable and stays visible outside the block.
+The code outputs `7`.
+
+:::tip
+Declare **global** variables at the top level of the script. A global variable declared inside a **local** scope (a block) is still global and stays visible after the block ends, but a reader of the outer code cannot see where it comes from, so declaring it there makes the script harder to read.
+:::
 
 ## Keywords
 

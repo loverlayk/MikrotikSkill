@@ -3,7 +3,7 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `a898fe70bd2f0770e2bd6796f1215a91fa50a182113d5f0be9f5b472fb219305`
 Pages in current index: 1473
-Pages changed/written: 7
+Pages changed/written: 3
 Pages removed: 0
 Pages failed: 0
 
@@ -219,7 +219,7 @@ Pages failed: 0
 - [/interface/bonding](docs/cli-reference/interface/bonding.md) `f5344b293b3b`
 - [/interface/bonding/monitor-slaves](docs/cli-reference/interface/bonding/monitor-slaves.md) `9ec8962033f3`
 - [/interface/bonding/monitor](docs/cli-reference/interface/bonding/monitor.md) `90a842e2f15d`
-- [/interface/bridge](docs/cli-reference/interface/bridge.md) `e64d911c5613`
+- [/interface/bridge](docs/cli-reference/interface/bridge.md) `4529dfbb135e`
 - [/interface/bridge/calea](docs/cli-reference/interface/bridge/calea.md) `690afd5316d1`
 - [/interface/bridge/calea/reset-counters-all](docs/cli-reference/interface/bridge/calea/reset-counters-all.md) `6a246b19e505`
 - [/interface/bridge/calea/reset-counters](docs/cli-reference/interface/bridge/calea/reset-counters.md) `6bfdd8a9ee4e`
@@ -1158,7 +1158,7 @@ Pages failed: 0
 - [API](docs/developer-guides/api.md) `40f0f636b33a`
 - [Python3 Example](docs/developer-guides/api/python3-example.md) `e056b7f9eda6`
 - [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
-- [Scripting](docs/developer-guides/scripting.md) `039a31e8fd6d`
+- [Scripting](docs/developer-guides/scripting.md) `26b6093ef447`
 - [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `87a15948365a`
 - [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `8b61e0af2544`
 - [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
@@ -1274,7 +1274,7 @@ Pages failed: 0
 - [Load Balancing](docs/high-availability-solutions/load-balancing.md) `182c27a3b77b`
 - [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `36a5c389a4b4`
 - [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `9a658aaa58d9`
-- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `24720d3f18f1`
+- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `eed613bcf753`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `047977ef8412`
 - [VRRP](docs/high-availability-solutions/vrrp.md) `cb3ff5d085a1`

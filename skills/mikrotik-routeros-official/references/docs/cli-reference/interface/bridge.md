@@ -110,8 +110,14 @@ All VLANs used for bridge slave ports must also be configured as tagged VLANs fo
 <ArgTableRow arg="mlag-heartbeat" typ="alt { mlag-heartbeat: enum (none) { none:0 }
 , mlag-heartbeat: time [1s .. 10s]
  }">This setting controls how often heartbeat messages are sent to check the connection between peers. If no heartbeat message is received for three intervals in a row, the peer logs a warning about potential communication problems. If set to `none`, heartbeat messages are not sent at all.</ArgTableRow>
-<ArgTableRow arg="mlag-init-delay" typ="time"></ArgTableRow>
-<ArgTableRow arg="mlag-lacp-fallback" typ="bool"></ArgTableRow>
+<ArgTableRow arg="mlag-init-delay" typ="time">
+After the device reboots, keep the slave interfaces of dual-connected (MLAG) bonds out of the LACP bond for the specified time, or until the MLAG peers synchronize their system IDs, whichever happens first. Set the delay longer than the time the device needs to boot and reconnect to the MLAG peer. This prevents the bond from activating with a locally generated system ID before the MLAG system ID is synchronized, which would otherwise reset the LACP session on the partner.  
+Default: 1 minute.
+</ArgTableRow>
+<ArgTableRow arg="mlag-lacp-fallback" typ="bool">
+Specify what happens to the LACP system ID of dual-connected (MLAG) bonds when the MLAG peer link is lost. When set to `yes`, the bond reverts to its own LACP system ID. When set to `no`, the bond keeps the MLAG system ID, which prevents the LACP partner from renegotiating the bond when one MLAG node reboots or its peer link fails.  
+Default: yes.
+</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

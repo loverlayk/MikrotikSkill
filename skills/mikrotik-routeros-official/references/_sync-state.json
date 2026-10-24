@@ -1805,7 +1805,7 @@
       "title": "Multi-chassis Link Aggregation Group",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
       "path": "docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
-      "sha256": "24720d3f18f15c779479b59d5b7c9e02315dd06c2bbfa133d5123afe13403ce2"
+      "sha256": "eed613bcf75328aaaead0c43598ff1602f66c95168f56db8a77bb73628cf5829"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/bonding-examples.md": {
       "title": "Bonding Examples",
@@ -2213,7 +2213,7 @@
       "title": "Scripting",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting.md",
       "path": "docs/developer-guides/scripting.md",
-      "sha256": "039a31e8fd6dc6d0ef378820d51b225afa39be54adec400fc4308da9b64917c1"
+      "sha256": "26b6093ef4474ddf8c80802a83405c7eb1764f94a989b27f023ede908d3681fd"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-examples.md": {
       "title": "Scripting examples",
@@ -3299,7 +3299,7 @@
       "title": "/interface/bridge",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/bridge.md",
       "path": "docs/cli-reference/interface/bridge.md",
-      "sha256": "e64d911c5613709472e405ec0005d915df8ecf43653edad4bb2879e95f1b7444"
+      "sha256": "4529dfbb135e189874ae26f62a6c4da3fa9bee9cfd158fceced20708312cbaaf"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/bridge/calea.md": {
       "title": "/interface/bridge/calea",

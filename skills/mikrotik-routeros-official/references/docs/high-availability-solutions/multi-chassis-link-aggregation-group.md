@@ -189,7 +189,13 @@ add mode=802.3ad name=bond1 slaves=sfp-sfpplus1,sfp-sfpplus2 lacp-rate=1sec
 
 ## MLAG settings and monitoring
 
-There are several MLAG related settings and monitoring options: [`mlag-heartbeat`](../cli-reference/interface/bridge/bridge.md#mlag-heartbeat), [`mlag-peer-port`](../cli-reference/interface/bridge/bridge.md#mlag-peer-port), [`mlag-priority`](../cli-reference/interface/bridge/bridge.md#mlag-priority) from `interface/bridge` menu and [`mlag-id`](../cli-reference/interface/bonding/bonding.md#mlag-id) from `interface/bonding` menu.
+There are several MLAG related settings and monitoring options: [`mlag-heartbeat`](../cli-reference/interface/bridge/bridge.md#mlag-heartbeat), [`mlag-init-delay`](../cli-reference/interface/bridge/bridge.md#mlag-init-delay), [`mlag-lacp-fallback`](../cli-reference/interface/bridge/bridge.md#mlag-lacp-fallback), [`mlag-peer-port`](../cli-reference/interface/bridge/bridge.md#mlag-peer-port), [`mlag-priority`](../cli-reference/interface/bridge/bridge.md#mlag-priority) from `interface/bridge` menu and [`mlag-id`](../cli-reference/interface/bonding/bonding.md#mlag-id) from `interface/bonding` menu.
+
+By default, MLAG uses the elected primary node's system ID as the shared system ID for both the RSTP bridge ID and the LACP system ID of dual-connected bonds. If the primary node reboots, the remaining secondary node reverts its bonds to its own LACP system IDs (see [`mlag-lacp-fallback`](../cli-reference/interface/bridge/bridge.md#mlag-lacp-fallback)). The LACP partner must then renegotiate the bond, causing brief packet loss.
+
+Consider setting `mlag-lacp-fallback=no` to keep the shared MLAG system ID after the peer link is lost, avoiding LACP renegotiation. The primary node must rejoin the cluster to restore the shared system ID.
+
+When a node joins or rejoins the cluster, its dual-connected bond slaves stay out of the 802.3ad bond until the MLAG system ID syncs with the peer. [`mlag-init-delay`](../cli-reference/interface/bridge/bridge.md#mlag-init-delay) controls how long the slaves stay excluded after reboot, preventing the bond from briefly activating with a local system ID.
 
 Use the `/interface/bridge/monitor` commands to see the current MLAG state and active role. The `mlag-state` field shows `connected` after ICCP is established, `connecting` while the peers establish or re-establish the connection, or an error such as `peer port not running` when the configured peer port is unavailable.
 
