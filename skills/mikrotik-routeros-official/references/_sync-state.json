@@ -293,7 +293,7 @@
       "title": "SSH",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/ssh.md",
       "path": "docs/management-tools/ssh.md",
-      "sha256": "192eaa91411d976fb46fa55a3a576fae1ebc931e2c644152812e607688c6446d"
+      "sha256": "73e927155820ba5b6face44526f34915e893bff919897ba3e00d7e9e85dee8d2"
     },
     "https://manual.mikrotik.com/docs/management-tools/quick-set.md": {
       "title": "Quick Set",
@@ -1727,7 +1727,7 @@
       "title": "Certificates",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates.md",
       "path": "docs/authentication-authorization-accounting/certificates.md",
-      "sha256": "055d81deb19c29637cdd59c84b5c9307b742561f672a7e608af39f98c2ea5620"
+      "sha256": "e4978be406f8b0509da6a082d22a511f470ad09cbd26a63b1f266475ace4b15b"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/dot1x.md": {
       "title": "Dot1X",
@@ -1769,7 +1769,7 @@
       "title": "User",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/user.md",
       "path": "docs/authentication-authorization-accounting/user.md",
-      "sha256": "d68ab2a64da40b065cc0b230eab99c0ba8236709e7e12556e10c1c5152c5a8ab"
+      "sha256": "788669d58277c20507a49ff6b85e700b8c2053d1aaa55a36958f8e2c8623da64"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions.md": {
       "title": "High Availability Solutions",

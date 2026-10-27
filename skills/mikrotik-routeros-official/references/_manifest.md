@@ -8,14 +8,14 @@ Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
-- [Certificates](docs/authentication-authorization-accounting/certificates.md) `055d81deb19c`
+- [Certificates](docs/authentication-authorization-accounting/certificates.md) `e4978be406f8`
 - [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `1cc1fd3126fa`
 - [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `0fd674338681`
 - [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `5a550cf0f64c`
 - [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `47038484e799`
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
-- [User](docs/authentication-authorization-accounting/user.md) `d68ab2a64da4`
+- [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
 - [Bridging and Switching](docs/bridging-and-switching.md) `5f2577df6afa`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `ba1a8e191094`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
@@ -1320,7 +1320,7 @@ Pages failed: 0
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
 - [RoMON](docs/management-tools/romon.md) `8eab6f0e2235`
 - [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
-- [SSH](docs/management-tools/ssh.md) `192eaa91411d`
+- [SSH](docs/management-tools/ssh.md) `73e927155820`
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
 - [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`

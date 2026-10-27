@@ -198,6 +198,10 @@ Columns: NAME, COMMON-NAME
 1  T name_example_1  ca   
 ```
 
+:::info
+Certificates with a weak RSA public exponent (7 or lower) continue to work, but are flagged with the comment `key uses insecure RSA public exponent!` in the print output of `/certificate/print`. Replace such a certificate with one that uses a stronger key.
+:::
+
 ### CRL
 
 RouterOS supports Certificate Revocation List (CRL) checking.

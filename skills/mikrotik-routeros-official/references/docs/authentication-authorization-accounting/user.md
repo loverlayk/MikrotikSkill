@@ -133,6 +133,10 @@ Private key import accepts PKCS#1 PEM (`BEGIN RSA PRIVATE KEY`) and PKCS#8 files
 
 OpenSSH-format private keys (`BEGIN OPENSSH PRIVATE KEY`) are not accepted. For all properties, see [`/user/ssh-keys`](../cli-reference/user/ssh-keys/) and [`/user/ssh-keys/private`](../cli-reference/user/ssh-keys/private/) in the CLI reference.
 
+:::info
+RSA keys with a weak public exponent (7 or lower) continue to work, but are flagged with the comment `key uses insecure RSA public exponent!` in the print output of `/user/ssh-keys` and `/user/ssh-keys/private`. Replace such a key pair with a stronger one.
+:::
+
 ## RADIUS authentication
 
 Router user remote AAA authenticates management logins against a RADIUS server and sends it accounting records. Configure the RADIUS client first: add a [`/radius`](../cli-reference/radius/) entry with `service=login`, then enable [`/user/aaa`](../cli-reference/user/aaa). For the RADIUS server, any RouterOS with the [User Manager](user-manager) package works:

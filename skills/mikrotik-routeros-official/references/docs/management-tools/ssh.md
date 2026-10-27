@@ -28,7 +28,16 @@ Create a new host key pair, for example after the old key leaked, with:
 /ip/ssh/regenerate-host-key
 ```
 
-Changing `host-key-type` also regenerates the key immediately. After either change, SSH clients that pinned the old key report a fingerprint mismatch; distribute the new fingerprint (`/ip/ssh/print`) or update the pinned entries.
+Changing `host-key-type` also regenerates the key immediately. After any regeneration, SSH clients that pinned the old key report a fingerprint mismatch; distribute the new fingerprint (`/ip/ssh/print`) or update the pinned entries.
+
+:::info
+If the host key is an RSA key with a weak public exponent (7 or lower), the SSH host key is automatically regenerated and the event is logged:
+
+```text
+ssh,critical host key uses insecure RSA public exponent! Host key will be regenerated!
+```
+
+:::
 
 The default host key type is Ed25519 on new installations; routers upgraded from older RouterOS versions keep their RSA key.
 
