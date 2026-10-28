@@ -10,7 +10,7 @@
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="name" typ="string"></ArgTableRow>
-<ArgTableRow arg="poe-out" typ="enum (off | auto-on | forced-on) { off:0, auto-on:1, forced-on:2 }" syscap="(!poe-4p-power and poe)"></ArgTableRow>
+<ArgTableRow arg="poe-out" typ="enum (off | auto-on | forced-on | forced-on-a | forced-on-bt) { off:0, auto-on:1, forced-on:2, forced-on-a:3, forced-on-bt:4 }" syscap="poe"></ArgTableRow>
 <ArgTableRow arg="poe-voltage" typ="enum (auto | low | high) { auto:0, low:1, high:2 }" syscap="poe"></ArgTableRow>
 <ArgTableRow arg="poe-priority" typ="num" syscap="poe"></ArgTableRow>
 <ArgTableRow arg="power-cycle-ping-enabled" typ="bool" syscap="poe"></ArgTableRow>

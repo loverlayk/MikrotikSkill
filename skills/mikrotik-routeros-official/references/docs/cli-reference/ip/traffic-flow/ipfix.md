@@ -37,6 +37,8 @@ Select the fields included in IPFIX flow records. A row set to `yes` exports tha
 <ArgTableRow arg="nat-dst-address" typ="bool">Include the NATed destination address of the flow</ArgTableRow>
 <ArgTableRow arg="nat-src-port" typ="bool">Include the NATed source port of the flow</ArgTableRow>
 <ArgTableRow arg="nat-dst-port" typ="bool">Include the NATed destination port of the flow</ArgTableRow>
+<ArgTableRow arg="nat-src-address6" typ="bool"></ArgTableRow>
+<ArgTableRow arg="nat-dst-address6" typ="bool"></ArgTableRow>
 <ArgTableRow arg="ipv6-flow-label" typ="bool">Include the IPv6 flow label field</ArgTableRow>
 <ArgTableRow arg="udp-length" typ="bool">Include the UDP payload length</ArgTableRow>
 <ArgTableRow arg="tcp-seq-num" typ="bool">Include the TCP sequence number</ArgTableRow>

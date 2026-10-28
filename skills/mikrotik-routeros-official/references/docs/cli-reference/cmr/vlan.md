@@ -16,7 +16,7 @@ The `/cmr/vlan` menu creates bridge and VLAN configuration on the selected CMR c
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="labels" typ="object" unset="1">Select the CMR clients this rule provisions. Supports + and - signs as AND and AND NOT operators, respectively; if no sign is provided, the OR operator is used. If omitted, the rule applies to all connected devices.</ArgTableRow>
-<ArgTableRow arg="port-labels" typ="object" unset="1">Select the ports to configure on the selected devices, by interface name (for example `ether1`) or by a port label assigned to the port in `/cmr/device` (for example `uplink`). If omitted, all ports of the selected devices are configured.</ArgTableRow>
+<ArgTableRow arg="port-labels" typ="object" unset="1" mandatory="1">Select the ports to configure on the selected devices, by interface name (for example `ether1`) or by a port label assigned to the port in `/cmr/device` (for example `uplink`). If omitted, all ports of the selected devices are configured.</ArgTableRow>
 <ArgTableRow arg="vlan-ids" typ="multi { vlan-range: range [1 .. 4094]
  }" mandatory="1">VLAN IDs assigned to the selected ports, as a comma-separated list or a range, for example `100,200` or `100-200`. On a trunk port every VLAN ID is tagged; on an access port only the first VLAN ID is used, as the port's PVID.</ArgTableRow>
 <ArgTableRow arg="role" typ="enum (access | trunk)" unset="1">

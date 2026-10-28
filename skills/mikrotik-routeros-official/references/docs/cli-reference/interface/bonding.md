@@ -67,6 +67,7 @@ Specifies whether ports actively or passively participates in the LACP.
 - `active` - ports actively initiate LACP communication.
 - `passive` - ports only respond to LACP messages.
 </ArgTableRow>
+<ArgTableRow arg="lacp-strict" typ="bool"></ArgTableRow>
 <ArgTableRow arg="lacp-system-id" typ="macAddr">Specifies the LACP system ID used for LACP negotiations.</ArgTableRow>
 <ArgTableRow arg="lacp-system-priority" typ="num">Specifies the LACP system priority used for LACP negotiations.</ArgTableRow>
 </ArgTable>

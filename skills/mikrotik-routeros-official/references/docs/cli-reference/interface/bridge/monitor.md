@@ -24,6 +24,11 @@
 <ArgTableRow arg="root-port" typ="iface_enum { none:0 }"></ArgTableRow>
 <ArgTableRow arg="port-count" typ="num"></ArgTableRow>
 <ArgTableRow arg="designated-port-count" typ="num"></ArgTableRow>
+<ArgTableRow arg="topology-changes" typ="num"></ArgTableRow>
+<ArgTableRow arg="last-topology-change" typ="time"></ArgTableRow>
+<ArgTableRow arg="max-age" typ="num"></ArgTableRow>
+<ArgTableRow arg="hello-time" typ="num"></ArgTableRow>
+<ArgTableRow arg="forward-delay" typ="num"></ArgTableRow>
 <ArgTableRow arg="mst-config-digest" typ="string"></ArgTableRow>
 <ArgTableRow arg="fast-forward" typ="bool"></ArgTableRow>
 <ArgTableRow arg="multicast-router" typ="bool"></ArgTableRow>

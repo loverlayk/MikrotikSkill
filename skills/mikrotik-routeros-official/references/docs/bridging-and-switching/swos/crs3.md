@@ -34,7 +34,7 @@ The System tab manages general configuration parameters, device discovery option
 
 | Property | Description |
 | :--- | :--- |
-| **Address Acquisition** | Defines IP assignment via static settings, DHCP with fallback, or DHCP only. |
+| **Address Acquisition** | Specify which address acquisition method to use:`DHCP with fallback` - the switch sends DHCP requests every second and, while no DHCP server is answering, immediately uses the configured **Static IP Address** value. When a server answers, the switch obtains a lease in 1-2 seconds and renews it at half the lease time. If a renewal goes unanswered, the switch returns to the **Static IP Address** value in 5 seconds and resumes sending requests every second.`static` - address is set as a **Static IP Address** value (IPv4 only)`DHCP only` - switch uses DHCPv4 client to acquire address |
 | **Static IP Address** | Specifies the static IPv4 address for management access. |
 | **Identity** | Sets a customizable name for the switch identifier. |
 | **Allow From** | Restricts management web access to specified IP ranges or subnets. |

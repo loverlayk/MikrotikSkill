@@ -5,7 +5,7 @@
 -----------
 
 ## cmr/client/forget 
-**Conditions:** !smips, !powerpc
+**Conditions:** !smips
 **Type:** Command
 
 Forget device pairing and disconnect device from CMR server.

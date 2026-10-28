@@ -14,7 +14,6 @@
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="term-pid" typ="num"></ArgTableRow>
 <ArgTableRow arg="task-id" typ="num"></ArgTableRow>
 <ArgTableRow arg="user" typ="string"></ArgTableRow>
 <ArgTableRow arg="name" typ="string"></ArgTableRow>

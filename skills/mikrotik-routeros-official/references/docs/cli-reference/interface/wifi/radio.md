@@ -17,7 +17,7 @@
 <ArgTableRow arg="tx-chains" typ="ubit ()"></ArgTableRow>
 <ArgTableRow arg="rx-chains" typ="ubit ()"></ArgTableRow>
 <ArgTableRow arg="bands" typ="object { band: composite { band-band: enum ()
-, band-widths: ubit (20mhz, 20/40mhz, 20/40/80mhz, 20/40/80/160mhz, 20/40/80+80mhz, 20/40/80/160/320mhz, 1mhz, 1/2mhz, 1/2/4mhz, 1/2/4/8mhz, 1/2/4/8/16mhz, 2160mhz)
+, band-widths: ubit (20mhz, 20/40mhz, 20/40/80mhz, 20/40/80/160mhz, 20/40/80+80mhz, 20/40/80/160/320mhz, 1mhz, 1/2mhz, 1/2/4mhz, 1/2/4/8mhz, 1/2/4/8/16mhz, 1080mhz, 2160mhz)
  }
  }"></ArgTableRow>
 <ArgTableRow arg="ciphers" typ="ubit (tkip, ccmp, gcmp, ccmp-256, gcmp-256, cmac, gmac, cmac-256, gmac-256)"></ArgTableRow>
@@ -39,7 +39,7 @@
 <ArgTableRow arg="max-station-interfaces" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="max-peers" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="hw-type" typ="string" unset="1"></ArgTableRow>
-<ArgTableRow arg="hw-caps" typ="multi { array-id, hw-cap: enum (sniffer | qos-classifier-dscp | spectral | channel-switch | mlo | hw-protection-mode | beacon-protection)
+<ArgTableRow arg="hw-caps" typ="multi { array-id, hw-cap: enum (sniffer | qos-classifier-dscp | spectral | channel-switch | mlo | hw-protection-mode | beacon-protection | mld-station)
  }" unset="1"></ArgTableRow>
 <ArgTableRow arg="ml-group" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="interface" typ="iface_enum" unset="1"></ArgTableRow>

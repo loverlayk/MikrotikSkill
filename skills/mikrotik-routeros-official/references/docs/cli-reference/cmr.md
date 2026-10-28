@@ -29,7 +29,7 @@ Defines what the remote device must do before this device accepts the pairing:
  }" unset="1">CMR server IP addresses that are sent to the devices when the controller address cannot be discovered automatically (MNDP, or DNS: the client resolves `_cmr._tcp.lan` and `_cmr._tcp.` followed by the domain name from DHCP).</ArgTableRow>
 <ArgTableRow arg="apptraffic-devices" typ="object" unset="1">Select devices using labels for which to collect app traffic data. Supports + and - signs as AND and AND NOT operators, respectively; if no sign is provided, the OR operator is used. Default: `gateway`; `all` selects every device.</ArgTableRow>
 <ArgTableRow arg="auto-labels" typ="alt { auto-labels: enum (none | all) { none:0, all:0xffff }
-, auto-labels: ubit (version, architecture, model, board-name, identity, address)
+, auto-labels: ubit (version, architecture, model, board-name, identity, address, ssid)
  }" unset="1">Whether to fetch labels information from the connected cmr-client devices. Can be configured to fetch only specific labels. Default: all.</ArgTableRow>
 </ArgTable>
 

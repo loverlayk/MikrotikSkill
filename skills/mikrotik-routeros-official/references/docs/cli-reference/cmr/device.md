@@ -29,7 +29,7 @@ Devices managed by this CMR server. A device appears in the list as soon as it c
 <ArgTableRow arg="labels" typ="multi { array-id, label: enum
  }" unset="1">User labels assigned to the device (grouping/filtering).</ArgTableRow>
 <ArgTableRow arg="port-labels" typ="object { port-and-labels: super { port: string
-, labels: multi { array-id, label: string
+, [labels] :multi { array-id, label: string
  }
  }
  }" unset="1">Labels per port. Quote the label, for example `port-labels=ether1:"uplink"`. `/cmr/vlan` rules can select ports by these labels.</ArgTableRow>

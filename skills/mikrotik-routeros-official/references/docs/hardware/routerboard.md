@@ -52,7 +52,7 @@ After the reboot, verify that **current-firmware** matches **upgrade-firmware**.
 
 Preboot etherboot instructs a RouterOS device to search for a Netinstall server on every boot for a specified amount of time, before starting the regular boot process (for example, RouterOS).
 
-By default, Etherboot accepts addresses from any BOOTP/DHCP server, but it is possible to lock preboot-etherboot process to aspecific Netinstall server with a specific IP address with [`preboot-etherboot-server`](../cli-reference/system/routerboard/settings/settings.md#preboot-etherboot-server) parameter.
+By default, Etherboot accepts addresses from any BOOTP/DHCP server, but it is possible to lock preboot-etherboot process to aspecific Netinstall server with a specific IP address with [`preboot-etherboot-server`](../cli-reference/system/routerboard/settings#preboot-etherboot-server) parameter.
 
 When both options are enabled, you can reinstall the device remotely without accessing RouterOS or pressing the reset button.
 

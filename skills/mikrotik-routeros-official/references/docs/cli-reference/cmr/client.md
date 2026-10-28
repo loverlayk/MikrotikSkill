@@ -5,7 +5,7 @@
 -----------
 
 ## cmr/client 
-**Conditions:** !smips, !powerpc
+**Conditions:** !smips
 **Type:** Settings Directory
 
 For an overview of the CMR-client and its usage, see the [CMR-Client](../../../management-tools/cmr/client) documentation.
@@ -14,7 +14,7 @@ For an overview of the CMR-client and its usage, see the [CMR-Client](../../../m
 <ArgTableRow arg="enabled" typ="enum (yes | no)">Whether CMR client is enabled or not. Default: no.</ArgTableRow>
 <ArgTableRow arg="peer-id" typ="string" unset="1">Unique CMR specific device identifier, of the CMR server.</ArgTableRow>
 <ArgTableRow arg="local-id" typ="string" unset="1">Unique CMR specific device identifier.</ArgTableRow>
-<ArgTableRow arg="pairing-requirement" typ="enum (none | password)" unset="1">
+<ArgTableRow arg="pairing-requirement" typ="enum (none | password | confirm)" unset="1">
 Defines what the remote device must do before this device accepts the pairing:
 - **none** - this device accepts pairing automatically, without additional checks
 - **password** (default) - the remote device may approve pairing by giving the username and password of a RouterOS user on this device; CMR has no separate pairing password

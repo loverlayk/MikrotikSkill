@@ -22,4 +22,6 @@
 <ArgTableRow arg="root-port" typ="iface_enum { none:0 }"></ArgTableRow>
 <ArgTableRow arg="port-count" typ="num"></ArgTableRow>
 <ArgTableRow arg="designated-port-count" typ="num"></ArgTableRow>
+<ArgTableRow arg="topology-changes" typ="num"></ArgTableRow>
+<ArgTableRow arg="last-topology-change" typ="time"></ArgTableRow>
 </ArgTable>

@@ -118,6 +118,7 @@ c - connect, s - static, r - rip, b - bgp, o - ospf, d - dhcp, v - vpn, m - mode
 <ArgTableRow arg="route-cost" typ="num"></ArgTableRow>
 <ArgTableRow arg="total-cost" typ="num"></ArgTableRow>
 <ArgTableRow arg="rpki" typ="enum (unknown | valid | invalid)" unset="1">Current status of the prefix from the [RPKI](../../user-guides/routing-and-networking-protocols/unicast/rpki.md) validation process.</ArgTableRow>
+<ArgTableRow arg="rpki-aspa" typ="enum (unknown | valid | invalid)" unset="1"></ArgTableRow>
 <ArgTableRow arg="bgp.session" typ="enum">[BGP](../../user-guides/routing-and-networking-protocols/unicast/bgp/index.md) session that installed the route. See `/routing/bgp/session` menu.</ArgTableRow>
 <ArgTableRow arg="bgp.aggregator" typ="string"></ArgTableRow>
 <ArgTableRow arg="bgp.as-path" typ="string">Value of the **`AS_PATH`** BGP attribute.</ArgTableRow>

@@ -81,6 +81,7 @@
 <ArgTableRow arg="rx-tc" typ="num"></ArgTableRow>
 <ArgTableRow arg="topology-changes" typ="num"></ArgTableRow>
 <ArgTableRow arg="last-topology-change" typ="time"></ArgTableRow>
+<ArgTableRow arg="host-moves" typ="num"></ArgTableRow>
 <ArgTableRow arg="multicast-router" typ="bool"></ArgTableRow>
 <ArgTableRow arg="hw-offload-group" typ="enum"></ArgTableRow>
 <ArgTableRow arg="declared-vlan-ids" typ="multi { vlan-range: range

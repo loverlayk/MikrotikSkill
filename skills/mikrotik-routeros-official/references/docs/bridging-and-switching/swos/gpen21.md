@@ -83,7 +83,7 @@ System Tab performs the following functions:
 
 | Property | Description |
 | --- | --- |
-| **Address Acquisition** | Specify which address acquisition method to use:`DHCP with fallback` - device is trying to request an IPv4 address from a DHCP server. If the requests are unsuccessful, then the device can be accessed using a **Static IP Address** value`static` - address is set as a **Static IP Address** value (IPv4 only)`DHCP only` - device uses DHCPv4 client to acquire address |
+| **Address Acquisition** | Specify which address acquisition method to use:`DHCP with fallback` - the switch sends DHCP requests every second and, while no DHCP server is answering, immediately uses the configured **Static IP Address** value. When a server answers, the switch obtains a lease in 1-2 seconds and renews it at half the lease time. If a renewal goes unanswered, the switch returns to the **Static IP Address** value in 5 seconds and resumes sending requests every second.`static` - address is set as a **Static IP Address** value (IPv4 only)`DHCP only` - switch uses DHCPv4 client to acquire address |
 | **Static IP Address** | IP address of the device in case of **Address Acquisition** is set as `DHCP with fallback` or `static` |
 | **Identity** | Name of the device (for Mikrotik Neighbor Discovery protocol) |
 | **Allow From** | IP address from which the device is accessible. Default value is `0.0.0.0/0` - any address |

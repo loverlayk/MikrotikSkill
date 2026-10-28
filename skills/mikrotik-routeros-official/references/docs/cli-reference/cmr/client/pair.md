@@ -5,7 +5,7 @@
 -----------
 
 ## cmr/client/pair 
-**Conditions:** !smips, !powerpc
+**Conditions:** !smips
 **Type:** Command
 
 Initiate pairing process to CMR server.

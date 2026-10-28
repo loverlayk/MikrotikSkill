@@ -45,10 +45,16 @@
 <ArgTableRow arg="fec-mode" typ="enum (off | auto | fec74 | fec91) { off:0, auto:1, fec74:2, fec91:3 }"></ArgTableRow>
 <ArgTableRow arg="sfp-shutdown-temperature" typ="num"></ArgTableRow>
 <ArgTableRow arg="passthrough-interface" typ="iface_enum { none:0 }" syscap="pcie_passthrough"></ArgTableRow>
-<ArgTableRow arg="onu-model" typ="string"></ArgTableRow>
-<ArgTableRow arg="onu-vendor-id" typ="string"></ArgTableRow>
-<ArgTableRow arg="onu-serial-number" typ="string"></ArgTableRow>
-<ArgTableRow arg="onu-registration-id" typ="string"></ArgTableRow>
+<ArgTableRow arg="ploam-password" typ="string"></ArgTableRow>
+<ArgTableRow arg="loid" typ="string"></ArgTableRow>
+<ArgTableRow arg="loid-password" typ="string"></ArgTableRow>
+<ArgTableRow arg="vendor-id" typ="string"></ArgTableRow>
+<ArgTableRow arg="serial-number" typ="string"></ArgTableRow>
+<ArgTableRow arg="equipment-id" typ="string"></ArgTableRow>
+<ArgTableRow arg="registration-id" typ="string"></ArgTableRow>
+<ArgTableRow arg="sw-version" typ="string"></ArgTableRow>
+<ArgTableRow arg="hw-version" typ="string"></ArgTableRow>
+<ArgTableRow arg="omcc-version" typ="enum (v1.0 | v1.1 | v1.2 | v1.3 | v1.4 | v1.5 | v1.6 | v1.0-ext | v1.1-ext | v1.2-ext | v1.3-ext | v1.4-ext | v1.5-ext)"></ArgTableRow>
 <ArgTableRow arg="arp" typ="enum (disabled | enabled | proxy-arp | reply-only | local-proxy-arp) { disabled:0, enabled:1, proxy-arp:2, reply-only:3, local-proxy-arp:4 }"></ArgTableRow>
 <ArgTableRow arg="arp-timeout" typ="alt { arp-timeout: enum (auto) { auto:0 }
 , arp-timeout: time

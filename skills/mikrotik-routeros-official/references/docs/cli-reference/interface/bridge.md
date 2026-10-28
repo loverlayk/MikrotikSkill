@@ -74,6 +74,7 @@ The string value can contain variables, whose names must be enclosed in parenthe
 Example: 'some_arbitrary_text $(HOSTNAME) another_piece_of_text $(BRIDGEMAC)'.
 The following variables are supported: HOSTNAME, INTERFACE, VID and BRIDGEMAC.
 </ArgTableRow>
+<ArgTableRow arg="dhcp-snooping-option82-policy" typ="enum (drop | keep | replace)"></ArgTableRow>
 <ArgTableRow arg="arp-inspection" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-snooping" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-agent-circuit-id" typ="string">

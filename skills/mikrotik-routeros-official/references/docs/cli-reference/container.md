@@ -38,6 +38,10 @@
  }"></ArgTableRow>
 <ArgTableRow arg="envlists" typ="multi { envlist: enum
  }"></ArgTableRow>
+<ArgTableRow arg="labels" typ="object { key-and-value: composite { key: string
+, value: string
+ }
+ }"></ArgTableRow>
 <ArgTableRow arg="entrypoint" typ="multi { cmd: string
  }"></ArgTableRow>
 <ArgTableRow arg="cmd" typ="multi { cmd: string
@@ -105,6 +109,10 @@
 <ArgTableRow arg="os" typ="string"></ArgTableRow>
 <ArgTableRow arg="arch" typ="string"></ArgTableRow>
 <ArgTableRow arg="env-current" typ="object { key-and-value: composite { key: string
+, value: string
+ }
+ }"></ArgTableRow>
+<ArgTableRow arg="image-labels" typ="object { key-and-value: composite { key: string
 , value: string
  }
  }"></ArgTableRow>

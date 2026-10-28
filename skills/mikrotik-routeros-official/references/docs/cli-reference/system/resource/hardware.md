@@ -28,6 +28,7 @@ Detected hardware devices connected over PCI, USB or SCSI buses. Empty on boards
 <ArgTableRow arg="ports" typ="num">Number of ports provided by the device</ArgTableRow>
 <ArgTableRow arg="usb-version" typ="string">Supported USB version</ArgTableRow>
 <ArgTableRow arg="manufacturer-reported-max-power" typ="string">Maximum power draw reported by the device (for example a USB modem)</ArgTableRow>
+<ArgTableRow arg="overcurrent" typ="num" syscap="usb-hub"></ArgTableRow>
 <ArgTableRow arg="irq" typ="num">Assigned interrupt number</ArgTableRow>
 <ArgTableRow arg="memory" typ="multi { range: composite { min: num
 , max: num

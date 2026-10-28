@@ -99,7 +99,3 @@ Defines the maximum time the reset button can be held during a reformat trigger.
 For example, setting `reformat-hold-button=60s` and `reformat-hold-button-max=65s` requires the button to be held strictly between 60 and 65 seconds. This increases security by making accidental or guessed resets practically impossible. Introduced in RouterBOOT 3.38.3.
 </ArgTableRow>
 </ArgTable>
-
-<ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="safe-cpu-frequency" typ="enum"></ArgTableRow>
-</ArgTable>
