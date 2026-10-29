@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `c6422eaa14f859d7e42c987b7918cf24cdbe2e0c7aac74b8a6f9e6deb94997b0`
+Index SHA-256: `c0f1d39794042dc73b8c65d22226564112b6282f44e88cd929efae6ddf0ee7ca`
 Pages in current index: 1483
-Pages changed/written: 50
+Pages changed/written: 9
 Pages removed: 0
 Pages failed: 0
 
@@ -17,7 +17,7 @@ Pages failed: 0
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
 - [Bridging and Switching](docs/bridging-and-switching.md) `5f2577df6afa`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `be4a06ba2879`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `752228ed42fc`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `c5780d59b4b5`
@@ -700,7 +700,7 @@ Pages failed: 0
 - [/ip/route/check](docs/cli-reference/ip/route/check.md) `1441ead60ef8`
 - [/ip/service](docs/cli-reference/ip/service.md) `89a75d04d630`
 - [/ip/service/webserver](docs/cli-reference/ip/service/webserver.md) `d9cc5f0307c4`
-- [/ip/settings](docs/cli-reference/ip/settings.md) `1d636142861d`
+- [/ip/settings](docs/cli-reference/ip/settings.md) `bf367e2bd10b`
 - [/ip/smb](docs/cli-reference/ip/smb.md) `e77bc7937030`
 - [/ip/smb/shares](docs/cli-reference/ip/smb/shares.md) `677b85728e34`
 - [/ip/smb/users](docs/cli-reference/ip/smb/users.md) `57b8b2e9c17e`
@@ -762,7 +762,7 @@ Pages failed: 0
 - [/ipv6/pool](docs/cli-reference/ipv6/pool.md) `bda7f872358f`
 - [/ipv6/pool/used](docs/cli-reference/ipv6/pool/used.md) `068ed3edc289`
 - [/ipv6/route](docs/cli-reference/ipv6/route.md) `d50d9e3c79bb`
-- [/ipv6/settings](docs/cli-reference/ipv6/settings.md) `01d5b243849b`
+- [/ipv6/settings](docs/cli-reference/ipv6/settings.md) `c1e91868e678`
 - [/lcd](docs/cli-reference/lcd.md) `266000d508d9`
 - [/lcd/backlight](docs/cli-reference/lcd/backlight.md) `fea609705953`
 - [/lcd/interface](docs/cli-reference/lcd/interface.md) `b3b33e443caf`
@@ -899,11 +899,11 @@ Pages failed: 0
 - [/routing/rip/keys](docs/cli-reference/routing/rip/keys.md) `f362bac53b82`
 - [/routing/rip/neighbor](docs/cli-reference/routing/rip/neighbor.md) `1a90f26b76bb`
 - [/routing/rip/static-neighbor](docs/cli-reference/routing/rip/static-neighbor.md) `8f9ba3ad2b6e`
-- [/routing/route](docs/cli-reference/routing/route.md) `1916c1474260`
+- [/routing/route](docs/cli-reference/routing/route.md) `4ab8fb4c3280`
 - [/routing/rpki](docs/cli-reference/routing/rpki.md) `489f8133ed9a`
 - [/routing/rpki/rpki-check](docs/cli-reference/routing/rpki/rpki-check.md) `4a2b11e7b31c`
 - [/routing/rpki/rpki-query](docs/cli-reference/routing/rpki/rpki-query.md) `09d9cf7f463c`
-- [/routing/rpki/session](docs/cli-reference/routing/rpki/session.md) `94587cb2d33c`
+- [/routing/rpki/session](docs/cli-reference/routing/rpki/session.md) `b4e516d773c7`
 - [/routing/rule](docs/cli-reference/routing/rule.md) `a057a218578e`
 - [/routing/settings](docs/cli-reference/routing/settings.md) `43e99e95505b`
 - [/routing/stats/memory](docs/cli-reference/routing/stats/memory.md) `0f8213321d88`
@@ -1208,7 +1208,7 @@ Pages failed: 0
 - [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
 - [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
-- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `bd4325702588`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `08df4aef1e89`
 - [Queues](docs/firewall-and-quality-of-service/queues.md) `1df41f5f9723`
 - [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `11546cfc0044`
 - [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `2654133b74d5`
@@ -1417,8 +1417,8 @@ Pages failed: 0
 - [PIM-SM](docs/user-guides/routing-and-networking-protocols/multicast/pim-sm.md) `e49ffc552e9e`
 - [Policy Routing](docs/user-guides/routing-and-networking-protocols/policy-routing.md) `d9a16d300d1d`
 - [Route Distinguisher and Route Target](docs/user-guides/routing-and-networking-protocols/route-distinguisher-and-route-target.md) `dfd6c662f0c6`
-- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `fb18e857d1c0`
-- [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `63ced8330081`
+- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `64ebe00be10d`
+- [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `c0c326f39d5d`
 - [Routing Protocol Multi-core Support](docs/user-guides/routing-and-networking-protocols/routing-protocol-multi-core-support.md) `569856e98d6d`
 - [Unicast routing protocols](docs/user-guides/routing-and-networking-protocols/unicast.md) `3797cce0f171`
 - [BFD](docs/user-guides/routing-and-networking-protocols/unicast/bfd.md) `5a56348ad18f`
@@ -1437,7 +1437,7 @@ Pages failed: 0
 - [Routing Table Calculation](docs/user-guides/routing-and-networking-protocols/unicast/ospf/routing-calculation.md) `0d2c7d5803ba`
 - [Understanding OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf/understanding-ospf.md) `85551c60d0dc`
 - [RIP](docs/user-guides/routing-and-networking-protocols/unicast/rip.md) `cdfb0e3cc272`
-- [RPKI](docs/user-guides/routing-and-networking-protocols/unicast/rpki.md) `7011ec661c96`
+- [RPKI](docs/user-guides/routing-and-networking-protocols/unicast/rpki.md) `8985d50209a9`
 - [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `34fa57d21e48`
 - [Virtual Private Networks](docs/virtual-private-networks.md) `0e9c42e1a2f2`
 - [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`

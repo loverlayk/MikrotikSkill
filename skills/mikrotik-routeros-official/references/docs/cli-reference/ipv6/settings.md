@@ -23,7 +23,7 @@ Specify the IPv6 hash policy for [ECMP](../../user-guides/routing-and-networking
 - l3-inner - Layer-3 hashing or inner layer-3 hashing if available.
 - l4 - Layer-4 hashing of source IP, destination IP, IP protocol, source port, and destination port.
 
-With [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) enabled, ECMP requires the `l3` policy; other policies do not work properly.
+ECMP processed by [FastPath](../../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) or offloaded by [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) requires the `l3` policy; other policies do not work properly.
 </ArgTableRow>
 <ArgTableRow arg="accept-redirects" typ="bool">Accept or reject ICMP redirect messages. Enable on hosts and disable on routers.</ArgTableRow>
 <ArgTableRow arg="accept-router-advertisements" typ="enum (no | yes-if-forwarding-disabled | yes) { no:0, yes-if-forwarding-disabled:1, yes:2 }">Control acceptance of router advertisement (RA) messages. When enabled, the router obtains addresses using [stateless address configuration](../../system-information-and-utilities/neighbor-discovery.md).</ArgTableRow>

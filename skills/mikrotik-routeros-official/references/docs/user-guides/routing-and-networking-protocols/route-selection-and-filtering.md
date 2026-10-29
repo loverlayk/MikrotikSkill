@@ -99,7 +99,8 @@ The default action of the routing filter chain is `reject`.
 | `origin` | `string` | Match route's origin instance, for example, it can match routes imported from a specific OSPF instance: `if (origin <instance_name>) {}` |
 | `ospf-type` | `ext1 \| ext2 \| inter \| intra \| nssa1 \| nssa2` | Type of the OSPF route: ext1 - external (Type 5 LSA) with type1 metricext2 - external (Type 5 LSA) with type2 metricinter - inter-area-route (Type 3 LSA)intra - intra-area-route (Type 1/2 LSA)nssa1 - Type 7 LSA with type1 metricnssa2 - Type 7 LSA with type2 metric |
 | `protocol` | `bgp \| connected \| dhcp \| fantasy \| modem \| ospf \| rip \| static \| slaac \| vpn` | Protocol type from which the route was imported. |
-| `rpki` | `invalid \| unknown \| valid \| unverified` | [RPKI](./unicast/rpki.md) validation status of the prefix |
+| `rpki` | `invalid \| unknown \| valid \| unverified` | [RPKI](./unicast/rpki.md) prefix origin validation status |
+| `rpki-aspa` | `invalid \| unknown \| valid \| unverified` | [ASPA](./unicast/rpki.md#aspa-validation) validation status of the AS path |
 | `rtab` | `routing_table_name` | Name of the routing table the route was imported from |
 | `vrf` | `vrf_name` | Name of the VRF the route was imported from |
 
@@ -154,7 +155,8 @@ The default action of the routing filter chain is `reject`.
 | `filter` |  | Inverse of the delete action (Delete everything except the specified values). Values of the following properties can be filtered: `bgp-communities, bgp-ext-communities, bgp-large-communities` |
 | `delete` |  | Delete the value of the specified property. Values of the following properties can be deleted: `bgp-communities, bgp-ext-communities, bgp-large-communities` |
 | `set` | `prop_writeable value` | The command is used to set a new value to writeable properties. Value can be set from other readable properties of matching types. For numeric properties, it is possible to prefix the value with +/- which will increment or decrement the current property value by a given amount. For example, `set bgp-local-pref +1` will increment the current LOCAL\_PREF by one, or extract the value from another readable num property, `set distance +ospf-ext-metric` |
-| `rpki-verify` | `rpki_group_name` | Enable [RPKI](./unicast/rpki.md) verification in the current chain from the specified RPKI group. |
+| `rpki-verify` | `rpki_group_name` | Enable [RPKI](./unicast/rpki.md) prefix origin verification in the current chain from the specified RPKI group. |
+| `rpki-aspa-verify` | `rpki_group_name` | Enable [ASPA](./unicast/rpki.md#aspa-validation) verification in the current chain from the specified RPKI group. |
 
 #### Operators
 

@@ -543,7 +543,7 @@ Using certain configurations (e.g. enabling bridge "**use-ip-firewall**" setting
 | IPv6 Unicast Routing | **HW** | `/interface/ethernet/switch/l3hw-settings/set ipv6-hw=yes` | 7.6 |
 | IPv4 Multicast Routing | **CPU** |  |  |
 | IPv6 Multicast Routing | **CPU** |  |  |
-| ECMP | **HW** | Multipath routing. Hardware-offloaded ECMP requires the `l3` hash policy; `l4` and `l3-inner` policies do not work properly with L3HW enabled. | 7.1 |
+| ECMP | **HW** | Multipath routing. Hardware-offloaded ECMP requires the `l3` hash policy; `l4` and `l3-inner` policies do not work properly with L3HW enabled. [FastPath](../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) has the same restriction. | 7.1 |
 | Blackholes | **HW** | `/ip/route/add dst-address=10.0.99.0/24 blackhole` | 7.1 |
 | `gateway=<interface_name>` | **CPU/HW** | `/ip/route/add dst-address=10.0.0.0/24 gateway=ether1` This works only for directly connected networks. Since HW does not know how to send ARP requests, CPU sends an ARP request and waits for a reply to find out the DST MAC address on the first received packet of the connection that matches a DST IP address. After DST MAC is determined, HW entry is added and all further packets will be processed by the switch chip. | 7.1 |
 | Bridge | **HW** | Routing from/to [hardware-offloaded bridge](./#bridge-hardware-offloading) interface. | 7.1 |

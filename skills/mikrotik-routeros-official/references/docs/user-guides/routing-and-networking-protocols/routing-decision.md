@@ -122,7 +122,7 @@ Supported hashing methods include:
 | L4       | srcIPv4, dstIPv4, srcPort, dstPort, IP proto | srcIPv6, dstIPv6, srcPort, dstPort, IP Proto |
 | L3-Inner | srcIPv4, dstIPv4 (if inner IPv4)srcIPv6, dstIPv6, flow label, IP proto (if inner IPv6)Same as L3 if inner is not present. | srcIPv4, dstIPv4 (if inner IPv4)srcIPv6, dstIPv6, flow label, IP proto (if inner IPv6)Same as L3 if inner is not present. |
 
-When [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) is enabled, ECMP requires the **Layer3** hash policy. The **Layer4** and **inner Layer3** policies do not work properly with L3HW enabled.
+ECMP requires the **Layer3** hash policy when traffic is offloaded by [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) or processed by [FastPath](../../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path). The **Layer4** and **inner Layer3** policies do not work properly with either L3HW or FastPath.
 
 ### Route Selection
 

@@ -434,6 +434,8 @@ FastPath handler is used if the following conditions are met:
 Packets will travel the FastPath way if FastTrack is used no matter whether the above conditions are met.
 :::
 
+ECMP requires the `l3` hash policy when packets are processed by FastPath. The `l4` and `l3-inner` policies do not work properly with FastPath.
+
 Traffic Generator automatically uses FastPath if the interface supports this feature.
 
 Currently, MPLS fast-path applies to MPLS switched traffic (frames that enter the router as MPLS and must leave the router as MPLS) and VPLS endpoints that do VPLS encap/decap. Other MPLS ingress and egress will operate as before.

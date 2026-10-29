@@ -63,7 +63,7 @@ c - connect, s - static, r - rip, b - bgp, o - ospf, d - dhcp, v - vpn, m - mode
        debug.fwp-ptr=0x20342060
 
  Fb   afi=ip4 contribution=filtered dst-address=1.0.0.0/24 routing-table=main gateway=10.155.101.1 immediate-gw=10.155.101.1%ether1 distance=20
-       scope=40 target-scope=10 belongs-to="BGP IP routes from 10.155.101.217" rpki=valid
+       scope=40 target-scope=10 belongs-to="BGP IP routes from 10.155.101.217" rpki=valid rpki-aspa=valid
        bgp.peer-cache-id=*B000002 .aggregator="13335:172.68.180.1" .as-path="65530,100,9002,13335" .atomic-aggregate=yes .origin=igp
        debug.fwp-ptr=0x20342960
 
@@ -117,8 +117,8 @@ c - connect, s - static, r - rip, b - bgp, o - ospf, d - dhcp, v - vpn, m - mode
 <ArgTableRow arg="local-address" typ="address (flags=46iv)">Local IP address of the connected network.</ArgTableRow>
 <ArgTableRow arg="route-cost" typ="num"></ArgTableRow>
 <ArgTableRow arg="total-cost" typ="num"></ArgTableRow>
-<ArgTableRow arg="rpki" typ="enum (unknown | valid | invalid)" unset="1">Current status of the prefix from the [RPKI](../../user-guides/routing-and-networking-protocols/unicast/rpki.md) validation process.</ArgTableRow>
-<ArgTableRow arg="rpki-aspa" typ="enum (unknown | valid | invalid)" unset="1"></ArgTableRow>
+<ArgTableRow arg="rpki" typ="enum (unknown | valid | invalid)" unset="1">Prefix origin validation status from the [RPKI](../../user-guides/routing-and-networking-protocols/unicast/rpki.md) process.</ArgTableRow>
+<ArgTableRow arg="rpki-aspa" typ="enum (unknown | valid | invalid)" unset="1">ASPA validation status of the route AS path from the [RPKI](../../user-guides/routing-and-networking-protocols/unicast/rpki.md#aspa-validation) process. `valid` means the AS path is consistent with the ASPA data, `invalid` means the path contains an unauthorized AS pair, and `unknown` means the ASPA data does not cover at least one AS pair. The attribute is not shown when ASPA validation has not run.</ArgTableRow>
 <ArgTableRow arg="bgp.session" typ="enum">[BGP](../../user-guides/routing-and-networking-protocols/unicast/bgp/index.md) session that installed the route. See `/routing/bgp/session` menu.</ArgTableRow>
 <ArgTableRow arg="bgp.aggregator" typ="string"></ArgTableRow>
 <ArgTableRow arg="bgp.as-path" typ="string">Value of the **`AS_PATH`** BGP attribute.</ArgTableRow>

@@ -1,5 +1,5 @@
 {
-  "index_sha256": "c6422eaa14f859d7e42c987b7918cf24cdbe2e0c7aac74b8a6f9e6deb94997b0",
+  "index_sha256": "c0f1d39794042dc73b8c65d22226564112b6282f44e88cd929efae6ddf0ee7ca",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -983,7 +983,7 @@
       "title": "L3 Hardware Offloading",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md",
       "path": "docs/bridging-and-switching/l3-hardware-offloading.md",
-      "sha256": "be4a06ba28797391420e9e56af25b5f16413df5e2a483eedc3555ab487cb3e1d"
+      "sha256": "752228ed42fc60a66b1d2ccf506f0a5c839d9e748a84c0a1d406e14dbbe923db"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md": {
       "title": "Quality of Service",
@@ -1241,7 +1241,7 @@
       "title": "Routing Decision",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/routing-decision.md",
       "path": "docs/user-guides/routing-and-networking-protocols/routing-decision.md",
-      "sha256": "63ced8330081ebbb452ca0daf541d8fc3ce222cd97333c6003ba2e4cc4b28263"
+      "sha256": "c0c326f39d5ddc58cd9a74de895a9b57d7636c32a74a47dc40e752ec36464d7c"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/moving-from-rosv6-to-rosv7.md": {
       "title": "Moving from ROSv6 to ROSv7",
@@ -1373,7 +1373,7 @@
       "title": "RPKI",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/unicast/rpki.md",
       "path": "docs/user-guides/routing-and-networking-protocols/unicast/rpki.md",
-      "sha256": "7011ec661c96adc3204b8e5c8c60b900e5ad319b51091a1d8cece6fcdcbfc1a5"
+      "sha256": "8985d50209a95907e34148756e1f2bd14c0ead51f6391b75560454278bc1c55f"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/mpls.md": {
       "title": "MPLS",
@@ -1445,7 +1445,7 @@
       "title": "Route Selection and Filtering",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
       "path": "docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
-      "sha256": "fb18e857d1c03300e41f6d834eb9822ef9f5c0c98b238e0a42f1539c924c0b48"
+      "sha256": "64ebe00be10de4ebcac09a224ba85dca2cf585f71413de109f69ebc5762d0b47"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service.md": {
       "title": "Firewall and Quality of Service",
@@ -1499,7 +1499,7 @@
       "title": "Packet Flow in RouterOS",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
       "path": "docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
-      "sha256": "bd4325702588e741f4d7a26c8847c95efd2843f0e0e9fc8d2f18213f35100e59"
+      "sha256": "08df4aef1e897600e8a4cf3bddfdc94c2afe0f36c743d00dbf28f720561dd6cd"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/connection-tracking.md": {
       "title": "Connection tracking",
@@ -6185,7 +6185,7 @@
       "title": "/ip/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/settings.md",
       "path": "docs/cli-reference/ip/settings.md",
-      "sha256": "1d636142861d56025f5fa77588ebe12935c3db46c145c5e5ed8ae9bd75bf389f"
+      "sha256": "bf367e2bd10b8401293fb6bedd57383eaa6ff52c9fec43014bbac9a873b34f27"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/smb.md": {
       "title": "/ip/smb",
@@ -6557,7 +6557,7 @@
       "title": "/ipv6/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ipv6/settings.md",
       "path": "docs/cli-reference/ipv6/settings.md",
-      "sha256": "01d5b243849b499f5ff971531c6289aa51ea0e0c6cccdc146a6826462dc76757"
+      "sha256": "c1e91868e67894c0a7fe6b2c09dcccbbd345bb8e29f5543cd122c3e7a6476bfa"
     },
     "https://manual.mikrotik.com/docs/cli-reference/lcd.md": {
       "title": "/lcd",
@@ -7379,7 +7379,7 @@
       "title": "/routing/route",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/route.md",
       "path": "docs/cli-reference/routing/route.md",
-      "sha256": "1916c1474260dcb0fdfaa607447e1762694dc45c5abc37784ef2e33145483d36"
+      "sha256": "4ab8fb4c328037d1586b3b5579158f5b600b22306e514e390c3c471a89b76bc3"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/rpki.md": {
       "title": "/routing/rpki",
@@ -7403,7 +7403,7 @@
       "title": "/routing/rpki/session",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/rpki/session.md",
       "path": "docs/cli-reference/routing/rpki/session.md",
-      "sha256": "94587cb2d33c1f4f66e3f24eab7cc3c3284121f1fc5306dba7e1854b7b9f7fe8"
+      "sha256": "b4e516d773c7d7ea318583e725bb9da84d9d470c91d057f60d775e592eae8bb3"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/rule.md": {
       "title": "/routing/rule",
