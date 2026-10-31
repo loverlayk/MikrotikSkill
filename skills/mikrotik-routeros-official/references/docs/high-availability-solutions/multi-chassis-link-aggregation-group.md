@@ -20,7 +20,7 @@ Bridge hardware offloaded MLAG is only available on [MikroTik devices with Marve
 :::
 
 :::info
-The MLAG is not compatible with [L3 hardware offloading](../bridging-and-switching/l3-hardware-offloading.md). When using MLAG, the L3 hardware offloading must be disabled.
+The MLAG is not compatible with [L3 hardware offloading](../bridging-and-switching/l3-hardware-offloading.md). When using MLAG, L3 hardware offloading must be disabled on the whole switch (`/interface/ethernet/switch/set 0 l3-hw-offloading=no`). Setting `l3-hw-offloading=no` on individual switch ports is not sufficient.
 
 :::
 

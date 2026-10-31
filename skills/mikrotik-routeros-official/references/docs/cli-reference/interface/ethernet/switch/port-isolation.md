@@ -44,7 +44,7 @@ Lookup type of the isolation/leakage entry:
 <ArgTableRow arg="traffic-type" typ="ubit (unicast, multicast, broadcast)">Matching traffic type.</ArgTableRow>
 <ArgTableRow arg="registration-status" typ="ubit (known, unknown)">Registration status for matching packets. Known ones are present in UFDB and MFDB, and unknown ones are not.</ArgTableRow>
 <ArgTableRow arg="protocol-type" typ="ubit (arp, nd, dhcpv4, dhcpv6, ripv1)">Included protocols for isolation/leakage.</ArgTableRow>
-<ArgTableRow arg="flow-id" typ="num"></ArgTableRow>
+<ArgTableRow arg="flow-id" typ="num">Flow ID of the isolation/leakage entry.</ArgTableRow>
 <ArgTableRow arg="mac-profile" typ="enum (promiscuous | isolated | community1 | community2) { promiscuous:0, isolated:1, community1:2, community2:3 }">Matching MAC isolation/leakage profile.</ArgTableRow>
 <ArgTableRow arg="port-profile" typ="num">Matching Port isolation/leakage profile.</ArgTableRow>
 <ArgTableRow arg="vlan-profile" typ="enum (promiscuous | isolated | community1 | community2) { promiscuous:0, isolated:1, community1:2, community2:3 }">Matching VLAN isolation/leakage profile.</ArgTableRow>
@@ -62,12 +62,12 @@ Lookup type of the isolation/leakage entry:
 <ArgTableRow arg="forwarding-override" typ="multi { array-id, port: alt { port: enum
 , interface-list: enum
  }
- }"></ArgTableRow>
+ }">Switch ports that ingress traffic is forwarded to. Switch port names and interface lists can be combined, the ports from all specified interface lists are added to the explicitly listed ports.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="name" typ="string"></ArgTableRow>
-<ArgTableRow arg="switch" typ="enum"></ArgTableRow>
+<ArgTableRow arg="name" typ="string">Switch port name.</ArgTableRow>
+<ArgTableRow arg="switch" typ="enum">Switch group the port belongs to.</ArgTableRow>
 <ArgTableRow arg="current-forwarding-override" typ="multi { array-id, port: enum
- }"></ArgTableRow>
+ }">Switch ports that the configured `forwarding-override` resolves to.</ArgTableRow>
 </ArgTable>

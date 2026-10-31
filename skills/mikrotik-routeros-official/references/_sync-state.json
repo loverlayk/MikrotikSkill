@@ -1013,7 +1013,7 @@
       "title": "Switch Chip Features",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/switch-chip-features.md",
       "path": "docs/bridging-and-switching/switch-chip-features.md",
-      "sha256": "00850b67102ca300e28fb7c5532637b53d3fb3b49f4f24d9e7657988f74155ef"
+      "sha256": "469058e307b6e2b89aba48b5da9f5025e85219ba581adf4b669a037e86458380"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/vlan.md": {
       "title": "VLAN",
@@ -1805,7 +1805,7 @@
       "title": "Multi-chassis Link Aggregation Group",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
       "path": "docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
-      "sha256": "eed613bcf75328aaaead0c43598ff1602f66c95168f56db8a77bb73628cf5829"
+      "sha256": "f87c7314736a9880fc3508d1a60dc3584354b6e93a4f395180ef653d4502c298"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/bonding-examples.md": {
       "title": "Bonding Examples",
@@ -3683,7 +3683,7 @@
       "title": "/interface/ethernet/switch/port-isolation",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/port-isolation.md",
       "path": "docs/cli-reference/interface/ethernet/switch/port-isolation.md",
-      "sha256": "d6889ca610538003509de9b6a8545106892b9af100e043f8272048e5591c9b4b"
+      "sha256": "44278987728bdaac2bc37527d45c043e386364d7b4e6d03e68b1945bc5648f53"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/port-leakage.md": {
       "title": "/interface/ethernet/switch/port-leakage",

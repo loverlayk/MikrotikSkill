@@ -338,7 +338,7 @@ Because the rule table is processed entirely in switch chip hardware, there is a
 
 ### Port isolation
 
-Port isolation provides the possibility to divide (isolate) certain parts of your network. This might be useful when you need to make sure that certain devices cannot access other devices. This can be done by isolating switch ports. Port isolation only works between ports that are members of the same switch. Switch port isolation is available on all switch chips since RouterOS v6.43.
+Port isolation provides the possibility to divide (isolate) certain parts of your network. This might be useful when you need to make sure that certain devices cannot access other devices. This can be done by isolating switch ports. Port isolation only works between ports that are members of the same switch. Switch port isolation is available on all switch chips.
 
 | Property | Description |
 | :-- | :-- |
@@ -390,6 +390,8 @@ set ether3 forwarding-override=sfp1
 :::warning
 It is possible to set multiple uplink ports for a single switch chip, this can be done by specifying multiple interfaces and separating them with a comma.
 :::
+
+Instead of listing switch ports, `forwarding-override` can refer to interface lists. Ports from all named interface lists are combined with the explicitly listed ports, and the resulting set is shown in the read-only `current-forwarding-override` property. Interface lists only add ports, excluding a port from the resolved set is not possible.
 
 #### Isolated switch groups
 

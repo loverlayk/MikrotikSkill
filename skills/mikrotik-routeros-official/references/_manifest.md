@@ -3,7 +3,7 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `c0f1d39794042dc73b8c65d22226564112b6282f44e88cd929efae6ddf0ee7ca`
 Pages in current index: 1483
-Pages changed/written: 9
+Pages changed/written: 3
 Pages removed: 0
 Pages failed: 0
 
@@ -22,7 +22,7 @@ Pages failed: 0
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `c5780d59b4b5`
 - [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `a61c62ea1297`
-- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `00850b67102c`
+- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `469058e307b6`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
 - [CSS106 (RB260) series Manual](docs/bridging-and-switching/swos/css106.md) `8101fbc475de`
@@ -281,7 +281,7 @@ Pages failed: 0
 - [/interface/ethernet/switch/multicast-fdb](docs/cli-reference/interface/ethernet/switch/multicast-fdb.md) `2cf74201aa56`
 - [/interface/ethernet/switch/one2one-vlan-switching](docs/cli-reference/interface/ethernet/switch/one2one-vlan-switching.md) `73a04e46e4d6`
 - [/interface/ethernet/switch/policer-qos-map](docs/cli-reference/interface/ethernet/switch/policer-qos-map.md) `e16aa20d995b`
-- [/interface/ethernet/switch/port-isolation](docs/cli-reference/interface/ethernet/switch/port-isolation.md) `d6889ca61053`
+- [/interface/ethernet/switch/port-isolation](docs/cli-reference/interface/ethernet/switch/port-isolation.md) `44278987728b`
 - [/interface/ethernet/switch/port-leakage](docs/cli-reference/interface/ethernet/switch/port-leakage.md) `85c23f3e1108`
 - [/interface/ethernet/switch/port](docs/cli-reference/interface/ethernet/switch/port.md) `d0b7befba4a2`
 - [/interface/ethernet/switch/port/reset-counters](docs/cli-reference/interface/ethernet/switch/port/reset-counters.md) `6c3929389f58`
@@ -1284,7 +1284,7 @@ Pages failed: 0
 - [Load Balancing](docs/high-availability-solutions/load-balancing.md) `182c27a3b77b`
 - [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `36a5c389a4b4`
 - [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `9a658aaa58d9`
-- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `eed613bcf753`
+- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f87c7314736a`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `047977ef8412`
 - [VRRP](docs/high-availability-solutions/vrrp.md) `cb3ff5d085a1`
