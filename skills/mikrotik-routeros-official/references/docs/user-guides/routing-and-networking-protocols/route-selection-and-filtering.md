@@ -349,7 +349,7 @@ Unlike AS-path regexp matching, which operates on AS numbers, community regexp m
 | BGP extended communities (RFC 4360) | Typed form: `rt:` (route target) or `soo:` (site of origin) prefix followed by the value in `asn:value`, `ipv4:value` or `asn4:value` form (a two-octet AS number written in the four-octet field is printed with an `L` suffix). Other recognized types print as `encap:`, `es-label:`, `es-import:` or `mobility:` values; all other extended communities print as `raw:<hex>` | `rt:65551:100`  `soo:1.2.3.4:5`  `rt:65000L:10` |
 | BGP large communities (RFC 8092) | `global-admin:local-part-1:local-part-2`, each field printed as a decimal 32-bit integer. All three fields are always present, including zero values | `65551:0:100` |
 
-The regexp uses the RouterOS regular expression implementation, the same one that is used for the `regexp` string operator and the `comment regexp` matcher in routing filters. Its syntax is POSIX ERE-like and supports `^`, `$`, `.`, `*`, `+`, `?`, `|`, `()` and character classes `[ ]`, `[^ ]`. Repetition bounds `{n,m}` are not supported.
+The regexp uses the same RouterOS regular expression engine as the `comment regexp` matcher in routing filters. Its syntax is POSIX ERE-like and supports `^`, `$`, `.`, `*`, `+`, `?`, `|`, `()` and character classes `[ ]`, `[^ ]`. Repetition bounds `{n,m}` are not supported. A backslash escapes a single literal character, so `\d` matches the letter `d`. Use `[0-9]` for digits. Matching is case-sensitive and unanchored. Use `^` and `$` to match the whole string. The scripting `~` operator uses a different regexp implementation, so patterns are not always interchangeable.
 
 For example, reject routes that carry any large community from administrative domain 7010:
 

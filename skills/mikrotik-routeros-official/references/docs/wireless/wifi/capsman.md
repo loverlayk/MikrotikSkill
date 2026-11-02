@@ -80,6 +80,10 @@ CAPsMAN forwarding is only possible starting with **7.21beta2** version. **On ol
 CAPsMAN forwarding is not supported by **wifi-qcom-ac** devices (wifi-qcom-ac drivers only **support** **local forwarding**).
 :::
 
+:::note
+MLO does not support CAPsMAN forwarding (`traffic-processing=on-capsman`) at this time.
+:::
+
 ### CAPsMAN - CAP simple configuration example
 
 CAPsMAN in WiFi uses the same menu as a regular WiFi interface, meaning when you pass configuration to CAPs, you have to use the same configuration, security, channel configuration, etc. as you would for regular WiFi interfaces.
@@ -112,6 +116,27 @@ add action=create-dynamic-enabled master-configuration=2ghz supported-bands=2ghz
 set ca-certificate=auto enabled=yes
 ```
 
+If you want to utilize MLO (supported by WiFi 7 BE CAPs), all interfaces that form the MLD must use the same SSID:
+
+```ros
+#create configuration profiles for the main and IoT SSIDs
+/interface/wifi/configuration
+add country=Latvia disabled=no mode=ap name=cfg-main security.authentication-types=wpa3-psk security.passphrase=HaveAg00dDay ssid=main
+add country=Latvia disabled=no mode=ap name=cfg-iot security.authentication-types=wpa3-psk security.passphrase=HaveAg00dDay ssid=IoT
+
+#provision all radios and make both master and virtual interfaces MLO
+/interface/wifi/provisioning
+add action=create-dynamic-enabled disabled=no master-configuration=cfg-main multi-link-mode=auto slave-configurations=cfg-iot
+
+#enable CAPsMAN and generate the CA certificate
+/interface/wifi/capsman
+set ca-certificate=auto enabled=yes
+```
+
+:::note
+If you want virtual interfaces to be basic interfaces (non-MLO), use `multi-link-mode=master` instead.
+:::
+
 #### CAP
 
 ```ros
@@ -121,6 +146,10 @@ set ca-certificate=auto enabled=yes
 #set configuration.manager= on the WiFi interface that should act as CAP
 /interface/wifi/set wifi1,wifi2 configuration.manager=capsman-or-local
 ```
+
+:::note
+The only difference between the non-MLO and MLO CAP scenarios is that an MLO CAP gets MLD interfaces added automatically and should have `mld-datapath=capdp` configured under `/interface/wifi/cap`.
+:::
 
 :::warning
 If the CAP is hAP ax<sup>2</sup> or hAP ax<sup>3</sup>, it is strongly recommended to enable RSTP in the bridge configuration, on the CAP
@@ -190,7 +219,16 @@ add address=192.168.20.0/24 gateway=192.168.20.1
 set name=cAP_Controller
 ```
 
-#### CAP using "wifi-qcom" package
+:::note
+When you use MLO with VLANs:
+
+- Enable only `wpa3-psk` in the security profile (MLO does not support `wpa2-psk`).
+- Match the Wi-Fi 7 radio's supported bands in the provisioning rules, for example `supported-bands=5ghz-be,2ghz-be`, or omit `supported-bands` and keep a single provisioning rule for the same master and slave configurations so it applies to all bands.
+- Set `multi-link-mode=master` (or `all`/`auto`) in the provisioning rule. See [Provisioning](#provisioning).
+
+:::
+
+#### CAP using "wifi-qcom" and "wifi-mediatek" packages
 
 ```ros
 /interface/bridge
@@ -211,6 +249,10 @@ set discovery-interfaces=bridgeLocal enabled=yes slaves-datapath=capdp
 /ip/dhcp-client
 add interface=bridgeLocal disabled=no
 ```
+
+:::note
+When using MLO supported CAPs, make sure `mld-datapath` under `/interface/wifi/cap` is pointing at a datapath profile that adds the MLD interfaces to the correct bridge, for example `mld-datapath=capdp`.
+:::
 
 #### CAP using "wifi-qcom-ac" package
 

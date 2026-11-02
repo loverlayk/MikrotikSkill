@@ -199,6 +199,10 @@ If your device is running RouterOS **v6** and you encounter the same message, fo
 
 All MikroTik devices running RouterOS support additional options for the **Reset** button. Select RouterBOARD devices also include a **Mode** button, which you can configure to run a custom script when pressed.
 
+:::warning
+Scripts triggered by the Mode or Reset button run with the `ftp`, `reboot`, `read`, `write`, `test`, and `romon` policies. See [script permissions](../developer-guides/scripting/#script-permissions) for more information.
+:::
+
 ---
 
 ### Supported Devices (Mode Button)

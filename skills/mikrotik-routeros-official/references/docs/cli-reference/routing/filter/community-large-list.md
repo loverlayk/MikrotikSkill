@@ -14,5 +14,5 @@
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="list" typ="enum" mandatory="1">Reference name.</ArgTableRow>
 <ArgTableRow arg="communities" typ="object">List of large communities expressed in the following format: `admin:value1:value2`, where each section can be an integer [0..4294967295].</ArgTableRow>
-<ArgTableRow arg="regexp" typ="string">Regexp matcher to match communities. The community set with only the regexp parameter cannot be used to append/delete communities.</ArgTableRow>
+<ArgTableRow arg="regexp" typ="string">Regexp matcher to match communities. Regexp entries are used for matching and by `delete`/`filter`. Only concrete community values are used by `append`/`set`.</ArgTableRow>
 </ArgTable>

@@ -61,6 +61,12 @@ Virtual MAC addresses cannot be manually set or edited.
 
 :::
 
+### Hardware offloading
+
+When a VRRP instance is in the master state and L3 hardware offloading is enabled, the instance is hardware-offloaded. The switch uses the virtual MAC address as the source MAC address for routed traffic. Frames addressed to the virtual MAC address are routed by the switch. The instance reports the read-only `hw-offloaded` property, shown as the `H` flag in `/interface/vrrp/print`.
+
+Offloading is removed when the instance is not in the master state or L3 hardware offloading is disabled. VRRP hardware offloading is not available on every switch that supports L3 hardware offloading. For the configuration and the list of supported devices, see [L3 Hardware Offloading](../bridging-and-switching/l3-hardware-offloading).
+
 ### Owner
 
 An Owner router for a VR is the default Master router and operates as the Owner for all subnets included in the VR. Priority on an owner router must be the highest value (255) and the virtual IP is the same as the real IP (owns the virtual IP address).
@@ -201,6 +207,7 @@ If multiple VRRP interfaces are configured between two units and `sync-connectio
 :::
 
 Example `connection-tracking-mode` configuration:
+
 ```
 R1
 /interface/vrrp
@@ -216,6 +223,7 @@ add connection-tracking-mode=active-active connection-tracking-port=8276 interfa
 `group-authority` configuration example:
 
 VRRP instances run on LAN and WAN networks with NAT between them. If one VRRP instance is Master and the other is Backup on the same device, the entire network malfunctions due to NAT failure. Grouping LAN and WAN VRRP interfaces ensures that both are either VRRP Master or Backup. In a VRRP group, VRRP advertisements are sent only by the group authority. In a typical WAN+LAN setup, you should use the LAN network as the group authority to keep VRRP control traffic in the internal network.
+
 ```
 /interface/vrrp
 add name=vrrp-wan interface=sfp-sfpplus1 vrid=1 priority=100

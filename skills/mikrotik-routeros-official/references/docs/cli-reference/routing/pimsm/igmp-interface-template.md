@@ -1,12 +1,14 @@
 # igmp-interface-template
 
-> RouterOS directory reference for /routing/pimsm/igmp-interface-template.
+> The IGMP interface template menu defines which interfaces run an IGMP/MLD querier and what querier parameters will be used. It is configured separately from the PIM interface-template, so an interface can run PIM,...
 
 -----------
 
 ## routing/pimsm/igmp-interface-template 
 **Conditions:** !smips
 **Type:** Directory
+
+The IGMP interface template menu defines which interfaces run an IGMP/MLD querier and what querier parameters will be used. It is configured separately from the PIM [`interface-template`](./interface-template), so an interface can run PIM, IGMP/MLD, or both.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">The template is disabled.</ArgTableRow>

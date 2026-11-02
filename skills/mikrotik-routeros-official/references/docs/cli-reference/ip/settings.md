@@ -32,7 +32,7 @@ IPv4 hash policy used for [ECMP](../../user-guides/routing-and-networking-protoc
 - l3-inner - Layer-3 hashing, or inner layer-3 hashing if available.
 - l4 - Layer-4 hashing of source and destination IP addresses, IP protocol, source port, and destination port.
 
-ECMP processed by [FastPath](../../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) or offloaded by [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) requires the `l3` policy; other policies do not work properly.
+With [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md) enabled, hardware-forwarded ECMP uses the switch chip's own hash mask, which includes L4 ports for TCP/UDP; the configured policy is ignored. FastTrack-offloaded connections follow the kernel FIB lookup and may select a different nexthop. [FastPath](../../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) caches routes by L3.
 </ArgTableRow>
 <ArgTableRow arg="tcp-syncookies" typ="bool">Send syncookies when the SYN backlog queue of a socket overflows. This helps prevent SYN flood attacks. However, syncookies violate the TCP protocol and prevent the use of TCP extensions, which can degrade some services (for example, SMTP relaying). This degradation may be visible to your clients and relays contacting you.</ArgTableRow>
 <ArgTableRow arg="tcp-timestamps" typ="enum (disabled | random-offset | enabled) { disabled:0, random-offset:1, enabled:2 }">Enable or disable TCP timestamps, or add a random offset to TCP timestamps (default behavior). Disabling timestamps can help reduce performance drop spikes.</ArgTableRow>

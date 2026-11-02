@@ -434,7 +434,7 @@ FastPath handler is used if the following conditions are met:
 Packets will travel the FastPath way if FastTrack is used no matter whether the above conditions are met.
 :::
 
-ECMP requires the `l3` hash policy when packets are processed by FastPath. The `l4` and `l3-inner` policies do not work properly with FastPath.
+FastPath caches IPv4 and IPv6 routes by destination address, not by L4 ports or inner headers. Therefore the ECMP `l4` and `l3-inner` policies do not provide per-flow distribution for FastPath-cached traffic.
 
 Traffic Generator automatically uses FastPath if the interface supports this feature.
 

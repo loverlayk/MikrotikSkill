@@ -49,7 +49,7 @@ Argument types can be nested, for example `super {num, time, super {bool, ip}}`.
 
 List menus (menus whose entries can be added, removed and reordered) share a set of properties and commands that behave the same way everywhere, so they are not repeated in the Argument tables of each menu page:
 
-- **`comment`** — free-form text comment for the entry
+- **`comment`** — free-form text comment for the entry, limited to 16 KB
 - **`disabled`** — when `yes`, the entry is inactive but kept in the configuration; such entries are flagged with `X` in listings. The `enable` and `disable` commands toggle this state
 - **`copy-from`** — argument of the `add` command: creates the new entry as a copy of an existing entry
 - **`place-before`** — argument of the `add` and `move` commands: positions the entry before another entry in the list

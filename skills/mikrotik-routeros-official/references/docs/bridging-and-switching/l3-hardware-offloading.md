@@ -543,7 +543,7 @@ Using certain configurations (e.g. enabling bridge "**use-ip-firewall**" setting
 | IPv6 Unicast Routing | **HW** | `/interface/ethernet/switch/l3hw-settings/set ipv6-hw=yes` | 7.6 |
 | IPv4 Multicast Routing | **CPU** |  |  |
 | IPv6 Multicast Routing | **CPU** |  |  |
-| ECMP | **HW** | Multipath routing. Hardware-offloaded ECMP requires the `l3` hash policy; `l4` and `l3-inner` policies do not work properly with L3HW enabled. [FastPath](../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) has the same restriction. | 7.1 |
+| ECMP | **HW** | Multipath routing. L3HW uses the switch chip's own ECMP hash mask, which includes L4 ports for TCP/UDP; the configured hash policy is ignored for hardware-forwarded ECMP. FastTrack-offloaded connections follow the kernel FIB lookup and may select a different nexthop. [FastPath](../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) caches routes by L3. | 7.1 |
 | Blackholes | **HW** | `/ip/route/add dst-address=10.0.99.0/24 blackhole` | 7.1 |
 | `gateway=<interface_name>` | **CPU/HW** | `/ip/route/add dst-address=10.0.0.0/24 gateway=ether1` This works only for directly connected networks. Since HW does not know how to send ARP requests, CPU sends an ARP request and waits for a reply to find out the DST MAC address on the first received packet of the connection that matches a DST IP address. After DST MAC is determined, HW entry is added and all further packets will be processed by the switch chip. | 7.1 |
 | Bridge | **HW** | Routing from/to [hardware-offloaded bridge](./#bridge-hardware-offloading) interface. | 7.1 |
@@ -553,12 +553,16 @@ Using certain configurations (e.g. enabling bridge "**use-ip-firewall**" setting
 | IPv4 NAT | **FW** | NAT rules applied to the offloaded ***Fasttrack*** connections get processed by HW too. | 7.1 |
 | MLAG | **N/A** |  |  |
 | VRF | **HW** | [Hardware-offloaded VRF](#hardware-offloaded-vrf). |  |
-| VRRP | **N/A** |  |  |
+| VRRP | **HW** | Only a VRRP instance in the master state is offloaded. Not supported on 98DX3236, 98DX224S, 98DX226S and 98DX2528 switches. |  |
 | Traffic-Flow | **N/A** | L3HW offloaded traffic is not reported through [Traffic Flow](../diagnostics-monitoring-and-troubleshooting/traffic-flow/index.md). |  |
 | VXLAN | **HW** | Support for hardware-offloaded [VXLAN](./vxlan.md) data plane, VXLAN encapsulation and decapsulation. This allows for static one-to-one VLAN-to-VXLAN mappings within a vlan-filtering bridge.  At this point, some known features are not yet implemented.  **Underlay (routing encapsulated VXLAN packets):**  1. VTEPs are not supported over ECMP  2. VTEPs are not supported over bond, bridge, VLAN interfaces (only stand-alone routed Ethernet interfaces are supported)  3. VTEPs are not supported over multicast  4. VXLAN hardware offloading is limited to the `main` routing table. VTEPs cannot operate within VRFs.  5. VTEPs are not supported with IPv6  **Overlay (forwarding between Ethernet and VXLAN):**  1. VLAN tagging over VXLAN is not supported  2. Routing between different VXLAN VNIs is not supported  3. VTEPs are isolated, and there is no mechanism to control "horizon" between them.  4. Bridged VXLAN interfaces do not support IGMP snooping. When snooping is enabled, MDB entries on VXLAN are not offloaded, and multicast traffic gets restricted between Ethernet and VXLAN.  5. Bridged VXLAN interfaces are not supported by MLAG. `/interface/vxlan` | 7.18 |
 | MTU | **HW** | The hardware supports up to 8 MTU profiles. | 7.1 |
 | QinQ Routing | **CPU** | Stacked routable VLAN interfaces will lose L3HW offloading, while routable VLAN interfaces created directly on the bridge interface can still use HW offloading. |  |
 | IPv4 routes with IPv6 nexthops or vice versa | **N/A** |  |  |
+
+:::warning
+Mixing hardware-forwarded and FastTrack/CPU-forwarded packets of the same flow can select different ECMP nexthops, causing asymmetric routing and connection resets.
+:::
 
 Only the devices listed in the table below support L3 HW Offloading.
 

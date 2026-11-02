@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `c0f1d39794042dc73b8c65d22226564112b6282f44e88cd929efae6ddf0ee7ca`
+Index SHA-256: `0f36529a56aa1d7e028738744002a9e4d86fe8e602d76a719f2a78cd5bb2160e`
 Pages in current index: 1483
-Pages changed/written: 3
+Pages changed/written: 21
 Pages removed: 0
 Pages failed: 0
 
@@ -17,10 +17,10 @@ Pages failed: 0
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
 - [Bridging and Switching](docs/bridging-and-switching.md) `5f2577df6afa`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `752228ed42fc`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `a6593e35f7ec`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
-- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `c5780d59b4b5`
+- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `fe2d5cb0d5ba`
 - [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `a61c62ea1297`
 - [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `469058e307b6`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
@@ -41,7 +41,7 @@ Pages failed: 0
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
 - [VLAN](docs/bridging-and-switching/vlan.md) `dda05c4515ca`
 - [VXLAN](docs/bridging-and-switching/vxlan.md) `a0704e1b36b5`
-- [/address-flags](docs/cli-reference.md) `1de97ad65172`
+- [/address-flags](docs/cli-reference.md) `8049423092b3`
 - [/app](docs/cli-reference/app.md) `7391a7b8a073`
 - [/app/cleanup](docs/cli-reference/app/cleanup.md) `6136ea605ac9`
 - [/app/network](docs/cli-reference/app/network.md) `59ae26ee7a1a`
@@ -396,7 +396,7 @@ Pages failed: 0
 - [/interface/vlan](docs/cli-reference/interface/vlan.md) `0e1b40e01790`
 - [/interface/vpls](docs/cli-reference/interface/vpls.md) `b51b597ecf6b`
 - [/interface/vpls/monitor](docs/cli-reference/interface/vpls/monitor.md) `9b57bb6933b7`
-- [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `778f65a49d7e`
+- [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `ba3c5254b46a`
 - [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `fc68e05e3676`
 - [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `c27ffd31be57`
 - [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `71b6bf9c6c73`
@@ -700,7 +700,7 @@ Pages failed: 0
 - [/ip/route/check](docs/cli-reference/ip/route/check.md) `1441ead60ef8`
 - [/ip/service](docs/cli-reference/ip/service.md) `89a75d04d630`
 - [/ip/service/webserver](docs/cli-reference/ip/service/webserver.md) `d9cc5f0307c4`
-- [/ip/settings](docs/cli-reference/ip/settings.md) `bf367e2bd10b`
+- [/ip/settings](docs/cli-reference/ip/settings.md) `d95b83fc5e8a`
 - [/ip/smb](docs/cli-reference/ip/smb.md) `e77bc7937030`
 - [/ip/smb/shares](docs/cli-reference/ip/smb/shares.md) `677b85728e34`
 - [/ip/smb/users](docs/cli-reference/ip/smb/users.md) `57b8b2e9c17e`
@@ -762,7 +762,7 @@ Pages failed: 0
 - [/ipv6/pool](docs/cli-reference/ipv6/pool.md) `bda7f872358f`
 - [/ipv6/pool/used](docs/cli-reference/ipv6/pool/used.md) `068ed3edc289`
 - [/ipv6/route](docs/cli-reference/ipv6/route.md) `d50d9e3c79bb`
-- [/ipv6/settings](docs/cli-reference/ipv6/settings.md) `c1e91868e678`
+- [/ipv6/settings](docs/cli-reference/ipv6/settings.md) `d45fb9029634`
 - [/lcd](docs/cli-reference/lcd.md) `266000d508d9`
 - [/lcd/backlight](docs/cli-reference/lcd/backlight.md) `fea609705953`
 - [/lcd/interface](docs/cli-reference/lcd/interface.md) `b3b33e443caf`
@@ -851,9 +851,9 @@ Pages failed: 0
 - [/routing/discourse](docs/cli-reference/routing/discourse.md) `a75d19d57dd5`
 - [/routing/fantasy](docs/cli-reference/routing/fantasy.md) `e80747b17f20`
 - [/routing/filter/chain](docs/cli-reference/routing/filter/chain.md) `9ee9924d7f8a`
-- [/routing/filter/community-ext-list](docs/cli-reference/routing/filter/community-ext-list.md) `50d5cfce7af8`
-- [/routing/filter/community-large-list](docs/cli-reference/routing/filter/community-large-list.md) `5ecbd54c7854`
-- [/routing/filter/community-list](docs/cli-reference/routing/filter/community-list.md) `e4d8aef7bec0`
+- [/routing/filter/community-ext-list](docs/cli-reference/routing/filter/community-ext-list.md) `fc5e7d02541c`
+- [/routing/filter/community-large-list](docs/cli-reference/routing/filter/community-large-list.md) `8b0cffbad310`
+- [/routing/filter/community-list](docs/cli-reference/routing/filter/community-list.md) `3e83b6d18548`
 - [/routing/filter/filter-wizard](docs/cli-reference/routing/filter/filter-wizard.md) `107021ea4eba`
 - [/routing/filter/num-list](docs/cli-reference/routing/filter/num-list.md) `3515959668e0`
 - [/routing/filter/rule](docs/cli-reference/routing/filter/rule.md) `9ed4a09320b5`
@@ -885,9 +885,9 @@ Pages failed: 0
 - [/routing/pimsm/bsr/candidate](docs/cli-reference/routing/pimsm/bsr/candidate.md) `a91d21370dfa`
 - [/routing/pimsm/bsr/rp-candidate](docs/cli-reference/routing/pimsm/bsr/rp-candidate.md) `2790b131e9c2`
 - [/routing/pimsm/bsr/rp-set](docs/cli-reference/routing/pimsm/bsr/rp-set.md) `ad3dca755974`
-- [/routing/pimsm/igmp-interface-template](docs/cli-reference/routing/pimsm/igmp-interface-template.md) `a20cd8bdfc89`
+- [/routing/pimsm/igmp-interface-template](docs/cli-reference/routing/pimsm/igmp-interface-template.md) `19182e6daaf2`
 - [/routing/pimsm/instance](docs/cli-reference/routing/pimsm/instance.md) `2b4dc09e1a6d`
-- [/routing/pimsm/interface-template](docs/cli-reference/routing/pimsm/interface-template.md) `6679e47446e3`
+- [/routing/pimsm/interface-template](docs/cli-reference/routing/pimsm/interface-template.md) `b4f90f2504a8`
 - [/routing/pimsm/interface](docs/cli-reference/routing/pimsm/interface.md) `82d307fa6247`
 - [/routing/pimsm/neighbor](docs/cli-reference/routing/pimsm/neighbor.md) `0fe05c17aad4`
 - [/routing/pimsm/static-rp](docs/cli-reference/routing/pimsm/static-rp.md) `3b855a107c88`
@@ -1179,12 +1179,12 @@ Pages failed: 0
 - [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
 - [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `50fda08234ce`
 - [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `e00b31a1e483`
-- [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `2408219795d0`
+- [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `9c8decb5fad0`
 - [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
 - [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `b7e081ceaee3`
 - [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `bd664c964077`
 - [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `a168d6ee93e2`
-- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `bce89033e66c`
+- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `c1c1405afdc1`
 - [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
 - [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `c53f192eea99`
@@ -1208,7 +1208,7 @@ Pages failed: 0
 - [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
 - [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
-- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `08df4aef1e89`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `f23a31e3f0d9`
 - [Queues](docs/firewall-and-quality-of-service/queues.md) `1df41f5f9723`
 - [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `11546cfc0044`
 - [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `2654133b74d5`
@@ -1275,7 +1275,7 @@ Pages failed: 0
 - [PoE](docs/hardware/poe-out.md) `5e0f32b66608`
 - [Ports](docs/hardware/ports.md) `57be74b6b121`
 - [Product Naming](docs/hardware/product-naming.md) `146063d0b48b`
-- [RouterBOARD](docs/hardware/routerboard.md) `5d67df4d6fba`
+- [RouterBOARD](docs/hardware/routerboard.md) `1a64026467ba`
 - [S+RJ10 general guidance](docs/hardware/s-plus-rj10-general-guidance.md) `8ee401bde01e`
 - [Try Before RMA](docs/hardware/try-before-rma.md) `720e1b72cbd9`
 - [USB Features](docs/hardware/usb-features.md) `ebadd3a1ed08`
@@ -1287,7 +1287,7 @@ Pages failed: 0
 - [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f87c7314736a`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `047977ef8412`
-- [VRRP](docs/high-availability-solutions/vrrp.md) `cb3ff5d085a1`
+- [VRRP](docs/high-availability-solutions/vrrp.md) `a7365300fcc0`
 - [Internet of Things](docs/internet-of-things.md) `345029d5fceb`
 - [Bluetooth](docs/internet-of-things/bluetooth.md) `d699afba1d02`
 - [MikroTik Beacon Manager](docs/internet-of-things/bluetooth/mikrotik-beacon-manager.md) `d2eb11a878b9`
@@ -1310,7 +1310,7 @@ Pages failed: 0
 - [AWS LoRaWAN configuration](docs/internet-of-things/lora/user-guides/aws-lorawan-configuration.md) `5031df37ec30`
 - [ChirpStack](docs/internet-of-things/lora/user-guides/chirpstack.md) `15a4bd1b157e`
 - [Step by step installation](docs/internet-of-things/lora/user-guides/step-by-step-installation.md) `ed4383ae11c7`
-- [TG-LR setup](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `d8c70c4374d3`
+- [TG-LR Setup](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `9e5c6b059eb0`
 - [The Things Stack](docs/internet-of-things/lora/user-guides/the-things-stack.md) `170871bf71d5`
 - [Modbus](docs/internet-of-things/modbus.md) `fb03d1372638`
 - [MQTT](docs/internet-of-things/mqtt.md) `38e9d2c599fa`
@@ -1417,8 +1417,8 @@ Pages failed: 0
 - [PIM-SM](docs/user-guides/routing-and-networking-protocols/multicast/pim-sm.md) `e49ffc552e9e`
 - [Policy Routing](docs/user-guides/routing-and-networking-protocols/policy-routing.md) `d9a16d300d1d`
 - [Route Distinguisher and Route Target](docs/user-guides/routing-and-networking-protocols/route-distinguisher-and-route-target.md) `dfd6c662f0c6`
-- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `64ebe00be10d`
-- [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `c0c326f39d5d`
+- [Route Selection and Filtering](docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md) `1d2449e30e3f`
+- [Routing Decision](docs/user-guides/routing-and-networking-protocols/routing-decision.md) `9a5a17e8fd11`
 - [Routing Protocol Multi-core Support](docs/user-guides/routing-and-networking-protocols/routing-protocol-multi-core-support.md) `569856e98d6d`
 - [Unicast routing protocols](docs/user-guides/routing-and-networking-protocols/unicast.md) `3797cce0f171`
 - [BFD](docs/user-guides/routing-and-networking-protocols/unicast/bfd.md) `5a56348ad18f`
@@ -1484,8 +1484,8 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi](docs/wireless/wifi.md) `bc36ec845299`
-- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `7624d97e4aac`
+- [Wi-Fi](docs/wireless/wifi.md) `a7211b663f95`
+- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`

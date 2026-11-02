@@ -13,7 +13,7 @@
 <ArgTableRow arg="G" typ="grp-authority">The VRRP interface is `group-authority`. It controls the state of the other group members and is the only interface that sends VRRP advertisements.</ArgTableRow>
 <ArgTableRow arg="g" typ="grp-member">The VRRP interface is a group member. Its state machine follows the state of the specified `group-authority` interface.</ArgTableRow>
 <ArgTableRow arg="R" typ="running">running.</ArgTableRow>
-<ArgTableRow arg="H" typ="hw-offloaded"></ArgTableRow>
+<ArgTableRow arg="H" typ="hw-offloaded">The VRRP interface is hardware-offloaded when it is in the master state. The flag is cleared when the instance is not in the master state or L3 hardware offloading is disabled.</ArgTableRow>
 <ArgTableRow arg="M" typ="master">The VRRP interface is in the master state.</ArgTableRow>
 <ArgTableRow arg="B" typ="backup">The VRRP interface is in the backup state.</ArgTableRow>
 <ArgTableRow arg="F" typ="failure">The VRRP interface is in the failure state, for example due to a link-down on its parent interface.</ArgTableRow>

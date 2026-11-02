@@ -20,5 +20,5 @@ List of extended communities expressed as a **raw** integer value or in the type
 
 The value depends on the type.
 </ArgTableRow>
-<ArgTableRow arg="regexp" typ="string">Regexp matcher to match communities. The community set with only the regexp parameter cannot be used to append/delete communities.</ArgTableRow>
+<ArgTableRow arg="regexp" typ="string">Regexp matcher to match communities. Regexp entries are used for matching and by `delete`/`filter`. Only concrete community values are used by `append`/`set`.</ArgTableRow>
 </ArgTable>

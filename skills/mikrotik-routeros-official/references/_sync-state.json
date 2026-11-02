@@ -1,5 +1,5 @@
 {
-  "index_sha256": "c0f1d39794042dc73b8c65d22226564112b6282f44e88cd929efae6ddf0ee7ca",
+  "index_sha256": "0f36529a56aa1d7e028738744002a9e4d86fe8e602d76a719f2a78cd5bb2160e",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -509,7 +509,7 @@
       "title": "Interface stats and monitor-traffic",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md",
-      "sha256": "2408219795d0581e31014f4417b136cbbdaefa3c8b7705ad7224071234176cee"
+      "sha256": "9c8decb5fad0017ad6ba635a9f948a34e3004cf03f6e4f46a094b07e0ac5e797"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md": {
       "title": "Traffic Generator",
@@ -521,7 +521,7 @@
       "title": "Netwatch",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/netwatch.md",
-      "sha256": "bce89033e66c7a64318a38ac0c5ae155534eaaf66d5c6951ad32b1ee39a2d59c"
+      "sha256": "c1c1405afdc11c7dd9575a496e9316fd9057edc179eed2aaf02042c72d3089b6"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/graphing.md": {
       "title": "Graphing",
@@ -683,7 +683,7 @@
       "title": "RouterBOARD",
       "markdown_url": "https://manual.mikrotik.com/docs/hardware/routerboard.md",
       "path": "docs/hardware/routerboard.md",
-      "sha256": "5d67df4d6fbabe6b729a84c112aff3195722e592b2cd8eb373712e2bbebe1988"
+      "sha256": "1a64026467baf819d864627a4bd2da8f4957248778805bd97de0242088b96a2d"
     },
     "https://manual.mikrotik.com/docs/hardware/s-plus-rj10-general-guidance.md": {
       "title": "S+RJ10 general guidance",
@@ -737,13 +737,13 @@
       "title": "Wi-Fi",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi.md",
       "path": "docs/wireless/wifi.md",
-      "sha256": "bc36ec84529914a5ef924478aa1f2ba7e7394c99c11477c1cf2f9d769ff00a36"
+      "sha256": "a7211b663f9578e9de6e10318ffbcfbd16cb6aef4644a649584bcf634e35432b"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md": {
       "title": "WiFi CAPsMAN",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md",
       "path": "docs/wireless/wifi/capsman.md",
-      "sha256": "7624d97e4aacc485fd76af6c2cc3532189b3565a4ae298fd9ab1e69b2179a446"
+      "sha256": "ed8faf248f48c509d37c92c967515c341270b9d9af2e75edd342129af80ffb46"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",
@@ -977,13 +977,13 @@
       "title": "Marvell Prestera switch chip features",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md",
       "path": "docs/bridging-and-switching/marvell-prestera-switch-chip-features.md",
-      "sha256": "c5780d59b4b5f96e3fb465925494afd16d1467e7a273087f7d8354e92e85b3ab"
+      "sha256": "fe2d5cb0d5ba385b6ab32141a37caf422cf5cf1d9ad27472183ef255282f082b"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md": {
       "title": "L3 Hardware Offloading",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md",
       "path": "docs/bridging-and-switching/l3-hardware-offloading.md",
-      "sha256": "752228ed42fc60a66b1d2ccf506f0a5c839d9e748a84c0a1d406e14dbbe923db"
+      "sha256": "a6593e35f7ecee6fd65a38d9c92949ab97e720b29f1b1e05c6b1c610af6caf5c"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md": {
       "title": "Quality of Service",
@@ -1241,7 +1241,7 @@
       "title": "Routing Decision",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/routing-decision.md",
       "path": "docs/user-guides/routing-and-networking-protocols/routing-decision.md",
-      "sha256": "c0c326f39d5ddc58cd9a74de895a9b57d7636c32a74a47dc40e752ec36464d7c"
+      "sha256": "9a5a17e8fd117bfd9e0b2a45fb8c71f0788bbf3fa17a726656cc49b2953eda28"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/moving-from-rosv6-to-rosv7.md": {
       "title": "Moving from ROSv6 to ROSv7",
@@ -1445,7 +1445,7 @@
       "title": "Route Selection and Filtering",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
       "path": "docs/user-guides/routing-and-networking-protocols/route-selection-and-filtering.md",
-      "sha256": "64ebe00be10de4ebcac09a224ba85dca2cf585f71413de109f69ebc5762d0b47"
+      "sha256": "1d2449e30e3f95297b89a69d16ad851b996e83ba60c765db752c6eec9f9c7d41"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service.md": {
       "title": "Firewall and Quality of Service",
@@ -1499,7 +1499,7 @@
       "title": "Packet Flow in RouterOS",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
       "path": "docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
-      "sha256": "08df4aef1e897600e8a4cf3bddfdc94c2afe0f36c743d00dbf28f720561dd6cd"
+      "sha256": "f23a31e3f0d9224ce1cb56684edf2230a902baefcaeadfbc073e9a8813dc4110"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/connection-tracking.md": {
       "title": "Connection tracking",
@@ -1823,7 +1823,7 @@
       "title": "VRRP",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/vrrp.md",
       "path": "docs/high-availability-solutions/vrrp.md",
-      "sha256": "cb3ff5d085a11e5df5a820f5d2e6fab34b61a921b9c5d85fd2597e42d1ae7a73"
+      "sha256": "a7365300fcc033fa50945554d503a3c62f09022640c200cf2da170a4286f783b"
     },
     "https://manual.mikrotik.com/docs/internet-of-things.md": {
       "title": "Internet of Things",
@@ -1958,10 +1958,10 @@
       "sha256": "ed4383ae11c7bd5b1d256bdec76619f294100f116e74d45c9c113e04bfc197d0"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md": {
-      "title": "TG-LR setup",
+      "title": "TG-LR Setup",
       "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
       "path": "docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
-      "sha256": "d8c70c4374d3f18e1659cfd21378c62c46edb277113956cd1db1c8699645b2cd"
+      "sha256": "9e5c6b059eb026bd98acdd9f57be8f8cde38a10deb3c8bbaf78e0a499a93e310"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/the-things-stack.md": {
       "title": "The Things Stack",
@@ -2231,7 +2231,7 @@
       "title": "/address-flags",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference.md",
       "path": "docs/cli-reference.md",
-      "sha256": "1de97ad65172715f292db2e03aff98a9968ef16c5debb2859e2c4a88f5752733"
+      "sha256": "8049423092b32a02070926725465c9ea80ea6e148b5b4f697a3d835cdac8b0d0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/compare-versions.md": {
       "title": "/compare-versions",
@@ -4361,7 +4361,7 @@
       "title": "/interface/vrrp",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vrrp.md",
       "path": "docs/cli-reference/interface/vrrp.md",
-      "sha256": "778f65a49d7e09b6c1171282cd94293fc1e9b520f1b1f9d59dc96d8eb5bd4d62"
+      "sha256": "ba3c5254b46a418774883bb53f2b7923b9bd5288356b7d2e4c531e1b1b72eebd"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan.md": {
       "title": "/interface/vxlan",
@@ -6185,7 +6185,7 @@
       "title": "/ip/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/settings.md",
       "path": "docs/cli-reference/ip/settings.md",
-      "sha256": "bf367e2bd10b8401293fb6bedd57383eaa6ff52c9fec43014bbac9a873b34f27"
+      "sha256": "d95b83fc5e8a704160b65ba28cc2e6e5dd373795b6db05884131799be5ddbc20"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/smb.md": {
       "title": "/ip/smb",
@@ -6557,7 +6557,7 @@
       "title": "/ipv6/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ipv6/settings.md",
       "path": "docs/cli-reference/ipv6/settings.md",
-      "sha256": "c1e91868e67894c0a7fe6b2c09dcccbbd345bb8e29f5543cd122c3e7a6476bfa"
+      "sha256": "d45fb90296343fceab36780f6ef70f32e7c8804f0d30cd5ae64ef4de5003f3da"
     },
     "https://manual.mikrotik.com/docs/cli-reference/lcd.md": {
       "title": "/lcd",
@@ -7091,19 +7091,19 @@
       "title": "/routing/filter/community-ext-list",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/filter/community-ext-list.md",
       "path": "docs/cli-reference/routing/filter/community-ext-list.md",
-      "sha256": "50d5cfce7af80b473f494af57aa4a3c2512c88f996c779a7e104944752b85fec"
+      "sha256": "fc5e7d02541cb5d8295837f3636ea3dff53bdb77b7609655eb86f3817951f26e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/filter/community-large-list.md": {
       "title": "/routing/filter/community-large-list",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/filter/community-large-list.md",
       "path": "docs/cli-reference/routing/filter/community-large-list.md",
-      "sha256": "5ecbd54c7854af9fd1df8da82defe2ecee37b8d792412878051559f7f2ea2330"
+      "sha256": "8b0cffbad310fd9837197e0ee6ef4047c4f1f8573480dd7329bc11feb5db7d32"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/filter/community-list.md": {
       "title": "/routing/filter/community-list",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/filter/community-list.md",
       "path": "docs/cli-reference/routing/filter/community-list.md",
-      "sha256": "e4d8aef7bec0a57d8083f8412f912b2daf1442bd98cec06f8943549d0783f459"
+      "sha256": "3e83b6d18548acde362723b7ed5b62d6724cad60f45fc3e54d5e96ed057f7416"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/filter/filter-wizard.md": {
       "title": "/routing/filter/filter-wizard",
@@ -7295,7 +7295,7 @@
       "title": "/routing/pimsm/igmp-interface-template",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/pimsm/igmp-interface-template.md",
       "path": "docs/cli-reference/routing/pimsm/igmp-interface-template.md",
-      "sha256": "a20cd8bdfc894cc647ff8fb1c3ad2597d50d8b1fc489d8619a34e40fb98a9dd3"
+      "sha256": "19182e6daaf27f9ed18b37063d8aecd081e38dff82946cbd58a826fffdbc5b44"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/pimsm/instance.md": {
       "title": "/routing/pimsm/instance",
@@ -7307,7 +7307,7 @@
       "title": "/routing/pimsm/interface-template",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/pimsm/interface-template.md",
       "path": "docs/cli-reference/routing/pimsm/interface-template.md",
-      "sha256": "6679e47446e31ab3e8b0a304383aebd91e6d2d5a60782797d26281470574a8dc"
+      "sha256": "b4f90f2504a8fe8cb3f14438909d3d69d9da9fde00e90c1de340e0c854fcbc17"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/pimsm/interface.md": {
       "title": "/routing/pimsm/interface",

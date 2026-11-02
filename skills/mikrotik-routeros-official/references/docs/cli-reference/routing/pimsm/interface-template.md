@@ -1,6 +1,6 @@
 # interface-template
 
-> The interface template menu defines which interfaces will participate in PIM and what per-interface configuration will be used.
+> The interface template menu defines which interfaces will participate in PIM and what per-interface configuration will be used. It enables PIM only; to also run an IGMP/MLD querier on an interface, add it to an...
 
 -----------
 
@@ -8,7 +8,7 @@
 **Conditions:** !smips
 **Type:** Directory
 
-The interface template menu defines which interfaces will participate in PIM and what per-interface configuration will be used.
+The interface template menu defines which interfaces will participate in PIM and what per-interface configuration will be used. It enables PIM only; to also run an IGMP/MLD querier on an interface, add it to an [`igmp-interface-template`](./igmp-interface-template).
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">disabled</ArgTableRow>

@@ -70,6 +70,10 @@ The [`/tool/traffic-monitor`](../cli-reference/tool/traffic-monitor) menu runs a
     on-event=rate-alert
 ```
 
+:::warning
+The `/tool/traffic-monitor` menu runs scripts with the `ftp`, `reboot`, `read`, `write`, and `test` policies. See [script permissions](../developer-guides/scripting/#script-permissions) for more information.
+:::
+
 ## Technical details
 
 - The values starting with `fp` count the traffic that took the Fast Path (the streamlined CPU forwarding path). When regular counters grow much faster than the fp counters, the traffic instead takes the full CPU path (firewall processing and so on) — useful on busy routers.
