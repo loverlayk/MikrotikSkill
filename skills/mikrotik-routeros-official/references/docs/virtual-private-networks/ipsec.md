@@ -1332,6 +1332,189 @@ password=123 use-ipsec=yes user=user1
 
 This automatically creates dynamic IPsec peer and policy configurations.
 
+### Route-based IPsec with XFRM interfaces
+
+Policy-based IPsec selects traffic by the source and destination addresses in the policy. An XFRM interface adds a route-based mode: the IPsec policy group is bound to a virtual interface, and traffic is routed into that interface instead of being matched only by the policy selectors. This makes it possible to run dynamic routing protocols over the tunnel and to use the routing table to decide which traffic enters the tunnel.
+
+The XFRM interface is the tunnel endpoint for the policies in its group; configure it with [`/interface/xfrm`](../../cli-reference/interface/xfrm.md). It behaves like a regular interface: it has an IP address, a maximum transmission unit, and a running state. The running flag appears when an IPsec SA that uses the interface is established.
+
+Consider the setup where two routers are connected over an IPsec tunnel. R1 uses underlay address 203.0.113.1, LAN 192.168.51.0/28, and XFRM address 192.168.50.1/24. R2 uses underlay address 203.0.113.2, LAN 192.168.52.0/28, and XFRM address 192.168.50.2/24. R1 initiates the connection, R2 is the responder. Replace the addresses and the pre-shared key with your own values.
+
+#### Use cases
+
+- Dynamic routing over IPsec: a branch office has several LANs and gains new subnets over time. With policy-based IPsec, every local and remote subnet pair needs its own policy. With an XFRM interface, the branch runs OSPF over the tunnel and routes the head office networks through `xfrm1`; new subnets are advertised and reachable without adding IPsec policies.
+- Multi-WAN and policy routing: because the tunnel is a route, selected traffic can be steered into `xfrm1` with routing marks or a VRF, and the tunnel can fail over between WAN links without changing the IPsec policy.
+
+#### R1 configuration
+
+Start by creating the local bridge, the XFRM interface, and their IP addresses:
+
+```ros
+/interface/bridge
+add name=lan
+/interface/xfrm
+add name=xfrm1
+/ip/address
+add address=192.168.51.1/28 interface=lan
+add address=192.168.50.1/24 interface=xfrm1
+```
+
+Create the Phase 1 profile and Phase 2 proposal entries. These parameters must match on both routers:
+
+```ros
+/ip/ipsec/profile
+add name=xfrm-example hash-algorithm=sha256 enc-algorithm=aes-256 dh-group=modp2048
+/ip/ipsec/proposal
+add name=xfrm-example auth-algorithms=sha256 enc-algorithms=aes-256-cbc pfs-group=none
+```
+
+Create a dedicated policy group and bind it to the XFRM interface. A dedicated group keeps these policies separate from other IPsec policies on the router:
+
+```ros
+/ip/ipsec/policy/group
+add name=xfrm1-group interface=xfrm1
+```
+
+Configure the peer and identity. The identity must use the same policy group as its `policy-template-group`:
+
+```ros
+/ip/ipsec/peer
+add name=xfrm-example address=203.0.113.2/32 local-address=203.0.113.1 exchange-mode=ike2 profile=xfrm-example
+/ip/ipsec/identity
+add peer=xfrm-example auth-method=pre-shared-key secret=example-secret generate-policy=port-strict policy-template-group=xfrm1-group
+```
+
+Add the policy for the LAN-to-LAN traffic and route the remote LAN through the interface:
+
+```ros
+/ip/ipsec/policy
+add peer=xfrm-example group=xfrm1-group tunnel=yes src-address=192.168.51.0/28 dst-address=192.168.52.0/28 protocol=all action=encrypt level=require proposal=xfrm-example
+/ip/route
+add dst-address=192.168.52.0/28 gateway=xfrm1
+```
+
+#### R2 configuration
+
+The configuration on R2 mirrors R1. Create the bridge, the XFRM interface, and their IP addresses:
+
+```ros
+/interface/bridge
+add name=lan
+/interface/xfrm
+add name=xfrm1
+/ip/address
+add address=192.168.52.1/28 interface=lan
+add address=192.168.50.2/24 interface=xfrm1
+```
+
+Create the same profile and proposal:
+
+```ros
+/ip/ipsec/profile
+add name=xfrm-example hash-algorithm=sha256 enc-algorithm=aes-256 dh-group=modp2048
+/ip/ipsec/proposal
+add name=xfrm-example auth-algorithms=sha256 enc-algorithms=aes-256-cbc pfs-group=none
+```
+
+Create the policy group, the peer, and the identity:
+
+```ros
+/ip/ipsec/policy/group
+add name=xfrm1-group interface=xfrm1
+/ip/ipsec/peer
+add name=xfrm-example address=203.0.113.1/32 local-address=203.0.113.2 exchange-mode=ike2 passive=yes profile=xfrm-example
+/ip/ipsec/identity
+add peer=xfrm-example auth-method=pre-shared-key secret=example-secret generate-policy=port-strict policy-template-group=xfrm1-group
+```
+
+Add the policy and the route:
+
+```ros
+/ip/ipsec/policy
+add peer=xfrm-example group=xfrm1-group tunnel=yes src-address=192.168.52.0/28 dst-address=192.168.51.0/28 protocol=all action=encrypt level=require proposal=xfrm-example
+/ip/route
+add dst-address=192.168.51.0/28 gateway=xfrm1
+```
+
+#### Verification
+
+Check that the XFRM interface is running:
+
+```ros
+/interface/xfrm/print
+```
+
+The `R` flag appears after the IPsec SA is established. Before that, an IP address assigned to the interface is shown as invalid.
+
+Check the policy and the active peer:
+
+```ros
+/ip/ipsec/policy/print detail
+/ip/ipsec/active-peers/print detail
+```
+
+The active policy shows `active-interface=xfrm1` and `ph2-state=established`. Test the tunnel by pinging the remote LAN:
+
+```ros
+/ping 192.168.52.1 src-address=192.168.51.1
+```
+
+#### MTU
+
+The `mtu` property sets the Layer 3 MTU of the XFRM interface. The default is `1400` bytes, which leaves room for the ESP overhead. The read-only `actual-mtu` property reports the value in use. A change to `mtu` takes effect immediately. Verify the effective value with `/interface print detail`; if `actual-mtu` does not match the configured value, set `mtu` again.
+
+#### OSPF over XFRM
+
+OSPF can run over the XFRM interface. The IPsec policy must match the OSPF traffic, including multicast hellos, so replace the LAN-to-LAN policy with a catch-all policy in the XFRM group. Both routers must also use the same effective MTU; an MTU mismatch leaves the OSPF neighbor in `ExStart`.
+
+On R1, replace the policy and add the OSPF configuration:
+
+```ros
+/ip/ipsec/policy
+remove [find peer=xfrm-example]
+add peer=xfrm-example group=xfrm1-group tunnel=yes src-address=0.0.0.0/0 dst-address=0.0.0.0/0 protocol=all action=encrypt level=require proposal=xfrm-example
+
+/routing/ospf/instance
+add name=xfrm-ospf version=2 router-id=192.168.50.1
+/routing/ospf/area
+add name=backbone instance=xfrm-ospf area-id=0.0.0.0
+/routing/ospf/interface-template
+add interfaces=xfrm1 area=backbone type=ptp
+add networks=192.168.51.0/28 area=backbone
+```
+
+On R2, use the same configuration with the R2 router ID and LAN network:
+
+```ros
+/ip/ipsec/policy
+remove [find peer=xfrm-example]
+add peer=xfrm-example group=xfrm1-group tunnel=yes src-address=0.0.0.0/0 dst-address=0.0.0.0/0 protocol=all action=encrypt level=require proposal=xfrm-example
+
+/routing/ospf/instance
+add name=xfrm-ospf version=2 router-id=192.168.50.2
+/routing/ospf/area
+add name=backbone instance=xfrm-ospf area-id=0.0.0.0
+/routing/ospf/interface-template
+add interfaces=xfrm1 area=backbone type=ptp
+add networks=192.168.52.0/28 area=backbone
+```
+
+Check the neighbor state:
+
+```ros
+/routing/ospf/neighbor/print
+```
+
+:::warning
+The XFRM interface must be running before traffic can pass through it. If the interface does not come up after the SA is established, re-create the interface or reboot the router.
+:::
+
+:::info
+A policy group can be bound to only one XFRM interface. When you use a dedicated group, set the identity's `policy-template-group` to that group so the Phase 2 SA is created for the policy in the group.
+
+The example uses a pre-shared key. Use certificate authentication in production.
+:::
+
 ### Troubleshooting/FAQ
 
 #### Phase 1 Failed to get a valid proposal
@@ -1397,3 +1580,15 @@ Yes, you can, see "Allow only IPsec encapsulated traffic" examples.
 #### I enable IKEv2 REAUTH on StrongSwan and got the error 'initiator did not reauthenticate as requested'
 
 RouterOS does not support rfc4478, reauth must be disabled on StrongSwan.
+
+#### XFRM interface does not come up
+
+The `R` flag appears only after an IPsec SA that uses the interface is established. If the SA is established but the interface stays down, re-create the interface or reboot the router. An IP address on the interface is shown as invalid until the interface is running.
+
+#### XFRM policy stays in no-phase2
+
+Check that the policy group is bound to the XFRM interface, that the identity uses the same group as its `policy-template-group`, and that traffic is routed through the XFRM interface. If you use the default policy group, check that no other policy in that group overrides the traffic.
+
+#### OSPF over XFRM stays in ExStart
+
+The XFRM interfaces on both sides must use the same effective MTU. Check `actual-mtu` with `/interface print detail` on both routers and set `mtu` again if the values differ. An MTU mismatch prevents the OSPF database description exchange from completing.

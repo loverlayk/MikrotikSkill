@@ -1,5 +1,5 @@
 {
-  "index_sha256": "0f36529a56aa1d7e028738744002a9e4d86fe8e602d76a719f2a78cd5bb2160e",
+  "index_sha256": "b833571f4b4e987e580449572eb556b3fe21b0b95213eb9757ff42d1e74ec752",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -317,7 +317,7 @@
       "title": "MAC server",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/mac-server.md",
       "path": "docs/management-tools/mac-server.md",
-      "sha256": "a8e56d47c9f469c874bc1075fd52984b9dc05ab34d675e2ac9ab17eda73fdebe"
+      "sha256": "d2d84ca5b3abb0d282385f4d8e8cef844779fe458e631d9a69c950c170310ff3"
     },
     "https://manual.mikrotik.com/docs/management-tools/tr-069.md": {
       "title": "TR-069",
@@ -971,7 +971,7 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "5f2577df6afa4a6c3b1d130851573d71e5083aa349a0aa0e51471191ee3cef93"
+      "sha256": "2673eb93ddd8320e14cf905ae95e510080ca2bc913223c1b38a154870ba5a825"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
@@ -1643,7 +1643,7 @@
       "title": "IPsec",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec.md",
       "path": "docs/virtual-private-networks/ipsec.md",
-      "sha256": "45559f60f0be6947c94e43bd9a4f16f665d74f7d942dcc6fe276a427c827a29a"
+      "sha256": "87c1f5d4e2a930fe3167fd650f84dbc9c543df8ff96b0b118429c6b27369bb07"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md": {
       "title": "IKEv2 EAP between NordVPN and RouterOS",
@@ -4997,7 +4997,7 @@
       "title": "/interface/xfrm",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/xfrm.md",
       "path": "docs/cli-reference/interface/xfrm.md",
-      "sha256": "749642c860da506dbf417a0d3bafcea65cd9c66988e82ea11efb1d5974851a11"
+      "sha256": "0028b7936068835e81b0215a2dfa94ed1dd59835556ac0df0a605c34cdffef63"
     },
     "https://manual.mikrotik.com/docs/cli-reference/iot/bluetooth.md": {
       "title": "/iot/bluetooth",

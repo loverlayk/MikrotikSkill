@@ -120,6 +120,8 @@ An interface list you create without members blocks MAC access in the same way.
 
 :::note
 The IP firewall does not protect MAC access: an IP filter rule that drops UDP port 20561 does not block MAC Telnet or MAC ping. Limit MAC access with `allowed-interface-list`, or with a bridge filter rule on a bridge port. For the other ports RouterOS uses, see [Services](../system-information-and-utilities/services).
+
+Enabling [IP Source Guard](../bridging-and-switching/#arp-inspection-and-ip-source-guard) on a bridge blocks MAC Telnet, MAC WinBox and MAC ping on its untrusted ports.
 :::
 
 ## MAC ping

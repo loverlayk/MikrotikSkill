@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `0f36529a56aa1d7e028738744002a9e4d86fe8e602d76a719f2a78cd5bb2160e`
+Index SHA-256: `b833571f4b4e987e580449572eb556b3fe21b0b95213eb9757ff42d1e74ec752`
 Pages in current index: 1483
-Pages changed/written: 21
+Pages changed/written: 4
 Pages removed: 0
 Pages failed: 0
 
@@ -16,7 +16,7 @@ Pages failed: 0
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
-- [Bridging and Switching](docs/bridging-and-switching.md) `5f2577df6afa`
+- [Bridging and Switching](docs/bridging-and-switching.md) `2673eb93ddd8`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `a6593e35f7ec`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
@@ -502,7 +502,7 @@ Pages failed: 0
 - [/interface/wireless/wds/monitor](docs/cli-reference/interface/wireless/wds/monitor.md) `e296e77bfad5`
 - [/interface/wireless/wps-client](docs/cli-reference/interface/wireless/wps-client.md) `68d93e68c1dc`
 - [/interface/wireless/wps-push-button](docs/cli-reference/interface/wireless/wps-push-button.md) `a970689ebef9`
-- [/interface/xfrm](docs/cli-reference/interface/xfrm.md) `749642c860da`
+- [/interface/xfrm](docs/cli-reference/interface/xfrm.md) `0028b7936068`
 - [/iot/bluetooth](docs/cli-reference/iot/bluetooth.md) `5e3cd2fb0250`
 - [/iot/bluetooth/advertisers](docs/cli-reference/iot/bluetooth/advertisers.md) `512eb7e5775f`
 - [/iot/bluetooth/advertisers/ad-structures](docs/cli-reference/iot/bluetooth/advertisers/ad-structures.md) `67a32bd143a8`
@@ -1325,7 +1325,7 @@ Pages failed: 0
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
 - [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
-- [MAC server](docs/management-tools/mac-server.md) `a8e56d47c9f4`
+- [MAC server](docs/management-tools/mac-server.md) `d2d84ca5b3ab`
 - [MikroTik mobile app](docs/management-tools/mikrotik-mobile-app.md) `e80dd37a4295`
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
 - [RoMON](docs/management-tools/romon.md) `8eab6f0e2235`
@@ -1444,7 +1444,7 @@ Pages failed: 0
 - [EoIP](docs/virtual-private-networks/eoip.md) `22ebede54bc3`
 - [GRE](docs/virtual-private-networks/gre.md) `253b82ced2fb`
 - [IPIP](docs/virtual-private-networks/ipip.md) `6f1df6c98353`
-- [IPsec](docs/virtual-private-networks/ipsec.md) `45559f60f0be`
+- [IPsec](docs/virtual-private-networks/ipsec.md) `87c1f5d4e2a9`
 - [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`
 - [QKD Integration in RouterOS IPsec (PPK)](docs/virtual-private-networks/ipsec/qkd-integration-in-routeros-ipsec-ppk.md) `8c24ee335038`
 - [L2TP](docs/virtual-private-networks/l2tp.md) `307b4bed8475`
