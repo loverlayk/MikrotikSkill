@@ -38,6 +38,7 @@ New to one of these devices? Start with a task-oriented guide, then use the prop
 - [Configuring outdoor CPE-to-AP links](./configuring-outdoor-cpe-to-ap-links.md)
 - [Interworking (802.11u / Hotspot 2.0) for WiFi6](./interworking-for-wifi6.md)
 - [Centralized management with WiFi CAPsMAN](./capsman.md)
+- [Configuring EasyMesh](./configuring-easymesh)
 
 ## WiFi Terminology
 
@@ -427,6 +428,10 @@ Wireless peers can be manually de-authenticated (forcing re-association) by remo
 
 CAPsMAN (Controlled Access Point system Manager) for the new WiFi menu lets you apply wireless settings to many MikroTik WiFi APs from a central controller. See the dedicated page: [WiFi CAPsMAN](./capsman.md).
 
+## WiFi EasyMesh
+
+EasyMesh is a Wi-Fi Alliance standard for multi-AP Wi-Fi networks, where a central controller manages one or more agents, including certified devices from different vendors. See the dedicated page: [Configuring EasyMesh](./configuring-easymesh).
+
 ## Advanced examples
 
 [Enterprise wireless security with User Manager v5](../user-guides/enterprise-wireless-security-user.md)
@@ -533,7 +538,7 @@ This section includes properties relating to the operation of the interface and 
 | **hide-ssid** (*no \| yes*; default: **no**) | yes - AP does not include its SSID in beacon frames, and does not reply to probe requests that have broadcast SSID.no - AP includes its SSID in the beacon frames, and replies to probe requests that have broadcast SSID. |
 | **hw-protection-mode** (*cts-to-self* \| none \| *rts-cts)* | To reduce frame collisions, you can use: cts-to-self  - Interface sends CTS frame to own address before transmitting an MPDU (to notify nearby devices to hold off talking over each other);none  - Interface does not use any hardware protection mechanism;rts-cts - Interface sends an RTS frame before each MPDU (RTS is followed by a CTS from a receiver and the communication happens after that - both RTS and CTS frames can hold off other devices); Default (unset): interface sends RTS frames before re-transmitted MPDUs. |
 | **installation** (*indoor*\|*outdoor*; *default*: **indoor**) | Devices installed outdoors will avoid use of indoor-only radio channels. |
-| **manager** (*capsman* \|*capsman-or-local* \| *local*; default: **local**) | capsman - the interface will act as CAP only; this option should **not** be passed via provisioning rules to the CAP  capsman-or-local - the interface will get configuration via CAPsMAN or use its own, if `/interface/wifi/cap` is not enabled.  local - interface won't contact CAPsMAN in order to get configuration. |
+| **manager** (*capsman* \|*capsman-or-local* \| *easymesh* \| *local*; default: **local**) | capsman - the interface will act as CAP only; this option should **not** be passed via provisioning rules to the CAP  capsman-or-local - the interface will get configuration via CAPsMAN or use its own, if `/interface/wifi/cap` is not enabled.  easymesh - the interface is managed by EasyMesh.  local - interface won't contact CAPsMAN in order to get configuration. |
 | **max-clients** (*integer 1..1000; default: **1000**)* | Maximum number of associated clients. |
 | **mode** (*ap* \| *station*) | Interface operation mode ap (default) - interface operates as an access pointstation - interface acts as a client device, scanning for access points advertising the configured SSIDstation-bridge - interface acts as a client device and enables support for a 4-address frame format, so that the interface can be used as a bridge portstation-pseudobridge - the interface keeps track of outgoing IP connections and performs MAC address translation similarly to how IP masquerading works🛈  **Important:** The 'wifi' station-bridge mode is incompatible with APs running the older 'wireless' package and vice versa.     |
 | **multicast-enhance** (*enabled*\| *disabled*; default: **disabled**) | With the multicast-enhance feature enabled, an AP will convert every multicast-addressed IP or IPv6 packet into multiple unicast-addressed frames for each connected station. This may improve link throughput and reliability since, unlike multicast frames, unicasts are acknowledged by stations and transmitted using a higher data rate. |

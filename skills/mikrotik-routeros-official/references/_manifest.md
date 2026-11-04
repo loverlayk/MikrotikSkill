@@ -1,8 +1,8 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `b833571f4b4e987e580449572eb556b3fe21b0b95213eb9757ff42d1e74ec752`
-Pages in current index: 1483
+Index SHA-256: `7feaa8571855a83a33866c4476428c406ce14e07c15a97f0efd4a693c5ec5e93`
+Pages in current index: 1484
 Pages changed/written: 4
 Pages removed: 0
 Pages failed: 0
@@ -17,7 +17,7 @@ Pages failed: 0
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
 - [Bridging and Switching](docs/bridging-and-switching.md) `2673eb93ddd8`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `a6593e35f7ec`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `b80767fa842d`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `fe2d5cb0d5ba`
@@ -1153,7 +1153,7 @@ Pages failed: 0
 - [/zerotier/peer](docs/cli-reference/zerotier/peer.md) `b0a980eca26b`
 - [/zerotier/peer/hint](docs/cli-reference/zerotier/peer/hint.md) `e7651d2f1df5`
 - [Container](docs/containers.md) `7ec652bf8fd7`
-- [Apps](docs/containers/apps.md) `4822b560ebb3`
+- [Apps](docs/containers/apps.md) `3f94c3751a83`
 - [List of available Apps](docs/containers/apps/available-apps.md) `b8d97c9264da`
 - [Pair Claire with Home Assistant on hAP beÂ³ Media](docs/containers/user-guides/claire-homeassistant.md) `fa1f01ea8765`
 - [Container - freeradius server](docs/containers/user-guides/container-freeradius-server.md) `06382d817af5`
@@ -1484,8 +1484,9 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi](docs/wireless/wifi.md) `a7211b663f95`
+- [Wi-Fi](docs/wireless/wifi.md) `ee04ed7e3e20`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
+- [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `6d021135ff6f`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`

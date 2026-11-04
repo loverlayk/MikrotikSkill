@@ -1,5 +1,5 @@
 {
-  "index_sha256": "b833571f4b4e987e580449572eb556b3fe21b0b95213eb9757ff42d1e74ec752",
+  "index_sha256": "7feaa8571855a83a33866c4476428c406ce14e07c15a97f0efd4a693c5ec5e93",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -737,13 +737,19 @@
       "title": "Wi-Fi",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi.md",
       "path": "docs/wireless/wifi.md",
-      "sha256": "a7211b663f9578e9de6e10318ffbcfbd16cb6aef4644a649584bcf634e35432b"
+      "sha256": "ee04ed7e3e20509cd20746e90a7eca9ab9ece4b59ec23fdcd7a1e40f79f86ebc"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md": {
       "title": "WiFi CAPsMAN",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md",
       "path": "docs/wireless/wifi/capsman.md",
       "sha256": "ed8faf248f48c509d37c92c967515c341270b9d9af2e75edd342129af80ffb46"
+    },
+    "https://manual.mikrotik.com/docs/wireless/wifi/configuring-easymesh.md": {
+      "title": "Configuring EasyMesh",
+      "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/configuring-easymesh.md",
+      "path": "docs/wireless/wifi/configuring-easymesh.md",
+      "sha256": "6d021135ff6f07d6ce5335d352bd69553f6be98eca1e8a09d33cdec1150f84d4"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",
@@ -983,7 +989,7 @@
       "title": "L3 Hardware Offloading",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md",
       "path": "docs/bridging-and-switching/l3-hardware-offloading.md",
-      "sha256": "a6593e35f7ecee6fd65a38d9c92949ab97e720b29f1b1e05c6b1c610af6caf5c"
+      "sha256": "b80767fa842d1ee66e50a2fbbc678ee153ce58d06dffd85a5f792e2097c695c2"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md": {
       "title": "Quality of Service",
@@ -2123,7 +2129,7 @@
       "title": "Apps",
       "markdown_url": "https://manual.mikrotik.com/docs/containers/apps.md",
       "path": "docs/containers/apps.md",
-      "sha256": "4822b560ebb3ad85631bc56634fc02309b38fab97bdf0b6949f9c7d3e278de35"
+      "sha256": "3f94c3751a83fee1f568518cc949ba2f868a32faad4f1b851bfef7005db4c160"
     },
     "https://manual.mikrotik.com/docs/containers/apps/available-apps.md": {
       "title": "List of available Apps",

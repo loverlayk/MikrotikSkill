@@ -38,7 +38,7 @@ As with the underlying Container system, the App menu inherits security implicat
 
 | Property | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| **auto-update** | *yes* &#124; *no* | *no* | Enables or disables automatic updating when a new container image version is available. |
+| **auto-update** | *yes* &#124; *no* | *no* | Enables or disables automatic updating when a new container image version is available. Update automatically triggers on device reboot |
 | **check-certificate** | *yes* &#124; *no* | *yes* | Verifies the registry certificate against the router’s [certificate store](../../authentication-authorization-accounting/certificates.md) before pulling the container image. |
 | **container-command-lines** | *string* | *(empty)* | Specifies the command-line argument(s) to pass to the application when starting the container. |
 | **devices** | *string* | *(empty)* | Specifies additional hardware devices to pass through to the container application. |

@@ -564,25 +564,22 @@ Using certain configurations (e.g. enabling bridge "**use-ip-firewall**" setting
 Mixing hardware-forwarded and FastTrack/CPU-forwarded packets of the same flow can select different ECMP nexthops, causing asymmetric routing and connection resets.
 :::
 
-Only the devices listed in the table below support L3 HW Offloading.
-
 ## L3HW Device Support
 
 Only the devices listed in the table below support L3 HW Offloading.
 
 ### CRS3xx: Switch 98DX3xxx and 98DX2xxx Series
 
-The devices below are based on **Marvell **98DX224S, 98DX226S****, **98DX2528,** or **98DX3236** switch chip models.
+The devices below are based on Marvell 98DX224S, 98DX226S, 98DX2528, or 98DX3236 switch chip models. The 98DX3255 and 98DX3257 models are exceptions, which have a feature set of the 98DX8xxx rather than the 98DX3xxx series.
 
-:::info
-The **98DX3255** and **98DX3257** models are exceptions, which have a feature set of the 98DX8xxx rather than the 98DX3xxx series.
-
-**Caution:** Below are some important features that these devices are missing when compared to other switch models:
+:::warning
+These devices are missing several features that other switch models support:
 
 - Fasttrack and NAT connection offloading
 - per-VLAN packet and byte counters
 - VXLAN offloading
-- hardware-offloaded VRF.
+- VRRP offloading
+- hardware-offloaded VRF
 
 :::
 
