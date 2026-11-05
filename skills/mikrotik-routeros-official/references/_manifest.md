@@ -3,7 +3,7 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `7feaa8571855a83a33866c4476428c406ce14e07c15a97f0efd4a693c5ec5e93`
 Pages in current index: 1484
-Pages changed/written: 4
+Pages changed/written: 3
 Pages removed: 0
 Pages failed: 0
 
@@ -16,7 +16,7 @@ Pages failed: 0
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `788669d58277`
-- [Bridging and Switching](docs/bridging-and-switching.md) `2673eb93ddd8`
+- [Bridging and Switching](docs/bridging-and-switching.md) `9fadb366acc9`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `b80767fa842d`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `ef5f78d23d56`
@@ -220,7 +220,7 @@ Pages failed: 0
 - [/interface/bonding](docs/cli-reference/interface/bonding.md) `7b52b3e99b20`
 - [/interface/bonding/monitor-slaves](docs/cli-reference/interface/bonding/monitor-slaves.md) `9ec8962033f3`
 - [/interface/bonding/monitor](docs/cli-reference/interface/bonding/monitor.md) `90a842e2f15d`
-- [/interface/bridge](docs/cli-reference/interface/bridge.md) `417d88bf604d`
+- [/interface/bridge](docs/cli-reference/interface/bridge.md) `f9422fff26b9`
 - [/interface/bridge/calea](docs/cli-reference/interface/bridge/calea.md) `690afd5316d1`
 - [/interface/bridge/calea/reset-counters-all](docs/cli-reference/interface/bridge/calea/reset-counters-all.md) `6a246b19e505`
 - [/interface/bridge/calea/reset-counters](docs/cli-reference/interface/bridge/calea/reset-counters.md) `6bfdd8a9ee4e`
@@ -1486,7 +1486,7 @@ Pages failed: 0
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
 - [Wi-Fi](docs/wireless/wifi.md) `ee04ed7e3e20`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
-- [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `6d021135ff6f`
+- [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`

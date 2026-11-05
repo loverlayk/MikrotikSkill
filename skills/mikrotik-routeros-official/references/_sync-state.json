@@ -749,7 +749,7 @@
       "title": "Configuring EasyMesh",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/configuring-easymesh.md",
       "path": "docs/wireless/wifi/configuring-easymesh.md",
-      "sha256": "6d021135ff6f07d6ce5335d352bd69553f6be98eca1e8a09d33cdec1150f84d4"
+      "sha256": "767369a9fa58ab50261d25f5ba8d97a0dbb076a0b875d0c44b8e82616370ff7a"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",
@@ -977,7 +977,7 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "2673eb93ddd8320e14cf905ae95e510080ca2bc913223c1b38a154870ba5a825"
+      "sha256": "9fadb366acc9af4c143e770bf226386f06adc7c3fe73e86865b737d07d8348f1"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
@@ -3311,7 +3311,7 @@
       "title": "/interface/bridge",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/bridge.md",
       "path": "docs/cli-reference/interface/bridge.md",
-      "sha256": "417d88bf604d7b1361051810049223aa1d13ae7c66081cfd84b503fb124e1fcc"
+      "sha256": "f9422fff26b9aef1ab6a56d05a741d2a0e26828da46eea53111b5bcf2ad96912"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/bridge/calea.md": {
       "title": "/interface/bridge/calea",

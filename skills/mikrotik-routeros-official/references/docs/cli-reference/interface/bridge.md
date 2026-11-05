@@ -57,7 +57,7 @@
 <ArgTableRow arg="ingress-filtering" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcp-snooping" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcp-snooping-vlan-ids" typ="multi { vlan-id-range: range [1 .. 4094]
- }"></ArgTableRow>
+ }">VLAN IDs on which DHCP snooping is applied. VLANs outside the list are forwarded without snooping. By default, all VLANs are snooped. This property only has an effect when `dhcp-snooping` and `vlan-filtering` are set to `yes`.</ArgTableRow>
 <ArgTableRow arg="dhcp-agent-circuit-id" typ="string">
 Specify the relay agent circuit-id suboption value of the option 82 to be added to the DHCP messages passing through the bridge.
 The string length is limited to 255 characters with the default value being: $(INTERFACE):$(VID).
@@ -74,7 +74,7 @@ The string value can contain variables, whose names must be enclosed in parenthe
 Example: 'some_arbitrary_text $(HOSTNAME) another_piece_of_text $(BRIDGEMAC)'.
 The following variables are supported: HOSTNAME, INTERFACE, VID and BRIDGEMAC.
 </ArgTableRow>
-<ArgTableRow arg="dhcp-snooping-option82-policy" typ="enum (drop | keep | replace)"></ArgTableRow>
+<ArgTableRow arg="dhcp-snooping-option82-policy" typ="enum (drop | keep | replace)">Action for DHCP messages that already contain Option 82 when they pass through the bridge: `drop` the message, `keep` the existing option, or `replace` it with the values set in `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. Default: drop. This property only has an effect when `dhcp-snooping` is set to `yes`.</ArgTableRow>
 <ArgTableRow arg="arp-inspection" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-snooping" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-agent-circuit-id" typ="string">

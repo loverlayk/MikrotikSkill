@@ -1523,51 +1523,66 @@ The bridge supports IGMP/MLD snooping. It controls multicast streams and prevent
 
 DHCP Snooping and DHCP Option 82 are supported by bridge. The DHCP Snooping is a Layer2 security feature that prevents unauthorized DHCP servers from providing malicious information to users. In RouterOS, you can specify which bridge ports are trusted (where a known DHCP server resides and DHCP messages should be forwarded) and which are untrusted (usually used for access ports, received DHCP server messages will be dropped). The DHCP Option 82 is additional information (Agent Circuit ID and Agent Remote ID) provided by DHCP Snooping enabled devices that allows identifying the device itself and DHCP clients.
 
+By default, DHCP snooping applies to all VLANs of the bridge. When `vlan-filtering` is enabled, the `dhcp-snooping-vlan-ids` property limits it to the listed VLAN IDs. DHCP messages in other VLANs are forwarded without snooping, including DHCP server messages received on untrusted ports.
+
 ![Dhcp_snooping](./img/index-09.webp)
 
-In this example, SW1 and SW2 are DHCP Snooping and Option 82-enabled devices. First, we need to create a bridge, assign interfaces and mark trusted ports. Use these commands on **SW1**:
+In this example, SW1 and SW2 are DHCP Snooping and Option 82-enabled devices. Both switches carry client traffic in VLAN 10.
+
+Create a bridge with VLAN filtering and assign the interfaces.
+
+On SW1:
+- ether1 is an untagged access port for DHCP clients.
+- ether2 is the trusted tagged uplink to SW2.
 
 ```ros
 /interface/bridge
-add name=bridge
+add name=bridge vlan-filtering=yes
 /interface/bridge/port
-add bridge=bridge interface=ether1
+add bridge=bridge interface=ether1 pvid=10
 add bridge=bridge interface=ether2 trusted=yes
+/interface/bridge/vlan
+add bridge=bridge tagged=ether2 vlan-ids=10
 ```
 
-For SW2, the configuration will be similar, but we also need to mark ether1 as trusted, because this interface is going to receive DHCP messages with Option 82 already added. You need to mark all ports as trusted if they are going to receive DHCP messages with added Option 82, otherwise these messages will be dropped. Also, we add ether3 to the same bridge and leave this port untrusted, imagining there is an unauthorized (rogue) DHCP server. Use these commands on **SW2**:
+On SW2:
+- ether1 is the trusted tagged uplink from SW1.
+- ether2 is the trusted tagged port to the DHCP server.
+- ether3 is an untagged access port with an unauthorized (rogue) DHCP server connected to it. Leave it untrusted.
 
 ```ros
 /interface/bridge
-add name=bridge
+add name=bridge vlan-filtering=yes
 /interface/bridge/port
 add bridge=bridge interface=ether1 trusted=yes
 add bridge=bridge interface=ether2 trusted=yes
-add bridge=bridge interface=ether3
+add bridge=bridge interface=ether3 pvid=10
+/interface/bridge/vlan
+add bridge=bridge tagged=ether1,ether2 vlan-ids=10
 ```
 
-Then we need to enable DHCP Snooping and configure Option 82. Starting from RouterOS version 7.23, it is possible to configure custom Remote ID and Circuit ID values using predefined variables (such as BRIDGEMAC, HOSTNAME, INTERFACE, VID). See the `dhcp-agent-circuit-id`, `dhcp-agent-remote-id` properties for more details. In case your DHCP server does not support DHCP Option 82 or you do not implement any Option 82-related policies, this step is not mandatory. In this configuration example, we are using these commands on **SW1** and **SW2**:
+:::info
+Mark all ports as trusted if they receive DHCP messages with already added Option 82, otherwise these messages are dropped.
+:::
+
+Then enable DHCP snooping. By default it applies to all VLANs. `dhcp-snooping-vlan-ids` limits it to the listed VLANs, as in this example. Option 82 values can use predefined variables (`BRIDGEMAC`, `HOSTNAME`, `INTERFACE`, `VID`). See `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. If your DHCP server does not support Option 82, this step is optional. Use these commands on SW1 and SW2:
 
 ```ros
 /interface/bridge
-set [find where name="bridge"] dhcp-snooping=yes dhcp-agent-circuit-id="interface: \$(INTERFACE), vlan: \$(VID)" dhcp-agent-remote-id="ip: 192.168.88.1, identity: \$(HOSTNAME), mac: \$(BRIDGEMAC)"
+set [find where name="bridge"] dhcp-snooping=yes dhcp-snooping-vlan-ids=10 dhcp-agent-circuit-id="interface: \$(INTERFACE), vlan: \$(VID)" dhcp-agent-remote-id="ip: 192.168.88.1, identity: \$(HOSTNAME), mac: \$(BRIDGEMAC)"
 ```
 
-Now both devices will analyze what DHCP messages are received on bridge ports. The **SW1** is responsible for adding and removing the DHCP Option 82. The **SW2** will limit rogue DHCP servers from receiving any discovery messages and drop malicious DHCP server messages from ether3.
-
-:::warning
-Currently, MikroTik devices with Marvell Prestera switch and 88E6393X, 88E6191X, 88E6190 switch chips fully support hardware offloaded DHCP Snooping and Option 82. For CRS1xx and CRS2xx series switches, it is possible to use DHCP Snooping along with VLAN switching, but then you need to make sure that DHCP packets are sent out with the correct VLAN tag using egress ACL rules. Other devices are capable of using DHCP Snooping and Option 82 features along with hardware offloading, but you must make sure that there is no VLAN-related configuration applied to the device, otherwise, DHCP Snooping and Option 82 might not work properly. See the Bridge Hardware Offloading section with supported features.
-:::
+Now both devices analyze the DHCP messages received on bridge ports. **SW1** adds and removes DHCP Option 82. **SW2** prevents rogue DHCP servers from receiving discovery messages and drops malicious DHCP server messages from ether3.
 
 :::info
-Starting from RouterOS v7.17, DHCP snooping is supported with hardware offloading on bonding interfaces.
+DHCP snooping is supported with hardware offloading on bonding interfaces.
 :::
 
 ### DHCP Snooping Binding Table
 
 The DHCP snooping binding database is a runtime table generated by a bridge and intended to store DHCP leases provided by DHCP servers connected to trusted ports. Each entry records the client’s MAC address, assigned IP address, lease expiration time, VLAN ID, and the physical interface on which the client was seen. The bridge can utilize this database to enhance security. Namely, when a frame arrives on an untrusted port, the switch verifies that the source MAC/IP pair matches a stored binding before forwarding the packet, thereby blocking traffic from rogue DHCP servers or spoofed hosts, preventing address‑theft attacks, and enabling features such as IP‑Source‑Guard, ARP‑Inspection.
 
-The present implementation of the DHCPv4 snooping binding table has been built on top of the existing `/interface/bridge/host` table. The relevant DHCP information is retrieved from DHCP messages traversing the bridge.
+The present implementation of the DHCPv4 snooping binding table has been built on top of the existing `/interface/bridge/host` table. The relevant DHCP information is retrieved from DHCP messages traversing the bridge. The binding table is only maintained when `arp-inspection` or `ip-source-guard` is enabled. With `dhcp-snooping` alone, the bridge still drops DHCP server messages received on untrusted ports, but no `dhcpv4-*` entries are created.
 
 :::danger
 The DHCP snooping binding table is cleared whenever the bridge interface configuration is changed, including enabling the `arp-inspection` or `ip-source-guard` features. As a result, IPv4 and ARP traffic on untrusted ports is interrupted until clients obtain or renew their DHCP leases. To repopulate the binding table more quickly, disable and re-enable the untrusted Ethernet interfaces or reboot the switch.

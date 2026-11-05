@@ -7,14 +7,17 @@
 **Package:** `wifi-qcom`, `wifi-qcom-ac`
 
 :::warning
-EasyMesh is available in CLI (no GUI support yet).
 
-At this moment, it works on `wifi-qcom` and `wifi-qcom-ac` only.
+- EasyMesh is available in CLI (no GUI support yet).
+- At this moment, it works on `wifi-qcom` and `wifi-qcom-ac` only.
+- When onboarding an agent over Wi-Fi, configure the fronthaul with `wpa2-psk` or `wpa2-psk,wpa3-psk`. WPS onboarding uses the fronthaul configuration, while the agent's backhaul credentials are delivered over the backhaul link. WPS does not support WPA3-only (SAE).
+- DPP (Wi-Fi Easy Connect) onboarding is not implemented. To onboard an agent, use the WPS push-button or connect the agent over Ethernet.
+
 :::
 
-EasyMesh is a Wi-Fi Alliance standard for multi-AP Wi-Fi networks. One device acts as the controller and manages one or more agents. The controller distributes the Wi-Fi configuration to the agents, so all access points broadcast the same networks and use coordinated settings. For the complete list of settings, see the [EasyMesh CLI reference](../../cli-reference/interface/wifi/easymesh/).
+EasyMesh is a Wi-Fi Alliance standard for managing Wi-Fi APs and wireless extenders from different vendors as one coordinated network. A controller distributes fronthaul (client SSID) and backhaul (agent SSID) settings to managed APs (agents), which bridge their fronthaul interfaces to a wireless or Ethernet backhaul interface via Layer 2, preserving client MAC addresses during client traffic forwarding. The result is one Layer 2 network under a single controller. For all settings, see the [EasyMesh CLI reference](../../cli-reference/interface/wifi/easymesh/).
 
-[CAPsMAN](./capsman) provides similar centralized management for MikroTik devices, but it is primarily intended for access points connected to the network with Ethernet. It does not provide the standardized wireless backhaul and WPS onboarding. EasyMesh is a vendor-neutral standard, so a certified controller can manage certified agents from different vendors. Interoperability still depends on the devices, so test the controller and agent combination before deployment.
+[CAPsMAN](./capsman) provides similar centralized management for MikroTik devices, but it is primarily intended for access points connected to the network with Ethernet. It does not provide the standardized wireless backhaul and WPS onboarding. EasyMesh certification allows a controller to manage certified agents from different vendors. Interoperability still depends on the devices, so test the controller and agent combination before deployment.
 
 ## Topology
 
