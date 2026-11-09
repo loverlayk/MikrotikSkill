@@ -1,6 +1,6 @@
 # remove
 
-> Removes the specified application from the system.
+> Removes the app entry. Run cleanup first to remove its data and containers. This cannot be used to remove built-in apps.
 
 -----------
 
@@ -9,4 +9,4 @@
 **Package:** container
 **Type:** Command
 
-Removes the specified application from the system.
+Removes the app entry. Run `cleanup` first to remove its data and containers. This cannot be used to remove built-in apps.

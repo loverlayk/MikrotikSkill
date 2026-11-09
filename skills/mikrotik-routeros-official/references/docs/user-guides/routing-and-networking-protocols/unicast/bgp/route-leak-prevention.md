@@ -42,7 +42,7 @@ When a BGP session is configured with an RFC 9234 role, the router sends the BGP
 | `ebgp-rs-client` | `ebgp-rs` |
 | `ebgp-peer` | `ebgp-peer` |
 
-If the remote peer does not send the Role capability, or if the received role does not match the expected role, the router sends a NOTIFICATION message with Error Code 2 (OPEN Message Error), Error Subcode 8 (Role Mismatch), and the session is terminated.
+If the remote peer does not send the Role capability, or if the received role does not match the expected role, the router sends a NOTIFICATION message with Error Code 2 (OPEN Message Error), Error Subcode 11 (Role Mismatch), and the session is terminated.
 
 The negotiated roles are visible in the session monitoring output:
 

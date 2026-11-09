@@ -37,10 +37,20 @@ You need physical access to your RouterOS device to enable support for the conta
 
 Container package is compatible with **arm, arm64** and **x86** architectures. Use of remote-image (similar to docker pull) functionality requires a lot of free space in main memory, 16MB SPI flash boards may use pre-built images on USB or other disk media.
 
+Before you add the first container:
+
+1. Install the `container` package, see [Installing packages](../getting-started/installation-and-upgrade/packages#installing-packages).
+2. Enable containers in device-mode, where they are off by default:
+
+   ```ros
+   /system/device-mode/update container=yes
+   ```
+
+3. Within 5 minutes, confirm the change by pressing the reset or mode button, or by turning the power off and on; on a CHR, stop and start the virtual machine. A regular reboot cancels the change. After the confirmation, the router reboots with containers enabled. See [Device-mode](../system-information-and-utilities/device-mode).
+
 :::danger
 
 - An external disk supporting at least 100MB/s sequential read/write speed and 10K random iops is recommended. When using slower disks, container extraction times may become longer.
-- The Container package needs to be installed
 - For devices with EN7562CT CPU like the hEX Refresh, only [arm32v5](https://hub.docker.com/u/arm32v5) container images are supported, meaning a limited number of containers can be run.
 
 :::

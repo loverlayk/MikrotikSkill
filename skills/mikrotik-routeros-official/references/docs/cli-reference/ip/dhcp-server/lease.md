@@ -38,7 +38,7 @@ The server creates a dynamic simple queue named `dhcp-ds<hostname/MAC>` for the 
 <ArgTableRow arg="parent-queue" typ="enum (none) { none:0 }">Parent of the dynamic simple queue created for this lease. Default: none.</ArgTableRow>
 <ArgTableRow arg="queue-type" typ="enum">Queue type of the dynamic simple queue created for this lease.</ArgTableRow>
 <ArgTableRow arg="address-lists" typ="multi { array-id, address-list: string
- }">Firewall address lists to which the address of the lease is added while the lease is bound.</ArgTableRow>
+ }">Firewall address lists to which the address of the lease is added while the lease is bound. When set, these lists override the `address-lists` of the DHCP server for this lease: only the lists of the lease are used.</ArgTableRow>
 <ArgTableRow arg="server" typ="enum (all) { all:0 }">DHCP server the lease belongs to. With `all`, the static lease is valid on every server.</ArgTableRow>
 <ArgTableRow arg="block-access" typ="bool">Whether to block the client: the server does not answer it, and the lease gets the `B` flag. Default: no.</ArgTableRow>
 <ArgTableRow arg="allow-dual-stack-queue" typ="bool">Whether this lease and a DHCPv6 binding of the same client share one dynamic simple queue, which then contains both the IPv4 and the IPv6 address. Default: yes.</ArgTableRow>

@@ -1,6 +1,6 @@
 # cleanup
 
-> Removes all application data, configuration files, and the container image. This operation is destructive and irreversible.
+> Stops the app and removes its containers, data, and network configuration. The app entry remains, disabled. This operation cannot be undone.
 
 -----------
 
@@ -9,4 +9,4 @@
 **Package:** container
 **Type:** Command
 
-Removes all application data, configuration files, and the container image. This operation is destructive and irreversible.
+Stops the app and removes its containers, data, and network configuration. The app entry remains, disabled. This operation cannot be undone.

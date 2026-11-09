@@ -1,6 +1,6 @@
 # remove-certificate
 
-> RouterOS command reference for /app/settings/remove-certificate.
+> Removes the certificate used for app HTTPS URLs.
 
 -----------
 
@@ -8,3 +8,5 @@
 **Syscap:** app
 **Package:** container
 **Type:** Command
+
+Removes the certificate used for app HTTPS URLs.

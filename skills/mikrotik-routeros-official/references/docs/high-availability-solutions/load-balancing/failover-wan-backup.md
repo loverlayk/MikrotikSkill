@@ -28,23 +28,17 @@ add chain=srcnat action=masquerade out-interface=ether1
 add chain=srcnat action=masquerade out-interface=ether2
 ```
 
-Next, we need to define two reachable hosts on the internet to monitor the status of each uplink. These hosts should be reliable and respond to ICMP requests. In this example, we use Google's DNS servers (8.8.8.8 and 8.8.4.4):
+Next, we need to define two reachable hosts on the internet to monitor the status of each uplink. These hosts should be reliable and respond to ICMP requests. In this example, we use Google's DNS servers (8.8.8.8 and 8.8.4.4). The first two routes reach each test host through its own uplink. The default routes then resolve recursively through the test hosts, and the ISP1 connection serves as the primary link (configured with a lower distance value):
 
 ```ros
-/ip/route 
+/ip/route
 add dst-address=8.8.8.8 scope=10 gateway=10.111.0.1
 add dst-address=8.8.4.4 scope=10 gateway=10.112.0.1
-```
-
-Finally, we add the default route that will be recursively resolved through both test hosts. The ISP1 connection serves as the primary link (configured with a lower distance value):
-
-```ros
-/ip/route/
 add distance=1 gateway=8.8.8.8 target-scope=11 check-gateway=ping
 add distance=2 gateway=8.8.4.4 target-scope=11 check-gateway=ping
 ```
 
-This configuration ensures that if the primary uplink becomes unavailable, traffic automatically fails over to the secondary connection.
+The default routes need the routes to the test hosts: without them, both default routes stay inactive. This configuration ensures that if the primary uplink becomes unavailable, traffic automatically fails over to the secondary connection.
 
 ### Improve Detection Reliability
 

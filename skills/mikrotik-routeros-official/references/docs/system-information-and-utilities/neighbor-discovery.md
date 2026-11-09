@@ -6,7 +6,7 @@
 
 Neighbor Discovery protocols allow you to find devices compatible with MNDP (MikroTik Neighbor Discovery Protocol), CDP (Cisco Discovery Protocol), or LLDP (Link Layer Discovery Protocol) in the Layer 2 broadcast domain. They can be used to map out your network.
 
-`/ip/neighbor` lists all discovered neighbors, whichever of the protocols announced them (the `discovered-by` value shows which). The read-only [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp) menu shows only LLDP-discovered entries. All read-only neighbor parameters are described in the [`/ip/neighbor`](../cli-reference/ip/neighbor) CLI reference:
+`/ip/neighbor` lists all discovered neighbors, whichever of the protocols announced them (the `discovered-by` value shows which), with the common summary fields. The read-only [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp) menu shows only LLDP-discovered entries and the LLDP-specific fields, named after the LLDP standard. The read-only parameters of `/ip/neighbor` are described in its [`/ip/neighbor`](../cli-reference/ip/neighbor) CLI reference:
 
 ```ros
 [admin@MikroTik] > /ip/neighbor/print where identity="Router-A"
@@ -16,7 +16,7 @@ Columns: INTERFACE, ADDRESS4, ADDRESS6, MAC-ADDRESS
    bridge
 ```
 
-The neighbor list keeps entries while the device announces itself. A device announces its presence every 30 seconds (the default `discover-interval`); when announcements stop, the entry is dropped after it ages out. The `lldpRemTable` SNMP table reports only neighbors discovered through LLDP; entries discovered exclusively by CDP or MNDP are not part of the SNMP LLDP-MIB.
+The neighbor list keeps entries while the device announces itself. A device announces its presence every 30 seconds (the default `discover-interval`); when announcements stop, the entry is dropped after it ages out. The `lldpRemTable` SNMP table contains the same LLDP-discovered entries as `/ip/neighbor/lldp`; entries discovered only by CDP or MNDP are not part of the SNMP LLDP-MIB.
 
 ## View and configure discovery in WinBox
 

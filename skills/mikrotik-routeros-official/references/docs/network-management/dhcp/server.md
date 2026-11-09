@@ -86,6 +86,27 @@ To configure the same DHCP server manually, create each part yourself:
    /ip/dhcp-server/add address-pool=dhcp_pool0 interface=bridge1 name=dhcp1
    ```
 
+### Give a device a fixed address
+
+A static lease gives a device the same address every time it asks for one. The device keeps using DHCP, so you do not change anything on the device.
+
+To keep the address a device already has, make its lease static. Find the lease by the device's MAC address, and set another address if you want one:
+
+```ros
+/ip/dhcp-server/lease/make-static [find mac-address=6C:3B:6B:7C:41:3E]
+/ip/dhcp-server/lease/set [find mac-address=6C:3B:6B:7C:41:3E] address=192.168.88.50
+```
+
+The device gets the new address when it renews its lease. To apply it sooner, reconnect the device or renew its lease on the device.
+
+To set the address before the device connects, add a static lease with its MAC address:
+
+```ros
+/ip/dhcp-server/lease/add mac-address=6C:3B:6B:7C:41:3E address=192.168.88.50 server=dhcp1
+```
+
+The address does not have to be in the pool.
+
 ## Properties
 
 All properties of the DHCP server are described in the [`/ip/dhcp-server`](../../cli-reference/ip/dhcp-server/) CLI reference. The following behavior needs more explanation.
@@ -122,6 +143,10 @@ When a client asks for an address, the server picks one:
 - Other clients get a free address from the pool. With `conflict-detection` (the default), the server first checks the address with an ARP request and an ICMP echo request, which delays the offer by about half a second. If another host answers, the address is kept as a lease with the `conflict` status for the lease time, and the client is offered another free address.
 
 The server then offers the address, and the lease is bound when the client requests it. When a client releases its address or its lease expires, a dynamic lease is removed and the address returns to the pool; a static lease stays and is used again when the client returns.
+
+### Lease address lists
+
+The server can add the address of each bound lease to firewall address lists with its `address-lists` property. A static lease can have its own `address-lists`. When it does, those lists override the `address-lists` of the server for that lease: only the lists of the lease are used, and the lists of the server are not.
 
 ### Lease storage
 

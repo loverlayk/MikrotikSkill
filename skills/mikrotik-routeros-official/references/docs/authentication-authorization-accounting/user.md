@@ -95,6 +95,17 @@ Even the `read` group includes the `reboot` and `sensitive` policies. Do not giv
 
 The exclamation mark `!` in front of a policy revokes it from the group.
 
+### Create a read-only user
+
+To let someone look at the configuration without changing anything, create a group with the `read` policy and the policies for the tools the user logs in with, then add the user to it:
+
+```ros
+/user/group/add name=readonly policy=read,winbox,web,ssh
+/user/add name=viewer group=readonly password="StrongPass123!"
+```
+
+The user can see the configuration in WinBox, WebFig and over SSH. Changing the configuration, rebooting, running tools such as ping and torch, and changing their own password with `/password` fail with `not enough permissions`. Without the `sensitive` policy, the user cannot see passwords: `/export show-sensitive` shows them as `*****`.
+
 ## Lock or close inactive sessions
 
 Set `inactivity-timeout` (range 1 minute to 24 hours) and `inactivity-policy` on a user to handle idle console sessions:

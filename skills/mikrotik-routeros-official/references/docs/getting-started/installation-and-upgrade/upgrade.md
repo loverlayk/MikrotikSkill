@@ -25,6 +25,15 @@ The package upgrade feature connects from the router to the MikroTik download se
 
 After selecting the *Check for Updates* button in QuickSet or in the System → Packages menu, the *Check for Updates* window will open with the current changelog or the latest changelog (if a newer version exists). If a newer version is available, the *Download* and *Download&Install* buttons will appear. Selecting *Download* downloads the newest version (a manual device reboot is required), while selecting *Download&Install* starts the download and automatically reboots the device after a successful download.
 
+From the command line, check for a new version, then install it:
+
+```ros
+/system/package/update/check-for-updates
+/system/package/update/install
+```
+
+`check-for-updates` shows the installed version and the latest version in the channel. `install` works like *Download&Install*: it downloads the new packages and reboots the router to install them. To download now and reboot later, use `/system/package/update/download`.
+
 The versions offered depend on the selected release channel. Not all versions may be available. It is not possible to upgrade from an older version to the latest version in one step with the check-for-updates approach. For example, if running RouterOS v6.x, even when selecting the major release upgrade channel called "Upgrade", you will only see v7.12.1 as the available version. You must first upgrade to that intermediate version, and only then will newer releases be available in the channels. This intermediate step can be done with check for updates as well; you will simply need to repeat check for updates after the first update to the intermediate version.
 
 If custom packages are installed, the downloader takes this into account and downloads all necessary packages.

@@ -203,6 +203,24 @@ add action=accept chain=forward comment="local network" in-interface=!in_interfa
 add action=drop chain=forward log-prefix=IPV6
 ```
 
+## Block a connection that is already open
+
+The firewall checks every packet against the rules, but the first rules in the previous examples accept the packets of established and related connections. A drop rule that you add after them stops only new connections: connections that are already open keep working until they end.
+
+To stop open connections too, put the drop rule before the rules that accept or FastTrack established connections:
+
+```ros
+/ip/firewall/filter/add chain=forward action=drop dst-address=203.0.113.10 place-before=0
+```
+
+The packets of a FastTracked connection bypass the filter rules. Remove such connections from the connection table, so that their next packets go through the rules again:
+
+```ros
+/ip/firewall/connection/remove [find dst-address~"203.0.113.10"]
+```
+
+Removing a TCP connection without the drop rule in first place does not stop it: with `loose-tcp-tracking=yes` (the default, see [Connection tracking](../connection-tracking#connection-tracking-settings)), the next packet of the connection counts as established and is accepted again.
+
 ## RAW Filtering
 
 The firewall RAW table allows selectively bypassing or dropping packets before connection tracking, that way significantly reducing the load on the CPU. The tool is very useful for DoS/DDoS attack mitigation.

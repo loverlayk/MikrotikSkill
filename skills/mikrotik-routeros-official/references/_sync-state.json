@@ -1,5 +1,5 @@
 {
-  "index_sha256": "7feaa8571855a83a33866c4476428c406ce14e07c15a97f0efd4a693c5ec5e93",
+  "index_sha256": "9feead13d6ee970ee0729e3fe71118ee9045a40b9e363ba8bf71c4a3402d2b6c",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -17,7 +17,7 @@
       "title": "First Time Configuration",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/first-time-configuration.md",
       "path": "docs/getting-started/first-time-configuration.md",
-      "sha256": "17dbd8d42e83d35b9032143857eabfc1bca0132e46d4d6e267620ddf7d599d0e"
+      "sha256": "4285d02ab78dc829f22b9e9b7b15b2edf0fe2875605797d7b54a69094f75a1b0"
     },
     "https://manual.mikrotik.com/docs/getting-started/manual-network-setup.md": {
       "title": "Manual Network Setup (No Default Configuration)",
@@ -29,7 +29,7 @@
       "title": "Securing your router",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/securing-your-router.md",
       "path": "docs/getting-started/securing-your-router.md",
-      "sha256": "0fbb40e2a92304bbeb325db3e0102b2a30838c900dbd4f8e3b8611aeb8821afb"
+      "sha256": "5e461c6914db0e3db479de7721a25c0cbf26f51e2f10fb3e681887baaa6b72cc"
     },
     "https://manual.mikrotik.com/docs/getting-started/networking-fundamentals.md": {
       "title": "Networking Fundamentals",
@@ -119,7 +119,7 @@
       "title": "Upgrade",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade/upgrade.md",
       "path": "docs/getting-started/installation-and-upgrade/upgrade.md",
-      "sha256": "0856202de3fd8e6dd1a32eba23ed65948e0c37f966621f541c9db484e51da7b1"
+      "sha256": "78c36ae7929016da4c819fb9dddd439d05d265ce44937b70ed8464bdefaee576"
     },
     "https://manual.mikrotik.com/docs/getting-started/installation-and-upgrade/netinstall.md": {
       "title": "Netinstall",
@@ -263,7 +263,7 @@
       "title": "WinBox",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/winbox.md",
       "path": "docs/management-tools/winbox.md",
-      "sha256": "9472c72378237b22c5b92df924d02655b474bd89d85993dfbeb5206c91a18511"
+      "sha256": "f4c6590336aad5af16e4a1d7a6f44bde4652a9403de0b310ba64913c5cbeeb2c"
     },
     "https://manual.mikrotik.com/docs/management-tools/winbox-legacy.md": {
       "title": "WinBox v3 (Legacy)",
@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "9d08f8093bcee5008987e1b5af2997ddb135e50045747acbb740712e072a395d"
+      "sha256": "953188baef17cc2241780a4b599f0ca49995a22a254b79a79530e8d5fd773d76"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -401,7 +401,7 @@
       "title": "Neighbor Discovery",
       "markdown_url": "https://manual.mikrotik.com/docs/system-information-and-utilities/neighbor-discovery.md",
       "path": "docs/system-information-and-utilities/neighbor-discovery.md",
-      "sha256": "658319ee8b3d9483edda88e9132f76add0aa65b4cea50e65c72172f012d6fdc5"
+      "sha256": "7a254ee121bf5bfcc4c6d8fbfc796d84907c2eec0c8e97437ed413425317e708"
     },
     "https://manual.mikrotik.com/docs/system-information-and-utilities/note.md": {
       "title": "Note",
@@ -533,7 +533,7 @@
       "title": "SNMP",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/snmp.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/snmp.md",
-      "sha256": "02a608133ebbfe88b49ce587bc5f69f49135a6274cb2ffeed3f28d37bc7915bb"
+      "sha256": "e070b2b6af46bbc2f55c6b53162e1b0ff92b15e0873059ea675e841f199cf5a4"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/health.md": {
       "title": "Health",
@@ -713,7 +713,7 @@
       "title": "Ethernet",
       "markdown_url": "https://manual.mikrotik.com/docs/wired-connections/ethernet.md",
       "path": "docs/wired-connections/ethernet.md",
-      "sha256": "497bf5f5244a2ef596ef8e45bbe76c7ee611b3018562ece739352e24cb7fce99"
+      "sha256": "76e955bc0597f68c2f1214aa6cc3870b9a3daf269b9f613b3e7a0a926217a78b"
     },
     "https://manual.mikrotik.com/docs/wired-connections/mikrotik-wired-interface-compatibility.md": {
       "title": "MikroTik wired interface compatibility",
@@ -725,7 +725,7 @@
       "title": "PWR Line",
       "markdown_url": "https://manual.mikrotik.com/docs/wired-connections/pwr-line.md",
       "path": "docs/wired-connections/pwr-line.md",
-      "sha256": "642aaefd72262376749cc8f9dce5423c1235da278546d39ed9b712ad6bf95840"
+      "sha256": "58ee0fea0f6aaaa95f6d2a7dbbb0b7c5b85dea7604f6236860648cc8fbcec242"
     },
     "https://manual.mikrotik.com/docs/wireless.md": {
       "title": "Wireless",
@@ -977,7 +977,7 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "9fadb366acc9af4c143e770bf226386f06adc7c3fe73e86865b737d07d8348f1"
+      "sha256": "cee9ba9c65465f81d471235cb45fd1b585437ff37a8c8af44f004f3ed939b971"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
@@ -1007,13 +1007,13 @@
       "title": "MACVLAN",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/macvlan.md",
       "path": "docs/bridging-and-switching/macvlan.md",
-      "sha256": "ef5f78d23d5655c0e4ec13652f6962dd20db8ca41afff5fbc2db145d572c01fd"
+      "sha256": "4175c3fefc1ef6bd960d16966b447c36d43216e4845b6a8564dde5f246c87d0c"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/vxlan.md": {
       "title": "VXLAN",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/vxlan.md",
       "path": "docs/bridging-and-switching/vxlan.md",
-      "sha256": "a0704e1b36b524fee5b2a6308062d31209421060181fc01b3902f9372499f6b5"
+      "sha256": "ae2e8d9d61eff5a040774cb8cdb32522ce1d1686997f8a7f55ba17ffc64f7541"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/switch-chip-features.md": {
       "title": "Switch Chip Features",
@@ -1025,7 +1025,7 @@
       "title": "VLAN",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/vlan.md",
       "path": "docs/bridging-and-switching/vlan.md",
-      "sha256": "dda05c4515ca3b503f8b8ddb91f17cba9238f48043a1c1cf0903282211725f54"
+      "sha256": "670eea913665a513f7215d33098cd1f7b75c819515a0717444b390424f63adcd"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/swos.md": {
       "title": "SwOS",
@@ -1085,7 +1085,7 @@
       "title": "Bridge VLAN Table",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/bridge-vlan-table.md",
       "path": "docs/bridging-and-switching/user-guides/bridge-vlan-table.md",
-      "sha256": "f28570e9a44a0ef67ae816aca004c9d503dfb7553c046c369a6d14b4f8202220"
+      "sha256": "cf1e054f0645c53b0358ffc648edb9079f10dc2c202b997a3af7a69f33a41d7b"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/crs1xx-2xx-series-switches-examples.md": {
       "title": "CRS1xx/2xx series switch examples",
@@ -1097,7 +1097,7 @@
       "title": "Layer2 misconfiguration",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/layer2-misconfiguration.md",
       "path": "docs/bridging-and-switching/user-guides/layer2-misconfiguration.md",
-      "sha256": "65e966865d64ecd1a76b166464d895f757877d51b91cbe27d8eec2699d97d3de"
+      "sha256": "728f0aa530a2c3dbb01c7fd00c4080395f87c5f64847f8993c1952cfbeb171ef"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/loop-protect.md": {
       "title": "Loop Protect",
@@ -1175,7 +1175,7 @@
       "title": "DHCP Server",
       "markdown_url": "https://manual.mikrotik.com/docs/network-management/dhcp/server.md",
       "path": "docs/network-management/dhcp/server.md",
-      "sha256": "993d78ac03a9503b50e34d2a8d475ef0f0eedc94b6effa6c05686b09ae4a1044"
+      "sha256": "01ffff0ecfc941e32ee30a4559ff80bdcc424e7ba239e45268064da37bdec421"
     },
     "https://manual.mikrotik.com/docs/network-management/dhcp/relay.md": {
       "title": "DHCP Relay",
@@ -1265,7 +1265,7 @@
       "title": "Policy Routing",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/policy-routing.md",
       "path": "docs/user-guides/routing-and-networking-protocols/policy-routing.md",
-      "sha256": "d9a16d300d1d051a62c833159c52e035b8d4015af0521396f3bb4c83c49349d0"
+      "sha256": "df9ec28c1e98d514456745a841c56c2dc29b4b33f593f6430c2ce154b5b5cc24"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/vrf.md": {
       "title": "VRF",
@@ -1313,7 +1313,7 @@
       "title": "Route Leak Prevention",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/unicast/bgp/route-leak-prevention.md",
       "path": "docs/user-guides/routing-and-networking-protocols/unicast/bgp/route-leak-prevention.md",
-      "sha256": "4469a0e22ec241bfd57de1721a2065b43f3f89e385fac106f9abdf3f0a8f16ef"
+      "sha256": "06c8109562019de172610a46102d1f64b4e01bd0070c1c6b4e7213a487f3ace2"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/unicast/bgp/faq.md": {
       "title": "FAQ",
@@ -1481,7 +1481,7 @@
       "title": "Filter",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/filter.md",
       "path": "docs/firewall-and-quality-of-service/firewall/filter.md",
-      "sha256": "a5a7a777eb06b8ffd9c59ad1e6cb8100ce6862dd24d7e3966e00e6387ab57459"
+      "sha256": "2708ef4c325107c509771492f5ded568bcf0cfa591fea45be6ffbb1eab81e917"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/layer7.md": {
       "title": "Layer7",
@@ -1529,7 +1529,7 @@
       "title": "PCQ example",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/pcq-example.md",
       "path": "docs/firewall-and-quality-of-service/queues/pcq-example.md",
-      "sha256": "2654133b74d52516fe14c6657ac7ff1b078434f02f29431d120b1d3f71ad1d82"
+      "sha256": "e92e9c3efcea27ba07e9ae5d7f9f42af292d387c7c1cb58b49631e443ef7160d"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-burst.md": {
       "title": "Queue Burst",
@@ -1631,7 +1631,7 @@
       "title": "EoIP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/eoip.md",
       "path": "docs/virtual-private-networks/eoip.md",
-      "sha256": "22ebede54bc3f4778f1daf775b91a002e64e1c087851ec85e45e7b6efec871bc"
+      "sha256": "9d2bf92faaec19b737ba16e1f711a6d2853023b6ad4c46a09fbf85b297fe4ae3"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/gre.md": {
       "title": "GRE",
@@ -1733,7 +1733,7 @@
       "title": "Certificates",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates.md",
       "path": "docs/authentication-authorization-accounting/certificates.md",
-      "sha256": "e4978be406f8b0509da6a082d22a511f470ad09cbd26a63b1f266475ace4b15b"
+      "sha256": "f0ee5cc2ab468c523c659bd29b5055e41fd3f054313dacac7eff023b6a2f7180"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/dot1x.md": {
       "title": "Dot1X",
@@ -1775,7 +1775,7 @@
       "title": "User",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/user.md",
       "path": "docs/authentication-authorization-accounting/user.md",
-      "sha256": "788669d58277c20507a49ff6b85e700b8c2053d1aaa55a36958f8e2c8623da64"
+      "sha256": "814cf3ee0a6c7c36c2a669c036e5680478a5e605793ea42e38d4d77362d82650"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions.md": {
       "title": "High Availability Solutions",
@@ -1787,7 +1787,7 @@
       "title": "Bonding",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/bonding.md",
       "path": "docs/high-availability-solutions/bonding.md",
-      "sha256": "b40619919f259a89114f0385b4d59f9d857e45429df4b10f6daf754090e14d85"
+      "sha256": "8f5c62b4931bc7105840acd367c6452d453a6031f502ff57a1515d44392ce7d3"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing.md": {
       "title": "Load Balancing",
@@ -1799,7 +1799,7 @@
       "title": "Failover (WAN Backup)",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
       "path": "docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
-      "sha256": "36a5c389a4b4aba46ed4f7756674cdfcd45e4469d03722a5fad0e89f19765751"
+      "sha256": "6d6e7967023a41cdaf36f3998e8e8d81e13630ffc381477da0f6f27e2e50d76e"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/per-connection-classifier.md": {
       "title": "Per connection classifier",
@@ -2123,13 +2123,13 @@
       "title": "Container",
       "markdown_url": "https://manual.mikrotik.com/docs/containers.md",
       "path": "docs/containers.md",
-      "sha256": "7ec652bf8fd7b71e5e84eb33e95c121d15f62769f5ff2d6d3cfa9490014d1453"
+      "sha256": "5993a09ecbe18c0d54d766200daa79dc3dcd294aae89fe4fcb5ae297310aa5fc"
     },
     "https://manual.mikrotik.com/docs/containers/apps.md": {
       "title": "Apps",
       "markdown_url": "https://manual.mikrotik.com/docs/containers/apps.md",
       "path": "docs/containers/apps.md",
-      "sha256": "3f94c3751a83fee1f568518cc949ba2f868a32faad4f1b851bfef7005db4c160"
+      "sha256": "691145163a2d54ebdb8845f9fff18eaa7ec7386e7031568716e23cb6d60b5017"
     },
     "https://manual.mikrotik.com/docs/containers/apps/available-apps.md": {
       "title": "List of available Apps",
@@ -2255,49 +2255,49 @@
       "title": "/app/cleanup",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/cleanup.md",
       "path": "docs/cli-reference/app/cleanup.md",
-      "sha256": "6136ea605ac929aeeaaf5e0d118d88fcf343f0a5420fe92cf6643ae18be44cb9"
+      "sha256": "0319f683ad4e2c7203be6d5d828d84fd6dae30c8418de6d802a9c5a0917c9fbe"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/network.md": {
       "title": "/app/network",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/network.md",
       "path": "docs/cli-reference/app/network.md",
-      "sha256": "59ae26ee7a1a82dc45b9e9f8d73d1b9304af4b50e261ac2cfabce8ab4350302d"
+      "sha256": "638d9bd4fadf643f5a8c2e78a3c0e3366c005237c976617f4f196d9830ef33af"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/remove.md": {
       "title": "/app/remove",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/remove.md",
       "path": "docs/cli-reference/app/remove.md",
-      "sha256": "e6a9ddf175649dd75ad2123b5f61fc0a78e98321d418cbce0ac4458a9eeff0f9"
+      "sha256": "ec824128db1eaf6bc62cd7694991f73977836373a8bebacee99e91d2ef8b3f35"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/restart.md": {
       "title": "/app/restart",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/restart.md",
       "path": "docs/cli-reference/app/restart.md",
-      "sha256": "696fc8a3f4c5ab6b46c57b2efd19ab356bd019f2a3bc2d6bae71782d3028272a"
+      "sha256": "5406255453f5a54f4e41d94f6e8793152f3c44ad59330ed76af94edddc4d5633"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/settings.md": {
       "title": "/app/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/settings.md",
       "path": "docs/cli-reference/app/settings.md",
-      "sha256": "e0feb69e70750549858a1b3a475f73bc7c610534ff8ad3de79466256d8dde7ba"
+      "sha256": "78d0500a2ee79e5c256bae313c14b9b4d7f5d047b4e34dade8a8a426d330425a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/settings/remove-certificate.md": {
       "title": "/app/settings/remove-certificate",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/settings/remove-certificate.md",
       "path": "docs/cli-reference/app/settings/remove-certificate.md",
-      "sha256": "b36161e6bae99a146bc427b5d8fcd5cb1fbf44fba11a490c1977eeb295bad4a7"
+      "sha256": "f15e05d49e9597100e5982a5372e216539c337e08737d57b556ae6df6d3749ae"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/setup.md": {
       "title": "/app/setup",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/setup.md",
       "path": "docs/cli-reference/app/setup.md",
-      "sha256": "c8236859b0234a05c88c55ea024c8e1a1a0c984e82c3c150ef567e6edee78eaf"
+      "sha256": "9488fe89467eef8d3524d0cc4e8f30a7dd271550f85122c6194b3bb849110e40"
     },
     "https://manual.mikrotik.com/docs/cli-reference/app/update.md": {
       "title": "/app/update",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/app/update.md",
       "path": "docs/cli-reference/app/update.md",
-      "sha256": "6cb2020ea775ae1016418244bd4fed1a3ff507f0b463a7523eb2ca99ed0786e5"
+      "sha256": "748a61cdfc75a86cd4d02d513ad8cda5878233787b03b4d4862c6880b31ad553"
     },
     "https://manual.mikrotik.com/docs/cli-reference/beep.md": {
       "title": "/beep",
@@ -2459,7 +2459,7 @@
       "title": "/certificate",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/certificate.md",
       "path": "docs/cli-reference/certificate.md",
-      "sha256": "03d4abd7956f357b45d2ece122bc0a5e0885b4663e51649a046fb9f7eab5c427"
+      "sha256": "5ea3711341f46e09a389642d9555f71ca56d32cb66bee4d4c6b1c7735ea35e4b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/certificate/acme-renew.md": {
       "title": "/certificate/acme-renew",
@@ -2537,7 +2537,7 @@
       "title": "/certificate/import",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/certificate/import.md",
       "path": "docs/cli-reference/certificate/import.md",
-      "sha256": "ea5a43bda540a14e0e27032b62f2ede86c3c516d6eeb6bf153c66de1745585ed"
+      "sha256": "9ae3e2c29df1a1edc3057dcc24b7d12dcfb52dad1c2e12a2da50930891ed1977"
     },
     "https://manual.mikrotik.com/docs/cli-reference/certificate/issued-revoke.md": {
       "title": "/certificate/issued-revoke",
@@ -2789,7 +2789,7 @@
       "title": "/cmr/vlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/vlan.md",
       "path": "docs/cli-reference/cmr/vlan.md",
-      "sha256": "9a02b4927d1747adb343961d40442191814db3bb84786ea66e14e364f2e0c6a3"
+      "sha256": "b394d20e17411c963964fc0ad3a2c1fabd1df457743fa0afd70cee13602fae68"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/wifi.md": {
       "title": "/cmr/wifi",
@@ -3497,7 +3497,7 @@
       "title": "/interface/ethernet",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet.md",
       "path": "docs/cli-reference/interface/ethernet.md",
-      "sha256": "c20bee77cf7b681524f453c60f0be8aec7d444f90fc4ef14ef2b14bfd1bf2aaa"
+      "sha256": "9f1fbfdde76cdd25628d33f4420603059aca4d744b5ef884cd3ca744d642ec75"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/blink.md": {
       "title": "/interface/ethernet/blink",
@@ -4061,7 +4061,7 @@
       "title": "/interface/macvlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macvlan.md",
       "path": "docs/cli-reference/interface/macvlan.md",
-      "sha256": "ddb4b1ffc8d8b3b071de7c22ad18afe273c4e13cdfd2ab6de09a59fa52950a6f"
+      "sha256": "4c87e373e1c74ed5e0efa85a2279b32ffbfd6abe41547d43f4c308d47d09e112"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/mesh.md": {
       "title": "/interface/mesh",
@@ -4187,7 +4187,7 @@
       "title": "/interface/pppoe-client",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pppoe-client.md",
       "path": "docs/cli-reference/interface/pppoe-client.md",
-      "sha256": "e48f9b22427633299936305f10d806da6eb17956475eaca879086a592a3947d3"
+      "sha256": "f3a1678d2d31ad683ced9603bae3b7afb5a459a4e7075c49e0d506bffe576971"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pppoe-client/monitor.md": {
       "title": "/interface/pppoe-client/monitor",
@@ -4253,7 +4253,7 @@
       "title": "/interface/pwr-line",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pwr-line.md",
       "path": "docs/cli-reference/interface/pwr-line.md",
-      "sha256": "b7a6f76570494a625c96146847f5d9adf3024f3a4d235eb7f36959f0b5f94318"
+      "sha256": "479b37f4ece7254e7200fba6af061c8eb5913256494903362d04c1754b83c38d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pwr-line/blink.md": {
       "title": "/interface/pwr-line/blink",
@@ -4349,7 +4349,7 @@
       "title": "/interface/vlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vlan.md",
       "path": "docs/cli-reference/interface/vlan.md",
-      "sha256": "0e1b40e017908d959763eb528d38ba67e564eb499150632393cbf16db8f8bca0"
+      "sha256": "756fc14b6a41001a3c67177bbbd68d66c1213089dd4d015ad88d2e94e89bf9bf"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vpls.md": {
       "title": "/interface/vpls",
@@ -4373,7 +4373,7 @@
       "title": "/interface/vxlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan.md",
       "path": "docs/cli-reference/interface/vxlan.md",
-      "sha256": "fc68e05e36766a06189649947b0d5004c38c39ff4bb4ef29fee14154850850d6"
+      "sha256": "4fe68d4e2fd0224f92dcd0cb0e3b42c566a5059117df6f56d50720b228caf5df"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan/fdb.md": {
       "title": "/interface/vxlan/fdb",
@@ -5483,7 +5483,7 @@
       "title": "/ip/dhcp-server",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/dhcp-server.md",
       "path": "docs/cli-reference/ip/dhcp-server.md",
-      "sha256": "1b36a6f5833d9b47d6eacdf792d86d139338a5fa6887d78a5d98390a840aa5e3"
+      "sha256": "90792dd87d1d0933e9d0563775ef0ede754ae0308d8d54603350b4b8a2ba059e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/dhcp-server/alert.md": {
       "title": "/ip/dhcp-server/alert",
@@ -5507,7 +5507,7 @@
       "title": "/ip/dhcp-server/lease",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/dhcp-server/lease.md",
       "path": "docs/cli-reference/ip/dhcp-server/lease.md",
-      "sha256": "983b6936aeb5817ecf6e96ab29eebd6df8b2f693530f7cd64f3172ee4fcf5361"
+      "sha256": "0121d728110d503754a199ad37ac4dc629c2fb68d6a2bb1adb5410e7453d9232"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/dhcp-server/lease/check-status.md": {
       "title": "/ip/dhcp-server/lease/check-status",
@@ -6017,7 +6017,7 @@
       "title": "/ip/neighbor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/neighbor.md",
       "path": "docs/cli-reference/ip/neighbor.md",
-      "sha256": "af708e23af4b11bb608bb56ab20088ca51df3843e83242914e1eee8ea82735df"
+      "sha256": "b3ed8070877f8f71d318588910c0c9dffc8c8821077993ae6c03918d94cd2c4b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/neighbor/discovery-settings.md": {
       "title": "/ip/neighbor/discovery-settings",
@@ -6029,7 +6029,7 @@
       "title": "/ip/neighbor/lldp",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/neighbor/lldp.md",
       "path": "docs/cli-reference/ip/neighbor/lldp.md",
-      "sha256": "a74ca48d6ccc7a962a025d074922df27d67be7be969afeb79c24fb456e02ccfd"
+      "sha256": "69be003816843fb1fc62734c0ba23f0cd0c90e2753939031eff4011388df6aba"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/packing.md": {
       "title": "/ip/packing",

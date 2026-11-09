@@ -1,266 +1,167 @@
 # Apps
 
-> The Apps menu provides a catalog of pre-configured applications deployable via containers, with automatic RouterOS configuration and support for multiple container registries. It requires Container package...
+> Install, manage, and create container applications with the RouterOS Apps menu, including the setup wizard and custom compose YAML files.
 
 # Apps
 
-#### Summary
+The Apps menu provides a catalog of applications you can run on RouterOS. An app can contain one or more containers, and RouterOS creates the required container configuration, VETH interface, bridge port, firewall rules, and reverse proxy entry. The catalog is maintained by MikroTik and sources images from Docker Hub, GCR, Quay, and other registries. You can edit an app's configuration before you enable it and view its YAML at any time.
 
-**Sub-menu:** `/app`  
-**Packages required:** `container`
+The [list of available Apps](available-apps) shows the catalog. The same YAML format is used by catalog apps and custom apps.
 
-The App menu provides a catalog of applications that can be deployed in a couple of clicks. Each app can consist of one or multiple pre-configured containers and the necessary RouterOS configuration such as firewall rules and address translation will be applied automatically. This catalog is prepared and maintained by MikroTik, but the container images get sourced from multiple registries such as Docker Hub, GCR and Quay.
+## Prerequisites
 
-The configuration parameters, however, can be edited before enabling an app, and the applied yaml file can always be viewed.
+- Install the `container` package.
+- Use an arm64, arm32 or x86 device. Devices with an EN7562CT CPU such as hEX Refresh run only arm32v5 images, so only apps that list `arm_v5` in `supported-archs` are available.
+- Enable container mode with `/system/device-mode/update container=yes`. This requires physical access and a reset-button confirmation or a cold reboot on x86. See [Device mode](../../system-information-and-utilities/device-mode/).
+- Format a storage disk with ext4, btrfs, or xfs and mount it in `/disk`. External storage is recommended. Devices with 16 MB SPI flash need external storage for container images.
+- Provide enough RAM for the containers. The app's current memory use is shown as `memory-current` in `/app/print detail`.
+- Configure the app disk, router IP address, and LAN bridge in `/app/settings` or with the [setup wizard](#setup-wizard).
+- For HTTPS app URLs, the router needs a working app certificate from the cloud service.
 
-#### Requirements
+:::warning
+Running third-party container images can expose the device to the same security risks as the images themselves. A compromised router can also use containers to install malicious software. Review [Container](../) before you enable container mode.
+:::
 
-The App system inherits the same requirements as the Container package:
+## Setup wizard
 
-- **Architecture Support:** arm64 and x86 architectures.
-- **Container Package:** Must be installed.
-- **Device Mode:** Container mode must be enabled (requires physical access and device reset).
-- **External Storage:** Highly recommended for optimal performance.
-- **Memory Requirements:** Adequate RAM for container operations (16MB SPI flash devices may require external storage for images).
-- **Architecture Limitations:** Devices with EN7562CT CPU (like hEX Refresh) are not supported.
+Run `/app/setup` in the terminal or select Setup in WebFig. The wizard writes the values to `/app/settings`, where you can change them later.
 
-#### Security Considerations
+### Select the app disk
 
-As with the underlying Container system, the App menu inherits security implications:
+The wizard lists disks that are formatted and mounted. Format a disk in `/disk` with ext4, btrfs, or xfs before you run the wizard.
 
-- Physical access is required to initially enable container support.
-- Once enabled, containers can be managed remotely.
-- Compromised devices can use containers to install malicious software.
-- Device security is equivalent to the security of running containers.
-- Third-party container images may introduce security vulnerabilities.
+Use a disk with at least 100 MB/s sequential read/write speed and 10,000 random IOPS. Verify the disk with `/disk/test`.
 
-## Properties
+The wizard sets the media path to `<disk>/media` and the download path to `<disk>/media/downloads`. App images and data are stored under `<disk>/apps`.
 
-| Property | Type | Default | Description |
-| :-- | :-- | :-- | :-- |
-| **auto-update** | *yes* &#124; *no* | *no* | Enables or disables automatic updating when a new container image version is available. Update automatically triggers on device reboot |
-| **check-certificate** | *yes* &#124; *no* | *yes* | Verifies the registry certificate against the router’s [certificate store](../../authentication-authorization-accounting/certificates.md) before pulling the container image. |
-| **container-command-lines** | *string* | *(empty)* | Specifies the command-line argument(s) to pass to the application when starting the container. |
-| **devices** | *string* | *(empty)* | Specifies additional hardware devices to pass through to the container application. |
-| **environment** | *string* | *(empty)* | Defines environment variables to be available to the running application. Specify as a list of key-value pair(s). |
-| **extra-mounts** | *string* | *(empty)* | Specifies additional mount points to attach to the container. |
-| **firewall-redirects** | *string* | *(empty)* | Configures port redirection from the host device to the container. |
-| **network** | *default* &#124; *lan* &#124; *internal* | *default* | Specifies which network the container will use: **internal** (behind NAT), **lan** (on the LAN network), or **default** (varies per application; can be internal or lan). |
-| **network-outgoing-access** | *yes* &#124; *no* | *yes* | Allows network outgoing access for the specific container app, when set to `no`, a mangle drop rule is created. |
-| **pvid** | *integer* | *1* | Sets the Port VLAN ID (PVID) for the container's virtual Ethernet interface in the bridge. |
-| **required-hw-devices** | *string* | *(empty)* | Hardware devices that must be present on the host for the container to start. This property is configurable only after adding the YAML configuration. **Compose format:**`[host-hw-device]:[device-in-app]` |
-| **required-mounts** | *string* | *(empty)* | Mount directories required for the container to start. This property is configurable only after adding the YAML configuration. **Compose format:**`[dir-on-host]:[dir-in-app]` |
-| **use-https** | *yes* &#124; *no* | *yes* | Uses HTTPS for the application URL. This option will not work on devices that do not support cloud services. |
-| **yaml** | *string* | *(empty)* | Provides the YAML composition for the application. See the documentation for configuration examples. |
+### Select the LAN bridge
 
-## Read-only Properties
+Select the bridge that represents your LAN. Apps with `network=lan` attach their VETH interface to this bridge. Some apps use the LAN for autodiscovery.
 
-| Property | Type | Default | Description |
-| :-- | :-- | :-- | :-- |
-| **app-size** | | | The total size of the application. |
-| **app-store-url** | *string* | | The URL of the app store from which the application was installed. |
-| **cpu-usage** | | | The current CPU usage percentage by the application. |
-| **custom** | *yes* &#124; *no* | | Indicates whether the application is a custom application created by the user. |
-| **data-size** | | | The size of the data stored by the application. |
-| **default-credential** | *string* | | The default credentials required for the application. |
-| **default-network** | *lan* &#124; *internal* | | The default network used by the application. Valid values are `lan` or `internal`. |
-| **description** | *string* | | The application description as defined in the `descr` parameter of the YAML configuration. |
-| **from-app-store** | *yes* &#124; *no* | | Indicates whether the application was installed from a custom app store. |
-| **interface** | *string* | | The VETH interface used by the application. |
-| **ip-address** | *IP* | | The IP address assigned to the VETH interface. |
-| **memory-current** | | | The amount of memory currently used by the application. |
-| **name** | *string* | | The application name as defined in the `name` parameter of the YAML configuration. |
-| **project-page** | *string* | | The application project page URL as defined in the `page` parameter of the YAML configuration. |
-| **running** | | | Indicates whether the application is currently running. |
-| **status** | *acquire veth* &#124; *configuring container(s)* &#124; *downloading/extracting* &#124; *starting* | | The current status of the application. Possible values indicate the application is acquiring a VETH interface, configuring containers, downloading/extracting, or starting. |
-| **ui-url** | *string* | | The generated URL for the application's web interface, if available. |
-| **variables-to-be-used-in-environment** | | | A list of all variables present in the application environment. |
+### Set the router IP
 
-#### Setup Wizard
+Select the IP address at which clients reach the router. Apps use this address in generated URLs and port-forwarding rules, so set it before you enable apps. An app enabled without it stays in `status=waiting for router ip to be configured`.
 
-The App menu includes a setup wizard (button "Setup" in the GUI, or command `/app/setup`). This wizard automates all the networking, storage, and registry setup that would otherwise require multiple manual steps.
+### Review the settings
 
-##### Step 1: Storage Selection
+The wizard stores the selected values in `/app/settings`. Check them with:
 
-Select a storage disk for application installation. The system automatically detects available formatted disks drives (such as nvme1, usb1, disk1, and similar devices). If no suitable disk appears in the list, you must first format the disk using either the ext4 or btrfs file system, then mount it through the `/disk` menu.
-
-**Requirements:**
-
-- A minimum of 100 MB/s sequential read/write speed is recommended.
-- A minimum of 10,000 random IOPS (Input/Output Operations Per Second) is recommended.
-- Use the `/disk/test` command to verify storage performance before proceeding.
-- External storage devices are highly recommended for optimal performance.
-
-##### Step 2: Bridge Configuration
-
-Select the LAN bridge interface for container networking. This configuration enables automatic port forwarding and application autodiscovery on the local network. The setup wizard automatically configures the following:
-
-- Virtual ethernet (veth) interface creation
-- Addition of the veth interface to the configured bridge
-- NAT rules for outbound connectivity
-
-##### Step 3: IP Configuration
-
-Define the router's IP address to enable application access. The system automatically detects the primary IP address; however, manual configuration is supported for complex network setups. The specified IP address serves the following purposes:
-
-- Generating application UI URLs.
-- Creating automatic port forwarding rules.
-- Providing WebFig integration links.
-
-##### Completion
-
-Once you complete the setup wizard, the App system is ready for immediate use. You can enable applications directly through the interface. The system automatically handles all underlying container configuration.
-
-#### Configuration
-
-App configuration is accessible through `/app/settings` and provides a simplified setup compared to manual Container configuration
-
-## Properties
-
-| Property | Type | Default | Description |
-| :-- | :-- | :-- | :-- |
-| **app-store-urls** | *string* | *(empty)* | URL to a custom app store. The URL must point to a YAML array where each application is an element within the array. |
-| **auto-update** | *yes* &#124; *no* | *no* | Global setting that enables automatic updates for all installed applications packages. |
-| **disk** | *string* | *(empty)* | Global setting that specifies which disk will be used for storage operations. |
-| **download-path** | *string* | *(empty)* | Manually specifies the directory path where all downloaded content will be stored. |
-| **lan-bridge** | *string* | *(empty)* | Manually specifies the bridge interface that represents the local area network. |
-| **media-path** | *string* | *(empty)* | Manually specifies the directory path where all media files will be stored. |
-| **registry-mirrors** | *string* | *(empty)* | Specifies one or more registry mirror URLs addresses for container image retrieval. |
-| **router-ip** | *IP* | *(empty)* | Manually specifies the IP address at which the current RouterOS device can be reached. |
-| **show-in-webfig** | *yes* &#124; *no* | *yes* | Controls whether links to enabled applications are displayed on the WebFig login page. |
-
-### Auto-Configured Settings
-
-Certain parameters are initially configured automatically based on network detection. These values can always be manually overridden if required.
-
-| Property | Type | Default | Description |
-| :-- | :-- | :-- | :-- |
-| **assumed-router-ip** | *IP* | *(detected)* | Automatically detected network IP address of the RouterOS device. |
-| **assumed-lan-bridge** | *string* | *(detected)* | Automatically detected bridge interface used for LAN connectivity. |
-| **assumed-media-path** | *string* | *disk/media* | Default media storage path, typically located on the system disk. |
-| **assumed-download-path** | *string* | *disk/media/downloads* | Default download directory path, typically located within the media storage area. |
-
-#### Application Management
-
-Applications are managed through the `/app` interface, providing status monitoring and lifecycle control similar to the underlying `/container` system:
-
-```
-/app> print 
-Flags: X - DISABLED, R - RUNNING
-Columns: NAME, UI-URL, MEMORY-CURRENT, APP-SIZE, DATA-SIZE, CATEGORY, DESCRIPTION
+```routeros
+/app/settings/print
 ```
 
-##### Status Indicators and Metadata
+## Install and run an app
 
-- **Flags:**
-  - X (DISABLED) - Can indicate two states: not downloaded/installed (APP-SIZE and DATA-SIZE will be empty), or downloaded but disabled (APP-SIZE and DATA-SIZE show storage usage).
-  - R (RUNNING) - Application actively running and accessible.
-- **UI-URL:** Direct web interface access URL when application is running.
-- **MEMORY-CURRENT:** Real-time memory consumption in MiB (only when running).
-- **APP-SIZE:** Container image storage consumption in MiB (shows space used when downloaded).
-- **DATA-SIZE:** Application persistent data size in KiB/MiB (shows configuration and user data).
-- **CATEGORY:** Application functional classification.
-- **DESCRIPTION:** Application functionality description.
+Catalog apps are present but disabled. Enable an app in WebFig or in the terminal:
 
-##### Application Lifecycle Management
-
-### Deployment Process
-
-Unlike manual Container deployment which requires multiple configuration steps (veth interface, bridge setup, environment variable, mount, and firewall rules), App deployment automates the entire process:
-
-1. **Selection:** Choose an application from the catalog via CLI or WebFig.
-2. **Download:** Automatic container image download and extraction.
-3. **Network Setup:** Automatic veth interface and bridge configuration.
-4. **Port Forwarding:** Automatic firewall rule creation for web access.
-5. **Startup:** Container initialization with pre-configured settings.
-6. **Access:** UI-URL becomes available for immediate web interface access.
-
-#### Cleanup Command
-
-The cleanup command provides complete application removal, including all associated data. This operation is destructive and irreversible:
-
+```routeros
+/app/print
+/app/enable <app>
 ```
-/app> cleanup pihole 
+
+The first enable pulls and extracts the images, creates the network, and starts the containers. Check the progress with:
+
+```routeros
+/app/print detail where name="<app>"
+```
+
+While the app starts, `status` shows `downloading/extracting` or `starting`. When the app runs, `status` is empty, flag `R` appears, and `ui-url` contains the access URL.
+
+With `use-https=yes`, RouterOS creates a reverse proxy rule and uses the app certificate from `/app/settings`. The URL uses the cloud hostname. With `use-https=no`, the URL is `http://<router-ip>:<port>`. An app with a port named `web` gets a UI URL. See [Container apps](../../network-management/proxy/reverse-proxy#container-apps) for the reverse proxy details.
+
+## Manage apps
+
+### Flags and status
+
+| Flag | Meaning |
+| :-- | :-- |
+| `X` | The app is disabled. |
+| `R` | The app is running. |
+| `c` | The app is a custom app. |
+| `s` | The app comes from a custom app store. |
+
+`app print` can show different columns depending on the terminal width. Use `print detail` or `proplist` to read a specific field.
+
+`status` is empty while the app is running. During startup or after a failure it can show values such as `waiting for router ip to be configured`, `downloading/extracting`, or `starting`.
+
+### Update, restart, and stop apps
+
+```routeros
+/app/update <app>
+/app/restart <app>
+/app/disable <app>
+/app/enable <app>
+```
+
+`/app/update` pulls the app images again, extracts them, and restarts the app. `/app/restart` stops and starts the containers without pulling images.
+
+Set `auto-update=yes` on an app to check for a new image when the app starts after a reboot. The global `auto-update` setting in `/app/settings` provides the default for installed apps. When the image has not changed, RouterOS skips the import and starts the existing image.
+
+### Remove apps
+
+`/app/cleanup` stops the app and removes its containers, data, and network configuration. The app entry remains, disabled. This operation cannot be undone:
+
+```text
+/app/cleanup <app>
 App data will be lost, continue? [y/N]:
 ```
 
-**Cleanup Process:**
-
-1. Stops the running container.
-2. Removes all application data and configuration files.
-3. Deletes the container image from storage.
-4. Resets the application to an uninstalled state (empty APP-SIZE and DATA-SIZE).
-5. Removes network configuration specific to the application.
+Use `/app/remove` to delete the app entry itself. Run cleanup first to remove the app data.
 
 :::warning
-
-All user data, configuration settings, and application state will be permanently lost. The application will return to its original catalog state and require complete reconfiguration if cleaned-up.
-
+Cleanup permanently deletes application data, configuration, and state. Back up any data you need before you continue.
 :::
 
-## Custom Apps
+### Network settings
 
-Starting with RouterOS v7.22, you can create your own custom apps using a 'compose' YAML file. This lets experienced users build solutions that fit their specific network needs.
+- `network` selects the app network. `internal` places the app behind NAT, `lan` attaches the VETH interface to the LAN bridge, and `default` uses the app's default network.
+- `network-pvid` sets the PVID of the app's bridge port. The default is `1`.
+- `network-outgoing-access=no` blocks outgoing connections from the app with a mangle drop rule. Please keep in mind this may interfere with your existing firewall.
+- `use-https` controls whether the app uses the HTTPS reverse proxy and cloud URL or plain HTTP with a port forwarded to the router IP.
 
-How it works:
+## Custom apps
 
-- You define the app internals and limited RouterOS configuration in YAML format
-- RouterOS pulls the specified image/s and creates your app
-- The app runs on RouterOS hardware and delivers new features at no cost
-- Optionally, have it interact with our API
+Create a custom app when the catalog does not contain the service you need or when you need a different container configuration. Custom apps use the same compose YAML format as catalog apps and are marked with flag `c`. You can also publish custom apps in a custom app store.
 
-Why use it:
+### Create a blank app
 
-- Build exactly what you need for your network
-- No need to wait for official app releases
-- Great for automation, custom routing, or specialized services
-- Declarative setup makes management easier
-
-### How to add apps
-
-There are three options, but they all rely on YAML.
-
-#### Method 1: Create a Blank App and Edit YAML
-
-First, create the app and assign it to the LAN network:
+Create an app and assign it to the LAN network:
 
 ```routeros
 /app/add network=lan
 ```
 
-By default, the app will be named "app".
-
-Next, add the YAML configuration. In the Terminal, run:
+The app is created disabled with the name `app` and no service containers. Add the YAML configuration in the terminal:
 
 ```routeros
 /app/edit app yaml
 ```
 
-This opens a text editor where you can paste your YAML. After pasting, press <kbd>Control</kbd>+<kbd>O</kbd> to save your changes. Finally, enable the app to start it running.
+Paste the YAML, press <kbd>Control</kbd>+<kbd>O</kbd> to save, and enable the app.
 
-#### Method 2: Import from a File
+### Import a YAML file
 
-Alternatively, save your compose text to a file and upload it to the device. Then, set the file as the app's YAML using the following command:
-
-```routeros
-/app/add yaml=[/file/get alpine-iperf.yml contents]
-```
-
-This method is useful when you have a pre-configured YAML file ready to import.
-
-#### Method 3: Add custom app-store URL
-
-If you or someone you know has hosted their own app or a list of apps on a webserver, you can simply add the URL in your APP settings. This way it is possible to have a dynamically updated catalog of custom apps.
+Save the compose file, upload it to the device, and use its contents as the app YAML:
 
 ```routeros
-/app/settings set app-store-urls="<custom_url>"
+/app/add yaml=[/file/get <filename> contents]
 ```
 
-For this to work correctly, the URL should simply return the text contents of a YAML file, where multiple apps are listed in a simple list according to standard YAML syntax.
+The app is created disabled. Enable it after you check the imported configuration.
 
-### Writing YAML for a Custom App
+### Add a custom app store
 
-This example creates an iperf3 app using an existing openEuler base image.
+Set one or more app store URLs in `/app/settings`:
+
+```routeros
+/app/settings/set app-store-urls="<url>"
+```
+
+Each URL must return a YAML array in which every element is an app definition. Apps loaded from a custom store appear with flag `s`.
+
+### Write YAML for a custom app
+
+This example creates an iperf3 server from an openEuler image that already contains iperf3:
 
 ```yaml
 name: openeuler-iperf
@@ -275,15 +176,11 @@ services:
       - 5201:5201:tcp
       - 5201:5201/udp:udp
     command: /bin/sh -c "iperf3 -s"
-
 ```
 
-Key distinctions:
-- base image already has iperf installed
-- necessary ports are forwarded/mapped to routers IP
-- the 'command' executes at containers startup and runs iperf3
+The image already contains `iperf3`, the ports are forwarded to the router IP, and `command` starts the server when the container starts.
 
-Alternatively, you could use a plain base image like Alpine Linux and install iperf3 using 'command'.
+To install iperf3 at container startup, use a plain base image:
 
 ```yaml
 name: alpine-iperf
@@ -299,124 +196,134 @@ networks:
   default:
     name: lan
     external: true
-
 ```
 
-Key distinctions:
-- clean base image
-- iperf3 is installed and ran at each startup
-- the app's network is set to your LAN (alternative to forwarding ports)
+This example installs iperf3 and starts it at every container start. The container needs internet access to download the package. The `networks` section places the app directly on the LAN instead of forwarding ports.
 
-Optionally, if you want to ensure that 'command' executes something only once, consider using conditional one-liners such as this:
+To install a package only when it is missing, use a conditional command:
 
 ```yaml
 command: /bin/sh -c "if ! command -v iperf3 >/dev/null 2>&1; then apk add --no-cache iperf3; fi; exec iperf3 -s"
 ```
 
-### Port Mapping
+### Map ports
 
-When mapping ports use the X:Y or X:Y:Z syntax where X is the port on your router, Y is a port on the container and Z gives the port a name, however some names can have special functionality, for example, 'web' will cause RouterOS to set up reverse proxy with an auto-generated URL.
-Some valid examples:
-
-```yaml
-2211:21
-888:80:web
-9000:9000:api
-9001:9001:api-secure
-
-```
-
-All ports are set up as TCP by default, unless you define them as UDP, like so:
+Use `<router-port>:<container-port>` or `<router-port>:<container-port>:<name>`:
 
 ```yaml
-6000:6000/udp:udp
-8000:8000/udp:custom_name
-
+ports:
+  - 8080:80:web
+  - 9000:9000:api
+  - 6000:6000/udp:dns
 ```
 
-:::warning
-By default, port `80` is assumed to be a web port, unless you explicitly set it to a different type. There is a healthcheck that probes this port — if nothing is listening, the app will appear stuck in a `starting` state. When port `80` is not mapped, the first defined port is used instead. To avoid ambiguity, name your used ports explicitly.
-:::
+Ports are TCP unless you add `/udp`. The first TCP port becomes the web port if no port is named `web`. A port named `web` gets a reverse proxy entry and a UI URL. A `web` port with no listener inside the container keeps the app in `starting`, so name the ports explicitly.
 
-## YAML Field Reference
+### Set a URL path
 
-A YAML document defines one App: an app-level section with the App's metadata, and a `services` section with one or more container definitions.
+Use `url-path` to append a path to the generated app URL:
 
-### App-level Fields
+```yaml
+url-path: /admin
+```
+
+The UI URL then ends with `/admin`.
+
+## YAML reference
+
+A YAML document defines one app. The app-level section contains metadata, and the `services` section contains one or more container definitions.
+
+### App-level fields
 
 | Field | Type | Description |
-|---|---|---|
-| `name` | *string* | Unique name of the App. |
+| :-- | :-- | :-- |
+| `name` | *string* | Unique name of the app. |
 | `descr` | *string* | Description of the app. |
-| `page` | *string* | URL of the project page, shown as the `project-page` property of the App. |
-| `category` | *string* | Classification group shown in the App list (e.g., network, system, utilities). |
-| `default-credentials` | *string* | Login credentials in the `username:password` format. Informative only; can be left blank.|
-| `icon` | *string* | URL of an icon image displayed in the WebFig landing page. |
-| `url-path` | *string* | Path appended to the App URL, for example `/login` or `/web`. |
-| `auto-update` | *boolean* | When `true`, the App is updated automatically when a new container image is available. |
-| `supported-archs` | *list of strings* | CPU architectures supported by the App: `arm`, `arm64`, `arm_v5`, and `x86`. Devices not matching the specified architecture will not display the app. |
-| `compatible-boards` | *list of strings* | Board names supported by the App, for example `RDS2216`. The `*` wildcard is accepted. Devices not matching the specified board name will not display the app. |
+| `page` | *string* | URL of the project page, shown as the `project-page` property. |
+| `category` | *string* | Classification group shown in the app list. |
+| `default-credentials` | *string* | Login credentials in `username:password` format. Informative only. |
+| `icon` | *string* | URL of an icon shown in WebFig. |
+| `url-path` | *string* | Path appended to the app URL, for example `/login` or `/web`. |
+| `auto-update` | *boolean* | Update the app when a new image is available. |
+| `supported-archs` | *list of strings* | Supported architectures: `arm`, `arm64`, `arm_v5`, and `x86`. The catalog uses this list to select apps for the device. |
+| `compatible-boards` | *list of strings* | Supported board names, for example `RDS2216`. The `*` wildcard is accepted. The catalog uses this list to select apps for the device. |
 | `services` | *map* | Container service definitions. At least one service is required. |
 | `volumes` | *map* | Named volume declarations used by the services. |
-| `secrets` | *map* | Secret names for the App, referenced with `[secret:name]` in `environment`. |
+| `secrets` | *map* | Secret names referenced with `[secret:name]` in `environment`. |
 | `configs` | *map* | Configuration file declarations mounted into the services. |
 | `networks` | *map* | Network declarations used by the services. |
 
-### Service Fields
+Custom apps remain visible even when their `supported-archs` value does not match the device.
+
+### Service fields
 
 | Field | Type | Description |
-|---|---|---|
+| :-- | :-- | :-- |
 | `image` | *string* | App image to use for the container. Required. |
-| `container_name` | *string* | Name to use with the specific image, as shown in the `/container` menu. |
+| `container_name` | *string* | Name used for the container in `/container`. |
 | `command` | *string* | Startup command executed inside the container. |
 | `entrypoint` | *string* | Executable used as the container entry point. |
-| `environment` | *list or map* | Environment variables passed to the container.|
+| `environment` | *list or map* | Environment variables passed to the container. |
 | `volumes` | *list* | Mount points attached to the container. |
 | `ports` | *list* | Port mappings from the router to the container. |
 | `expose` | *list* | Ports exposed to other containers without publishing them on the router. |
-| `restart` | *string* | Restart policy of the container. `unless-stopped`, `always`, and `on-failure`. |
+| `restart` | *string* | Restart policy: `unless-stopped`, `always`, or `on-failure`. |
 | `depends_on` | *list* | Service names that must start before this service. |
-| `healthcheck` | *map* | Run a healthcheck when container starts. See example below. |
+| `healthcheck` | *map* | Probe that checks whether the service is running. |
 | `shm_size` | *string* | Shared memory size, for example `512mb` or `1gb`. |
-| `stop_grace_period` | *string* or *int* | Timeout for graceful shutdown, for example `30s` or `0`. 30 seconds by default. |
-| `devices` | *list* | Hardware devices passed through to the container, for example `- /dev/ttyACM0:/dev/ttyACM0`. |
+| `stop_grace_period` | *string* or *int* | Timeout for graceful shutdown, for example `30s` or `0`. |
+| `devices` | *list* | Hardware devices passed through to the container. |
 | `user` | *string* | Linux user or UID the container runs as. |
 | `hostname` | *string* | Hostname set in the container. |
 | `security_opt` | *list* | Container security options. |
 | `build` | *map* | Build configuration for a locally built image. |
-| `secrets` | *list* | Secret names available to this service, mounted as files at `/run/secrets/<name>`. |
+| `secrets` | *list* | Secret names available to this service as files at `/run/secrets/<name>`. |
 | `configs` | *list* | Configuration files mounted into this service. |
 
 ### Healthcheck
 
-A health check probes the service to verify that the application is running correctly. The 'test' parameter runs inside the container, and the service is considered healthy when the command returns exit code 0:
+A health check probes the service and considers it healthy when the command exits with code 0. Use `CMD` with separate arguments for an executable:
 
 ```yaml
 healthcheck:
-  test: ["CMD", "curl -f http://localhost:8080/ || exit 1"]
+  test: ["CMD", "wget", "-qO-", "http://localhost/"]
   interval: 30s
   retries: 3
   start_period: 30s
   timeout: 10s
 ```
 
-### Runtime Placeholders
+Use `CMD-SHELL` when the command contains shell syntax such as `||` or a pipeline:
 
-Environment variable values and the default-credentials field can contain placeholders that RouterOS replaces when the App runs.
+```yaml
+healthcheck:
+  test: ["CMD-SHELL", "wget -qO- http://localhost/ || exit 1"]
+  interval: 30s
+  retries: 3
+  start_period: 30s
+  timeout: 10s
+```
+
+With `CMD`, each list element becomes one argument. A shell expression placed in a single `CMD` argument is passed as text and fails.
+
+### Runtime placeholders
+
+Environment values and `default-credentials` can contain placeholders that RouterOS replaces when the app runs.
 
 | Placeholder | Description |
-|---|---|
-| `[accessIP]` | IP address or hostname used to access the App from outside. |
-| `[accessPort]` | Router port mapped to the App web interface. |
-| `[accessProto]` | Protocol used to access the App, `http` or `https`. |
+| :-- | :-- |
+| `[accessIP]` | IP address or hostname used to access the app from outside. |
+| `[accessPort]` | Router port mapped to the app web interface. |
+| `[accessProto]` | Protocol used to access the app: `http` or `https`. |
 | `[containerIP]` | IP address assigned to the container. |
-| `[containerInterface]` | Name of the VETH interface created for the App. |
-| `[routerIP]` | IP address of the router on the App network. |
-| `[env:variable]` | Value of an environment variable of the App. |
-| `[env:service:variable]` | Value of an environment variable of the specifiec service. |
+| `[containerInterface]` | Name of the VETH interface inside the container. The name is limited to 15 characters. |
+| `[routerIP]` | IP address of the router from `/app/settings router-ip`. |
+| `[networkRouterIP]` | Router IP address on the app network. |
+| `[env:variable]` | Value of an environment variable of the app. |
+| `[env:service:variable]` | Value of an environment variable of the named service. |
 | `[secret:name]` | Value of the secret declared in the app-level `secrets` section. |
 
-Use placeholders in environment values to configure services automatically:
+Example environment values:
 
 ```yaml
 environment:
@@ -433,14 +340,15 @@ services:
   app:
     image: docker.io/example/app:latest
     volumes:
-      - data:/data              # persistent directory in the App storage
-      - appdata/conf:/etc/app   # sub-directory, mounted at /etc/app
-      - ./custom:/custom        # relative to the storage path
+      - data:/data
+      - appdata/conf:/etc/app
 ```
+
+`data` is a named volume in the app storage. A path such as `appdata/conf` is a subdirectory of the app storage and is mounted at `/etc/app`.
 
 ### Secrets
 
-Secrets store passwords and keys separately from the environment. Declare secrets in the app-level `secrets` section and reference them with `[secret:name]` in environment values and default-credentials. RouterOS generates the secret value when the App runs:
+Declare secrets in the app-level `secrets` section and reference them with `[secret:name]`. RouterOS generates the value when the app runs:
 
 ```yaml
 secrets:
@@ -457,7 +365,7 @@ services:
       ADMIN_PASSWORD: "[secret:admin_password]"
 ```
 
-Alternatively, list a secret under a service to mount it as a file at `/run/secrets/<name>`:
+To mount a secret as a file, list it under the service. The file is available at `/run/secrets/<name>`:
 
 ```yaml
 services:
@@ -471,7 +379,7 @@ services:
 
 ### Configs
 
-Configs provide configuration files to containers as text. Declare content in the app-level `configs` section and mount it into a service with `source`, `target`, and optional `mode`.
+Configs provide configuration files to containers as text. Declare the content in the app-level `configs` section and mount it into a service with `source`, `target`, and optional `mode`:
 
 ```yaml
 configs:
@@ -488,11 +396,11 @@ services:
         mode: 0644
 ```
 
-The `source` is the name of the app-level config declaration, `target` is the path inside the container, and `mode` is the file permission.
+`source` is the name of the app-level config declaration, `target` is the path inside the container, and `mode` is the file permission.
 
 ### Networks
 
-By default, an App runs on an internal network behind NAT and services are reached through mapped ports. To place the App directly on a network, define the default network in the app-level `networks` section with an external network.
+By default, an app runs on an internal network behind NAT and services are reached through mapped ports. To place the app directly on a network, define the default network with an external network:
 
 ```yaml
 networks:
@@ -501,35 +409,14 @@ networks:
     external: true
 ```
 
-## Custom app store
+The app then attaches its VETH interface to the LAN bridge from `/app/settings`.
 
-The App system supports custom app stores served as a YAML array, where each element of the array is an app definition. The file must be hosted on a server the device can reach over the network.
+### Custom app store
 
-Example of a YAML array consisting of two apps:
+A custom app store is a YAML array in which every element is an app definition. The file must be reachable by the router:
 
 ```yaml
-- name: code-server-xxx
-  descr: Code-server is VS Code running on a remote server, accessible through the browser.
-  page: https://coder.com
-  category: development
-  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/code-server-logo.png
-  default-credentials: <no_username>:password
-  services:
-    code-server:
-      image: lscr.io/linuxserver/code-server:latest
-      container_name: code-server
-      user: "0:0"
-      environment:
-        PUID: 0
-        PGID: 0
-        PASSWORD: password
-        PWA_APPNAME: code-server
-      volumes:
-        - config:/config
-        - media:/data/media
-      ports:
-        - 8443:8443:web
-- name: code-server-yyy
+- name: code-server
   descr: Code-server is VS Code running on a remote server, accessible through the browser.
   page: https://coder.com
   category: development
@@ -552,14 +439,76 @@ Example of a YAML array consisting of two apps:
         - 8443:8443:web
 ```
 
-## Tips and Best Practices
+Add more list items to publish more apps.
 
-- **Storage:** For optimal performance and greater capacity, consider using external storage devices such as USB drive, SATA drive, or NVMe SSD.
+## App properties
 
-- **Memory:** Keep track of your application's memory consumption by running the `/app/print` command in the terminal.
+The app menu has the following properties. `/app/add` creates new apps disabled.
 
-- **Updates:** Only update your system when required and deemed necessary. While automatic updates can provide security patches and new features, it's important to assess whether an update is needed for your specific use case before enabling or applying it.
+| Property | Type | Default | Description |
+| :-- | :-- | :-- | :-- |
+| **auto-update** | *yes* &#124; *no* | *no* | Checks for a new image when the app starts after a reboot. |
+| **check-certificate** | *yes* &#124; *no* | *yes* | Verifies the registry certificate against the router certificate store. |
+| **container-command-lines** | *string* | *(empty)* | Container commands generated from the YAML. |
+| **devices** | *string* | *(empty)* | Additional hardware devices passed to the container. |
+| **disabled** | *yes* &#124; *no* | *yes* | Whether the app is disabled. New apps are created disabled. |
+| **environment** | *string* | *(empty)* | Environment variables in `service:key=value` form. |
+| **extra-mounts** | *string* | *(empty)* | Additional mount points attached to the container. |
+| **firewall-redirects** | *string* | *(empty)* | Port redirects in `router-port:container-port:protocol:name` form. |
+| **network** | *default* &#124; *lan* &#124; *internal* | *default* | Network used by the app. `default` uses the app's default network. |
+| **network-outgoing-access** | *yes* &#124; *no* | *yes* | Allows outgoing connections from the app. When set to `no`, RouterOS adds a mangle drop rule. |
+| **network-pvid** | *integer* | *1* | PVID of the app's bridge port. |
+| **required-hw-devices** | *string* | *(empty)* | Hardware devices that must be present for the app to start. |
+| **required-mounts** | *string* | *(empty)* | Mount directories required by the app. |
+| **use-https** | *yes* &#124; *no* | *yes* | Uses HTTPS and the reverse proxy for the app URL. |
+| **yaml** | *string* | *(empty)* | Compose YAML that defines the app. |
 
-- **Networking:** The application automatically manages port forwarding and generates the necessary URL for external access.
+Read-only values:
 
-- **Data Persistence:** Your application data is stored in the designated storage path and will remain intact even after the application restarts or the system reboots.
+| Property | Description |
+| :-- | :-- |
+| **app-size** | Size of the app image in MiB. |
+| **app-store-url** | URL of the custom app store the app came from. |
+| **data-size** | Size of the app data. |
+| **default-credentials** | Default login credentials from the YAML. |
+| **default-network** | Default network from the YAML. |
+| **description** | App description from the YAML. |
+| **interface** | VETH interface used by the app. |
+| **ip-address** | IP address assigned to the VETH interface. |
+| **memory-current** | Current memory use of the app. |
+| **name** | App name. |
+| **project-page** | Project page URL from the YAML. |
+| **status** | Current startup or error state. Empty while the app is running. |
+| **ui-url** | Generated URL for the app web interface. |
+| **variables-to-use-in-environment** | Placeholders and their current values. |
+
+The `/app/settings` parameters are documented in the CLI reference.
+
+## Technical details
+
+An enabled app creates the following objects:
+
+- A VETH interface named `veth-app-<app>`.
+- A bridge port on the internal bridge or the LAN bridge.
+- For an internal network, the `internal` bridge, the `172.18.0.1/24` address, and a source NAT masquerade rule.
+- One destination NAT rule for each mapped port.
+- A reverse proxy rule for the `web` port when `use-https=yes`.
+- One container per service, named `app-<app>-<service>`.
+
+Storage paths on the selected disk:
+
+- `<disk>/apps/layers` holds shared image layers.
+- `<disk>/apps/<app>/<service>_root` holds the container root directory.
+- `<disk>/apps/<app>/<volume>` holds named volumes.
+- `<disk>/apps/<app>/secret-<name>` holds secret files.
+- `<disk>/apps/<app>/config-<name>` holds configuration files.
+
+Set `router-ip` before enabling an app so that its generated URLs and environment values use the final address.
+
+## Related topics
+
+- [Container](../) for manual container configuration.
+- [VETH](../veth) for virtual Ethernet interfaces.
+- [Reverse proxy](../../network-management/proxy/reverse-proxy#container-apps) for HTTPS app URLs.
+- [Certificates](../../authentication-authorization-accounting/certificates) for certificate management.
+- [List of available Apps](available-apps).

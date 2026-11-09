@@ -63,6 +63,8 @@ The bonding interface needs a couple of seconds to get connectivity with its pee
 
 :::
 
+Without `mode`, the bonding interface uses `balance-rr`. To connect to a switch with LACP, use `mode=802.3ad`, described in the following 802.3ad section.
+
 ## Link Monitoring
 
 ---
@@ -133,6 +135,14 @@ We will leave mii-interval to its default value (100ms). When unplugging one of 
 ### 802.3ad
 
 802.3ad mode is an IEEE standard also known as LACP (Link Aggregation Control Protocol). It provides automatic configuration of the aggregate, requiring minimal switch configuration. This standard also mandates that frames are delivered in order, so connections should not experience packet misordering. Additionally, all devices in the aggregate must operate at the same speed and duplex mode.
+
+To create an LACP bond, set `mode=802.3ad`. The device at the other end, usually a switch, must run LACP on the same links:
+
+```ros
+/interface/bonding/add name=bond1 slaves=ether1,ether2 mode=802.3ad
+```
+
+Check the bond with `/interface/bonding/monitor bond1`. When LACP works, both ports are in `active-ports` and `lacp-partner-system-id` shows the other device. If the other end does not run LACP, `lacp-partner-system-id` is missing, only one port is active, and the link can lose traffic.
 
 LACP balances outgoing traffic across the active ports based on hashed protocol header information and accepts incoming traffic from any active port. The hash includes the Ethernet source and destination address, the VLAN tag (if available), and the IPv4/IPv6 source and destination address. The calculation method depends on the transmit-hash-policy parameter. ARP link monitoring is not recommended, because ARP replies packets might arrive only on one slave port due to the transmit hash policy on the LACP peer device. This can result in unbalanced transmitted traffic, so MII link monitoring is the recommended option.
 

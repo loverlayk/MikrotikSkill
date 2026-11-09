@@ -8,6 +8,14 @@
 
 WinBox is a utility that allows the administration of MikroTik RouterOS using a fast and simple GUI. WinBox v4 is a native application available for Windows, Linux, and macOS — no Wine or emulation required. All WinBox interface functions mirror the console functions as closely as possible, which is why there are no separate WinBox sections in the manual.
 
+WinBox connects to the router's `winbox` service on TCP port 8291. To move WinBox to another port, change the port of the service, then add the port to the address when you connect, for example `192.168.88.1:9999`:
+
+```ros
+/ip/service/set winbox port=9999
+```
+
+To limit which addresses can connect, see [Services](../system-information-and-utilities/services#limit-who-can-use-a-service).
+
 The following security features are used:
 
 - WinBox is signed with an Extended Validation certificate issued by SIA Mikrotīkls (MikroTik).
@@ -112,6 +120,12 @@ Database path shows (in the bottom right corner of [Figure 3](#figure-3---saved-
 - **Import** - overrides current .cdb file with saved device list from exported .cdb file of your choice
 - **Export** - exports saved device list from current .cdb file, so it can be used with **Import** or **Open**
 - **Set file password** - encrypts current .cdb file with a password
+
+#### Saved device list encryption
+
+WinBox provides the **Set file password** action, which encrypts all saved passwords in the current `.cdb` file. The most recently used password cannot be encrypted. To avoid storing it, leave the **Remember password** checkbox unchecked.
+
+For additional protection, use your operating system's built-in tools, for example BitLocker or EFS on Windows and FileVault on macOS, to encrypt the WinBox folder and protect it from unauthorized access.
 
 #### Figure 4 - Neighbors device list
 

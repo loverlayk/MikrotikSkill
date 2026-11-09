@@ -141,7 +141,11 @@ The bandwidth server is used to test throughput between two MikroTik routers. Di
 
 ## DNS Cache
 
-DNS cache improves performance by storing resolved DNS query results locally on the router, reducing the time needed to resolve DNS requests from client devices to remote servers. If the router does not need to answer DNS queries from other devices—for example, if another device on your network handles DNS—turn off remote requests. The router then resolves names only for itself, and it cannot answer DNS queries from the internet even if a firewall rule lets them through:
+DNS cache improves performance by storing resolved DNS query results locally on the router, reducing the time needed to resolve DNS requests from client devices to remote servers.
+
+When the router is the DNS server for your network, as in the [default configurations](configuration-management/default-configurations) of home and office routers, keep `allow-remote-requests=yes` so that local devices can use it. The default firewall drops DNS queries from the internet. If you use your own firewall rules, drop these queries as well; see [Use the router as the DNS server for your network](../network-management/dns#use-the-router-as-the-dns-server-for-your-network).
+
+If the router does not need to answer DNS queries from other devices—for example, if another device on your network handles DNS—turn off remote requests. The router then resolves names only for itself, and it cannot answer DNS queries from the internet even if a firewall rule lets them through:
 
 ```ros
 /ip/dns/set allow-remote-requests=no

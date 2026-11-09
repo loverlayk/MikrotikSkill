@@ -100,3 +100,36 @@ Routing rules can also act as a basic firewall. For example, to block a customer
 ```ros
 /routing/rule/add dst-address=192.168.1.0/24 interface=ether4 action=drop
 ```
+
+## Example: Send one device through a second WAN
+
+The router has two internet connections: WAN1 on ether1, with the default route from its DHCP client, and WAN2 on ether2, with the gateway 10.20.0.1. All devices on the LAN, 192.168.88.0/24, use WAN1, except 192.168.88.50, which must use WAN2. Give the device a fixed address, so the rule keeps matching it (see [Give a device a fixed address](../../network-management/dhcp/server#give-a-device-a-fixed-address)).
+
+1. Create a routing table with a default route through WAN2. With `check-gateway=ping`, the route becomes inactive when the gateway stops answering:
+
+   ```ros
+   /routing/table/add name=to-wan2 fib
+   /ip/route/add dst-address=0.0.0.0/0 gateway=10.20.0.1 routing-table=to-wan2 check-gateway=ping
+   ```
+
+2. Send the traffic of the device to the table:
+
+   ```ros
+   /routing/rule/add src-address=192.168.88.50/32 action=lookup table=to-wan2
+   ```
+
+   With `action=lookup`, the device falls back to WAN1 while the route through WAN2 is inactive. To keep it off WAN1, use `lookup-only-in-table`.
+
+3. Masquerade the traffic that leaves through WAN2, as for WAN1:
+
+   ```ros
+   /ip/firewall/nat/add chain=srcnat out-interface=ether2 action=masquerade
+   ```
+
+The rule sends all traffic of the device to the table, including traffic to other networks on the router, such as a guest LAN or the network of the WAN1 modem. To reach such a network directly, add a rule for it before the first rule:
+
+```ros
+/routing/rule/add dst-address=192.168.1.0/24 action=lookup-only-in-table table=main place-before=0
+```
+
+Connections the device opened before you added the rule can keep using WAN1 until they end. To check the path, run a traceroute on the device: the hop after the router is the WAN2 gateway.

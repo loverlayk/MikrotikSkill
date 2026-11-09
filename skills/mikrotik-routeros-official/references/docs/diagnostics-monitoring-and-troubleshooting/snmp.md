@@ -237,7 +237,7 @@ iso.3.6.1.4.1.14988.1.1.8.1.1.2.1 = STRING: "status-report"
 iso.3.6.1.4.1.14988.1.1.8.1.1.3.1 = INTEGER: 0
 ```
 
-The same script can also be started with a SET to `1.3.6.1.4.1.14988.1.1.8.1.1.3.<N>`. The value written is irrelevant — a `0` runs it exactly as any other value does:
+The same script can also be started with a SET to `1.3.6.1.4.1.14988.1.1.8.1.1.3.<N>`. The value written is irrelevant â€” a `0` runs it exactly as any other value does:
 
 ```bash
 snmpset -v2c -c monit-admin 192.0.2.1 1.3.6.1.4.1.14988.1.1.8.1.1.3.1 s 1
@@ -287,5 +287,7 @@ Write access covers a fixed set of OIDs: the system identity (`1.3.6.1.2.1.1.5.0
 ### MIBs the agent implements
 
 The agent answers the standard MIB-2 groups (system, interfaces, IP, IP forwarding, IPv6, ICMP, TCP, UDP) and the [HOST-RESOURCES-MIB](https://datatracker.ietf.org/doc/html/rfc2790), [IF-MIB](https://datatracker.ietf.org/doc/html/rfc2863), [IP-MIB](https://datatracker.ietf.org/doc/html/rfc4293), [IP-FORWARD-MIB](https://datatracker.ietf.org/doc/html/rfc4292), [IPV6-MIB](https://datatracker.ietf.org/doc/html/rfc4293), [BRIDGE-MIB](https://datatracker.ietf.org/doc/html/rfc4188), plus [UPS-MIB](https://datatracker.ietf.org/doc/html/rfc1628) and the SQUID-MIB used by the [web proxy](../network-management/proxy/web-proxy). The proprietary [MIKROTIK-MIB](https://mikrotik.com/download/tools) carries the RouterOS values that fit no standard MIB, such as the software ID, the health values, and the script table.
+
+The LLDP-MIB remote table (`lldpRemTable`) contains the same LLDP-discovered neighbors as [`/ip/neighbor/lldp`](../cli-reference/ip/neighbor/lldp). Neighbors discovered only by CDP or MNDP are not included.
 
 All parameters of `/snmp` and `/snmp/community`, and the `/snmp/send-trap` command, are documented in the [SNMP CLI reference](../cli-reference/snmp/).

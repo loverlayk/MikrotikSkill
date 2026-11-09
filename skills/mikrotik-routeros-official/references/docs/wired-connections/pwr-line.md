@@ -11,6 +11,7 @@ The PWR-Line series devices allow Ethernet-like connectivity between supported d
 |  |  |
 | :-- | :-- |
 | **arp** (*disabled \| enabled \| proxy-arp \| reply-only*; Default: **enabled**) | Address Resolution Protocol mode:disabled - the interface will not use ARPenabled - the interface will use ARPproxy-arp - the interface will use the ARP proxy featurereply-only - the interface will only reply to requests originating from matching IP address/MAC address combinations which are entered as static entries in the `/ip/arp` table. No dynamic entries will be automatically stored in the ARP table. Therefore, for communications to be successful, a valid static entry must already exist. |
+| **arp-accept** (*yes \| no*; Default: **no**) | Defines the behavior for accepting gratuitous ARP (GARP) frames received from devices that are not already present in the ARP table:no - new entries are not created in the ARP tableyes - new entries are created in the ARP table The setting is available since RouterOS version 7.25.1. |
 | **bandwidth** (*integer/integer*; Default: **unlimited/unlimited**) | Sets the max rx/tx bandwidth in kbps that will be handled by an interface. TX limit is supported on all Atheros [switch-chip](../bridging-and-switching/switch-chip-features.md) ports. RX limit is supported only on Atheros8327/QCA8337 switch-chip ports. |
 | **comment** (*string*; Default: ) | Descriptive name of an item |
 | **l2mtu** (*integer [0..65536]*; Default: ) | Layer2 Maximum transmission unit. [MTU in RouterOS](../hardware/mtu-in-routeros.md) |

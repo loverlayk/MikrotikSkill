@@ -38,6 +38,8 @@ Before explaining bridge VLAN filtering in-depth, you should understand a few ba
 
 ---
 
+For the configuration of a trunk port and access ports without the explanations, see [VLAN Example: Trunk and Access Ports](../#vlan-example-trunk-and-access-ports). This section builds such a setup step by step and explains the caveats along the way.
+
 Below you can find a very common diagram for a very typical type of setup that consists of a trunk port and multiple access ports:
 
 ![Trunk and Access Setup](./img/bridge-vlan-table-01.webp)

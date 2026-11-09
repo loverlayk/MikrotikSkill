@@ -1,6 +1,6 @@
 # setup
 
-> Starts the setup wizard that automates networking, storage, and registry configuration for the App system.
+> Starts the interactive setup wizard. It selects the app disk, the LAN bridge, and the router IP address used for app URLs and port forwarding.
 
 -----------
 
@@ -9,7 +9,7 @@
 **Package:** container
 **Type:** Command
 
-Starts the setup wizard that automates networking, storage, and registry configuration for the App system.
+Starts the interactive setup wizard. It selects the app disk, the LAN bridge, and the router IP address used for app URLs and port forwarding.
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="disk" typ="enum (none)">Selected storage disk for application installation</ArgTableRow>

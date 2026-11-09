@@ -24,7 +24,7 @@
 <ArgTableRow arg="active" typ="switch"></ArgTableRow>
 <ArgTableRow arg="inactive" typ="switch"></ArgTableRow>
 <ArgTableRow arg="name" typ="string"></ArgTableRow>
-<ArgTableRow arg="pem" typ="string">import certificate or private key in PEM format</ArgTableRow>
+<ArgTableRow arg="pem" typ="string">import certificate or unencrypted private key from a pasted PEM string</ArgTableRow>
 <ArgTableRow arg="trust-store" typ="alt { all: enum (all)
 , component: ubit (ipsec, wpa-eap, capsman, fetch, sstp, ovpn, mqtt, email, netwatch, radius, container, userman, lora, wiliot, openflow, tr069, dot1x, dns, www, api, reverse-proxy, logging)
  }"></ArgTableRow>

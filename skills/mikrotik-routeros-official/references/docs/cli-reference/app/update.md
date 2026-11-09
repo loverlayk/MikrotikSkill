@@ -1,6 +1,6 @@
 # update
 
-> Updates the specified application to the latest available container image.
+> Pulls the app images again, extracts them, and restarts the app.
 
 -----------
 
@@ -9,4 +9,4 @@
 **Package:** container
 **Type:** Command
 
-Updates the specified application to the latest available container image.
+Pulls the app images again, extracts them, and restarts the app.

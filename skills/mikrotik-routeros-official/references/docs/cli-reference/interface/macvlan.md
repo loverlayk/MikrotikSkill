@@ -22,7 +22,7 @@
 <ArgTableRow arg="arp-timeout" typ="alt { arp-timeout: enum (auto) { auto:0 }
 , arp-timeout: time
  }"></ArgTableRow>
-<ArgTableRow arg="arp-accept" typ="bool"></ArgTableRow>
+<ArgTableRow arg="arp-accept" typ="bool">Whether to accept gratuitous ARP replies.</ArgTableRow>
 <ArgTableRow arg="loop-protect" typ="enum (default | off | on) { default:0, off:1, on:2 }"></ArgTableRow>
 <ArgTableRow arg="loop-protect-send-interval" typ="time"></ArgTableRow>
 <ArgTableRow arg="loop-protect-disable-time" typ="time"></ArgTableRow>

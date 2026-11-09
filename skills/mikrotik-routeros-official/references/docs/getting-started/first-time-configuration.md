@@ -313,8 +313,12 @@ Some client devices may need direct access from the internet on specific ports. 
 After a quick search, you can find that RDP runs on TCP port 3389. Now you can add a destination NAT rule to redirect RDP traffic to the client's PC.
 
 ```ros
-/ip/firewall/nat/add chain=dstnat action=dst-nat protocol=tcp dst-port=3389 to-addresses=192.168.88.254 to-ports=3389
+/ip/firewall/nat/add chain=dstnat action=dst-nat protocol=tcp dst-port=3389 in-interface-list=WAN to-addresses=192.168.88.254 to-ports=3389
 ```
+
+`in-interface-list=WAN` limits the rule to connections that come in from the internet. Without it, the rule also catches local devices that connect to port 3389 of any server on the internet, and sends them to 192.168.88.254 instead. If you did not create the WAN list, use `in-interface=ether1`.
+
+`dst-port` is the port on the router's public address and `to-ports` the port on the device, so they can differ. For example, with `dst-port=13389`, RDP clients on the internet connect to port 13389 and reach port 3389 on 192.168.88.254.
 
 :::tip
 If you have set up strict firewall rules, then the RDP protocol must be allowed in the firewall filter forward chain.

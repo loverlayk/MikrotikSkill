@@ -487,11 +487,11 @@ Before using bridge VLAN filtering, check if your device supports it at the hard
 - [CRS1xx/CRS2xx series devices](./crs1xx-2xx-series-switches-examples.md#vlan)
 - [Other devices with a switch chip](../switch-chip-features.md#setup-examples)
 
-## VLAN filtering with multiple switch chips
+## Switch chip VLANs on devices with several switch chips 
 
 ---
 
-Consider the following scenario: you have a device with two or more switch chips and you have decided to use a single bridge and set up VLAN filtering (by using the `/interface/ethernet/switch` menu) on a hardware level to be able to reach wire-speed performance on your network. This is very relevant for RB2011 and RB3011 series devices. In this example, let's assume that you want to have a single trunk port and all other ports are access ports, for example, **ether10** is our trunk port and **ether1-ether9** are our access ports.
+This section configures VLANs in the switch chip menu, `/interface/ethernet/switch`, not with the bridge `vlan-filtering` property. Consider the following scenario: you have a device with two or more switch chips and you have decided to use a single bridge and set up VLANs in the switch chips on a hardware level to be able to reach wire-speed performance on your network. This is very relevant for RB2011 and RB3011 series devices. In this example, let's assume that you want to have a single trunk port and all other ports are access ports, for example, **ether10** is our trunk port and **ether1-ether9** are our access ports.
 
 ### Configuration
 

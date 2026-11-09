@@ -168,9 +168,9 @@ Exporting certificates requires "sensitive" user policy.
 
 ### Import Certificate
 
-To import certificates, certificates must be uploaded to a device using one of the file upload methods.
+To import a certificate from a file, first upload the file to the device with one of the file upload methods.
 
-Certificates must be imported as a file.
+Import a certificate from a file with `file-name=`, or paste a certificate or private key directly in PEM format with `pem=`. `/certificate/add` accepts only unencrypted private keys, while `/certificate/import` also accepts an encrypted private key when passphrase is supplied.
 
 Supported are PEM, DER, CRT, PKCS12 formats. PKCS12 import supports AES and 3DES decryption.
 
@@ -178,6 +178,7 @@ Supported are PEM, DER, CRT, PKCS12 formats. PKCS12 import supports AES and 3DES
 | :-- | :-- |
 | **name** (*string* Default: **file-name\_number**) | A certificate name that will be shown in the certificate manager |
 | **file-name** (*string*) | A file name that will be imported |
+| **pem** (*string*) | A certificate or private key in PEM format, pasted directly instead of imported from a file. With `/certificate/import`, an encrypted private key is accepted when passphrase is supplied. |
 | **passphrase** (*string* Default: **none**) *[sensitive](../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | File passphrase if there is one |
 | **trusted** (*yes \| no* Default: yes) | Adds *trusted* flag for the imported certificate |
 | **trust-store**(*all* \| *capsman* \| *dns* \| *email* \| *ipsec* \| *mqtt* \| *openflow* \| *radius* \| *sstp* \| *userman* \| *www* \| *api* \| *container* \| *dot1x* \| *fetch* \| *lora* \| *netwatch* \| *ovpn* \| *tr069* \| *wpa-eap* \| *wiliot* \| *logging*  Default: **all**) | Specify the service which can use a specific certificate for certificate verification or trust-chain creation (www, sstp). |

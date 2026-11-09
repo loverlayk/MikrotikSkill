@@ -1,6 +1,6 @@
 # restart
 
-> RouterOS command reference for /app/restart.
+> Stops and starts the app containers.
 
 -----------
 
@@ -8,3 +8,5 @@
 **Syscap:** app
 **Package:** container
 **Type:** Command
+
+Stops and starts the app containers.

@@ -1,13 +1,13 @@
 # neighbor
 
-> The neighbor list shows all discovered neighbors in the Layer 2 broadcast domain. It shows to which interface the neighbor is connected, its IP/MAC addresses, and other related parameters.
+> The neighbor list shows all discovered neighbors in the Layer 2 broadcast domain, the interface each one is connected to, its IP and MAC addresses, and other related parameters. Neighbors found by MNDP, CDP and LLDP...
 
 -----------
 
 ## ip/neighbor 
 **Type:** Directory
 
-The neighbor list shows all discovered neighbors in the Layer 2 broadcast domain. It shows to which interface the neighbor is connected, its IP/MAC addresses, and other related parameters.
+The neighbor list shows all discovered neighbors in the Layer 2 broadcast domain, the interface each one is connected to, its IP and MAC addresses, and other related parameters. Neighbors found by MNDP, CDP and LLDP appear here together. For the full LLDP details of LLDP-discovered neighbors, use the [`/ip/neighbor/lldp`](./lldp) menu.
 
 The number of neighbor entries is limited to (total RAM in megabytes) * 16 per interface to avoid memory exhaustion.
 

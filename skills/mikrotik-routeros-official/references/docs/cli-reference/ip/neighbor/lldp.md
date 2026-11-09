@@ -1,16 +1,18 @@
 # lldp
 
-> This menu shows detailed LLDP type-length-values (TLVs) received from neighboring devices.
+> This read-only menu lists neighbors discovered through Link Layer Discovery Protocol (LLDP) and shows the details of the LLDP type-length-values (TLVs) they sent. The field names follow the LLDP standard: chassis ID,...
 
 -----------
 
 ## ip/neighbor/lldp 
 **Type:** Directory
 
-This menu shows detailed LLDP type-length-values (TLVs) received from neighboring devices.
+This read-only menu lists neighbors discovered through Link Layer Discovery Protocol (LLDP) and shows the details of the LLDP type-length-values (TLVs) they sent. The field names follow the LLDP standard: chassis ID, chassis ID subtype, port ID, port ID subtype, port description, system name, system description, time-to-live, and system capabilities.
+
+The aggregated [`/ip/neighbor`](./) menu lists neighbors found by any discovery protocol and shows the common summary fields. Use this menu when you need the full LLDP data for an LLDP neighbor.
 
 :::note
-The `lldpRemTable` SNMP table reports only neighbors discovered through LLDP. Entries discovered exclusively by CDP or MNDP are excluded from the SNMP LLDP-MIB.
+The `lldpRemTable` SNMP table contains the same LLDP-discovered entries as this menu. Entries discovered exclusively by CDP or MNDP are excluded from the SNMP LLDP-MIB.
 :::
 
 Example output:

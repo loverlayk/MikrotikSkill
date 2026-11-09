@@ -10,7 +10,7 @@
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="name" typ="string"></ArgTableRow>
 <ArgTableRow arg="file-name" typ="file"></ArgTableRow>
-<ArgTableRow arg="pem" typ="string">import certificate or private key in PEM format</ArgTableRow>
+<ArgTableRow arg="pem" typ="string">import certificate or private key from a pasted PEM string; an encrypted private key is accepted when passphrase is supplied</ArgTableRow>
 <ArgTableRow arg="passphrase" typ="string"></ArgTableRow>
 <ArgTableRow arg="trusted" typ="bool">mark as trusted</ArgTableRow>
 <ArgTableRow arg="trust-store" typ="alt { all: enum (all)
