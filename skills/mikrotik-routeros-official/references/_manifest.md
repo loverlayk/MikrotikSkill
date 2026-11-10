@@ -1,10 +1,10 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `9feead13d6ee970ee0729e3fe71118ee9045a40b9e363ba8bf71c4a3402d2b6c`
+Index SHA-256: `1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790`
 Pages in current index: 1484
-Pages changed/written: 48
-Pages removed: 0
+Pages changed/written: 6
+Pages removed: 1
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
@@ -1306,12 +1306,11 @@ Pages failed: 0
 - [Using the GPIO as pulse input from a meter device](docs/internet-of-things/gpio/using-gpio-as-pulse-input-from-meter.md) `ebcdd683bf3f`
 - [Lora](docs/internet-of-things/lora.md) `4024fd7ea0e8`
 - [General Properties](docs/internet-of-things/lora/general-properties.md) `24df2be70ca5`
-- [User Guides](docs/internet-of-things/lora/user-guides.md) `66e80fe7e41e`
+- [User Guides](docs/internet-of-things/lora/user-guides.md) `7f9c589c7927`
 - [AWS LoRaWAN configuration](docs/internet-of-things/lora/user-guides/aws-lorawan-configuration.md) `5031df37ec30`
-- [ChirpStack](docs/internet-of-things/lora/user-guides/chirpstack.md) `15a4bd1b157e`
+- [ChirpStack](docs/internet-of-things/lora/user-guides/chirpstack.md) `29429ae719bd`
 - [Step by step installation](docs/internet-of-things/lora/user-guides/step-by-step-installation.md) `ed4383ae11c7`
-- [TG-LR Setup](docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md) `9e5c6b059eb0`
-- [The Things Stack](docs/internet-of-things/lora/user-guides/the-things-stack.md) `170871bf71d5`
+- [The Things Stack](docs/internet-of-things/lora/user-guides/the-things-stack.md) `5eb1c6adccba`
 - [Modbus](docs/internet-of-things/modbus.md) `fb03d1372638`
 - [MQTT](docs/internet-of-things/mqtt.md) `38e9d2c599fa`
 - [Kaa IoT setup](docs/internet-of-things/mqtt/kaa-iot-setup.md) `ce400fcb5fed`
@@ -1348,7 +1347,7 @@ Pages failed: 0
 - [SMS](docs/mobile-networking/sms.md) `89ba0073e173`
 - [Network Services](docs/network-management.md) `1ec129b3ecc8`
 - [Cloud](docs/network-management/cloud.md) `2393886d1893`
-- [Back To Home](docs/network-management/cloud/back-to-home.md) `ddafd933b2c2`
+- [Back To Home](docs/network-management/cloud/back-to-home.md) `46780cfe3708`
 - [Cloud backup](docs/network-management/cloud/cloud-backup.md) `3c437b2ca22b`
 - [Communication with MikroTik Cloud Services](docs/network-management/cloud/communication-mikrotik-cloud-servers.md) `308563d86640`
 - [File Share](docs/network-management/cloud/file-share.md) `85800eebd9f1`
@@ -1484,10 +1483,15 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi](docs/wireless/wifi.md) `ee04ed7e3e20`
+- [Wi-Fi](docs/wireless/wifi.md) `c7a39847e6e7`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
 - [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
+- [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `4b1a254fdb6c`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
+
+## Removed pages
+
+- `docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md`

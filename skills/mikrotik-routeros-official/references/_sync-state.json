@@ -1,5 +1,5 @@
 {
-  "index_sha256": "9feead13d6ee970ee0729e3fe71118ee9045a40b9e363ba8bf71c4a3402d2b6c",
+  "index_sha256": "1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -737,7 +737,7 @@
       "title": "Wi-Fi",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi.md",
       "path": "docs/wireless/wifi.md",
-      "sha256": "ee04ed7e3e20509cd20746e90a7eca9ab9ece4b59ec23fdcd7a1e40f79f86ebc"
+      "sha256": "c7a39847e6e74dc92cade580e902641cb3607c00d4312115a2b8572cd4f21222"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/capsman.md": {
       "title": "WiFi CAPsMAN",
@@ -750,6 +750,12 @@
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/configuring-easymesh.md",
       "path": "docs/wireless/wifi/configuring-easymesh.md",
       "sha256": "767369a9fa58ab50261d25f5ba8d97a0dbb076a0b875d0c44b8e82616370ff7a"
+    },
+    "https://manual.mikrotik.com/docs/wireless/wifi/configuring-meshpoint.md": {
+      "title": "Configuring MeshPoint",
+      "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/configuring-meshpoint.md",
+      "path": "docs/wireless/wifi/configuring-meshpoint.md",
+      "sha256": "4b1a254fdb6c45c254cc1dda34392a200191988a9fcd6e681951b68a9c43b1c4"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",
@@ -1139,7 +1145,7 @@
       "title": "Back To Home",
       "markdown_url": "https://manual.mikrotik.com/docs/network-management/cloud/back-to-home.md",
       "path": "docs/network-management/cloud/back-to-home.md",
-      "sha256": "ddafd933b2c26ecb53c3a426efaaea61f21f383a7a73b6d760ba9516e18ed2f5"
+      "sha256": "46780cfe3708f0cfd74f722d826bf45bbf54bce5b874606791915c606299ea44"
     },
     "https://manual.mikrotik.com/docs/network-management/cloud/cloud-backup.md": {
       "title": "Cloud backup",
@@ -1943,7 +1949,7 @@
       "title": "User Guides",
       "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides.md",
       "path": "docs/internet-of-things/lora/user-guides.md",
-      "sha256": "66e80fe7e41e44285a00efbd904cdb9d834987e4317c95e8a39a496f080af2e9"
+      "sha256": "7f9c589c7927f926bab53f4fd40b3a4bc8e2f9dadffcc6f72c5b5fded9e6f15c"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/aws-lorawan-configuration.md": {
       "title": "AWS LoRaWAN configuration",
@@ -1955,7 +1961,7 @@
       "title": "ChirpStack",
       "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/chirpstack.md",
       "path": "docs/internet-of-things/lora/user-guides/chirpstack.md",
-      "sha256": "15a4bd1b157ebea6002f5669f5b22ec8a1210a2d08970ac770b2a3eea00c2225"
+      "sha256": "29429ae719bd7dae1a68f64c619b7c6741ae75492fe06b2082702332b7041830"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/step-by-step-installation.md": {
       "title": "Step by step installation",
@@ -1963,17 +1969,11 @@
       "path": "docs/internet-of-things/lora/user-guides/step-by-step-installation.md",
       "sha256": "ed4383ae11c7bd5b1d256bdec76619f294100f116e74d45c9c113e04bfc197d0"
     },
-    "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md": {
-      "title": "TG-LR Setup",
-      "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
-      "path": "docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md",
-      "sha256": "9e5c6b059eb026bd98acdd9f57be8f8cde38a10deb3c8bbaf78e0a499a93e310"
-    },
     "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/the-things-stack.md": {
       "title": "The Things Stack",
       "markdown_url": "https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/the-things-stack.md",
       "path": "docs/internet-of-things/lora/user-guides/the-things-stack.md",
-      "sha256": "170871bf71d5780199ec0e8f79c6a79a62e30d92296a09cb3ce07469f881566a"
+      "sha256": "5eb1c6adccba8140d5acb3dca1be1a23d6a5361ebd4c021a0eb1f4fe503aeb16"
     },
     "https://manual.mikrotik.com/docs/internet-of-things/modbus.md": {
       "title": "Modbus",

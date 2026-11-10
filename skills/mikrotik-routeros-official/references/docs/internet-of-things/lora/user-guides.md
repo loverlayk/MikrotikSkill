@@ -13,5 +13,3 @@ This section covers LoRa user guides and setup examples. Use it to connect Route
 ## [AWS LoRaWAN configuration](./aws-lorawan-configuration.md)
 
 ## [The Things Stack](./the-things-stack.md)
-
-## [TG-LR setup guide](./tg-lr-setup-guide.md)

@@ -39,6 +39,7 @@ New to one of these devices? Start with a task-oriented guide, then use the prop
 - [Interworking (802.11u / Hotspot 2.0) for WiFi6](./interworking-for-wifi6.md)
 - [Centralized management with WiFi CAPsMAN](./capsman.md)
 - [Configuring EasyMesh](./configuring-easymesh)
+- [Configuring MeshPoint](./configuring-meshpoint)
 
 ## WiFi Terminology
 
@@ -432,6 +433,10 @@ CAPsMAN (Controlled Access Point system Manager) for the new WiFi menu lets you 
 
 EasyMesh is a Wi-Fi Alliance standard for multi-AP Wi-Fi networks, where a central controller manages one or more agents, including certified devices from different vendors. See the dedicated page: [Configuring EasyMesh](./configuring-easymesh).
 
+## WiFi MeshPoint
+
+MeshPoint is an IEEE 802.11s Layer 2 mesh. It works on `wifi-qcom-be` and `wifi-mediatek`, and does not work on `wifi-qcom` or `wifi-qcom-ac`. See the dedicated page: [Configuring MeshPoint](./configuring-meshpoint).
+
 ## Advanced examples
 
 [Enterprise wireless security with User Manager v5](../user-guides/enterprise-wireless-security-user.md)
@@ -540,7 +545,7 @@ This section includes properties relating to the operation of the interface and 
 | **installation** (*indoor*\|*outdoor*; *default*: **indoor**) | Devices installed outdoors will avoid use of indoor-only radio channels. |
 | **manager** (*capsman* \|*capsman-or-local* \| *easymesh* \| *local*; default: **local**) | capsman - the interface will act as CAP only; this option should **not** be passed via provisioning rules to the CAP  capsman-or-local - the interface will get configuration via CAPsMAN or use its own, if `/interface/wifi/cap` is not enabled.  easymesh - the interface is managed by EasyMesh.  local - interface won't contact CAPsMAN in order to get configuration. |
 | **max-clients** (*integer 1..1000; default: **1000**)* | Maximum number of associated clients. |
-| **mode** (*ap* \| *station*) | Interface operation mode ap (default) - interface operates as an access pointstation - interface acts as a client device, scanning for access points advertising the configured SSIDstation-bridge - interface acts as a client device and enables support for a 4-address frame format, so that the interface can be used as a bridge portstation-pseudobridge - the interface keeps track of outgoing IP connections and performs MAC address translation similarly to how IP masquerading works🛈  **Important:** The 'wifi' station-bridge mode is incompatible with APs running the older 'wireless' package and vice versa.     |
+| **mode** (*ap* \| *station* \| *station-bridge* \| *station-pseudobridge* \| *meshpoint*; default: **ap**) | Interface operation mode ap (default) - interface operates as an access pointstation - interface acts as a client device, scanning for access points advertising the configured SSIDstation-bridge - interface acts as a client device and enables support for a 4-address frame format, so that the interface can be used as a bridge portstation-pseudobridge - the interface keeps track of outgoing IP connections and performs MAC address translation similarly to how IP masquerading worksmeshpoint - interface operates as an IEEE 802.11s mesh point and connects to other mesh nodes with the same Mesh ID. Works on <code>wifi-qcom-be</code> and <code>wifi-mediatek</code> only.🛈  **Important:** The 'wifi' station-bridge mode is incompatible with APs running the older 'wireless' package and vice versa.     |
 | **multicast-enhance** (*enabled*\| *disabled*; default: **disabled**) | With the multicast-enhance feature enabled, an AP will convert every multicast-addressed IP or IPv6 packet into multiple unicast-addressed frames for each connected station. This may improve link throughput and reliability since, unlike multicast frames, unicasts are acknowledged by stations and transmitted using a higher data rate. |
 | **qos-classifier** (*dscp-high-3-bits*\| *priority*; default: **priority**) | Specify which WMM ruleset to follow. APs and clients classify packets based on the priority assigned to them (as per WMM specification) → 1,2 - background; 0,3 - best effort; 4,5 - video; 6,7 - voice. "Better" access category has a higher probability of getting access to medium (e.g. voice frames will have a shorter "back off" time after medium becomes "idle", ensuring that they are more likely to be sent out sooner than "worse" category frames). dscp-high-3-bits - interface will transmit data packets using a WMM priority equal to the value of the 3 most significant bits of the IP DSCP fieldpriority - interface will transmit data packets using a WMM priority equal to that set by IP firewall or bridge filter🛈  **Important:** 802.11ac wireless chipsets do not support the dscp-high-3-bits classifier mode. For 802.11ac interfaces, please see [DSCP from priority](../../bridging-and-switching/user-guides/wmm-and-vlan-priority.md#set-vlan-or-wmm-priority-from-dscp).     |
 | **ssid** (*string*; default: **no**) | The name of the wireless network, aka the (E)SSID. |

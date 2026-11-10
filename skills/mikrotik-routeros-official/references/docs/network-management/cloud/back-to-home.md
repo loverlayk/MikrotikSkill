@@ -31,6 +31,12 @@ The tunnel is ready. Disconnect from the router's Wi-Fi, and select **Connect** 
 | :-- | :-- | :-- | :-- | :-- |
 | Select **Create new** | Enter the router address and credentials | Name the tunnel | Allow the VPN configuration | Error on a device without Back To Home support |
 
+### Disable VPN when home
+
+The app decides that the phone is home by looking for the router on the local network. When a tunnel is created with **Create new**, the app reads the router's unique RouterOS identifier and saves it in the tunnel profile. Each time the phone connects to a Wi-Fi network, the app runs MikroTik discovery, the same discovery WinBox uses. If it finds a router with the saved identifier, it considers the phone home and pauses the tunnel.
+
+The option does not work for tunnels imported from a QR code or a share link, because those profiles do not contain the router's identifier. The check only runs when the phone connects to Wi-Fi, so the option does not pause the tunnel on mobile data. The router must also be visible to MikroTik discovery on that network.
+
 ## Share the tunnel with other people
 
 You can create guest tunnels for friends and family, with an expiration date. For each guest tunnel, you choose whether the person can reach your home network or only use the internet through your router. The person needs the Back To Home app.

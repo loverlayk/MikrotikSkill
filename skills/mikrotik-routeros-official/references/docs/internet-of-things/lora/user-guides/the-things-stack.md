@@ -171,15 +171,15 @@ You can input decoder script in the "[Payload formatters](https://www.thethingsi
 ![](./img/payload_decoder.png)
 
 - Select "Custom Javascript formatter";
-- Copy/Paste the content of the [provided script **tg-lrx2-2.0-ul-dec.js**](/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide#quickstart-guide) into the "Formatter code" field and "Save changes".
+- Copy/Paste the content of the [provided script **tg-lrx2-2.0-ul-dec.js**](/hardware/tg-lr-setup-guide#quickstart-guide) into the "Formatter code" field and "Save changes".
 
 ### Power on the tag
 
-Please check our full guide on the [TG-LR options](https://manual.mikrotik.com/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide).
+Please check our full guide on the [TG-LR options](/hardware/tg-lr-setup-guide).
 
 From the get-go, the tag will be in the "Shutdown" mode (sleeping).
 
-To activate it, check our [Quickstart Guide](/docs/internet-of-things/lora/user-guides/tg-lr-setup-guide#quickstart-guide), and simply hold the magnet against the reed switch for about ~1.5 seconds until you see x2 LED blinks (after which remove the magnet).
+To activate it, check our [Quickstart Guide](/hardware/tg-lr-setup-guide#quickstart-guide), and simply hold the magnet against the reed switch for about ~1.5 seconds until you see x2 LED blinks (after which remove the magnet).
 
 ### Node registration verification
 
