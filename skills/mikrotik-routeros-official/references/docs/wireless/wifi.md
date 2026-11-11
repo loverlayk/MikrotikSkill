@@ -308,7 +308,7 @@ The sniffer will operate on whichever channel is configured for the chosen inter
 The spectral scan can scan frequencies supported by your wifi interface, and plot them directly in the console.
 
 :::info
-Spectral scan is supported only by the wifi-qcom driver; it is not supported by the wifi-qcom-ac driver.
+Spectral scan is supported only by the wifi-qcom driver; it is not supported by the wifi-qcom-ac, wifi-mediatek or wifi-qcom-be driver.
 :::
 
 ```ros

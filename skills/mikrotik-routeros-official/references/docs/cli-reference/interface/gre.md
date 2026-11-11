@@ -22,7 +22,7 @@
 <ArgTableRow arg="keepalive" typ="super { keepalive-interval: time [1 .. ]
 , [keepalive-retries] [ ,num [1 .. ]]
  }">
-The keepalive parameter sets how often the router checks the remote end of the tunnel: the router sends GRE echo probes to the remote end every `KeepaliveInterval` seconds, repeated up to `KeepaliveRetries` times. The minimum interval is 1 second and a 0-second setting is rejected; unsetting `keepalive` turns it off, but on current RouterOS that does not change the running-flag behavior. By default keepalive is set to 10 seconds and 10 retries. On current RouterOS the tunnel keeps the running flag while it is enabled, even when the remote end stops answering; the tunneled traffic is then dropped until the remote end responds again.  
+The keepalive parameter sets how often the router checks the remote end of the tunnel: the router sends GRE echo probes to the remote end every `KeepaliveInterval` seconds, repeated up to `KeepaliveRetries` times. The minimum interval is 1 second and a 0-second setting is rejected. If the configured time and retries fail (the remote end does not answer the probes), the tunnel loses the running flag, about interval x retries after the last answered probe — about 100 s with the default. Without keepalive (unset), no probes are sent and the tunnel keeps the running flag even when the remote end stops answering; the tunneled traffic is then dropped until the remote end responds again. By default keepalive is set to 10 seconds and 10 retries.  
 Parameters are written in the following format: `KeepaliveInterval,KeepaliveRetries`  
  where KeepaliveInterval is the time interval and KeepaliveRetries is the number of retry attempts.
 </ArgTableRow>

@@ -3,8 +3,8 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790`
 Pages in current index: 1484
-Pages changed/written: 6
-Pages removed: 1
+Pages changed/written: 4
+Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
@@ -310,8 +310,8 @@ Pages failed: 0
 - [/interface/ethernet/switch/unicast-fdb](docs/cli-reference/interface/ethernet/switch/unicast-fdb.md) `ef572be7f6df`
 - [/interface/ethernet/switch/unicast-fdb/flush](docs/cli-reference/interface/ethernet/switch/unicast-fdb/flush.md) `5bfa1d31cc21`
 - [/interface/ethernet/switch/vlan](docs/cli-reference/interface/ethernet/switch/vlan.md) `0a4e9ba6938f`
-- [/interface/gre](docs/cli-reference/interface/gre.md) `8b0c2d995163`
-- [/interface/gre6](docs/cli-reference/interface/gre6.md) `b50c5920b3cb`
+- [/interface/gre](docs/cli-reference/interface/gre.md) `f01f1cf1f90f`
+- [/interface/gre6](docs/cli-reference/interface/gre6.md) `81b205ff749c`
 - [/interface/ipip](docs/cli-reference/interface/ipip.md) `d78427d78a9f`
 - [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `7eb76c5b1e12`
 - [/interface/l2tp-client](docs/cli-reference/interface/l2tp-client.md) `9d6970e77104`
@@ -1441,7 +1441,7 @@ Pages failed: 0
 - [Virtual Private Networks](docs/virtual-private-networks.md) `0e9c42e1a2f2`
 - [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`
 - [EoIP](docs/virtual-private-networks/eoip.md) `9d2bf92faaec`
-- [GRE](docs/virtual-private-networks/gre.md) `253b82ced2fb`
+- [GRE](docs/virtual-private-networks/gre.md) `7bd2a35e6191`
 - [IPIP](docs/virtual-private-networks/ipip.md) `6f1df6c98353`
 - [IPsec](docs/virtual-private-networks/ipsec.md) `87c1f5d4e2a9`
 - [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`
@@ -1483,7 +1483,7 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi](docs/wireless/wifi.md) `c7a39847e6e7`
+- [Wi-Fi](docs/wireless/wifi.md) `4ecf4efb0545`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
 - [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
 - [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `4b1a254fdb6c`
@@ -1491,7 +1491,3 @@ Pages failed: 0
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
-
-## Removed pages
-
-- `docs/internet-of-things/lora/user-guides/tg-lr-setup-guide.md`
