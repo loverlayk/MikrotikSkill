@@ -3,7 +3,7 @@
 Source: https://manual.mikrotik.com/llms.txt
 Index SHA-256: `1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790`
 Pages in current index: 1484
-Pages changed/written: 4
+Pages changed/written: 2
 Pages removed: 0
 Pages failed: 0
 
@@ -836,7 +836,7 @@ Pages failed: 0
 - [/routing/bfd/session](docs/cli-reference/routing/bfd/session.md) `0a43287d1290`
 - [/routing/bgp](docs/cli-reference/routing/bgp.md) `26f45242d001`
 - [/routing/bgp/advertisements](docs/cli-reference/routing/bgp/advertisements.md) `d5d9abe5277a`
-- [/routing/bgp/connection](docs/cli-reference/routing/bgp/connection.md) `dd2c672f15df`
+- [/routing/bgp/connection](docs/cli-reference/routing/bgp/connection.md) `4b5e480e0e98`
 - [/routing/bgp/evpn](docs/cli-reference/routing/bgp/evpn.md) `f17b42a5390b`
 - [/routing/bgp/instance](docs/cli-reference/routing/bgp/instance.md) `d0bb66528d75`
 - [/routing/bgp/session](docs/cli-reference/routing/bgp/session.md) `59a471e4e8b4`
@@ -1486,7 +1486,7 @@ Pages failed: 0
 - [Wi-Fi](docs/wireless/wifi.md) `4ecf4efb0545`
 - [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
 - [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
-- [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `4b1a254fdb6c`
+- [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `ad5c094bb37b`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`

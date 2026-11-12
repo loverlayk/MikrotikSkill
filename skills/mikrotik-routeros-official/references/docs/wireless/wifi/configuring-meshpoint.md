@@ -118,16 +118,18 @@ The virtual AP uses the same channel as the MeshPoint interface. It shares airti
 
 ### Optional channel control
 
-At startup, a MeshPoint scans for a matching Mesh ID and selects a channel with a peer. If the mesh is visible on more than one channel, the nodes converge to the channel of the peer with the lowest MAC address (the smallest address value, used as a deterministic tie-breaker).
+At startup, a MeshPoint scans for a matching Mesh ID and selects a channel with a peer. If the mesh is visible on more than one channel, the nodes converge to the channel of the peer with the lowest MAC address (the smallest address value, used as a deterministic tie-breaker). After the initial scan, the mesh radio runs a background scan periodically, by default every 2–3 hours.
 
-Set the scan interval with `channel.reselect-interval`:
+Control the background scans with `channel.reselect-interval` or `channel.reselect-time`:
 
 ```ros
 /interface/wifi
 set [find default-name=wifi1] channel.reselect-interval=02:00..03:00
+# or use a clock-time window instead:
+set [find default-name=wifi1] channel.reselect-time=03:00..04:00
 ```
 
-`channel.reselect-interval` is optional. It controls how often the mesh radio scans for a better channel. A reselection can trigger a channel switch and briefly disrupt the mesh. For a stable multi-hop chain, use a fixed channel instead.
+Both settings schedule the same background scan. A reselection can trigger a channel switch and briefly disrupt the mesh.
 
 To keep the mesh radio on a fixed channel, set a single `channel.frequency`:
 

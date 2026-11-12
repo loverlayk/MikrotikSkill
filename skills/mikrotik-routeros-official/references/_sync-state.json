@@ -755,7 +755,7 @@
       "title": "Configuring MeshPoint",
       "markdown_url": "https://manual.mikrotik.com/docs/wireless/wifi/configuring-meshpoint.md",
       "path": "docs/wireless/wifi/configuring-meshpoint.md",
-      "sha256": "4b1a254fdb6c45c254cc1dda34392a200191988a9fcd6e681951b68a9c43b1c4"
+      "sha256": "ad5c094bb37b0e6a7e32622536b53ae3c1957187fa37e5c08dcdae0f55d32c68"
     },
     "https://manual.mikrotik.com/docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md": {
       "title": "Configuring outdoor CPE to AP links",
@@ -7007,7 +7007,7 @@
       "title": "/routing/bgp/connection",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/routing/bgp/connection.md",
       "path": "docs/cli-reference/routing/bgp/connection.md",
-      "sha256": "dd2c672f15df39e81ea8ea11165f9e123ec3ab0abc38cf53b3862fc3b733d39b"
+      "sha256": "4b5e480e0e98766356081236626459b30eeb12d241ceb8a0bf46cb245a01b41a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/routing/bgp/evpn.md": {
       "title": "/routing/bgp/evpn",

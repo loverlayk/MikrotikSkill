@@ -26,11 +26,11 @@ In addition to connection-specific parameters, template-specific parameters are 
 <ArgTableRow arg="remote.as" typ="super { as: as
 , [sub-as] [ /as]
  }" unset="1">Remote AS number. If not specified BGP will determine remote AS automatically from the OPEN message.</ArgTableRow>
-<ArgTableRow arg="remote.ttl" typ="num">Acceptable minimum Time To Live, the hop limit for this TCP connection. For example, if 'ttl=255' then only single-hop neighbors will be able to establish the connection. This property only affects EBGP peers.</ArgTableRow>
+<ArgTableRow arg="remote.ttl" typ="num">Acceptable minimum Time To Live, the hop limit for this TCP connection. Packets arriving from the peer with a TTL below this value are discarded, and the session fails to establish or drops. When not set, this value defaults to `local.ttl`, so with the default `local.ttl=255` only single-hop neighbors can establish the connection. For multihop peers, set this value below the TTL at which the peer's packets arrive, for example `64`, or leave `local.ttl` unset to disable the minimum. This property only affects EBGP peers.</ArgTableRow>
 <ArgTableRow arg="remote.allowed-as" typ="enum" unset="1">Name of the num-list containing remote AS numbers that will be allowed to connect. Useful for dynamic peer configuration.</ArgTableRow>
 <ArgTableRow arg="local.address" typ="address (flags=46i:)" unset="1"></ArgTableRow>
 <ArgTableRow arg="local.port" typ="num" unset="1"></ArgTableRow>
-<ArgTableRow arg="local.ttl" typ="num">Time To Live (hop limit) that will be recorded in sent TCP packets.</ArgTableRow>
+<ArgTableRow arg="local.ttl" typ="num">Time To Live (hop limit) recorded in sent TCP packets. Default: 255. When `remote.ttl` is not set, this value is also used as the acceptable minimum TTL for received packets.</ArgTableRow>
 <ArgTableRow arg="local.role" typ="enum (ibgp | ibgp-rr | ebgp | ebgp-provider | ebgp-rs | ebgp-rs-client | ebgp-customer | ebgp-peer)" mandatory="1">BGP role. In most scenarios, set to iBGP or eBGP. For more information on BGP roles and route leak prevention, see [Route Leak Prevention](../../../user-guides/routing-and-networking-protocols/unicast/bgp/route-leak-prevention.md) and the corresponding [RFC 9234](https://tools.ietf.org/html/rfc9234).</ArgTableRow>
 <ArgTableRow arg="tcp-md5-key" typ="string" unset="1">Key used to authenticate the connection with TCP MD5 signature as described in [RFC 2385](https://tools.ietf.org/html/rfc2385). Leave empty to disable authentication.</ArgTableRow>
 <ArgTableRow arg="connect" typ="bool">Whether to allow the router to initiate the connection.</ArgTableRow>
