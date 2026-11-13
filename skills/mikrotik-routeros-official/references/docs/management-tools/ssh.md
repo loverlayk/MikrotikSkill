@@ -130,14 +130,18 @@ do you want to update the host key? <y/n>
 
 Non-interactive commands cannot ask: `ssh-exec` (and fetch over SFTP) fails with `host key not trusted` for an unknown or mismatched server. For scripted connections, pin the server key in advance, pass `known-hosts-ignore=yes` to skip validation for that one command, or set `known-hosts-trusted-subnets` to skip validation for whole subnets, for example a management network.
 
-Pin a server's key in advance with its public key — get the OpenSSH-format key line (`<type> <base64>`) from the server's administrator or from a workstation with `ssh-keyscan 192.168.88.3`, and add it:
+Pin a server's key in advance with its public key. The key is one OpenSSH-format line, `<type> <base64>`: the server's `ssh_host_ed25519_key.pub` file, or the output of `ssh-keyscan -t ed25519 192.168.88.3` on a workstation without the leading address. Ed25519 and RSA keys are accepted; ECDSA keys are not, and neither is a line that still starts with the host address (`failure: key import failed!`). A trailing comment after the key is allowed. Add it:
 
 ```ros
-/ip/ssh/known-hosts/add host=192.168.88.3 key="ssh-ed25519 AAAA..." \
-    comment="backup server"
+/ip/ssh/known-hosts/add host=192.168.88.3 comment="backup server" \
+    key="ssh-ed25519 AAAA..."
 ```
 
+Compare the fingerprint in `/ip/ssh/known-hosts/print` with the server's own: `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` on an OpenSSH server, or `host-key-fingerprint` in `/ip/ssh/print` on a RouterOS server.
+
 Answering `y` to the interactive client's trust prompt pins the key the same way, so a scripted `ssh-exec` that failed with `host key not trusted` works after one interactive `/system/ssh` login where you confirm the key.
+
+Each address holds one key, and the entry applies to every port of that address. Entries cannot be edited: when a server gets a new key, remove its entry and add the new key, or confirm the update prompt of the interactive client. Pinned keys are part of the configuration export, so they move with an exported configuration to another router.
 
 With validation disabled, no host key is asked about or stored, and any key is accepted.
 

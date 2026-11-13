@@ -866,7 +866,7 @@ An Access Control List contains ingress policy engines and egress policy engines
 
 ACL rules are checked for each received packet until a match has been found. If there are multiple rules that can match, then only the first rule will be triggered. A rule without any action parameters is a rule to accept the packet.
 
-Enabling features such as IGMP snooping, DHCP snooping, RoMON, PTP, or loop-protect can automatically create dynamic ACL rules. These rules should be considered when adding new ACL entries. Use the `place-before` property when creating a new rule, or the `move` command to adjust the ACL rule order.
+Enabling features such as IGMP snooping, DHCP snooping, RoMON, PTP, or loop-protect can automatically create dynamic ACL rules. Dynamic rules that redirect or copy traffic to the CPU use the CPU high-priority queue. These rules should be considered when adding new ACL entries. Use the `place-before` property when creating a new rule, or the `move` command to adjust the ACL rule order.
 
 :::warning
 It is not required to set `mac-protocol` to a certain IP version when using L3 or L4 matchers, however, it is recommended to set the `mac-protocol=ip` or `mac-protocol=ipv6`  when filtering any IP packets.
@@ -881,6 +881,7 @@ Then switch ACL rules are modified (e.g. added, removed, disabled, enabled, or m
 | Property | Description |
 | :-- | :-- |
 | **copy-to-cpu** (*no \| yes*; Default: **no**) | Clones the matching packet and sends it to the CPU. |
+| **cpu-high-priority** (*no \| yes*; Default: **no**) | Sends the matching packets to the CPU high-priority queue (`queue1`). Only applies together with `redirect-to-cpu=yes` or `copy-to-cpu=yes`. See [To CPU QoS](./quality-of-service.md#to-cpu-qos). |
 | **disabled** (*yes \| no*; Default: **no**) | Enables or disables the ACL entry. |
 | **dscp** (*0..63*) | Matching the DSCP field of the packet (only applies to IPv4 packets). |
 | **dst-address** (*IP address/Mask*) | Matching destination IPv4 address and mask. If `mac-protocol=arp` is specified, matches the destination IP in ARP packets. Without `mac-protocol`, matches only IPv4 packets. |
@@ -891,8 +892,9 @@ Then switch ACL rules are modified (e.g. added, removed, disabled, enabled, or m
 | **mac-protocol** (*802.2 \| arp \| capsman \| dot1x \| homeplug-av \| ip \| ipv6 \| ipx \| lacp \| lldp \| loop-protect \| macsec \| mpls-multicast \| mpls-unicast \| mvrp \| packing-compr \| packing-simple \| pppoe \| pppoe-discovery \| rarp \| romon \| service-vlan \| vlan \| or 0..65535 \| or 0x0000-0xffff*) | Matching a particular MAC protocol specified by protocol name or number |
 | **mirror** (*no \| yes*) | Clones the matching packet and sends it to the mirror-target port. |
 | **new-dst-ports** (*ports \| bond \| all*) | Changes the destination port to the specified value: If the setting is left empty (e.g. <code>new-dst-ports=""</code>), the packet will be dropped;If a port or  hardware-offloaded bonding interface is specified, the packet will be redirected to that port. Only a single port or bond interface is supported;if you use the <code>all</code> argument, packet will be allowed to pass through to the egress processing without being dropped;If this parameter is not used, the packet will be accepted as is. |
+| **new-qos-profile** (*QoS profile name*) | Assigns the matched packets to the named QoS profile. To send traffic to the CPU high-priority queue, use `cpu-high-priority=yes` instead. |
 | **new-vlan-id** (*0..4095*) | Changes the VLAN ID to the specified value. Requires `vlan-filtering=yes`. |
-| **new-vlan-priority** (*0..7*) | Changes the VLAN priority (priority code point). Requires `vlan-filtering=yes`. |
+| **new-vlan-priority** (*0..7*) | Changes the VLAN priority (priority code point). Requires `vlan-filtering=yes`. This is a legacy option, use `new-qos-profile` instead. |
 | **new-vrf** (*vrf name*) | Assigns ingress traffic to a specified VRF. Requires [hardware-offloaded VRF](./l3-hardware-offloading.md#l3hw-feature-support) support on the switch chip. On VRF-unaware switches (98DX3xxx and 98DX2xxx series), setting `new-vrf` to anything other than `main` will be treated as `redirect-to-cpu=yes`. |
 | **ports** (*ports \| bond*) | Matching switch interfaces where the rule will apply to incoming traffic. Multiple ports and [hardware-offloaded bonding](./marvell-prestera-switch-chip-features.md#bonding) interfaces can be selected. Note that the `switch1-cpu` port cannot be selected. If `ports` property is left empty, the rule will apply to all switch interfaces. |
 | **protocol** (*dccp \| ddp \| egp \| encap \| etherip \| ggp \| gre \| hmp \| icmp \| icmpv6 \| idpr-cmtp \| igmp \| ipencap \| ipip \| ipsec-ah \| ipsec-esp \| ipv6 \| ipv6-frag \| ipv6-nonxt \| ipv6-opts \| ipv6-route \| iso-tp4 \| l2tp \| ospf \| pim \| pup \| rdp \| rspf \| rsvp \| sctp \| st \| tcp \| udp \| udp-lite \| vmtp \| vrrp \| xns-idp \| xtp \| or 0..255*) | Matching a particular IP protocol specified by protocol name or number. Only applies to IPv4 packets if `mac-protocol` is not specified. To match certain IPv6 protocols, use the `mac-protocol=ipv6` setting. |

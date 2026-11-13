@@ -73,16 +73,16 @@ Changes the destination port as specified, multiple ports allowed, including a s
 </ArgTableRow>
 <ArgTableRow arg="mirror-ports" typ="multi { array-id, port: enum
  }" syscap="switch-mv88e6xxx">Selects multiple mirroring target ports, only available on the **88E6393X** switch chip. Matched packets in the ACL rule will be copied and sent to selected ports.</ArgTableRow>
-<ArgTableRow arg="new-qos-profile" typ="enum" syscap="crs_prestera">The name of the QoS profile to assign to the matched packets.</ArgTableRow>
+<ArgTableRow arg="new-qos-profile" typ="enum" syscap="crs_prestera">The name of the QoS profile to assign to the matched packets. To send traffic to the CPU high-priority queue, use `cpu-high-priority=yes` instead. See [To CPU QoS](../../../../../bridging-and-switching/quality-of-service.md#to-cpu-qos).</ArgTableRow>
 <ArgTableRow arg="keep-qos-fields" typ="bool" syscap="crs_prestera">Should the original values of QoS fields (PCP, DSCP) be kept (`yes`), or replaced with the ones from the assigned QoS profile (`no`)? Relevant only if `new-qos-profile` is set.</ArgTableRow>
 <ArgTableRow arg="new-vlan-id" typ="num">Changes the VLAN ID to the specified value. Requires `vlan-filtering=yes`.</ArgTableRow>
-<ArgTableRow arg="new-vlan-priority" typ="num">Changes the VLAN priority (priority code point). Requires `vlan-filtering=yes`.</ArgTableRow>
+<ArgTableRow arg="new-vlan-priority" typ="num">Changes the VLAN priority (priority code point). Requires `vlan-filtering=yes`. This is a legacy option, use `new-qos-profile` instead.</ArgTableRow>
 <ArgTableRow arg="new-vrf" typ="enum" syscap="crs_prestera">Assigns ingress traffic to a specified VRF. Requires [hardware-offloaded VRF](../../../../../bridging-and-switching/l3-hardware-offloading.md#l3hw-feature-support) support on the switch chip. On VRF-unaware switches (98DX3xxx and 98DX2xxx series), setting `new-vrf` to anything other than `main` will be treated as `redirect-to-cpu=yes`.</ArgTableRow>
 <ArgTableRow arg="rate" typ="num">Sets ingress traffic limitation (bits per second) for matched traffic.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="packets" typ="num" syscap="crs_prestera"></ArgTableRow>
-<ArgTableRow arg="bytes" typ="num" syscap="crs_prestera"></ArgTableRow>
+<ArgTableRow arg="packets" typ="num" syscap="crs_prestera">The number of packets matched by the rule.</ArgTableRow>
+<ArgTableRow arg="bytes" typ="num" syscap="crs_prestera">The number of bytes matched by the rule.</ArgTableRow>
 <ArgTableRow arg="internal-priority" typ="num"></ArgTableRow>
 </ArgTable>

@@ -109,7 +109,7 @@ Global parameters for switches with Marwell Prestera chips.
 <ArgTableRow arg="switch-all-ports" typ="bool">Changes the ether1 switch group only on RB450G/RB435G/RB850Gx2 devices. `yes` - ether1 is part of the switch and supports all advanced features including extended statistics. `no` - ether1 is not part of the switch, effectively making it a stand-alone ethernet port, increasing throughput but removing switching capability.</ArgTableRow>
 <ArgTableRow arg="cpu-flow-control" typ="bool" syscap="switch-mv88e6xxx">Disables or enables the CPU Flow Control feature. The switch chip ensures the CPU port is not congested by sending out Pause Frames when link capacity is exceeded. Without this feature, packets crucial for routing or management may be dropped.</ArgTableRow>
 <ArgTableRow arg="l3-hw-offloading" typ="bool" syscap="crs_prestera">Layer 3 hardware offloading. Allows offloading routing features onto the switch chip to reach wire speeds.</ArgTableRow>
-<ArgTableRow arg="qos-hw-offloading" typ="bool" syscap="crs_prestera">Quality of Service hardware offloading. Allows enabling QoS for the given switch chip (if it supports QoS). Turning off the this setting will not completely revert to the previous functionality. It is recommended to reboot the device after disabling it.</ArgTableRow>
+<ArgTableRow arg="qos-hw-offloading" typ="bool" syscap="crs_prestera">Quality of Service hardware offloading. Deprecated and always enabled on supported switch chips. The value is kept for backward compatibility.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790`
-Pages in current index: 1484
-Pages changed/written: 2
+Index SHA-256: `f60137fe2ca1f7fee289a93c05d06b86c2aaf231d1359dd4e69974ee79674964`
+Pages in current index: 1485
+Pages changed/written: 17
 Pages removed: 0
 Pages failed: 0
 
@@ -16,13 +16,13 @@ Pages failed: 0
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
-- [Bridging and Switching](docs/bridging-and-switching.md) `cee9ba9c6546`
+- [Bridging and Switching](docs/bridging-and-switching.md) `9023f4e6412a`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `b80767fa842d`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `4175c3fefc1e`
-- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `fe2d5cb0d5ba`
-- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `a61c62ea1297`
-- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `469058e307b6`
+- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `559b92535fb8`
+- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `ed75ce5e297e`
+- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `50bafc241d02`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
 - [CSS106 (RB260) series Manual](docs/bridging-and-switching/swos/css106.md) `8101fbc475de`
@@ -263,7 +263,7 @@ Pages failed: 0
 - [/interface/ethernet/pon/monitor](docs/cli-reference/interface/ethernet/pon/monitor.md) `7a1af68e3ab8`
 - [/interface/ethernet/reset-counters](docs/cli-reference/interface/ethernet/reset-counters.md) `6513434466e7`
 - [/interface/ethernet/reset-mac-address](docs/cli-reference/interface/ethernet/reset-mac-address.md) `4bc43d73b592`
-- [/interface/ethernet/switch](docs/cli-reference/interface/ethernet/switch.md) `4ec6988ad6c5`
+- [/interface/ethernet/switch](docs/cli-reference/interface/ethernet/switch.md) `f1d2cbe0e45f`
 - [/interface/ethernet/switch/acl](docs/cli-reference/interface/ethernet/switch/acl.md) `053901d82a53`
 - [/interface/ethernet/switch/acl/policer](docs/cli-reference/interface/ethernet/switch/acl/policer.md) `85f85ce62b8c`
 - [/interface/ethernet/switch/dscp-qos-map](docs/cli-reference/interface/ethernet/switch/dscp-qos-map.md) `a35b80826e09`
@@ -295,13 +295,13 @@ Pages failed: 0
 - [/interface/ethernet/switch/qos/port](docs/cli-reference/interface/ethernet/switch/qos/port.md) `87ee66ce92e7`
 - [/interface/ethernet/switch/qos/port/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/port/reset-counters.md) `ac1f1738b444`
 - [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `ac639c07bab8`
-- [/interface/ethernet/switch/qos/profile](docs/cli-reference/interface/ethernet/switch/qos/profile.md) `0558eeddbbec`
+- [/interface/ethernet/switch/qos/profile](docs/cli-reference/interface/ethernet/switch/qos/profile.md) `272bcc190d77`
 - [/interface/ethernet/switch/qos/settings](docs/cli-reference/interface/ethernet/switch/qos/settings.md) `0cb595f8f0e0`
 - [/interface/ethernet/switch/qos/tx-manager](docs/cli-reference/interface/ethernet/switch/qos/tx-manager.md) `72f0b5aca15a`
 - [/interface/ethernet/switch/qos/tx-manager/queue](docs/cli-reference/interface/ethernet/switch/qos/tx-manager/queue.md) `d186caa5b8c5`
 - [/interface/ethernet/switch/reserved-fdb](docs/cli-reference/interface/ethernet/switch/reserved-fdb.md) `4f24831add5c`
 - [/interface/ethernet/switch/reset-counters](docs/cli-reference/interface/ethernet/switch/reset-counters.md) `8fc1444335dd`
-- [/interface/ethernet/switch/rule](docs/cli-reference/interface/ethernet/switch/rule.md) `ebea674f19d4`
+- [/interface/ethernet/switch/rule](docs/cli-reference/interface/ethernet/switch/rule.md) `b1395450d558`
 - [/interface/ethernet/switch/rule/reset-counters-all](docs/cli-reference/interface/ethernet/switch/rule/reset-counters-all.md) `bb5cc8b560ad`
 - [/interface/ethernet/switch/rule/reset-counters](docs/cli-reference/interface/ethernet/switch/rule/reset-counters.md) `47fc5222a0d0`
 - [/interface/ethernet/switch/shaper](docs/cli-reference/interface/ethernet/switch/shaper.md) `e758c026aec4`
@@ -620,7 +620,7 @@ Pages failed: 0
 - [/ip/firewall/nat](docs/cli-reference/ip/firewall/nat.md) `0aded196ad45`
 - [/ip/firewall/nat/reset-counters-all](docs/cli-reference/ip/firewall/nat/reset-counters-all.md) `4e76f3cc281f`
 - [/ip/firewall/nat/reset-counters](docs/cli-reference/ip/firewall/nat/reset-counters.md) `35cd947b3fdf`
-- [/ip/firewall/raw](docs/cli-reference/ip/firewall/raw.md) `370a1271f848`
+- [/ip/firewall/raw](docs/cli-reference/ip/firewall/raw.md) `bcbb67d2c35a`
 - [/ip/firewall/raw/reset-counters-all](docs/cli-reference/ip/firewall/raw/reset-counters-all.md) `fb6d1512f2b7`
 - [/ip/firewall/raw/reset-counters](docs/cli-reference/ip/firewall/raw/reset-counters.md) `33a0b2269ab5`
 - [/ip/firewall/service-port](docs/cli-reference/ip/firewall/service-port.md) `23144d6ab52a`
@@ -712,7 +712,7 @@ Pages failed: 0
 - [/ip/ssh](docs/cli-reference/ip/ssh.md) `0f0e1c0e73d8`
 - [/ip/ssh/export-host-key](docs/cli-reference/ip/ssh/export-host-key.md) `712cca89d3e6`
 - [/ip/ssh/import-host-key](docs/cli-reference/ip/ssh/import-host-key.md) `8075bace72a7`
-- [/ip/ssh/known-hosts](docs/cli-reference/ip/ssh/known-hosts.md) `56d9a2331416`
+- [/ip/ssh/known-hosts](docs/cli-reference/ip/ssh/known-hosts.md) `018a627170d4`
 - [/ip/ssh/regenerate-host-key](docs/cli-reference/ip/ssh/regenerate-host-key.md) `55054cdff109`
 - [/ip/tftp](docs/cli-reference/ip/tftp.md) `b24a9bdc848f`
 - [/ip/tftp/settings](docs/cli-reference/ip/tftp/settings.md) `b87e65cd8de8`
@@ -750,7 +750,7 @@ Pages failed: 0
 - [/ipv6/firewall/nat](docs/cli-reference/ipv6/firewall/nat.md) `cd1c627920e8`
 - [/ipv6/firewall/nat/reset-counters-all](docs/cli-reference/ipv6/firewall/nat/reset-counters-all.md) `b05411b1db1f`
 - [/ipv6/firewall/nat/reset-counters](docs/cli-reference/ipv6/firewall/nat/reset-counters.md) `113a67fe9cf8`
-- [/ipv6/firewall/raw](docs/cli-reference/ipv6/firewall/raw.md) `503c9638b315`
+- [/ipv6/firewall/raw](docs/cli-reference/ipv6/firewall/raw.md) `1373708ee436`
 - [/ipv6/firewall/raw/reset-counters-all](docs/cli-reference/ipv6/firewall/raw/reset-counters-all.md) `4ce711f15205`
 - [/ipv6/firewall/raw/reset-counters](docs/cli-reference/ipv6/firewall/raw/reset-counters.md) `f1d9002a50a1`
 - [/ipv6/nd](docs/cli-reference/ipv6/nd.md) `6ef2122ff4ec`
@@ -1198,17 +1198,18 @@ Pages failed: 0
 - [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `22032cf2b327`
 - [Watchdog](docs/diagnostics-monitoring-and-troubleshooting/watchdog.md) `cfa0097ec733`
 - [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `1b12f5885941`
-- [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `6ab6c5b43569`
-- [Firewall](docs/firewall-and-quality-of-service/firewall.md) `dfc0407bb1ad`
+- [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `2ff57cbbeba4`
+- [Firewall](docs/firewall-and-quality-of-service/firewall.md) `6a7a2d6cff88`
 - [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a9883ddfaab1`
 - [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `34389ca56b9b`
-- [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `2708ef4c3251`
+- [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `569127d1fa48`
 - [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `fa803d9a0c54`
 - [Mangle](docs/firewall-and-quality-of-service/firewall/mangle.md) `3e2f19250e8d`
 - [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
+- [RAW](docs/firewall-and-quality-of-service/firewall/raw.md) `83270491c6bf`
 - [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
-- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `f23a31e3f0d9`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `7277f3880df9`
 - [Queues](docs/firewall-and-quality-of-service/queues.md) `1df41f5f9723`
 - [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `11546cfc0044`
 - [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `e92e9c3efcea`
@@ -1222,7 +1223,7 @@ Pages failed: 0
 - [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `64baf17452a7`
 - [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `aec9b9732524`
 - [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `4c2276a4d875`
-- [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `2d4b362ea4b5`
+- [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `8095f2d4b529`
 - [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
 - [Configuration Management](docs/getting-started/configuration-management.md) `72075b3124d1`
@@ -1329,7 +1330,7 @@ Pages failed: 0
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
 - [RoMON](docs/management-tools/romon.md) `8eab6f0e2235`
 - [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
-- [SSH](docs/management-tools/ssh.md) `73e927155820`
+- [SSH](docs/management-tools/ssh.md) `1920f1c04d0f`
 - [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
 - [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`

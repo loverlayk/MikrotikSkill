@@ -34,7 +34,7 @@ and much more!
 
 Firewall is split into three major modules:
 
-- **filter/raw** - Used to deny traffic based on configured policies. Filtering in RAW tables allows saving resources if connection tracking is not required.
+- **filter/raw** - Used to deny traffic based on configured policies. Filtering in the [RAW](./raw) table saves resources if connection tracking is not required.
 - **mangle** - Used to mark certain connections, packets, streams, set priorities and do other tasks.
 - **nat** - Used to set up address translation rules, redirects and port forwarding.
 

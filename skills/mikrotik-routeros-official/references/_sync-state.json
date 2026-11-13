@@ -1,5 +1,5 @@
 {
-  "index_sha256": "1e9769054641635820ab6c48ddd8e229b133780d30b9d8eea5997fd88ed20790",
+  "index_sha256": "f60137fe2ca1f7fee289a93c05d06b86c2aaf231d1359dd4e69974ee79674964",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -293,7 +293,7 @@
       "title": "SSH",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/ssh.md",
       "path": "docs/management-tools/ssh.md",
-      "sha256": "73e927155820ba5b6face44526f34915e893bff919897ba3e00d7e9e85dee8d2"
+      "sha256": "1920f1c04d0f0f231ca235618994ae1d4f517c3ec1fdd8bf55ab24438931e351"
     },
     "https://manual.mikrotik.com/docs/management-tools/quick-set.md": {
       "title": "Quick Set",
@@ -983,13 +983,13 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "cee9ba9c65465f81d471235cb45fd1b585437ff37a8c8af44f004f3ed939b971"
+      "sha256": "9023f4e6412a0bcbbcd42aeb4a35d11634ecec6d891a0107b2b651847388b915"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md",
       "path": "docs/bridging-and-switching/marvell-prestera-switch-chip-features.md",
-      "sha256": "fe2d5cb0d5ba385b6ab32141a37caf422cf5cf1d9ad27472183ef255282f082b"
+      "sha256": "559b92535fb80160d37cb807dea1fd93c1374026976a6ed542531e57539715d7"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md": {
       "title": "L3 Hardware Offloading",
@@ -1001,7 +1001,7 @@
       "title": "Quality of Service",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md",
       "path": "docs/bridging-and-switching/quality-of-service.md",
-      "sha256": "a61c62ea129700bed248766d46e88842952cb0e6845f06c0f953b1de00521b0b"
+      "sha256": "ed75ce5e297ed7ab7a35564b1a45c367e3e527f24820622a84331f620415b819"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/macsec.md": {
       "title": "MACsec",
@@ -1025,7 +1025,7 @@
       "title": "Switch Chip Features",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/switch-chip-features.md",
       "path": "docs/bridging-and-switching/switch-chip-features.md",
-      "sha256": "469058e307b6e2b89aba48b5da9f5025e85219ba581adf4b669a037e86458380"
+      "sha256": "50bafc241d023623200ffb5483c0b4e7349c095f13fee62614b69bdd2c782a36"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/vlan.md": {
       "title": "VLAN",
@@ -1469,7 +1469,7 @@
       "title": "Firewall",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall.md",
       "path": "docs/firewall-and-quality-of-service/firewall.md",
-      "sha256": "dfc0407bb1adb18af7283fe2e2aac320a4dea37d6db039ec5bd9703bc2c10cdb"
+      "sha256": "6a7a2d6cff8828bbd2f09d8d06e8a92f33c3766464173db158fc7f6d451425d7"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/address-lists.md": {
       "title": "Address lists",
@@ -1487,7 +1487,7 @@
       "title": "Filter",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/filter.md",
       "path": "docs/firewall-and-quality-of-service/firewall/filter.md",
-      "sha256": "2708ef4c325107c509771492f5ded568bcf0cfa591fea45be6ffbb1eab81e917"
+      "sha256": "569127d1fa4821192631c25b24396c5efc468943eb64a5642e7af7471a79f0c4"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/layer7.md": {
       "title": "Layer7",
@@ -1507,17 +1507,23 @@
       "path": "docs/firewall-and-quality-of-service/firewall/nat.md",
       "sha256": "d217a6f1ac80b899848d2355e9f7ef9d9eaa365052091555776a81aaedfc54cf"
     },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/raw.md": {
+      "title": "RAW",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/raw.md",
+      "path": "docs/firewall-and-quality-of-service/firewall/raw.md",
+      "sha256": "83270491c6bf0c78af43edaf38a73bddf581471df54592fd1f013c5b9d9a811c"
+    },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/packet-flow-in-routeros.md": {
       "title": "Packet Flow in RouterOS",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
       "path": "docs/firewall-and-quality-of-service/packet-flow-in-routeros.md",
-      "sha256": "f23a31e3f0d9224ce1cb56684edf2230a902baefcaeadfbc073e9a8813dc4110"
+      "sha256": "7277f3880df991152adf8c83cc305e6da738475adb0fbc92ac8dc9e0efd7da08"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/connection-tracking.md": {
       "title": "Connection tracking",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/connection-tracking.md",
       "path": "docs/firewall-and-quality-of-service/connection-tracking.md",
-      "sha256": "6ab6c5b43569fac4ea0f780046adce54c236113d1d0d901096627357be4b75c6"
+      "sha256": "2ff57cbbeba4e17e488cf7fce9bf3871ccffd8a4aff9da4ceee2bd2c1a24c85b"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues.md": {
       "title": "Queues",
@@ -1613,7 +1619,7 @@
       "title": "DDoS protection",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/user-guides/ddos-protection.md",
       "path": "docs/firewall-and-quality-of-service/user-guides/ddos-protection.md",
-      "sha256": "2d4b362ea4b5239d3ed2e099715f7cf75b8a5aca5fd8c1fd0a19afdf2ba97e47"
+      "sha256": "8095f2d4b529f5cbe3d767c878275ab9044a8458508796c5e39b5e040571490c"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/user-guides/port-knocking.md": {
       "title": "Port knocking",
@@ -3569,7 +3575,7 @@
       "title": "/interface/ethernet/switch",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch.md",
       "path": "docs/cli-reference/interface/ethernet/switch.md",
-      "sha256": "4ec6988ad6c571b1e23ba3654298c29410c745876a1398dfe5910c71da9165bb"
+      "sha256": "f1d2cbe0e45f81cd4ce5187ada317d93678061004a2053fb4f7092490cb42b75"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/acl.md": {
       "title": "/interface/ethernet/switch/acl",
@@ -3755,7 +3761,7 @@
       "title": "/interface/ethernet/switch/qos/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/profile.md",
       "path": "docs/cli-reference/interface/ethernet/switch/qos/profile.md",
-      "sha256": "0558eeddbbec499b4eccff40213c02988a56bce94ed50d19a0a9fada73c26fd1"
+      "sha256": "272bcc190d773e39ded1450592f4a005af43dc2f088262348fc7ad8588aafac7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/settings.md": {
       "title": "/interface/ethernet/switch/qos/settings",
@@ -3797,7 +3803,7 @@
       "title": "/interface/ethernet/switch/rule",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/rule.md",
       "path": "docs/cli-reference/interface/ethernet/switch/rule.md",
-      "sha256": "ebea674f19d4cfef88d9bf4f07d619459b596dc79cb00486659886b4c5f16ef0"
+      "sha256": "b1395450d558c07c4c367031c2a1440cc0d0bc5d398d4ee295f6296cba04a946"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/rule/reset-counters-all.md": {
       "title": "/interface/ethernet/switch/rule/reset-counters-all",
@@ -5711,7 +5717,7 @@
       "title": "/ip/firewall/raw",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/firewall/raw.md",
       "path": "docs/cli-reference/ip/firewall/raw.md",
-      "sha256": "370a1271f848a348823a231bc28cf76264fd30bbc6656d039606860ad3efc006"
+      "sha256": "bcbb67d2c35aa45450775e5d3ff02432c5ac35c52b926af23baf7a0acb04bdb8"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/firewall/raw/reset-counters-all.md": {
       "title": "/ip/firewall/raw/reset-counters-all",
@@ -6263,7 +6269,7 @@
       "title": "/ip/ssh/known-hosts",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/ssh/known-hosts.md",
       "path": "docs/cli-reference/ip/ssh/known-hosts.md",
-      "sha256": "56d9a23314161e4dbcc829e1bfd84f28ba76aca53c14055af4b9bf289dd16743"
+      "sha256": "018a627170d4e7e8aedd61c13cda80cd2cc8472fc5f22f7b0ce8b685b0688279"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/ssh/regenerate-host-key.md": {
       "title": "/ip/ssh/regenerate-host-key",
@@ -6491,7 +6497,7 @@
       "title": "/ipv6/firewall/raw",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ipv6/firewall/raw.md",
       "path": "docs/cli-reference/ipv6/firewall/raw.md",
-      "sha256": "503c9638b31533b6bf561e49480b8c3271ba61910eca947d49488283ca1d15b2"
+      "sha256": "1373708ee436fde84905da7c384fd43813e9da098100b4c9c45e83a6712c8197"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ipv6/firewall/raw/reset-counters-all.md": {
       "title": "/ipv6/firewall/raw/reset-counters-all",

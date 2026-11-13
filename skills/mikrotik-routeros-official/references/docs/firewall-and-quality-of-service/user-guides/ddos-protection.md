@@ -35,7 +35,7 @@ The address lists do not have to exist beforehand: RouterOS creates `ddos-attack
 
 On a router with the default configuration, you can append the jump rule to the end of the forward chain. Established connections are accepted earlier in the chain, so only new connections reach it: connections from the LAN, and connections from the internet that a destination NAT rule forwards to a host behind the router.
 
-For such port-forwarded services, the raw rule does not match. The raw table handles packets before destination NAT, so it sees the router's public address as the destination, while `ddos-targets` holds the address of the host behind the router. To drop those floods as well, add a filter rule that drops the listed pairs after NAT, before the default fasttrack rule:
+For such port-forwarded services, the raw rule does not match. The [RAW](../firewall/raw) table handles packets before destination NAT, so it sees the router's public address as the destination, while `ddos-targets` holds the address of the host behind the router. To drop those floods as well, add a filter rule that drops the listed pairs after NAT, before the default fasttrack rule:
 
 ```ros
 /ip/firewall/filter/add chain=forward action=drop \

@@ -56,7 +56,7 @@ There are two different methods when the packet is considered **new**. The first
 
 If a packet is not new, it can belong to either an ***established*** or ***related*** connection or not belong to any connection, making it ***invalid***. A packet with an ***established*** state, as most of you already guessed, belongs to an existing connection from the connection tracking table. A ***related*** state is very similar, except that the packet belongs to a connection that is related to one of the existing connections, for example, ICMP error packets or FTP data connection packets.
 
-Connection state **untracked** is a special case when **RAW** firewall rules are used to exclude the connection from connection tracking. This rule would make all forwarded traffic bypass the connection tracking, improving packet processing speed through the device.
+Connection state **untracked** is a special case when [RAW](./firewall/raw) firewall rules are used to exclude the connection from connection tracking. This rule would make all forwarded traffic bypass the connection tracking, improving packet processing speed through the device.
 
 Any other packet is considered ***invalid*** and in most cases should be dropped.
 

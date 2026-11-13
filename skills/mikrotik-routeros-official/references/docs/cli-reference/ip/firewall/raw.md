@@ -14,15 +14,15 @@
 <ArgTableRow arg="chain" typ="enum" mandatory="1">Specifies to which chain the rule will be added. If the input does not match the name of an already defined chain, a new chain will be created.</ArgTableRow>
 <ArgTableRow arg="action" typ="enum (accept | jump | return | log | passthrough | add-src-to-address-list | add-dst-to-address-list | drop | notrack) { accept:0, jump:1, return:2, log:3, passthrough:4, add-src-to-address-list:5, add-dst-to-address-list:6, drop:10, notrack:42 }">
 Action to take if a packet is matched by the rule:
-- `accept` - accept the packet. A packet is not passed to the next firewall rule.
+- `accept` - accept the packet. The packet is not passed to the next RAW rule and goes on to connection tracking.
 - `add-dst-to-address-list` - add the destination address to the address list specified by the `address-list` parameter.
 - `add-src-to-address-list` - add the source address to the address list specified by the `address-list` parameter.
 - `jump` - jump to the user-defined chain specified by the value of the `jump-target` parameter.
 - `log` - add a message to the system log containing the following data: in-interface, out-interface, src-mac, protocol, src-ip:port-&gt;dst-ip:port, and length of the packet. After a packet is matched it is passed to the next rule in the list, similar to `passthrough`.
-- `passthrough` - if a packet is matched by the rule, increase the counter and go to the next rule (useful for statistics).
+- `passthrough` - if a packet is matched by the rule, increase the counter and go to the next rule.
 - `return` - passes control back to the chain from where the jump took place.
 - `drop` - drop the packet.
-- `notrack` - do not send a packet to connection tracking. Useful when you still need to use regular firewall, but do not require connection tracking.
+- `notrack` - do not send the packet to connection tracking. The packet goes on to the next RAW rule and has the connection state `untracked` in the mangle and filter rules.
 </ArgTableRow>
 <ArgTableRow arg="jump-target" typ="enum ()">Name of the target chain to jump to. Applicable only if `action=jump`.</ArgTableRow>
 <ArgTableRow arg="tcp-flags" typ="super { !,
@@ -46,10 +46,10 @@ Matches the specified TCP flags:
  }">Matches HTTPS traffic based on TLS SNI hostname. Accepts GLOB syntax for wildcard matching. The matcher will not be able to match the hostname if the TLS handshake frame is fragmented into multiple TCP segments.</ArgTableRow>
 <ArgTableRow arg="in-interface" typ="super { !
 , interface: iface_enum
- }">Interface the packet has entered the router.</ArgTableRow>
+ }">Interface the packet has entered the router. Not valid in the output chain.</ArgTableRow>
 <ArgTableRow arg="out-interface" typ="super { !
 , interface: iface_enum
- }">Interface the packet is leaving the router.</ArgTableRow>
+ }">Interface the packet is leaving the router. Not valid in the prerouting chain.</ArgTableRow>
 <ArgTableRow arg="in-interface-list" typ="super { !
 , interface-list: enum
  }">Set of interfaces defined in interface list. Works the same as `in-interface`.</ArgTableRow>
@@ -105,7 +105,7 @@ Matches the specified TCP flags:
 <ArgTableRow arg="tos" typ="super { !
 , tos: num [0 .. 255]
 , [mask] [ /num [0 .. 255]]
- }"></ArgTableRow>
+ }">Matches the Type of Service (ToS) field of the IP header. An optional mask selects the bits to compare, in the format `value/mask`.</ArgTableRow>
 <ArgTableRow arg="limit" typ="super { !
 , count: num [1 .. 32000000000]
 , [time] [ /time [1 .. ]]
@@ -161,8 +161,8 @@ Matches packets until a given rate is exceeded. Rate is defined as packets per t
 , [policy] ,enum (none | ipsec) { none:0, ipsec:1 }
  }">
 Matches the policy used by IPsec. Value is written in the following format: `direction, policy`.
-- `in` - valid in the PREROUTING, INPUT, and FORWARD chains.
-- `out` - valid in the POSTROUTING, OUTPUT, and FORWARD chains.
+- `in` - valid in the prerouting chain.
+- `out` - valid in the output chain.
 - `ipsec` - matches if the packet is subject to IPsec processing.
 - `none` - matches packets that are not subject to IPsec processing.
 </ArgTableRow>
@@ -176,7 +176,7 @@ Matches the policy used by IPsec. Value is written in the following format: `dir
 , range: ipRange
  }">Matches packets whose destination is equal to the specified IP or falls into the specified IP range.</ArgTableRow>
 <ArgTableRow arg="fragment" typ="super { fragment: bool
- }">Matches fragmented packets. The first (starting) fragment does not count. If connection tracking is enabled there will be no fragments as the system automatically assembles every packet. IPv4 only.</ArgTableRow>
+ }">Matches fragmented packets. The first (starting) fragment does not count. Packets are not assembled before the RAW rules run, so fragments are visible also when connection tracking is enabled; packets that bypass connection tracking with `notrack` stay fragmented. IPv4 only.</ArgTableRow>
 <ArgTableRow arg="psd" typ="super { weight-threshold: num
 , [delay-threshold] ,time
 , [low-port-weight] ,num
