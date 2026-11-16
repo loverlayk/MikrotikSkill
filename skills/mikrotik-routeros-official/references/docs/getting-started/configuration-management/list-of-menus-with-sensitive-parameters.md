@@ -14,7 +14,7 @@ The table lists the menus where sensitive parameters can be configured, the para
 | `/ip/hotspot` | mac-auth-password, password, otp-secret | [HotSpot - Captive portal#HotSpotUsers](../../authentication-authorization-accounting/hotspot-captive-portal/index.md) |
 | `/iot` | password, key | password - [MQTT#Brokers](../../internet-of-things/mqtt/index.md)  key - [Lora#Servers](../../internet-of-things/lora/general-properties.md#servers)|
 | `/interface/gre`  `/interface/gre6` | ipsec-secret | [GRE#Properties](../../virtual-private-networks/gre.md) |
-| `/interface/ipip`  `/interface/ipipv6` | ipsec-secret | [IPIP#Properties](../../virtual-private-networks/ipip.md) |
+| `/interface/ipip`  `/interface/ipipv6` | ipsec-secret | [IPIP#Protect the tunnel with IPsec](../../virtual-private-networks/ipip.md#protect-the-tunnel-with-ipsec) |
 | `/interface/eoip`  `/interface/eoipv6` | ipsec-secret | [EoIP#PropertyDescription](../../virtual-private-networks/eoip.md) |
 | `/interface/6to4` | ipsec-secret | [6to4#6to4-PropertyDescription](../../virtual-private-networks/6to4.md) |
 | `/interface/ppp-client` | password, pin | Work in Progress [PPP](../../mobile-networking/ppp.md) |
@@ -30,7 +30,7 @@ The table lists the menus where sensitive parameters can be configured, the para
 | `/system/ssh-exec` | password | [SSH](../../management-tools/ssh#run-remote-commands-from-scripts) |
 | `/user` | password | [User](../../authentication-authorization-accounting/user.md) |
 | `/disk` | nvme-tcp-server-password, nvme-tcp-password, smb-server-password, smb-password, self-encryption-password, encryption-key, sshfs-password | nvme-tcp-server-password, nvme-tcp-password - [NVMe over TCP](../../storage/nvme-over-tcp.md)  sshfs-password - Work in Progress  smb-server-password, smb-password - [SMB](../../storage/smb.md)  self-encryption-password, encryption-key - [Self-Encrypting Drives](../../storage/self-encrypting-drives.md)|
-| `/interface/vrrp` | password | [VRRP#Parameters](../../high-availability-solutions/vrrp.md) |
+| `/interface/vrrp` | password | [VRRP parameters](../../cli-reference/interface/vrrp) |
 | `/interface/dot1x` | password | [Dot1X#Client](../../authentication-authorization-accounting/dot1x.md) |
 | `/interface/macsec` | cak | [MACsec#PropertyReference](../../bridging-and-switching/macsec.md) |
 | `/interface/wireguard` | private-key, preshared-key, \**show-client-config* | [WireGuard](../../virtual-private-networks/wireguard.md) |

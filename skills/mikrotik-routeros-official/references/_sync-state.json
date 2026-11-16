@@ -1,5 +1,5 @@
 {
-  "index_sha256": "f60137fe2ca1f7fee289a93c05d06b86c2aaf231d1359dd4e69974ee79674964",
+  "index_sha256": "044dbb13c13f708b6a588701011fe69c15e19a00fc1b86ec6e4ac2c633ecc4a5",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -185,7 +185,7 @@
       "title": "List of menus with sensitive parameters",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
       "path": "docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
-      "sha256": "27762e9130bddad883440c8f65c9f332c45586da14f87d5dadec25fa04c02855"
+      "sha256": "c5a71d9c49162aa66ee1a9adf993d76622622046b3722b17ea77507f55f23d7d"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/routeros-configuration-reset.md": {
       "title": "RouterOS configuration reset",
@@ -335,7 +335,7 @@
       "title": "CMR",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/cmr.md",
       "path": "docs/management-tools/cmr.md",
-      "sha256": "953188baef17cc2241780a4b599f0ca49995a22a254b79a79530e8d5fd773d76"
+      "sha256": "d5eeb823d1c76e0e4d1d0c4dc0dabba7ecc59327ad11f3ec3cb319a86b67acd8"
     },
     "https://manual.mikrotik.com/docs/management-tools/cmr/client.md": {
       "title": "CMR-Client",
@@ -527,7 +527,7 @@
       "title": "Graphing",
       "markdown_url": "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/graphing.md",
       "path": "docs/diagnostics-monitoring-and-troubleshooting/graphing.md",
-      "sha256": "50fda08234ce6288b4f1e02f126d7f988f3720bbf4c608d61e3830373a363465"
+      "sha256": "9ca78f4af62baf677442cfd70c9902989978f22a8cd404cd8a3a4b577899d693"
     },
     "https://manual.mikrotik.com/docs/diagnostics-monitoring-and-troubleshooting/snmp.md": {
       "title": "SNMP",
@@ -983,7 +983,7 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "9023f4e6412a0bcbbcd42aeb4a35d11634ecec6d891a0107b2b651847388b915"
+      "sha256": "fe57a4a4c31663ccba1683cc41235fb386a4778f903ed1390feb897ac21e9f24"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
@@ -995,13 +995,13 @@
       "title": "L3 Hardware Offloading",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md",
       "path": "docs/bridging-and-switching/l3-hardware-offloading.md",
-      "sha256": "b80767fa842d1ee66e50a2fbbc678ee153ce58d06dffd85a5f792e2097c695c2"
+      "sha256": "7516a33c6b797751af1898d3323826ab10f60e2fba51fd22d831e590e12ccd8d"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md": {
       "title": "Quality of Service",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md",
       "path": "docs/bridging-and-switching/quality-of-service.md",
-      "sha256": "ed75ce5e297ed7ab7a35564b1a45c367e3e527f24820622a84331f620415b819"
+      "sha256": "37162e58113bdf470ca67f4f13cb20756a3f527fe7c022920871ddeafce70286"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/macsec.md": {
       "title": "MACsec",
@@ -1013,7 +1013,7 @@
       "title": "MACVLAN",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/macvlan.md",
       "path": "docs/bridging-and-switching/macvlan.md",
-      "sha256": "4175c3fefc1ef6bd960d16966b447c36d43216e4845b6a8564dde5f246c87d0c"
+      "sha256": "8135bf84fc7333dab0bcb741b3857a64f958a48f287c7676456b4e70afc9bff3"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/vxlan.md": {
       "title": "VXLAN",
@@ -1493,7 +1493,7 @@
       "title": "Layer7",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/layer7.md",
       "path": "docs/firewall-and-quality-of-service/firewall/layer7.md",
-      "sha256": "fa803d9a0c54ced0f6cfda9b501e7c11d614dc8884af5e66f10c8d2d2ed0531d"
+      "sha256": "9579a02f238931320e02e8cea8ec6af0a1dab13b6d63635e93a6e318c3e16a72"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/mangle.md": {
       "title": "Mangle",
@@ -1511,7 +1511,7 @@
       "title": "RAW",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/raw.md",
       "path": "docs/firewall-and-quality-of-service/firewall/raw.md",
-      "sha256": "83270491c6bf0c78af43edaf38a73bddf581471df54592fd1f013c5b9d9a811c"
+      "sha256": "9e5bdde0f9b3fcca9d6327699542917dc4889add35df907c66bc7a42b123187f"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/packet-flow-in-routeros.md": {
       "title": "Packet Flow in RouterOS",
@@ -1529,13 +1529,25 @@
       "title": "Queues",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues.md",
       "path": "docs/firewall-and-quality-of-service/queues.md",
-      "sha256": "1df41f5f972335014b4ea6f0a782003b078ac9c83de2fcf0a6d15c788530f5ee"
+      "sha256": "2b26f7f4b271d1a46b2bd42726b9aafc69676d5a0ed40c1747001bd92f2094cf"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/simple-queue.md": {
+      "title": "Simple queue",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/simple-queue.md",
+      "path": "docs/firewall-and-quality-of-service/queues/simple-queue.md",
+      "sha256": "03795a322539cbaa0ec6129536b8059a9060a76adcec20282975a770162cac92"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-tree.md": {
+      "title": "Queue tree",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-tree.md",
+      "path": "docs/firewall-and-quality-of-service/queues/queue-tree.md",
+      "sha256": "93cd372f4db2d839c3d536a625863317f4cd74f5e4e2589759530889705f7284"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md": {
       "title": "HTB (Hierarchical Token Bucket)",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md",
       "path": "docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md",
-      "sha256": "11546cfc004464b6011fa8276cd94926677070dc7df9e9313e96528a87a74787"
+      "sha256": "6ce3d3e97e87896da9eedbcff9218b8354ca8821d35ae8a1ae1bc828dfea4116"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/pcq-example.md": {
       "title": "PCQ example",
@@ -1547,31 +1559,55 @@
       "title": "Queue Burst",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-burst.md",
       "path": "docs/firewall-and-quality-of-service/queues/queue-burst.md",
-      "sha256": "0d9f5551f49f9d0e9a83582b82defdca71d9be41dc99b4f9b10c484272260a95"
+      "sha256": "2b720a81d8fa48ca482267bea2a115e9a3ea6068188c15ad198658b4ecb57535"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-size.md": {
       "title": "Queue size",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-size.md",
       "path": "docs/firewall-and-quality-of-service/queues/queue-size.md",
-      "sha256": "819af2a73a2993e47d7a749612d9560be3c42433d407baea27b29a843986d740"
+      "sha256": "d6994ba4c8fd763ef7c4042160eeb3a4e2e4767d4d1fbfa950998a1a69e5c0bb"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types.md": {
       "title": "Queue types",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types.md",
       "path": "docs/firewall-and-quality-of-service/queues/queue-types.md",
-      "sha256": "9d3abca71d592ce5f93b897cbc7c54b51a3111bf36d14fd976f39c301cfe2eff"
+      "sha256": "ee22bcc3133283d4542d6092c3ad0efe792ac8ac8b0e6f77afb1e8eb5b6fa657"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/cake.md": {
       "title": "CAKE",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/cake.md",
       "path": "docs/firewall-and-quality-of-service/queues/queue-types/cake.md",
-      "sha256": "345741a92cdfc22e84eddfedad749f68733a55bf6930a9b92c855a3860dd0692"
+      "sha256": "b837a8b0260d0f42926059e07e88b5bb7ebc3944a1508d61c8eb329ef2213131"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/codel-fq-codel.md": {
+      "title": "CoDel and FQ-CoDel",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/codel-fq-codel.md",
+      "path": "docs/firewall-and-quality-of-service/queues/queue-types/codel-fq-codel.md",
+      "sha256": "b197979c7d81f99518712faf636e746f928c597599ca17f987ec82c2b6638cb0"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/pcq.md": {
+      "title": "PCQ",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/pcq.md",
+      "path": "docs/firewall-and-quality-of-service/queues/queue-types/pcq.md",
+      "sha256": "1df0829f0837856f61f4f0411169b149e6a89c516d42be72cea873e6b43f09e2"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md": {
-      "title": "PFIFO,BFIFO",
+      "title": "FIFO queue types",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md",
       "path": "docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md",
-      "sha256": "40358a1696ddc940fde749ed3038ea7d87a6bb61650ae3609d639a1600b40187"
+      "sha256": "aaf58d3e090b68ab665cf677a78f5e2f5bd3449372ac2652444e2019f91f4a62"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/red.md": {
+      "title": "RED",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/red.md",
+      "path": "docs/firewall-and-quality-of-service/queues/queue-types/red.md",
+      "sha256": "f6e14c47254e58f9d032fe6c68b3d25eafc7373a7ca6fe9a311449bca93b74d0"
+    },
+    "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/sfq.md": {
+      "title": "SFQ",
+      "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/queues/queue-types/sfq.md",
+      "path": "docs/firewall-and-quality-of-service/queues/queue-types/sfq.md",
+      "sha256": "1bb4610ea269c581aebcb4af775e2e5f17a18ce0dd4b40fb7cede5d55ffa791b"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/kid-control.md": {
       "title": "Kid Control",
@@ -1655,7 +1691,7 @@
       "title": "IPIP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipip.md",
       "path": "docs/virtual-private-networks/ipip.md",
-      "sha256": "6f1df6c98353e6dce72e8e4698ef1e288a47a71e90367a31c536ee6597768976"
+      "sha256": "41297150b5c60d3f66729f879db469b360b2e199a1bd60b0472231cf7b8f0443"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec.md": {
       "title": "IPsec",
@@ -1715,7 +1751,7 @@
       "title": "PPTP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/pptp.md",
       "path": "docs/virtual-private-networks/pptp.md",
-      "sha256": "85e617e82de7bcd93f2d19814449150c4fa98faaf96df153104f1daeead0c66e"
+      "sha256": "3582192f410d24871cd4a2b57e49daa420bc1abeae2612eadca55a2be187d405"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/sstp.md": {
       "title": "SSTP",
@@ -1757,13 +1793,13 @@
       "title": "HotSpot - Captive portal",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/hotspot-captive-portal.md",
       "path": "docs/authentication-authorization-accounting/hotspot-captive-portal.md",
-      "sha256": "0fd6743386812caa6589e5c901e4a29fade5e87d0a9b940bb827181871a7febb"
+      "sha256": "1c0d3826d367bc5f997f29ac395554a043c2edfa3fe9d560f78e2eb25599c6f6"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md": {
       "title": "Hotspot customisation",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md",
       "path": "docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md",
-      "sha256": "5a550cf0f64c89c6c7e6a9b84dc144279bece75a1a81f5b50bc4c3f337932c72"
+      "sha256": "b68a83c3bdb6eb41817d3c04c13e42759ad71c58f7a6cd8547006e8663b8d235"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/ppp-aaa.md": {
       "title": "PPP AAA",
@@ -1835,13 +1871,13 @@
       "title": "VRRP Configuration Examples",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md",
       "path": "docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md",
-      "sha256": "047977ef8412abb973fbbc2d3c6413039876d2f3a9af17dd7d4194ba67929aa2"
+      "sha256": "567ce371eb6a4a1b45fdaffe2441510a365bfe1c52f8a76ba1679ee5b610b230"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/vrrp.md": {
       "title": "VRRP",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/vrrp.md",
       "path": "docs/high-availability-solutions/vrrp.md",
-      "sha256": "a7365300fcc033fa50945554d503a3c62f09022640c200cf2da170a4286f783b"
+      "sha256": "669d48f4fa40cfc4f8692987ea85e02cfad1ac874b022c124a9566f7353ea9ea"
     },
     "https://manual.mikrotik.com/docs/internet-of-things.md": {
       "title": "Internet of Things",
@@ -2190,6 +2226,12 @@
       "markdown_url": "https://manual.mikrotik.com/docs/containers/user-guides/container-postgres.md",
       "path": "docs/containers/user-guides/container-postgres.md",
       "sha256": "5f4275a37f4463c3a95eb0d8fc23b40d2c178be0efe4b31fefa1344a32545d0a"
+    },
+    "https://manual.mikrotik.com/docs/containers/user-guides/container-rke2-kubernetes.md": {
+      "title": "Container - Kubernetes (RKE2) single-node cluster",
+      "markdown_url": "https://manual.mikrotik.com/docs/containers/user-guides/container-rke2-kubernetes.md",
+      "path": "docs/containers/user-guides/container-rke2-kubernetes.md",
+      "sha256": "b71b00f97d5178e4d213e7331aa622b1d846f534daf0f98de8d67eb49282188c"
     },
     "https://manual.mikrotik.com/docs/containers/user-guides/container-thingsboard-mqtt-http-server.md": {
       "title": "Container - ThingsBoard MQTT/HTTP server",
@@ -2795,7 +2837,7 @@
       "title": "/cmr/vlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/cmr/vlan.md",
       "path": "docs/cli-reference/cmr/vlan.md",
-      "sha256": "b394d20e17411c963964fc0ad3a2c1fabd1df457743fa0afd70cee13602fae68"
+      "sha256": "81f372cd22a4736bb5288ad7545d1ccdb87fb4198101d733357c37247b5b609a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/cmr/wifi.md": {
       "title": "/cmr/wifi",
@@ -3869,13 +3911,13 @@
       "title": "/interface/ipip",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ipip.md",
       "path": "docs/cli-reference/interface/ipip.md",
-      "sha256": "d78427d78a9fc733dd7f00e630504b2687fcd0f63ae21c6af2eb597264914351"
+      "sha256": "98a9449500b4b4bbf7e581a0f28a97d589f8d9116b80f7eb0c6d4bb24eeaa036"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ipipv6.md": {
       "title": "/interface/ipipv6",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ipipv6.md",
       "path": "docs/cli-reference/interface/ipipv6.md",
-      "sha256": "7eb76c5b1e1248231cfeb84643b16a982b5c540108bb341b1010939cde2ef009"
+      "sha256": "2f7516a0a4bafbd428fa60404c50888228ced97ebc50e6afc41e6d413cb7d187"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/l2tp-client.md": {
       "title": "/interface/l2tp-client",
@@ -4067,7 +4109,7 @@
       "title": "/interface/macvlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macvlan.md",
       "path": "docs/cli-reference/interface/macvlan.md",
-      "sha256": "4c87e373e1c74ed5e0efa85a2279b32ffbfd6abe41547d43f4c308d47d09e112"
+      "sha256": "33557d0aa7ecf66832cf95c3f21f7f09fec619b0b3df1683b1ac79e6d693bbae"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/mesh.md": {
       "title": "/interface/mesh",
@@ -4229,7 +4271,7 @@
       "title": "/interface/pptp-client",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pptp-client.md",
       "path": "docs/cli-reference/interface/pptp-client.md",
-      "sha256": "25f5a864731c763b18032213513b7f75de68e45bb87fb98e48b97ec5a1f567f1"
+      "sha256": "cfdf3749e8296bbe77e7814b02ed8a887855244fcb70abc231c05b3a72fd735f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pptp-client/monitor.md": {
       "title": "/interface/pptp-client/monitor",
@@ -4241,7 +4283,7 @@
       "title": "/interface/pptp-server",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pptp-server.md",
       "path": "docs/cli-reference/interface/pptp-server.md",
-      "sha256": "4fa09350fb0aaa1e93b37379f615b1351cbeb83c0644b52738318d4c983de9e5"
+      "sha256": "63bc1e3a6a38c47f368e8064bb59832dd1e1d9e9c733783024d7d2ac63903f5b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pptp-server/monitor.md": {
       "title": "/interface/pptp-server/monitor",
@@ -4253,7 +4295,7 @@
       "title": "/interface/pptp-server/server",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pptp-server/server.md",
       "path": "docs/cli-reference/interface/pptp-server/server.md",
-      "sha256": "aad50bff0b0a705ad2a7d12bb4c3ed48ebea6f5278ec0b8fec6e568e54aa8f57"
+      "sha256": "460dc5dfc24277b53217c812f8067dafa9c99ba2ad04d01dbce037df1ff7a0d2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pwr-line.md": {
       "title": "/interface/pwr-line",
@@ -4373,7 +4415,7 @@
       "title": "/interface/vrrp",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vrrp.md",
       "path": "docs/cli-reference/interface/vrrp.md",
-      "sha256": "ba3c5254b46a418774883bb53f2b7923b9bd5288356b7d2e4c531e1b1b72eebd"
+      "sha256": "3f37781dc3439d6f88c9a6a622e17964bab691311c77730287d2a3842abd5d68"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan.md": {
       "title": "/interface/vxlan",
@@ -5675,7 +5717,7 @@
       "title": "/ip/firewall/layer7-protocol",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/firewall/layer7-protocol.md",
       "path": "docs/cli-reference/ip/firewall/layer7-protocol.md",
-      "sha256": "a81be657a58a52163d20ce1b16f7dfd9a3ae45777b3a523e6eff5cf0b95716ce"
+      "sha256": "7262419a750c11ad81599b0d183954a5b730b348100137f4b2fe3ec2868330a1"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/firewall/mangle.md": {
       "title": "/ip/firewall/mangle",
@@ -5741,109 +5783,109 @@
       "title": "/ip/hotspot",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot.md",
       "path": "docs/cli-reference/ip/hotspot.md",
-      "sha256": "7cf4260e519616f5d51c2a4001fb7dc4571965f72a095ea52c80d3c2a491888b"
+      "sha256": "5760ca5e2af69c938b90b678f0fd20f174151fbb65da3469e1aa1cf73f2f24d5"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/active.md": {
       "title": "/ip/hotspot/active",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/active.md",
       "path": "docs/cli-reference/ip/hotspot/active.md",
-      "sha256": "75241cac93ccbce63f4d6bfb239a7687ab7a97e3f292372ed3b5d7cad7b2cf09"
+      "sha256": "c6c5526df6d772c978d8b609df9f5b69a54ea1509987de32b7e468e65458d44e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/active/login.md": {
       "title": "/ip/hotspot/active/login",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/active/login.md",
       "path": "docs/cli-reference/ip/hotspot/active/login.md",
-      "sha256": "cba7e9e1d0b7bf676941398e9e3a283f3407d8c16d0cb3d214017a4f6c48f51a"
+      "sha256": "d3e6ead7198e4df0ecc1a54fe087a93caa13b579cf5906520e1690fffb79854f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/cookie.md": {
       "title": "/ip/hotspot/cookie",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/cookie.md",
       "path": "docs/cli-reference/ip/hotspot/cookie.md",
-      "sha256": "a415b78b3160aec4430315e7a4e027f2ab26c578d2c67ca793946a48dd337b90"
+      "sha256": "1420103e9c567e4e7787b417e2409729b3c6570ee0dac2d163a2858ddb377cc7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/host.md": {
       "title": "/ip/hotspot/host",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/host.md",
       "path": "docs/cli-reference/ip/hotspot/host.md",
-      "sha256": "853a2581ca569ce44910ad8c63577e5955986c61cf66647c976c4e51498c24e0"
+      "sha256": "5117507407981643f9b13d20a7ce8772f8f924e6c2efa6245b6d383de2ea3413"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/host/make-binding.md": {
       "title": "/ip/hotspot/host/make-binding",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/host/make-binding.md",
       "path": "docs/cli-reference/ip/hotspot/host/make-binding.md",
-      "sha256": "bed12857038f2aa6f7ec2563a2f7de044b5edbb01e68c6f523d0c8a2ab03658c"
+      "sha256": "56f4a9eb783806b1e9af6831e3839920afb25add30aa89b966467eec75ecd8d1"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/ip-binding.md": {
       "title": "/ip/hotspot/ip-binding",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/ip-binding.md",
       "path": "docs/cli-reference/ip/hotspot/ip-binding.md",
-      "sha256": "81a087ee864b5f0fe9d6473f81fe5054016cca1c3d0feda00321de1ee22012e9"
+      "sha256": "33d8ccea253f63ad1b6dd9a03126c66659ba7d83404b271c73051e878134fa1d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/profile.md": {
       "title": "/ip/hotspot/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/profile.md",
       "path": "docs/cli-reference/ip/hotspot/profile.md",
-      "sha256": "12e6eec9be993fb93cc015b8fc108a6434f97d9615e44492b5acbe8cf739e3bd"
+      "sha256": "248502a11095c0ebadfb93ca07da43db42b609c0e3b5e5adba7dcd619ae5c5c2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/reset-html.md": {
       "title": "/ip/hotspot/reset-html",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/reset-html.md",
       "path": "docs/cli-reference/ip/hotspot/reset-html.md",
-      "sha256": "95958f68ce65d7acb5799c10bc65923b1f12878a524bfb4acedbe889f7955917"
+      "sha256": "a606a26f84d6b3faceea3b6bfacadd852dd04a83a3c99f9bf86dbb1fe86bf55b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/service-port.md": {
       "title": "/ip/hotspot/service-port",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/service-port.md",
       "path": "docs/cli-reference/ip/hotspot/service-port.md",
-      "sha256": "303629eeaf4e766cc2e05020c423442a9aa9661588021f3e393fa2dc8b32c6a0"
+      "sha256": "a061542bb357ccf4138af2c5281d49919f04302196f23b99a62bf675d5b32322"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/setup.md": {
       "title": "/ip/hotspot/setup",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/setup.md",
       "path": "docs/cli-reference/ip/hotspot/setup.md",
-      "sha256": "fe7e86837074ecaf1ce7a93f6edd90bddf1f61230ee37337a98b3a81e2af34e2"
+      "sha256": "48d9240cce7cec28633a2373b507d647238a40964e0f97d6bcc883b3813d3ebb"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user.md": {
       "title": "/ip/hotspot/user",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user.md",
       "path": "docs/cli-reference/ip/hotspot/user.md",
-      "sha256": "e1aa1c6c10984218464818b40914f253a7e3f6d48164285bc803b7e89cf52f4c"
+      "sha256": "9f8630170c4bcdca9c92762300944c97b8b56f8536d1d00770ad211dc8f73711"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user/profile.md": {
       "title": "/ip/hotspot/user/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user/profile.md",
       "path": "docs/cli-reference/ip/hotspot/user/profile.md",
-      "sha256": "f91fb246d8f9879b4a9acf3b940ca5ec3e8445e91d5e36190f046c4581a4ba5e"
+      "sha256": "7168097358893013388af51a3bb3c8f757a939cc528c0dfbdb850d2b68fd9298"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user/reset-counters.md": {
       "title": "/ip/hotspot/user/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/user/reset-counters.md",
       "path": "docs/cli-reference/ip/hotspot/user/reset-counters.md",
-      "sha256": "eb8c43b41545c3757d46c42bc678b9505093ce3b8158a6fc2d685c968476f096"
+      "sha256": "1b4c71d491a9b0c97930430d79e0f2619c67a949daa451ef04cdb50e6629d24a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden.md": {
       "title": "/ip/hotspot/walled-garden",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden.md",
       "path": "docs/cli-reference/ip/hotspot/walled-garden.md",
-      "sha256": "0d7b4848d11f6beabfa4e7f1beb9a7b956e1efa32f42e7c0ec280b515297a93c"
+      "sha256": "43363543fd2b2719828c28d8c5844c3e345a811fe41583848611babd6c6ad968"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/ip.md": {
       "title": "/ip/hotspot/walled-garden/ip",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/ip.md",
       "path": "docs/cli-reference/ip/hotspot/walled-garden/ip.md",
-      "sha256": "3f938f199ac0741bdea1b5e811b0581012d60e8b2960b0228956c42ca212cfd8"
+      "sha256": "274ea5e815e6d436f956503df3fe070addd05a6f5473b51281a39c415c363734"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md": {
       "title": "/ip/hotspot/walled-garden/reset-counters-all",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md",
       "path": "docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md",
-      "sha256": "2f6c319600216d726ab6758869111e2ea8ea7ff9fb3979de805ef3ecc2b6f6f1"
+      "sha256": "ce3a74f160eb0eba4f01084bdf79d881dfa33799d45cf85ce82631f9c3191335"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md": {
       "title": "/ip/hotspot/walled-garden/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md",
       "path": "docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md",
-      "sha256": "0b0b96ece614bba94ccc722d82eb86a84bdfa3e02110f28e75cabf493c7fbdcf"
+      "sha256": "626f4383dad4cbc6fbf40954502c5513b30b5727fb9fd51f1fefe0446c6cbe9b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/ipsec/active-peers.md": {
       "title": "/ip/ipsec/active-peers",
@@ -6887,7 +6929,7 @@
       "title": "/queue/simple",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/queue/simple.md",
       "path": "docs/cli-reference/queue/simple.md",
-      "sha256": "2ef09e2fe15d32c6264ad07dcecd45fccc643662ef9b2bd0f21326739b326413"
+      "sha256": "b3af9d90c6145e0240606ec0af29f69b9ba2fca2f9823ad192faee3dd76fd037"
     },
     "https://manual.mikrotik.com/docs/cli-reference/queue/simple/reset-counters-all.md": {
       "title": "/queue/simple/reset-counters-all",
@@ -6905,7 +6947,7 @@
       "title": "/queue/tree",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/queue/tree.md",
       "path": "docs/cli-reference/queue/tree.md",
-      "sha256": "8c931e80a1cdff8805ac85e7adfaf5dff1f745a834a06623227c4b686eaf8b35"
+      "sha256": "bf353a92529b1c996b8e41ee6dcc774b1ff89c1aaa7accaef283e9e854292278"
     },
     "https://manual.mikrotik.com/docs/cli-reference/queue/tree/reset-counters-all.md": {
       "title": "/queue/tree/reset-counters-all",
@@ -6923,7 +6965,7 @@
       "title": "/queue/type",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/queue/type.md",
       "path": "docs/cli-reference/queue/type.md",
-      "sha256": "13fb9caf046ea61590da1b0e4604f717280e41b03448c7edffbccdfc7e8d3053"
+      "sha256": "c1e89430e17f8c34a3732d649b5846d25923178b3b9ce5d4e2bf76d90c945884"
     },
     "https://manual.mikrotik.com/docs/cli-reference/quit.md": {
       "title": "/quit",
@@ -8904,6 +8946,1518 @@
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/zerotier/peer/hint.md",
       "path": "docs/cli-reference/zerotier/peer/hint.md",
       "sha256": "e7651d2f1df5d4f30d9cb2e0fd4cb56d3d7761360af9d807a706ff530b7d8692"
+    },
+    "https://manual.mikrotik.com/hardware.md": {
+      "title": "Hardware Guides",
+      "markdown_url": "https://manual.mikrotik.com/hardware.md",
+      "path": "hardware.md",
+      "sha256": "864892387386966a0cb5c72ce02b091ca7a8037667bba5a0fab6272babdb2fd5"
+    },
+    "https://manual.mikrotik.com/hardware/cube-60g-ac.md": {
+      "title": "Cube 60G ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cube-60g-ac.md",
+      "path": "hardware/cube-60g-ac.md",
+      "sha256": "5e9cd53c8bb76981a5eb2fc3ef69cbf80229b911b23e079dcc0846fa624a8ed6"
+    },
+    "https://manual.mikrotik.com/hardware/cube-lite60.md": {
+      "title": "Cube Lite60",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cube-lite60.md",
+      "path": "hardware/cube-lite60.md",
+      "sha256": "ac2c1e49bf40485f8ff670791958e81b08f9f5b4a3f785bdbecaa7b5298aaf3e"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-60g.md": {
+      "title": "LHG 60G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-60g.md",
+      "path": "hardware/lhg-60g.md",
+      "sha256": "a8a9a3f1cc47acbf129b70ad2768d440ba012ed06832a603a9cac1397659589c"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-lite60.md": {
+      "title": "LHG Lite60",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-lite60.md",
+      "path": "hardware/lhg-lite60.md",
+      "sha256": "d8e8719bea5dde324877d7546e273b3fa963e11ee3521bb43ba533a7aff584d5"
+    },
+    "https://manual.mikrotik.com/hardware/nray-series.md": {
+      "title": "nRAY series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/nray-series.md",
+      "path": "hardware/nray-series.md",
+      "sha256": "fc31c43372df85a3bc2cdb1e77cffd6638ae7c6dc5baf0c08df38adee359aaed"
+    },
+    "https://manual.mikrotik.com/hardware/wap-60g-series.md": {
+      "title": "wAP 60G series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-60g-series.md",
+      "path": "hardware/wap-60g-series.md",
+      "sha256": "1afda5a5981852b2acc1acd7b9d6c312c61916ce89aeec8717dcf7a9180e2399"
+    },
+    "https://manual.mikrotik.com/hardware/wireless-wire-cube-pro-cube-60pro-ac.md": {
+      "title": "Wireless Wire Cube Pro, Cube 60Pro ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wireless-wire-cube-pro-cube-60pro-ac.md",
+      "path": "hardware/wireless-wire-cube-pro-cube-60pro-ac.md",
+      "sha256": "3cac3e360df464f0da6f2804b47ed8e8763dbad303078212a8a788555667e37b"
+    },
+    "https://manual.mikrotik.com/hardware/wireless-wire-cube.md": {
+      "title": "Wireless Wire Cube",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wireless-wire-cube.md",
+      "path": "hardware/wireless-wire-cube.md",
+      "sha256": "b4d7e0ae7b0f6578a66bc696bd61adb267f019b6c01d5de1ed921a149c1af8bb"
+    },
+    "https://manual.mikrotik.com/hardware/wireless-wire-dish.md": {
+      "title": "Wireless Wire Dish",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wireless-wire-dish.md",
+      "path": "hardware/wireless-wire-dish.md",
+      "sha256": "69127e27342dce2705b7aeabcd35dc21f641bee065da0da3e62964633470ba5b"
+    },
+    "https://manual.mikrotik.com/hardware/apa-1.md": {
+      "title": "APA-1",
+      "markdown_url": "https://manual.mikrotik.com/hardware/apa-1.md",
+      "path": "hardware/apa-1.md",
+      "sha256": "0f832ea870f6557c95a14f87c105c7a484c6ad01c3edbe806d8294d2d0c17d5b"
+    },
+    "https://manual.mikrotik.com/hardware/ftc11xg.md": {
+      "title": "FTC11XG",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ftc11xg.md",
+      "path": "hardware/ftc11xg.md",
+      "sha256": "3504bb232326607947089e7135f771a89755a2033bead4c68107b2918f7d7873"
+    },
+    "https://manual.mikrotik.com/hardware/ftc21-ups.md": {
+      "title": "FTC21-ups",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ftc21-ups.md",
+      "path": "hardware/ftc21-ups.md",
+      "sha256": "71c23c92017d1150edb6ffb23abdc89ed4273cd2a7acd1f348c6173266a6952f"
+    },
+    "https://manual.mikrotik.com/hardware/ftc21.md": {
+      "title": "FTC21",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ftc21.md",
+      "path": "hardware/ftc21.md",
+      "sha256": "6b91141850ccc97e0975fa8a7913442297adffcb99d5fd81873d97f54909d8bd"
+    },
+    "https://manual.mikrotik.com/hardware/g1040a-60wn.md": {
+      "title": "G1040A-60WN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/g1040a-60wn.md",
+      "path": "hardware/g1040a-60wn.md",
+      "sha256": "0a32f741d3a902ba1274c1e6eb7cae7e296cf88ecdff87d3c2398e0c20f824c5"
+    },
+    "https://manual.mikrotik.com/hardware/gesp-plus-poe-in.md": {
+      "title": "GESP+POE-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gesp-plus-poe-in.md",
+      "path": "hardware/gesp-plus-poe-in.md",
+      "sha256": "991fcf5d3618ddad0bdde09904b30ab7219ba660ef4c6cfa4f7b0ae15c6ac721"
+    },
+    "https://manual.mikrotik.com/hardware/gpen11.md": {
+      "title": "GPEN11",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gpen11.md",
+      "path": "hardware/gpen11.md",
+      "sha256": "6037cdc9a27c9218efa45a0c92ca8b2512335f28ebf2a86c872ad81c8deff0b7"
+    },
+    "https://manual.mikrotik.com/hardware/gpen21.md": {
+      "title": "GPEN21",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gpen21.md",
+      "path": "hardware/gpen21.md",
+      "sha256": "7011bf2b90390ea596efb76753609d1dafb3deb87b5e15492c9824daa28abbb9"
+    },
+    "https://manual.mikrotik.com/hardware/gper.md": {
+      "title": "GPeR",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gper.md",
+      "path": "hardware/gper.md",
+      "sha256": "1ffea58643f5ca2006b0cac2a283935af7e150f33a009a3db06b42e08ba95e59"
+    },
+    "https://manual.mikrotik.com/hardware/gperx4.md": {
+      "title": "GPeRx4",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gperx4.md",
+      "path": "hardware/gperx4.md",
+      "sha256": "462f9bb40194315cd3e2b64a24078660e7cf751306e54b97d25f6526b5646ffb"
+    },
+    "https://manual.mikrotik.com/hardware/mqs.md": {
+      "title": "MQS",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mqs.md",
+      "path": "hardware/mqs.md",
+      "sha256": "f8623c27ae3ed7211ea3026091186c94a086f2d104f3b7dcd08e6b36c280531e"
+    },
+    "https://manual.mikrotik.com/hardware/mtp250-series.md": {
+      "title": "MTP250 series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mtp250-series.md",
+      "path": "hardware/mtp250-series.md",
+      "sha256": "a919121e38eb0785d762035ee01b4af1dd299508e95fccdd13489c3581bb595c"
+    },
+    "https://manual.mikrotik.com/hardware/rbftc11.md": {
+      "title": "RBFTC11",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rbftc11.md",
+      "path": "hardware/rbftc11.md",
+      "sha256": "204d46419dcef7769f70e7fd1376b1ab55d6d83993f8ec961cfb2387d1402500"
+    },
+    "https://manual.mikrotik.com/hardware/up1302c-12.md": {
+      "title": "UP1302C-12",
+      "markdown_url": "https://manual.mikrotik.com/hardware/up1302c-12.md",
+      "path": "hardware/up1302c-12.md",
+      "sha256": "25cca035dbe34a6941fc135b31cc5e45aa13359ede6d77ce3d2de81aec84de75"
+    },
+    "https://manual.mikrotik.com/hardware/woobm-usb.md": {
+      "title": "Woobm-USB",
+      "markdown_url": "https://manual.mikrotik.com/hardware/woobm-usb.md",
+      "path": "hardware/woobm-usb.md",
+      "sha256": "90a7c6a71c0733d570fd45f37e2030911b7601dbc3fedd9d448f87d758bcb638"
+    },
+    "https://manual.mikrotik.com/hardware/mant-series.md": {
+      "title": "mANT-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mant-series.md",
+      "path": "hardware/mant-series.md",
+      "sha256": "57c80b2038977221772b8458ccf1f9eb68348266a5c962c1410e0ae540c36a51"
+    },
+    "https://manual.mikrotik.com/hardware/pwr-line-ap.md": {
+      "title": "PWR-LINE AP",
+      "markdown_url": "https://manual.mikrotik.com/hardware/pwr-line-ap.md",
+      "path": "hardware/pwr-line-ap.md",
+      "sha256": "0fa613659e3768badd0396d65fbc1f22b884f971b5f8841671f5b42c821a99d5"
+    },
+    "https://manual.mikrotik.com/hardware/pwr-line-pro.md": {
+      "title": "PWR-LINE PRO",
+      "markdown_url": "https://manual.mikrotik.com/hardware/pwr-line-pro.md",
+      "path": "hardware/pwr-line-pro.md",
+      "sha256": "ba5b5170301ca43c4ec6e47f8885a68acfd26eb02346038cbfe72bafb68f1966"
+    },
+    "https://manual.mikrotik.com/hardware/pwr-line.md": {
+      "title": "PWR-LINE",
+      "markdown_url": "https://manual.mikrotik.com/hardware/pwr-line.md",
+      "path": "hardware/pwr-line.md",
+      "sha256": "7fe299b3821ff7a58c88c756e47196493379ab97c3c6e7ac8658506ef50494f0"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-1s-plus-pc.md": {
+      "title": "CCR1009-7G-1C-1S+PC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-1s-plus-pc.md",
+      "path": "hardware/ccr1009-7g-1c-1s-plus-pc.md",
+      "sha256": "c9dfe842e1c7e6643f1b929670cc43688fe7889cc597689e807035e9a35e65c3"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-1s-plus.md": {
+      "title": "CCR1009-7G-1C-1S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-1s-plus.md",
+      "path": "hardware/ccr1009-7g-1c-1s-plus.md",
+      "sha256": "1f0b07a1e9e32e07fe1a5e9833557c78beb5428837c5a4b7e854cd0fc3cf2fc1"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-pc.md": {
+      "title": "CCR1009-7G-1C-PC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1009-7g-1c-pc.md",
+      "path": "hardware/ccr1009-7g-1c-pc.md",
+      "sha256": "d8daca86c8c0524efa02b8f185da2ceedf5da3ae5f7dfeb79c58b08bd46b2f19"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1016-12g.md": {
+      "title": "CCR1016-12G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1016-12g.md",
+      "path": "hardware/ccr1016-12g.md",
+      "sha256": "06e162d8fa64fdb2f72d4fea66848d175d22ffd31053e9339fcf334dcff1d71a"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1016-12s-1s-plus.md": {
+      "title": "CCR1016-12S-1S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1016-12s-1s-plus.md",
+      "path": "hardware/ccr1016-12s-1s-plus.md",
+      "sha256": "f637593737cf012cc2f72e84fcc6f1db233f97a492454048db94d07da34b1c51"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1036-12g-4s-series.md": {
+      "title": "CCR1036-12G-4S-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1036-12g-4s-series.md",
+      "path": "hardware/ccr1036-12g-4s-series.md",
+      "sha256": "7dff0842cc17b838f7ad8f02596788a460a4731523f0434a45c75c77f1966ad8"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1036-8g-2s-plus-series.md": {
+      "title": "CCR1036-8G-2S+-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1036-8g-2s-plus-series.md",
+      "path": "hardware/ccr1036-8g-2s-plus-series.md",
+      "sha256": "5eda7a88cc0a1125644c9dc25e87388b343d9e627f568d6ebaee90ec2e5625f5"
+    },
+    "https://manual.mikrotik.com/hardware/ccr1072-1g-8s-plus.md": {
+      "title": "CCR1072-1G-8S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr1072-1g-8s-plus.md",
+      "path": "hardware/ccr1072-1g-8s-plus.md",
+      "sha256": "3448109c35237801a69949e31287e74f264dd83760e68a35114a869d310055d9"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2004-16g-2s-plus-pc.md": {
+      "title": "CCR2004-16G-2S+PC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2004-16g-2s-plus-pc.md",
+      "path": "hardware/ccr2004-16g-2s-plus-pc.md",
+      "sha256": "cab078813c9a6362e34a7e571b3b0ec3aeb6c30495c77c3665619333952f11d7"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2004-16g-2s-plus.md": {
+      "title": "CCR2004-16G-2S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2004-16g-2s-plus.md",
+      "path": "hardware/ccr2004-16g-2s-plus.md",
+      "sha256": "0aa51eb4c99c52821fe73d3dba8dc221dd189ac81c661e65acb81daea7f4e459"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2004-1g-12s-plus-2xs.md": {
+      "title": "CCR2004-1G-12S+2XS",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2004-1g-12s-plus-2xs.md",
+      "path": "hardware/ccr2004-1g-12s-plus-2xs.md",
+      "sha256": "deff3580d232b33af6ab1cdaae491be867ac6620ed747a32675c39f102c4781b"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2004-1g-2xs-pcie.md": {
+      "title": "CCR2004-1G-2XS-PCIe",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2004-1g-2xs-pcie.md",
+      "path": "hardware/ccr2004-1g-2xs-pcie.md",
+      "sha256": "cc3609afefb51bc214c33ca4fe9d12ac1df618106fd4150eff777056efad67ef"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2116-12g-4s-plus.md": {
+      "title": "CCR2116-12G-4S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2116-12g-4s-plus.md",
+      "path": "hardware/ccr2116-12g-4s-plus.md",
+      "sha256": "291aeb570c87b32e6d81a985e672954f3ba3ef7aa94dde0af645d6dd3062e2d8"
+    },
+    "https://manual.mikrotik.com/hardware/ccr2216-1g-12xs-2xq.md": {
+      "title": "CCR2216-1G-12XS-2XQ",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ccr2216-1g-12xs-2xq.md",
+      "path": "hardware/ccr2216-1g-12xs-2xq.md",
+      "sha256": "000653d2509ec32769e94d51f8bd496d8a83962b7a2d152cda29f0699af2612e"
+    },
+    "https://manual.mikrotik.com/hardware/hex-lite.md": {
+      "title": "hEX lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-lite.md",
+      "path": "hardware/hex-lite.md",
+      "sha256": "7acb8100d15388e63f799e00c30862ea4f30f61fdccc68bb745ec2fb5f4defec"
+    },
+    "https://manual.mikrotik.com/hardware/hex-poe-lite.md": {
+      "title": "hEX PoE lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-poe-lite.md",
+      "path": "hardware/hex-poe-lite.md",
+      "sha256": "78f7faf3f0d8c4e186d75a46625094e9bcd259ade70ec9ef9b7036fb323441dd"
+    },
+    "https://manual.mikrotik.com/hardware/hex-poe.md": {
+      "title": "hEX PoE",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-poe.md",
+      "path": "hardware/hex-poe.md",
+      "sha256": "8f6ce2a59968b68af2540afef8da74f0300a960d21322eb2f281d7893047ccb6"
+    },
+    "https://manual.mikrotik.com/hardware/hex-refresh.md": {
+      "title": "hEX refresh",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-refresh.md",
+      "path": "hardware/hex-refresh.md",
+      "sha256": "c2e6ce84537ca5b61cda06b3203eba74512cd587e2859bd69e77bd38f10841c3"
+    },
+    "https://manual.mikrotik.com/hardware/hex-s-2025.md": {
+      "title": "hEX S (2025)",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-s-2025.md",
+      "path": "hardware/hex-s-2025.md",
+      "sha256": "3c2f9f071c3a2d0d0490b86a29a6355e2d8a8932c1d7337f226f651e0e43c232"
+    },
+    "https://manual.mikrotik.com/hardware/hex-s.md": {
+      "title": "hEX S",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex-s.md",
+      "path": "hardware/hex-s.md",
+      "sha256": "4f49927fbbe7687a5da50caf049fd1cac53e2afea9150c936c629e321043c56c"
+    },
+    "https://manual.mikrotik.com/hardware/hex.md": {
+      "title": "hEX",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hex.md",
+      "path": "hardware/hex.md",
+      "sha256": "161c171524b2611fb9f78b1005cddc40e42bf49f615aa41eee6d721414a42164"
+    },
+    "https://manual.mikrotik.com/hardware/l009uigs-rm.md": {
+      "title": "L009UiGS-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l009uigs-rm.md",
+      "path": "hardware/l009uigs-rm.md",
+      "sha256": "71c929ee0badf71f2a4d077b9d20798a902fcd02da939a0ed73df3d060097af3"
+    },
+    "https://manual.mikrotik.com/hardware/powerbox-pro.md": {
+      "title": "PowerBox Pro",
+      "markdown_url": "https://manual.mikrotik.com/hardware/powerbox-pro.md",
+      "path": "hardware/powerbox-pro.md",
+      "sha256": "7ba88ffbbc3b40af76029d83701f5c5d3c70966930434d33d855204896d242cc"
+    },
+    "https://manual.mikrotik.com/hardware/powerbox.md": {
+      "title": "PowerBox",
+      "markdown_url": "https://manual.mikrotik.com/hardware/powerbox.md",
+      "path": "hardware/powerbox.md",
+      "sha256": "371d09f472fd625e6d8b86d271c78a82f346c70059746ca910362f95897a2b3c"
+    },
+    "https://manual.mikrotik.com/hardware/rb1100-series.md": {
+      "title": "RB1100-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb1100-series.md",
+      "path": "hardware/rb1100-series.md",
+      "sha256": "54c9e68873c48469c9c2f99f8d8ae3d9f97d8e34bae1dc7012f8dec41b61e35f"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011il-in.md": {
+      "title": "RB2011iL-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011il-in.md",
+      "path": "hardware/rb2011il-in.md",
+      "sha256": "36b2418090f759ea3bdbfcab91ec74615e929471749506fb2946d59166b792bc"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011il-rm.md": {
+      "title": "RB2011iL-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011il-rm.md",
+      "path": "hardware/rb2011il-rm.md",
+      "sha256": "5c80ba5ff8c6e692f941def0dbd05b0386ebbdd3074720102e0373abc6d31ee7"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011ils-in.md": {
+      "title": "RB2011iLS-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011ils-in.md",
+      "path": "hardware/rb2011ils-in.md",
+      "sha256": "3ca87aa9f9b9321165dac6b96e416439d7e2cd1cf23ff1af691a6d262113ac3e"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011uias-in.md": {
+      "title": "RB2011UiAS-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011uias-in.md",
+      "path": "hardware/rb2011uias-in.md",
+      "sha256": "d2934d47c2d9a15d3b61265f3b322bd48924a7c15eab33229a2fd0fbc4bca184"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011uias-rm.md": {
+      "title": "RB2011UiAS-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011uias-rm.md",
+      "path": "hardware/rb2011uias-rm.md",
+      "sha256": "3c340af7775e337933ea6734e2ec75828904d99a8cb9e4536b9dea806f4f5faa"
+    },
+    "https://manual.mikrotik.com/hardware/rb3011uias-rm.md": {
+      "title": "RB3011UiAS-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb3011uias-rm.md",
+      "path": "hardware/rb3011uias-rm.md",
+      "sha256": "afc4224a6436530a378d7c621483445da0a85f85a553507c0d75766632f6d93b"
+    },
+    "https://manual.mikrotik.com/hardware/rb4011igs-plus-rm.md": {
+      "title": "RB4011iGS+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb4011igs-plus-rm.md",
+      "path": "hardware/rb4011igs-plus-rm.md",
+      "sha256": "e90ebd1738f1dd22f2a94896a84af91c537e2ccae64b47fa5d0ee10b9d016b03"
+    },
+    "https://manual.mikrotik.com/hardware/rb5009ug-plus-s-plus-in.md": {
+      "title": "RB5009UG+S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb5009ug-plus-s-plus-in.md",
+      "path": "hardware/rb5009ug-plus-s-plus-in.md",
+      "sha256": "0c06df6041d9a1e38edb828a242657fd24a450861ee4cf911f5b4f0aa547bc3c"
+    },
+    "https://manual.mikrotik.com/hardware/rb5009upr-plus-s-plus-in.md": {
+      "title": "RB5009UPr+S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb5009upr-plus-s-plus-in.md",
+      "path": "hardware/rb5009upr-plus-s-plus-in.md",
+      "sha256": "be3333980475acdc12ad033f7faa78092bdf579fafd5a6c07d1e22babe46c11e"
+    },
+    "https://manual.mikrotik.com/hardware/rb5009upr-plus-s-plus-out.md": {
+      "title": "RB5009UPr+S+OUT",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb5009upr-plus-s-plus-out.md",
+      "path": "hardware/rb5009upr-plus-s-plus-out.md",
+      "sha256": "7c50299e00577bba74fe01c5948c3ad09f296143e0791584c87d1491f8476eb9"
+    },
+    "https://manual.mikrotik.com/hardware/rose-data-server.md": {
+      "title": "ROSE Data Server",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rose-data-server.md",
+      "path": "hardware/rose-data-server.md",
+      "sha256": "880bef5b6cb29e1df211e6bd356672abd078068041bec2914717ba0efbb14cb6"
+    },
+    "https://manual.mikrotik.com/hardware/audience.md": {
+      "title": "Audience",
+      "markdown_url": "https://manual.mikrotik.com/hardware/audience.md",
+      "path": "hardware/audience.md",
+      "sha256": "a35b1ee2b1056b62adb3d814f149de96e8a389f978677c36c2ecf568ff160fb6"
+    },
+    "https://manual.mikrotik.com/hardware/cap-ac.md": {
+      "title": "cAP ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap-ac.md",
+      "path": "hardware/cap-ac.md",
+      "sha256": "78890113f54ef3dba342741cd1a11985515281566aae337eae5433cefb8f5bbc"
+    },
+    "https://manual.mikrotik.com/hardware/cap-ax.md": {
+      "title": "cAP ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap-ax.md",
+      "path": "hardware/cap-ax.md",
+      "sha256": "952ab2052c9c27f74897149302ba597882635b999a78a112f7ebddf99824ea68"
+    },
+    "https://manual.mikrotik.com/hardware/cap-lite.md": {
+      "title": "cAP lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap-lite.md",
+      "path": "hardware/cap-lite.md",
+      "sha256": "9c610c5db0feba9489c1be7e4aa986c1cb7f8c959aa578b2704603cb9c7b6a0c"
+    },
+    "https://manual.mikrotik.com/hardware/cap-xl-ac.md": {
+      "title": "cAP XL ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap-xl-ac.md",
+      "path": "hardware/cap-xl-ac.md",
+      "sha256": "cf5318a0dea52541812ad8fa7dcc21f4359caa531208c6041cb00f05f56274dd"
+    },
+    "https://manual.mikrotik.com/hardware/cap.md": {
+      "title": "cAP",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap.md",
+      "path": "hardware/cap.md",
+      "sha256": "d888159277e4d46d4874fc7f2b1931c2f3ece3963769c14beaca0d8be306bd56"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-pro-ax.md": {
+      "title": "Chateau PRO ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-pro-ax.md",
+      "path": "hardware/chateau-pro-ax.md",
+      "sha256": "f580470323040d28ca2e48855e0d98cc30d06256b78b41925f0bcb39862a3b88"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac-2.md": {
+      "title": "hAP acÂ²",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac-2.md",
+      "path": "hardware/hap-ac-2.md",
+      "sha256": "f7ef0a560b2ae824f2d20d9e7769007ab2399bdabba320c06d2fabb036923acd"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac-lite-tc.md": {
+      "title": "hAP ac lite TC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac-lite-tc.md",
+      "path": "hardware/hap-ac-lite-tc.md",
+      "sha256": "749b5be09609db1dd57ef315f3a8813b5da73b04bf24d26d63742c1b5ec3f251"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac-lite.md": {
+      "title": "hAP ac lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac-lite.md",
+      "path": "hardware/hap-ac-lite.md",
+      "sha256": "e2dd975ddb00d90c73cfdc624bfe0710f0fecfc033f19e86ee088f47d75fd070"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac.md": {
+      "title": "hAP ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac.md",
+      "path": "hardware/hap-ac.md",
+      "sha256": "543e2cdc8f2d572b15876f43fa07807ee2bf34fafdd4df3e992ab78caa6e94ae"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac3.md": {
+      "title": "hAP ac3",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac3.md",
+      "path": "hardware/hap-ac3.md",
+      "sha256": "d6165889db512357947b70d1a3f6b9e21a42085550bbc401c5056f1ce880a04f"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ax-2.md": {
+      "title": "hAP axÂ²",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ax-2.md",
+      "path": "hardware/hap-ax-2.md",
+      "sha256": "b9d3395e147a3e29ba542846e11bf4b3eb0f76d8eb703e76a9cc6a8ba4c79768"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ax-3.md": {
+      "title": "hAP axÂ³",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ax-3.md",
+      "path": "hardware/hap-ax-3.md",
+      "sha256": "34d7b900da03c4f60fcc13e4a458510411e847d09a859c3794dfce2805755940"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ax-lite-lte6.md": {
+      "title": "hAP ax lite LTE6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ax-lite-lte6.md",
+      "path": "hardware/hap-ax-lite-lte6.md",
+      "sha256": "8ded8421e3ab58513b36838f69ad35a3c342d77e5420a6cb5621628931193215"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ax-lite.md": {
+      "title": "hAP ax lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ax-lite.md",
+      "path": "hardware/hap-ax-lite.md",
+      "sha256": "d6f9bd917ba747222ce1bac5324f569ee64a1a5b14759e8831980a47dea01c71"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ax-s.md": {
+      "title": "hAP ax S",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ax-s.md",
+      "path": "hardware/hap-ax-s.md",
+      "sha256": "72dd8a685f2560fe827ad76cc74c6d647c2798fa59f8e96657fe713885660220"
+    },
+    "https://manual.mikrotik.com/hardware/hap-be-lite.md": {
+      "title": "hAP be lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-be-lite.md",
+      "path": "hardware/hap-be-lite.md",
+      "sha256": "d7bfbd13d1a4108c0389692c9f7a9cdf68efcf07621bae72a9b06b89d8e37abc"
+    },
+    "https://manual.mikrotik.com/hardware/hap-be-media.md": {
+      "title": "hAP beÂ³ Media",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-be-media.md",
+      "path": "hardware/hap-be-media.md",
+      "sha256": "3315adf6846b6aeb5edd7c900633f7828378ece5f991cea68011cc73a646f7cd"
+    },
+    "https://manual.mikrotik.com/hardware/hap-lite-tc.md": {
+      "title": "hAP lite TC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-lite-tc.md",
+      "path": "hardware/hap-lite-tc.md",
+      "sha256": "757baeff200c4c9ae1cbb76e6610957fc9359b635648287490d883def912667e"
+    },
+    "https://manual.mikrotik.com/hardware/hap-lite.md": {
+      "title": "hAP lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-lite.md",
+      "path": "hardware/hap-lite.md",
+      "sha256": "7bd6323c7486162921506305ee8b60f6678c861074529170dd9aaada8da32c0b"
+    },
+    "https://manual.mikrotik.com/hardware/hap-mini.md": {
+      "title": "hAP mini",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-mini.md",
+      "path": "hardware/hap-mini.md",
+      "sha256": "5744a84a3493482e632a12747adf7bec2992ab8849654ec3df495eac6fbc2e59"
+    },
+    "https://manual.mikrotik.com/hardware/hap.md": {
+      "title": "hAP",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap.md",
+      "path": "hardware/hap.md",
+      "sha256": "74a92e0d6f4f1847e0a596289471d5b86cc1f14536c17957a92c3ea1273e11aa"
+    },
+    "https://manual.mikrotik.com/hardware/l009uigs-2haxd-in.md": {
+      "title": "L009UiGS-2HaxD-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l009uigs-2haxd-in.md",
+      "path": "hardware/l009uigs-2haxd-in.md",
+      "sha256": "8e5685971190c50a64b797e45c367be7187d26350ddbf31505ca51a480cf6b22"
+    },
+    "https://manual.mikrotik.com/hardware/map-lite.md": {
+      "title": "mAP lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/map-lite.md",
+      "path": "hardware/map-lite.md",
+      "sha256": "5039eae0b082f2f8d2b9f70f66a87172c57503fa9bc07cc6a7f2948e627da242"
+    },
+    "https://manual.mikrotik.com/hardware/map.md": {
+      "title": "mAP",
+      "markdown_url": "https://manual.mikrotik.com/hardware/map.md",
+      "path": "hardware/map.md",
+      "sha256": "9123e82dda7d7eac607e006ea8dc3a62ae7f9c6162ffbd068c24f7a06c8f077e"
+    },
+    "https://manual.mikrotik.com/hardware/rb2011uias-2hnd-in.md": {
+      "title": "RB2011UiAS-2HnD-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb2011uias-2hnd-in.md",
+      "path": "hardware/rb2011uias-2hnd-in.md",
+      "sha256": "0c97fa76ec522b44730e2e9a39d446877b45196128add5a40bb202f18d7e44b1"
+    },
+    "https://manual.mikrotik.com/hardware/rb4011igs-plus-5hacq2hnd-in.md": {
+      "title": "RB4011iGS+5HacQ2HnD-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb4011igs-plus-5hacq2hnd-in.md",
+      "path": "hardware/rb4011igs-plus-5hacq2hnd-in.md",
+      "sha256": "4066797129638afd66a9c6c59b2a085cbbdd8b53aa5f1cfc2237f2f32f3283c3"
+    },
+    "https://manual.mikrotik.com/hardware/rb951-series.md": {
+      "title": "RB951-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb951-series.md",
+      "path": "hardware/rb951-series.md",
+      "sha256": "6b40630a8dd50bb73dd39206eea89c923c2618150196bb5e086d365755e7a9df"
+    },
+    "https://manual.mikrotik.com/hardware/wap-ac.md": {
+      "title": "wAP ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-ac.md",
+      "path": "hardware/wap-ac.md",
+      "sha256": "6520108d31840fc102f257d52fd746d49c0cb4d129cab10882cedf676d46a8e7"
+    },
+    "https://manual.mikrotik.com/hardware/wap-ax.md": {
+      "title": "wAP ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-ax.md",
+      "path": "hardware/wap-ax.md",
+      "sha256": "ff876f9f79eb554bc7f007d003b824d97be05c75b028b0260858e47524b5a538"
+    },
+    "https://manual.mikrotik.com/hardware/wap-series.md": {
+      "title": "wAP-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-series.md",
+      "path": "hardware/wap-series.md",
+      "sha256": "3d72dd24b9fc3a847f0d49de4fdcf2b4ce40664d330292fa559248a785e534b1"
+    },
+    "https://manual.mikrotik.com/hardware/wsap-ac-lite.md": {
+      "title": "wsAP ac lite",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wsap-ac-lite.md",
+      "path": "hardware/wsap-ac-lite.md",
+      "sha256": "0589c5252ed0723c466c48d229bed0b5eba22a067b14102233c3c4d648311346"
+    },
+    "https://manual.mikrotik.com/hardware/s-3553lc20d.md": {
+      "title": "S-3553LC20D",
+      "markdown_url": "https://manual.mikrotik.com/hardware/s-3553lc20d.md",
+      "path": "hardware/s-3553lc20d.md",
+      "sha256": "653d6a340d257a1e787c2dfc7fd587b69dbb2e5da7f84eb247436a066611653f"
+    },
+    "https://manual.mikrotik.com/hardware/cme22-2n-bg77.md": {
+      "title": "CME22-2n-BG77",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cme22-2n-bg77.md",
+      "path": "hardware/cme22-2n-bg77.md",
+      "sha256": "8ba1526a2bfe91f5112cdda9593f9e644f04526e0130e81936049e10f149c6ae"
+    },
+    "https://manual.mikrotik.com/hardware/iaqm-thc2pv-w-and-iaqm-thc2pv-g.md": {
+      "title": "IAQM-THC2PV-W and IAQM-THC2PV-G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/iaqm-thc2pv-w-and-iaqm-thc2pv-g.md",
+      "path": "hardware/iaqm-thc2pv-w-and-iaqm-thc2pv-g.md",
+      "sha256": "5db843cc5a5ad1809a57d06f496ea88e0bbeacefe4ffe7ffb589b4bc2e4ed595"
+    },
+    "https://manual.mikrotik.com/hardware/knot-embedded-lte4-ec25-eu-and-kne.md": {
+      "title": "KNOT Embedded LTE4 EC25-EU&KNe",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-embedded-lte4-ec25-eu-and-kne.md",
+      "path": "hardware/knot-embedded-lte4-ec25-eu-and-kne.md",
+      "sha256": "6e5cfc9804977e64889ad39f492d0fe28c224b06087b2fa85d09e643e715e18c"
+    },
+    "https://manual.mikrotik.com/hardware/knot-embedded-lte4-global-eg25-g-and-kne.md": {
+      "title": "KNOT Embedded LTE4 Global EG25-G&KNe",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-embedded-lte4-global-eg25-g-and-kne.md",
+      "path": "hardware/knot-embedded-lte4-global-eg25-g-and-kne.md",
+      "sha256": "7763e85834bf038f90852425a6242e55d5d78c16d905556f1a712b896f67c53f"
+    },
+    "https://manual.mikrotik.com/hardware/knot-lr8-kit.md": {
+      "title": "KNOT LR8 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-lr8-kit.md",
+      "path": "hardware/knot-lr8-kit.md",
+      "sha256": "956957d1a749fb341d269bca909edb13c617d4bd50a8ab7f9d6b6ae630c305cf"
+    },
+    "https://manual.mikrotik.com/hardware/knot-lr8g-kit.md": {
+      "title": "KNOT LR8G kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-lr8g-kit.md",
+      "path": "hardware/knot-lr8g-kit.md",
+      "sha256": "0e770a0b3906eb367f8316064bb67aecc56ad353e0d1a3cfa1702744a2b2d702"
+    },
+    "https://manual.mikrotik.com/hardware/knot-lr9-kit.md": {
+      "title": "KNOT LR9 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-lr9-kit.md",
+      "path": "hardware/knot-lr9-kit.md",
+      "sha256": "f21143b5f3b9df6dd2275537b8b3233117831da3d7f19078d91260e2d90a6494"
+    },
+    "https://manual.mikrotik.com/hardware/knot-lr9g-kit.md": {
+      "title": "KNOT LR9G kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot-lr9g-kit.md",
+      "path": "hardware/knot-lr9g-kit.md",
+      "sha256": "6a1385e0febe446c9f8bb72e69fa308c820c3b2c7aae01dc4345e3d4e8189fa1"
+    },
+    "https://manual.mikrotik.com/hardware/knot.md": {
+      "title": "KNOT",
+      "markdown_url": "https://manual.mikrotik.com/hardware/knot.md",
+      "path": "hardware/knot.md",
+      "sha256": "705b594e52ae6a2fda057fcf52e1b1e2f556dbc44df5f34d1368a955b89ac08a"
+    },
+    "https://manual.mikrotik.com/hardware/l14g-2ax-bt5-hl9-and-eg800q.md": {
+      "title": "L14G-2ax-BT5-HL9&EG800Q (KNOT Gateway HL9)",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l14g-2ax-bt5-hl9-and-eg800q.md",
+      "path": "hardware/l14g-2ax-bt5-hl9-and-eg800q.md",
+      "sha256": "5df00523e8efc2b57ca11f5cdc755be881ae844e7140820909a2779cf39c4576"
+    },
+    "https://manual.mikrotik.com/hardware/l14g-2ax-bt5-lr8-and-eg800k.md": {
+      "title": "L14G-2ax-BT5-LR8&EG800K (KNOT Gateway LR8)",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l14g-2ax-bt5-lr8-and-eg800k.md",
+      "path": "hardware/l14g-2ax-bt5-lr8-and-eg800k.md",
+      "sha256": "9312e7bee2f0bff242df5ced7a57c6bf32e7c9c822afb5880a28c9700b934503"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-lr8-lte-kit.md": {
+      "title": "LtAP LR8 LTE kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-lr8-lte-kit.md",
+      "path": "hardware/ltap-lr8-lte-kit.md",
+      "sha256": "7e878662385c8f2f318821129370ce71b869857aa88db0a7a2f4483a1f650824"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-lr8-lte6-kit.md": {
+      "title": "LtAP LR8 LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-lr8-lte6-kit.md",
+      "path": "hardware/ltap-lr8-lte6-kit.md",
+      "sha256": "0cc5154ad917cee793c274ff4667e6db654f2356f6cdd0f9529d9999ac25c486"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-lr8g-lte6-kit.md": {
+      "title": "LtAP LR8G LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-lr8g-lte6-kit.md",
+      "path": "hardware/ltap-lr8g-lte6-kit.md",
+      "sha256": "5cabf32635c26b3483129848519a9e504933f3d894427d2cc44e82d496eb96c9"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-lr2.md": {
+      "title": "R11e-LR2",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-lr2.md",
+      "path": "hardware/r11e-lr2.md",
+      "sha256": "5039049c9207b54b09d3808acdaa69412f32397d8e0d577c996b4ef380f7559b"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-lr8.md": {
+      "title": "R11e-LR8",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-lr8.md",
+      "path": "hardware/r11e-lr8.md",
+      "sha256": "999e1d4f18a4ffd0671558d8be857f9ad4369d57ff13af9a86a60bf87e7ff81d"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-lr8g.md": {
+      "title": "R11e-LR8G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-lr8g.md",
+      "path": "hardware/r11e-lr8g.md",
+      "sha256": "465dcd7f18a8235f087575f373e009b98573cb73e9ab6793a6c9f55c8c777fc6"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-lr9.md": {
+      "title": "R11e-LR9",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-lr9.md",
+      "path": "hardware/r11e-lr9.md",
+      "sha256": "8f5d97670e51172e122d5a6b8e6d5fac74614feb6704c6fef3b9d2a47d92c82a"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-lr9g.md": {
+      "title": "R11e-LR9G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-lr9g.md",
+      "path": "hardware/r11e-lr9g.md",
+      "sha256": "72334cc281447759bd5ecbe045b8a8ef97014d5bf5714fb851ede739a14fdb8d"
+    },
+    "https://manual.mikrotik.com/hardware/tg-bt5-in.md": {
+      "title": "TG-BT5-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/tg-bt5-in.md",
+      "path": "hardware/tg-bt5-in.md",
+      "sha256": "f43c1d7f762b7356cc6b8f67e8574bb18bbd2762e371ed17f40742bfab9be855"
+    },
+    "https://manual.mikrotik.com/hardware/tg-bt5-out.md": {
+      "title": "TG-BT5-OUT",
+      "markdown_url": "https://manual.mikrotik.com/hardware/tg-bt5-out.md",
+      "path": "hardware/tg-bt5-out.md",
+      "sha256": "74b328f6b894aadacc31781d708020d1efc65eea9ca3fd16acad14ba11bea096"
+    },
+    "https://manual.mikrotik.com/hardware/tg-lr-setup-guide.md": {
+      "title": "TG-LR82 / TG-LR92 User Manual",
+      "markdown_url": "https://manual.mikrotik.com/hardware/tg-lr-setup-guide.md",
+      "path": "hardware/tg-lr-setup-guide.md",
+      "sha256": "d6564287d8e6f26811eb71954cff9f97b419cb8d3d26da5b64a84ef82b7f8a9e"
+    },
+    "https://manual.mikrotik.com/hardware/tg-lr82.md": {
+      "title": "TG-LR82",
+      "markdown_url": "https://manual.mikrotik.com/hardware/tg-lr82.md",
+      "path": "hardware/tg-lr82.md",
+      "sha256": "1a02f40e5f2a9c306738b933813347573a789d70d05f361007615020531d3d62"
+    },
+    "https://manual.mikrotik.com/hardware/tg-lr92.md": {
+      "title": "TG-LR92",
+      "markdown_url": "https://manual.mikrotik.com/hardware/tg-lr92.md",
+      "path": "hardware/tg-lr92.md",
+      "sha256": "2c42b4eccdf9ecedf7a7b41a18926169d07cf92df23e9bb6917916d8feeb8a90"
+    },
+    "https://manual.mikrotik.com/hardware/wap-lr2-kit.md": {
+      "title": "wAP LR2 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-lr2-kit.md",
+      "path": "hardware/wap-lr2-kit.md",
+      "sha256": "401aadcf2735e03aa4f87834f6e89daea9ea760821218c0eb53c5e780acdce87"
+    },
+    "https://manual.mikrotik.com/hardware/wap-lr8g-kit.md": {
+      "title": "wAP LR8G kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-lr8g-kit.md",
+      "path": "hardware/wap-lr8g-kit.md",
+      "sha256": "1f6e716a9413a1f448442dc06125f24a2abac85b7e1628e6de841ab590b24061"
+    },
+    "https://manual.mikrotik.com/hardware/wap-lr9-kit.md": {
+      "title": "wAP LR9 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-lr9-kit.md",
+      "path": "hardware/wap-lr9-kit.md",
+      "sha256": "78029dd9f1d43584e6077902f09ae09ca4d80753474ecf3eb97db7bcbab0381a"
+    },
+    "https://manual.mikrotik.com/hardware/wap-lr9g-kit.md": {
+      "title": "wAP LR9G kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-lr9g-kit.md",
+      "path": "hardware/wap-lr9g-kit.md",
+      "sha256": "6c7f17936872a08817b6258536ac30f7c0fc8d7399acc40e78c2de354cc08cf4"
+    },
+    "https://manual.mikrotik.com/hardware/atlgm-and-eg18-ea.md": {
+      "title": "ATLGM&EG18-EA",
+      "markdown_url": "https://manual.mikrotik.com/hardware/atlgm-and-eg18-ea.md",
+      "path": "hardware/atlgm-and-eg18-ea.md",
+      "sha256": "f350ef6534a27e00758082f8243a38e6b26dbf8bfc159ce544533ca1ea85df11"
+    },
+    "https://manual.mikrotik.com/hardware/atlgm-and-rg520f-eu.md": {
+      "title": "ATLGM&RG520F-EU",
+      "markdown_url": "https://manual.mikrotik.com/hardware/atlgm-and-rg520f-eu.md",
+      "path": "hardware/atlgm-and-rg520f-eu.md",
+      "sha256": "2c0381f3a089a6f7dc7aa4e01bc5fcd8b529fecab3492aab50a9691b6a64db70"
+    },
+    "https://manual.mikrotik.com/hardware/audience-lte6-kit.md": {
+      "title": "Audience LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/audience-lte6-kit.md",
+      "path": "hardware/audience-lte6-kit.md",
+      "sha256": "8b15caeea82b264a44948043c8964ba1126823212af3b616d06db96f145daa48"
+    },
+    "https://manual.mikrotik.com/hardware/cap-lte12-ax.md": {
+      "title": "cAP LTE12 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/cap-lte12-ax.md",
+      "path": "hardware/cap-lte12-ax.md",
+      "sha256": "2a2be3719744d6d9ce6ef36067129c2494652aa1c9106da104914f79c7aad32c"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-5g-ax.md": {
+      "title": "Chateau 5G ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-5g-ax.md",
+      "path": "hardware/chateau-5g-ax.md",
+      "sha256": "7ee18ec47c4a3359f79c80d0451cda40fbe0c266c6eb39d187ca21d9f9a62b52"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-5g-r16.md": {
+      "title": "Chateau 5G R16",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-5g-r16.md",
+      "path": "hardware/chateau-5g-r16.md",
+      "sha256": "477fe996bef8864c47938fc4b9c4dbf5a65a7d0025e4b4ad4a31d2d9dc61e9bf"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-5g-r17-ax.md": {
+      "title": "Chateau 5G R17 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-5g-r17-ax.md",
+      "path": "hardware/chateau-5g-r17-ax.md",
+      "sha256": "e5000784c4b03e02576837a0c29d20b4cdc1aca7a057b4d4d6b5fb0cc5da67c3"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-5g.md": {
+      "title": "Chateau 5G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-5g.md",
+      "path": "hardware/chateau-5g.md",
+      "sha256": "0432741bace9361588b16fa3f9f9d16ff7f9c1ffc6480f32af269cb572aadb32"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte12.md": {
+      "title": "Chateau LTE12",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte12.md",
+      "path": "hardware/chateau-lte12.md",
+      "sha256": "cf5f5d7153ff8e7bfee76e35d8cb234c62c38063f59fb4b1e611590d21c8f9e2"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte18-ax.md": {
+      "title": "Chateau LTE18 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte18-ax.md",
+      "path": "hardware/chateau-lte18-ax.md",
+      "sha256": "501cba106026608cf068259e17d9bca2eecc4775cb24ea8b649df0c73900b667"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte6-ax.md": {
+      "title": "Chateau LTE6 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte6-ax.md",
+      "path": "hardware/chateau-lte6-ax.md",
+      "sha256": "fd60fe3f7f7d1fd7fb2b9e2391d11027879611228a54ee90a2d585ecbc0851f3"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte6-us.md": {
+      "title": "Chateau LTE6-US",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte6-us.md",
+      "path": "hardware/chateau-lte6-us.md",
+      "sha256": "574bb254bd9220a7669a1ba572c1a8910b8228f2ae3fad8e26da5bcfb739ba62"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte6.md": {
+      "title": "Chateau LTE6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte6.md",
+      "path": "hardware/chateau-lte6.md",
+      "sha256": "1dde9992d8afbbf06b67c77e222554a883cd00494c71a210dcd8ee1c2a66c89a"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte7-ax.md": {
+      "title": "Chateau LTE7 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte7-ax.md",
+      "path": "hardware/chateau-lte7-ax.md",
+      "sha256": "4ec5966c5ec0d18bc85bcb610903b00bd2365065b09ac9ba9804749c494fd9c0"
+    },
+    "https://manual.mikrotik.com/hardware/chateau-lte7.md": {
+      "title": "Chateau LTE7",
+      "markdown_url": "https://manual.mikrotik.com/hardware/chateau-lte7.md",
+      "path": "hardware/chateau-lte7.md",
+      "sha256": "4ee1f69e483daa3f2c7877757dc615380c26e6d7a5396fba459082bb70a0c81e"
+    },
+    "https://manual.mikrotik.com/hardware/hap-ac3-lte6-kit.md": {
+      "title": "hAP ac3 LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/hap-ac3-lte6-kit.md",
+      "path": "hardware/hap-ac3-lte6-kit.md",
+      "sha256": "dbc6d4e3ec0ad86dd22f71e2bed3ee48a5ddf5e91feb83f257134275b7ddbe5b"
+    },
+    "https://manual.mikrotik.com/hardware/intercell.md": {
+      "title": "Intercell",
+      "markdown_url": "https://manual.mikrotik.com/hardware/intercell.md",
+      "path": "hardware/intercell.md",
+      "sha256": "6ead09e8a283ad04874b56b07678ed8b1c4ee6ba21d73a40d47f1e4d512dfda3"
+    },
+    "https://manual.mikrotik.com/hardware/lamp-5g-r16.md": {
+      "title": "LAMP 5G R16",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lamp-5g-r16.md",
+      "path": "hardware/lamp-5g-r16.md",
+      "sha256": "ff72c79d742027cbf4287d31415ab319dfccf353b066b2c64460ff7d425595cd"
+    },
+    "https://manual.mikrotik.com/hardware/ldf-lte6-kit.md": {
+      "title": "LDF LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ldf-lte6-kit.md",
+      "path": "hardware/ldf-lte6-kit.md",
+      "sha256": "583567772ce9e8bf35251944082c6182895b1f213256e75b10f6ae2b7b7b4b1b"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-kit-series.md": {
+      "title": "LHG kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-kit-series.md",
+      "path": "hardware/lhg-kit-series.md",
+      "sha256": "9c03ec7603ef8cfb6698ff77bf7eab7059951efdc25870dafa31b775c04bf6f0"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-lte18-kit.md": {
+      "title": "LHG LTE18 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-lte18-kit.md",
+      "path": "hardware/lhg-lte18-kit.md",
+      "sha256": "57cb3655f765a32f65cb11800b09dd060f894c8ddb32cf570967ac80732a7295"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-r.md": {
+      "title": "LHG R",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-r.md",
+      "path": "hardware/lhg-r.md",
+      "sha256": "662ec9742dfa08879c694207db04996414e5edd2603f1a859d04b68c75b0f909"
+    },
+    "https://manual.mikrotik.com/hardware/lhgg-lte6-kit.md": {
+      "title": "LHGG LTE6 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhgg-lte6-kit.md",
+      "path": "hardware/lhgg-lte6-kit.md",
+      "sha256": "b67268d8683634b3b79240a3beaf3019b6d458566b7b1c097427a17929349630"
+    },
+    "https://manual.mikrotik.com/hardware/lhgg-lte7-kit.md": {
+      "title": "LHGG LTE7 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhgg-lte7-kit.md",
+      "path": "hardware/lhgg-lte7-kit.md",
+      "sha256": "71c4667c1a342a574b09951be9f3afa627e4455691ea8f9dc1bea058bfa40c20"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-kit-series.md": {
+      "title": "LtAP kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-kit-series.md",
+      "path": "hardware/ltap-kit-series.md",
+      "sha256": "76624a9491435e206e2862dc1cbdfd79be025af8facb3e1e6cf742caaa70cb99"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-lte12-ax.md": {
+      "title": "LtAP LTE12 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-lte12-ax.md",
+      "path": "hardware/ltap-lte12-ax.md",
+      "sha256": "d86116c9f158bbe20211248894df001fec8b8a06ad76c84e6b7b182d7b917feb"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-mini-kit-series.md": {
+      "title": "LtAP mini kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-mini-kit-series.md",
+      "path": "hardware/ltap-mini-kit-series.md",
+      "sha256": "a4bc03b17a3d8ec03c31110451ec418e9083a70c6273b32dfa52c046b2947c9f"
+    },
+    "https://manual.mikrotik.com/hardware/ltap-mini.md": {
+      "title": "LtAP mini",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap-mini.md",
+      "path": "hardware/ltap-mini.md",
+      "sha256": "cf4c305e60c6d0def91609615cd82c83401f60bcc5a93c081168bc7c5c70b67b"
+    },
+    "https://manual.mikrotik.com/hardware/ltap.md": {
+      "title": "LtAP",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ltap.md",
+      "path": "hardware/ltap.md",
+      "sha256": "0f434e2a887c596735b841b4d30ebfd122d5701a6c8065206ae811c3b8d6dbc9"
+    },
+    "https://manual.mikrotik.com/hardware/r11e-series.md": {
+      "title": "R11e series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/r11e-series.md",
+      "path": "hardware/r11e-series.md",
+      "sha256": "50bdda810d0cd6a227f99ebf2376f6507c9358caaa93bff39bafd22cccf85a60"
+    },
+    "https://manual.mikrotik.com/hardware/sxt-kit-series.md": {
+      "title": "SXT kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxt-kit-series.md",
+      "path": "hardware/sxt-kit-series.md",
+      "sha256": "a5b8620f4d9199d4be796f3f3857aa22f9f29cbe31c9ca73ba8a2c5e92b870df"
+    },
+    "https://manual.mikrotik.com/hardware/sxt-r.md": {
+      "title": "SXT R",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxt-r.md",
+      "path": "hardware/sxt-r.md",
+      "sha256": "ee25bb3849ae4e7d67fe30cb18c73f9976ff1f53f571b585ec70dff512ebbb2f"
+    },
+    "https://manual.mikrotik.com/hardware/sxtsq-embedded-lte4-global.md": {
+      "title": "SXTsq Embedded LTE4 Global",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxtsq-embedded-lte4-global.md",
+      "path": "hardware/sxtsq-embedded-lte4-global.md",
+      "sha256": "8e420f41712e5ced518dc91a0095832b713aedd29ccd506e12dfbffa5607d17f"
+    },
+    "https://manual.mikrotik.com/hardware/sxtsq-embedded-lte4.md": {
+      "title": "SXTsq Embedded LTE4",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxtsq-embedded-lte4.md",
+      "path": "hardware/sxtsq-embedded-lte4.md",
+      "sha256": "452c40329306f9c2c476d01168b480f8c072a16d0cade17f85d7f2fc87e453cc"
+    },
+    "https://manual.mikrotik.com/hardware/wap-ac-kit-series.md": {
+      "title": "wAP ac kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-ac-kit-series.md",
+      "path": "hardware/wap-ac-kit-series.md",
+      "sha256": "e2b8b99dd3b2fb9ffe201d43f63cd73ed9cace54c76850186a370fd96eef42be"
+    },
+    "https://manual.mikrotik.com/hardware/wap-ax-lte7-kit.md": {
+      "title": "wAP ax LTE7 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-ax-lte7-kit.md",
+      "path": "hardware/wap-ax-lte7-kit.md",
+      "sha256": "7278f3f56da775418bb57516d8cf3bd19e3232621a6f1275911c62d344c08fb9"
+    },
+    "https://manual.mikrotik.com/hardware/wap-kit-series.md": {
+      "title": "wAP kit-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-kit-series.md",
+      "path": "hardware/wap-kit-series.md",
+      "sha256": "d17f50d5b26fecf60aefb0887ee14b008f6bd3a9bdfe0450ac66c4f1bb476696"
+    },
+    "https://manual.mikrotik.com/hardware/wap-lte-kit-2024.md": {
+      "title": "wAP LTE kit (2024)",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-lte-kit-2024.md",
+      "path": "hardware/wap-lte-kit-2024.md",
+      "sha256": "bb5ec782163b0532ba02f2827eb8c22de8d8e4343544549bd96ced2851668ef8"
+    },
+    "https://manual.mikrotik.com/hardware/wap-r-ac.md": {
+      "title": "wAP R ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-r-ac.md",
+      "path": "hardware/wap-r-ac.md",
+      "sha256": "faac16cb409d7c9cbb7c83d1f353b5ce3c2e95979c4cf722b9605fb7fe09056e"
+    },
+    "https://manual.mikrotik.com/hardware/wap-r.md": {
+      "title": "wAP R",
+      "markdown_url": "https://manual.mikrotik.com/hardware/wap-r.md",
+      "path": "hardware/wap-r.md",
+      "sha256": "a61b64b78d9fbd8d455995d081f2031aa4deea9e892b80ab95d0eefa15acbadb"
+    },
+    "https://manual.mikrotik.com/hardware/l11ug-5haxd.md": {
+      "title": "L11UG-5HaxD",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l11ug-5haxd.md",
+      "path": "hardware/l11ug-5haxd.md",
+      "sha256": "d485c2bf400f3d0d20020e0686adc25d06c1393d705c3b77b6e78bfbd6bd309f"
+    },
+    "https://manual.mikrotik.com/hardware/l23ugsr-5haxd2haxd.md": {
+      "title": "L23UGSR-5HaxD2HaxD",
+      "markdown_url": "https://manual.mikrotik.com/hardware/l23ugsr-5haxd2haxd.md",
+      "path": "hardware/l23ugsr-5haxd2haxd.md",
+      "sha256": "3c5586484de4e4474a5f91694d74e64f1d941a51dc0f32e19103a573e2d4fa86"
+    },
+    "https://manual.mikrotik.com/hardware/rb450gx4.md": {
+      "title": "RB450Gx4",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb450gx4.md",
+      "path": "hardware/rb450gx4.md",
+      "sha256": "8bbc57824b852759b8dd1681cb83d0d63d47efe875ed6f9bb82bb572cee88a56"
+    },
+    "https://manual.mikrotik.com/hardware/rb911-series.md": {
+      "title": "RB911-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb911-series.md",
+      "path": "hardware/rb911-series.md",
+      "sha256": "2a3bf4a02658848fd4623ee8029d4caf52f29acaa20bc1406e00000630a50315"
+    },
+    "https://manual.mikrotik.com/hardware/rb912uag-series.md": {
+      "title": "RB912UAG-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb912uag-series.md",
+      "path": "hardware/rb912uag-series.md",
+      "sha256": "6ac7ef925a0675dbc92c530c56cfeb939c50f9734c8ec9119ff14044e5b94a31"
+    },
+    "https://manual.mikrotik.com/hardware/rb922uags-5hpacd.md": {
+      "title": "RB922UAGS-5HPacD",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb922uags-5hpacd.md",
+      "path": "hardware/rb922uags-5hpacd.md",
+      "sha256": "8aa55d915c102c049b7868e4438f61909b7bc45e375a199f14caaf26a0b8176e"
+    },
+    "https://manual.mikrotik.com/hardware/rbm11g.md": {
+      "title": "RBM11G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rbm11g.md",
+      "path": "hardware/rbm11g.md",
+      "sha256": "e6a7b5953b1567c78aac5ada5d7367928d4e0bb361e4d73d7d7107f2fe7b44b1"
+    },
+    "https://manual.mikrotik.com/hardware/rbm33g.md": {
+      "title": "RBM33G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rbm33g.md",
+      "path": "hardware/rbm33g.md",
+      "sha256": "b79066c7ef998020176c3aa4b7c35d12c1d885a7eb98aea6c0e870d8021e3a58"
+    },
+    "https://manual.mikrotik.com/hardware/crs-series.md": {
+      "title": "CRS-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs-series.md",
+      "path": "hardware/crs-series.md",
+      "sha256": "5b74c75e80a35ec206863b3c554a1e8a3c3d38c9c51170a5bd49a2ad843e1c99"
+    },
+    "https://manual.mikrotik.com/hardware/crs106-1c-5s.md": {
+      "title": "CRS106-1C-5S",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs106-1c-5s.md",
+      "path": "hardware/crs106-1c-5s.md",
+      "sha256": "fe067cb55d4698a3b92d5ddddb01b3e2d161bfc141a5c99fda02daaa520b17dd"
+    },
+    "https://manual.mikrotik.com/hardware/crs112-8g-4s-in.md": {
+      "title": "CRS112-8G-4S-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs112-8g-4s-in.md",
+      "path": "hardware/crs112-8g-4s-in.md",
+      "sha256": "195ce8add264e8fd18f4674cce95b20951f8492b14dfbdec6871f88e8bcffb6f"
+    },
+    "https://manual.mikrotik.com/hardware/crs112-8p-4s-in.md": {
+      "title": "CRS112-8P-4S-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs112-8p-4s-in.md",
+      "path": "hardware/crs112-8p-4s-in.md",
+      "sha256": "fb2778450ed2ab66d7b2e53fee583aa80c209607e1f2a6fd8e526edafff4624f"
+    },
+    "https://manual.mikrotik.com/hardware/crs125-24g-1s-series.md": {
+      "title": "CRS125-24G-1S-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs125-24g-1s-series.md",
+      "path": "hardware/crs125-24g-1s-series.md",
+      "sha256": "89437b10d8bbc4249fb65779c8293eeef8f9b0cba9d9cd2e6f3d731b9875ccf1"
+    },
+    "https://manual.mikrotik.com/hardware/crs304-4xg-in.md": {
+      "title": "CRS304-4XG-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs304-4xg-in.md",
+      "path": "hardware/crs304-4xg-in.md",
+      "sha256": "8b020a7f0ec95c4651e34d9d511c5ec374ce5c91c0824afab953544f6c5820cf"
+    },
+    "https://manual.mikrotik.com/hardware/crs305-1g-4s-plus-in.md": {
+      "title": "CRS305-1G-4S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs305-1g-4s-plus-in.md",
+      "path": "hardware/crs305-1g-4s-plus-in.md",
+      "sha256": "ccb96c0b01fed7f003266ce8baccc4ece975bd0e209aa4ff8ea999f625a7fd2b"
+    },
+    "https://manual.mikrotik.com/hardware/crs309-1g-8s-plus-in.md": {
+      "title": "CRS309-1G-8S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs309-1g-8s-plus-in.md",
+      "path": "hardware/crs309-1g-8s-plus-in.md",
+      "sha256": "9878c53480d475940808c31c86595a2346afd2bf2752ea8e95a5362e3fe32a50"
+    },
+    "https://manual.mikrotik.com/hardware/crs310-1g-5s-4s-plus-in.md": {
+      "title": "CRS310-1G-5S-4S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs310-1g-5s-4s-plus-in.md",
+      "path": "hardware/crs310-1g-5s-4s-plus-in.md",
+      "sha256": "bf0ab501095313f18c106a97037bdd099c57b2c22de8012dfb86d7aa8527718f"
+    },
+    "https://manual.mikrotik.com/hardware/crs310-8g-plus-2s-plus-in.md": {
+      "title": "CRS310-8G+2S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs310-8g-plus-2s-plus-in.md",
+      "path": "hardware/crs310-8g-plus-2s-plus-in.md",
+      "sha256": "9e566f2069cc12f546fd1cc1e6cd37f955e79fe58dbfb06152d951296551858f"
+    },
+    "https://manual.mikrotik.com/hardware/crs312-4c-plus-8xg-rm.md": {
+      "title": "CRS312-4C+8XG-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs312-4c-plus-8xg-rm.md",
+      "path": "hardware/crs312-4c-plus-8xg-rm.md",
+      "sha256": "3c1110a1741640c25a10d35a26d328dfca5eb11e8fda88d09dc733ce6bfb5e18"
+    },
+    "https://manual.mikrotik.com/hardware/crs317-1g-16s-plus-rm.md": {
+      "title": "CRS317-1G-16S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs317-1g-16s-plus-rm.md",
+      "path": "hardware/crs317-1g-16s-plus-rm.md",
+      "sha256": "2ff111a6517eff9053f3fd5c340cd2ebd992f23d0edd938b8e1d7203ef89f64b"
+    },
+    "https://manual.mikrotik.com/hardware/crs320-8p-8b-4s-plus-rm.md": {
+      "title": "CRS320-8P-8B-4S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs320-8p-8b-4s-plus-rm.md",
+      "path": "hardware/crs320-8p-8b-4s-plus-rm.md",
+      "sha256": "ebc12791290c0814f2479b17315d8384704d442f5841d53fa430aa5e6b6d4fb9"
+    },
+    "https://manual.mikrotik.com/hardware/crs326-24g-2s-plus-in.md": {
+      "title": "CRS326-24G-2S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs326-24g-2s-plus-in.md",
+      "path": "hardware/crs326-24g-2s-plus-in.md",
+      "sha256": "1fe3efa298017eed1faa45d0311e89c41672615ccc4ff5958d82f9d223ffcb17"
+    },
+    "https://manual.mikrotik.com/hardware/crs326-24g-2s-plus-rm.md": {
+      "title": "CRS326-24G-2S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs326-24g-2s-plus-rm.md",
+      "path": "hardware/crs326-24g-2s-plus-rm.md",
+      "sha256": "e26d81c463d1ca5be5aadf433b1a011c06714925ce2d35678556d16b61a4ca33"
+    },
+    "https://manual.mikrotik.com/hardware/crs326-24s-plus-2q-plus-rm.md": {
+      "title": "CRS326-24S+2Q+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs326-24s-plus-2q-plus-rm.md",
+      "path": "hardware/crs326-24s-plus-2q-plus-rm.md",
+      "sha256": "a0acff4d7e4794b969f0d8bb7b733b408b1c9876cc910d625d81f8b2895fa55f"
+    },
+    "https://manual.mikrotik.com/hardware/crs326-4c-plus-20g-plus-2q-plus-rm.md": {
+      "title": "CRS326-4C+20G+2Q+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs326-4c-plus-20g-plus-2q-plus-rm.md",
+      "path": "hardware/crs326-4c-plus-20g-plus-2q-plus-rm.md",
+      "sha256": "6ba05b1594fc41174cb389998b4b54498733c09767749af008df5611614c7de4"
+    },
+    "https://manual.mikrotik.com/hardware/crs328-24p-4s-plus-rm.md": {
+      "title": "CRS328-24P-4S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs328-24p-4s-plus-rm.md",
+      "path": "hardware/crs328-24p-4s-plus-rm.md",
+      "sha256": "d41bc7807a2a21a6ba401149a0aa473f57ab0e1b2bbf87c9b4ac059f47864456"
+    },
+    "https://manual.mikrotik.com/hardware/crs328-4c-20s-4s-plus-rm.md": {
+      "title": "CRS328-4C-20S-4S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs328-4c-20s-4s-plus-rm.md",
+      "path": "hardware/crs328-4c-20s-4s-plus-rm.md",
+      "sha256": "23dfb1bdd17c0b7aa83b3049f5c77a15144efb3408bd0f9e39101ecca840b6a8"
+    },
+    "https://manual.mikrotik.com/hardware/crs354-48g-4s-plus-2q-plus-rm.md": {
+      "title": "CRS354-48G-4S+2Q+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs354-48g-4s-plus-2q-plus-rm.md",
+      "path": "hardware/crs354-48g-4s-plus-2q-plus-rm.md",
+      "sha256": "b56008746d0d761ddbc344fa14d3daff7bf8c8e70d45c7639038b87de7855c9e"
+    },
+    "https://manual.mikrotik.com/hardware/crs354-48p-4s-plus-2q-plus-rm.md": {
+      "title": "CRS354-48P-4S+2Q+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs354-48p-4s-plus-2q-plus-rm.md",
+      "path": "hardware/crs354-48p-4s-plus-2q-plus-rm.md",
+      "sha256": "0323e85320fe9563835b719f911d85f332d5879d4d4b000f0de8bb1fc4a41a19"
+    },
+    "https://manual.mikrotik.com/hardware/crs418-8p-8g-2s-plus-5axq2axq-rm.md": {
+      "title": "CRS418-8P-8G-2S+5axQ2axQ-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs418-8p-8g-2s-plus-5axq2axq-rm.md",
+      "path": "hardware/crs418-8p-8g-2s-plus-5axq2axq-rm.md",
+      "sha256": "d6afde781ae0d26bdada3d55ffdc9210948f22cb0edbd24e101e57d51dc68195"
+    },
+    "https://manual.mikrotik.com/hardware/crs418-8p-8g-2s-plus-rm.md": {
+      "title": "CRS418-8P-8G-2S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs418-8p-8g-2s-plus-rm.md",
+      "path": "hardware/crs418-8p-8g-2s-plus-rm.md",
+      "sha256": "24f833542ee431a6e5bea29148efd7c6ad97042f1ed707eef549b1c7a7c3b852"
+    },
+    "https://manual.mikrotik.com/hardware/crs504-4xq-in.md": {
+      "title": "CRS504-4XQ-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs504-4xq-in.md",
+      "path": "hardware/crs504-4xq-in.md",
+      "sha256": "60bd364d0218f42bafcccf519d3228ff8a3ef4fe84894603d464f2efa99630e9"
+    },
+    "https://manual.mikrotik.com/hardware/crs504-4xq-out.md": {
+      "title": "CRS504-4XQ-OUT",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs504-4xq-out.md",
+      "path": "hardware/crs504-4xq-out.md",
+      "sha256": "7bf453f3ba7edda9e13a42215b535a083d67437b373c6c8cb0d1bd1bb1342026"
+    },
+    "https://manual.mikrotik.com/hardware/crs510-8xs-2xq-in.md": {
+      "title": "CRS510-8XS-2XQ-IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs510-8xs-2xq-in.md",
+      "path": "hardware/crs510-8xs-2xq-in.md",
+      "sha256": "12b15d55dd16ac32aaa3e3fddb66bf77f82a848e59cf36909114168104894ca1"
+    },
+    "https://manual.mikrotik.com/hardware/crs518-16xs-2xq-rm.md": {
+      "title": "CRS518-16XS-2XQ-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs518-16xs-2xq-rm.md",
+      "path": "hardware/crs518-16xs-2xq-rm.md",
+      "sha256": "c48e9ce4376620d1c8889b09ec4498d5db19e8d420e40fdd3e6b188d10a9c41a"
+    },
+    "https://manual.mikrotik.com/hardware/crs520-4xs-16xq-rm.md": {
+      "title": "CRS520-4XS-16XQ-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs520-4xs-16xq-rm.md",
+      "path": "hardware/crs520-4xs-16xq-rm.md",
+      "sha256": "63cfe08c984189f09614e3df63d1dbb66d61d701f8857a8d942a9f55b14799b4"
+    },
+    "https://manual.mikrotik.com/hardware/crs804-4ddq-hrm.md": {
+      "title": "CRS804-4DDQ-hRM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs804-4ddq-hrm.md",
+      "path": "hardware/crs804-4ddq-hrm.md",
+      "sha256": "1745570784c243541d73fa35bfaf018bbb837cb4813067c79e57b3943430a0fb"
+    },
+    "https://manual.mikrotik.com/hardware/crs812-8ds-2dq-2ddq-rm.md": {
+      "title": "CRS812-8DS-2DQ-2DDQ-RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/crs812-8ds-2dq-2ddq-rm.md",
+      "path": "hardware/crs812-8ds-2dq-2ddq-rm.md",
+      "sha256": "903722fdf1feece0d822d6352aeee0918dcc72c4c8c01ea5ff55c1ffb90cd2dd"
+    },
+    "https://manual.mikrotik.com/hardware/css318-16g-2s-plus-in.md": {
+      "title": "CSS318-16G-2S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/css318-16g-2s-plus-in.md",
+      "path": "hardware/css318-16g-2s-plus-in.md",
+      "sha256": "75887707d94bd8b013ec804d926213477155a85ec557d4e41dd99faf6b63ac01"
+    },
+    "https://manual.mikrotik.com/hardware/css326-24g-2s-plus-rm.md": {
+      "title": "CSS326-24G-2S+RM",
+      "markdown_url": "https://manual.mikrotik.com/hardware/css326-24g-2s-plus-rm.md",
+      "path": "hardware/css326-24g-2s-plus-rm.md",
+      "sha256": "6808cd43c2c54f5da2097bf32cec1ec32beb16555842dff5f130ae8643af83cd"
+    },
+    "https://manual.mikrotik.com/hardware/css610-8g-2s-plus-in.md": {
+      "title": "CSS610-8G-2S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/css610-8g-2s-plus-in.md",
+      "path": "hardware/css610-8g-2s-plus-in.md",
+      "sha256": "49c6f3ffa75dae1e2ff4626b015de67138ba92c8ac191c63c3d577c0600e5afa"
+    },
+    "https://manual.mikrotik.com/hardware/css610-8p-2s-plus-in.md": {
+      "title": "CSS610-8P-2S+IN",
+      "markdown_url": "https://manual.mikrotik.com/hardware/css610-8p-2s-plus-in.md",
+      "path": "hardware/css610-8p-2s-plus-in.md",
+      "sha256": "3d4697c13f9f3a6221236179f1ecf4ea19c48e5c82d4a4dbd29a8bc5936fb069"
+    },
+    "https://manual.mikrotik.com/hardware/fiberbox-plus.md": {
+      "title": "FiberBox Plus",
+      "markdown_url": "https://manual.mikrotik.com/hardware/fiberbox-plus.md",
+      "path": "hardware/fiberbox-plus.md",
+      "sha256": "d83600b88ea633f9801c6977ce89a3360952565438decd3cbda3445692cb0a8c"
+    },
+    "https://manual.mikrotik.com/hardware/fiberbox.md": {
+      "title": "FiberBox",
+      "markdown_url": "https://manual.mikrotik.com/hardware/fiberbox.md",
+      "path": "hardware/fiberbox.md",
+      "sha256": "e5ea26dac2e0b4adb123ae2d6e8b2d2205bd188d3af9ac1b90e70a83e604cdbc"
+    },
+    "https://manual.mikrotik.com/hardware/gperx6.md": {
+      "title": "GPERx6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/gperx6.md",
+      "path": "hardware/gperx6.md",
+      "sha256": "e393aaa573710fb638074dcb6b487e43c89c8a7b893b37857f4120eb03ce144d"
+    },
+    "https://manual.mikrotik.com/hardware/netfiber-9.md": {
+      "title": "netFiber 9",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netfiber-9.md",
+      "path": "hardware/netfiber-9.md",
+      "sha256": "e25bef2ce3fe9a7a6fb19a52569a54f4f16890bcb31bba5ccd53c8f2ba6c83f6"
+    },
+    "https://manual.mikrotik.com/hardware/netpower-15fr.md": {
+      "title": "netPower 15FR",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netpower-15fr.md",
+      "path": "hardware/netpower-15fr.md",
+      "sha256": "242b7e83fb3d02ca4e6fc4664ee99a16a99b9f2bc4f2caf5d3d539768d8de00e"
+    },
+    "https://manual.mikrotik.com/hardware/netpower-16p.md": {
+      "title": "netPower 16P",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netpower-16p.md",
+      "path": "hardware/netpower-16p.md",
+      "sha256": "a2f921b6d5f88d7664249573c9bd71d5c898b69bead31cc05eb4cc5b4d847943"
+    },
+    "https://manual.mikrotik.com/hardware/netpower-lite-7r.md": {
+      "title": "netPower Lite 7R",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netpower-lite-7r.md",
+      "path": "hardware/netpower-lite-7r.md",
+      "sha256": "8e991951d1fa241a865cb047fca31391be0340b4196de487b68d9d0722946035"
+    },
+    "https://manual.mikrotik.com/hardware/netpower-lite-8p.md": {
+      "title": "netPower Lite 8P",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netpower-lite-8p.md",
+      "path": "hardware/netpower-lite-8p.md",
+      "sha256": "2c2dc3b2568db884a17f54badab5690b8a0d642b9f7a9ccac17eb2a625f4edbe"
+    },
+    "https://manual.mikrotik.com/hardware/rb260-series.md": {
+      "title": "RB260-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/rb260-series.md",
+      "path": "hardware/rb260-series.md",
+      "sha256": "aeda8e8eb897d164c44b477ffe6c87b5c86623e689996ad6898f7f0e106d2d22"
+    },
+    "https://manual.mikrotik.com/hardware/basebox-series.md": {
+      "title": "BaseBox-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/basebox-series.md",
+      "path": "hardware/basebox-series.md",
+      "sha256": "b518a20d139641cc917cb4259c7dd9dc26fd35b5ccd18d3cd2d478465ef61b56"
+    },
+    "https://manual.mikrotik.com/hardware/disc-lite5-ac.md": {
+      "title": "Disc Lite5 ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/disc-lite5-ac.md",
+      "path": "hardware/disc-lite5-ac.md",
+      "sha256": "8f6ab9a3475da9e3c490d6d1124ccc2fda2fa84e1f89fdcbca0772753de851dc"
+    },
+    "https://manual.mikrotik.com/hardware/disc-lite5.md": {
+      "title": "Disc Lite5",
+      "markdown_url": "https://manual.mikrotik.com/hardware/disc-lite5.md",
+      "path": "hardware/disc-lite5.md",
+      "sha256": "74b467e236decd160e9a3c27d438c83c468cf80ec26965df2719f37460f95e17"
+    },
+    "https://manual.mikrotik.com/hardware/dynadish-5.md": {
+      "title": "DynaDish 5",
+      "markdown_url": "https://manual.mikrotik.com/hardware/dynadish-5.md",
+      "path": "hardware/dynadish-5.md",
+      "sha256": "9e83db1c964e6c05d89d38be2a1e343d9a7aff218e55e347bd2763f230619cc4"
+    },
+    "https://manual.mikrotik.com/hardware/dynadish-6.md": {
+      "title": "DynaDish 6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/dynadish-6.md",
+      "path": "hardware/dynadish-6.md",
+      "sha256": "ed9e0ee71b40c01ad48afae3c55dd7bbabfcdd87ff9ffb3b2cf8b4edbeea0a28"
+    },
+    "https://manual.mikrotik.com/hardware/groove-series.md": {
+      "title": "Groove-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/groove-series.md",
+      "path": "hardware/groove-series.md",
+      "sha256": "f99efa178330f6a39deb8109337fb52d34b7e740f1028d39de6a1ae1974aabaa"
+    },
+    "https://manual.mikrotik.com/hardware/ldf-2.md": {
+      "title": "LDF 2",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ldf-2.md",
+      "path": "hardware/ldf-2.md",
+      "sha256": "9195978f893a4fdd857f0005b2bdacb2bce8bdafcddc8d3fd49a62a33fea6dd6"
+    },
+    "https://manual.mikrotik.com/hardware/ldf-5-series.md": {
+      "title": "LDF 5-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/ldf-5-series.md",
+      "path": "hardware/ldf-5-series.md",
+      "sha256": "18badc6fde05eefc785639ef089a73e368d0c6e2667a20e131caec4fae085769"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-5axd.md": {
+      "title": "LHG-5axD",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-5axd.md",
+      "path": "hardware/lhg-5axd.md",
+      "sha256": "f76e2773dfaad9a896163059f3bb8caedd27d6068e5dbee904f10d3f0d2ef292"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-series.md": {
+      "title": "LHG-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-series.md",
+      "path": "hardware/lhg-series.md",
+      "sha256": "cd9b4cddebeeb84c63f566243fac6fb24fb4af16d5d288fdbc5d3e819e4e1053"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-xl-2.md": {
+      "title": "LHG XL 2",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-xl-2.md",
+      "path": "hardware/lhg-xl-2.md",
+      "sha256": "be8abb0bc1c70c0471dbd43713eb89094b1a4c18125e6f8318da621134f8cbfc"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-xl-5-ac.md": {
+      "title": "LHG XL 5 ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-xl-5-ac.md",
+      "path": "hardware/lhg-xl-5-ac.md",
+      "sha256": "eddcdf3e718af4ea468fd8f0b605099cc6c0eac60288eafba3e5d76b1149632e"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-xl-5-ax.md": {
+      "title": "LHG XL 5 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-xl-5-ax.md",
+      "path": "hardware/lhg-xl-5-ax.md",
+      "sha256": "014d40bd64e466ad393bcba072aa587c468f9e946d47bc38aa3d18ff8fe34478"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-xl-52-ac.md": {
+      "title": "LHG XL 52 ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-xl-52-ac.md",
+      "path": "hardware/lhg-xl-52-ac.md",
+      "sha256": "3acd31dd9751829cf85eb59931e717526286dfb475a0d20820e626d2b56caf45"
+    },
+    "https://manual.mikrotik.com/hardware/lhg-xl-hp5.md": {
+      "title": "LHG XL HP5",
+      "markdown_url": "https://manual.mikrotik.com/hardware/lhg-xl-hp5.md",
+      "path": "hardware/lhg-xl-hp5.md",
+      "sha256": "ceca6d5af6d77bb0c82aa98b0bc71776fb6b02be718ac6a56883d1950cfe47d8"
+    },
+    "https://manual.mikrotik.com/hardware/mantbox-52-15s.md": {
+      "title": "MANTBox 52 15s",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mantbox-52-15s.md",
+      "path": "hardware/mantbox-52-15s.md",
+      "sha256": "e07fb3661858b24dd50b45427adc6e49e887808c4914ed078b4a24669ed5332d"
+    },
+    "https://manual.mikrotik.com/hardware/mantbox-ax-15s.md": {
+      "title": "mANTBox ax 15s",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mantbox-ax-15s.md",
+      "path": "hardware/mantbox-ax-15s.md",
+      "sha256": "20b754b61e4f9c343340fe1840526f1a32c6ffc0a5f343435d3ce01d84ffe537"
+    },
+    "https://manual.mikrotik.com/hardware/mantbox-series.md": {
+      "title": "mANTBox-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/mantbox-series.md",
+      "path": "hardware/mantbox-series.md",
+      "sha256": "6cce7263785035c8b5c6ca652691685d84c52fa2658868851b9ae91fffdfa3f0"
+    },
+    "https://manual.mikrotik.com/hardware/metal-52-ac.md": {
+      "title": "Metal 52 ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/metal-52-ac.md",
+      "path": "hardware/metal-52-ac.md",
+      "sha256": "41483939a9da860abb4129f574b8fa79bd6b2f509bdb553c631313716cae914d"
+    },
+    "https://manual.mikrotik.com/hardware/netbox-5-ax.md": {
+      "title": "NetBox 5 ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netbox-5-ax.md",
+      "path": "hardware/netbox-5-ax.md",
+      "sha256": "fa357fa74a2c6cc6ed6729f25fa89fe3bf862619df90ccea8f309f24c5705aa9"
+    },
+    "https://manual.mikrotik.com/hardware/netbox-5.md": {
+      "title": "NetBox 5",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netbox-5.md",
+      "path": "hardware/netbox-5.md",
+      "sha256": "cd0ae6f2425157ea5c046ab80034b536a8089496a77830330017562276f4087f"
+    },
+    "https://manual.mikrotik.com/hardware/netmetal-ac.md": {
+      "title": "NetMetal acÂ²",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netmetal-ac.md",
+      "path": "hardware/netmetal-ac.md",
+      "sha256": "44f92e7c0d560eca206f1d49bfcc2de1867aa30b7a90adecdba4de005a84b138"
+    },
+    "https://manual.mikrotik.com/hardware/netmetal-ax.md": {
+      "title": "NetMetal ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netmetal-ax.md",
+      "path": "hardware/netmetal-ax.md",
+      "sha256": "551d4b9b97e9e65507c2ce004a0d31b9e546b13ccadea50a3db50e70d1d456ce"
+    },
+    "https://manual.mikrotik.com/hardware/netmetal-series.md": {
+      "title": "NetMetal-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/netmetal-series.md",
+      "path": "hardware/netmetal-series.md",
+      "sha256": "117ddc4e094720724094d07cff05e93c10874c10fb065b2b8ad2328909af44ea"
+    },
+    "https://manual.mikrotik.com/hardware/omnitik-series.md": {
+      "title": "OmniTIK series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/omnitik-series.md",
+      "path": "hardware/omnitik-series.md",
+      "sha256": "5e8f088a9c059a907a3935db0439636ea4f8f7e97a045b7acd1f1b84559d6603"
+    },
+    "https://manual.mikrotik.com/hardware/qrt-2.md": {
+      "title": "QRT 2",
+      "markdown_url": "https://manual.mikrotik.com/hardware/qrt-2.md",
+      "path": "hardware/qrt-2.md",
+      "sha256": "4f420ed9137206439245c091eedf4abf34a80c0073a799f6ad8251501b98a257"
+    },
+    "https://manual.mikrotik.com/hardware/qrt-5-ac.md": {
+      "title": "QRT 5 ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/qrt-5-ac.md",
+      "path": "hardware/qrt-5-ac.md",
+      "sha256": "fa6c0dcdc01493f84f5c65a2df7f09d600f07ce8157febc25c31920ec50d0464"
+    },
+    "https://manual.mikrotik.com/hardware/qrt-5.md": {
+      "title": "QRT 5",
+      "markdown_url": "https://manual.mikrotik.com/hardware/qrt-5.md",
+      "path": "hardware/qrt-5.md",
+      "sha256": "2b9e77c8c798dc6627f5c917b0bd314fcaf1e2f92407cee33c55a7d5751e49a1"
+    },
+    "https://manual.mikrotik.com/hardware/sextant-g.md": {
+      "title": "SEXTANT G",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sextant-g.md",
+      "path": "hardware/sextant-g.md",
+      "sha256": "39a0588c2f1ab98e089b48e44e77b4d3bee1b18326a8840b3995a5bd67afc022"
+    },
+    "https://manual.mikrotik.com/hardware/sxt-2.md": {
+      "title": "SXT 2",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxt-2.md",
+      "path": "hardware/sxt-2.md",
+      "sha256": "099f8839d35b7e9db507e91e70afa81ed62d5c60e4316ae828bd58960a424673"
+    },
+    "https://manual.mikrotik.com/hardware/sxt-6.md": {
+      "title": "SXT 6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxt-6.md",
+      "path": "hardware/sxt-6.md",
+      "sha256": "ed7eaff61277459356dbcab56d65ba9532fffa1f5f365a694e49e3dd76c3ce5e"
+    },
+    "https://manual.mikrotik.com/hardware/sxtsa-series.md": {
+      "title": "SXTSA-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxtsa-series.md",
+      "path": "hardware/sxtsa-series.md",
+      "sha256": "a0774db951c26a36e14aebc43ce6c676917cc4ef899ebfc2aeeac9977cd1c0c4"
+    },
+    "https://manual.mikrotik.com/hardware/sxtsq-5axd.md": {
+      "title": "SXTsq-5axD",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxtsq-5axd.md",
+      "path": "hardware/sxtsq-5axd.md",
+      "sha256": "eff77c66377bfba06e0458824155e98fd6e27ffae6a61e76d5539324a19d00d8"
+    },
+    "https://manual.mikrotik.com/hardware/sxtsq-series.md": {
+      "title": "SXTsq-series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/sxtsq-series.md",
+      "path": "hardware/sxtsq-series.md",
+      "sha256": "33aca22b21f015c333b12890695b5a9e953878b104de29da329eb5478c58874b"
     },
     "https://manual.mikrotik.com/docs/user-guides.md": {
       "title": "User Guides",

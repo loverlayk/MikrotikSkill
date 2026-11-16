@@ -1,271 +1,312 @@
 # VRRP
 
-> This page describes the Virtual Router Redundancy Protocol (VRRP) in MikroTik RouterOS, explaining how it provides router redundancy through IPv4/IPv6 multicast communication and prioritized election among routers....
+> VRRP provides a redundant default gateway by combining RouterOS routers into a virtual router. The page covers the protocol, virtual MAC addresses, master election and preemption, IPv4 and IPv6 configuration,...
 
 # VRRP
 
-## Summary
+VRRP (Virtual Router Redundancy Protocol) gives a LAN a redundant default gateway. Two or more
+routers form a virtual router with a shared virtual IP address and a shared virtual MAC address. One
+router is the master and forwards traffic for that address; the others are backups and take over if
+the master fails. Hosts keep using one gateway address, so their configuration does not change.
+RouterOS implements VRRPv2 (RFC 3768) and VRRPv3 (RFC 5798); VRRPv3 supports IPv4 and IPv6.
 
-This chapter describes the Virtual Router Redundancy Protocol (VRRP) support in RouterOS.
+A statically configured first hop is a single point of failure: if that router stops, hosts lose
+connectivity until their gateway is reconfigured. Dynamic routing protocols such as OSPF or RIP can
+provide another path, but they add complexity that a small network may not need. In IPv6, Neighbor
+Discovery detects an unreachable router only after several missed advertisements, which can take
+tens of seconds. VRRP detects a failed master within a few seconds without adding traffic for every
+host.
 
-Mostly on larger LANs, dynamic routing protocols (OSPF or RIP) are used; however, there are a number of factors that may make it undesirable to use dynamic routing protocols. One alternative is to use static routing, but if the statically configured first hop fails, then the host will not be able to communicate with other hosts.
-
-In IPv6 networks, hosts learn about routers by receiving Router Advertisements used by the Neighbor Discovery (ND) protocol. ND already has a built-in mechanism to determine unreachable routers. However, it can take up to 38 seconds to detect an unreachable router. It is possible to change parameters and make detection faster, but it will increase the overhead of ND traffic especially if there are a lot of hosts. VRRP allows the detection of unreachable routers within 3 seconds without additional traffic overhead.
-
-Virtual Router Redundancy Protocol (VRRP) provides a solution by combining a number of routers into a logical group called *Virtual Router* (VR). VRRP implementation in RouterOS is based on VRRPv2 RFC 3768 and VRRPv3 RFC 5798.
-
-It is recommended to use the same version of RouterOS for all devices with the same VRID used to implement VRRP.
-
-:::warning
-According to the RFC authentication is deprecated for VRRP v3.
-
+:::note
+Use the same RouterOS version on all routers that share a VRID.
 :::
 
-## Protocol Overview
+The configuration examples are on [VRRP configuration examples](./user-guides/vrrp-configuration-examples).
 
-![](./img/vrrp-01.webp)
+## How VRRP works
 
-The purpose of VRRP is to communicate with all VRRP routers associated with the Virtual Router ID and support router redundancy through a prioritized election process among them.
+A virtual router is identified by a Virtual Router ID (VRID) and a set of virtual IP addresses.
+Every router in the group is configured with the same VRID and the same virtual addresses. All
+members receive VRRP advertisements, but only the master sends them periodically; backups listen and
+wait for the master to stop.
 
-All messaging is done by IPv4 or IPv6 multicast packets using protocol 112 (VRRP). The destination address of an IPv4 packet is *224.0.0.18* and for IPv6 it is *FF02:0:0:0:0:0:0:12*. The source address of the packet is always the primary IP address of an interface from which the packet is being sent. In IPv6 networks, the source address is the link-local address of an interface.
+VRRP advertisements are IPv4 or IPv6 multicast packets with IP protocol number 112:
 
-These packets are always sent with TTL=255 and are not forwarded by the router. If for any reason the router receives a packet with a lower TTL, the packet is discarded.
+- IPv4 destination `224.0.0.18`, multicast MAC `01:00:5E:00:00:12`.
+- IPv6 destination `FF02::12`, multicast MAC `33:33:00:00:00:12`.
 
-Each VR node has a single assigned MAC address. This MAC address is used as a source for all periodic messages sent by Master.
+The source address is the primary IPv4 address of the parent interface for IPv4, or the link-local
+address of the VRRP interface for IPv6. Advertisements are sent with TTL 255 and are not forwarded by
+routers.
 
-Virtual Router is defined by VRID and a mapped set of IPv4 or IPv6 addresses. The master router is said to be the **owner** of the mapped IPv4/IPv6 addresses. There are no limits to using the same VRID for IPv4 and IPv6; however, these will be two different Virtual Routers.
-
-Only the Master router is sending periodic Advertisement messages to minimize the traffic. A backup will try to preempt the Master only if it has the higher priority and preemption is not prohibited.
-
-:::tip
-All VRRP routers belonging to the same VR must be configured with the same advertisement interval. If the interval does not match, the router will discard the received advertisement packet.
-
-:::
-
-## Virtual Router (VR)
-
-A Virtual Router (VR) consists of one Owner router and one or more backup routers belonging to the same network.
-
-VR includes:
-
-- VRID is configured on each VRRP router.
-- The same virtual IP is configured on each router.
-- Owner and Backup are configured on each router. On a given VR there can be only one Owner.
+Every member must use the same advertisement interval. A router discards an advertisement whose
+interval differs from its own and records `misconfigured interval` in the log.
 
 ### Virtual MAC address
 
-VRRP automatically assigns a MAC address to the VRRP interface based on the standard MAC prefix for VRRP packets and the VRID number. The first five octets are 00:00:5E:00:01 and the last octet is the configured VRID. For example, if Virtual Router's VRID is 49, then the virtual MAC address will be *00:00:5E:00:01:31*.
+VRRP assigns each virtual router a MAC address derived from the VRID. It cannot be set or edited.
 
-:::warning
-Virtual MAC addresses cannot be manually set or edited.
+- IPv4 uses `00:00:5E:00:01:VRID`.
+- IPv6 uses `00:00:5E:00:02:VRID`.
 
+The last octet is the VRID in hexadecimal. VRID 49 gives the IPv4 address `00:00:5E:00:01:31`. The
+master uses the virtual MAC address as the source of its advertisements and answers ARP or Neighbor
+Discovery requests for the virtual IP address with it. The VRRP interface also derives an IPv6
+link-local address from this MAC address.
+
+When a router becomes master, it sends an ARP announcement for the virtual IPv4 address from the
+virtual MAC address, so hosts update their ARP tables as soon as the master changes.
+
+A VRID must be unique on a parent interface. An IPv4 and an IPv6 virtual router on the same
+interface need different VRIDs.
+
+### Master election and preemption
+
+The member with the highest priority becomes the master. Priorities range from 1 to 254; the default
+is 100. If two members have the same priority, the one with the higher primary IP address becomes
+master.
+
+Priority 255 is reserved for the owner, a router whose real address is the virtual address, and
+priority 0 for a master that releases the role. RouterOS accepts neither value and cannot be
+configured as an owner, so the virtual address must differ from the real address on every RouterOS
+member.
+
+The current master's `preemption-mode` setting decides whether it gives up the role to a router with
+a higher priority that appears later:
+
+- `yes` (default) - The master yields, and the higher-priority router becomes master.
+- `no` - The master keeps the role until it fails, even when a higher-priority router is available.
+
+The setting on a backup does not change this decision. Set the same value on all members so the
+result does not depend on which router is master.
+
+## Configuration
+
+### IPv4
+
+Create the VRRP interface on the LAN-facing interface, add the router's real address to that
+interface, and add the shared virtual address to the VRRP interface:
+
+```ros
+/interface/vrrp/add name=vrrp1 interface=ether5
+/ip/address/add address=192.168.1.2/24 interface=ether5
+/ip/address/add address=192.168.1.1/32 interface=vrrp1
+```
+
+Only the `interface` argument is required. The other settings take their defaults: `vrid=1`,
+`priority=100`, `interval=1s` and `authentication=none`. Name the interface explicitly, because
+RouterOS does not reuse automatically assigned names after an interface is deleted.
+
+The real address on the parent interface is required; without it, the VRRP interface stays invalid
+with the status comment `No IPv4 address!`. The virtual address needs a `/32` netmask when it belongs
+to the same subnet as an address on another interface of the router.
+
+:::note
+With strict reverse path filtering (`rp-filter=strict`), traffic sent to the virtual address can be
+dropped: packets arrive on the parent interface, but the route to the virtual address points at the
+VRRP interface. Set `rp-filter=loose` on routers that must reach the virtual address.
 :::
 
-### Hardware offloading
+Configure the second router the same way with its own real address, the same VRID and the same
+virtual address. The [configuration examples](./user-guides/vrrp-configuration-examples) show both
+routers and the failover test. Set the virtual address as the default gateway on the LAN hosts, for
+example with the `gateway` setting of the DHCP server, not the real address of either router.
 
-When a VRRP instance is in the master state and L3 hardware offloading is enabled, the instance is hardware-offloaded. The switch uses the virtual MAC address as the source MAC address for routed traffic. Frames addressed to the virtual MAC address are routed by the switch. The instance reports the read-only `hw-offloaded` property, shown as the `H` flag in `/interface/vrrp/print`.
+Check the state:
 
-Offloading is removed when the instance is not in the master state or L3 hardware offloading is disabled. VRRP hardware offloading is not available on every switch that supports L3 hardware offloading. For the configuration and the list of supported devices, see [L3 Hardware Offloading](../bridging-and-switching/l3-hardware-offloading).
+```ros
+/interface/vrrp/print
+Flags: R - RUNNING; M - MASTER
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#    NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0 RM vrrp1  ether5     00:00:5E:00:01:01     1       100  1s  3  ipv4  no
+```
 
-### Owner
+The `M` flag marks the master, `B` the backup and `F` the failure state. An instance that cannot
+start shows `I` (invalid) and the reason as a status comment, for example `No IPv4 address!`.
 
-An Owner router for a VR is the default Master router and operates as the Owner for all subnets included in the VR. Priority on an owner router must be the highest value (255) and the virtual IP is the same as the real IP (owns the virtual IP address).
+### IPv6
 
-:::warning
-RouterOS cannot be configured as Owner. The Pure virtual IP configuration is the only valid configuration unless a non-RouterOS device is set as the owner.
+VRRPv3 is required for IPv6. Create the interface with `v3-protocol=ipv6` and add a global address
+with `advertise=yes`:
 
-:::
+```ros
+/interface/vrrp/add name=vrrp6 interface=ether5 vrid=6 v3-protocol=ipv6
+/ipv6/address/add address=fd00:1::1/64 advertise=yes interface=vrrp6
+```
 
-### Master
+The VRRP interface receives a link-local address automatically and uses it for advertisements. With
+`advertise=yes`, the master advertises the prefix in Router Advertisements. The IPv6 virtual router is
+independent of an IPv4 one on the same interface and needs its own VRID.
 
-A master router in a VR operates as the physical gateway for the network for which it is configured. The selection of the Master is controlled by priority value. The Master state describes the behavior of the Master router. In the example network, **R1** is the Master router. When R1 is no longer available R2 becomes master.
+## Connection tracking synchronization
 
-### Backup
-
-VR must contain at least one Backup router. A backup router must be configured with the same virtual IP as the Master for that VR. The default priority for Backup routers is 100. When the current master router is no longer available, a backup router with the highest priority will become a current master. Every time a router with higher priority becomes available it is switched to master. Sometimes this behavior is not necessary. To override it preemption mode should be disabled.
-
-### Virtual Address
-
-![](./img/vrrp-02.webp)
-
-The Virtual IP associated with VR must be identical and set on all VR nodes. All virtual and real addresses should be from the same network.
-
-:::warning
-RouterOS can not be configured as Owner. VRRP address and real IP address should not be the same.
-
-:::
-
-If the Master of VR is associated with multiple IP addresses, then Backup routers belonging to the same VR must also be associated with the same set of virtual IP addresses. If the virtual address on the Master is not also on Backup, a misconfiguration exists and VRRP advertisement packets will be discarded.
-
-All Virtual Router members can be configured so that the virtual IP is not the same as the physical IP. Such a virtual address can be called a floating or pure virtual IP address. The advantage of this setup is the flexibility given to the administrator. Since the virtual IP address is not the real address of any one of the participating routers, the administrator can change these physical routers or their addresses without any need to reconfigure the virtual router itself.
-
-In IPv6 networks, the first address is always a link-local address associated with VR. If multiple IPv6 addresses are configured, then they are added to the advertisement packet after the link-local address.
-
-### IPv4 ARP
-
-The Master for a given VR responds to ARP requests with the VR's assigned MAC address. The virtual MAC address is also used as the source MAC address for advertisement packets sent by the Master. To ARP requests for non-virtual IP addresses, the router responds with the system MAC address. Backup routers are not responding to ARP requests for Virtual IPs.
-
-### IPv6 ND
-
-As you may know, in IPv6 networks, the Neighbor Discovery protocol is used instead of ARP. When a router becomes the Master, an unsolicited ND Neighbor Advertisement with the Router Flag is sent for each IPv6 address associated with the virtual router.
-
-## VRRP state machine
-
-![](./img/vrrp-03.webp)
-
-As you can see from the diagram, each VRRP node can be in one of three states:
-
-- Init state
-- Backup state
-- Master state
-
-### Init state
-
-The purpose of this state is to wait for a Startup event. When this event is received, the following actions are taken:
-
-- If priority is 255:
-- \* For IPv4 send advertisement packet and broadcast ARP requests.
-- \* For IPv6 send an unsolicited ND Neighbor Advertisement for each IPv6 address associated with the virtual router and set target address to link-local address associated with VR.
-- \* Transition to MASTER state.
-- Else transition to BACKUP state.
-
-### Backup state
-
-When in the backup state:
-
-- In IPv4 networks, a node is not responding to ARP requests and is not forwarding traffic for the IP associated with the VR.
-- In IPv6 networks, a node is not responding to ND Neighbor Solicitation messages and is not sending ND Router Advertisement messages for VR-associated IPv6 addresses.
-
-Routers' main task is to receive advertisement packets and check if the master node is available.
-
-The backup router will transition itself to the master state in two cases:
-
-- If the priority in the advertisement packet is 0.
-- When Preemption\_Mode is set to yes and Priority in the ADVERTISEMENT is lower than the local Priority.
-
-After the transition to Master state, the node is:
-
-- In IPv4 broadcasts a gratuitous ARP request.
-- In IPv6 sends an unsolicited ND Neighbor Advertisement for every associated IPv6 address.
-
-In other cases, advertisement packets will be discarded. When the shutdown event is received, transition to Init state.
-
-:::warning
-Preemption mode is ignored if the Owner router becomes available.
-
-:::
-
-### Master state
-
-When the MASTER state is set, the node functions as a forwarding router for IPv4/IPv6 addresses associated with the VR.
-
-In IPv4 networks, the Master node responds to ARP requests for the IPv4 address associated with the VR. In IPv6 networks, the Master node:
-
-- Responds to the ND Neighbor Solicitation message for the associated IPv6 address.
-- Sends ND Router Advertisements for the associated IPv6 addresses.
-
-If the advertisement packet is received by the master node:
-
-- If priority is 0, send advertisement immediately.
-- If priority in advertisement packet is greater than node's priority then transition to the backup state.
-- If priority in advertisement packet is equal to node's priority and primary IP Address of the sender is greater than the local primary IP Address, then transition to the backup state.
-- Ignore advertisement in other cases.
-
-When the shutdown event is received, send the advertisement packet with priority=0 and transition to Init state.
-
-### Connection tracking synchronization
-
-Similar to different High availability features, RouterOS v7 supports VRRP connection tracking synchronization.
-
-The VRRP connection tracking synchronization requires that RouterOS [connection tracking](../firewall-and-quality-of-service/connection-tracking.md) is running. By default, connection tracking is working in `auto` mode. If VRRP devices do not contain any firewall rules, you need to manually enable connection tracking:
+Connection tracking synchronization copies connection tracking entries from the master to the
+backup, so established connections can continue after a failover. The log and the status refer to it
+as CTSYNC. It requires connection tracking on both routers. Connection tracking is in `auto` mode by
+default, which disables it until a firewall rule needs it; enable it explicitly when the routers have
+no such rule:
 
 ```ros
 /ip/firewall/connection/tracking/set enabled=yes
 ```
 
-To sync connection tracking entries configure the device as follows:
+Enable synchronization on both routers of the pair:
 
 ```ros
-/interface/vrrp/set vrrp1 sync-connection-tracking=yes
+/interface/vrrp/set [find name=vrrp1] sync-connection-tracking=yes
 ```
 
-Verify configuration in the logging section:
+The routers exchange synchronization data over UDP port 8275. If the firewall filters traffic between
+the routers, allow this port in the input chain on both of them.
+
+The log shows the synchronization state, for example on the master:
+
+```text
+2026-11-13 14:52:10 vrrp,info vrrp1 now MASTER, master down timer
+2026-11-13 14:52:10 vrrp,info vrrp1 stop CTSYNC
+2026-11-13 14:52:10 vrrp,info vrrp1 starting CTSYNC MASTER
+2026-11-13 14:52:10 vrrp,info Obtaining CTSYNC Backup IP address...
+2026-11-13 14:52:11 vrrp,info Waiting for CTSYNC Backup...
+2026-11-13 14:52:11 vrrp,info CTSYNC Backup ready
+2026-11-13 14:52:11 vrrp,info Initial CTSYNC complete
+```
+
+In the default `passive-active` mode, only the master sends connection tracking data. Use
+`active-active` mode when several VRRP groups spread the master role across routers; every group then
+needs its own `connection-tracking-port`. See the [`/interface/vrrp`](../cli-reference/interface/vrrp)
+CLI reference for the synchronization arguments.
+
+## Group authority
+
+Several VRRP interfaces on the same router can be grouped so that they share one state. This matters
+when the router performs NAT between two interfaces: if the LAN instance is master and the WAN
+instance is backup, the router forwards traffic for one interface but not the other, and NAT fails.
+In a group, all members share one state, so they are master or backup together.
+
+One interface is the group authority. It controls the state of the other members and is the only
+interface that sends advertisements. A group member follows the authority. A failure on any member,
+for example a link-down on its parent interface, moves the whole group to the failure state.
+
+Create the group from the interfaces and their addresses:
 
 ```ros
-16:14:06 vrrp,info vrrp1 now MASTER, master down timer
-16:14:06 vrrp,info vrrp1 stop CONNTRACK
-16:14:06 vrrp,info vrrp1 starting CONNTRACK MASTER
+/interface/vrrp/add name=vrrp-lan interface=bridge vrid=2
+/interface/vrrp/add name=vrrp-wan interface=ether1 vrid=1
+/ip/address/add address=192.168.10.2/24 interface=bridge
+/ip/address/add address=192.168.10.1/32 interface=vrrp-lan
+/ip/address/add address=192.0.2.2/24 interface=ether1
+/ip/address/add address=192.0.2.1/32 interface=vrrp-wan
+/interface/vrrp/set [find name=vrrp-lan] group-authority=self
+/interface/vrrp/set [find name=vrrp-wan] group-authority=vrrp-lan
 ```
 
-Connection tracking entries are synchronized only from the Master to the Backup device.
+Use the LAN interface as the authority so that VRRP control traffic stays in the internal network.
+Every member needs a real address on its parent interface and a virtual address; otherwise it stays
+invalid with the status comment `No IPv4 address!`, and a member whose authority is not ready shows
+`VRRP Group is not ready!`.
 
-When both `sync-connection-tracking` and `preemption-mode` are enabled, and a router with higher VRRP priority becomes online, the connections get synchronized first, and only then the router with higher priority becomes the VRRP master.
+## Hardware offloading
 
-:::tip
-If multiple VRRP interfaces are configured between two units and `sync-connection-tracking=yes` is required, it must be enabled only on one of the VRRP interfaces, preferably the one designated as the `group-authority`.
+A master VRRP instance is hardware-offloaded when L3 hardware offloading is enabled. The switch then
+uses the virtual MAC address as the source for routed traffic and routes frames addressed to the
+virtual MAC address. The instance reports the read-only `hw-offloaded` property as the `H` flag in
+`/interface/vrrp/print`.
 
-:::
+Offloading is removed when the instance is not master or when L3 hardware offloading is disabled.
+VRRP hardware offloading is not available on every switch that supports L3 hardware offloading. See
+[L3 Hardware Offloading](../bridging-and-switching/l3-hardware-offloading) for the configuration and
+the list of supported devices.
 
-Example `connection-tracking-mode` configuration:
+## Troubleshooting
 
-```
-R1
-/interface/vrrp
-add connection-tracking-mode=active-active connection-tracking-port=8275 interface=ether1 name=vrrp30 priority=100 sync-connection-tracking=yes vrid=1
-add connection-tracking-mode=active-active connection-tracking-port=8276 interface=ether1 name=vrrp40 priority=100 sync-connection-tracking=yes vrid=2
+### All routers are master
 
-R2
-/interface/vrrp
-add connection-tracking-mode=active-active connection-tracking-port=8275 interface=ether1 name=vrrp30 priority=55 sync-connection-tracking=yes vrid=1
-add connection-tracking-mode=active-active connection-tracking-port=8276 interface=ether1 name=vrrp40 priority=155 sync-connection-tracking=yes vrid=2
-```
+Members that cannot hear each other all become master. Check that both routers use the same VRID,
+version, `v3-protocol`, virtual addresses and advertisement interval. The log shows why an
+advertisement was rejected:
 
-`group-authority` configuration example:
+- `misconfigured interval (1 != 2)` - The advertisement intervals differ.
+- `misconfigured authentication type` or `simple authentication failed` - VRRPv2 authentication does
+  not match.
+- `bad checksum` - The `v3-checksum-as-v2` setting differs between the routers.
+- `misconfigured IP addresses [192.168.1.253](my) != [192.168.1.1](received)` - The virtual address
+  sets differ.
 
-VRRP instances run on LAN and WAN networks with NAT between them. If one VRRP instance is Master and the other is Backup on the same device, the entire network malfunctions due to NAT failure. Grouping LAN and WAN VRRP interfaces ensures that both are either VRRP Master or Backup. In a VRRP group, VRRP advertisements are sent only by the group authority. In a typical WAN+LAN setup, you should use the LAN network as the group authority to keep VRRP control traffic in the internal network.
+A firewall that drops IP protocol 112 also prevents the routers from hearing each other. Allow VRRP
+in the input chain on both routers.
 
-```
-/interface/vrrp
-add name=vrrp-wan interface=sfp-sfpplus1 vrid=1 priority=100
-add name=vrrp-lan interface=bridge1 vrid=2 priority=100
-set [find] group-authority=vrrp-lan
-```
+### The VRRP interface is invalid
 
-## Configuring VRRP
+An `I` flag means that the instance cannot run. The status comment gives the reason:
 
-### IPv4
+- `No IPv4 address!` - The parent interface has no address, or the VRRP interface has no virtual
+  address.
+- `VRRP Group is not ready!` - The group authority is not ready.
 
-Setting up a Virtual Router is quite easy, only two actions are required - create a VRRP interface and set Virtual Router's IP address.
+### A backup does not take over
 
-For example, add VRRP to ether1 and set VR's address to 192.168.1.1
+Check that the backup has the same virtual address and VRID and that its parent interface is up.
+When the master is still reachable, a backup with a lower priority stays backup; if the priorities
+are equal, the router with the lower primary IP address stays backup. Only a higher priority, or an
+equal priority with a higher primary IP address, triggers preemption. If the master's
+`preemption-mode` is `no`, it also keeps the role after a higher-priority router returns.
 
-```ros
-/interface/vrrp/add name=vrrp1 interface=ether1
-/ip/address/add address=192.168.1.2/24 interface=ether1
-/ip/address/add address=192.168.1.1/32 interface=vrrp1
-```
+### Connection tracking synchronization does not start
 
-Notice that only the 'interface' parameter was specified when adding VRRP. It is the only parameter required to be set manually. Other parameters, if not specified, will be set to their defaults: `vrid=1, priority=100` and `authentication=none`.
+Check that `sync-connection-tracking` is enabled on both routers and that connection tracking is
+enabled; otherwise the VRRP interface shows the status comment `Connection tracking inactive!` and
+nothing is synchronized. Allow UDP port 8275 between the routers. If the synchronization data must
+use a different path than the VRRP advertisements, set `remote-address` to the other router's
+address.
 
-:::warning
-The address on the VRRP interface must have a /32 netmask if the address configured on VRRP is from the same subnet as on any other interface of the router.
+### No traffic after a failover
 
-:::
+Confirm that the backup became master and has the virtual address configured. Check the ARP or
+Neighbor Discovery entry for the virtual address on a host: it must resolve to the virtual MAC
+address, not to the MAC address of a physical interface.
 
-Before VRRP can operate correctly, a correct IP address is required on ether1. In this example, it is 192.168.1.2/24.
+## Technical details
 
-### IPv6
+### Router states
 
-To make VRRP work in IPv6 networks, several additional options must be enabled - v3 support is required and the protocol type should be set to IPv6:
+![VRRP state transitions between Init, Backup and Master](./img/vrrp-03.webp)
 
-```ros
-/interface/vrrp/add name=vrrp1 interface=ether1 version=3 v3-protocol=ipv6
-```
+The protocol defines three states:
 
-Now when the VRRP interface is set, we can add a global address and enable ND advertisement:
+- **Init** - The instance is waiting to start. RouterOS instances do not use the owner startup path,
+  because priority 255 is rejected.
+- **Backup** - The instance listens for advertisements and does not forward traffic for the virtual
+  addresses. It becomes master when the master-down timer expires, when it receives an advertisement
+  with priority 0, or when preemption applies and its own priority is higher.
+- **Master** - The instance forwards traffic for the virtual addresses, answers ARP and Neighbor
+  Discovery requests, and sends advertisements. If it receives an advertisement with a higher
+  priority, or with an equal priority from a router with a higher primary IP address, it returns to
+  the backup state. When its VRRP interface is disabled, it sends an advertisement with priority 0,
+  so the backups take over without waiting for the master-down timer.
 
-```ros
-/ipv6/address/add address=FEC0:0:0:FFFF::1/64 advertise=yes interface=vrrp1
-```
+RouterOS reports an additional failure state with the `F` flag when the parent interface is down or a
+group member has failed; the instance cannot forward traffic for the virtual addresses until the
+failure clears.
 
-No additional address configuration is required as it is in the IPv4 case. IPv6 uses link-local addresses to communicate between nodes.
+The master-down timer is three advertisement intervals plus a priority-dependent skew. A backup that
+receives an advertisement with a differing interval, authentication or virtual address set discards
+it and logs the reason.
+
+### Owner
+
+RFC 3768 and RFC 5798 define an owner as the router whose interface address is the virtual address;
+it has priority 255 and becomes master immediately. RouterOS cannot be configured as an owner:
+`priority=255` is rejected with `value of priority out of range (1..254)`, and the virtual address
+must be a separate address (a floating or pure virtual address). Use the same floating virtual
+address on every member, and configure it on the VRRP interface on each router.
+
+### Authentication
+
+VRRPv2 supports `none`, `simple` (a cleartext password) and `ah` (IP Authentication Header with
+HMAC-MD5). RFC 5798 deprecates authentication for VRRPv3. All members of a VRRPv2 virtual router
+must use the same authentication method and password.
+
+The menu and its arguments are described in the
+[`/interface/vrrp`](../cli-reference/interface/vrrp) CLI reference.

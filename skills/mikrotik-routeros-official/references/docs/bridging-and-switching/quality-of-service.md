@@ -420,7 +420,7 @@ TO_CPU traffic uses only two priorities. `queue1` is the highest, unlike the eig
 
 #### Default High-Priority Traffic
 
-The switch assigns the high-priority CPU queue to control traffic trapped by these CPU codes:
+The switch assigns the high-priority CPU queue to control traffic trapped by these traffic types:
 
 - Spanning tree BPDUs and other reserved multicast control frames in the `01:80:C2:00:00:0x` range, including LACP, 802.1X, MVRP, LLDP, and MLAG.
 - IPv6 ICMP and neighbor discovery.

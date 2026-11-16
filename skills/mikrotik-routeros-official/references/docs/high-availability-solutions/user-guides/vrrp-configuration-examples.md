@@ -1,98 +1,116 @@
 # VRRP Configuration Examples
 
-> This page provides basic VRRP configuration examples for MikroTik RouterOS, demonstrating how to set up master-backup redundancy between two routers with IP address sharing and ARP table updates during failover.
+> Basic VRRP configuration examples for RouterOS: a master and backup pair with a shared gateway, load sharing with two virtual routers, and a pair without preemption.
 
 # VRRP Configuration Examples
 
-## Basic Setup
+These examples configure a redundant gateway with two RouterOS routers, R1 and R2. The examples use
+`ether5` as the LAN-facing interface; replace it with the interface or bridge that connects to the
+LAN. The routers share the VRID, the virtual address and the advertisement interval, and both run the
+same RouterOS version.
 
-This is the basic VRRP configuration example.
+See [VRRP](../vrrp) for the protocol, the virtual MAC address, master election and preemption.
 
-:::info
-Note
+## Basic setup
 
-It is recommended to use the same version of RouterOS for all devices with the same VRID used to implement VRRP.
+As long as R1 is available, it is the master and forwards all traffic for the virtual address. R2 is
+the backup and stays idle. If R1 fails, R2 becomes master and continues to answer for the same
+address, so the hosts' gateway setting does not change.
 
-:::
-
-![](./img/vrrp-configuration-examples-01.webp)
-
-According to this configuration, as long as the master, R1, is functional, all traffic destined for the external network gets directed to R1. But as soon as R1 fails, R2 takes over as the master and starts handling packets forwarded to the interface associated with IP(R1). In this setup router "R2" is completely idle during the Backup period.
-
-## Configuration
+```mermaid
+graph LR
+    hosts["LAN hostsgateway 192.168.1.1"] --> r1["R1192.168.1.10/24priority 254master"]
+    hosts -.-> r2["R2192.168.1.20/24priority 100backup"]
+```
 
 ### R1 configuration
 
 ```ros
-/ip/address/add address=192.168.1.10/24 interface=ether1
-/interface/vrrp/add interface=ether1 vrid=49 priority=254
+/ip/address/add address=192.168.1.10/24 interface=ether5
+/interface/vrrp/add name=vrrp1 interface=ether5 vrid=49 priority=254
 /ip/address/add address=192.168.1.1/32 interface=vrrp1
 ```
 
 ### R2 configuration
 
 ```ros
-/ip/address/add address=192.168.1.20/24 interface=ether1
-/interface/vrrp/add interface=ether1 vrid=49
+/ip/address/add address=192.168.1.20/24 interface=ether5
+/interface/vrrp/add name=vrrp1 interface=ether5 vrid=49
 /ip/address/add address=192.168.1.1/32 interface=vrrp1
 ```
 
-### Testing
+Both routers have the same VRID and the same virtual address. R1 has the higher priority and is the
+master. Name the VRRP interface explicitly on both routers so that the name does not depend on
+automatically assigned numbers.
 
-First of all, check if both routers have correct flags at VRRP interfaces. On router R1 it should look like this.
+### Check the result
 
-```ros
-/interface/vrrp/print detail
- 0   RM name="vrrp1" mtu=1500 mac-address=00:00:5E:00:01:31 arp=enabled interface=ether1 vrid=49 
-        priority=254 interval=1 preemption-mode=yes authentication=none password="" on-backup="" 
-        on-master="" version=3 v3-protocol=ipv4
-```
-
-and on router R2:
+On R1:
 
 ```ros
 /interface/vrrp/print detail
- 0    B name="vrrp1" mtu=1500 mac-address=00:00:5E:00:01:31 arp=enabled interface=ether1 vrid=49 
-        priority=100 interval=1 preemption-mode=yes authentication=none password=""
-         on-backup="" on-master="" version=3 v3-protocol=ipv4
+Flags: R - RUNNING; M - MASTER
+0 RM name="vrrp1" mtu=1500 mac-address=00:00:5E:00:01:31 arp=enabled
+     arp-timeout=auto interface=ether5 group-authority="" vrid=49 priority=254
+     interval=1s preemption-mode=yes authentication=none on-backup=""
+     on-master="" on-fail="" version=3 v3-protocol=ipv4 v3-checksum-as-v2=no
+     sync-connection-tracking=no connection-tracking-mode=passive-active
 ```
 
-As you can see VRRP interface MAC addresses are identical on both routers. Now to check if VRRP is working correctly, try to ping the virtual address from a client and check ARP entries:
+On R2:
 
 ```ros
-[admin@client] > /ping 192.168.1.1
-192.168.1.1 64 byte ping: ttl=64 time=10 ms
-192.168.1.1 64 byte ping: ttl=64 time=8 ms
-2 packets transmitted, 2 packets received, 0% packet loss
-round-trip min/avg/max = 8/9.0/10 ms
+/interface/vrrp/print detail
+Flags: B - BACKUP
+0 B name="vrrp1" mtu=1500 mac-address=00:00:5E:00:01:31 arp=enabled
+    arp-timeout=auto interface=ether5 group-authority="" vrid=49 priority=100
+    interval=1s preemption-mode=yes authentication=none on-backup=""
+    on-master="" on-fail="" version=3 v3-protocol=ipv4 v3-checksum-as-v2=no
+    sync-connection-tracking=no connection-tracking-mode=passive-active
 ```
 
-Now unplug the ether1 cable on router R1. R2 will become VRRP master, and the ARP table on a client will not change, but traffic will start to flow over the R2 router.
+The virtual MAC address is the same on both routers. The master sends advertisements and answers ARP
+requests for 192.168.1.1 with this address; the backup only listens.
 
-:::info
-In case VRRP is used with Reverse Path Filtering, it is recommended that `rp-filter` is set to `loose`, otherwise, the VRRP interface might not be reachable.
+To test a failover, disable the VRRP interface on R1 (`/interface/vrrp/disable [find name=vrrp1]`) or
+disconnect the interface it runs on. A disabled master sends an advertisement with priority 0, so R2
+takes over at once; after a disconnect, R2 becomes master when the master-down timer expires:
 
-:::
+On R2:
+
+```ros
+/interface/vrrp/print
+Flags: R - RUNNING; M - MASTER
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#    NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0 RM vrrp1  ether5     00:00:5E:00:01:31    49       100  1s  3  ipv4  no
+```
+
+Enable R1 again (`/interface/vrrp/enable [find name=vrrp1]`) or reconnect its interface. Preemption
+is enabled by default, so R1 returns to the master role and R2 becomes backup. The virtual MAC
+address does not change, so hosts keep the same gateway address in their ARP entry, and the new
+master announces it.
 
 ## Load sharing
 
-In the basic configuration example, R2 is completely idle during the Backup state. This behavior may be considered a waste of valuable resources. In such circumstances, the R2 router can be set as the gateway for some clients.
-The obvious advantage of this configuration is the establishment of a load-sharing scheme. But by doing so, the R2 router is not protected by the current VRRP setup.  
-To make this setup work we need two virtual routers.
+In the basic setup R2 is idle while it is the backup. With two virtual routers, each router can be
+the master for one address and the backup for the other, so both routers forward traffic and each
+backs up the other. This example replaces the basic setup; remove its VRRP interfaces and addresses
+on both routers first.
 
-![](./img/vrrp-configuration-examples-02.webp)
+![Load sharing with two virtual routers: in V1 (VRID 49) R1 is the master and R2 the backup, in V2 (VRID 77) R2 is the master and R1 the backup; clients on the LAN use 192.168.1.253 or 192.168.1.254 as their gateway.](./img/vrrp-configuration-examples-02.webp)
 
-Configuration for the V1 virtual router will be identical to a configuration in the basic example - R1 is the Master and R2 is the Backup router. In V2 the Master is R2 and the Backup is R1.  
-With this configuration, we establish load-sharing between R1 and R2; moreover, we create a protection setup by having two routers acting as backups for each other.
-
-## Configuration
+In V1, R1 is the master and R2 is the backup. In V2, the roles are reversed. If one router fails, the
+other takes over both virtual addresses. Each host uses one of the two addresses as its default
+gateway: some hosts use 192.168.1.253, the others use 192.168.1.254.
 
 ### R1 configuration
 
 ```ros
-/ip/address/add address=192.168.1.1/24 interface=ether1
-/interface/vrrp/add interface=ether1 vrid=49 priority=254
-/interface/vrrp/add interface=ether1 vrid=77 
+/ip/address/add address=192.168.1.1/24 interface=ether5
+/interface/vrrp/add name=vrrp1 interface=ether5 vrid=49 priority=254
+/interface/vrrp/add name=vrrp2 interface=ether5 vrid=77
 /ip/address/add address=192.168.1.253/32 interface=vrrp1
 /ip/address/add address=192.168.1.254/32 interface=vrrp2
 ```
@@ -100,27 +118,81 @@ With this configuration, we establish load-sharing between R1 and R2; moreover, 
 ### R2 configuration
 
 ```ros
-/ip/address/add address=192.168.1.2/24 interface=ether1
-/interface/vrrp/add interface=ether1 vrid=49
-/interface/vrrp/add interface=ether1 vrid=77 priority=254
+/ip/address/add address=192.168.1.2/24 interface=ether5
+/interface/vrrp/add name=vrrp1 interface=ether5 vrid=49
+/interface/vrrp/add name=vrrp2 interface=ether5 vrid=77 priority=254
 /ip/address/add address=192.168.1.253/32 interface=vrrp1
 /ip/address/add address=192.168.1.254/32 interface=vrrp2
 ```
 
-## VRRP without Preemption
+Both virtual addresses are configured on both routers. The priorities give R1 the master role for
+VRID 49 and R2 the master role for VRID 77.
 
-Each time the router with a higher priority becomes available it becomes the Master router. Sometimes this is not the desired behavior and can be turned off by setting `preemption-mode=no` in VRRP configuration.
+### Check the result
 
-### Configuration
+On R1:
 
-We will be using the same setup as in the basic example. The only difference is that during configuration, set preemption-mode=no. It can be done easily by modifying the existing configuration:
+```ros
+/interface/vrrp/print
+Flags: R - RUNNING; M - MASTER, B - BACKUP
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#    NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0 RM vrrp1  ether5     00:00:5E:00:01:31    49       254  1s  3  ipv4  no
+1  B vrrp2  ether5     00:00:5E:00:01:4D    77       100  1s  3  ipv4  no
+```
+
+On R2:
+
+```ros
+/interface/vrrp/print
+Flags: R - RUNNING; M - MASTER, B - BACKUP
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#    NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0  B vrrp1  ether5     00:00:5E:00:01:31    49       100  1s  3  ipv4  no
+1 RM vrrp2  ether5     00:00:5E:00:01:4D    77       254  1s  3  ipv4  no
+```
+
+Traffic to 192.168.1.253 uses R1 and traffic to 192.168.1.254 uses R2 while both routers are
+available.
+
+## VRRP without preemption
+
+A router with a higher priority takes over when it becomes available. This is not always wanted, for
+example when the current master should keep the role until it fails. Disable preemption on the VRRP
+interfaces:
 
 ```ros
 /interface/vrrp/set [find] preemption-mode=no
 ```
 
-### Testing
+Run the command on both routers, so the behavior does not depend on which router is master. The
+command changes every VRRP interface on the router.
 
-Try turning off the R1 router, R2 will become the Master router because it has the highest priority among available routers.
+With the basic setup, R1 starts as master and R2 as backup. Disable the VRRP interface on R1
+(`/interface/vrrp/disable [find name=vrrp1]`); R2 becomes master. Enable it again
+(`/interface/vrrp/enable [find name=vrrp1]`); R1 returns as backup, and R2 keeps the master role even
+though R1 has the higher priority:
 
-Now turn the R1 router on and you will see that the R2 router continues to be the Master even if R1 has the higher priority.
+On R1:
+
+```ros
+/interface/vrrp/print
+Flags: B - BACKUP
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#   NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0 B vrrp1  ether5     00:00:5E:00:01:31    49       254  1s  3  ipv4  no
+```
+
+On R2:
+
+```ros
+/interface/vrrp/print
+Flags: R - RUNNING; M - MASTER
+Columns: NAME, INTERFACE, MAC-ADDRESS, VRID, PRIORITY, INTERVAL, VERSION, 
+         V3-PROTOCOL, SYNC-CONNECTION-TRACKING
+#    NAME   INTERFACE  MAC-ADDRESS        VRID  PRIORITY  IN  V  V3-P  SY
+0 RM vrrp1  ether5     00:00:5E:00:01:31    49       100  1s  3  ipv4  no
+```

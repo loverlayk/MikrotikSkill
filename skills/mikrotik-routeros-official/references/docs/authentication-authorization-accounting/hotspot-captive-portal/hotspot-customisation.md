@@ -1,174 +1,208 @@
 # Hotspot customisation
 
-> Customize HotSpot authentication pages by overriding default HTML files stored on the router's FTP server, specifying custom directories via 'html-directory-override' in HotSpot profiles. Choose from predefined pages...
+> Customise the HotSpot login, status, and logout pages: where the page files are, how to use your own directory, the variables and conditions that the pages can use, error messages, translations, and examples such as...
 
 # Hotspot customisation
 
-#### Introduction
+The pages that the [HotSpot](./) shows to its users are HTML files on the router. You can edit them, or give each HotSpot server profile its own set of pages. The pages contain variables, for example `$(username)`, which the router replaces with their values when it serves a page.
 
-You can create a completely different set of servlet pages for each HotSpot server you have, specifying the directory in the "html-directory-override" property of a HotSpot server profile `/ip/hotspot/profile`. The default servlet pages are copied in the "hotspot" directory right after you create the server profile. This directory can be accessed by connecting to the router with an FTP client. You can copy this directory and modify the pages as you like using the information from this section of the manual. Note that it is suggested to edit the files manually, as automated HTML editing tools may corrupt the pages by removing variables or other vital parts. After you are finished with content modification you need to upload this modified content to some custom directory on the hotspot router and point the previously mentioned property "html-directory-override" value as the path to this new custom HTML directory.
+## Where the pages are
 
-**Note:** If the "html-directory-override" value path is missing or empty then the hotspot server will revert to default HTML files.
+A router with a HotSpot server has the `hotspot` directory in its files, with the default pages. The `html-directory` setting of the server profile in `/ip/hotspot/profile` points to this directory.
 
-#### Available Pages
+To make your own pages:
 
-Main HTML servlet pages, which are shown to the user:
+1. Download the `hotspot` directory from the files of the router to your computer.
+2. Edit the pages. Use a text editor: an HTML editor can remove the variables and the other parts that the HotSpot needs.
+3. Upload the directory to the router under another name, for example `hs-custom`.
+4. Set the directory in the server profile:
 
-- **redirect.html** - Redirects the user to another URL (for example, to the login page).
-- **login.html** - Login page shown to a user to ask for a username and password. This page may take the following parameters:
-  - **username** - Username.
-  - **password** - Either a plain-text password (in case of PAP authentication) or an MD5 hash of the chap-id variable, password, and CHAP challenge (in case of CHAP authentication). This value is used as an e-mail address for trial users.
-  - **dst** - Original URL requested before the redirect. This will be opened on successful login.
-  - **popup** - Whether to pop up a status window on successful login.
-  - **radius\<id>** - Send the attribute identified with \<id> in text string form to the RADIUS server (in case RADIUS authentication is used; lost otherwise).
-  - **radius\<id>u** - Send the attribute identified with \<id> in unsigned integer form to the RADIUS server (in case RADIUS authentication is used; lost otherwise).
-  - **radius\<id>-\<vnd-id>** - Send the attribute identified with \<id> and vendor ID \<vnd-id> in text string form to the RADIUS server (in case RADIUS authentication is used; lost otherwise).
-  - **radius\<id>-\<vnd-id>u** - Send the attribute identified with \<id> and vendor ID \<vnd-id> in unsigned integer form to the RADIUS server (in case RADIUS authentication is used; lost otherwise).
-- **md5.js** - JavaScript for MD5 password hashing. Used together with http-chap login method.
-- **alogin.html** - Page shown after a client has logged in. It pops up the status page and redirects the browser to the originally requested page (before he/she was redirected to the HotSpot login page).
-- **status.html** - Status page, shows statistics for the client. It is also able to display advertisements automatically.
-- **logout.html** - Logout page, shown after a user is logged out. Shows final statistics about the finished session. This page may take the following additional parameters:
-  - **erase-cookie** - Whether to erase cookies from the HotSpot server on logout (makes it impossible to log in with a cookie next time from the same browser, might be useful in multiuser environments).
-- **error.html** - Error page, shown on fatal errors only.
+   ```ros
+   /ip/hotspot/profile/set hsprof1 html-directory-override=hs-custom
+   ```
 
-Some other pages are available as well, if more control is needed:
+Open the login page, `http://hotspot.lan/login`, to check the result. If the directory in `html-directory-override` does not exist, the HotSpot uses the pages from `html-directory`.
 
-- **rlogin.html** - page that redirects the client from some other URL to the login page, if authorization of the client is required to access that URL
-- **rstatus.html** - similar to rlogin.html, only in case the client is already logged in and the original URL is not known
-- **radvert.html** - redirects the client to the scheduled advertisement link
-- **flogin.html** - shown instead of login.html, if some error has happened (invalid username or password, for example)
-- **fstatus.html** - shown instead of redirect, if a status page is requested, but the client is not logged in
-- **flogout.html** - shown instead of redirect, if the logout page is requested, but the client is not logged in
+To get the default pages back in the `html-directory` of a server, for example after an edit that broke the login page, run:
 
-#### Serving Servlet Pages
-
-The HotSpot servlet recognizes 5 different request types:
-
-1. **Request for a remote host**
-   - If the user is logged in and the advertisement is due to be displayed, radvert.html is displayed. This page redirects to the scheduled advertisement page.
-   - If the user is logged in and the advertisement is not scheduled for this user, the requested page is served.
-   - If the user is not logged in, but the destination host is allowed by the walled garden, then the request is also served.
-   - If the user is not logged in, and the destination host is disallowed by the walled garden, rlogin.html is displayed; if rlogin.html is not found, redirect.html is used to redirect to the login page.
-2. **Request for "/" on the HotSpot host**
-   - If the user is logged in, rstatus.html is displayed; if rstatus.html is not found, redirect.html is used to redirect to the status page.
-   - If the user is not logged in, rlogin.html is displayed; if rlogin.html is not found, redirect.html is used to redirect to the login page.
-3. **Request for "/login" page**
-   - If the user has successfully logged in (or is already logged in), alogin.html is displayed; if alogin.html is not found, redirect.html is used to redirect to the originally requested page or the status page (in case the original destination page was not given).
-   - If the user is not logged in (username was not supplied, no error message appeared), login.html is shown.
-   - If the login procedure has failed (an error message is supplied), flogin.html is displayed; if flogin.html is not found, login.html is used.
-   - In case of fatal errors, error.html is shown.
-4. **Request for "/status" page**
-   - If the user is logged in, status.html is displayed.
-   - If the user is not logged in, fstatus.html is displayed; if fstatus.html is not found, redirect.html is used to redirect to the login page.
-5. **Request for '/logout' page**
-   - If the user is logged in, logout.html is displayed.
-   - If the user is not logged in, flogout.html is displayed; if flogout.html is not found, redirect.html is used to redirect to the login page.
-
-**Note:** If it is not possible to meet a request using the pages stored on the router's FTP server, Error 404 is displayed.
-
-There are many ways to customize what the HotSpot authentication pages look like:
-
-- The pages are easily modifiable. They are stored on the router's FTP server in the directory you choose for the respective HotSpot server profile.
-- By changing the variables, which the client sends to the HotSpot servlet, it is possible to reduce the keyword count to one (username or password; for example, the client's MAC address may be used as the other value) or even to zero (License Agreement; some predefined values general for all users or the client's MAC address may be used as username and password).
-- Registration may occur on a different server (for example, on a server that is able to charge Credit Cards). The client's MAC address may be passed to it, so that this information doesn't have to be entered manually. After the registration, the server should change the RADIUS database enabling the client to log in for some amount of time.
-
-To insert a variable in some place in the HTML file, the $(var\_name) syntax is used, where the "var\_name" is the name of the variable (without quotes). This construction may be used in any HotSpot HTML file accessed as '/', '/login', '/status' or '/logout', as well as any text or HTML (.txt, .htm or .html) file stored on the HotSpot server (with the exception of traffic counters, which are available in the status page only, and **error**, **error-orig**, **chap-id**, **chap-challenge** and **popup** variables, which are available in the login page only). For example, to show a link to the login page, the following construction can be used:
-
+```ros
+/ip/hotspot/reset-html hotspot1
 ```
+
+## Pages
+
+The pages that the user sees:
+
+- **redirect.html** - redirects the user to another URL, for example to the login page.
+- **login.html** - the login page, which asks for a user name and password. The page accepts these parameters:
+  - **username** - the user name.
+  - **password** - the plain-text password (`http-pap` and `https` login), or the MD5 hash of the chap-id variable, the password, and the CHAP challenge (`http-chap` login). For trial users this value is used as an e-mail address.
+  - **dst** - the URL that the user requested before the redirect. It is opened after a successful login.
+  - **popup** - whether to open the status page in a pop-up window after a successful login.
+  - **radius\<id>** - send the attribute with this ID to the RADIUS server as a text string. Only with RADIUS authentication.
+  - **radius\<id>u** - the same, as an unsigned integer.
+  - **radius\<id>-\<vnd-id>** - send the attribute with this ID and vendor ID to the RADIUS server as a text string.
+  - **radius\<id>-\<vnd-id>u** - the same, as an unsigned integer.
+- **md5.js** - JavaScript for the MD5 hash of the password, used by the `http-chap` login method.
+- **alogin.html** - shown after a successful login. It opens the status page in a pop-up window and redirects the browser to the page that the user requested.
+- **status.html** - the status page with the statistics of the session and the logout button. It also opens advertisements.
+- **logout.html** - shown after logout, with the statistics of the finished session. The page accepts this parameter:
+  - **erase-cookie** - `on` or `true` removes the cookie of the user on logout, so the browser is not logged in automatically the next time.
+- **error.html** - shown on fatal errors.
+- **errors.txt** - the texts of the error messages.
+
+Pages for more control. If such a page does not exist, the HotSpot uses the page named in its description:
+
+- **rlogin.html** - redirects a user who is not logged in from the requested URL to the login page. The default page answers with the HTTP status 302.
+- **rstatus.html** - redirects a logged-in user who requests the HotSpot address to the status page. Not in the default set; `redirect.html` is used.
+- **radvert.html** - redirects the user to the advertisement that is due.
+- **flogin.html** - shown instead of `login.html` after a failed login. Not in the default set; `login.html` is used.
+- **fstatus.html** - shown when the status page is requested by a user who is not logged in. Not in the default set; `redirect.html` is used.
+- **flogout.html** - shown when the logout page is requested by a user who is not logged in. Not in the default set; `redirect.html` is used.
+
+The `xml` sub-directory holds the pages for WISPr clients, which log in without a browser.
+
+### Which page is shown
+
+The HotSpot handles five kinds of requests:
+
+1. **A request for a remote host**
+   - The user is logged in and an advertisement is due: `radvert.html`, which redirects to the advertisement.
+   - The user is logged in and no advertisement is due: the requested page.
+   - The user is not logged in and the host is allowed by the walled garden: the requested page.
+   - The user is not logged in and the host is not allowed: `rlogin.html`, or `redirect.html` to the login page.
+2. **A request for `/` on the HotSpot address**
+   - The user is logged in: `rstatus.html`, or `redirect.html` to the status page.
+   - The user is not logged in: `rlogin.html`, or `redirect.html` to the login page.
+3. **A request for `/login`**
+   - The login succeeded, or the user is already logged in: `alogin.html`, or `redirect.html` to the requested page or the status page.
+   - No user name was sent: `login.html`.
+   - The login failed: `flogin.html`, or `login.html`, with the error message.
+   - Fatal error: `error.html`.
+4. **A request for `/status`**
+   - The user is logged in: `status.html`.
+   - The user is not logged in: `fstatus.html`, or `redirect.html` to the login page.
+5. **A request for `/logout`**
+   - The user is logged in: `logout.html`.
+   - The user is not logged in: `flogout.html`, or `redirect.html` to the login page.
+
+## Variables
+
+To insert a value into a page, write `$(name)`, where `name` is the name of a variable. The router replaces the variables in the pages requested as `/`, `/login`, `/status`, and `/logout`, and in the other text and HTML files (`.txt`, `.htm`, `.html`) of the directory. For example, a link to the login page:
+
+```html
 login
-
 ```
 
-#### Variables
+For a client with the address 192.168.88.254 that requested `http://example.com/`, on a HotSpot with the DNS name `hotspot.lan`, this line of a page:
 
-All of the Servlet HTML pages use variables to show user specific values. Variable names appear only in the HTML source of the servlet pages - they are automatically replaced with the respective values by the HotSpot Servlet. For most variables, there is an example of their possible value included in brackets. All the described variables are valid in all servlet pages, but some of them just might be empty at the time they are accessed (for example, there is no uptime before a user has logged in).
-
-##### List of available variables
-
-**Note:** Some of the variables use hard-coded http URLs, if you are using https, you can construct the link in some other way, for example for $link-status, you can use https://$(hostname)/$(target-dir)status
-
-**Common server variables:**
-
-- **hostname** - DNS name or IP address (if DNS name is not given) of the HotSpot Servlet ("[hotspot.example.net](http://hotspot.example.net)").
-- **identity** - RouterOS identity name ("MikroTik").
-- **login-by** - Authentication method used by the user.
-- **plain-passwd** - A "yes/no" representation of whether HTTP-PAP login method is allowed ("no").
-- **server-address** - HotSpot server address ("10.5.50.1:80").
-- **ssl-login** - A "yes/no" representation of whether HTTPS method was used to access that servlet page ("no").
-- **server-name** - HotSpot server name (set in the `/ip/hotspot` menu, as the name property).
-
-**Links:**
-
-- **link-login** - link to the login page including the original URL requested ("[http://10.5.50.1/login?dst=http://www.example.com/](http://10.5.50.1/login?dst=http://www.example.com/)")
-- **link-login-only** - link to the login page, not including the original URL requested ("[http://10.5.50.1/login](http://10.5.50.1/login)")
-- **link-logout** - link to the logout page ("[http://10.5.50.1/logout](http://10.5.50.1/logout)")
-- **link-status** - link to the status page ("[http://10.5.50.1/status](http://10.5.50.1/status)")
-- **link-orig** - the original URL requested ("[http://www.example.com/](http://www.example.com/)")
-
-**General client information:**
-
-- **domain** - Domain name of the user ("[example.com](http://example.com)").
-- **interface-name** - Physical HotSpot interface name (in case of bridged interfaces, this will return the actual bridge port name).
-- **ip** - IP address of the client ("10.5.50.2").
-- **logged-in** - "yes" if the user is logged in, otherwise - "no" ("yes").
-- **mac** - MAC address of the user ("01:23:45:67:89:AB").
-- **trial** - A "yes/no" representation of whether the user has access to trial time. If the user's trial time has expired, the value is "no".
-- **username** - The name of the user ("John").
-- **host-ip** - Client IP address from the `/ip/hotspot/host` table.
-- **vlan-id** - Represents the ID of a VLAN interface from which the client is connected.
-
-**User status information:**
-
-- **idle-timeout** - Idle timeout ("20m" or "" if none).
-- **idle-timeout-secs** - Idle timeout in seconds ("88" or "0" if there is no such timeout).
-- **limit-bytes-in** - Byte limit for send ("1000000" or "---" if there is no limit).
-- **limit-bytes-out** - Byte limit for receive ("1000000" or "---" if there is no limit).
-- **refresh-timeout** - Status page refresh timeout ("1m30s" or "" if none).
-- **refresh-timeout-secs** - Status page refresh timeout in seconds ("90s" or "0" if none).
-- **session-timeout** - Session time left for the user ("5h" or "" if none).
-- **session-timeout-secs** - Session time left for the user, in seconds ("3475" or "0" if there is no such timeout).
-- **session-time-left** - Session time left for the user ("5h" or "" if none).
-- **session-time-left-secs** - Session time left for the user, in seconds ("3475" or "0" if there is no such timeout).
-- **uptime** - Current session uptime ("10h2m33s").
-- **uptime-secs** - Current session uptime in seconds ("125").
-
-**Traffic counters, which are available only on the status page:**
-
-- **bytes-in** - Number of bytes received from the user ("15423").
-- **bytes-in-nice** - User-friendly form of the number of bytes received from the user ("15423").
-- **bytes-out** - Number of bytes sent to the user ("11352").
-- **bytes-out-nice** - User-friendly form of the number of bytes sent to the user ("11352").
-- **packets-in** - Number of packets received from the user ("251").
-- **packets-out** - Number of packets sent to the user ("211").
-- **remain-bytes-in** - Remaining bytes until limit-bytes-in will be reached ("337465" or "---" if there is no limit).
-- **remain-bytes-out** - Remaining bytes until limit-bytes-out will be reached ("124455" or "---" if there is no limit).
-
-**Miscellaneous variables:**
-
-- **session-id** - Value of 'session-id' parameter in the last request.
-- **var** - Value of 'var' parameter in the last request.
-- **error** - Error message, if something failed ("invalid username or password").
-- **error-orig** - Original error message (without translations retrieved from errors.txt), if something failed ("invalid username or password").
-- **chap-id** - Value of chap ID ("\371").
-- **chap-challenge** - Value of chap challenge ("\357\015\330\013\021\234\145\245\303\253\142\246\133\175\375\316").
-- **popup** - Whether to pop-up checkbox ("true" or "false").
-- **advert-pending** - Whether an advertisement is pending to be displayed ("yes" or "no").
-- **http-status** - Allows the setting of the http status code and message.
-- **http-header** - Allows the setting of the http header.
-
-**RADIUS-related variables:**
-
-- **radius\<id>** - shows the attribute identified with \<id> in text string form (in case RADIUS authentication was used; "" otherwise)
-- **radius\<id>u** - shows the attribute identified with \<id> in unsigned integer form (in case RADIUS authentication was used; "0" otherwise)
-- **radius\<id>-\<vnd-id>** - shows the attribute identified with \<id> and vendor ID \<vnd-id> in text string form (in case RADIUS authentication was used; "" otherwise)
-- **radius\<id>-\<vnd-id>u** - shows the attribute identified with \<id> and vendor ID \<vnd-id> in unsigned integer form (in case RADIUS authentication was used; "0" otherwise)
-
-##### Working with variables
-
-$(if \<var\_name>) statements can be used in these pages. The following content will be included, if the value of \<var\_name> will not be an empty string. It is equivalent to $(if \<var\_name> != "") It is possible to compare on equivalence as well: $(if \<var\_name> == \<value>) These statements have effect until $(elif \<var\_name>), $(else) or $(endif). In the general case it looks like this:
-
+```text
+ip=$(ip) mac=$(mac) link-login=$(link-login)
 ```
-some content, which will always be displayed
+
+is served as:
+
+```text
+ip=192.168.88.254 mac=52:54:09:80:02:01 link-login=http://hotspot.lan/login?dst=http%3A%2F%2Fexample.com%2F
+```
+
+Every variable also exists with the `-esc` suffix, for example `$(mac-esc)`. This form is escaped for use inside a URL: `52:54:09:80:02:01` becomes `52%3A54%3A09%3A80%3A02%3A01`. Use it when you put a variable into a link. For example, `` breaks when the user name is `123&456=1 2`; with `$(mac-esc)` and `$(username-esc)` the user name is sent as `123%26456%3D1+2`.
+
+Some links use `http://` URLs. If you use HTTPS, build the link yourself, for example `https://$(hostname)/$(target-dir)status` instead of `$(link-status)`.
+
+### Server
+
+- **hostname** - the DNS name of the HotSpot, or its IP address if no DNS name is set (`hotspot.lan`).
+- **identity** - the identity of the router (`MikroTik`).
+- **login-by** - the login method that the user used.
+- **plain-passwd** - `yes` if the `http-pap` login method is enabled, otherwise `no`.
+- **server-address** - the address and port of the HotSpot server (`192.168.88.1:80`).
+- **ssl-login** - `yes` if the page was requested over HTTPS, otherwise `no`.
+- **server-name** - the name of the HotSpot server in `/ip/hotspot` (`hotspot1`).
+
+### Links
+
+- **link-login** - the login page, with the requested URL (`http://hotspot.lan/login?dst=http%3A%2F%2Fexample.com%2F`).
+- **link-login-only** - the login page, without the requested URL (`http://hotspot.lan/login`).
+- **link-logout** - the logout page (`http://hotspot.lan/logout`).
+- **link-status** - the status page (`http://hotspot.lan/status`).
+- **link-orig** - the URL that the user requested (`http://example.com/`).
+- **link-redirect** - the URL to which the page redirects the user.
+- **link-advert** - the advertisement that is due.
+
+### Client
+
+- **domain** - the domain name of the user (`example.com`).
+- **interface-name** - the name of the HotSpot interface (`bridge`).
+- **ip** - the IP address of the client (`192.168.88.254`).
+- **logged-in** - `yes` if the user is logged in, otherwise `no`.
+- **mac** - the MAC address of the client (`52:54:09:80:02:01`).
+- **trial** - `yes` if the user can use trial access, otherwise `no`.
+- **username** - the name of the user (`anna`).
+- **host-ip** - the IP address of the client in `/ip/hotspot/host`.
+- **vlan-id** - the ID of the VLAN interface through which the client is connected.
+
+### Session
+
+- **idle-timeout** - the idle timeout (`20m`, or empty if none).
+- **idle-timeout-secs** - the idle timeout in seconds (`88`, or `0` if none).
+- **limit-bytes-in** - the limit of bytes that the user can send (`1000000`, or `---` if none).
+- **limit-bytes-out** - the limit of bytes that the user can receive (`1000000`, or `---` if none).
+- **refresh-timeout** - the refresh interval of the status page (`1m30s`, or empty if none).
+- **refresh-timeout-secs** - the refresh interval of the status page in seconds (`90`, or `0` if none).
+- **session-timeout**, **session-time-left** - the session time that is left (`5h`, or empty if none).
+- **session-timeout-secs**, **session-time-left-secs** - the session time that is left, in seconds (`3475`, or `0` if none).
+- **uptime** - the time since login (`10h2m33s`).
+- **uptime-secs** - the time since login in seconds (`125`).
+
+### Traffic counters
+
+These variables have values only on the status and logout pages:
+
+- **bytes-in** - the number of bytes received from the user (`15423`).
+- **bytes-in-nice** - the same in a readable form.
+- **bytes-out** - the number of bytes sent to the user (`11352`).
+- **bytes-out-nice** - the same in a readable form.
+- **packets-in** - the number of packets received from the user (`251`).
+- **packets-out** - the number of packets sent to the user (`211`).
+- **remain-bytes-in** - the bytes left until `limit-bytes-in` is reached (`337465`, or `---` if no limit).
+- **remain-bytes-out** - the bytes left until `limit-bytes-out` is reached (`124455`, or `---` if no limit).
+- **remain-bytes-total** - the bytes left until `limit-bytes-total` is reached.
+
+### Other
+
+- **session-id** - the value of the `session-id` parameter of the last request.
+- **var** - the value of the `var` parameter of the last request.
+- **error** - the error message, if something failed (`invalid username or password`). Only on the login page.
+- **error-orig** - the original error message, before it is replaced by the text from `errors.txt`. Only on the login page.
+- **chap-id** - the CHAP ID (`\371`). Only on the login page.
+- **chap-challenge** - the CHAP challenge (`\357\015\330\013\021\234\145\245\303\253\142\246\133\175\375\316`). Only on the login page.
+- **popup** - `true` or `false`: whether to open the status pop-up window. Only on the login page.
+- **advert-pending** - `yes` if an advertisement is due, otherwise `no`.
+- **http-status** - sets the HTTP status code and message, as described in the HTTP status and headers section.
+- **http-header** - sets an HTTP header.
+
+### RADIUS
+
+- **radius\<id>** - the attribute with this ID as a text string. Empty if RADIUS authentication was not used.
+- **radius\<id>u** - the attribute with this ID as an unsigned integer. `0` if RADIUS authentication was not used.
+- **radius\<id>-\<vnd-id>** - the attribute with this ID and vendor ID as a text string.
+- **radius\<id>-\<vnd-id>u** - the attribute with this ID and vendor ID as an unsigned integer.
+
+### Request headers
+
+The pages can read the HTTP headers of the request with `$(header-name)`. For example, `$(user-agent)` is the browser of the user. The last example on this page uses it.
+
+## Conditions
+
+A page can show a part of its content only when a condition is true:
+
+- `$(if name)` - true if the variable is not empty.
+- `$(if name == value)` and `$(if name != value)` - compare the variable with a value.
+- `$(elif name == value)`, `$(else)`, and `$(endif)` continue and end the condition.
+
+```html
+some content, which is always displayed
 $(if username == john)
 Hey, your username is john
 $(elif username == dizzy)
@@ -178,215 +212,228 @@ You are sitting at that old computer, which is so slow...
 $(elif mac == 00:01:02:03:04:05)
 This is an ethernet card, which was stolen few months ago...
 $(else)
-I don't know who you are, so lets live in peace.
+I don't know who you are, so let's live in peace.
 $(endif)
-other content, which will always be displayed
-
+other content, which is always displayed
 ```
 
-Only one of those expressions will be shown. Which one depends on the values of those variables for each client.
+Only one of the parts is shown: the first one whose condition is true.
 
-##### Redirects and custom Headers
+## HTTP status and headers
 
+Two variables are set, not tested, although they are written as conditions. `http-status` sets the status line of the HTTP response, and `http-header` adds a header. The default `rlogin.html` starts with these lines:
+
+```html
+$(if http-status == 302)Hotspot login required$(endif)
+$(if http-header == "Location")$(link-redirect)$(endif)
 ```
-	$(if http-status == 302)Hotspot login required$(endif)
-	$(if http-header == "Location")$(link-redirect)$(endif)
 
-```
+If `$(link-redirect)` is `http://192.168.88.1/login`, the response to the client starts with:
 
-**Note:** Although the above appears to use the conditional expression 'if', it is in fact setting the 'http-status' to '302', not testing for it. The same applies to the variable 'http-header'. Once again, even though it uses an 'if', it is in fact setting the variable to 'Location' followed by the URL set from the variable 'link-redirect'.
-
-For example, in the case where $(link-redirect) evaluates to "[http://192.168.88.1/login](http://192.168.88.1/login)", then the HTTP response returned to the client will be changed to:
-
-```
+```text
 HTTP/1.0 302 Hotspot login required
 <regular HTTP headers>
 Location: http://192.168.88.1/login
-
 ```
 
-**http-status syntax**:
+The syntax:
 
-```
-	$(if http-status == XYZ)HTTP_STATUS_MESSAGE$(endif)
-
-```
-
-- *XYZ* - The status code you wish to return. Should be 3 decimal digits, the first one must not be 0.
-- *HTTP\_STATUS\_MESSAGE* - Any text you wish to return to the client, which will follow the above status code in the HTTP reply.
-
-In any HTTP response it will be on the first line and will be as follows:
-
-```
-HTTP/1.0 XYZ HTTP_STATUS_MESSAGE
-
-```
-
-**http-header syntax:**
-
-```
+```html
+$(if http-status == XYZ)HTTP_STATUS_MESSAGE$(endif)
 $(if http-header == HTTP_HEADER_NAME)HTTP_HEADER_VALUE$(endif)
-
 ```
 
-- *HTTP\_HEADER\_NAME* - name of the HTTP header to be sent in the response
-- *HTTP\_HEADER\_VALUE* - the value of the HTTP header with the name HTTP\_HEADER\_NAME to be sent in the response
+- `XYZ` - the status code: three digits, the first one not 0.
+- `HTTP_STATUS_MESSAGE` - the text after the status code.
+- `HTTP_HEADER_NAME` and `HTTP_HEADER_VALUE` - the name and the value of the header.
 
-The HTTP response will appear as:
+Variables and conditions inside the message and the header value are processed as usual. If the same header is added several times, the last one is used. This way a page can replace a regular header, for example `Content-Type` or `Cache-Control`.
 
-```
-HTTP_HEADER_NAME: HTTP_HEADER_VALUE
+## Error messages
 
-```
+The texts of the error messages are in the `errors.txt` file of the directory. Edit the file to change or translate them. The file explains each message, and the messages can use variables. For example, this line:
 
-All variables and conditional expressions within HTTP\_HEADER\_VALUE and HTTP\_STATUS\_MESSAGE are processed as usual.
-
-In case multiple headers with the same name are added,  only the last one will be used (previous ones will be discarded). It allows the system to override regular HTTP headers (for example, Content-Type and Cache-Control).
-
-#### Customizing Error Messages
-
-All error messages are stored in the errors.txt file within the respective HotSpot servlet directory. You can change and translate all these messages to your native language. To do so, edit the errors.txt file. You can also use variables in the messages. All instructions are given in that file.
-
-#### Multiple Versions of HotSpot Pages
-
-Multiple HotSpot page sets for the same HotSpot server are supported. They can be chosen by the user (to select a language) or automatically by JavaScript (to select a PDA/regular version of HTML pages).
-
-To utilize this feature, create subdirectories in the HotSpot HTML directory, and place those HTML files, which are different, in that subdirectory. For example, to translate everything in Latvian, the subdirectory "lv" can be created with login.html, logout.html, status.html, alogin.html, radvert.html and errors.txt files, which are translated into Latvian. If the requested HTML page cannot be found in the requested subdirectory, the corresponding HTML file from the main directory will be used. The main login.html file would contain a link to "/lv/login?dst=$(link-orig-esc)", which then displays the Latvian version of the login page: Latviski. And the Latvian version would contain a link to the English version: English
-
-Another way of referencing directories is to specify 'target' variable:
-
-```
-        Latviski
-        English
-
+```text
+invalid-username = wrong name or password for $(username) from $(ip)
 ```
 
-After the preferred directory has been selected (for example, "lv"), all links to local HotSpot pages will contain that path (for example, $(link-status) = "[http://hotspot.mt.lv/lv/status](http://hotspot.mt.lv/lv/status)"). So, if all HotSpot pages reference links using "$(link-xxx)" variables, then no more changes are to be made - each client will stay within the selected directory all the time.
+shows "wrong name or password for anna from 192.168.88.253" on the login page after a failed login.
 
-#### Misc
+## Several versions of the pages
 
-If you want to use the HTTP-CHAP authentication method, you need to include the **doLogin()** function (which references the **md5.js** which must be already loaded) before the **Submit action** of the login form. Otherwise, CHAP login will fail.
+One HotSpot server can have several sets of pages, for example one for each language. Create a sub-directory in the HTML directory and put the pages that differ into it. For a Latvian version, create the `lv` sub-directory with the translated `login.html`, `logout.html`, `status.html`, `alogin.html`, `radvert.html`, and `errors.txt`. A page that is not in the sub-directory is taken from the main directory.
 
-The resulting password to be sent to the HotSpot gateway in case of the HTTP-CHAP method is formed by MD5-hashing the concatenation of the following: chap-id, the password of the user, and chap-challenge (in the given order)
+The user selects the version with a link. In the main `login.html`:
 
-In case variables are to be used in the link directly, then they must be escaped accordingly. For example, in the login page, **link** will not work as intended, if the username is "123&456=1 2". In this case instead of $(user), its escaped version must be used: $(user-esc): **link**. Now the same username will be converted to "123%26456%3D1+2", which is the valid representation of "123&456=1 2" in the URL. This trick may be used with any variables, not only with $(username).
-
-There is a boolean parameter "erase-cookie" to the logout page, which may be either "on" or "true" to delete the user cookie on logout (so that the user would not be automatically logged on when he/she opens a browser next time).
-
-#### Examples
-
-With basic HTML language knowledge and the examples below, it should be easy to implement the ideas described above:
-
-- To provide a predefined value as a username, in login.html change:
-
-```
-<input type="text" name="username" value="$(username)">
-
+```html
+Latviski
 ```
 
-to this line:
+and in the Latvian `login.html`:
 
-```
-<input type="hidden" name="username" value="hsuser">
-
-```
-
-(where hsuser is the username you are providing)
-
-- To provide a predefined value as a password, change in login.html.
-
-```
-<input type="password">
-
+```html
+English
 ```
 
-to this line:
+The `target` parameter selects the sub-directory as well:
 
-```
-<input type="hidden" name="password" value="hspass">
-
-```
-
-(where hspass is the password you are providing)
-
-- To send the client's MAC address to a registration server in the form of:
-
-[https://www.example.com/register.html?mac=XX:XX:XX:XX:XX:XX](https://www.example.com/register.html?mac=XX:XX:XX:XX:XX:XX)
-
-change the Login button link in login.html to:
-
-```
-https://www.example.com/register.html?mac=$(mac)
-
+```html
+Latviski
+English
 ```
 
-(you should correct the link to point to your server)
+After the user selects a version, the link variables contain its path, for example `$(link-status)` is `http://hotspot.lan/lv/status`. If the pages use the `$(link-...)` variables for all links, the user stays in the selected version.
 
-- To show a banner after user login, in alogin.html after.
+## Examples
 
-$(if popup == 'true') add the following line:
+The examples change the default pages. The lines that they refer to are from the default `login.html`:
 
+```html
+<form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
+    <input type="hidden" name="dst" value="$(link-orig)" />
+    <input type="hidden" name="popup" value="true" />
+    ...
+    <input name="username" type="text" value="$(username)" placeholder="Username" />
+    ...
+    <input name="password" type="password" placeholder="Password" />
+    ...
+    <input type="submit" value="Connect" />
+</form>
 ```
+
+With the `http-chap` login method, the form calls the `doLogin()` function, which uses `md5.js` to hash the password together with `$(chap-id)` and `$(chap-challenge)`. Keep this function and the `onSubmit` attribute in your own login page, or the CHAP login fails.
+
+### Change the colours
+
+The default pages have three colour sets. To select another one, change the `<body>` tag of the page to one of these:
+
+```html
+<body class="lite">
+<body class="dark">
+```
+
+### Use a fixed user name or password
+
+To log every user in with the same user name, replace the user name field with a hidden field:
+
+```html
+<input name="username" type="hidden" value="hsuser" />
+```
+
+To use a fixed password, do the same with the password field:
+
+```html
+<input name="password" type="hidden" value="hspass" />
+```
+
+### One-click login
+
+With a fixed user name and a fixed password, the login page needs only a button:
+
+1. Create a user for this purpose, and a user profile with `shared-users` set to the number of devices that can be logged in at the same time:
+
+   ```ros
+   /ip/hotspot/user/profile/add name=open shared-users=unlimited
+   /ip/hotspot/user/add name=guest password=guest profile=open
+   ```
+
+2. In your copy of `login.html`, replace the user name and password fields, with their `<label>` elements, by hidden fields, and change the text of the button:
+
+   ```html
+   <input name="username" type="hidden" value="guest" />
+   <input name="password" type="hidden" value="guest" />
+   <input type="submit" value="Proceed to Internet!" />
+   ```
+
+3. Set the directory with the changed page as `html-directory-override` of the server profile.
+
+### Show a different text on each HotSpot server
+
+One set of pages can serve several HotSpot servers. Use the server name in a condition:
+
+```html
+$(if server-name == hotspot1)
+Welcome to the lobby network
+$(else)
+Welcome to the conference network
+$(endif)
+```
+
+### Show the session values to the user
+
+The status page can show any of the session variables. This table row from the default `status.html` shows the remaining time only for users who have a time limit:
+
+```html
+$(if session-time-left)
+    Connected / left$(uptime) / $(session-time-left)
+$(else)
+    Connected$(uptime)
+$(endif)
+```
+
+### Open another page after login
+
+After login the browser opens the URL in the `dst` field, which is the page that the user requested. To open your own page instead, change this line of `login.html`:
+
+```html
+<input type="hidden" name="dst" value="$(link-orig)" />
+```
+
+to:
+
+```html
+<input type="hidden" name="dst" value="http://www.example.com" />
+```
+
+### Show a banner after login
+
+In `alogin.html`, after the line `$(if popup == 'true')`, add:
+
+```html
 open('http://www.example.com/your-banner-page.html', 'my-banner-name','');
-
 ```
 
-(you should correct the link to point to the page you want to show)
+### Send the MAC address to a registration server
 
-- To choose a different page shown after login, change in login.html:
+To send users to a registration page together with the MAC address of their device, add a link to `login.html`:
 
-```
-<input type="hidden" name="dst" value="$(link-orig)">
-
-```
-
-to this line:
-
-```
-<input type="hidden" name="dst" value="http://www.example.com">
-
+```html
+Register
 ```
 
-(you should correct the link to point to your server)
+Allow the registration server in the walled garden, so that users can open it before login.
 
-- To erase the cookie on logoff, in the page containing a link to the logout (for example, in status.html) change.
+### Remove the cookie on logout
 
-```
+The status page opens the logout page with this line:
+
+```html
 open('$(link-logout)', 'hotspot_logout', ...
-
 ```
 
-to this:
+To remove the cookie of the user on logout, change it to:
 
-```
+```html
 open('$(link-logout)?erase-cookie=on', 'hotspot_logout', ...
-
 ```
 
-or alternatively add this line:
+or add this field to the logout form of the page:
 
-```
+```html
 <input type="hidden" name="erase-cookie" value="on">
-
 ```
 
-Before this one:
+### External authentication
 
-```
-<input type="submit" value="log off">
+The login page can be on another server, for example on a server that takes a payment before it gives access:
 
-```
+1. Allow access to the external server in the walled garden.
+2. Change the login page of the HotSpot so that it redirects to the external server. The external server changes the RADIUS database as needed.
+3. The external server logs the user in by sending the browser back to the login page of the HotSpot with the user name and password.
 
-##### External authentication
+This login page on the HotSpot router redirects to `https://auth.example.com/login.php`. Replace it with the address of your server:
 
-Another example is making HotSpot authenticate on a remote server (which may, for example, perform credit card charging):
-
-- Allow direct access to the external server in walled-garden (either HTTP-based or IP-based).
-- Modify the login page of the HotSpot servlet to redirect to the external authentication server. The external server should modify the RADIUS database as needed.
-
-Here is an example of such a login page to put on the HotSpot router (it is redirecting to [https://auth.example.com/login.php](https://auth.example.com/login.php), replace with the actual address of an external authentication server):
-
-```
+```html
 <html>
 <title>...</title>
 <body>
@@ -400,20 +447,16 @@ Here is an example of such a login page to put on the HotSpot router (it is redi
 </form>
 <script language="JavaScript">
 <!--
-	document.redirect.submit();
+   document.redirect.submit();
 //-->
 </script>
 </body>
 </html>
-          
-
 ```
 
-- The external server can log in a HotSpot client by redirecting it back to the original HotSpot servlet login page, specifying the correct username and password.
+This page on the external server sends the user back to the HotSpot. Replace `https://hotspot.example.com/login` with the address of your HotSpot router, and `http://www.mikrotik.com/` with the page to open after login:
 
-Here is an example of such a page (it is redirecting to [https://hotspot.example.com/login](https://hotspot.example.com/login), replace it with the actual address of a HotSpot router; also, it is displaying [www.mikrotik.com](http://www.mikrotik.com) after successful login, replace it with what is needed):
-
-```
+```html
 <html>
 <title>Hotspot login page</title>
 <body>
@@ -426,280 +469,22 @@ Here is an example of such a page (it is redirecting to [https://hotspot.example
 </form>
 </body>
 </html>
-          
-
 ```
 
-- Hotspot will ask the RADIUS server whether to allow the login or not. If allowed, the alogin.html page will be displayed (it can be modified to do anything). If not allowed, the flogin.html (or login.html) page will be displayed, which will redirect the client back to the external authentication server.
+The HotSpot asks the RADIUS server whether to allow the login. If the login is allowed, `alogin.html` is shown. If not, `flogin.html` or `login.html` is shown, which sends the user back to the external server.
 
-**Note:** as shown in these examples, the HTTPS protocol and the POST method can be used to secure communications.
+The external page sends the password as it is, so the server profile needs the `https` or `http-pap` login method. Without it, the login fails with the message "web browser did not send challenge response". As in these examples, use HTTPS and the POST method to protect the password.
 
-##### HTTP header detection
+### Answer differently to one browser
 
-The Hotspot login pages have access to HTTP headers by using **$(http-header-name);**
+A page can test a request header and return other content instead of the regular page. For example, these lines at the top of `rlogin.html` answer "Success" to one browser instead of redirecting it to the login page:
 
-For example, there exists an ability to check the user agent (or browser), and it will return any other content instead of the regular login page, if so desired. This can be used to disable automatic popups in phones, for example.
-
-For example, to output "SUCCESS" for users of a specific Firefox mobile version, instead of the login page, you can add these lines on the top of the **rlogin.html** page in your hotspot directory:
-
-```
-$(if user-agent == "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0" ) 
-<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML> 
+```html
+$(if user-agent == "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0" )
+<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>
 $(else)
 ---- regular content of rlogin.html page  ----
 $(endif)
-
 ```
 
-This will DISABLE the login popup for Android Firefox 40 users.
-
-##### One-click login
-
-It is possible to create a modified captive portal for quick one-click login for scenarios where no user or password is required.
-
-What you need to do is:
-
-- Create a user for this purpose. For example, it is "notsosecretuser" with password "notsosecretpass".
-- Assign this user to a user profile that allows a specific/unlimited number of simultaneous active users.
-- Copy the original hotspot directory that is already generated in router's file menu at the root level.
-- Modify the contents of this copy directory.
-  - Only one file requires modifications for this to work, the "login.html".
-
-Original:
-
-```
-
-  login
-      <input style={{width: '80px'}} name="username" type="text" value="$(username)"/>
-  
-  password
-      <input style={{width: '80px'}} name="password" type="password"/>
-  
-   
-      <input type="submit" value="OK" />
-  
-
-```
-
-Modified:
-
-```
-
-  login
-    <input style={{width: '80px'}} name="username" type="text" value="notsosecretuser"/>
-  
-  password
-    <input style={{width: '80px'}} name="password" type="password" value="notsosecretpass"/>
-  
-   
-    <input type="submit" value="Proceed to Internet!" />
-  
-
-```
-
-What changed:
-
-- - - User and Password "" fields are hidden.
-    - Both User and Password field values contain predefined values.
-    - Changed the "OK" button value(name) to something more fitting.
-
-- Now upload this new hotspot folder back to the router, preferably with a different name.
-- Change settings in the hotspot server profile to use this new html directory.
-
-```
-/ip/hotspot/profile/set (profile number or name) html-directory-override=(dir path/name)
-
-```
-
-### Firewall customizations
-
-#### Summary
-
-Apart from the obvious dynamic entries in the `/ip/hotspot` submenu itself (like hosts and active users), some additional rules are added in the firewall tables when activating a HotSpot service.
-
-#### NAT
-
-From the **`/ip/firewall/nat/print` dynamic** command, you can get something like this (comments follow after each of the rules):
-
-```
- 0 D chain=dstnat action=jump jump-target=hotspot hotspot=from-client
-
-```
-
-Puts all HotSpot-related tasks for packets from all HotSpot clients into a separate chain.
-
-```
- 1 I chain=hotspot action=jump jump-target=pre-hotspot
-
-```
-
-Any actions that should be done before HotSpot rules apply, should be put in the pre-hotspot chain. This chain is under full administrator control and does not contain any rules set by the system, hence the invalid jump rule (as the chain does not have any rules by default).
-
-```
- 2 D chain=hotspot action=redirect to-ports=64872 dst-port=53 protocol=udp 
- 3 D chain=hotspot action=redirect to-ports=64872 dst-port=53 protocol=tcp 
-
-```
-
-Redirect all DNS requests to the HotSpot service. The 64872 port provides DNS service for all HotSpot users. If you want the HotSpot server to listen on another port, add rules here the same way, changing the dst-port property.
-
-```
- 4 D chain=hotspot action=redirect to-ports=64873 hotspot=local-dst dst-port=80
-     protocol=tcp
-
-```
-
-Redirect all HTTP login requests to the HTTP login servlet. The 64873 is the HotSpot HTTP servlet port.
-
-```
- 5 D chain=hotspot action=redirect to-ports=64875 hotspot=local-dst dst-port=443
-     protocol=tcp
-
-```
-
-Redirect all HTTPS login requests to the HTTPS login servlet. 64875 is the HotSpot HTTPS servlet port.
-
-```
- 6 D chain=hotspot action=jump jump-target=hs-unauth hotspot=!auth protocol=tcp
-
-```
-
-All other packets except DNS and login requests from unauthorized clients should pass through the hs-unauth chain.
-
-```
- 7 D chain=hotspot action=jump jump-target=hs-auth hotspot=auth protocol=tcp
-
-```
-
-And packets from the authorized clients - through the hs-auth chain.
-
-```
- 8 D ;;; www.mikrotik.com
-     chain=hs-unauth action=return dst-address=66.228.113.26 dst-port=80 protocol=tcp
-
-```
-
-First in the **hs-unauth** chain is put everything that affects TCP protocol in the `/ip/hotspot/walled-garden/ip` submenu (i.e., everything where either protocol is not set, or set to TCP). Here we are excluding [www.mikrotik.com](http://www.mikrotik.com) from being redirected to the login page.
-
-```
- 9 D chain=hs-unauth action=redirect to-ports=64874 dst-port=80 protocol=tcp
-
-```
-
-All other HTTP requests are redirected to the Walled Garden proxy server which listens on port 64874. If there is an "allow" entry in the `/ip/hotspot/walled-garden` menu for an HTTP request, it is being forwarded to the destination. Otherwise, the request will be automatically redirected to the HotSpot login servlet (port 64873).
-
-```
-10 D chain=hs-unauth action=redirect to-ports=64874 dst-port=3128 protocol=tcp 
-11 D chain=hs-unauth action=redirect to-ports=64874 dst-port=8080 protocol=tcp 
-
-```
-
-HotSpot by default assumes that only these ports may be used for HTTP proxy requests. These two entries are used to "catch" client requests to unknown proxies (you can add more rules here for other ports), i.e., to make it possible for the clients with unknown proxy settings to work with the HotSpot system. This feature is called "Universal Proxy". If it is detected that a client is using some proxy server, the system will automatically mark those packets with the HTTP hotspot mark to work around the unknown proxy problem, as we will see later on. Note that the port used (64874) is the same as for HTTP requests in rule #9 (so both HTTP and HTTP proxy requests are processed by the same code).
-
-```
-12 D chain=hs-unauth action=redirect to-ports=64875 dst-port=443 protocol=tcp
-
-```
-
-HTTPS proxy is listening on port 64875.
-
-```
-13 I chain=hs-unauth action=jump jump-target=hs-smtp dst-port=25 protocol=tcp
-
-```
-
-Redirect for the SMTP protocol may also be defined in the HotSpot configuration. In case it is, a redirect rule will be put in the hs-smtp chain. This is done so that users with an unknown SMTP configuration would be able to send their mail through the service provider's (your) SMTP server instead of going to the [possibly unavailable outside their network of origin] SMTP server users have configured on their computers. The chain is empty by default, hence the invalid jump rule.
-
-```
-14 D chain=hs-auth action=redirect to-ports=64874 hotspot=http protocol=tcp
-
-```
-
-Providing HTTP proxy service for authorized users. Authenticated user requests may need to be subject to transparent proxying (the "Universal Proxy" technique and advertisement feature). This HTTP mark is put automatically on the HTTP proxy requests to the servers detected by the HotSpot HTTP proxy (the one that is listening on port 64874) as HTTP proxy requests for unknown proxy servers. This is done so that users that have some proxy settings would use the HotSpot gateway instead of the [possibly unavailable outside their network of origin] proxy server users have configured on their computers. This mark is also applied when an advertisement is due to be shown to the user, as well as on any HTTP requests from the users whose profile is configured to transparently proxy their requests.
-
-```
-15 I chain=hs-auth action=jump jump-target=hs-smtp dst-port=25 protocol=tcp
-
-```
-
-Providing an SMTP proxy for authorized users (the same as in rule #13).
-
-#### Packet Filtering
-
-From the **`/ip/firewall/filter/print` dynamic** command, you can get something like this (comments follow after each of the rules):
-
-```
- 0 D chain=forward action=jump jump-target=hs-unauth hotspot=from-client,!auth
-
-```
-
-Any packet that traverses the router from an unauthorized client will be sent to the **hs-unauth** chain. The hs-unauth implements the IP-based Walled Garden filter.
-
-```
- 1 D chain=forward action=jump jump-target=hs-unauth-to hotspot=to-client,!auth
-
-```
-
-Everything that comes to clients through the router gets redirected to another chain, called **hs-unauth-to**. This chain should reject unauthorized requests to the clients.
-
-```
- 2 D chain=input action=jump jump-target=hs-input hotspot=from-client
-
-```
-
-Everything that comes from clients to the router itself gets to yet another chain, called **hs-input**.
-
-```
- 3 I chain=hs-input action=jump jump-target=pre-hs-input
-
-```
-
-Before proceeding with [predefined] dynamic rules, the packet gets to the administratively controlled **pre-hs-input** chain, which is empty by default, hence the invalid state of the jump rule.
-
-```
- 4 D chain=hs-input action=accept dst-port=64872 protocol=udp 
- 5 D chain=hs-input action=accept dst-port=64872-64875 protocol=tcp 
-
-```
-
-Allow client access to the local authentication and proxy services (as described earlier).
-
-```
- 6 D chain=hs-input action=jump jump-target=hs-unauth hotspot=!auth
-
-```
-
-All other traffic from unauthorized clients to the router itself will be treated the same way as the traffic traversing the router.
-
-```
- 7 D chain=hs-unauth action=return protocol=icmp
- 8 D ;;; www.mikrotik.com
-     chain=hs-unauth action=return dst-address=66.228.113.26 dst-port=80 protocol=tcp
-
-```
-
-Unlike the NAT table where only TCP-protocol related Walled Garden entries were added, in the packet filter, the **hs-unauth** chain is added to everything you have set in the `/ip/hotspot/walled-garden/ip` menu. That is why although you have seen only one entry in the NAT table, there are two rules here.
-
-```
- 9 D chain=hs-unauth action=reject reject-with=tcp-reset protocol=tcp
-10 D chain=hs-unauth action=reject reject-with=icmp-net-prohibited
-
-```
-
-Everything else that has not been white-listed by the Walled Garden will be rejected. Note the usage of TCP Reset for rejecting TCP connections.
-
-```
-11 D chain=hs-unauth-to action=return protocol=icmp
-12 D ;;; www.mikrotik.com
-     chain=hs-unauth-to action=return src-address=66.228.113.26 src-port=80 protocol=tcp
-
-```
-
-The same action as in rules #7 and #8 is performed for the packets destined to the clients (chain **hs-unauth-to**) as well.
-
-```
-13 D chain=hs-unauth-to action=reject reject-with=icmp-host-prohibited
-
-```
-
-Reject all packets to the clients with an ICMP reject message.
+This browser no longer opens the login page by itself.

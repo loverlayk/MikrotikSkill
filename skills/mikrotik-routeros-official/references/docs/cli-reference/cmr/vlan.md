@@ -8,7 +8,7 @@
 **Package:** cmr
 **Type:** Directory
 
-The `/cmr/vlan` menu creates bridge and VLAN configuration on the selected CMR clients. Each rule selects the devices with `labels` and the ports with `port-labels` (matched against the interface names of a device and against the port labels assigned in `/cmr/device`), lists the `vlan-ids`, and assigns each port a `role`. On a selected device the rule creates a dedicated bridge named `cmr-bridge` with VLAN filtering enabled and moves the selected ports into it. Removing a rule restores the previous configuration. See the [VLAN provisioning](../../management-tools/cmr/#vlan-provisioning) section of the CMR guide.
+The `/cmr/vlan` menu creates bridge and VLAN configuration on the selected CMR clients. Each rule selects the devices with `labels` and the ports with `port-labels` (matched against the interface names of a device and against the port labels assigned in `/cmr/device`), lists the `vlan-ids`, and assigns each port a `role`. On a selected device the rule adds the selected ports and their VLAN entries to the enabled bridge of the device. If the device has no enabled bridge, the rule creates a bridge named `cmr-bridge` with VLAN filtering enabled. Removing a rule removes the ports and VLAN entries that it added. See the [VLAN provisioning](../../management-tools/cmr/#vlan-provisioning) section of the CMR guide.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">VLAN provisioning rule is disabled.</ArgTableRow>

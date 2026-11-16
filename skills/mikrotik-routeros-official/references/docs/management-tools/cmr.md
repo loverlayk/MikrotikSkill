@@ -29,7 +29,7 @@ CMR manages a fleet of RouterOS devices from one of them. One device runs the CM
 ### What CMR does not do
 
 - CMR does not configure IP addresses, DHCP, routing, firewall, users, or other device settings. Configure them on the device with WinBox, WebFig, or the CLI. For a one-off change on many devices, use `run-script`.
-- CMR does not edit or adopt the existing configuration of a device. It creates its own configuration objects next to it, and they take over where they overlap, for example a WiFi radio or a bridge port.
+- CMR does not edit or adopt the existing configuration of a device. It creates its own configuration objects next to it, and they take over where they overlap, for example a WiFi radio or a bridge port. VLAN provisioning adds its ports and VLAN entries to the existing bridge of a device and leaves the bridge and the rest of its configuration as they are.
 - CMR WiFi writes the configuration to each access point. It does not coordinate roaming between access points or act as a central authentication server.
 
 ### How it works
@@ -758,7 +758,14 @@ When the uplink of an access point joins `cmr-bridge`, it leaves the access poin
 
 The [`/cmr/vlan`](../../cli-reference/cmr/vlan) menu creates bridge and VLAN configuration on the selected CMR clients. A rule selects the devices by `labels`, selects the ports by `port-labels` (an interface name of a device, for example `ether1`, or a port label assigned to the port in `/cmr/device`, for example `uplink`), defines the `vlan-ids` (a comma-separated list or a range, for example `10,20` or `10-20`), and assigns each port a `role`: `access` (default) or `trunk`. The `port-labels` argument is required, so a rule always names the ports it configures and cannot apply to every port of a device by accident.
 
-On a selected device the rule creates a dedicated `cmr-bridge` bridge with VLAN filtering enabled and moves the selected ports into it:
+On a selected device the rule adds the selected ports to a bridge. The bridge depends on the configuration of the device:
+
+- If the device has one enabled bridge, CMR uses it. Your configuration on the bridge stays in place: its ports, VLAN interfaces, and IP addresses.
+- If the device has no enabled bridge, CMR creates a managed bridge named `cmr-bridge` with VLAN filtering enabled.
+
+Keep only one enabled bridge on the device, and do not add the VLANs of a CMR rule manually in `/interface/bridge/vlan`.
+
+On the device, the ports and VLAN entries that CMR adds have the **Y** flag. Each selected port gets one of two roles:
 
 - An `access` port belongs to a single VLAN, the first VLAN in `vlan-ids`, which is set as the port's PVID. It carries untagged frames. On the client, the VLAN appears as a dynamic untagged entry in the bridge's VLAN table while the port has link.
 - A `trunk` port carries every VLAN in `vlan-ids`, tagged with 802.1Q headers, and accepts only VLAN-tagged frames.
@@ -781,8 +788,8 @@ For example, give the devices with the `office` label one access port on VLAN 10
    labels=office port-labels=ether6 vlan-ids=10,20 role=trunk
 ```
 
-Removing or disabling a rule reverses its provisioning: the selected ports are returned to their previous bridge and port configuration, and `cmr-bridge` is removed when the last rule that uses it is removed.
+Removing or disabling a rule removes the ports and VLAN entries that CMR manages. A port that was a port of the bridge before the rule returns to its previous port configuration. Your bridge and the rest of its configuration are not changed; `cmr-bridge` is removed when the last rule that uses it is removed.
 
 :::warning
-Provisioning moves the selected ports into the managed `cmr-bridge`, which disconnects the port's current traffic and can cut the device's management access if a management or uplink port is selected. The `port-labels` argument is required, so a rule always names the ports it changes, but a rule with no `labels` still applies those ports to all connected devices, including the CMR controller itself; applying such a rule can disconnect the whole fleet and the controller's own management access. Keep the device selection explicit too. Disabling or removing a rule restores the previous configuration, provided the device is still reachable from the controller; a rule that also configures the device's own uplink can cut that link, and `cmr-bridge` is then kept until the CMR connection to the device is re-established, for example by re-enabling the CMR client.
+Provisioning replaces the bridge port configuration of the selected ports with the VLAN settings of the rule, and on a device without an enabled bridge it moves them into the managed `cmr-bridge`. This can disconnect the port's current traffic and cut the device's management access if a management or uplink port is selected. The `port-labels` argument is required, so a rule always names the ports it changes, but a rule with no `labels` still applies those ports to all connected devices, including the CMR controller itself; applying such a rule can disconnect the whole fleet and the controller's own management access. Keep the device selection explicit too. Disabling or removing a rule restores the previous configuration, provided the device is still reachable from the controller; a rule that also configures the device's own uplink can cut that link, and the managed configuration is then kept until the CMR connection to the device is re-established, for example by re-enabling the CMR client.
 :::

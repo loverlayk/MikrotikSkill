@@ -1,400 +1,435 @@
 # HotSpot - Captive portal
 
-> The MikroTik HotSpot Gateway enables client authentication for public networks with features like DHCP address pools, multiple authentication methods, and walled-garden access. It requires IPv4 and has specific...
+> Set up a HotSpot (captive portal) in RouterOS: run the setup, add users and user profiles with rate and time limits, select the login methods, let selected traffic through without login, and authenticate against a...
 
 # HotSpot - Captive portal
 
-The MikroTik HotSpot Gateway provides authentication for clients before access to public networks.
+A HotSpot asks the users of a network to log in before they get network access. A device that connects to the HotSpot network gets an IP address and can resolve DNS names, but every web page that it opens over HTTP is replaced by the login page of the router, and all other traffic is rejected. After the user logs in, the device has network access until the user logs out or a limit is reached.
 
-:::warning
-HotSpot (captive portal) - uses web-proxy and it is capable of using only the default routing table, at the moment, making the PCC(per connection-classifier) not a valid method, due to the multiple routing tables used.
-:::
+The HotSpot can:
 
-:::warning
-HotSpot functionality could be blocked by the device-mode. Prior to configuring HotSpot, make sure that it is enabled in `/system/device-mode` ([more info](../../system-information-and-utilities/device-mode.md).
-:::
+- authenticate users from a list on the router or on a RADIUS server;
+- limit each user by time, by traffic amount, and by data rate;
+- log in known devices without a login page, by their MAC address;
+- give time-limited trial access without an account;
+- let selected sites, services, and devices through without login (walled garden and IP bindings);
+- show your own login page, see [HotSpot customisation](./hotspot-customisation).
 
-### HotSpot Properties
+## Before you start
 
-| Property | Description |
-| :--- | :--- |
-| **name** | Descriptive name for the HotSpot server instance. |
-| **interface** | The specific local interface (physical or virtual) where the HotSpot service will listen for client requests. |
-| **address-pool** | The IP address pool from which HotSpot clients will receive their IP addresses via DHCP. |
-| **profile** | Reference to the HotSpot Server Profile containing common settings like login methods and HTML directory. |
-| **idle-timeout** | The period of inactivity after which a client is automatically logged out if no traffic is detected. |
-| **keepalive-timeout** | The time interval used to check if the client is still reachable; if the client does not respond, the session is terminated. |
-| **login-timeout** | The maximum duration allowed for a client to complete the authentication process after the login page is displayed. |
-| **addresses-per-mac** | Limits the number of IP addresses that can be associated with a single MAC address. |
-| **proxy-status** | Indicates the current operational state of the internal web-proxy used by the HotSpot system. |
+- HotSpot works with IPv4 only.
+- [Device-mode](../../system-information-and-utilities/device-mode) can block HotSpot. Check that `hotspot` is `yes` in `/system/device-mode/print`.
+- One HotSpot server runs on one interface. To serve several ports, put them in a bridge and run the HotSpot on the bridge interface, not on a bridge port. Do not put the interface that leads to the Internet into this bridge.
+- A user rate limit creates a simple queue. Simple queues do not limit FastTracked connections, see [Simple queue](../../firewall-and-quality-of-service/queues/simple-queue).
+- If you set up the HotSpot on the interface through which you manage the router, you lose access until you log in on the login page. Manage the router through another interface, or add an IP binding for your computer first, as described in the IP bindings section of this page.
 
-### HotSpot Gateway features
+## Set up a HotSpot
 
-- Different authentication methods of clients, using a local client database on the router, or a remote RADIUS server.
-- User accounting in a local database on the router, or on a remote RADIUS server.
-- A walled-garden system, access to some web pages without authorization.
-- Login page modification, where you can put information about the company.
-- Automatic and transparent change of any IP address of a client to a valid address.
-- HotSpot can inform DHCP clients that they are behind a captive portal (RFC7710).
+The `/ip/hotspot/setup` command asks a few questions and creates the HotSpot server together with everything that it needs.
 
-A HotSpot can work reliably only when IPv4 is used. HotSpot relies on Firewall NAT rules which currently are not supported for IPv6.
+| Question | What to answer |
+| :-- | :-- |
+| `hotspot interface` | The interface with the clients. On a router with the default configuration this is `bridge`. |
+| `local address of network` | The address of the router on this interface. The address that the interface already has is offered. |
+| `masquerade network` | `yes` adds a source NAT rule for the HotSpot network. |
+| `address pool of network` | The addresses for the clients. If the interface has a DHCP server, its pool is offered. |
+| `select certificate` | Answer `none`, unless you use the `https` login method. |
+| `ip address of smtp server` | Keep `0.0.0.0`. |
+| `dns servers` | The DNS servers that the router itself uses. The answer is written to `/ip/dns`, so do not enter the address of the router here. |
+| `dns name` | A name for the login page, for example `hotspot.lan`. The router resolves this name to its own address for the clients. Leave it empty to use the IP address. |
+| `name of local hotspot user`, `password for the user` | The first user account. These two questions are asked only when the router has no HotSpot user yet. |
 
-## Example
+On a router with the default configuration, with `bridge` as the HotSpot interface and `hotspot.lan` as the DNS name, the setup creates this configuration:
 
 ```ros
-[admin@MikroTik] /ip/hotspot> setup 
-Select interface to run HotSpot on 
-
-hotspot interface: ether3
-Set HotSpot address for interface 
-
-local address of network: 10.5.50.1/24
-masquerade network: yes
-Set pool for HotSpot addresses 
-
-address pool of network: 10.5.50.2-10.5.50.254
-Select hotspot SSL certificate 
-
-select certificate: none
-Select SMTP server 
-
-ip address of smtp server: 0.0.0.0
-Setup DNS configuration 
-
-dns servers: 10.1.101.1
-DNS name of local hotspot server 
-
-dns name: myhotspot
-Create local hotspot user 
-
-name of local hotspot user: admin
-password for the user: 
-[admin@MikroTik] /ip/hotspot>
+/ip/hotspot/profile
+add dns-name=hotspot.lan hotspot-address=192.168.88.1 name=hsprof1
+/ip/hotspot
+add address-pool=default-dhcp disabled=no interface=bridge \
+    name=hotspot1 profile=hsprof1
+/ip/hotspot/user
+add name=user1
+/ip/firewall/nat
+add action=masquerade chain=srcnat \
+    comment="masquerade hotspot network" src-address=192.168.88.0/24
 ```
 
-## Verify HotSpot configuration
+If the interface has no DHCP server, the setup also creates an IP pool and a DHCP server for it. The existing firewall rules of the router are not changed; the HotSpot adds its own dynamic rules, which are listed at the end of this page.
+
+Check that the server runs:
 
 ```ros
-[admin@MikroTik] /ip/hotspot> print 
-Flags: X - disabled, I - invalid, S - HTTPS 
-# NAME INTERFACE ADDRESS-POOL PROFILE IDLE-TIMEOUT
-0 hotspot1 ether3 hs-pool-3 hsprof1 5m 
-[admin@MikroTik] /ip/hotspot> 
-[admin@MikroTik] /ip/pool> print 
-# NAME RANGES 
-0 hs-pool-3 10.5.50.2-10.5.50.254 
-[admin@MikroTik] /ip/pool> /ip/dhcp-server 
-[admin@MikroTik] /ip/dhcp-server> print 
-Flags: X - disabled, I - invalid 
-# NAME INTERFACE RELAY ADDRESS-POOL LEASE-TIME ADD-ARP
-0 dhcp1 ether3 hs-pool-3 1h 
-[admin@MikroTik] /ip/dhcp-server> /ip/firewall/nat 
-[admin@MikroTik] /ip/firewall/nat> print 
-Flags: X - disabled, I - invalid, D - dynamic 
-0 X ;;; place hotspot rules here
-chain=unused-hs-chain action=passthrough 
-
-1 ;;; masquerade hotspot network
-chain=srcnat action=masquerade src-address=10.5.50.0/24 
-[admin@MikroTik] /ip/firewall/nat> 
+/ip/hotspot/print
 ```
 
-### **Parameters asked during the setup process**
-
-| Parameter | Description |
-| :-- | :-- |
-| **hotspot interface** (*string*; Default: **allow**) | Interface name on which to run HotSpot. To run HotSpot on a bridge interface, make sure public interfaces are not included in the bridge ports. |
-| **local address of network** (*IP*; Default: **10.5.50.1/24**) | HotSpot gateway address |
-| **masquerade network** (*yes \| no*; Default: **yes**) | Whether to masquerade HotSpot network, when **yes**, a rule is added to *`/ip/firewall/nat`* with *action=masquerade* |
-| **address pool of network** (*string*; Default: **yes**) | Address pool for HotSpot network, which is used to change user IP address to a valid address. Useful if providing network access to mobile clients that are not willing to change their networking settings. |
-| **select certificate** (*none \| import-other-certificate*; Default: ) | Choose an SSL certificate, when the HTTPS authorization method is required. |
-| **ip address of smtp server** (*IP*; Default: **0.0.0.0**) | The IP address of the SMTP server, where to redirect HotSpot's network SMTP requests (TCP port 25) |
-| **dns servers** (*IP*; Default: **0.0.0.0**) | DNS server addresses used for HotSpot clients, configuration is taken from *`/ip/dns`* menu of the HotSpot gateway |
-| **dns name** (*string*; Default: **""**) | The domain name of the HotSpot server, a fully qualified domain name is required, for example, [www.example.com](http://www.example.com) |
-| **name of local hotspot user** (*string*; Default: **"admin"**) | username of one automatically created HotSpot user, added to *`/ip/hotspot/user`* |
-| **password for the user** (*string*; Default: ) | Password for automatically created HotSpot user |
-
-## HotSpot
-
-**Sub-menu:** `/ip/hotspot`
-
-The menu is designed to manage the HotSpot servers of the router. It is possible to run HotSpot on Ethernet, wireless, VLAN, and bridge interfaces. One HotSpot server is allowed per interface. When HotSpot is configured on the bridge interface, set the HotSpot interface as the bridge interface, not as a bridge port, do not add public interfaces to bridge ports. You can add HotSpot servers manually to the *`/ip/hotspot`* menu, but it is advised to run *`/ip/hotspot/setup`*, which adds all necessary settings.
-
-| Parameters | Description |
-| :-- | :-- |
-| **name** (text) | HotSpot server's name or identifier |
-| **address-pool** (name/none; default: *none*) | address space used to change any HotSpot client IP address to a valid address. Useful for providing public network access to mobile clients that are not willing to change their networking settings |
-| **idle-timeout** (time/none; default: *5m*) | period of inactivity for unauthorized clients. When there is no traffic from this client (literally, the client computer should be switched off), once the timeout is reached, a user is dropped from the HotSpot host list, its used address becomes available |
-| **keepalive-timeout** (time/none; default: *none*) | Value of how long the host can stay out of reach to be removed from the HotSpot |
-| **login-timeout** (time/none; default: *none*) | Period of time after which if a host hasn't been authorized with the system the host entry gets deleted from the host table. Loop repeats until the host logs in to the system. Enable if there are situations where a host cannot log in after being too long in the host table unauthorized. |
-| **interface** (name of an interface) | Interface to run HotSpot on |
-| **addresses-per-mac** (integer**/**unlimited; default: 2) | Number of IP addresses allowed to be bound with the MAC address, when multiple HotSpot clients are connected with one MAC-address |
-| **profile** (name; default: ***default*)** | HotSpot server default HotSpot profile, which is located in *`/ip/hotspot/profile`* |
-
-## Read-only
-
-| Parameters | Description |
-| :-- | :-- |
-| keepalive-timeout (read-only; time) | The exact value of the keepalive-timeout that is applied to the user. The value shows how long the host can stay out of reach to be removed from the HotSpot |
-
-## HotSpot Profile
-
-This submenu contains a list of HotSpot server profiles. There may be various different HotSpot systems, defined as Server Profiles, on the same gateway machine. One or more interfaces can be grouped into one server profile. There are very few settings for the servers on particular interfaces - most of the configuration is set in the server profiles. For example, it is possible to make a completely different set of servlet pages for each server profile, and define different RADIUS servers for authentication.
-
-| Property | Description |
-| :-- | :-- |
-| **dns-name** (*string*; Default: **""**) | DNS name of the HotSpot server. This is the DNS name used as the name of the HotSpot server (i.e., it appears as the location of the login page). This name will automatically be added as a static DNS entry in the DNS cache. |
-| **hotspot-address** (*IP*; Default: **0.0.0.0**) | IP address of HotSpot service. |
-| **html-directory** (*string*; Default: **hotspot**) | Directory name in which HotSpot HTML pages are stored (by default *hotspot* directory). It is possible to specify a different directory with modified HTML pages. To change the HotSpot login page, get HotSpot files from your router, change and upload them back to the same location. Full path must be typed in the html-directory field, including "/flash/(hotspot\_dir)" |
-| **html-directory-override** (*string*; Default: **none**) | Alternative path for HotSpot HTML files. It should be used only when customized HotSpot HTML files are stored on external storage. |
-| **http-cookie-lifetime** (*time*; Default: **3d**) | HTTP cookie validity time, the option is related to *cookie* HotSpot login method |
-| **http-proxy** (*IP:Port*; Default: **0.0.0.0:0**) | Address and port of the proxy server for HotSpot service, when the default value is used all requests are resolved by the local `/ip/proxy` |
-| **https-redirect** (*yes \| no*; Default: **yes**) | Whether to redirect the unauthenticated user to the HotSpot login page, if the user is visiting an https:// url. Since the certificate domain name will mismatch, often this leads to errors, so you can set this parameter to "no" and all https requests will simply be rejected and user will have to visit an http page. |
-| **login-by** (*cookie\|http-chap\|http-pap\|https\|mac\|trial\|mac-cookie*; Default: **http-chap, cookie**) | The HotSpot authentication method usedmac-cookie - enables login by mac cookie methodcookie - may only be used with another HTTP authentication method. HTTP cookie is generated, when the user authenticates in HotSpot for the first time. User is not asked for the login/password and is authenticated automatically, until cookie-lifetime is activehttp-chap - login/password is required for the user to authenticate in HotSpot. CHAP challenge-response method with MD5 hashing algorithm is used for protecting passwords.http-pap - login/password is required for user to authenticate in HotSpot. Username and password are sent over network in plain text.https - login/password is required for user to authenticate in HotSpot. Client login/password exchange between client and server is encrypted with SSL tunnel. mac - client is authenticated without asking for a login form. Client MAC-address is added to `/ip/hotspot/user` database, client is authenticated as soon as connected to the HotSpottrial - client is allowed to use the internet without HotSpot login for the specified amount of time |
-| **mac-auth-password** (*string*; Default: ) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Used together with MAC authentication, the field is used to specify password for the users to be authenticated by their MAC addresses. The following option is required, when a specific RADIUS server rejects authentication for the clients with a blank password |
-| **name** (*string*; Default: ) | Descriptive name of the profile |
-| **nas-port-type** (*string*; Default: **wireless-802.11**) | NAS-Port-Type value to be sent to RADIUS server, NAS-Port-Type values are described in the RADIUS RFC 2865. This optional value attribute indicates the type of the physical port of the HotSpot server. |
-| **radius-accounting** (*yes \| no*; Default: **yes**) | Send RADIUS server accounting information for each user, when yes is used |
-| **radius-default-domain** (*string*; Default: ) | Default domain to use for RADIUS requests. Allows using separate RADIUS server per *`/ip/hotspot/profile`*. If used, same domain name should be specified under /radius domain value. |
-| **radius-interim-update** (*time \| received*; Default: **received**) | How often to send accounting updates. When *received* is set, interim-time from the RADIUS server is used. **0s** is the same as *received*. |
-| **radius-location-name** (*string*; Default: ) | RADIUS-Location-Id to be sent to RADIUS server. Used to identify location of the HotSpot server during the communication with RADIUS server. Value is optional and used together with RADIUS server. |
-| **radius-mac-format** (*"XX XX XX XX XX XX"\|XX:XX:XX:XX:XX:XX\|XXXXXX-XXXXXX\|XXXXXXXXXXXX\|XX-XX-XX-XX-XX-XX\|XXXX:XXXX:XXXX\|XXXXXX:XXXXXX*; Default: **XX:XX:XX:XX:XX:XX**) | Option to set format of user mac-address, that is sent to RADIUS server during AAA session. |
-| **rate-limit** (*string*; Default: **""**) | Rate limitation in the form of **rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold] [rx-burst-time[/tx-burst-time]]]] [priority] [rx-rate-min[/tx-rate-min]]** from the point of view of the router (so "rx" is client upload, and "tx" is client download). All rates should be numbers with optional 'k' (1,000s) or 'M' (1,000,000s). If tx-rate is not specified, rx-rate is as tx-rate too. Same goes for tx-burst-rate and tx-burst-threshold and tx-burst-time. If both rx-burst-threshold and tx-burst-threshold are not specified (but burst-rate is specified), rx-rate and tx-rate are used as burst thresholds. If both rx-burst-time and tx-burst-time are not specified, 1s is used as the default. rx-rate-min and tx-rate min are the values of limit-at properties |
-| **smtp-server** (*IP*; Default: **0.0.0.0**) | SMTP server address to be used to redirect HotSpot users' SMTP requests. |
-| **split-user-domain** (*yes \| no*; Default: **no**) | Split username from domain name when the username is given in "user@domain" or in "domain\user" format from RADIUS server |
-| **ssl-certificate** (*string \| none*; Default: **none**) | Name of the SSL certificate on the router to use only for HTTPS authentication. |
-| **trial-uptime** (*time/time*; Default: **30m/1d**) | Used only with *trial* authentication method. First time value specifies how long trial user identified by MAC address can use access to public networks without HotSpot authentication. Second time value specifies the amount of time, that has to pass until the user is allowed to use trial again. |
-| **trial-user-profile** (*string*; Default: **default**) | Specifies **HotSpot user profile** for trial users. |
-| **use-radius** (*yes \| no*; Default: **no**) | Use RADIUS to authenticate HotSpot users. |
-
-## HotSpot User Profiles
-
-**Sub-menu:** `/ip/hotspot/user/profile`
-
-User profile menu is used for common HotSpot client settings. Profiles are like User groups with the same set of settings, rate-limit, filter chain name, etc.
-
-| Property | Description |
-| :-- | :-- |
-| **add-mac-cookie** (*yes\|no*; Default: **yes**) | Allows adding a mac cookie for users. |
-| **address-list** (*string*; Default: ) | Name of the address list in which the user's IP address will be added. Useful to mark traffic per user group for queue tree configurations. |
-| **address-pool** (*string \|none*; Default: **none**) | IP pool name from which the user will get an IP. When the user has improper network settings configuration on the computer, the HotSpot server makes a translation and assigns the correct IP address from the pool instead of the incorrect one |
-| **advertise** (*yes \| no*; Default: **no**) | Enable forced advertisement popups. After a certain interval, a specific web-page is being displayed for HotSpot users. The advertisement page might be blocked by browser popup blockers. |
-| **advertise-interval** (*time[,time[,..]]*; Default: **30m,10m**) | Set of intervals between advertisement popups. After the list is done, the last value is used for all further advertisements, 10 minutes |
-| **advertise-timeout** (*time \| immediately \| never*; Default: **1m**) | How long the advertisement is shown, before blocking network access for the HotSpot client. Connection to the Internet is not allowed when the advertisement is not shown. |
-| **advertise-url** (*string[,string[,..]]*; Default: ) | List of URLs that are shown for advertisement popups. After the last URL is used, the list starts from the beginning. |
-| **idle-timeout** (*time \| none*; Default: **none**) | Maximal period of inactivity for authorized HotSpot clients. The timer counts when there is no traffic coming from that client and going through the router, for example, the computer is switched off. The user is logged out, dropped from the host list, and the address used by the user is freed when the timeout is reached. |
-| **incoming-filter** (*string*; Default: ) | Name of the firewall chain applied to incoming packets from the users of this profile. A jump rule is required from the built-in chain (input, forward, output) to chain=hotspot |
-| **incoming-packet-mark** (*string*; Default: ) | Packet mark put on incoming packets from every user of this profile |
-| **keepalive-timeout** (*time \| none*; Default: ) | Keepalive timeout for authorized HotSpot clients. Used to detect that the computer of the client is alive and reachable. The user is logged out when the timeout value is reached |
-| **mac-cookie-timeout** (*time*; Default: **3d**) | Selects the mac-cookie timeout from the last login or logout. |
-| **name** (*string*; Default: ) | Descriptive name of the profile |
-| **on-login** (*string*; Default: **""**) | Script name to be executed when the user logs in to the HotSpot from the particular profile. It is possible to get the username from internal **user** and **interface** variables. For example, *:log info "User $user logged in!"*. If the HotSpot is set on a bridge interface, then the **interface** variable will show the bridge as the actual interface unless **use-ip-firewall** is set in the bridge settings. List of available variables: $user$username (alternative var name for $user)$address$"mac-address"$interface |
-| **on-logout** (*string*; Default: **""**) | Script name to be executed when the user logs out from the HotSpot. It is possible to get the username from internal **user** and **interface** variables. For example, *:log info "User $user logged in!"* . If the HotSpot is set on a bridge interface, then the **interface** variable will show the bridge as the actual interface unless **use-ip-firewall** is set in the bridge settings. List of available variables: $user$username (alternative var name for $user)$address$"mac-address"$interface$cause Starting with v6.34rc11 some additional variables are available: $uptime-secs - final session time in seconds$bytes-in - bytes uploaded$bytes-out - bytes downloaded$bytes-total - bytes up + bytes down$packets-in - packets uploaded$packets-out - packets downloaded$packets-total - packets up + packets down |
-| **open-status-page** (*always \| http-login*; Default: **always**) | Option to show status page for a user authenticated with the mac login method. For example, to show advertisement on the status page (alogin.html)http-login - open the status page only for HTTP login (includes cookie and HTTPS)always - open the HTTP status page in case of mac login as well |
-| **outgoing-filter** (*string*; Default: ) | Name of the firewall chain applied to outgoing packets from the users of this profile. A jump rule is required from the built-in chain (input, forward, output) to chain=hotspot |
-| **outgoing-packet-mark** (*string*; Default: ) | Packet mark put on outgoing packets from every user of this profile |
-| **rate-limit** (*string*; Default: **""**) | A simple dynamic queue is created for the user once the user logs in to the HotSpot. Rate-limitation is configured in the following form **[rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold] [rx-burst-time[/tx-burst-time] [priority] [rx-rate-min[/tx-rate-min]]]]**. For example, to set 1M download, 512k upload for the client, rate-limit=512k/1M |
-| **session-timeout** (*time*; Default: **0s**) | Allowed session time for the client. After this time, the user is logged out unconditionally |
-| **shared-users** (*integer*; Default: **1**) | Allowed number of simultaneously logged-in users with the same HotSpot username |
-| **status-autorefresh** (*time \| none*; Default: **none**) | HotSpot status page autorefresh interval |
-| **transparent-proxy** (*yes \|*; Default: **yes**) | Use a transparent HTTP proxy for the authorized users of this profile |
-
-## HotSpot Users
-
-This is the menu, where client's user/password information is actually added. Additional configuration options for HotSpot users are configured here as well.
-
-| Property | Description |
-| :-- | :-- |
-| **address** (*IP*; Default: **0.0.0.0**) | IP address, when specified, the client will get the address from the HotSpot one-to-one NAT translations. Address does not restrict HotSpot login only from this address |
-| **comment** (*string*; Default: ) | descriptive information for the HotSpot user. It might be used for scripts to change parameters for specific clients |
-| **email** (*string*; Default: ) | HotSpot client's e-mail, informational value for the HotSpot user |
-| **limit-bytes-in** (*integer*; Default: **0**) | Maximal amount of bytes that can be received from the user. The user is disconnected from HotSpot after the limit is reached. |
-| **limit-bytes-out** (*integer*; Default: **0**) | Maximal amount of bytes that can be transmitted from the user. The user is disconnected from HotSpot after the limit is reached. |
-| **limit-bytes-total** (*integer*; Default: **0**) | (limit-bytes-in+limit-bytes-out). The user is disconnected from HotSpot after the limit is reached. |
-| **limit-uptime** (*time*; Default: **0**) | Uptime limit for the HotSpot client. The user is disconnected from HotSpot as soon as the uptime is reached. |
-| **mac-address** (*MAC*; Default: **00:00:00:00:00:00**) | The client is allowed to log in only from the specified MAC-address. If the value is *00:00:00:00:00:00*, any mac address is allowed. |
-| **name** (*string*; Default: ) | HotSpot login page username. When MAC-address authentication is used, the name is configured as the client's MAC-address |
-| **password** (*string*; Default: ) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | User password |
-| **profile** (*string*; Default: **default**) | User profile configured in *`/ip/hotspot/user/profile`* |
-| **routes** (*string*; Default: ) | Routes added to HotSpot gateway when the client is connected. The route format is **dst-address gateway metric** (for example, *192.168.1.0/24 192.168.0.1 1*) |
-| **server** (*string \| all*; Default: **all**) | HotSpot server's name to which the user is allowed to log in |
-| **otp-secret** (*string*; Default: ) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | A one-time password token that is used for HotSpot user authorization. It could be used as a separate "password" for HotSpot user authentication. |
-
-## Read-only properties
-
-| Property | Description |
-| :-- | :-- |
-| **bytes-in** (*integer*) | Total amount of data bytes received from the client. |
-| **bytes-out** (*integer*) | Total amount of data bytes sent to the client. |
-| **packets-in** (*integer*) | Total number of packets received from the client. |
-| **packets-out** (*integer*) | Total number of packets sent to the client. |
-| **uptime** (*time*) | Current session duration since the client was authenticated. |
-
-## HotSpot Active
-
-**Sub-menu:** `/ip/hotspot/active`
-
-HotSpot active menu shows all clients authenticated in HotSpot, the menu is informational (read-only). It is not possible to change anything here, except the user can be logged out with the remove command.
-
-| Parameters | Description |
-| :-- | :-- |
-| **server** (read-only; name) | HotSpot server name client is logged in |
-| **user** (read-only; name) | name of the HotSpot user |
-| **domain** (read-only; text) | the domain of the user (if split from the username), the parameter is used only with RADIUS authentication |
-| **address** (read-only; IP address) | The IP address of the HotSpot user |
-| **mac-address** (read-only; MAC-address) | MAC-address of the HotSpot user |
-| **login-by** (read-only; multiple-choice: cookie **/** http-chap **/** http-pap **/** https **/** mac **/** mac-cookie **/** trial) | the authentication method used by the HotSpot client |
-| **uptime** (read-only; time) | current session time of the user, it is showing how long the user has been logged in |
-| **idle-time** (read-only; time) | the amount of time the user has been idle |
-| **session-time-left** (read-only; time) | the exact value of session-time, that is applied for the user. Value shows how long user is allowed to be online to be logged off automatically by **uptime** reached |
-| **idle-timeout** (read-only; time) | the exact value of the user's idle-timeout |
-| **keepalive-timeout** (read-only; time) | the exact value of the keepalive-timeout, that is applied for the user. Value shows how long the host can stay out of reach to be removed from the HotSpot |
-| **limit-bytes-in** (read-only; integer) | value shows how many bytes received from the client, the option is active when the appropriate parameter is configured for HotSpot user |
-| **limit-bytes-out** (read-only; integer) | value shows how many bytes sent to the client, the option is active when the appropriate parameter is configured for HotSpot user |
-| **limit-bytes-total** (read-only; integer) | value shows how many bytes total were sent/received from the client, the option is active when the appropriate parameter is configured for HotSpot user |
-
-## HotSpot Host
-
-**Sub-menu:** `/ip/hotspot/host`
-
-The host table lists all computers connected to the HotSpot server. The host table is informational and it is not possible to change any value there:
-
-| Parameters | Description |
-| :-- | :-- |
-| **mac-address** (read-only; MAC-address) | HotSpot user MAC-address |
-| **address** (read-only; IP address) | HotSpot client's original IP address |
-| **to-address** (read-only; IP address) | The new client address assigned by HotSpot might be the same as the original **address** |
-| **server** (read-only; name) | HotSpot server name the client is connected to |
-| **bridge-port** (read-only; name) | *`/interface/bridge/port`* the client is connected to, value is unknown when HotSpot is not configured on the bridge |
-| **uptime** (read-only; time) | value shows how long the user is online (connected to the HotSpot) |
-| **idle-time** (read-only; time) | time the user has been idle |
-| **idle-timeout** (read-only; time) | value of the client idle-timeout (unauthorized client) |
-| **keepalive-timeout** (read-only; time) | keepalive-timeout value of the unauthorized client |
-| **bytes-in** (read-only; integer) | amount of bytes received from an unauthorized client |
-| **packet-in** (read-only; integer) | amount of packets received from an unauthorized client |
-| **bytes-out** (read-only; integer) | amount of bytes sent to an unauthorized client |
-| **packet-out** (read-only; integer) | amount of packets sent to an unauthorized client |
-
-## HotSpot walled-garden
-
-A Walled garden is a system which allows unauthorized use of some resources, but requires authorization to access other resources. This is useful, for example, to give access to some general information about the HotSpot service provider or billing options.
-
-The menu only manages Walled Garden for HTTP and HTTPs protocols. Other protocols can also be included in Walled Garden, but that is configured elsewhere (in `/ip/hotspot/walled-garden/ip`).
-
-| Property | Description |
-| :-- | :-- |
-| **action** (*allow \| deny*; Default: **allow**) | Action to perform, when packet matches the ruleallow - allow access to the web-page without authorizationdeny - authorization is required to access the web-page |
-| **server** (*string*; Default: ) | Name of the HotSpot server the rule is applied to. |
-| **src-address** (*IP*; Default: ) | Source address of the user, usually the IP address of the HotSpot client |
-| **method** (*string*; Default: ) | HTTP method of the request |
-| **dst-host** (*string*; Default: ) | Domain name of the destination web-server |
-| **dst-port** (*integer*; Default: ) | TCP port number the client sends request to |
-| **path** (*string*; Default: ) | The path of the request. Path comes after '''http://dst\_host' |
-
-# Read-only properties
-
-| Property | Description |
-| :-- | :-- |
-| **dst-address** (*IP*) |  |
-| **hits** (*integer*) |  |
-
-Wildcard properties (dst-host and path) match a complete string (i.e., they will not match "[example.com](http://example.com)" if they are set to "example"). Available wildcards are '\*' (match any number of any characters) and '?' (match any one character). Regular expressions are also accepted here, but if the property should be treated as a regular expression, it should start with a colon (':'). To show that no symbols are allowed before the given pattern, we use the ^ symbol at the beginning of the pattern. To specify that no symbols are allowed after the given pattern, we use the $ symbol at the end of the pattern.
-
-### Example
-
-To only permit bypassed access in the walled garden to "[www.example.com/test](http://www.example.com/test)" but not to "[www.example.com/test/test.php](http://www.example.com/test/test.php)" :
-
-```
-/ip/hotspot/walled-garden
-add dst-host=:^www.example.com path=":/test\$"
+```ros
+Columns: NAME, INTERFACE, ADDRESS-POOL, PROFILE, IDLE-TIMEOUT
+# NAME      INTERFACE  ADDRESS-POOL  PROFILE  IDLE-TIMEOUT
+0 hotspot1  bridge     default-dhcp  hsprof1  5m
 ```
 
-## HotSpot walled-garden ip
+Connect a device to the HotSpot network and open an HTTP page, for example `http://example.com`. The login page of the router opens instead. The device is now in the host list:
 
-To bypass HotSpot authentication for other protocols and different src/dst addresses (or address-lists). Used for different services (Winbox, SSH, Telnet, SIP, etc.)
+```ros
+/ip/hotspot/host/print
+```
 
-| Property | Description |
+```ros
+Flags: H - DHCP
+Columns: MAC-ADDRESS, ADDRESS, TO-ADDRESS, SERVER, IDLE-TIMEOUT
+#   MAC-ADDRESS        ADDRESS         TO-ADDRESS      SERVER    IDLE-TIMEOUT
+0 H 52:54:09:80:02:01  192.168.88.254  192.168.88.254  hotspot1  5m
+1 H 52:54:09:81:02:01  192.168.88.253  192.168.88.253  hotspot1  5m
+```
+
+Log in with the user that you created. The host gets the `A` (authorized) flag, and the session is in the active list:
+
+```ros
+/ip/hotspot/active/print
+```
+
+```ros
+Columns: USER, ADDRESS, UPTIME
+# USER   ADDRESS         UPTIME
+0 user1  192.168.88.254  2s
+```
+
+To log a user out, remove the session from `/ip/hotspot/active`. The user can also open the status page, `http://hotspot.lan/status`, and log out there.
+
+## Add users and limits
+
+Users are in `/ip/hotspot/user`. A user profile in `/ip/hotspot/user/profile` holds the settings that several users share.
+
+Add a user:
+
+```ros
+/ip/hotspot/user/add name=anna password=ChangeMe-1
+```
+
+### Limit the data rate and the session time
+
+Create a profile for guests and a user with this profile:
+
+```ros
+/ip/hotspot/user/profile/add name=guest rate-limit=512k/2M \
+    session-timeout=1h shared-users=1 address-list=hotspot-guests
+/ip/hotspot/user/add name=guest1 password=ChangeMe-2 profile=guest
+```
+
+- `rate-limit` is the upload/download limit of each user of the profile. The first value limits what the user sends, the second what the user receives.
+- `session-timeout` logs the user out after this time.
+- `shared-users` is the number of devices that can be logged in with the same user name at the same time. A login from one more device fails with the message "no more sessions are allowed for user".
+- `address-list` adds the address of each logged-in user to a firewall address list. Use the list in your own firewall, mangle, or queue rules.
+
+While `guest1` is logged in, the router has a dynamic simple queue and an address list entry for the user. Both are removed when the user logs out:
+
+```ros
+/queue/simple/print where dynamic
+/ip/firewall/address-list/print where list=hotspot-guests
+```
+
+```ros
+Flags: D - DYNAMIC
+0 D name="<hotspot-guest1>" target=192.168.88.253/32 parent=none
+    packet-marks="" priority=8/8 queue=default-small/default-small
+    limit-at=512k/2M max-limit=512k/2M burst-limit=0/0 burst-threshold=0/0
+    burst-time=0s/0s bucket-size=0.1/0.1
+
+Flags: D - DYNAMIC
+Columns: LIST, ADDRESS, CREATION-TIME
+#   LIST            ADDRESS         CREATION-TIME
+0 D hotspot-guests  192.168.88.253  2026-11-13 20:45:06
+```
+
+### Limit the total time and traffic of a user
+
+`session-timeout` in the profile limits one session, and the user can log in again. The limits of the user itself count over all sessions:
+
+```ros
+/ip/hotspot/user/add name=daypass password=ChangeMe-3 limit-uptime=1d \
+    limit-bytes-total=2G
+```
+
+When a limit is reached, the user is logged out. A new login fails with the message "user daypass has reached uptime limit" or "user daypass has reached traffic limit". The counters of the user are in `/ip/hotspot/user/print detail`. To let the user in again, reset them:
+
+```ros
+/ip/hotspot/user/reset-counters daypass
+```
+
+### Run a script at login and logout
+
+The `on-login` and `on-logout` scripts of a user profile run for every user of the profile. This example writes a line to the log:
+
+```ros
+/ip/hotspot/user/profile/set guest \
+    on-login=":log info \"HotSpot login: \$user \$address\"" \
+    on-logout=":log info \"HotSpot logout: \$user \$cause\""
+```
+
+```ros
+/log/print where message~"^HotSpot log"
+```
+
+```ros
+ 2026-11-13 20:45:47 script,info HotSpot login: guest1 192.168.88.253
+ 2026-11-13 20:45:49 script,info HotSpot logout: guest1 admin reset
+ 2026-11-13 20:51:40 script,info HotSpot login: guest1 192.168.88.254
+ 2026-11-13 20:51:45 script,info HotSpot logout: guest1 user request
+ 2026-11-13 20:51:50 script,info HotSpot login: guest1 192.168.88.254
+ 2026-11-13 20:51:54 script,info HotSpot logout: guest1 admin reset
+```
+
+The scripts can use these variables:
+
+| Variable | Value |
 | :-- | :-- |
-| **action** (*accept \|drop\|reject*; Default: **allow**) | Action to perform, when the packet matches the ruleallow - allow access to the opened service without authorizationdrop - the authorization is required to access the servicereject - the authorization is required to access the service, when the service is accessed, an ICMP reject message host-unreachable will be generated |
-| **server** (*string*; Default: ) | Name of the HotSpot server, rule is applied to. |
-| **src-address** (*IP*; Default: ) | Source address of the user, usually the IP address of the HotSpot client |
-| **dst-address** (*IP*; Default: ) | Destination IP address, the IP address of the WEB-server. Ignored if **dst-host** is already specified. |
-| **src-address-list** (*string*; Default: ) | Source address list name |
-| **dst-address-list** (*string*; Default: ) | Destination address list. Ignored if **dst-host** is already specified. |
-| **dst-host** (*string*; Default: ) | Domain name of the destination web-server. When this parameter is specified, a dynamic entry is added to Walled Garden |
-| **dst-port** (*integer*; Default: ) | TCP port number, client sends request to |
-| **protocol** (*integer \| string*; Default: ) | IP protocol |
+| `$user`, `$username` | The user name. |
+| `$address` | The IP address of the device. |
+| `$"mac-address"` | The MAC address of the device. |
+| `$interface` | The HotSpot interface. |
+| `$cause` | Only in `on-logout`: why the session ended, for example `user request`, `session timeout`, or `traffic limit reached`. |
+| `$"uptime-secs"` | Only in `on-logout`: the session time in seconds. |
+| `$"bytes-in"`, `$"bytes-out"`, `$"bytes-total"` | Only in `on-logout`: the bytes that the user sent and received. |
+| `$"packets-in"`, `$"packets-out"`, `$"packets-total"` | Only in `on-logout`: the packets that the user sent and received. |
 
-## IP Binding
+## Select the login methods
 
-**Sub-menu:** `/ip/hotspot/ip-binding`
+The `login-by` setting of the server profile in `/ip/hotspot/profile` selects how users can log in. Several methods can be enabled at the same time. The default is `cookie,http-chap`.
 
-IP-Binding HotSpot menu allows the setup of static One-to-One NAT translations, allows bypassing specific HotSpot clients without any authentication, and also allows blocking specific hosts and subnets from the HotSpot network
-
-| Property | Description |
+| Method | How the user logs in |
 | :-- | :-- |
-| **address** (*IP Range*; Default: **""**) | The original IP address of the client |
-| **mac-address** (*MAC*; Default: **""**) | MAC address of the client |
-| **server** (*string \| all*; Default: **"all"**) | Name of the HotSpot server.all - will be applied to all HotSpot servers |
-| **to-address** (*IP*; Default: **""**) | New IP address of the client, translation occurs on the router (client does not know anything about the translation) |
-| **type** (*blocked \| bypassed \| regular*; Default: **""**) | Type of the IP-binding actionregular - performs One-to-One NAT according to the rule, translates the address to to-addressbypassed - performs the translation, but excludes the client from login to the HotSpotblocked - translation is not performed and packets from a host are dropped |
+| `http-chap` | With a user name and password on the login page. The page does not send the password itself: JavaScript on the page hashes it together with a challenge from the router. |
+| `http-pap` | With a user name and password on the login page. The password is sent as plain text. A login link or an external page that sends the password directly needs this method. |
+| `https` | As `http-pap`, but the login page is opened over HTTPS. Set `ssl-certificate` in the server profile. The server then has the `S` flag in `/ip/hotspot/print`. |
+| `cookie` | Automatically, with a browser cookie from an earlier login. The cookie is valid for `http-cookie-lifetime`. |
+| `mac-cookie` | Automatically, by the MAC address of a device that has logged in before. |
+| `mac` | Automatically, when a user with the MAC address of the device as its name exists. |
+| `trial` | With a link on the login page, without an account, for a limited time. |
 
-## Cookies
+Without `http-pap`, a login that sends the plain password fails with the message "web browser did not send challenge response (try again, enable JavaScript)".
 
-The menu contains all cookies sent to the HotSpot clients, which are authorized by the cookie method. All the entries are read-only.
+### Remember devices with a MAC cookie
 
-**Sub-menu:** `/ip/hotspot/cookie`
+With `mac-cookie`, the user logs in once. After that, the router logs the device in by itself each time it comes back, until the cookie expires. This suits phones, which leave and join the network often.
 
-| Property | Description |
-| :-- | :-- |
-| **domain** (*string*) | The domain name (if split from the username) |
-| **expires-in** (*time*) | How long the cookie is valid |
-| **mac-address** (*MAC*) | Client's MAC-address |
-| **user** (*string*) | HotSpot username |
+```ros
+/ip/hotspot/profile/set hsprof1 login-by=cookie,http-chap,mac-cookie
+```
 
-## MAC Cookie
+The user profile must have `add-mac-cookie=yes`, which is the default, and `mac-cookie-timeout` sets how long the cookie is valid. The cookies are in `/ip/hotspot/cookie`; a MAC cookie has the `M` flag:
 
-MAC cookie is a HotSpot feature, designed to improve accessibility for smartphones, laptops and other mobile devices.
+```ros
+/ip/hotspot/cookie/print
+```
 
-When the MAC cookie feature is enabled (**login-by**=mac-cookie, **add-mac-cookie**=yes set in user profile), the following actions are taken:
+```ros
+Flags: M - MAC-COOKIE
+Columns: USER, MAC-ADDRESS, EXPIRES-IN
+#   USER  MAC-ADDRESS        EXPIRES-IN
+0 M anna  52:54:09:80:02:01  2d23h59m58s
+1   anna  52:54:09:80:02:01  2d23h59m58s
+```
 
-- **First successful login**. Mac cookie keeps a record of username and password for the MAC address if there is only one host with such a MAC. Cookie timeout is set to a value equal to mac-cookie-timeout.
-- **New host appears**. HotSpot checks if there is a mac cookie record for the MAC address and logs in the host using the recorded username and password. If there is more than one host with the same MAC address, the user will not be logged in and the MAC cookie record for this address will be deleted.
+The cookie is removed when the user logs out on the status page. To make a device log in again, remove its cookie from this list.
 
-When **a user logs out** mac cookie is removed in the following cases:
+### Log in devices by MAC address
 
-- user-request - User clicked on the logout button.
-- admin-reset - Disconnected from the radius server or the user is removed from the HotSpot active menu.
-- nas-request - Traffic limit reached.
-- session-timeout.
+With `mac`, a device needs no login page at all. Add a user whose name is the MAC address of the device:
 
-To debug problems with mac-cookies you will need to enable HotSpot debug logs and look for reasons why mac-cookie login didn't work for a certain host.
+```ros
+/ip/hotspot/profile/set hsprof1 login-by=cookie,http-chap,mac
+/ip/hotspot/user/add name=00:00:5E:00:53:10 comment="reception TV"
+```
 
-### Reasons when mac cookie is removed by server
+A MAC address is easy to copy, so use this method only for devices that cannot show a login page.
 
-- `/ip/hotspot/cookie/remove [number]`.
-- Radius server sends Disconnect-Request.
-- End-User has logged out himself via HotSpot status page.
-- End user has reached his data cap ("traffic limit reached").
-- Session-Timeout.
-- If mac-cookie login fails.
-- If the server detects that in the host table there is more than one entry with the same mac-address.
+### Give trial access
 
-### Properties of the HotSpot API JSON (RFC 7710)
+With `trial`, the login page shows a "Free trial available" link. A user who follows it gets access for `trial-uptime-limit` and can use the trial again after `trial-uptime-reset`:
 
-Based on the `api.json` template provided in the documentation, here are the descriptions for each property used to communicate captive portal status to client devices:
+```ros
+/ip/hotspot/profile/set hsprof1 login-by=cookie,http-chap,trial \
+    trial-uptime-limit=30m trial-uptime-reset=1d
+```
 
-- **captive**: A boolean value (`true` or `false`) that informs the client device whether it is currently restricted by the captive portal. If the user is already authenticated, it returns `false`.
-- **user-portal-url**: The specific URL where the user can access the login page or manage their current session. In MikroTik RouterOS, this is dynamically populated by the `$(link-login-only)` variable.
-- **seconds-remaining**: (Optional) An integer representing the number of seconds left before the current session expires. This is only included if a session timeout is configured.
-- **bytes-remaining**: (Optional) An integer representing the remaining data quota in bytes available to the user. This is only included if data limits are applied to the HotSpot user.
-- **can-extend-session**: A boolean value indicating whether the user has the ability to extend their current session or purchase/request more time/data via the portal.
+The router creates a dynamic user named `T-` and the MAC address of the device for each trial, with the profile set in `trial-user-profile`. When the time is used up, a new trial login fails with the message "has reached uptime limit" until the reset time passes.
 
-## Load balancing with mangle on HotSpot server
+## Let traffic through without login
 
-In a multi-uplink HotSpot setup (for example, [PCC](../../high-availability-solutions/load-balancing/per-connection-classifier.md), default routing often might fail to work as expected because the router prioritises mangle rules over the local destination check.
+### Sites: walled garden
 
-To fix this, ensure traffic destined for the HotSpot server is routed via the **local** table before the **mangle** chain is evaluated. You can achieve this by:
+The walled garden lists the web sites that a device can open before login, for example your own site or a payment page. Rules in `/ip/hotspot/walled-garden` match HTTP and HTTPS requests by the host name of the site:
 
-1. Adjusting the "`/routing/settings"` ([Routing table lookup](../../user-guides/routing-and-networking-protocols/routing-decision.md#routing-table-lookup).
-2. Or, adding specific "`/routing/rule"` entries to force the HotSpot server's traffic to use the local table first (including HTTP 80 traffic which is used to detect the HotSpot server).
+```ros
+/ip/hotspot/walled-garden/add dst-host=example.com
+/ip/hotspot/walled-garden/add dst-host=*.example.com
+```
+
+`dst-host` and `path` must match the whole value. Use `*` for any number of characters and `?` for one character. A value that starts with `:` is a regular expression.
+
+Rules in `/ip/hotspot/walled-garden/ip` match packets by address, protocol, and port, so they also work for services other than the web:
+
+```ros
+/ip/hotspot/walled-garden/ip/add action=accept \
+    dst-host=pay.example.com
+/ip/hotspot/walled-garden/ip/add action=accept protocol=tcp \
+    dst-port=443 dst-address=192.0.2.10
+```
+
+With `dst-host`, the router adds a dynamic rule with the address that the name resolves to.
+
+The `hits` counter of a walled garden rule shows that it is used:
+
+```ros
+/ip/hotspot/walled-garden/print
+```
+
+```ros
+Flags: X - DISABLED, D - DYNAMIC
+Columns: DST-HOST, DST-PORT, ACTION, HITS
+#    DST-HOST       DST-PORT  ACTION  HITS
+0 D                      443  allow      0
+;;; place hotspot rules here
+1 X                           allow      0
+2    example.com              allow      2
+3    *.example.com            allow      1
+```
+
+### Devices: IP bindings
+
+An IP binding in `/ip/hotspot/ip-binding` sets how the HotSpot treats one device, selected by its MAC address or IP address:
+
+```ros
+/ip/hotspot/ip-binding/add mac-address=00:00:5E:00:53:20 type=bypassed \
+    comment="office printer"
+/ip/hotspot/ip-binding/add mac-address=00:00:5E:00:53:21 type=blocked
+```
+
+- `bypassed` - the device has network access without login. It is in the host list with the `P` flag and is not in the active list.
+- `blocked` - the device has no access at all, also not to the login page.
+- `regular` - the device logs in as usual; with `to-address`, the HotSpot translates its address to this address.
+
+To create a binding for a device that is already connected, use `/ip/hotspot/host/make-binding` on its entry in the host list.
+
+## Authenticate users with RADIUS
+
+To keep the users on a RADIUS server, add the server for the `hotspot` service and enable RADIUS in the server profile:
+
+```ros
+/radius/add service=hotspot address=192.0.2.5 secret=ChangeMe-4
+/ip/hotspot/profile/set hsprof1 use-radius=yes
+```
+
+Users that exist in `/ip/hotspot/user` still log in from the local list. A session that RADIUS authenticated has the `R` flag in `/ip/hotspot/active`. The reply of the server can set the limits of the session, for example `Session-Timeout` for the session time and `Mikrotik-Rate-Limit` for the rate limit. With `radius-accounting=yes`, which is the default, the router also sends accounting records for each session.
+
+The attributes are listed on the [RADIUS](../radius) page. [User Manager](../user-manager) is a RADIUS server that runs on RouterOS.
+
+## How HotSpot behaves
+
+### Hosts and sessions
+
+- Every device that sends traffic to the HotSpot interface gets an entry in `/ip/hotspot/host`. `found-by` shows the packet that created the entry.
+- A logged-in user has an entry in `/ip/hotspot/active`. The session ends when the user logs out, when a limit or `session-timeout` is reached, when the device does not answer for the `keepalive-timeout` of the user profile, or when you remove the entry.
+- `/ip/hotspot/active/login` logs a connected device in from the console, without the login page.
+
+### What a device can do before login
+
+- Its DNS requests are answered by the router.
+- HTTP requests to a site in the walled garden pass. All other HTTP requests show the login page.
+- Everything else is rejected, including ping to the router: TCP with a reset, other protocols with an ICMP "prohibited" message.
+
+### Routing marks
+
+The login page is served by the router itself. A mangle rule that puts a routing mark on all traffic from the HotSpot network, for example for load balancing between two uplinks, also marks the requests to the login page, and the page no longer opens. Exclude the traffic to the router from such a rule with `dst-address-type=!local`.
+
+### Firewall rules that HotSpot adds
+
+A running HotSpot server adds dynamic rules to the NAT and filter tables. They are placed before your own rules.
+
+In `/ip/firewall/nat`, the `dstnat` chain sends the packets of HotSpot clients to the `hotspot` chain:
+
+```ros
+/ip/firewall/nat/print dynamic
+```
+
+```ros
+Flags: D - DYNAMIC
+ 0 D chain=dstnat action=jump jump-target=hotspot hotspot=from-client
+
+ 1 D chain=hotspot action=jump jump-target=pre-hotspot
+
+ 2 D chain=hotspot action=redirect to-ports=64872 protocol=udp dst-port=53
+
+ 3 D chain=hotspot action=redirect to-ports=64872 protocol=tcp dst-port=53
+
+ 4 D chain=hotspot action=redirect to-ports=64873 protocol=tcp
+     hotspot=local-dst dst-port=80
+
+ 5 D chain=hotspot action=redirect to-ports=64875 protocol=tcp
+     hotspot=local-dst dst-port=443
+
+ 6 D chain=hotspot action=jump jump-target=hs-unauth protocol=tcp hotspot=!auth
+
+ 7 D chain=hotspot action=jump jump-target=hs-auth protocol=tcp hotspot=auth
+
+ 8 D chain=hs-unauth action=redirect to-ports=64874 protocol=tcp dst-port=80
+
+ 9 D chain=hs-unauth action=redirect to-ports=64874 protocol=tcp dst-port=3128
+
+10 D chain=hs-unauth action=redirect to-ports=64874 protocol=tcp dst-port=8080
+
+11 D chain=hs-unauth action=redirect to-ports=64875 protocol=tcp dst-port=443
+
+12 D chain=hs-unauth action=jump jump-target=hs-smtp protocol=tcp dst-port=25
+
+13 D chain=hs-auth action=redirect to-ports=64874 protocol=tcp hotspot=http
+
+14 D chain=hs-auth action=jump jump-target=hs-smtp protocol=tcp dst-port=25
+```
+
+- `hotspot` redirects DNS requests and the requests to the login page to the HotSpot service, and sends the other TCP packets to `hs-unauth` (not logged in) or `hs-auth` (logged in).
+- `hs-unauth` redirects HTTP, the proxy ports 3128 and 8080, and HTTPS to the HotSpot service, which checks the walled garden and shows the login page.
+- `pre-hotspot` is for your own rules: add rules to this chain to handle packets of HotSpot clients before the HotSpot rules.
+
+In `/ip/firewall/filter`, the packets of clients that are not logged in go to their own chains:
+
+```ros
+/ip/firewall/filter/print dynamic where chain~"hs-" or hotspot
+```
+
+```ros
+Flags: D - DYNAMIC
+ 0 D chain=forward action=jump jump-target=hs-unauth hotspot=from-client,!auth
+
+ 1 D chain=forward action=jump jump-target=hs-unauth-to hotspot=to-client,!auth
+
+ 2 D chain=input action=jump jump-target=hs-input hotspot=from-client
+
+ 3 D chain=input action=drop protocol=tcp hotspot=!from-client
+     dst-port=64872-64875
+
+ 4 D chain=hs-input action=jump jump-target=pre-hs-input
+
+ 5 D chain=hs-input action=accept protocol=udp dst-port=64872
+
+ 6 D chain=hs-input action=accept protocol=tcp dst-port=64872-64875
+
+ 7 D chain=hs-input action=jump jump-target=hs-unauth hotspot=!auth
+
+ 8 D chain=hs-unauth action=reject reject-with=tcp-reset protocol=tcp
+
+ 9 D chain=hs-unauth action=reject reject-with=icmp-net-prohibited
+
+10 D chain=hs-unauth-to action=reject reject-with=icmp-host-prohibited
+```
+
+- `hs-unauth` handles the packets from clients that are not logged in, and `hs-unauth-to` the packets to them. Both reject everything that a walled garden IP rule does not allow.
+- `hs-input` accepts the connections of clients to the HotSpot service on the router.
+- `pre-hs-input` is for your own rules for packets from HotSpot clients to the router.
+
+Each rule in `/ip/hotspot/walled-garden/ip` appears as dynamic rules in these chains.
+
+## Read more
+
+- [HotSpot customisation](./hotspot-customisation) - your own login page.
+- CLI reference: [`/ip/hotspot`](../../cli-reference/ip/hotspot), [`/ip/hotspot/profile`](../../cli-reference/ip/hotspot/profile), [`/ip/hotspot/user`](../../cli-reference/ip/hotspot/user), [`/ip/hotspot/user/profile`](../../cli-reference/ip/hotspot/user/profile), [`/ip/hotspot/active`](../../cli-reference/ip/hotspot/active), [`/ip/hotspot/host`](../../cli-reference/ip/hotspot/host), [`/ip/hotspot/walled-garden`](../../cli-reference/ip/hotspot/walled-garden), [`/ip/hotspot/walled-garden/ip`](../../cli-reference/ip/hotspot/walled-garden/ip), [`/ip/hotspot/ip-binding`](../../cli-reference/ip/hotspot/ip-binding), [`/ip/hotspot/cookie`](../../cli-reference/ip/hotspot/cookie), [`/ip/hotspot/setup`](../../cli-reference/ip/hotspot/setup).

@@ -16,7 +16,9 @@ RAW rules are in `/ip/firewall/raw` for IPv4 and in `/ipv6/firewall/raw` for IPv
 - **prerouting** - every packet that enters the router, both packets for the router itself and packets that pass through it.
 - **output** - packets that the router itself sends.
 
-RAW rules are stateless: a rule sees each packet on its own and does not know which connection the packet belongs to.
+:::warning
+RAW rules work before connection tracking, so they are stateless: a rule sees each packet on its own and does not know which connection the packet belongs to. For packets that skip connection tracking with `action=notrack`, the mangle and filter rules are stateless too. Write the rules for both directions of the traffic: a rule for one direction does not cover the replies.
+:::
 
 ## Drop unwanted traffic before connection tracking
 
@@ -38,17 +40,14 @@ The rule drops every packet from these addresses that arrives on the WAN, before
 To check that the rule works, look at its counters:
 
 ```ros
-[admin@MikroTik] > /ip/firewall/raw/print stats
-Flags: D - DYNAMIC
+[admin@MikroTik] > /ip/firewall/raw/print stats where comment~"Drop invalid"
 Columns: CHAIN, ACTION, BYTES, PACKETS
-#   CHAIN       ACTION       BYTES  PACKETS
-;;; special dummy rule to show fasttrack counters
-0 D prerouting  passthrough      0        0
+# CHAIN       ACTION  BYTES  PACKETS
 ;;; Drop invalid source addresses
-1   prerouting  drop           168        3
+0 prerouting  drop      168        3
 ```
 
-The dynamic rule at the top belongs to [FastTrack](../packet-flow-in-routeros#fasttrack). To set the counters back to zero, use `/ip/firewall/raw/reset-counters-all`.
+To set the counters back to zero, use `/ip/firewall/raw/reset-counters-all`.
 
 To detect and drop a flood towards one destination, see [DDoS protection](../user-guides/ddos-protection).
 
@@ -89,6 +88,10 @@ set [find action=accept connection-state="established,related"] \
     connection-state=established,related,untracked
 ```
 
+:::warning
+A filter rule that accepts `untracked` packets accepts every packet that a `notrack` rule matched, and the filter rules after it do not see these packets. In the default configuration, the rule that drops new connections from the WAN is one of the rules after it. Make each `notrack` rule as narrow as the traffic that you want to exclude. If some of this traffic must still be dropped, put the filter rule that drops it before the rule that accepts `untracked`.
+:::
+
 To check that the traffic is no longer tracked, ping a host in 192.168.88.0/24 from the other network five times. Right after the ping, count the connection entries between the two networks:
 
 ```ros
@@ -99,18 +102,13 @@ To check that the traffic is no longer tracked, ping a host in 192.168.88.0/24 f
 The command prints `0`. Without the `notrack` rules, the same ping leaves one entry, which expires 10 seconds after the last packet. The counters do not depend on timing, and the `notrack` rules show the five packets of each direction:
 
 ```ros
-[admin@MikroTik] > /ip/firewall/raw/print stats
-Flags: D - DYNAMIC
+[admin@MikroTik] > /ip/firewall/raw/print stats where comment~"LAN to LAN"
 Columns: CHAIN, ACTION, BYTES, PACKETS
-#   CHAIN       ACTION       BYTES  PACKETS
-;;; special dummy rule to show fasttrack counters
-0 D prerouting  passthrough      0        0
-;;; Drop invalid source addresses
-1   prerouting  drop           168        3
+# CHAIN       ACTION   BYTES  PACKETS
 ;;; Do not track LAN to LAN
-2   prerouting  notrack        280        5
+1 prerouting  notrack    280        5
 ;;; Do not track LAN to LAN
-3   prerouting  notrack        280        5
+2 prerouting  notrack    280        5
 ```
 
 :::warning
@@ -177,27 +175,18 @@ add chain=udp-check action=drop protocol=udp src-port=19,1900,11211 \
     comment="Drop replies of common amplification services"
 ```
 
-The counters show how many packets entered the chain and what happened to them. Here, two UDP packets entered the chain. One had source port 1900 and was dropped; the other reached the end of the chain and returned:
+The counters show how many packets entered the chain and what happened to them. Here, six UDP packets entered the chain. One had source port 1900 and was dropped; the other five reached the end of the chain and returned:
 
 ```ros
-[admin@MikroTik] > /ip/firewall/raw/print stats
-Flags: D - DYNAMIC
+[admin@MikroTik] > /ip/firewall/raw/print stats where chain=udp-check or jump-target=udp-check
 Columns: CHAIN, ACTION, BYTES, PACKETS
-#   CHAIN       ACTION       BYTES  PACKETS
-;;; special dummy rule to show fasttrack counters
-0 D prerouting  passthrough      0        0
-;;; Drop invalid source addresses
-1   prerouting  drop           168        3
-;;; Do not track LAN to LAN
-2   prerouting  notrack        280        5
-;;; Do not track LAN to LAN
-3   prerouting  notrack        280        5
+# CHAIN       ACTION  BYTES  PACKETS
 ;;; Check UDP from the WAN
-4   prerouting  jump           292        2
+3 prerouting  jump      342        6
 ;;; Do not check trusted addresses
-5   udp-check   return           0        0
+4 udp-check   return      0        0
 ;;; Drop replies of common amplification services
-6   udp-check   drop            57        1
+5 udp-check   drop       57        1
 ```
 
 ## IPv6
@@ -210,7 +199,7 @@ add chain=prerouting action=drop in-interface-list=WAN \
     src-address=2001:db8::/32 comment="Drop the documentation prefix"
 ```
 
-The matchers differ in a few places. IPv6 rules have `headers` and `hop-limit`. They do not have `fragment`, `hotspot`, `ipv4-options`, `psd` and `ttl`.
+The matchers differ in a few places. IPv6 rules have `headers` and `hop-limit`. They do not have `fragment`, `hotspot`, `ipv4-options`, `psd` and `ttl`. The address types of `src-address-type` and `dst-address-type` differ too: IPv4 rules have `broadcast` and `blackhole`, IPv6 rules have `anycast` and `unreachable`.
 
 ## How RAW rules behave
 

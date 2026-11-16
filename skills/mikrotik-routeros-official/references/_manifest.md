@@ -1,27 +1,27 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `f60137fe2ca1f7fee289a93c05d06b86c2aaf231d1359dd4e69974ee79674964`
-Pages in current index: 1485
-Pages changed/written: 17
+Index SHA-256: `044dbb13c13f708b6a588701011fe69c15e19a00fc1b86ec6e4ac2c633ecc4a5`
+Pages in current index: 1744
+Pages changed/written: 311
 Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
 - [Certificates](docs/authentication-authorization-accounting/certificates.md) `f0ee5cc2ab46`
 - [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `1cc1fd3126fa`
-- [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `0fd674338681`
-- [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `5a550cf0f64c`
+- [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `1c0d3826d367`
+- [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `b68a83c3bdb6`
 - [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `47038484e799`
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
-- [Bridging and Switching](docs/bridging-and-switching.md) `9023f4e6412a`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `b80767fa842d`
+- [Bridging and Switching](docs/bridging-and-switching.md) `fe57a4a4c316`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `7516a33c6b79`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
-- [MACVLAN](docs/bridging-and-switching/macvlan.md) `4175c3fefc1e`
+- [MACVLAN](docs/bridging-and-switching/macvlan.md) `8135bf84fc73`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `559b92535fb8`
-- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `ed75ce5e297e`
+- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `37162e58113b`
 - [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `50bafc241d02`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
@@ -132,7 +132,7 @@ Pages failed: 0
 - [/cmr/upgrade/show-devices](docs/cli-reference/cmr/upgrade/show-devices.md) `933346c15fe1`
 - [/cmr/upgrade/trigger](docs/cli-reference/cmr/upgrade/trigger.md) `2ccc4c29a6a5`
 - [/cmr/upgrade/version-check](docs/cli-reference/cmr/upgrade/version-check.md) `d620c8d89df7`
-- [/cmr/vlan](docs/cli-reference/cmr/vlan.md) `b394d20e1741`
+- [/cmr/vlan](docs/cli-reference/cmr/vlan.md) `81f372cd22a4`
 - [/cmr/wifi](docs/cli-reference/cmr/wifi.md) `70c4e120199e`
 - [/cmr/wifi/radio](docs/cli-reference/cmr/wifi/radio.md) `37c28ee29d72`
 - [/compare-versions](docs/cli-reference/compare-versions.md) `4eac1a1b6193`
@@ -312,8 +312,8 @@ Pages failed: 0
 - [/interface/ethernet/switch/vlan](docs/cli-reference/interface/ethernet/switch/vlan.md) `0a4e9ba6938f`
 - [/interface/gre](docs/cli-reference/interface/gre.md) `f01f1cf1f90f`
 - [/interface/gre6](docs/cli-reference/interface/gre6.md) `81b205ff749c`
-- [/interface/ipip](docs/cli-reference/interface/ipip.md) `d78427d78a9f`
-- [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `7eb76c5b1e12`
+- [/interface/ipip](docs/cli-reference/interface/ipip.md) `98a9449500b4`
+- [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `2f7516a0a4ba`
 - [/interface/l2tp-client](docs/cli-reference/interface/l2tp-client.md) `9d6970e77104`
 - [/interface/l2tp-client/monitor](docs/cli-reference/interface/l2tp-client/monitor.md) `76a7f05cc670`
 - [/interface/l2tp-ether](docs/cli-reference/interface/l2tp-ether.md) `2eb8ef0b474a`
@@ -345,7 +345,7 @@ Pages failed: 0
 - [/interface/macsec](docs/cli-reference/interface/macsec.md) `6bf6ae92365b`
 - [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `0dad41a8b32a`
 - [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `98dbe046e79c`
-- [/interface/macvlan](docs/cli-reference/interface/macvlan.md) `4c87e373e1c7`
+- [/interface/macvlan](docs/cli-reference/interface/macvlan.md) `33557d0aa7ec`
 - [/interface/mesh](docs/cli-reference/interface/mesh.md) `715a3eef6843`
 - [/interface/mesh/fdb](docs/cli-reference/interface/mesh/fdb.md) `abd06562903b`
 - [/interface/mesh/port](docs/cli-reference/interface/mesh/port.md) `32da38ce6942`
@@ -372,11 +372,11 @@ Pages failed: 0
 - [/interface/pppoe-server](docs/cli-reference/interface/pppoe-server.md) `c46545356f0a`
 - [/interface/pppoe-server/monitor](docs/cli-reference/interface/pppoe-server/monitor.md) `63b4f40a9dbf`
 - [/interface/pppoe-server/server](docs/cli-reference/interface/pppoe-server/server.md) `85d8e9a4f5d1`
-- [/interface/pptp-client](docs/cli-reference/interface/pptp-client.md) `25f5a864731c`
+- [/interface/pptp-client](docs/cli-reference/interface/pptp-client.md) `cfdf3749e829`
 - [/interface/pptp-client/monitor](docs/cli-reference/interface/pptp-client/monitor.md) `2b1cffd0ace5`
-- [/interface/pptp-server](docs/cli-reference/interface/pptp-server.md) `4fa09350fb0a`
+- [/interface/pptp-server](docs/cli-reference/interface/pptp-server.md) `63bc1e3a6a38`
 - [/interface/pptp-server/monitor](docs/cli-reference/interface/pptp-server/monitor.md) `3428bac1c2e1`
-- [/interface/pptp-server/server](docs/cli-reference/interface/pptp-server/server.md) `aad50bff0b0a`
+- [/interface/pptp-server/server](docs/cli-reference/interface/pptp-server/server.md) `460dc5dfc242`
 - [/interface/pwr-line](docs/cli-reference/interface/pwr-line.md) `479b37f4ece7`
 - [/interface/pwr-line/blink](docs/cli-reference/interface/pwr-line/blink.md) `ea846149fdf7`
 - [/interface/pwr-line/configure](docs/cli-reference/interface/pwr-line/configure.md) `d6f7c23612ac`
@@ -396,7 +396,7 @@ Pages failed: 0
 - [/interface/vlan](docs/cli-reference/interface/vlan.md) `756fc14b6a41`
 - [/interface/vpls](docs/cli-reference/interface/vpls.md) `b51b597ecf6b`
 - [/interface/vpls/monitor](docs/cli-reference/interface/vpls/monitor.md) `9b57bb6933b7`
-- [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `ba3c5254b46a`
+- [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `3f37781dc343`
 - [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `4fe68d4e2fd0`
 - [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `c27ffd31be57`
 - [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `71b6bf9c6c73`
@@ -613,7 +613,7 @@ Pages failed: 0
 - [/ip/firewall/filter](docs/cli-reference/ip/firewall/filter.md) `b38d25432818`
 - [/ip/firewall/filter/reset-counters-all](docs/cli-reference/ip/firewall/filter/reset-counters-all.md) `db50cd36b2e1`
 - [/ip/firewall/filter/reset-counters](docs/cli-reference/ip/firewall/filter/reset-counters.md) `9a92139e4f87`
-- [/ip/firewall/layer7-protocol](docs/cli-reference/ip/firewall/layer7-protocol.md) `a81be657a58a`
+- [/ip/firewall/layer7-protocol](docs/cli-reference/ip/firewall/layer7-protocol.md) `7262419a750c`
 - [/ip/firewall/mangle](docs/cli-reference/ip/firewall/mangle.md) `c23a71e6c3fe`
 - [/ip/firewall/mangle/reset-counters-all](docs/cli-reference/ip/firewall/mangle/reset-counters-all.md) `684ff7dac961`
 - [/ip/firewall/mangle/reset-counters](docs/cli-reference/ip/firewall/mangle/reset-counters.md) `37300f725a2c`
@@ -624,24 +624,24 @@ Pages failed: 0
 - [/ip/firewall/raw/reset-counters-all](docs/cli-reference/ip/firewall/raw/reset-counters-all.md) `fb6d1512f2b7`
 - [/ip/firewall/raw/reset-counters](docs/cli-reference/ip/firewall/raw/reset-counters.md) `33a0b2269ab5`
 - [/ip/firewall/service-port](docs/cli-reference/ip/firewall/service-port.md) `23144d6ab52a`
-- [/ip/hotspot](docs/cli-reference/ip/hotspot.md) `7cf4260e5196`
-- [/ip/hotspot/active](docs/cli-reference/ip/hotspot/active.md) `75241cac93cc`
-- [/ip/hotspot/active/login](docs/cli-reference/ip/hotspot/active/login.md) `cba7e9e1d0b7`
-- [/ip/hotspot/cookie](docs/cli-reference/ip/hotspot/cookie.md) `a415b78b3160`
-- [/ip/hotspot/host](docs/cli-reference/ip/hotspot/host.md) `853a2581ca56`
-- [/ip/hotspot/host/make-binding](docs/cli-reference/ip/hotspot/host/make-binding.md) `bed12857038f`
-- [/ip/hotspot/ip-binding](docs/cli-reference/ip/hotspot/ip-binding.md) `81a087ee864b`
-- [/ip/hotspot/profile](docs/cli-reference/ip/hotspot/profile.md) `12e6eec9be99`
-- [/ip/hotspot/reset-html](docs/cli-reference/ip/hotspot/reset-html.md) `95958f68ce65`
-- [/ip/hotspot/service-port](docs/cli-reference/ip/hotspot/service-port.md) `303629eeaf4e`
-- [/ip/hotspot/setup](docs/cli-reference/ip/hotspot/setup.md) `fe7e86837074`
-- [/ip/hotspot/user](docs/cli-reference/ip/hotspot/user.md) `e1aa1c6c1098`
-- [/ip/hotspot/user/profile](docs/cli-reference/ip/hotspot/user/profile.md) `f91fb246d8f9`
-- [/ip/hotspot/user/reset-counters](docs/cli-reference/ip/hotspot/user/reset-counters.md) `eb8c43b41545`
-- [/ip/hotspot/walled-garden](docs/cli-reference/ip/hotspot/walled-garden.md) `0d7b4848d11f`
-- [/ip/hotspot/walled-garden/ip](docs/cli-reference/ip/hotspot/walled-garden/ip.md) `3f938f199ac0`
-- [/ip/hotspot/walled-garden/reset-counters-all](docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md) `2f6c31960021`
-- [/ip/hotspot/walled-garden/reset-counters](docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md) `0b0b96ece614`
+- [/ip/hotspot](docs/cli-reference/ip/hotspot.md) `5760ca5e2af6`
+- [/ip/hotspot/active](docs/cli-reference/ip/hotspot/active.md) `c6c5526df6d7`
+- [/ip/hotspot/active/login](docs/cli-reference/ip/hotspot/active/login.md) `d3e6ead7198e`
+- [/ip/hotspot/cookie](docs/cli-reference/ip/hotspot/cookie.md) `1420103e9c56`
+- [/ip/hotspot/host](docs/cli-reference/ip/hotspot/host.md) `511750740798`
+- [/ip/hotspot/host/make-binding](docs/cli-reference/ip/hotspot/host/make-binding.md) `56f4a9eb7838`
+- [/ip/hotspot/ip-binding](docs/cli-reference/ip/hotspot/ip-binding.md) `33d8ccea253f`
+- [/ip/hotspot/profile](docs/cli-reference/ip/hotspot/profile.md) `248502a11095`
+- [/ip/hotspot/reset-html](docs/cli-reference/ip/hotspot/reset-html.md) `a606a26f84d6`
+- [/ip/hotspot/service-port](docs/cli-reference/ip/hotspot/service-port.md) `a061542bb357`
+- [/ip/hotspot/setup](docs/cli-reference/ip/hotspot/setup.md) `48d9240cce7c`
+- [/ip/hotspot/user](docs/cli-reference/ip/hotspot/user.md) `9f8630170c4b`
+- [/ip/hotspot/user/profile](docs/cli-reference/ip/hotspot/user/profile.md) `716809735889`
+- [/ip/hotspot/user/reset-counters](docs/cli-reference/ip/hotspot/user/reset-counters.md) `1b4c71d491a9`
+- [/ip/hotspot/walled-garden](docs/cli-reference/ip/hotspot/walled-garden.md) `43363543fd2b`
+- [/ip/hotspot/walled-garden/ip](docs/cli-reference/ip/hotspot/walled-garden/ip.md) `274ea5e815e6`
+- [/ip/hotspot/walled-garden/reset-counters-all](docs/cli-reference/ip/hotspot/walled-garden/reset-counters-all.md) `ce3a74f160eb`
+- [/ip/hotspot/walled-garden/reset-counters](docs/cli-reference/ip/hotspot/walled-garden/reset-counters.md) `626f4383dad4`
 - [/ip/ipsec/active-peers](docs/cli-reference/ip/ipsec/active-peers.md) `3a15eb301db1`
 - [/ip/ipsec/active-peers/kill-connections](docs/cli-reference/ip/ipsec/active-peers/kill-connections.md) `4531c2e188ac`
 - [/ip/ipsec/identity](docs/cli-reference/ip/ipsec/identity.md) `ac75ac26d81d`
@@ -815,13 +815,13 @@ Pages failed: 0
 - [/ppp/secret](docs/cli-reference/ppp/secret.md) `eaa3c7e8f490`
 - [/queue/interface](docs/cli-reference/queue/interface.md) `4b6a0ef359f5`
 - [/queue/monitor](docs/cli-reference/queue/monitor.md) `d2b5eeb63b98`
-- [/queue/simple](docs/cli-reference/queue/simple.md) `2ef09e2fe15d`
+- [/queue/simple](docs/cli-reference/queue/simple.md) `b3af9d90c614`
 - [/queue/simple/reset-counters-all](docs/cli-reference/queue/simple/reset-counters-all.md) `bdaba52dd969`
 - [/queue/simple/reset-counters](docs/cli-reference/queue/simple/reset-counters.md) `4d5040062098`
-- [/queue/tree](docs/cli-reference/queue/tree.md) `8c931e80a1cd`
+- [/queue/tree](docs/cli-reference/queue/tree.md) `bf353a92529b`
 - [/queue/tree/reset-counters-all](docs/cli-reference/queue/tree/reset-counters-all.md) `f9a8dab18e79`
 - [/queue/tree/reset-counters](docs/cli-reference/queue/tree/reset-counters.md) `8584a4ccb3d5`
-- [/queue/type](docs/cli-reference/queue/type.md) `13fb9caf046e`
+- [/queue/type](docs/cli-reference/queue/type.md) `c1e89430e17f`
 - [/quit](docs/cli-reference/quit.md) `dce55e7a1e7e`
 - [/radius](docs/cli-reference/radius.md) `c4118720775f`
 - [/radius/incoming](docs/cli-reference/radius/incoming.md) `6dc6e0a905fb`
@@ -1162,6 +1162,7 @@ Pages failed: 0
 - [Container - Matrix (Synapse)](docs/containers/user-guides/container-matrix-synapse.md) `c5d5f294f52d`
 - [Container - mosquitto MQTT server](docs/containers/user-guides/container-mosquitto-mqtt-server.md) `4fb29d1c7bd5`
 - [Container - Postgres](docs/containers/user-guides/container-postgres.md) `5f4275a37f44`
+- [Container - Kubernetes (RKE2) single-node cluster](docs/containers/user-guides/container-rke2-kubernetes.md) `b71b00f97d51`
 - [Container - ThingsBoard MQTT/HTTP server](docs/containers/user-guides/container-thingsboard-mqtt-http-server.md) `a4dd608d0558`
 - [VETH](docs/containers/veth.md) `188f661131f7`
 - [Developer Guides](docs/developer-guides.md) `e69d65dac54c`
@@ -1177,7 +1178,7 @@ Pages failed: 0
 - [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `bc239bf6e8ef`
 - [DNS update](docs/diagnostics-monitoring-and-troubleshooting/dynamic-dns.md) `cc242fcb4e80`
 - [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
-- [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `50fda08234ce`
+- [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `9ca78f4af62b`
 - [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `e00b31a1e483`
 - [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `9c8decb5fad0`
 - [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
@@ -1203,21 +1204,27 @@ Pages failed: 0
 - [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a9883ddfaab1`
 - [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `34389ca56b9b`
 - [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `569127d1fa48`
-- [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `fa803d9a0c54`
+- [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `9579a02f2389`
 - [Mangle](docs/firewall-and-quality-of-service/firewall/mangle.md) `3e2f19250e8d`
 - [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
-- [RAW](docs/firewall-and-quality-of-service/firewall/raw.md) `83270491c6bf`
+- [RAW](docs/firewall-and-quality-of-service/firewall/raw.md) `9e5bdde0f9b3`
 - [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
 - [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `7277f3880df9`
-- [Queues](docs/firewall-and-quality-of-service/queues.md) `1df41f5f9723`
-- [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `11546cfc0044`
+- [Queues](docs/firewall-and-quality-of-service/queues.md) `2b26f7f4b271`
+- [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `6ce3d3e97e87`
 - [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `e92e9c3efcea`
-- [Queue Burst](docs/firewall-and-quality-of-service/queues/queue-burst.md) `0d9f5551f49f`
-- [Queue size](docs/firewall-and-quality-of-service/queues/queue-size.md) `819af2a73a29`
-- [Queue types](docs/firewall-and-quality-of-service/queues/queue-types.md) `9d3abca71d59`
-- [CAKE](docs/firewall-and-quality-of-service/queues/queue-types/cake.md) `345741a92cdf`
-- [PFIFO,BFIFO](docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md) `40358a1696dd`
+- [Queue Burst](docs/firewall-and-quality-of-service/queues/queue-burst.md) `2b720a81d8fa`
+- [Queue size](docs/firewall-and-quality-of-service/queues/queue-size.md) `d6994ba4c8fd`
+- [Queue tree](docs/firewall-and-quality-of-service/queues/queue-tree.md) `93cd372f4db2`
+- [Queue types](docs/firewall-and-quality-of-service/queues/queue-types.md) `ee22bcc31332`
+- [CAKE](docs/firewall-and-quality-of-service/queues/queue-types/cake.md) `b837a8b0260d`
+- [CoDel and FQ-CoDel](docs/firewall-and-quality-of-service/queues/queue-types/codel-fq-codel.md) `b197979c7d81`
+- [PCQ](docs/firewall-and-quality-of-service/queues/queue-types/pcq.md) `1df0829f0837`
+- [FIFO queue types](docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md) `aaf58d3e090b`
+- [RED](docs/firewall-and-quality-of-service/queues/queue-types/red.md) `f6e14c47254e`
+- [SFQ](docs/firewall-and-quality-of-service/queues/queue-types/sfq.md) `1bb4610ea269`
+- [Simple queue](docs/firewall-and-quality-of-service/queues/simple-queue.md) `03795a322539`
 - [UPnP](docs/firewall-and-quality-of-service/upnp.md) `f54adefa8b3d`
 - [Firewall and QoS Case Studies](docs/firewall-and-quality-of-service/user-guides.md) `a7386d01da90`
 - [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `64baf17452a7`
@@ -1230,7 +1237,7 @@ Pages failed: 0
 - [Backup](docs/getting-started/configuration-management/backup.md) `35543b82e148`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `ee72052ed4f1`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `27762e9130bd`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `c5a71d9c4916`
 - [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `4285d02ab78d`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
@@ -1287,8 +1294,8 @@ Pages failed: 0
 - [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `9a658aaa58d9`
 - [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f87c7314736a`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
-- [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `047977ef8412`
-- [VRRP](docs/high-availability-solutions/vrrp.md) `a7365300fcc0`
+- [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `567ce371eb6a`
+- [VRRP](docs/high-availability-solutions/vrrp.md) `669d48f4fa40`
 - [Internet of Things](docs/internet-of-things.md) `345029d5fceb`
 - [Bluetooth](docs/internet-of-things/bluetooth.md) `d699afba1d02`
 - [MikroTik Beacon Manager](docs/internet-of-things/bluetooth/mikrotik-beacon-manager.md) `d2eb11a878b9`
@@ -1320,7 +1327,7 @@ Pages failed: 0
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
-- [CMR](docs/management-tools/cmr.md) `953188baef17`
+- [CMR](docs/management-tools/cmr.md) `d5eeb823d1c7`
 - [CMR-Client](docs/management-tools/cmr/client.md) `69b99e59fd00`
 - [Console](docs/management-tools/console.md) `55964efcaf71`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
@@ -1443,7 +1450,7 @@ Pages failed: 0
 - [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`
 - [EoIP](docs/virtual-private-networks/eoip.md) `9d2bf92faaec`
 - [GRE](docs/virtual-private-networks/gre.md) `7bd2a35e6191`
-- [IPIP](docs/virtual-private-networks/ipip.md) `6f1df6c98353`
+- [IPIP](docs/virtual-private-networks/ipip.md) `41297150b5c6`
 - [IPsec](docs/virtual-private-networks/ipsec.md) `87c1f5d4e2a9`
 - [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`
 - [QKD Integration in RouterOS IPsec (PPK)](docs/virtual-private-networks/ipsec/qkd-integration-in-routeros-ipsec-ppk.md) `8c24ee335038`
@@ -1453,7 +1460,7 @@ Pages failed: 0
 - [PPPoE](docs/virtual-private-networks/pppoe.md) `850d209cc357`
 - [IPv6 PD over PPP](docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md) `538fb7ab9b7b`
 - [MLPPP over single and multiple links](docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md) `ec3daa96dc9e`
-- [PPTP](docs/virtual-private-networks/pptp.md) `85e617e82de7`
+- [PPTP](docs/virtual-private-networks/pptp.md) `3582192f410d`
 - [SSTP](docs/virtual-private-networks/sstp.md) `22e4e7d4c9c3`
 - [WireGuard](docs/virtual-private-networks/wireguard.md) `dae1f955b845`
 - [ZeroTier](docs/virtual-private-networks/zerotier.md) `690c5a15399b`
@@ -1492,3 +1499,255 @@ Pages failed: 0
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `ffc0494806f6`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
+- [Hardware Guides](hardware.md) `864892387386`
+- [APA-1](hardware/apa-1.md) `0f832ea870f6`
+- [ATLGM&EG18-EA](hardware/atlgm-and-eg18-ea.md) `f350ef6534a2`
+- [ATLGM&RG520F-EU](hardware/atlgm-and-rg520f-eu.md) `2c0381f3a089`
+- [Audience LTE6 kit](hardware/audience-lte6-kit.md) `8b15caeea82b`
+- [Audience](hardware/audience.md) `a35b1ee2b105`
+- [BaseBox-series](hardware/basebox-series.md) `b518a20d1396`
+- [cAP ac](hardware/cap-ac.md) `78890113f54e`
+- [cAP ax](hardware/cap-ax.md) `952ab2052c9c`
+- [cAP lite](hardware/cap-lite.md) `9c610c5db0fe`
+- [cAP LTE12 ax](hardware/cap-lte12-ax.md) `2a2be3719744`
+- [cAP XL ac](hardware/cap-xl-ac.md) `cf5318a0dea5`
+- [cAP](hardware/cap.md) `d888159277e4`
+- [CCR1009-7G-1C-1S+PC](hardware/ccr1009-7g-1c-1s-plus-pc.md) `c9dfe842e1c7`
+- [CCR1009-7G-1C-1S+](hardware/ccr1009-7g-1c-1s-plus.md) `1f0b07a1e9e3`
+- [CCR1009-7G-1C-PC](hardware/ccr1009-7g-1c-pc.md) `d8daca86c8c0`
+- [CCR1016-12G](hardware/ccr1016-12g.md) `06e162d8fa64`
+- [CCR1016-12S-1S+](hardware/ccr1016-12s-1s-plus.md) `f637593737cf`
+- [CCR1036-12G-4S-series](hardware/ccr1036-12g-4s-series.md) `7dff0842cc17`
+- [CCR1036-8G-2S+-series](hardware/ccr1036-8g-2s-plus-series.md) `5eda7a88cc0a`
+- [CCR1072-1G-8S+](hardware/ccr1072-1g-8s-plus.md) `3448109c3523`
+- [CCR2004-16G-2S+PC](hardware/ccr2004-16g-2s-plus-pc.md) `cab078813c9a`
+- [CCR2004-16G-2S+](hardware/ccr2004-16g-2s-plus.md) `0aa51eb4c99c`
+- [CCR2004-1G-12S+2XS](hardware/ccr2004-1g-12s-plus-2xs.md) `deff3580d232`
+- [CCR2004-1G-2XS-PCIe](hardware/ccr2004-1g-2xs-pcie.md) `cc3609afefb5`
+- [CCR2116-12G-4S+](hardware/ccr2116-12g-4s-plus.md) `291aeb570c87`
+- [CCR2216-1G-12XS-2XQ](hardware/ccr2216-1g-12xs-2xq.md) `000653d2509e`
+- [Chateau 5G ax](hardware/chateau-5g-ax.md) `7ee18ec47c4a`
+- [Chateau 5G R16](hardware/chateau-5g-r16.md) `477fe996bef8`
+- [Chateau 5G R17 ax](hardware/chateau-5g-r17-ax.md) `e5000784c4b0`
+- [Chateau 5G](hardware/chateau-5g.md) `0432741bace9`
+- [Chateau LTE12](hardware/chateau-lte12.md) `cf5f5d7153ff`
+- [Chateau LTE18 ax](hardware/chateau-lte18-ax.md) `501cba106026`
+- [Chateau LTE6 ax](hardware/chateau-lte6-ax.md) `fd60fe3f7f7d`
+- [Chateau LTE6-US](hardware/chateau-lte6-us.md) `574bb254bd92`
+- [Chateau LTE6](hardware/chateau-lte6.md) `1dde9992d8af`
+- [Chateau LTE7 ax](hardware/chateau-lte7-ax.md) `4ec5966c5ec0`
+- [Chateau LTE7](hardware/chateau-lte7.md) `4ee1f69e483d`
+- [Chateau PRO ax](hardware/chateau-pro-ax.md) `f58047032304`
+- [CME22-2n-BG77](hardware/cme22-2n-bg77.md) `8ba1526a2bfe`
+- [CRS-series](hardware/crs-series.md) `5b74c75e80a3`
+- [CRS106-1C-5S](hardware/crs106-1c-5s.md) `fe067cb55d46`
+- [CRS112-8G-4S-IN](hardware/crs112-8g-4s-in.md) `195ce8add264`
+- [CRS112-8P-4S-IN](hardware/crs112-8p-4s-in.md) `fb2778450ed2`
+- [CRS125-24G-1S-series](hardware/crs125-24g-1s-series.md) `89437b10d8bb`
+- [CRS304-4XG-IN](hardware/crs304-4xg-in.md) `8b020a7f0ec9`
+- [CRS305-1G-4S+IN](hardware/crs305-1g-4s-plus-in.md) `ccb96c0b01fe`
+- [CRS309-1G-8S+IN](hardware/crs309-1g-8s-plus-in.md) `9878c53480d4`
+- [CRS310-1G-5S-4S+IN](hardware/crs310-1g-5s-4s-plus-in.md) `bf0ab5010953`
+- [CRS310-8G+2S+IN](hardware/crs310-8g-plus-2s-plus-in.md) `9e566f2069cc`
+- [CRS312-4C+8XG-RM](hardware/crs312-4c-plus-8xg-rm.md) `3c1110a17416`
+- [CRS317-1G-16S+RM](hardware/crs317-1g-16s-plus-rm.md) `2ff111a6517e`
+- [CRS320-8P-8B-4S+RM](hardware/crs320-8p-8b-4s-plus-rm.md) `ebc12791290c`
+- [CRS326-24G-2S+IN](hardware/crs326-24g-2s-plus-in.md) `1fe3efa29801`
+- [CRS326-24G-2S+RM](hardware/crs326-24g-2s-plus-rm.md) `e26d81c463d1`
+- [CRS326-24S+2Q+RM](hardware/crs326-24s-plus-2q-plus-rm.md) `a0acff4d7e47`
+- [CRS326-4C+20G+2Q+RM](hardware/crs326-4c-plus-20g-plus-2q-plus-rm.md) `6ba05b1594fc`
+- [CRS328-24P-4S+RM](hardware/crs328-24p-4s-plus-rm.md) `d41bc7807a2a`
+- [CRS328-4C-20S-4S+RM](hardware/crs328-4c-20s-4s-plus-rm.md) `23dfb1bdd17c`
+- [CRS354-48G-4S+2Q+RM](hardware/crs354-48g-4s-plus-2q-plus-rm.md) `b56008746d0d`
+- [CRS354-48P-4S+2Q+RM](hardware/crs354-48p-4s-plus-2q-plus-rm.md) `0323e85320fe`
+- [CRS418-8P-8G-2S+5axQ2axQ-RM](hardware/crs418-8p-8g-2s-plus-5axq2axq-rm.md) `d6afde781ae0`
+- [CRS418-8P-8G-2S+RM](hardware/crs418-8p-8g-2s-plus-rm.md) `24f833542ee4`
+- [CRS504-4XQ-IN](hardware/crs504-4xq-in.md) `60bd364d0218`
+- [CRS504-4XQ-OUT](hardware/crs504-4xq-out.md) `7bf453f3ba7e`
+- [CRS510-8XS-2XQ-IN](hardware/crs510-8xs-2xq-in.md) `12b15d55dd16`
+- [CRS518-16XS-2XQ-RM](hardware/crs518-16xs-2xq-rm.md) `c48e9ce43766`
+- [CRS520-4XS-16XQ-RM](hardware/crs520-4xs-16xq-rm.md) `63cfe08c9841`
+- [CRS804-4DDQ-hRM](hardware/crs804-4ddq-hrm.md) `1745570784c2`
+- [CRS812-8DS-2DQ-2DDQ-RM](hardware/crs812-8ds-2dq-2ddq-rm.md) `903722fdf1fe`
+- [CSS318-16G-2S+IN](hardware/css318-16g-2s-plus-in.md) `75887707d94b`
+- [CSS326-24G-2S+RM](hardware/css326-24g-2s-plus-rm.md) `6808cd43c2c5`
+- [CSS610-8G-2S+IN](hardware/css610-8g-2s-plus-in.md) `49c6f3ffa75d`
+- [CSS610-8P-2S+IN](hardware/css610-8p-2s-plus-in.md) `3d4697c13f9f`
+- [Cube 60G ac](hardware/cube-60g-ac.md) `5e9cd53c8bb7`
+- [Cube Lite60](hardware/cube-lite60.md) `ac2c1e49bf40`
+- [Disc Lite5 ac](hardware/disc-lite5-ac.md) `8f6ab9a3475d`
+- [Disc Lite5](hardware/disc-lite5.md) `74b467e236de`
+- [DynaDish 5](hardware/dynadish-5.md) `9e83db1c964e`
+- [DynaDish 6](hardware/dynadish-6.md) `ed9e0ee71b40`
+- [FiberBox Plus](hardware/fiberbox-plus.md) `d83600b88ea6`
+- [FiberBox](hardware/fiberbox.md) `e5ea26dac2e0`
+- [FTC11XG](hardware/ftc11xg.md) `3504bb232326`
+- [FTC21-ups](hardware/ftc21-ups.md) `71c23c92017d`
+- [FTC21](hardware/ftc21.md) `6b91141850cc`
+- [G1040A-60WN](hardware/g1040a-60wn.md) `0a32f741d3a9`
+- [GESP+POE-IN](hardware/gesp-plus-poe-in.md) `991fcf5d3618`
+- [GPEN11](hardware/gpen11.md) `6037cdc9a27c`
+- [GPEN21](hardware/gpen21.md) `7011bf2b9039`
+- [GPeR](hardware/gper.md) `1ffea58643f5`
+- [GPeRx4](hardware/gperx4.md) `462f9bb40194`
+- [GPERx6](hardware/gperx6.md) `e393aaa57371`
+- [Groove-series](hardware/groove-series.md) `f99efa178330`
+- [hAP acÂ²](hardware/hap-ac-2.md) `f7ef0a560b2a`
+- [hAP ac lite TC](hardware/hap-ac-lite-tc.md) `749b5be09609`
+- [hAP ac lite](hardware/hap-ac-lite.md) `e2dd975ddb00`
+- [hAP ac](hardware/hap-ac.md) `543e2cdc8f2d`
+- [hAP ac3 LTE6 kit](hardware/hap-ac3-lte6-kit.md) `dbc6d4e3ec0a`
+- [hAP ac3](hardware/hap-ac3.md) `d6165889db51`
+- [hAP axÂ²](hardware/hap-ax-2.md) `b9d3395e147a`
+- [hAP axÂ³](hardware/hap-ax-3.md) `34d7b900da03`
+- [hAP ax lite LTE6](hardware/hap-ax-lite-lte6.md) `8ded8421e3ab`
+- [hAP ax lite](hardware/hap-ax-lite.md) `d6f9bd917ba7`
+- [hAP ax S](hardware/hap-ax-s.md) `72dd8a685f25`
+- [hAP be lite](hardware/hap-be-lite.md) `d7bfbd13d1a4`
+- [hAP beÂ³ Media](hardware/hap-be-media.md) `3315adf6846b`
+- [hAP lite TC](hardware/hap-lite-tc.md) `757baeff200c`
+- [hAP lite](hardware/hap-lite.md) `7bd6323c7486`
+- [hAP mini](hardware/hap-mini.md) `5744a84a3493`
+- [hAP](hardware/hap.md) `74a92e0d6f4f`
+- [hEX lite](hardware/hex-lite.md) `7acb8100d153`
+- [hEX PoE lite](hardware/hex-poe-lite.md) `78f7faf3f0d8`
+- [hEX PoE](hardware/hex-poe.md) `8f6ce2a59968`
+- [hEX refresh](hardware/hex-refresh.md) `c2e6ce84537c`
+- [hEX S (2025)](hardware/hex-s-2025.md) `3c2f9f071c3a`
+- [hEX S](hardware/hex-s.md) `4f49927fbbe7`
+- [hEX](hardware/hex.md) `161c171524b2`
+- [IAQM-THC2PV-W and IAQM-THC2PV-G](hardware/iaqm-thc2pv-w-and-iaqm-thc2pv-g.md) `5db843cc5a5a`
+- [Intercell](hardware/intercell.md) `6ead09e8a283`
+- [KNOT Embedded LTE4 EC25-EU&KNe](hardware/knot-embedded-lte4-ec25-eu-and-kne.md) `6e5cfc980497`
+- [KNOT Embedded LTE4 Global EG25-G&KNe](hardware/knot-embedded-lte4-global-eg25-g-and-kne.md) `7763e85834bf`
+- [KNOT LR8 kit](hardware/knot-lr8-kit.md) `956957d1a749`
+- [KNOT LR8G kit](hardware/knot-lr8g-kit.md) `0e770a0b3906`
+- [KNOT LR9 kit](hardware/knot-lr9-kit.md) `f21143b5f3b9`
+- [KNOT LR9G kit](hardware/knot-lr9g-kit.md) `6a1385e0febe`
+- [KNOT](hardware/knot.md) `705b594e52ae`
+- [L009UiGS-2HaxD-IN](hardware/l009uigs-2haxd-in.md) `8e5685971190`
+- [L009UiGS-RM](hardware/l009uigs-rm.md) `71c929ee0bad`
+- [L11UG-5HaxD](hardware/l11ug-5haxd.md) `d485c2bf400f`
+- [L14G-2ax-BT5-HL9&EG800Q (KNOT Gateway HL9)](hardware/l14g-2ax-bt5-hl9-and-eg800q.md) `5df00523e8ef`
+- [L14G-2ax-BT5-LR8&EG800K (KNOT Gateway LR8)](hardware/l14g-2ax-bt5-lr8-and-eg800k.md) `9312e7bee2f0`
+- [L23UGSR-5HaxD2HaxD](hardware/l23ugsr-5haxd2haxd.md) `3c5586484de4`
+- [LAMP 5G R16](hardware/lamp-5g-r16.md) `ff72c79d7420`
+- [LDF 2](hardware/ldf-2.md) `9195978f893a`
+- [LDF 5-series](hardware/ldf-5-series.md) `18badc6fde05`
+- [LDF LTE6 kit](hardware/ldf-lte6-kit.md) `583567772ce9`
+- [LHG-5axD](hardware/lhg-5axd.md) `f76e2773dfaa`
+- [LHG 60G](hardware/lhg-60g.md) `a8a9a3f1cc47`
+- [LHG kit-series](hardware/lhg-kit-series.md) `9c03ec7603ef`
+- [LHG Lite60](hardware/lhg-lite60.md) `d8e8719bea5d`
+- [LHG LTE18 kit](hardware/lhg-lte18-kit.md) `57cb3655f765`
+- [LHG R](hardware/lhg-r.md) `662ec9742dfa`
+- [LHG-series](hardware/lhg-series.md) `cd9b4cddebee`
+- [LHG XL 2](hardware/lhg-xl-2.md) `be8abb0bc1c7`
+- [LHG XL 5 ac](hardware/lhg-xl-5-ac.md) `eddcdf3e718a`
+- [LHG XL 5 ax](hardware/lhg-xl-5-ax.md) `014d40bd64e4`
+- [LHG XL 52 ac](hardware/lhg-xl-52-ac.md) `3acd31dd9751`
+- [LHG XL HP5](hardware/lhg-xl-hp5.md) `ceca6d5af6d7`
+- [LHGG LTE6 kit](hardware/lhgg-lte6-kit.md) `b67268d86836`
+- [LHGG LTE7 kit](hardware/lhgg-lte7-kit.md) `71c4667c1a34`
+- [LtAP kit-series](hardware/ltap-kit-series.md) `76624a949143`
+- [LtAP LR8 LTE kit](hardware/ltap-lr8-lte-kit.md) `7e878662385c`
+- [LtAP LR8 LTE6 kit](hardware/ltap-lr8-lte6-kit.md) `0cc5154ad917`
+- [LtAP LR8G LTE6 kit](hardware/ltap-lr8g-lte6-kit.md) `5cabf32635c2`
+- [LtAP LTE12 ax](hardware/ltap-lte12-ax.md) `d86116c9f158`
+- [LtAP mini kit-series](hardware/ltap-mini-kit-series.md) `a4bc03b17a3d`
+- [LtAP mini](hardware/ltap-mini.md) `cf4c305e60c6`
+- [LtAP](hardware/ltap.md) `0f434e2a887c`
+- [mANT-series](hardware/mant-series.md) `57c80b203897`
+- [MANTBox 52 15s](hardware/mantbox-52-15s.md) `e07fb3661858`
+- [mANTBox ax 15s](hardware/mantbox-ax-15s.md) `20b754b61e4f`
+- [mANTBox-series](hardware/mantbox-series.md) `6cce72637850`
+- [mAP lite](hardware/map-lite.md) `5039eae0b082`
+- [mAP](hardware/map.md) `9123e82dda7d`
+- [Metal 52 ac](hardware/metal-52-ac.md) `41483939a9da`
+- [MQS](hardware/mqs.md) `f8623c27ae3e`
+- [MTP250 series](hardware/mtp250-series.md) `a919121e38eb`
+- [NetBox 5 ax](hardware/netbox-5-ax.md) `fa357fa74a2c`
+- [NetBox 5](hardware/netbox-5.md) `cd0ae6f24251`
+- [netFiber 9](hardware/netfiber-9.md) `e25bef2ce3fe`
+- [NetMetal acÂ²](hardware/netmetal-ac.md) `44f92e7c0d56`
+- [NetMetal ax](hardware/netmetal-ax.md) `551d4b9b97e9`
+- [NetMetal-series](hardware/netmetal-series.md) `117ddc4e0947`
+- [netPower 15FR](hardware/netpower-15fr.md) `242b7e83fb3d`
+- [netPower 16P](hardware/netpower-16p.md) `a2f921b6d5f8`
+- [netPower Lite 7R](hardware/netpower-lite-7r.md) `8e991951d1fa`
+- [netPower Lite 8P](hardware/netpower-lite-8p.md) `2c2dc3b2568d`
+- [nRAY series](hardware/nray-series.md) `fc31c43372df`
+- [OmniTIK series](hardware/omnitik-series.md) `5e8f088a9c05`
+- [PowerBox Pro](hardware/powerbox-pro.md) `7ba88ffbbc3b`
+- [PowerBox](hardware/powerbox.md) `371d09f472fd`
+- [PWR-LINE AP](hardware/pwr-line-ap.md) `0fa613659e37`
+- [PWR-LINE PRO](hardware/pwr-line-pro.md) `ba5b5170301c`
+- [PWR-LINE](hardware/pwr-line.md) `7fe299b3821f`
+- [QRT 2](hardware/qrt-2.md) `4f420ed91372`
+- [QRT 5 ac](hardware/qrt-5-ac.md) `fa6c0dcdc014`
+- [QRT 5](hardware/qrt-5.md) `2b9e77c8c798`
+- [R11e-LR2](hardware/r11e-lr2.md) `5039049c9207`
+- [R11e-LR8](hardware/r11e-lr8.md) `999e1d4f18a4`
+- [R11e-LR8G](hardware/r11e-lr8g.md) `465dcd7f18a8`
+- [R11e-LR9](hardware/r11e-lr9.md) `8f5d97670e51`
+- [R11e-LR9G](hardware/r11e-lr9g.md) `72334cc28144`
+- [R11e series](hardware/r11e-series.md) `50bdda810d0c`
+- [RB1100-series](hardware/rb1100-series.md) `54c9e68873c4`
+- [RB2011iL-IN](hardware/rb2011il-in.md) `36b2418090f7`
+- [RB2011iL-RM](hardware/rb2011il-rm.md) `5c80ba5ff8c6`
+- [RB2011iLS-IN](hardware/rb2011ils-in.md) `3ca87aa9f9b9`
+- [RB2011UiAS-2HnD-IN](hardware/rb2011uias-2hnd-in.md) `0c97fa76ec52`
+- [RB2011UiAS-IN](hardware/rb2011uias-in.md) `d2934d47c2d9`
+- [RB2011UiAS-RM](hardware/rb2011uias-rm.md) `3c340af7775e`
+- [RB260-series](hardware/rb260-series.md) `aeda8e8eb897`
+- [RB3011UiAS-RM](hardware/rb3011uias-rm.md) `afc4224a6436`
+- [RB4011iGS+5HacQ2HnD-IN](hardware/rb4011igs-plus-5hacq2hnd-in.md) `406679712963`
+- [RB4011iGS+RM](hardware/rb4011igs-plus-rm.md) `e90ebd1738f1`
+- [RB450Gx4](hardware/rb450gx4.md) `8bbc57824b85`
+- [RB5009UG+S+IN](hardware/rb5009ug-plus-s-plus-in.md) `0c06df6041d9`
+- [RB5009UPr+S+IN](hardware/rb5009upr-plus-s-plus-in.md) `be3333980475`
+- [RB5009UPr+S+OUT](hardware/rb5009upr-plus-s-plus-out.md) `7c50299e0057`
+- [RB911-series](hardware/rb911-series.md) `2a3bf4a02658`
+- [RB912UAG-series](hardware/rb912uag-series.md) `6ac7ef925a06`
+- [RB922UAGS-5HPacD](hardware/rb922uags-5hpacd.md) `8aa55d915c10`
+- [RB951-series](hardware/rb951-series.md) `6b40630a8dd5`
+- [RBFTC11](hardware/rbftc11.md) `204d46419dce`
+- [RBM11G](hardware/rbm11g.md) `e6a7b5953b15`
+- [RBM33G](hardware/rbm33g.md) `b79066c7ef99`
+- [ROSE Data Server](hardware/rose-data-server.md) `880bef5b6cb2`
+- [S-3553LC20D](hardware/s-3553lc20d.md) `653d6a340d25`
+- [SEXTANT G](hardware/sextant-g.md) `39a0588c2f1a`
+- [SXT 2](hardware/sxt-2.md) `099f8839d35b`
+- [SXT 6](hardware/sxt-6.md) `ed7eaff61277`
+- [SXT kit-series](hardware/sxt-kit-series.md) `a5b8620f4d91`
+- [SXT R](hardware/sxt-r.md) `ee25bb3849ae`
+- [SXTSA-series](hardware/sxtsa-series.md) `a0774db951c2`
+- [SXTsq-5axD](hardware/sxtsq-5axd.md) `eff77c66377b`
+- [SXTsq Embedded LTE4 Global](hardware/sxtsq-embedded-lte4-global.md) `8e420f41712e`
+- [SXTsq Embedded LTE4](hardware/sxtsq-embedded-lte4.md) `452c40329306`
+- [SXTsq-series](hardware/sxtsq-series.md) `33aca22b21f0`
+- [TG-BT5-IN](hardware/tg-bt5-in.md) `f43c1d7f762b`
+- [TG-BT5-OUT](hardware/tg-bt5-out.md) `74b328f6b894`
+- [TG-LR82 / TG-LR92 User Manual](hardware/tg-lr-setup-guide.md) `d6564287d8e6`
+- [TG-LR82](hardware/tg-lr82.md) `1a02f40e5f2a`
+- [TG-LR92](hardware/tg-lr92.md) `2c42b4eccdf9`
+- [UP1302C-12](hardware/up1302c-12.md) `25cca035dbe3`
+- [wAP 60G series](hardware/wap-60g-series.md) `1afda5a59818`
+- [wAP ac kit-series](hardware/wap-ac-kit-series.md) `e2b8b99dd3b2`
+- [wAP ac](hardware/wap-ac.md) `6520108d3184`
+- [wAP ax LTE7 kit](hardware/wap-ax-lte7-kit.md) `7278f3f56da7`
+- [wAP ax](hardware/wap-ax.md) `ff876f9f79eb`
+- [wAP kit-series](hardware/wap-kit-series.md) `d17f50d5b26f`
+- [wAP LR2 kit](hardware/wap-lr2-kit.md) `401aadcf2735`
+- [wAP LR8G kit](hardware/wap-lr8g-kit.md) `1f6e716a9413`
+- [wAP LR9 kit](hardware/wap-lr9-kit.md) `78029dd9f1d4`
+- [wAP LR9G kit](hardware/wap-lr9g-kit.md) `6c7f17936872`
+- [wAP LTE kit (2024)](hardware/wap-lte-kit-2024.md) `bb5ec782163b`
+- [wAP R ac](hardware/wap-r-ac.md) `faac16cb409d`
+- [wAP R](hardware/wap-r.md) `a61b64b78d9f`
+- [wAP-series](hardware/wap-series.md) `3d72dd24b9fc`
+- [Wireless Wire Cube Pro, Cube 60Pro ac](hardware/wireless-wire-cube-pro-cube-60pro-ac.md) `3cac3e360df4`
+- [Wireless Wire Cube](hardware/wireless-wire-cube.md) `b4d7e0ae7b0f`
+- [Wireless Wire Dish](hardware/wireless-wire-dish.md) `69127e27342d`
+- [Woobm-USB](hardware/woobm-usb.md) `90a7c6a71c07`
+- [wsAP ac lite](hardware/wsap-ac-lite.md) `0589c5252ed0`

@@ -45,7 +45,7 @@ To graph every interface, add a rule with `interface=all`.
 
 ## Graph simple queues
 
-If you limit each customer with a [simple queue](../firewall-and-quality-of-service/queues#simple-queue), you can graph every queue and let each customer see the graph of their own queue. For example, with these customer queues:
+If you limit each customer with a [simple queue](../firewall-and-quality-of-service/queues/simple-queue), you can graph every queue and let each customer see the graph of their own queue. For example, with these customer queues:
 
 ```ros
 /queue/simple/add name=customer-12 target=192.168.88.12/32 \

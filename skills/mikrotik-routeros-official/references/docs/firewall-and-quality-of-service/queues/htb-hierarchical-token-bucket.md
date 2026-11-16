@@ -30,8 +30,8 @@ In the case of a multi-level queue structure, tokens used in a child queue are a
 
 The size of this packet queue, the sequence, how packets are added to this queue, and when packets are discarded is determined by:
 
-- **queue-type** - [Queue](./index.md)
-- **queue-size** - [Queue Size](./queue-size.md)
+- the queue type that the queue uses (`queue`) - see [Queue types](./queue-types)
+- the queue size of that queue type - see [Queue size](./queue-size)
 
 ### Token rate selection (Black part of the diagram)
 
@@ -47,7 +47,7 @@ In a case where **limit-at** is the highest value, extra tokens need to be issue
 
 ### The Diagram
 
-![](./img/htb-hierarchical-token-bucket-01.webp)
+![HTB diagram with the token bucket, the packet queue and the token rate selection](./img/htb-hierarchical-token-bucket-01.webp)
 
 ### Bucket Size in action
 
@@ -119,7 +119,7 @@ We have to follow three basic steps to create HTB:
 
 - **Match and mark traffic** – classify traffic for further use. It consists of one or more matching parameters to select packets for the specific class.
 - **Create rules (policy) to mark traffic** – put specific traffic classes into specific queues and define the actions that are taken for each class.
-- **Attach a policy for a specific interface(-s)** – append policy for all interfaces (global-in, global-out, or global-total), for a specific interface, or for a specific parent queue.
+- **Attach a policy for a specific interface(-s)** – append the policy to all traffic (`parent=global`), to a specific interface, or to a specific parent queue.
 
 HTB allows the creation of a hierarchical queue structure and determines relations between queues, like "parent-child" or "child-child".
 
@@ -150,12 +150,6 @@ CIR(parent)\* ≥ CIR(child1) +...+ CIR(childN)\* if parent is main parent CIR(p
 - The maximal rate of any child must be less than or equal to the maximal rate of the parent.
 
 MIR (parent) ≥ MIR(child1) & MIR (parent) ≥ MIR(child2) & ... & MIR (parent) ≥ MIR(childN)
-
-# Queue colors in Winbox
-
-- 0% - 50% available traffic used - green
-- 50% - 75% available traffic used - yellow
-- 75% - 100% available traffic used - red
 
 #### Priority
 
@@ -188,7 +182,7 @@ Our HTB structure will consist of 5 queues:
 
 #### Example 1: Usual case
 
-![](./img/htb-hierarchical-token-bucket-02.webp)
+![Queue structure and rates of example 1](./img/htb-hierarchical-token-bucket-02.webp)
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=4Mbps max-limit=10Mbps
@@ -205,7 +199,7 @@ Our HTB structure will consist of 5 queues:
 
 #### Example 2: Usual case with max-limit
 
-![](./img/htb-hierarchical-token-bucket-03.webp)
+![Queue structure and rates of example 2](./img/htb-hierarchical-token-bucket-03.webp)
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=4Mbps max-limit=10Mbps
@@ -222,7 +216,7 @@ Our HTB structure will consist of 5 queues:
 
 #### Example 3: Inner queue limit-at
 
-![](./img/htb-hierarchical-token-bucket-04.webp)
+![Queue structure and rates of example 3](./img/htb-hierarchical-token-bucket-04.webp)
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps.
 - **Queue02** limit-at=8Mbps max-limit=10Mbps.
@@ -239,7 +233,7 @@ Our HTB structure will consist of 5 queues:
 
 #### Example 4: Leaf queue limit-at
 
-![](./img/htb-hierarchical-token-bucket-05.webp)
+![Queue structure and rates of example 4](./img/htb-hierarchical-token-bucket-05.webp)
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps.
 - **Queue02** limit-at=4Mbps max-limit=10Mbps.

@@ -67,7 +67,7 @@ Settings menu [`/interface/ethernet/switch/l3hw-settings`](../cli-reference/inte
 
 ### Interface Lists
 
-It is impossible to use interface lists directly to control `l3-hw-offloading` because an interface list may contain virtual interfaces (such as VLAN) while the `l3-hw-offloading` setting must be applied to physical switch ports only. For example, if there are two VLAN interfaces (vlan20 and vlan30) running on the same switch port (trunk port), it is impossible to enable hardware routing on vlan20 but keep it disabled on vlan30.
+It is impossible to use interface lists directly to control `l3-hw-offloading` because an interface list may contain virtual interfaces (such as VLAN) while the `l3-hw-offloading` setting must be applied to physical switch ports only. To disable hardware routing for individual VLAN interfaces on a port, use the per-VLAN `l3-hw-offloading` setting in the `/interface/vlan` menu (see [Per-VLAN offloading](#per-vlan-offloading)).
 
 However, an interface list may be used as a port selector. The following example demonstrates how to enable hardware routing on LAN ports (ports that belong to the "LAN" interface list) and disable it on WAN ports:
 
@@ -448,7 +448,7 @@ add name=vlan10 vlan-id=10 interface=sfp-sfpplus1
 add name=vlan20 vlan-id=20 interface=bond1
 ```
 
-Due to Layer 2 dependency, on most devices only VLAN interfaces created on a hardware-offloaded, vlan-filtering bridge are capable of L3HW offloading. The correct configuration is:
+Due to Layer 2 dependency, on most devices only VLAN interfaces created on a hardware-offloaded, vlan-filtering bridge are capable of L3HW offloading. On 98DX7xxx switches, a VLAN interface created directly on an Ethernet switch port is also offloaded (see [Inter-VLAN Routing](#inter-vlan-routing)). The correct configuration is:
 
 ```ros
 /interface/bridge/port
@@ -464,10 +464,8 @@ add name=vlan10 vlan-id=10 interface=bridge1
 add name=vlan20 vlan-id=20 interface=bridge1
 ```
 
-:::warning
-If VLAN interfaces are created directly on Ethernet or bonding interfaces on devices that do not support offloading such interfaces (see [Inter-VLAN Routing](#inter-vlan-routing)), packets may be offloaded incorrectly - bypassing CPU processing (such as firewall and NAT) and causing undefined behavior.
-
-If this type of configuration is required, L3HW offloading must be disabled on the related switch ports under the `/interface/ethernet/switch/port` menu by setting `l3-hw-offloading=no`.
+:::info
+On devices that do not support offloading VLAN interfaces created directly on Ethernet or bonding interfaces (see [Inter-VLAN Routing](#inter-vlan-routing)), such interfaces are not offloaded and their traffic is routed by the CPU.
 :::
 
 ### Not adding the bridge interface to /interface/bridge/vlan/

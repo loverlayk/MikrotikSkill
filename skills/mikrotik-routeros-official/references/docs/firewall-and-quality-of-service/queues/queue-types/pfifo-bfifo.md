@@ -1,64 +1,106 @@
-# PFIFO,BFIFO
+# FIFO queue types
 
-> PFIFO and BFIFO are MikroTik RouterOS queue management strategies following FIFO principles, with PFIFO prioritizing packets by arrival order and BFIFO managing byte-based bandwidth allocation. Both ensure fairness...
+> PFIFO, BFIFO and MQ-PFIFO are the first-in, first-out queue types of RouterOS. This page shows how to set the queue size in packets or in bytes, and describes the default FIFO queue types and only-hardware-queue.
 
-# PFIFO,BFIFO
+# FIFO queue types
 
-## Overview
+A first-in, first-out (FIFO) queue sends packets in the order in which they arrive. When the queue is full, it drops every new packet until there is space again. A FIFO queue does not separate devices or connections.
 
-Queue types are like templates for classless queuing disciplines - the algorithms that control how packets are dropped or queued up in a memory buffer before further transmission. They are crucial for ensuring good Quality of Service, as they can not only help when bandwidth limits are exceeded, but also affect other aspects like latency.
+RouterOS has three FIFO kinds:
 
-Their complexity and attributes vary a lot. For example, a First-In-First-Out (FIFO) queue is simple and ensures fairness in the order of packet processing, but it can lead to issues such as head-of-line blocking. More complex queue types, such as those that implement fair queuing or congestion avoidance, can help manage network performance more effectively, but they may require more resources and configuration.
+- `pfifo` - the queue size is a number of packets, set with `pfifo-limit`.
+- `bfifo` - the queue size is a number of bytes, set with `bfifo-limit`.
+- `mq-pfifo` - one `pfifo` queue for each transmit queue of an interface. The size of each queue is set with `mq-pfifo-limit`.
 
-Therefore, the choice of queue type depends on the specific needs and characteristics of the network.
+The default queue types `default`, `ethernet-default` and `default-small` are `pfifo` types. `multi-queue-ethernet-default` is an `mq-pfifo` type.
 
-## PFIFO (Packet First-In, First-Out)
+## Set the queue size in packets
 
-### Description
+A simple queue and a queue tree use `default-small`, which holds 10 packets. This example gives the rate limit of one server a queue of 100 packets.
 
-PFIFO (Packet First-In, First-Out) is a queue management strategy that follows the basic queue logic. The main principle of PFIFO is that the first packet to arrive is the first packet to be transmitted out. This method is simple and straightforward, and ensures that no packet receives preferential treatment over the others.
+Simple queues do not limit FastTracked connections, and the default configuration has a FastTrack rule for established connections. The first two lines of the example disable this rule. See [Simple queue](../simple-queue) for other ways to take traffic off FastTrack.
 
-When packets enter the queue, they are placed at the end (tail) of the queue. As space becomes available for transmission, the packets at the front (head) of the queue are transmitted first. If the queue is full when a packet arrives, the packet is dropped or other policies are followed, depending on the overall queue management strategy in place.
+```ros
+/ip/firewall/filter
+disable [find action=fasttrack-connection]
+/queue/type
+add name=fifo-100 kind=pfifo pfifo-limit=100
+/queue/simple
+add name=server target=192.168.88.10/32 max-limit=10M/10M \
+    queue=fifo-100/fifo-100
+```
 
-### Characteristics
+Check that the queue counts the traffic of the server:
 
-- **Simplicity:** PFIFO is one of the simplest forms of queue management. It doesn't require complex algorithms or significant computational resources. This makes it easy to implement and understand.
-- **Fairness:** All packets are treated equally, regardless of their source, destination, or content. The first packet in is the first one out.
-- **No Prioritization:** There's no inherent capability to prioritize certain types of traffic over others. While this ensures fairness, it can be a drawback when dealing with different types of network traffic that might need prioritization.
+```ros
+/queue/simple/print bytes where name=server
+Columns: NAME, TARGET, BYTES, TOTAL-BYTES
+# NAME    TARGET            BYTES          TOTAL-BYTES
+0 server  192.168.88.10/32  188000/188000            0
+```
 
-### Examples
+## Set the queue size in bytes
 
-Imagine a line at the post office. Each person (packet) waiting in line represents a data packet waiting in the queue. The first person in line gets served first, then the next, and so on. If the post office is too busy and the line is full, any new person arriving would have to wait or leave (the packet is dropped).
+With `pfifo`, the amount of queued data depends on the packet sizes. With `bfifo`, the limit is the same for small and large packets. This example changes the queue of the server to 150 000 bytes, which is the size of 100 packets of 1500 bytes:
 
-### Conclusion
+```ros
+/queue/type
+add name=fifo-150k kind=bfifo bfifo-limit=150000
+/queue/simple
+set server queue=fifo-150k/fifo-150k
+```
 
-While PFIFO is simple and straightforward, its lack of traffic prioritization capabilities can be a downside, especially when managing network traffic that contains different types of data. In these situations, more complex queue management algorithms available in RouterOS, such as CAKE, FQ-CoDel, or PCQ, might be more suitable.
+Check the queue type of the simple queue:
 
-## BFIFO (Byte First-In, First-Out)
+```ros
+/queue/simple/print where name=server
+0  name="server" target=192.168.88.10/32 parent=none packet-marks=""
+   priority=8/8 queue=fifo-150k/fifo-150k limit-at=0/0 max-limit=10M/10M
+   burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s bucket-size=0.1/0.1
+```
 
-### Description
+## Choose the queue size
 
-BFIFO (Byte First-In, First-Out) is another queue management strategy, similar to PFIFO in its principle of operation, but with a key difference: BFIFO operates based on the size of packets, or bytes, rather than on the number of packets.
+A full queue adds delay to every packet that passes it. The delay is the queue size divided by the rate of the queue. A queue of 100 packets of 1500 bytes holds 1.2 Mbit of data:
 
-In a BFIFO system, when packets enter the queue, they are still placed at the end, and packets at the front are transmitted first. However, the queue size is calculated in bytes, not in the number of packets. When the queue reaches its maximum byte size, any new packets that arrive are dropped, or other policies are followed.
+- At 10 Mbps, the last packet in the queue waits 120 ms.
+- At 100 Mbps, the last packet in the queue waits 12 ms.
 
-### Characteristics
+The default type `default-small` holds 10 packets, which is 6 ms at 20 Mbps. The type `default` holds 50 packets, which is 30 ms at 20 Mbps.
 
-- **Byte-Based:** Unlike PFIFO, BFIFO calculates the queue size based on bytes, which allows for more precise control of bandwidth usage.
-- **Fairness:** BFIFO also ensures fairness as it treats all packets equally, regardless of their source, destination, or content.
-- **No Prioritization:** Similar to PFIFO, there's no inherent capability in BFIFO to prioritize certain types of traffic over others.
+A short queue drops more packets when traffic arrives in bursts. A long queue drops fewer packets and delays them longer. See [Queue size](../queue-size) for how the queue size changes the shape of the traffic.
 
-### Examples
+## FIFO types on interfaces
 
-Consider a public bus as an example of a BFIFO system. The bus has a maximum capacity of passengers it can carry (similar to the byte size of the queue). Even if there is a line of people waiting (packets), if the bus is full, new passengers cannot get on (packets are dropped).
+`/queue/interface` shows the queue type of each interface. On Ethernet interfaces, the default is `only-hardware-queue`. Its kind is `none`: the interface has no software queue, and packets go directly to the transmit queue of the hardware.
 
-## Comparison: PFIFO vs. BFIFO
+```ros
+/queue/interface/print where interface=ether1
+Columns: INTERFACE, QUEUE, ACTIVE-QUEUE
+#  INTERFACE  QUEUE                ACTIVE-QUEUE
+0  ether1     only-hardware-queue  only-hardware-queue
+```
 
-While both PFIFO and BFIFO are FIFO (First-In, First-Out) strategies and follow the basic queue logic, there are some differences:
+To put a software FIFO queue on an interface, set its queue type:
 
-- **Queue Size:** PFIFO considers the queue size in terms of the number of packets, while BFIFO calculates the queue size in bytes. This means that BFIFO takes into account the size of each packet, which can allow for more accurate control of bandwidth usage.
-- **Packet Dropping:** In PFIFO, packets are dropped when the queue is full in terms of the number of packets. In BFIFO, packets are dropped when the byte size of the queue is exceeded, even if this means dropping a packet that is larger than the remaining space in the queue.
-- **Fairness:** Both PFIFO and BFIFO are fair in terms of the order of packet transmission – the first in is the first out. However, in a situation where packets are of different sizes, PFIFO could lead to a situation where a large packet takes up a lot of resources but is treated the same as a smaller packet. On the other hand, BFIFO's byte-based approach can provide more balanced resource usage.
-- **Complexity:** Both strategies are simple compared to more complex queuing strategies that prioritize certain types of traffic. However, BFIFO is slightly more complex than PFIFO because it requires tracking the total size of all packets in the queue.
+```ros
+/queue/interface
+set ether1 queue=ethernet-default
+```
 
-Overall, the choice between PFIFO and BFIFO depends on the specific requirements of your network and the characteristics of your traffic.
+Check the active queue of the interface:
+
+```ros
+/queue/interface/print where interface=ether1
+Columns: INTERFACE, QUEUE, ACTIVE-QUEUE
+#  INTERFACE  QUEUE             ACTIVE-QUEUE
+0  ether1     ethernet-default  ethernet-default
+```
+
+`QUEUE` is the configured type. `ACTIVE-QUEUE` is the type that the interface uses now. When a queue tree has the interface as its parent, `ACTIVE-QUEUE` shows `queue-tree`.
+
+## Read more
+
+- [Queue types](./) - all kinds and the default queue types.
+- [Queue size](../queue-size) - the effect of the queue size on a rate limit.
+- [`/queue/type` CLI reference](../../../cli-reference/queue/type) - all properties.
