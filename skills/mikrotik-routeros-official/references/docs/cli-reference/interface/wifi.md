@@ -174,6 +174,7 @@
 <ArgTableRow arg="datapath.traffic-processing" typ="enum (on-cap | on-capsman | on-capsman-secure)" unset="1"></ArgTableRow>
 <ArgTableRow arg="datapath.vlan-id" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="datapath.interface-list" typ="enum" unset="1"></ArgTableRow>
+<ArgTableRow arg="datapath.batman-adv" typ="iface_enum { none }" unset="1"></ArgTableRow>
 <ArgTableRow arg="channel.frequency" typ="object" unset="1"></ArgTableRow>
 <ArgTableRow arg="channel.secondary-frequency" typ="multi { array-id, secondary-frequency: alt { secondary-frequency-disable: enum (disabled)
 , secondary-frequency-num: num

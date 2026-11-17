@@ -17,8 +17,8 @@ The `/ip/hotspot/profile` menu lists the server profiles. A profile holds the se
 <ArgTableRow arg="name" typ="string">Name of the profile.</ArgTableRow>
 <ArgTableRow arg="hotspot-address" typ="ipAddr">IP address of the HotSpot service, which is the address of the login page.</ArgTableRow>
 <ArgTableRow arg="dns-name" typ="string">DNS name of the login page. The router resolves this name to the HotSpot address for the clients. Empty - the login page uses the IP address.</ArgTableRow>
-<ArgTableRow arg="html-directory" typ="file">Directory with the HotSpot pages. Default: `hotspot`.</ArgTableRow>
-<ArgTableRow arg="html-directory-override" typ="file">Directory with your own HotSpot pages. If it is set and exists, it is used instead of `html-directory`.</ArgTableRow>
+<ArgTableRow arg="html-directory" typ="file">Directory with the HotSpot pages. Default: `hotspot`, or `flash/hotspot` on a router that has a `flash` folder in its file list.</ArgTableRow>
+<ArgTableRow arg="html-directory-override" typ="file">Directory with your own HotSpot pages. If it is set and exists, it is used instead of `html-directory`. On a router that has a `flash` folder in its file list, keep the directory in `flash` and set the path with the folder, for example `flash/hs-custom`: files outside `flash` are lost on reboot.</ArgTableRow>
 <ArgTableRow arg="install-hotspot-queue" typ="bool">Whether to create a dynamic simple queue for the HotSpot interface of each server with this profile. The queue uses the `hotspot-default` queue type. Default: `no`.</ArgTableRow>
 <ArgTableRow arg="rate-limit" typ="string">Rate limit in the form `rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold] [rx-burst-time[/tx-burst-time] [priority] [rx-rate-min[/tx-rate-min]]]]]`. `rx` is what the router receives from the user (upload), `tx` is what it sends to the user (download). For example, `512k/2M` limits upload to 512 kbps and download to 2 Mbps. The limit applies to all users of the servers with this profile together.</ArgTableRow>
 <ArgTableRow arg="http-proxy" typ="composite { address: ipAddr
@@ -38,10 +38,10 @@ Login methods that the servers with this profile accept. Default: `cookie,http-c
 <ArgTableRow arg="mac-auth-mode" typ="enum (mac-as-username | mac-as-username-and-password) { mac-as-username:0, mac-as-username-and-password:1 }">What is sent for a `mac` login: `mac-as-username` - the MAC address as the user name, with `mac-auth-password` as the password; `mac-as-username-and-password` - the MAC address as both.</ArgTableRow>
 <ArgTableRow arg="mac-auth-password" typ="string">Password for `mac` logins. Use it when the RADIUS server rejects users with an empty password.</ArgTableRow>
 <ArgTableRow arg="http-cookie-lifetime" typ="time">Time for which the cookie of the `cookie` login method is valid. Default: `3d`.</ArgTableRow>
-<ArgTableRow arg="ssl-certificate" typ="enum (none) { none:0 }">Certificate for the `https` login method. Default: `none`.</ArgTableRow>
+<ArgTableRow arg="ssl-certificate" typ="enum (none) { none:0 }">Certificate for the `https` login method. It has to be valid for the `dns-name` of the profile. Default: `none`.</ArgTableRow>
 <ArgTableRow arg="split-user-domain" typ="bool">Whether to split a user name given as `user@domain` or `domain\user` into the user name and the domain. Default: `no`.</ArgTableRow>
-<ArgTableRow arg="trial-uptime-limit" typ="time">Time for which a trial user has access.</ArgTableRow>
-<ArgTableRow arg="trial-uptime-reset" typ="time">Time after which a device can use the trial again.</ArgTableRow>
+<ArgTableRow arg="trial-uptime-limit" typ="time">Time for which a trial user has access. Default: `30m`.</ArgTableRow>
+<ArgTableRow arg="trial-uptime-reset" typ="time">Time after which a device can use the trial again. Default: `1d`.</ArgTableRow>
 <ArgTableRow arg="trial-user-profile" typ="enum ()">User profile from `/ip/hotspot/user/profile` for trial users. Default: `default`.</ArgTableRow>
 <ArgTableRow arg="use-radius" typ="bool">Whether to authenticate users that are not in `/ip/hotspot/user` on a RADIUS server. The server is set in `/radius` with `service=hotspot`. Default: `no`.</ArgTableRow>
 <ArgTableRow arg="radius-accounting" typ="bool">Whether to send accounting records for the sessions to the RADIUS server. Default: `yes`.</ArgTableRow>

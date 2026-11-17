@@ -8,18 +8,20 @@ The pages that the [HotSpot](./) shows to its users are HTML files on the router
 
 ## Where the pages are
 
-A router with a HotSpot server has the `hotspot` directory in its files, with the default pages. The `html-directory` setting of the server profile in `/ip/hotspot/profile` points to this directory.
+A router with a HotSpot server has the `hotspot` directory in its files, with the default pages. On a router that has a `flash` folder in its file list, the directory is `flash/hotspot`. The `html-directory` setting of the server profile in `/ip/hotspot/profile` points to this directory.
 
 To make your own pages:
 
-1. Download the `hotspot` directory from the files of the router to your computer.
+1. Download the `hotspot` directory from the files of the router to your computer, for example with WinBox, SFTP or FTP.
 2. Edit the pages. Use a text editor: an HTML editor can remove the variables and the other parts that the HotSpot needs.
-3. Upload the directory to the router under another name, for example `hs-custom`.
+3. Upload the directory to the router under another name, for example `hs-custom`. If the file list of the router has a `flash` folder, upload the directory into `flash`: files outside it are lost on reboot. See [Files](../../system-information-and-utilities/files).
 4. Set the directory in the server profile:
 
    ```ros
    /ip/hotspot/profile/set hsprof1 html-directory-override=hs-custom
    ```
+
+   For a directory in the `flash` folder, set the path with the folder, `html-directory-override=flash/hs-custom`.
 
 Open the login page, `http://hotspot.lan/login`, to check the result. If the directory in `html-directory-override` does not exist, the HotSpot uses the pages from `html-directory`.
 

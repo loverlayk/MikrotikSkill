@@ -54,12 +54,15 @@ Type of the probe (default value: **"simple"**) :
 <ArgTableRow arg="port" typ="num" unset="1">TCP port. This parameter is specific to the [**TCP-conn**](../../diagnostics-monitoring-and-troubleshooting/netwatch#tcp-conn-probe) and [**HTTP/S-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#http-get-probe) probe types. (default value: **80** (TCP-conn, HTTP-GET) and  **443** (HTTPS-GET))</ArgTableRow>
 <ArgTableRow arg="thr-tcp-conn-time" typ="time" unset="1">Fail threshold for tcp-connect-time, the configuration uses microseconds, if the time unit is not specified (s/m/h), log and status pages display the same value in milliseconds. This parameter is specific to the [**TCP-conn**](../../diagnostics-monitoring-and-troubleshooting/netwatch#tcp-conn-probe) probe type.(default value: **1s**)</ArgTableRow>
 <ArgTableRow arg="thr-http-time" typ="time" unset="1">Fail threshold for http-resp-time. This parameter is specific to the [**HTTP/S-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#http-get-probe) probe types. (default value: **10s**)</ArgTableRow>
+<ArgTableRow arg="http-host" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="http-codes" typ="multi { http-response-range: range [100 .. 599]
  }" unset="1">Range of HTTP response status codes that are accepted as an "Up" state for the probe. See [mozilla-http-status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) or [RFC7231](https://datatracker.ietf.org/doc/html/rfc7231#section-6). This parameter is specific to the [**HTTP/S-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#http-get-probe) probe types. (default value: **100-299**)</ArgTableRow>
 <ArgTableRow arg="certificate" typ="enum (none) { none:0 }" unset="1">Certificate from the local store that should be used for host verification. This parameter is specific to the [**HTTPS-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#https-get-probe) probe type.</ArgTableRow>
 <ArgTableRow arg="check-certificate" typ="bool" unset="1">Enables trust chain validation from the local certificate store. This parameter is specific to the [**HTTPS-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#https-get-probe) probe type. (default value: **no**)</ArgTableRow>
+<ArgTableRow arg="sni" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="record-type" typ="enum (A | AAAA | MX | NS)" unset="1">Record type that will be used for DNS probe. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. (default value: **A**)</ArgTableRow>
 <ArgTableRow arg="dns-server" typ="address (flags=46)" unset="1">The DNS server that the probe should send its requests to; if not specified, it will use the value from `/ip/dns`. The probe is paced by its own `timeout`, not by the `query-server-timeout` of `/ip/dns`. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
+<ArgTableRow arg="thr-resolve-time" typ="time" unset="1"></ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
@@ -85,4 +88,5 @@ Type of the probe (default value: **"simple"**) :
  }">Name servers - the result of NS record-type probe. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type.</ArgTableRow>
 <ArgTableRow arg="mail-servers" typ="multi { array-id, mail-servers: string
  }">Mail servers along with their priorities - the result of MX record-type probe. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type.</ArgTableRow>
+<ArgTableRow arg="resolve-time" typ="time"></ArgTableRow>
 </ArgTable>

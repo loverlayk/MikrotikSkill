@@ -8,14 +8,14 @@
 **Type:** Command
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
-<ArgTableRow arg="name" typ="string"></ArgTableRow>
-<ArgTableRow arg="file-name" typ="file"></ArgTableRow>
+<ArgTableRow arg="name" typ="string">Name for the imported certificate.</ArgTableRow>
+<ArgTableRow arg="file-name" typ="file">File to import. The file is deleted after the import.</ArgTableRow>
 <ArgTableRow arg="pem" typ="string">import certificate or private key from a pasted PEM string; an encrypted private key is accepted when passphrase is supplied</ArgTableRow>
-<ArgTableRow arg="passphrase" typ="string"></ArgTableRow>
+<ArgTableRow arg="passphrase" typ="string">Passphrase of an encrypted private key or PKCS12 file.</ArgTableRow>
 <ArgTableRow arg="trusted" typ="bool">mark as trusted</ArgTableRow>
 <ArgTableRow arg="trust-store" typ="alt { all: enum (all)
 , component: ubit (ipsec, wpa-eap, capsman, fetch, sstp, ovpn, mqtt, email, netwatch, radius, container, userman, lora, wiliot, openflow, tr069, dot1x, dns, www, api, reverse-proxy, logging)
- }"></ArgTableRow>
+ }">Services that use the imported certificate as a trusted authority. Default: `all`.</ArgTableRow>
 <ArgTableRow arg="no-key-export" typ="bool">disallow private key export</ArgTableRow>
 </ArgTable>
 

@@ -31,7 +31,7 @@ Depending on the configuration, data is either forwarded to CAPsMAN for centrali
 
 ## Simple setup of a CAPsMAN system
 
-![](./img/ap-controller-capsman-01.webp)
+![Network diagram: a router with CAP1 connected to ether2 and CAP2 connected to ether3](./img/ap-controller-capsman-01.webp)
 
 Before deep-diving into the details of CAPsMAN operation, let us quickly illustrate how to set up the most basic system where you have a MikroTik router that manages two MikroTik AP devices. The benefit of CAPsMAN is that the CAP units don't need to be configured; all settings are done in the CAPsMAN server.
 
@@ -39,17 +39,17 @@ The CAPsMAN setup consists of defining configuration templates, which will then 
 
 On the central device, which will be your CAPsMAN server, create a new "Configuration" template with only the basic settings (network name, country, the local LAN bridge interface, the wireless password):
 
-![](./img/ap-controller-capsman-02.webp)Add a new configuration profile:
-![](./img/ap-controller-capsman-03.webp)
-![](./img/ap-controller-capsman-04.webp)
+![WinBox CAPsMAN Configurations tab: new configuration with name, SSID and country set](./img/ap-controller-capsman-02.webp)Add a new configuration profile:
+![WinBox new CAPs configuration, Datapath tab with the bridge selected](./img/ap-controller-capsman-03.webp)
+![WinBox new CAPs configuration, Security tab with WPA PSK, WPA2 PSK and a passphrase set](./img/ap-controller-capsman-04.webp)
 
 Then create a new "Provisioning" rule, which will assign the created configuration template to the CAP devices:
 
-![](./img/ap-controller-capsman-05.webp)
+![WinBox CAPsMAN Provisioning tab: new rule with action create dynamic enabled and the master configuration](./img/ap-controller-capsman-05.webp)
 
 All that remains to do on the CAPsMAN is to enable it:
 
-![](./img/ap-controller-capsman-06.webp)
+![WinBox CAPs Manager dialog with Enabled selected](./img/ap-controller-capsman-06.webp)
 
 Most MikroTik AP devices already support CAP mode out of the box, all you need to do is make sure they are on the same network as your CAPsMAN, and then boot them up, while holding the reset button.
 
@@ -100,13 +100,13 @@ CAP can be configured to automatically lock to a particular CAPsMAN server. Lock
 
 Locking is enabled by the following command:
 
-```
+```ros
 [admin@CAP] > /interface/wireless/cap/set lock-to-caps-man=yes
 ```
 
 Once CAP connects to a suitable CAPsMAN and locks to it, it is reflected like this:
 
-```
+```ros
 [admin@wtp] > /interface/wireless/cap/print
 ...
         locked-caps-man-common-name: CAPsMAN-000C424C30F3
@@ -129,7 +129,7 @@ CAPsMAN has the following certificate settings:
 
 When CAPsMAN auto-generates certificates, this will be reflected like this:
 
-```
+```ros
 [admin@CM] /caps-man/manager> pr
                    enabled: yes
                certificate: auto
@@ -141,7 +141,7 @@ When CAPsMAN auto-generates certificates, this will be reflected like this:
 
 And certificates:
 
-```
+```ros
 [admin@CM] /certificate> print detail
 Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, 
 A - authority, I - issued, R - revoked, E - expired, T - trusted 
@@ -162,7 +162,7 @@ CAP can be configured to request a certificate from CAPsMAN. In order for this t
 
 CAP will initially generate a private key and a certificate request with CommonName of the form `CAP-<mac address>`. When CAP establishes connection with CAPsMAN, CAP will request CAPsMAN to sign its certificate request. If this succeeds, CAPsMAN will send CA certificate and newly issued certificate to CAP. CAP will import these certificates into its certificate store:
 
-```
+```ros
 [admin@CAP] > /interface/wireless/cap/print
 ...
               requested-certificate: cert_2
@@ -255,7 +255,7 @@ CAPsMAN distinguishes between CAPs based on an identifier. The identifier is gen
 
 When the DTLS connection with the CAP is successfully established (which means that the CAP identifier is known and valid), CAPsMAN makes sure there is no stale connection with the CAP using the same identifier. Currently connected CAPs are listed in the `/caps-man/remote-cap` menu:
 
-```
+```ros
 [admin@CM] /caps-man> remote-cap print
  # ADDRESS                                    IDENT           STATE               RADIOS
  0 00:0C:42:00:C0:32/27044                    MT-000C4200C032 Run                      1
@@ -263,7 +263,7 @@ When the DTLS connection with the CAP is successfully established (which means t
 
 CAPsMAN distinguishes between actual wireless interfaces (radios) based on their builtin MAC address (radio-mac). This implies that it is impossible to manage two radios with the same MAC address on one CAPsMAN. Radios currently managed by CAPsMAN (provided by connected CAPs) are listed in the `/caps-man/radio` menu:
 
-```
+```ros
 [admin@CM] /caps-man> radio print
 Flags: L - local, P - provisioned 
  #    RADIO-MAC         INTERFACE                               REMOTE-AP-IDENT
@@ -296,7 +296,7 @@ If no rule matches the radio, then an implicit default rule with action **create
 
 To get the active provisioning matchers:
 
-```
+```ros
 [admin@CM] /caps-man/provisioning> print
 Flags: X - disabled 
  0   radio-mac=00:00:00:00:00:00 action=create-enabled master-configuration=main-cfg 
@@ -305,13 +305,13 @@ Flags: X - disabled
 
 For user's convenience there are commands that allow the re-execution of the provisioning process for some radio or all radios provided by some AP:
 
-```
+```ros
 [admin@CM] > /caps-man/radio/provision 0
 ```
 
 and:
 
-```
+```ros
 [admin@CM] > /caps-man/remote-cap/provision 0
 ```
 
@@ -319,7 +319,7 @@ and:
 
 CAPsMAN interfaces are managed in the `/caps-man/interface` menu:
 
-```
+```ros
 [admin@CM] > /caps-man/interface/print          
 Flags: M - master, D - dynamic, B - bound, X - disabled, I - inactive, R - running 
  #      NAME                                 RADIO-MAC         MASTER-INTERFACE                               
@@ -444,7 +444,7 @@ In this mode, the wireless interface on the CAP behaves as a normal interface an
 
 The wireless interface on CAP will change its configuration to 'enabled' and its state and some relevant parameters (e.g. mac-address, arp, mtu) will reflect that of the interface on CAPsMAN. Note that wireless-related configuration **will not** reflect the actual interface configuration as applied by CAPsMAN:
 
-```
+```ros
 [admin@CAP] /interface/wireless> pr
 Flags: X - disabled, R - running 
  0  R ;;; managed by CAPsMAN
@@ -457,7 +457,7 @@ Flags: X - disabled, R - running
 
 Virtual-AP interfaces in local forwarding mode will appear as enabled and dynamic Virtual-AP interfaces:
 
-```
+```ros
 [admin@CAP] /interface> pr
 Flags: D - dynamic, X - disabled, R - running, S - slave 
  #     NAME                                TYPE         MTU L2MTU  MAX-L2MTU
@@ -488,7 +488,7 @@ To facilitate data forwarding configuration, CAP can be configured with a bridge
 
 In this mode CAP sends all data received over wireless to CAPsMAN and only sends out over wireless data received from CAPsMAN. CAPsMAN has full control over data forwarding including client-to-client forwarding. The wireless interface on CAP is disabled and does not participate in networking:
 
-```
+```ros
  ...
  1 X  ;;; managed by CAPsMAN
       ;;; channel: 5180/20-Ceee/ac, SSID: master, manager forwarding
@@ -530,7 +530,7 @@ The Access list is configured in the `/caps-man/access-list` menu. There are the
 
 The Registration table contains a list of clients that are connected to radios controlled by CAPsMAN and is available in the `/caps-man/registration-table` menu:
 
-```
+```ros
 [admin@CM] /caps-man> registration-table print
  # INTERFACE                   MAC-ADDRESS       UPTIME                RX-SIGNAL
  0 cap1                        00:03:7F:48:CC:0B 1h38m9s210ms                -36
@@ -542,7 +542,7 @@ The Registration table contains a list of clients that are connected to radios c
 
 Create a security profile for WPA2 PSK, without specifying a passphrase:
 
-```
+```ros
 [admin@CM] /caps-man/security>add name="wpa2psk" authentication-types=wpa2-psk encryption=aes-ccm
 ```
 
@@ -551,7 +551,7 @@ Create a configuration profile to be used by the master interface:
 - Specify WPA2 passphrase in the configuration.
 - Specify channel settings in the configuration.
 
-```
+```ros
 [admin@CM] /caps-man/configuration> add name=master-cfg ssid=master security=wpa2psk
 security.passphrase=12345678 channel.frequency=5180 channel.width=20 channel.band=5ghz-a
 ```
@@ -560,21 +560,21 @@ Create a configuration profile to be used by the virtual AP interface:
 
 - Specify a different WPA2 passphrase in the configuration.
 
-```
+```ros
 [admin@CM] /caps-man/configuration> add name=slave-cfg ssid=slave security=wpa2psk
 security.passphrase=87654321
 ```
 
 Create a provisioning rule that matches any radio and creates dynamic interfaces using master-cfg and slave-cfg:
 
-```
+```ros
 [admin@CM] /caps-man/provisioning> add action=create-dynamic-enabled master-configuration=master-cfg
 slave-configurations=slave-cfg
 ```
 
 Now when an AP connects and is provisioned, 2 dynamic interfaces (one master and one slave) will get created:
 
-```
+```ros
 [admin@CM] /caps-man/interface> print detail 
 Flags: M - master, D - dynamic, B - bound, X - disabled, I - inactive, R - running 
  0 MDB  name="cap1" mtu=1500 l2mtu=2300 radio-mac=00:0C:42:1B:4E:F5 master-interface=none 
@@ -586,7 +586,7 @@ Flags: M - master, D - dynamic, B - bound, X - disabled, I - inactive, R - runni
 
 Consider an AP that does not support configured frequency connects and can not become operational:
 
-```
+```ros
 [admin@CM] /caps-man/interface> pr
 Flags: M - master, D - dynamic, B - bound, X - disabled, I - inactive, R - running 
  #      NAME                                 RADIO-MAC         MASTER-INTERFACE                               
@@ -597,19 +597,19 @@ Flags: M - master, D - dynamic, B - bound, X - disabled, I - inactive, R - runni
 
 We can override channel settings for this particular radio in interface settings, without affecting the master-cfg profile:
 
-```
+```ros
 [admin@CM] /caps-man/interface> set cap3 channel.frequency=2142 channel.band=2ghz-b/g
 ```
 
 Allow specific MAC address range to match the Access-list, for example, match all the Apple devices:
 
-```
+```ros
 [admin@CM] /caps-man/access-list> add mac-address=18:34:51:00:00:00 mac-address-mask=FF:FF:FF:00:00:00 action=accept
 ```
 
 Configuring DHCP Server Option 138 for setting the CAPsMAN address on the CAP boards
 
-```
+```ros
 [admin@CM] /ip/dhcp-server/network/set <network-id> caps-manager=<capsman-server-ip>
 ```
 
@@ -627,14 +627,14 @@ This is a basic configuration for using certificates in your CAPsMAN setup. This
 
 In the CAPsMAN Manager menu set *Certificate* and *CA Certificate* to *auto*:
 
-```
+```ros
 /caps-man/manager
 set ca-certificate=auto certificate=auto
 ```
 
 Print output:
 
-```
+```ros
 [admin@CAPsMAN] /caps-man/manager/print 
                    enabled: yes
                certificate: auto
@@ -652,7 +652,7 @@ The CAPsMAN device will first generate *CA-Certificate* and then it will generat
 
 Set in CAP configuration to *request* a certificate:
 
-```
+```ros
 /interface/wireless/cap
 set certificate=request
 ```
@@ -663,7 +663,7 @@ CAP will connect to CAPsMAN and request a certificate. CAP will receive *CA-Cert
 
 On the CAP device in the CAP menu *Requested Certificate* is set:
 
-```
+```ros
 [admin@CAP] /interface/wireless/cap/print
                             enabled: yes
                          interfaces: wlan1
@@ -680,7 +680,7 @@ On the CAP device in the CAP menu *Requested Certificate* is set:
 
 Also, two certificates are gained and are seen in the *Certificate* menu:
 
-```
+```ros
 [admin@CAP] > /certificate/print 
 Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I - issued, R - revoked, E - expired, T - trusted 
  #          NAME              COMMON-NAME              SUBJECT-ALT-NAME                                           FINGERPRINT             
@@ -690,7 +690,7 @@ Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I -
 
 On the CAPsMAN device in the Certificate menu three certificates are created. CAPsMAN and CAPsMAN-CA certificates, as well as a certificate which is issued to CAP:
 
-```
+```ros
 [admin@CAPsMAN] > /certificate/print 
 Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I - issued, R - revoked, E - expired, T - trusted 
  #          NAME                     COMMON-NAME              SUBJECT-ALT-NAME                                    FINGERPRINT         
@@ -703,7 +703,7 @@ Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I -
 
 If you want to allow only CAPs with a valid certificate to connect to this CAPsMAN you can set *Require Peer Certificate* to *yes* on the CAPsMAN device:
 
-```
+```ros
 /caps-man/manager
 set require-peer-certificate=yes
 ```
@@ -712,7 +712,7 @@ However, when you want to add new CAP devices to your CAPsMAN network you will h
 
 If you want to lock CAP to a specific CAPsMAN and be sure it won't connect to other CAPsMANs you should set the option *Lock To CAPsMAN* to *yes*. Additionally, you can specify the CAPsMAN to lock to by setting *CAPsMAN Certificate Common Names* on the CAP device:
 
-```
+```ros
 /interface/wireless/cap
 set lock-to-caps-man=yes
 set caps-man-certificate-common-names=CAPsMAN-D4CA6D987C26
@@ -720,13 +720,13 @@ set caps-man-certificate-common-names=CAPsMAN-D4CA6D987C26
 
 #### Manual certificates and issuing with SCEP
 
-With this example, you can create your own certificates for CAPsMAN and take control over issuing certificates to CAPs. This configuration can be useful in big, growing CAPsMAN networks. Many segments of this example can be done differently depending on your situation and needs. At this point, some knowledge about [Certificates](../../../authentication-authorization-accounting/certificates.md) and their [application](../../../authentication-authorization-accounting/certificates.md#sign-certificate) can be useful.
+With this example, you can create your own certificates for CAPsMAN and take control over issuing certificates to CAPs. This configuration can be useful in big, growing CAPsMAN networks. Many segments of this example can be done differently depending on your situation and needs. At this point, some knowledge about [Certificates](../../../authentication-authorization-accounting/certificates.md) and their [application](../../../authentication-authorization-accounting/certificates.md#create-a-certificate-authority-and-sign-certificates) can be useful.
 
 **CAPsMAN device:**
 
 In the *Certificate* menu add certificate templates for CA certificate and CAPsMAN server certificate:
 
-```
+```ros
 /certificate
 add name=CA-temp common-name=CA
 add name=CAPsMAN-temp common-name=CAPsMAN
@@ -734,7 +734,7 @@ add name=CAPsMAN-temp common-name=CAPsMAN
 
 Now *Sign* the certificate templates. First *Sign* the CA certificate and use CAPsMAN device IP as *CA CRL Host*:
 
-```
+```ros
 /certificate
 sign CA-temp ca-crl-host=10.5.138.157 name=CA
 sign CAPsMAN-temp ca=CA name=CAPsMAN
@@ -744,21 +744,21 @@ Alternatively, the previous two steps can be done with auto setting in *Certific
 
 *Export* CA certificate. You will have to *Import* it on the CAP device. You can use *Download -> Drag&Drop* to the CAP device, in this example the *fetch* command is used later from the CAP device. Using a long passphrase is advisable - a longer passphrase will take longer to crack if it gets into the wrong hands:
 
-```
+```ros
 /certificate
 export-certificate CA export-passphrase=thelongerthebetterpassphrase
 ```
 
 Create an *SCEP server* which will be used to issue and grant certificates to CAP devices:
 
-```
+```ros
 /certificate/scep-server
 add ca-cert=CA path=/scep/CAPsMAN
 ```
 
 Set certificates in the CAPsMAN Manager menu and set *Require Peer Certificate* to yes:
 
-```
+```ros
 /caps-man/manager
 set ca-certificate=CA certificate=CAPsMAN
 set require-peer-certificate=yes
@@ -770,26 +770,26 @@ At this point, only CAPs with a valid certificate will be able to connect.
 
 Download the export of the CA certificate from the CAPsMAN device to the CAP device. In this example *fetch* is used; however, there are multiple other ways:
 
-```
+```ros
 /tool/fetch address=10.5.138.157 src-path=cert_export_CA.crt user=admin password="123" mode=ftp
 ```
 
 Import CA certificate from CAPsMAN device in the *Certificate* menu:
 
-```
+```ros
 /certificate> import file-name=cert_export_CA.crt passphrase=thelongerthebetterpassphrase
 ```
 
 Add a certificate template for CAP:
 
-```
+```ros
 /certificate
 add name=CAP1 common-name=CAP1
 ```
 
 Ask the CAPsMAN device to grant this certificate with a key using SCEP:
 
-```
+```ros
 /certificate
 add-scep template=CAP1 scep-url="https://10.5.138.157/scep/CAPsMAN"
 ```
@@ -798,7 +798,7 @@ You will have to return to the CAPsMAN device to grant the key to this certifica
 
 In the CAP menu set the just created certificate:
 
-```
+```ros
 /interface/wireless/cap
 set certificate=CAP1
 ```
@@ -807,7 +807,7 @@ set certificate=CAP1
 
 Return to the CAPsMAN device to grant a key to the CAP certificate in the *Certificate Request* menu:
 
-```
+```ros
 /certificate/scep-server/requests
 grant numbers=0
 ```
@@ -816,7 +816,7 @@ grant numbers=0
 
 Now CAP should be able to connect to CAPsMAN. See in *CAPsMAN interfaces* if it connects. In the CAPsMAN device *Certificate* menu three certificates can be seen: CA, CAPsMAN, and the one which is issued to CAP:
 
-```
+```ros
 [admin@CAPsMAN] /certificate/print 
 Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I - issued, R - revoked, 
 E - expired, T - trusted 
@@ -828,7 +828,7 @@ E - expired, T - trusted
 
 In the CAP devices' *Certificate* menu two acquired certificates can be seen:
 
-```
+```ros
 [admin@CAP1] /interface/wireless> /certificate/print 
 Flags: K - private-key, D - dsa, L - crl, C - smart-card-key, A - authority, I - issued, R - revoked, 
 E - expired, T - trusted 

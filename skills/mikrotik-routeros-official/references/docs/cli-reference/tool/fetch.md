@@ -38,6 +38,7 @@ TLS certificate validation for HTTPS.
 - `yes-without-crl` - Validate the certificate without a CRL check.
 </ArgTableRow>
 <ArgTableRow arg="certificate" typ="enum">Certificate from the certificate store used for server verification in HTTPS mode. Applicable only when `check-certificate` is enabled.</ArgTableRow>
+<ArgTableRow arg="tls-version" typ="enum (any | only-1.2 | only-1.3 | min-1.2 | min-1.3)">minimum TLS version for HTTPS, default min-1.2</ArgTableRow>
 <ArgTableRow arg="address" typ="alt { address: address (flags=46vi)
 , address: ipAddr
  }">IP address or host name of the target device. Append @vrf_name to run the fetch operation within a specific VRF, or set only address=@vrf_name and let the url parameter supply the address.</ArgTableRow>

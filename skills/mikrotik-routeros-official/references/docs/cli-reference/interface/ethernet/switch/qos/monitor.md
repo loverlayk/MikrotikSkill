@@ -45,6 +45,7 @@ Monitors hardware QoS resources.
 <ArgTableRow arg="total-byte-use" typ="num">Total tx memory usage. The current number of bytes occupied by the packets in all tx queues.</ArgTableRow>
 <ArgTableRow arg="multicast-packet-cap" typ="num" syscap="!prestera-cpss">Multicast packet capacity. The maximum number of hardware packet descriptors that can be used by multicast/broadcast traffic. Depends on the `multicast-buffers` setting.</ArgTableRow>
 <ArgTableRow arg="multicast-packet-use" typ="num" syscap="!prestera-cpss">Multicast packet usage. The hardware makes a copy of the packet descriptor for each multicast destination.</ArgTableRow>
+<ArgTableRow arg="multicast-packet-drop" typ="num">Multicast packets dropped by the switch due to hitting a multicast cap</ArgTableRow>
 <ArgTableRow arg="multicast-byte-cap" typ="num" syscap="!prestera-ac3">Multicast byte capacity.</ArgTableRow>
 <ArgTableRow arg="multicast-byte-use" typ="num" syscap="prestera-bc2">Multicast byte usage.</ArgTableRow>
 <ArgTableRow arg="mirror-ingress-packet-cap" typ="num" syscap="!prestera-cpss">Ingress mirror packet capacity. The maximum number of hardware packet descriptors that can be used by ingress mirrored traffic. Depends on the `mirror-buffers` setting.</ArgTableRow>

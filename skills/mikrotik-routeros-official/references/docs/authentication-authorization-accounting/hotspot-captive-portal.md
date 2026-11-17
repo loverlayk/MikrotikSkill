@@ -54,6 +54,8 @@ add action=masquerade chain=srcnat \
     comment="masquerade hotspot network" src-address=192.168.88.0/24
 ```
 
+The `address-pool` of the server does more than name the client addresses. With a pool, the HotSpot also serves a device whose own IP settings do not fit the network, for example a laptop with a static address from another network. The router answers for the gateway that the device expects and translates the address of the device to a free address of the pool; `/ip/hotspot/host/print` shows that address as `to-address`. With `address-pool=none`, the addresses are not translated and such a device gets no answer.
+
 If the interface has no DHCP server, the setup also creates an IP pool and a DHCP server for it. The existing firewall rules of the router are not changed; the HotSpot adds its own dynamic rules, which are listed at the end of this page.
 
 Check that the server runs:
@@ -186,7 +188,7 @@ The scripts can use these variables:
 | `$user`, `$username` | The user name. |
 | `$address` | The IP address of the device. |
 | `$"mac-address"` | The MAC address of the device. |
-| `$interface` | The HotSpot interface. |
+| `$interface` | The HotSpot interface. When the HotSpot runs on a bridge, this is the bridge, unless `use-ip-firewall` is enabled in the bridge settings; then it is the bridge port of the device. |
 | `$cause` | Only in `on-logout`: why the session ended, for example `user request`, `session timeout`, or `traffic limit reached`. |
 | `$"uptime-secs"` | Only in `on-logout`: the session time in seconds. |
 | `$"bytes-in"`, `$"bytes-out"`, `$"bytes-total"` | Only in `on-logout`: the bytes that the user sent and received. |
@@ -200,13 +202,49 @@ The `login-by` setting of the server profile in `/ip/hotspot/profile` selects ho
 | :-- | :-- |
 | `http-chap` | With a user name and password on the login page. The page does not send the password itself: JavaScript on the page hashes it together with a challenge from the router. |
 | `http-pap` | With a user name and password on the login page. The password is sent as plain text. A login link or an external page that sends the password directly needs this method. |
-| `https` | As `http-pap`, but the login page is opened over HTTPS. Set `ssl-certificate` in the server profile. The server then has the `S` flag in `/ip/hotspot/print`. |
-| `cookie` | Automatically, with a browser cookie from an earlier login. The cookie is valid for `http-cookie-lifetime`. |
-| `mac-cookie` | Automatically, by the MAC address of a device that has logged in before. |
+| `https` | As `http-pap`, but the login page is opened over HTTPS. Set `ssl-certificate` in the server profile; the certificate has to be valid for the `dns-name` of the profile. The server then has the `S` flag in `/ip/hotspot/print`. |
+| `cookie` | Automatically, with a browser cookie from an earlier login with a user name and password. The cookie is valid for `http-cookie-lifetime`. |
+| `mac-cookie` | Automatically, by the MAC address of a device that has logged in before, for example a phone. It is a separate method from `cookie` and does not use the browser. |
 | `mac` | Automatically, when a user with the MAC address of the device as its name exists. |
 | `trial` | With a link on the login page, without an account, for a limited time. |
 
 Without `http-pap`, a login that sends the plain password fails with the message "web browser did not send challenge response (try again, enable JavaScript)".
+
+### Log in over HTTPS
+
+With the `https` method, the login page opens over HTTPS, so the user name and the password are encrypted between the device and the router. The certificate of the login page has to meet two conditions:
+
+- It is valid for the DNS name of the login page, which is the `dns-name` of the server profile.
+- The devices of the users trust the authority that issued it. A certificate from a public certificate authority meets this condition without any setup on the devices.
+
+This example uses the IP Cloud name of the router as the name of the login page, and a Let's Encrypt certificate for that name. The IP Cloud DDNS service has to be enabled; see [Let's Encrypt certificate](../certificates#lets-encrypt-certificate). To use a name of your own domain instead, see [Certificate for your own domain name](../certificates#certificate-for-your-own-domain-name).
+
+Request the certificate:
+
+```ros
+/certificate
+add-acme name=hotspot-cert domain-names=[/ip/cloud/get dns-name]
+```
+
+When the certificate is issued, it has the flags `K` and `a` in `/certificate/print`. Then set the name, the certificate and the login method in the server profile:
+
+```ros
+/ip/hotspot/profile
+set hsprof1 dns-name=[/ip/cloud/get dns-name] \
+    ssl-certificate=hotspot-cert login-by=cookie,http-chap,https
+```
+
+The server now has the `S` flag:
+
+```ros
+[admin@MikroTik] > /ip/hotspot/print
+Flags: S - HTTPS
+Columns: NAME, INTERFACE, ADDRESS-POOL, PROFILE, IDLE-TIMEOUT
+#   NAME      INTERFACE  ADDRESS-POOL  PROFILE  IDLE-TIMEOUT
+0 S hotspot1  bridge     default-dhcp  hsprof1  5m
+```
+
+To check the result, connect a device to the HotSpot network and open an HTTP site. The device is redirected to `https://<name>/login`, where `<name>` is the IP Cloud name, and the login page opens without a certificate warning. Users do not type the name: they get to the login page through the redirect.
 
 ### Remember devices with a MAC cookie
 
@@ -265,7 +303,14 @@ The walled garden lists the web sites that a device can open before login, for e
 /ip/hotspot/walled-garden/add dst-host=*.example.com
 ```
 
-`dst-host` and `path` must match the whole value. Use `*` for any number of characters and `?` for one character. A value that starts with `:` is a regular expression.
+`dst-host` and `path` must match the whole value. Use `*` for any number of characters and `?` for one character. A value that starts with `:` is a regular expression. It matches any part of the value, unless you anchor it with `^` at the start and `$` at the end:
+
+```ros
+/ip/hotspot/walled-garden
+add dst-host=":^example\\.com\$" action=allow
+```
+
+An HTTPS request is matched by its host name only. A rule that has `path` or `method` matches HTTP requests and no HTTPS requests.
 
 Rules in `/ip/hotspot/walled-garden/ip` match packets by address, protocol, and port, so they also work for services other than the web:
 
@@ -387,8 +432,20 @@ Flags: D - DYNAMIC
 14 D chain=hs-auth action=jump jump-target=hs-smtp protocol=tcp dst-port=25
 ```
 
+The rules redirect to four ports of the router, which `/ip/service/print where dynamic` lists:
+
+| Port | Service | What it does |
+| :-- | :-- | :-- |
+| 64872 | `resolver` | Answers the DNS requests of the HotSpot clients, also those that a client sends to another DNS server. |
+| 64873 | `hotspot` | Serves the login page and the other HotSpot pages over HTTP. |
+| 64874 | `wproxy` | Receives the HTTP requests of clients that are not logged in. It lets the requests to walled garden sites through and answers the others with a redirect to the login page. |
+| 64875 | `wproxy` | Receives the HTTPS requests of clients that are not logged in and lets the requests to walled garden sites through. |
+
 - `hotspot` redirects DNS requests and the requests to the login page to the HotSpot service, and sends the other TCP packets to `hs-unauth` (not logged in) or `hs-auth` (logged in).
-- `hs-unauth` redirects HTTP, the proxy ports 3128 and 8080, and HTTPS to the HotSpot service, which checks the walled garden and shows the login page.
+- `hs-unauth` redirects HTTP, the proxy ports 3128 and 8080, and HTTPS to the HotSpot service, which checks the walled garden and shows the login page. The rules for ports 3128 and 8080 catch the requests of a browser that is set to use a proxy server.
+- `hs-auth` redirects the packets of logged-in users that have the `http` HotSpot mark to the proxy on port 64874.
+- `hs-smtp` is empty until `smtp-server` is set in the server profile. Then it has a rule that sends the SMTP connections (TCP port 25) of the clients to that server.
+- A walled garden IP rule for TCP appears in `hs-unauth` as a `return` rule, so the matching packets are not redirected.
 - `pre-hotspot` is for your own rules: add rules to this chain to handle packets of HotSpot clients before the HotSpot rules.
 
 In `/ip/firewall/filter`, the packets of clients that are not logged in go to their own chains:
@@ -427,7 +484,9 @@ Flags: D - DYNAMIC
 - `hs-input` accepts the connections of clients to the HotSpot service on the router.
 - `pre-hs-input` is for your own rules for packets from HotSpot clients to the router.
 
-Each rule in `/ip/hotspot/walled-garden/ip` appears as dynamic rules in these chains.
+- Rule 3 drops connections to the HotSpot service ports that do not come from a HotSpot client.
+
+Each rule in `/ip/hotspot/walled-garden/ip` appears in the filter as two dynamic `return` rules, one in `hs-unauth` for the packets to the destination and one in `hs-unauth-to` for the replies. In the NAT table only the rules for TCP appear.
 
 ## Read more
 

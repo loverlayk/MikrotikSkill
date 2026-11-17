@@ -37,7 +37,7 @@
 <ArgTableRow arg="dial-on-demand" typ="bool">Connects only when outbound traffic is generated. If enabled, a route with a gateway address from 10.112.112.0/24 network is added while the connection is not established.</ArgTableRow>
 <ArgTableRow arg="authentication" typ="ubit (pap, chap, mschap1, mschap2)">Allowed authentication methods. By default all methods are allowed.</ArgTableRow>
 <ArgTableRow arg="pfs" typ="enum (no | yes | required) { no:0, yes:1, required:2 }">Specifies which TLS authentication to use. `yes` - TLS uses ECDHE-RSA and DHE-RSA. `required` - uses only ECDHE.</ArgTableRow>
-<ArgTableRow arg="tls-version" typ="enum (any | only-1.2) { any:0, only-1.2:2 }">Specifies which TLS version to allow.</ArgTableRow>
+<ArgTableRow arg="tls-version" typ="enum (any | only-1.2 | only-1.3 | min-1.2 | min-1.3) { any:0, only-1.2:2 }">Specifies which TLS version to allow.</ArgTableRow>
 <ArgTableRow arg="ciphers" typ="ubit (aes256-sha, aes256-gcm-sha384)">Allowed ciphers.</ArgTableRow>
 <ArgTableRow arg="add-sni" typ="bool">Adds TLS SNI extension to client hello packets. Available from RouterOS version 7.15.</ArgTableRow>
 </ArgTable>

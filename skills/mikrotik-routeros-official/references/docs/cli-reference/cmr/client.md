@@ -20,16 +20,17 @@ Defines what the remote device must do before this device accepts the pairing:
 - **password** (default) - the remote device may approve pairing by giving the username and password of a RouterOS user on this device; CMR has no separate pairing password
 - **confirm** - pairing must be approved locally with [`/cmr/client/pair`](pair) on this device; approval from the remote side is not possible
 </ArgTableRow>
-<ArgTableRow arg="controller-addresses" typ="multi { array-id, address: address (flags=46D)
+<ArgTableRow arg="controller-addresses" typ="multi { array-id, address: address (flags=46Dv)
  }" unset="1">Specifies the controller IP addresses to use. This setting is optional when the client can discover the controller automatically through neighbor discovery or DNS (`_cmr._tcp.lan`, or `_cmr._tcp.` followed by the domain name from DHCP), but must be configured when the controller address cannot be determined automatically.</ArgTableRow>
+<ArgTableRow arg="vrf" typ="enum" unset="1"></ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="status" typ="string">Current CMR-client status.</ArgTableRow>
 <ArgTableRow arg="controller-identity" typ="string">CMR server identity.</ArgTableRow>
-<ArgTableRow arg="controller-address" typ="address">CMR server IP address.</ArgTableRow>
+<ArgTableRow arg="controller-address" typ="address (flags=46iv)">CMR server IP address.</ArgTableRow>
 <ArgTableRow arg="pairing-status" typ="multi { array-id, status: string
  }">Current pairing status.</ArgTableRow>
-<ArgTableRow arg="saved-addresses" typ="multi { array-id, address: address (flags=46)
+<ArgTableRow arg="saved-addresses" typ="multi { array-id, address: address (flags=46v)
  }">List of CMR server's discovered IP addresses.</ArgTableRow>
 </ArgTable>

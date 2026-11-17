@@ -14,16 +14,16 @@
 </ArgTable>
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
-<ArgTableRow arg="url" typ="string" mandatory="1"></ArgTableRow>
+<ArgTableRow arg="url" typ="string" mandatory="1">URL of the revocation list.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="cert" typ="enum (none)"></ArgTableRow>
+<ArgTableRow arg="cert" typ="enum (none)">Certificate the list was added from.</ArgTableRow>
 <ArgTableRow arg="trust-store" typ="alt { all: enum (all)
 , component: ubit (ipsec, wpa-eap, capsman, fetch, sstp, ovpn, mqtt, email, netwatch, radius, container, userman, lora, wiliot, openflow, tr069, dot1x, dns, www, api, reverse-proxy, logging)
  }"></ArgTableRow>
 <ArgTableRow arg="num" typ="num"></ArgTableRow>
-<ArgTableRow arg="revoked" typ="num"></ArgTableRow>
+<ArgTableRow arg="revoked" typ="num">Number of revoked certificates in the list.</ArgTableRow>
 <ArgTableRow arg="next-update" typ="date"></ArgTableRow>
 <ArgTableRow arg="last-update" typ="date"></ArgTableRow>
 <ArgTableRow arg="akid" typ="string"></ArgTableRow>

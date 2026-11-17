@@ -139,4 +139,5 @@
 <ArgTableRow arg="default-healthcheck-start-period" typ="time"></ArgTableRow>
 <ArgTableRow arg="default-healthcheck-start-interval" typ="time"></ArgTableRow>
 <ArgTableRow arg="default-healthcheck-retries" typ="num"></ArgTableRow>
+<ArgTableRow arg="check-update-result" typ="enum (none | checking | up-to-date | update-available)"></ArgTableRow>
 </ArgTable>

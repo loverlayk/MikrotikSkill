@@ -21,4 +21,5 @@
 <ArgTableRow arg="traffic-processing" typ="enum (on-cap | on-capsman | on-capsman-secure)" unset="1"></ArgTableRow>
 <ArgTableRow arg="vlan-id" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="interface-list" typ="enum" unset="1"></ArgTableRow>
+<ArgTableRow arg="batman-adv" typ="iface_enum { none }" unset="1"></ArgTableRow>
 </ArgTable>

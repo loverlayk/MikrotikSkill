@@ -23,5 +23,12 @@
 <ArgTableRow arg="bhaul-authentication-types" typ="ubit (wpa-psk, wpa2-psk, wpa-eap, wpa2-eap, wpa3-psk, wpa3-eap)" unset="1"></ArgTableRow>
 <ArgTableRow arg="bhaul-encryption" typ="ubit (tkip, ccmp, gcmp, ccmp-256, gcmp-256)" unset="1"></ArgTableRow>
 <ArgTableRow arg="agent-state" typ="string" unset="1"></ArgTableRow>
+<ArgTableRow arg="decrypt-failure-counter" typ="num" unset="1"></ArgTableRow>
+<ArgTableRow arg="decrypt-failure-counter-threshold" typ="num" unset="1"></ArgTableRow>
+<ArgTableRow arg="dpp-pmkid" typ="string" unset="1"></ArgTableRow>
+<ArgTableRow arg="dpp-connector" typ="string" unset="1"></ArgTableRow>
+<ArgTableRow arg="dpp-ppkey" typ="string" unset="1"></ArgTableRow>
+<ArgTableRow arg="dpp-priv-proto-key" typ="string" unset="1"></ArgTableRow>
+<ArgTableRow arg="dpp-csign" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="network" typ="string"></ArgTableRow>
 </ArgTable>

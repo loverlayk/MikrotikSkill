@@ -16,6 +16,6 @@ Initiate pairing process to CMR server.
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="address" typ="address (flags=46)">CMR server IP address.</ArgTableRow>
+<ArgTableRow arg="address" typ="address (flags=46v)">CMR server IP address.</ArgTableRow>
 <ArgTableRow arg="status" typ="string">Pairing status.</ArgTableRow>
 </ArgTable>

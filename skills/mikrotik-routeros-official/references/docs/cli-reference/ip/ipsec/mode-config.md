@@ -35,12 +35,16 @@ You cannot use `system-dns` and `static-dns` at the same time; ROS can use only 
 <ArgTableRow arg="responder" typ="bool">Specifies whether the configuration will work as an initiator (client) or responder (server). The initiator will request mode-config parameters from the responder.</ArgTableRow>
 <ArgTableRow arg="system-dns" typ="bool">When this option is enabled, DNS addresses will be taken from /ip/dns.</ArgTableRow>
 <ArgTableRow arg="static-dns" typ="object { address: alt { address4: ipAddr
+, address6: ip6Addr
  }
  }">Manually specified DNS server IP addresses to be sent to the client.</ArgTableRow>
 <ArgTableRow arg="address" typ="ipAddr">Address to assign to the peer.</ArgTableRow>
 <ArgTableRow arg="address-pool" typ="enum (none) { none:-1 }">issue one address for peer from this pool</ArgTableRow>
 <ArgTableRow arg="address-prefix-length" typ="num">issued address netmask</ArgTableRow>
+<ArgTableRow arg="address6" typ="ip6Prefix">IPv6 address assigned to peer</ArgTableRow>
+<ArgTableRow arg="address6-pool" typ="enum (none) { none:-1 }">issue one IPv6 address for peer from this pool</ArgTableRow>
 <ArgTableRow arg="split-include" typ="object { subnet: alt { subnet4: ipPrefix
+, subnet6: ip6Prefix
  }
  }">List of subnets in CIDR format, which will be tunneled. Subnets will be sent to the peer using the CISCO UNITY extension. A remote peer will create specific dynamic policies.</ArgTableRow>
 <ArgTableRow arg="split-dns" typ="multi { array-id, dns: string

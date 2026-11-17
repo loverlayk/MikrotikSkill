@@ -43,6 +43,7 @@
 <ArgTableRow arg="trusted-ra" typ="bool"></ArgTableRow>
 <ArgTableRow arg="trusted-dhcpv6" typ="bool"></ArgTableRow>
 <ArgTableRow arg="trusted-arp" typ="bool"></ArgTableRow>
+<ArgTableRow arg="trusted-ipsg" typ="bool"></ArgTableRow>
 <ArgTableRow arg="mvrp-registrar-state" typ="enum (normal | fixed)"></ArgTableRow>
 <ArgTableRow arg="mvrp-applicant-state" typ="enum (normal-participant | non-participant)"></ArgTableRow>
 <ArgTableRow arg="multicast-router" typ="enum (disabled | temporary-query | permanent) { disabled:0, temporary-query:1, permanent:2 }"></ArgTableRow>

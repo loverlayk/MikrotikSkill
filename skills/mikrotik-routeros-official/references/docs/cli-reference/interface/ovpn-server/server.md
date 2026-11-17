@@ -24,7 +24,7 @@
 <ArgTableRow arg="default-profile" typ="enum">Specifies which PPP profile configuration is used when establishing the tunnel.</ArgTableRow>
 <ArgTableRow arg="certificate" typ="enum">Certificate from the certificate store that the OVPN server uses.</ArgTableRow>
 <ArgTableRow arg="require-client-certificate" typ="bool">If set to yes, the server checks whether the client's certificate belongs to the same certificate chain.</ArgTableRow>
-<ArgTableRow arg="tls-version" typ="enum (any | only-1.2) { any:0, only-1.2:2 }">Specifies which TLS versions to allow.</ArgTableRow>
+<ArgTableRow arg="tls-version" typ="enum (any | only-1.2 | only-1.3 | min-1.2 | min-1.3) { any:0, only-1.2:2, only-1.3:3, min-1.2:4, min-1.3:5 }">Specifies which TLS versions to allow.</ArgTableRow>
 <ArgTableRow arg="auth" typ="ubit (sha1, md5, sha256, sha384, sha512, null)">Authentication methods that the server accepts.</ArgTableRow>
 <ArgTableRow arg="cipher" typ="ubit (blowfish128, aes128-cbc, aes192-cbc, aes256-cbc, aes128-gcm, aes192-gcm, aes256-gcm, null)">Allowed ciphers.</ArgTableRow>
 <ArgTableRow arg="reneg-sec" typ="num">Encryption key re-negotiation interval in seconds. 0 disables re-negotiation.</ArgTableRow>

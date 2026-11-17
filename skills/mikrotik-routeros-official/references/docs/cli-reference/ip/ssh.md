@@ -20,7 +20,7 @@ SSH server settings (ciphers, forwarding, authentication) and the settings contr
 <ArgTableRow arg="known-hosts-trusted-subnets" typ="object { subnets: ip6Prefix
  }">Skip host key validation for servers whose address belongs to these subnets, even when `known-hosts-validation` is enabled. Hosts outside the listed subnets are still validated.</ArgTableRow>
 <ArgTableRow arg="host-key-size" typ="enum (1024 | 1536 | 2048 | 4096 | 8192) { 1024:1024, 1536:1536, 2048:2048, 4096:4096, 8192:8192 }">RSA key size when host key is regenerated.</ArgTableRow>
-<ArgTableRow arg="host-key-type" typ="enum (rsa | ed25519) { rsa:0, ed25519:3 }">Host key type.</ArgTableRow>
+<ArgTableRow arg="host-key-type" typ="enum (rsa | ed25519)">Host key type.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

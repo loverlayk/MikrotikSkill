@@ -14,6 +14,7 @@ Manage the `check-for-updates` channel and perform RouterOS upgrades.
 <ArgTableRow arg="mode" typ="enum (https | http)">Protocol for connecting to the MikroTik download server. Use `http` only if your network blocks HTTPS. HTTPS is recommended.</ArgTableRow>
 <ArgTableRow arg="check-certificate" typ="enum (no | yes | yes-without-crl)">Whether and how to validate the server SSL certificate. Always use `yes` to ensure a secure connection. `yes-without-crl` can be used to skip CRL validation.</ArgTableRow>
 <ArgTableRow arg="ip-version" typ="enum (auto | ipv4 | ipv6)">IP version preference for connecting to the MikroTik download server.</ArgTableRow>
+<ArgTableRow arg="vrf" typ="enum"></ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

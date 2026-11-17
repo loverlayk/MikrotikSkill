@@ -27,7 +27,7 @@ The management and service listeners of the router: WinBox, SSH, Telnet, FTP, th
  }
  }">IPv4 and IPv6 prefixes of the clients allowed to use the service. A client from another address can still open the TCP connection, and the router then closes it without serving the client, so the port stays visible. To hide a service from untrusted networks, drop the traffic in the firewall input chain as well. Empty means any address. Default: empty.</ArgTableRow>
 <ArgTableRow arg="certificate" typ="enum (none) { none:0 }">Certificate the service presents to TLS clients. Applies to `www-ssl`, `api-ssl` and `reverse-proxy`. With `none`, `www-ssl` and `api-ssl` accept only anonymous Diffie-Hellman ciphers: the connection is encrypted, but the router does not prove its identity, and browsers and tools such as cURL cannot connect. Set a certificate for HTTPS. For `reverse-proxy`, the certificate is used by the rules that have none of their own (see [`/ip/reverse-proxy`](../reverse-proxy)). Default: none.</ArgTableRow>
-<ArgTableRow arg="tls-version" typ="enum (any | only-1.2) { any:0, only-1.2:2 }">
+<ArgTableRow arg="tls-version" typ="enum (any | only-1.2 | only-1.3 | min-1.2 | min-1.3) { any:0, only-1.2:2, only-1.3:3, min-1.2:4, min-1.3:5 }">
 TLS versions the service accepts. Applies to the TLS services.
 - `any` (default) - TLS 1.0, 1.1 and 1.2.
 - `only-1.2` - Only TLS 1.2.

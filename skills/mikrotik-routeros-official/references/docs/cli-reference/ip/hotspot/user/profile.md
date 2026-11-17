@@ -48,7 +48,7 @@ The `/ip/hotspot/user/profile` menu lists the user profiles. A profile holds the
  }">Script that runs when a user of the profile logs in. It can use the variables `$user`, `$username`, `$address`, `$"mac-address"`, and `$interface`.</ArgTableRow>
 <ArgTableRow arg="on-logout" typ="alt { script: string
  }">Script that runs when a user of the profile logs out. In addition to the `on-login` variables it can use `$cause`, `$"uptime-secs"`, `$"bytes-in"`, `$"bytes-out"`, `$"bytes-total"`, `$"packets-in"`, `$"packets-out"`, and `$"packets-total"`.</ArgTableRow>
-<ArgTableRow arg="transparent-proxy" typ="bool">Whether to send the HTTP requests of the logged-in users of the profile through the HotSpot proxy.</ArgTableRow>
+<ArgTableRow arg="transparent-proxy" typ="bool">Whether to send the HTTP requests of the logged-in users of the profile through the HotSpot proxy. Default: `no`.</ArgTableRow>
 <ArgTableRow arg="open-status-page" typ="enum (http-login | always)">When to open the status page after login: `always` - also after a `mac` login; `http-login` - only after a login on the login page.</ArgTableRow>
 <ArgTableRow arg="advertise" typ="bool">Whether to show advertisement pages to the users of the profile. Default: `no`.</ArgTableRow>
 <ArgTableRow arg="advertise-url" typ="multi { url: string

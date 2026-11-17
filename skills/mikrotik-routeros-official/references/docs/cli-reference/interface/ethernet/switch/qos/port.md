@@ -22,6 +22,7 @@ By default, all ports are untrusted and receive the default QoS profile (Best-Ef
 <ArgTableRow arg="map" typ="enum" syscap="crs_prestera">QoS Packet-to-Profile mapping.</ArgTableRow>
 <ArgTableRow arg="trust-l2" typ="enum (ignore | trust | keep) { ignore:0, trust:1, keep:2 }" syscap="crs_prestera">Trust Layer 2 header (PCP) for QoS mapping.</ArgTableRow>
 <ArgTableRow arg="trust-l3" typ="enum (ignore | trust | keep) { ignore:0, trust:1, keep:2 }" syscap="crs_prestera">Trust Layer 3 header (DSCP) for QoS mapping.</ArgTableRow>
+<ArgTableRow arg="cut-through" typ="enum (disabled | tagged-only | all) { disabled:0, tagged-only:1, all:2 }" syscap="prestera-cpss">Cut-through forwarding mode for packets received on this port</ArgTableRow>
 <ArgTableRow arg="tx-manager" typ="enum" syscap="crs_prestera">QoS Tx Manager for egress traffic on this port.</ArgTableRow>
 <ArgTableRow arg="pfc" typ="enum" syscap="!prestera-ac3">Priority Flow Control profile for ingress traffic on this port.</ArgTableRow>
 <ArgTableRow arg="egress-rate-queue0" typ="num" syscap="switch-rate">Egress rate limit for queue 0.</ArgTableRow>
@@ -82,6 +83,7 @@ Due to hardware limitations, some switch chip models may break traffic flow whil
 ```
 
 **Port PFC Stats (Previous Generations)**
+
 ```ros
 [admin@crs317] /interface/ethernet/switch/qos/port> print pfc interval=1 where running
                  name:  sfp-sfpplus1 sfp-sfpplus2   ether1
@@ -94,6 +96,7 @@ pfc3-resume-threshold:        10 240
 ```
 
 **Port PFC Stats (New Generations)**
+
 ```routeros
 [admin@crs812] /interface/ethernet/switch/qos/port> print pfc interval=1 where pfc=roce
                  name:       sfp56-5 

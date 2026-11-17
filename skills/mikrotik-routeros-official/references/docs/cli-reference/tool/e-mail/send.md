@@ -38,4 +38,5 @@ TLS certificate validation. If not specified, the value from the server configur
 - `yes` - Validates the certificate chain against the local certificate store, including the server name. The built-in trust store covers email by default.
 - `yes-without-crl` - Validates the certificate without performing a CRL check.
 </ArgTableRow>
+<ArgTableRow arg="tls-version" typ="enum (any | only-1.2 | only-1.3 | min-1.2 | min-1.3)">minimum TLS version, default min-1.2</ArgTableRow>
 </ArgTable>

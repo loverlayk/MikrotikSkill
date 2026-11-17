@@ -85,7 +85,7 @@ It is sometimes possible to change router configuration in a way that will make 
 
 The **"Safe Mode"** button in the Winbox GUI allows you to enter Safe Mode, while in the CLI, you can access it by either using the keyboard shortcut <kbd>F4</kbd> or pressing **[CTRL]+[X]**. To exit without saving the changes made in CLI, hit **[CTRL]+[D].**
 
-![](./img/configuration-management-01.webp)
+![WinBox window with the Safe Mode button in the toolbar and an open terminal](./img/configuration-management-01.webp)
 
 ```ros
 [admin@MikroTik] /ip/route>[CTRL]+[X] 
@@ -140,7 +140,7 @@ An export command can be executed from each menu (resulting in configuration exp
 :::danger
 The Export command does not export system user passwords, installed certificates, SSH keys, Dude, or a User-manager database.
 
-[Installed certificates](../../authentication-authorization-accounting/certificates.md#export-certificate), [Dude](../../management-tools/dude.md), and [User Manager](../../authentication-authorization-accounting/user-manager.md#database) databases must be manually exported and imported into a new device.
+[Installed certificates](../../authentication-authorization-accounting/certificates.md#export-certificates), [Dude](../../management-tools/dude.md), and [User Manager](../../authentication-authorization-accounting/user-manager.md#database) databases must be manually exported and imported into a new device.
 
 System user passwords and user SSH keys can not be exported.
 
@@ -255,7 +255,7 @@ If some specific menu will not be able to respond to the export command, startin
 
 Starting from RouterOS 7.13, you can export parts of a specific menu. For instance, it is possible to export a specific address-list among multiple address-lists on your router.
 
-```
+```ros
 [admin@MikroTik] > ip firewall address-list export where list=mylist
 
 ```
@@ -385,7 +385,7 @@ Dangerous! Reset anyway? [y/N]: y
 
 And the same using Winbox:
 
-![](./img/configuration-management-02.webp)
+![WinBox Reset Configuration dialog with No Default Configuration and Do Not Backup selected](./img/configuration-management-02.webp)
 
 ## Related topics
 

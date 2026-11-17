@@ -68,6 +68,7 @@
 <ArgTableRow arg="datapath.traffic-processing" typ="enum (on-cap | on-capsman | on-capsman-secure)" unset="1"></ArgTableRow>
 <ArgTableRow arg="datapath.vlan-id" typ="num" unset="1"></ArgTableRow>
 <ArgTableRow arg="datapath.interface-list" typ="enum" unset="1"></ArgTableRow>
+<ArgTableRow arg="datapath.batman-adv" typ="iface_enum { none }" unset="1"></ArgTableRow>
 <ArgTableRow arg="interworking.network-type" typ="enum (private | private-with-guest | public-chargeable | public-free | personal-device | emergency-only | test | wildcard) { private:0, private-with-guest:1, public-chargeable:2, public-free:3, personal-device:4, emergency-only:5, test:14, wildcard:15 }" unset="1"></ArgTableRow>
 <ArgTableRow arg="interworking.internet" typ="bool" unset="1"></ArgTableRow>
 <ArgTableRow arg="interworking.esr" typ="bool" unset="1"></ArgTableRow>
