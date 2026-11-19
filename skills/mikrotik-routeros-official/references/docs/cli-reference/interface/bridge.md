@@ -74,7 +74,7 @@ The string value can contain variables, whose names must be enclosed in parenthe
 Example: 'some_arbitrary_text $(HOSTNAME) another_piece_of_text $(BRIDGEMAC)'.
 The following variables are supported: HOSTNAME, INTERFACE, VID and BRIDGEMAC.
 </ArgTableRow>
-<ArgTableRow arg="dhcp-snooping-option82-policy" typ="enum (drop | keep | replace)">Action for DHCP messages that already contain Option 82 when they pass through the bridge: `drop` the message, `keep` the existing option, or `replace` it with the values set in `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. Default: drop. This property only has an effect when `dhcp-snooping` is set to `yes`.</ArgTableRow>
+<ArgTableRow arg="dhcp-snooping-option82-policy" typ="enum (drop | keep | replace)">Action for DHCP client messages that arrive on an untrusted bridge port with Option 82 already present: `drop` discards the message, `keep` forwards it with the original option, `replace` overwrites the option with the values set in `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. Messages received on trusted ports are always forwarded unchanged. The `replace` policy requires at least one of the agent ID properties to be configured. Default: drop. This property only has an effect when `dhcp-snooping` is set to `yes`.</ArgTableRow>
 <ArgTableRow arg="arp-inspection" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-snooping" typ="bool"></ArgTableRow>
 <ArgTableRow arg="dhcpv6-agent-circuit-id" typ="string">

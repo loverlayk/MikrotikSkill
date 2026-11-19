@@ -10,7 +10,7 @@ This section covers RouterOS queueing and bandwidth management. Use it to config
 
 ## Overview
 
-A queue is a collection of data packets collectively waiting to be transmitted by a network device using a pre-defined structure methodology. Queuing works almost on the same methodology used at banks or supermarkets, where the customer is treated according to their arrival.
+A queue is a collection of data packets that wait to be transmitted by a network device, in a pre-defined order. Queuing works almost like the queue at a bank or a supermarket, where customers are served in the order of their arrival.
 
 Queues are used to:
 
@@ -20,14 +20,14 @@ Queues are used to:
 - Apply different time-based limits.
 - Share available traffic among users equally, or depending on the load of the channel.
 
-Queue implementation in MikroTik RouterOS is based on Hierarchical Token Bucket (HTB). HTB allows the creation of a hierarchical queue structure and determines relations between queues. These hierarchical structures can be attached at two different places. The [Packet Flow diagram](../packet-flow-in-routeros) illustrates both *input* and *postrouting* chains.
+The queue implementation in RouterOS is based on the [Hierarchical Token Bucket (HTB)](./htb-hierarchical-token-bucket). HTB allows the creation of a hierarchical queue structure and determines relations between queues. These hierarchical structures can be attached at two different places, in the *input* and in the *postrouting* stage of the [packet flow](../packet-flow-in-routeros).
 
 There are two different ways to configure queues in RouterOS:
 
 - [Simple queue](./simple-queue) (`/queue/simple`) - limits the upload and download of an address, a network or an interface with one entry.
 - [Queue tree](./queue-tree) (`/queue/tree`) - limits traffic in one direction by packet mark, on an interface or globally. Packet marks come from [`/ip/firewall/mangle`](../firewall/mangle).
 
-RouterOS provides a possibility to configure queues in 8 levels -  the first level is an interface queue from the `/queue/interface` menu and the other 7 are lower-level queues that can be created in Queue Simple and/or Queue Tree.
+Queues can be configured in 8 levels. The first level is an interface queue from the `/queue/interface` menu, and the other 7 are lower-level queues that can be created in simple queues and queue trees.
 
 ### Rate limitation principles
 
@@ -42,7 +42,7 @@ The next figure explains the difference between *rate limiting* and rate *equali
 
 ![Two pairs of traffic graphs. Rate limiting (shaper) cuts the traffic peaks at the rate limit. Rate equalizing (scheduler) also cuts the peaks at the rate limit and sends the delayed traffic afterwards.](./img/queues-01.webp)
 
-As you can see in the first case, all traffic exceeds a specific rate and is dropped. In another case, traffic exceeds a specific rate and is delayed in the queue and transmitted later when it is possible, but note that the packet can be delayed only while the queue is not full. If there is no more space in the queue buffer, packets are dropped.
+In the first case, all traffic that exceeds a specific rate is dropped. In the other case, traffic that exceeds a specific rate is delayed in the queue and transmitted later when it is possible. A packet can be delayed only while the queue is not full. If there is no more space in the queue buffer, packets are dropped. [Queue size](./queue-size) shows the effect of the buffer size.
 
 For each queue we can define two rate limits:
 
@@ -73,39 +73,29 @@ See [Queue types](./queue-types) for the kinds, the default queue types and exam
 
 ## Interface Queue
 
-**Sub-menu:** `/queue/interface`
-
 Before sending data over an interface, it is processed by the queue. An Interface Queue is a transmit (egress) queue; it does not process packets received by that interface.
 
 For forwarded client traffic, the WAN-facing Interface Queue processes uploads, and the LAN-facing Interface Queue processes downloads. Each direction uses a separate queue instance. If traffic can leave through several LAN interfaces, configure every required transmit path or use a Simple Queue or Queue Tree that matches the traffic at a common point.
 
-This sub-menu lists all available interfaces in RouterOS and allows changing the queue type for a particular interface. The list is generated automatically.
+The `/queue/interface` menu lists the interfaces of the router and allows changing the queue type of an interface. The list is generated automatically:
 
 ```ros
 [admin@MikroTik] > /queue/interface/print
 Columns: INTERFACE, QUEUE, ACTIVE-QUEUE
-# INTERFACE QUEUE ACTIVE-QUEUE
-0 ether1 only-hardware-queue only-hardware-queue
-1 ether2 only-hardware-queue only-hardware-queue
-2 ether3 only-hardware-queue only-hardware-queue
-3 ether4 only-hardware-queue only-hardware-queue
-4 ether5 only-hardware-queue only-hardware-queue
-5 ether6 only-hardware-queue only-hardware-queue
-6 ether7 only-hardware-queue only-hardware-queue
-7 ether8 only-hardware-queue only-hardware-queue
-8 ether9 only-hardware-queue only-hardware-queue
-9 ether10 only-hardware-queue only-hardware-queue
-10 sfp-sfpplus1 only-hardware-queue only-hardware-queue
-11 wlan1 wireless-default wireless-default
-12 wlan2 wireless-default wireless-default 
+#  INTERFACE  QUEUE                ACTIVE-QUEUE       
+0  ether1     only-hardware-queue  only-hardware-queue
+1  ether2     only-hardware-queue  only-hardware-queue
+2  ether3     only-hardware-queue  only-hardware-queue
+3  eoip1      no-queue             no-queue           
+4  lo         no-queue             no-queue           
 ```
+
+In this output, the Ethernet interfaces have the `only-hardware-queue` type and the virtual interfaces have `no-queue`. To change the queue type of an interface, set its `queue` property. See [CAKE](./queue-types/cake) for an example that shapes upload with an interface queue.
 
 ## Queue load visualization in GUI
 
-In Winbox and Webfig, a green, yellow, or red icon visualizes each Simple and Tree queue usage based on max-limit.
+In WinBox and WebFig, a green, yellow, or red icon shows the usage of each simple queue and queue tree entry, based on `max-limit`:
 
-|  |  |
-| :-- | :-- |
-| ![Green queue icon](./img/queue-usage-0-50.png)  | Less than 50% of max-limit used |
-| ![Yellow queue icon](./img/queue-usage-50-75.png)  | 50% or more, but less than 75% of max-limit used |
-| ![Red queue icon](./img/queue-usage-75-100.png)  | 75% or more of max-limit used |
+- ![Green queue icon](./img/queue-usage-0-50.png) Less than 50% of `max-limit` is used.
+- ![Yellow queue icon](./img/queue-usage-50-75.png) 50% or more, but less than 75% of `max-limit` is used.
+- ![Red queue icon](./img/queue-usage-75-100.png) 75% or more of `max-limit` is used.

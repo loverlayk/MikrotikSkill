@@ -46,12 +46,12 @@ Format of the messages sent to the syslog server:
 - `cef` - Common Event Format: the time and the router's identity, then `CEF:0|MikroTik|<model>|<version>|` with the topics, a severity (`Low`, `Medium`, `High`) and the fields `dvchost`, `dvc` and `msg`, followed by the message's extra fields. Each message ends with `cef-event-delimiter`.
 </ArgTableRow>
 <ArgTableRow arg="remote-protocol" typ="enum (udp | tcp | tls)">
-Transport to the syslog server. Every format works with every transport, and actions that send to the same address and port share one connection.
+Transport to the syslog server. Every format works with every transport. An action sends to one server address, port and protocol; to send several sets of topics to the same server, add a rule for each set and point the rules at one action.
 - `udp` (default) - One datagram per message. Messages sent while the server is unreachable are lost.
 - `tcp` - A TCP connection. Up to 1000 messages logged while the server is unreachable, for all remote actions together, are kept in memory and sent when the connection is back; newer ones are dropped when the buffer is full. `default` and `syslog` messages have no delimiter in the stream; use `cef` over TCP.
 - `tls` - The same as `tcp`, encrypted with TLS (`check-certificate`).
 </ArgTableRow>
-<ArgTableRow arg="check-certificate" typ="bool">For `remote-protocol=tls`: whether to verify the server certificate against the trusted certificates in [`/certificate`](../../../certificate/). When the verification fails, the router does not send, logs `ssld,error client session, logging, remote IP: <address>, ssl: no trusted CA certificate found` and tries again later. The name in the certificate is not compared with the server address, so trust only the CA of your log servers. Default: no.</ArgTableRow>
+<ArgTableRow arg="check-certificate" typ="bool">For `remote-protocol=tls`: whether to verify the server certificate against the trusted certificates in [`/certificate`](../../../certificate/). When the verification fails, the router does not send, logs `ssld,error client session, logging, remote IP: <address>, ssl: no trusted CA certificate found` and tries again later. The certificate must also name the server: the address or host name in `remote=` must be among its subject alternative names. Default: no.</ArgTableRow>
 <ArgTableRow arg="cef-event-delimiter" typ="string">Characters added at the end of every `cef` message, also over UDP. Default: `\r\n`.</ArgTableRow>
 <ArgTableRow arg="syslog-time-format" typ="enum (bsd-syslog | iso8601)">
 Time format of `syslog` messages:

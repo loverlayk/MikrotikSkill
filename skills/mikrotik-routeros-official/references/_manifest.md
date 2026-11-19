@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `983fac0704fadc39d8a5dc3bcdf36893cae8f680273d867be327aa584df99aa9`
-Pages in current index: 1749
-Pages changed/written: 57
+Index SHA-256: `73a6577c1673ea34e6f67707f0754243e638401a9499eeb7f5b425aa402c9191`
+Pages in current index: 1754
+Pages changed/written: 61
 Pages removed: 0
 Pages failed: 0
 
@@ -16,7 +16,7 @@ Pages failed: 0
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
-- [Bridging and Switching](docs/bridging-and-switching.md) `fe57a4a4c316`
+- [Bridging and Switching](docs/bridging-and-switching.md) `20183448ce31`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `7516a33c6b79`
 - [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `8135bf84fc73`
@@ -36,7 +36,7 @@ Pages failed: 0
 - [CRS1xx/2xx series switch examples](docs/bridging-and-switching/user-guides/crs1xx-2xx-series-switches-examples.md) `be52875f5fa7`
 - [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `728f0aa530a2`
 - [Loop Protect](docs/bridging-and-switching/user-guides/loop-protect.md) `2b501fda13d9`
-- [Spanning Tree Protocol](docs/bridging-and-switching/user-guides/spanning-tree-protocol.md) `cb727779d381`
+- [Spanning Tree Protocol](docs/bridging-and-switching/user-guides/spanning-tree-protocol.md) `3b29b09bf67f`
 - [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
 - [VLAN](docs/bridging-and-switching/vlan.md) `670eea913665`
@@ -222,7 +222,7 @@ Pages failed: 0
 - [/interface/bonding](docs/cli-reference/interface/bonding.md) `7b52b3e99b20`
 - [/interface/bonding/monitor-slaves](docs/cli-reference/interface/bonding/monitor-slaves.md) `9ec8962033f3`
 - [/interface/bonding/monitor](docs/cli-reference/interface/bonding/monitor.md) `90a842e2f15d`
-- [/interface/bridge](docs/cli-reference/interface/bridge.md) `f9422fff26b9`
+- [/interface/bridge](docs/cli-reference/interface/bridge.md) `113242d64117`
 - [/interface/bridge/calea](docs/cli-reference/interface/bridge/calea.md) `690afd5316d1`
 - [/interface/bridge/calea/reset-counters-all](docs/cli-reference/interface/bridge/calea/reset-counters-all.md) `6a246b19e505`
 - [/interface/bridge/calea/reset-counters](docs/cli-reference/interface/bridge/calea/reset-counters.md) `6bfdd8a9ee4e`
@@ -613,21 +613,21 @@ Pages failed: 0
 - [/ip/firewall/calea](docs/cli-reference/ip/firewall/calea.md) `01ef35fdd794`
 - [/ip/firewall/calea/reset-counters-all](docs/cli-reference/ip/firewall/calea/reset-counters-all.md) `d6ef845b6b27`
 - [/ip/firewall/calea/reset-counters](docs/cli-reference/ip/firewall/calea/reset-counters.md) `3c9d194ab33c`
-- [/ip/firewall/connection](docs/cli-reference/ip/firewall/connection.md) `6aa59f6df915`
-- [/ip/firewall/connection/tracking](docs/cli-reference/ip/firewall/connection/tracking.md) `2243153aa192`
-- [/ip/firewall/filter](docs/cli-reference/ip/firewall/filter.md) `b38d25432818`
-- [/ip/firewall/filter/reset-counters-all](docs/cli-reference/ip/firewall/filter/reset-counters-all.md) `db50cd36b2e1`
-- [/ip/firewall/filter/reset-counters](docs/cli-reference/ip/firewall/filter/reset-counters.md) `9a92139e4f87`
+- [/ip/firewall/connection](docs/cli-reference/ip/firewall/connection.md) `ef45328be4d2`
+- [/ip/firewall/connection/tracking](docs/cli-reference/ip/firewall/connection/tracking.md) `0514d2cd6153`
+- [/ip/firewall/filter](docs/cli-reference/ip/firewall/filter.md) `418ddda05555`
+- [/ip/firewall/filter/reset-counters-all](docs/cli-reference/ip/firewall/filter/reset-counters-all.md) `7cfcae22ea44`
+- [/ip/firewall/filter/reset-counters](docs/cli-reference/ip/firewall/filter/reset-counters.md) `368856a7c7bd`
 - [/ip/firewall/layer7-protocol](docs/cli-reference/ip/firewall/layer7-protocol.md) `7262419a750c`
-- [/ip/firewall/mangle](docs/cli-reference/ip/firewall/mangle.md) `c23a71e6c3fe`
-- [/ip/firewall/mangle/reset-counters-all](docs/cli-reference/ip/firewall/mangle/reset-counters-all.md) `684ff7dac961`
-- [/ip/firewall/mangle/reset-counters](docs/cli-reference/ip/firewall/mangle/reset-counters.md) `37300f725a2c`
-- [/ip/firewall/nat](docs/cli-reference/ip/firewall/nat.md) `0aded196ad45`
-- [/ip/firewall/nat/reset-counters-all](docs/cli-reference/ip/firewall/nat/reset-counters-all.md) `4e76f3cc281f`
-- [/ip/firewall/nat/reset-counters](docs/cli-reference/ip/firewall/nat/reset-counters.md) `35cd947b3fdf`
-- [/ip/firewall/raw](docs/cli-reference/ip/firewall/raw.md) `bcbb67d2c35a`
-- [/ip/firewall/raw/reset-counters-all](docs/cli-reference/ip/firewall/raw/reset-counters-all.md) `fb6d1512f2b7`
-- [/ip/firewall/raw/reset-counters](docs/cli-reference/ip/firewall/raw/reset-counters.md) `33a0b2269ab5`
+- [/ip/firewall/mangle](docs/cli-reference/ip/firewall/mangle.md) `dfeecdb98ca7`
+- [/ip/firewall/mangle/reset-counters-all](docs/cli-reference/ip/firewall/mangle/reset-counters-all.md) `40451aa110c0`
+- [/ip/firewall/mangle/reset-counters](docs/cli-reference/ip/firewall/mangle/reset-counters.md) `2f1bae93cf45`
+- [/ip/firewall/nat](docs/cli-reference/ip/firewall/nat.md) `ab9fa8426bc4`
+- [/ip/firewall/nat/reset-counters-all](docs/cli-reference/ip/firewall/nat/reset-counters-all.md) `15594b76161b`
+- [/ip/firewall/nat/reset-counters](docs/cli-reference/ip/firewall/nat/reset-counters.md) `de132504939a`
+- [/ip/firewall/raw](docs/cli-reference/ip/firewall/raw.md) `988bdb3fa16e`
+- [/ip/firewall/raw/reset-counters-all](docs/cli-reference/ip/firewall/raw/reset-counters-all.md) `a16d1ebe726a`
+- [/ip/firewall/raw/reset-counters](docs/cli-reference/ip/firewall/raw/reset-counters.md) `8125f01d181e`
 - [/ip/firewall/service-port](docs/cli-reference/ip/firewall/service-port.md) `23144d6ab52a`
 - [/ip/hotspot](docs/cli-reference/ip/hotspot.md) `5760ca5e2af6`
 - [/ip/hotspot/active](docs/cli-reference/ip/hotspot/active.md) `c6c5526df6d7`
@@ -667,11 +667,11 @@ Pages failed: 0
 - [/ip/ipsec/proposal](docs/cli-reference/ip/ipsec/proposal.md) `dbf8588c617b`
 - [/ip/ipsec/settings](docs/cli-reference/ip/ipsec/settings.md) `369de8d2916e`
 - [/ip/ipsec/statistics](docs/cli-reference/ip/ipsec/statistics.md) `cf06f83f8210`
-- [/ip/kid-control](docs/cli-reference/ip/kid-control.md) `dd52989f4f74`
-- [/ip/kid-control/device](docs/cli-reference/ip/kid-control/device.md) `33a282da6a87`
-- [/ip/kid-control/device/reset-counters](docs/cli-reference/ip/kid-control/device/reset-counters.md) `e50d82ff1ae2`
-- [/ip/kid-control/pause](docs/cli-reference/ip/kid-control/pause.md) `f66a6f7e6b6b`
-- [/ip/kid-control/resume](docs/cli-reference/ip/kid-control/resume.md) `a0b5689bd0ef`
+- [/ip/kid-control](docs/cli-reference/ip/kid-control.md) `55e8e958d5a7`
+- [/ip/kid-control/device](docs/cli-reference/ip/kid-control/device.md) `fa663ba53c97`
+- [/ip/kid-control/device/reset-counters](docs/cli-reference/ip/kid-control/device/reset-counters.md) `3523e144be56`
+- [/ip/kid-control/pause](docs/cli-reference/ip/kid-control/pause.md) `9be0eb30c4aa`
+- [/ip/kid-control/resume](docs/cli-reference/ip/kid-control/resume.md) `515c1075af63`
 - [/ip/media](docs/cli-reference/ip/media.md) `7850670ab51a`
 - [/ip/media/settings](docs/cli-reference/ip/media/settings.md) `32731d81c48c`
 - [/ip/nat-pmp](docs/cli-reference/ip/nat-pmp.md) `8226b991db68`
@@ -745,19 +745,19 @@ Pages failed: 0
 - [/ipv6/dhcp-server/option](docs/cli-reference/ipv6/dhcp-server/option.md) `9a1b7aee4e21`
 - [/ipv6/dhcp-server/option/sets](docs/cli-reference/ipv6/dhcp-server/option/sets.md) `2b41be7cbf71`
 - [/ipv6/firewall/address-list](docs/cli-reference/ipv6/firewall/address-list.md) `18555893b7ce`
-- [/ipv6/firewall/connection](docs/cli-reference/ipv6/firewall/connection.md) `ad54048d8b5e`
+- [/ipv6/firewall/connection](docs/cli-reference/ipv6/firewall/connection.md) `250c7743d3a5`
 - [/ipv6/firewall/filter](docs/cli-reference/ipv6/firewall/filter.md) `676abca3eee2`
-- [/ipv6/firewall/filter/reset-counters-all](docs/cli-reference/ipv6/firewall/filter/reset-counters-all.md) `b196d1b16d7d`
-- [/ipv6/firewall/filter/reset-counters](docs/cli-reference/ipv6/firewall/filter/reset-counters.md) `24be2d7ed56c`
+- [/ipv6/firewall/filter/reset-counters-all](docs/cli-reference/ipv6/firewall/filter/reset-counters-all.md) `a9b4167b0bfc`
+- [/ipv6/firewall/filter/reset-counters](docs/cli-reference/ipv6/firewall/filter/reset-counters.md) `cc40ed3aed1a`
 - [/ipv6/firewall/mangle](docs/cli-reference/ipv6/firewall/mangle.md) `fc07ddcf361e`
-- [/ipv6/firewall/mangle/reset-counters-all](docs/cli-reference/ipv6/firewall/mangle/reset-counters-all.md) `ae318d752709`
-- [/ipv6/firewall/mangle/reset-counters](docs/cli-reference/ipv6/firewall/mangle/reset-counters.md) `0e8e5d43e785`
-- [/ipv6/firewall/nat](docs/cli-reference/ipv6/firewall/nat.md) `cd1c627920e8`
-- [/ipv6/firewall/nat/reset-counters-all](docs/cli-reference/ipv6/firewall/nat/reset-counters-all.md) `b05411b1db1f`
-- [/ipv6/firewall/nat/reset-counters](docs/cli-reference/ipv6/firewall/nat/reset-counters.md) `113a67fe9cf8`
+- [/ipv6/firewall/mangle/reset-counters-all](docs/cli-reference/ipv6/firewall/mangle/reset-counters-all.md) `fc8c3dd62ef7`
+- [/ipv6/firewall/mangle/reset-counters](docs/cli-reference/ipv6/firewall/mangle/reset-counters.md) `b574f17c7ab3`
+- [/ipv6/firewall/nat](docs/cli-reference/ipv6/firewall/nat.md) `1748555e941d`
+- [/ipv6/firewall/nat/reset-counters-all](docs/cli-reference/ipv6/firewall/nat/reset-counters-all.md) `5ce054951ada`
+- [/ipv6/firewall/nat/reset-counters](docs/cli-reference/ipv6/firewall/nat/reset-counters.md) `11d0991f3612`
 - [/ipv6/firewall/raw](docs/cli-reference/ipv6/firewall/raw.md) `1373708ee436`
-- [/ipv6/firewall/raw/reset-counters-all](docs/cli-reference/ipv6/firewall/raw/reset-counters-all.md) `4ce711f15205`
-- [/ipv6/firewall/raw/reset-counters](docs/cli-reference/ipv6/firewall/raw/reset-counters.md) `f1d9002a50a1`
+- [/ipv6/firewall/raw/reset-counters-all](docs/cli-reference/ipv6/firewall/raw/reset-counters-all.md) `04e38775df19`
+- [/ipv6/firewall/raw/reset-counters](docs/cli-reference/ipv6/firewall/raw/reset-counters.md) `c8003f912fe3`
 - [/ipv6/nd](docs/cli-reference/ipv6/nd.md) `6ef2122ff4ec`
 - [/ipv6/nd/prefix](docs/cli-reference/ipv6/nd/prefix.md) `5f87acf00feb`
 - [/ipv6/nd/prefix/default](docs/cli-reference/ipv6/nd/prefix/default.md) `24a4f6f38961`
@@ -962,7 +962,7 @@ Pages failed: 0
 - [/system/license/output](docs/cli-reference/system/license/output.md) `d988924b9dd5`
 - [/system/license/renew](docs/cli-reference/system/license/renew.md) `1637c4f414ed`
 - [/system/logging](docs/cli-reference/system/logging.md) `f7e6da4076cf`
-- [/system/logging/action](docs/cli-reference/system/logging/action.md) `867bde44fcef`
+- [/system/logging/action](docs/cli-reference/system/logging/action.md) `9b8249a0a68d`
 - [/system/logging/action/clear](docs/cli-reference/system/logging/action/clear.md) `b969b980f94f`
 - [/system/note](docs/cli-reference/system/note.md) `3fabbab23d33`
 - [/system/ntp/client](docs/cli-reference/system/ntp/client.md) `bdd170a4b769`
@@ -1118,9 +1118,9 @@ Pages failed: 0
 - [/user-manager](docs/cli-reference/user-manager.md) `30fdd9d7943c`
 - [/user-manager/advanced](docs/cli-reference/user-manager/advanced.md) `12a76069c2e5`
 - [/user-manager/attribute](docs/cli-reference/user-manager/attribute.md) `aa755908f1ca`
-- [/user-manager/database](docs/cli-reference/user-manager/database.md) `b9446ff381a4`
+- [/user-manager/database](docs/cli-reference/user-manager/database.md) `14f22dab1a2e`
 - [/user-manager/database/load](docs/cli-reference/user-manager/database/load.md) `292c7600c654`
-- [/user-manager/database/migrate-legacy-db](docs/cli-reference/user-manager/database/migrate-legacy-db.md) `3081c97a11ed`
+- [/user-manager/database/migrate-legacy-db](docs/cli-reference/user-manager/database/migrate-legacy-db.md) `e0ae938564f7`
 - [/user-manager/database/optimize-db](docs/cli-reference/user-manager/database/optimize-db.md) `b418d898582a`
 - [/user-manager/database/save](docs/cli-reference/user-manager/database/save.md) `a9d25165492b`
 - [/user-manager/generate-report](docs/cli-reference/user-manager/generate-report.md) `7ad32b347cd5`
@@ -1187,7 +1187,7 @@ Pages failed: 0
 - [Health](docs/diagnostics-monitoring-and-troubleshooting/health.md) `e00b31a1e483`
 - [Interface stats and monitor-traffic](docs/diagnostics-monitoring-and-troubleshooting/interface-stats-and-monitor-traffic.md) `9c8decb5fad0`
 - [IP Scan](docs/diagnostics-monitoring-and-troubleshooting/ip-scan.md) `167faefb944e`
-- [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `b7e081ceaee3`
+- [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `abb0d81ca615`
 - [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `bd664c964077`
 - [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `a168d6ee93e2`
 - [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `c1c1405afdc1`
@@ -1203,27 +1203,27 @@ Pages failed: 0
 - [NetFlow analysis with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/traffic-flow/netflow-analysis-with-elasticsearch.md) `fe9df8913ddb`
 - [Traffic Generator](docs/diagnostics-monitoring-and-troubleshooting/traffic-generator.md) `22032cf2b327`
 - [Watchdog](docs/diagnostics-monitoring-and-troubleshooting/watchdog.md) `cfa0097ec733`
-- [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `1b12f5885941`
-- [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `2ff57cbbeba4`
-- [Firewall](docs/firewall-and-quality-of-service/firewall.md) `6a7a2d6cff88`
+- [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `0aaff9f56453`
+- [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `ed2c4a21d27a`
+- [Firewall](docs/firewall-and-quality-of-service/firewall.md) `73f30893430c`
 - [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a9883ddfaab1`
-- [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `34389ca56b9b`
-- [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `569127d1fa48`
+- [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `9ddb4f68781e`
+- [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `6c6bc3937e0f`
 - [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `9579a02f2389`
-- [Mangle](docs/firewall-and-quality-of-service/firewall/mangle.md) `3e2f19250e8d`
-- [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `d217a6f1ac80`
+- [Mangle](docs/firewall-and-quality-of-service/firewall/mangle.md) `7c042ac0cb64`
+- [NAT](docs/firewall-and-quality-of-service/firewall/nat.md) `7a5ba6b0bede`
 - [RAW](docs/firewall-and-quality-of-service/firewall/raw.md) `9e5bdde0f9b3`
-- [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `a0d9fba2dc06`
+- [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `2e7ff454645a`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
-- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `7277f3880df9`
-- [Queues](docs/firewall-and-quality-of-service/queues.md) `2b26f7f4b271`
-- [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `6ce3d3e97e87`
-- [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `e92e9c3efcea`
-- [Queue Burst](docs/firewall-and-quality-of-service/queues/queue-burst.md) `2b720a81d8fa`
-- [Queue size](docs/firewall-and-quality-of-service/queues/queue-size.md) `d6994ba4c8fd`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `1659e8d4647c`
+- [Queues](docs/firewall-and-quality-of-service/queues.md) `6f47b5d9643c`
+- [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `d71e2207a896`
+- [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `e007b267005f`
+- [Queue Burst](docs/firewall-and-quality-of-service/queues/queue-burst.md) `f10728a63fcd`
+- [Queue size](docs/firewall-and-quality-of-service/queues/queue-size.md) `54d8d4ae9bef`
 - [Queue tree](docs/firewall-and-quality-of-service/queues/queue-tree.md) `93cd372f4db2`
 - [Queue types](docs/firewall-and-quality-of-service/queues/queue-types.md) `ee22bcc31332`
-- [CAKE](docs/firewall-and-quality-of-service/queues/queue-types/cake.md) `b837a8b0260d`
+- [CAKE](docs/firewall-and-quality-of-service/queues/queue-types/cake.md) `37ac19e5f2a6`
 - [CoDel and FQ-CoDel](docs/firewall-and-quality-of-service/queues/queue-types/codel-fq-codel.md) `b197979c7d81`
 - [PCQ](docs/firewall-and-quality-of-service/queues/queue-types/pcq.md) `1df0829f0837`
 - [FIFO queue types](docs/firewall-and-quality-of-service/queues/queue-types/pfifo-bfifo.md) `aaf58d3e090b`
@@ -1231,10 +1231,10 @@ Pages failed: 0
 - [SFQ](docs/firewall-and-quality-of-service/queues/queue-types/sfq.md) `1bb4610ea269`
 - [Simple queue](docs/firewall-and-quality-of-service/queues/simple-queue.md) `03795a322539`
 - [UPnP](docs/firewall-and-quality-of-service/upnp.md) `f54adefa8b3d`
-- [Firewall and QoS Case Studies](docs/firewall-and-quality-of-service/user-guides.md) `a7386d01da90`
+- [Firewall and QoS Case Studies](docs/firewall-and-quality-of-service/user-guides.md) `a57a8b67940d`
 - [SSH brute-force protection](docs/firewall-and-quality-of-service/user-guides/bruteforce-prevention.md) `64baf17452a7`
-- [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `aec9b9732524`
-- [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `4c2276a4d875`
+- [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `80f69ebf1ebf`
+- [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `39ad19731ca3`
 - [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `8095f2d4b529`
 - [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
@@ -1276,7 +1276,7 @@ Pages failed: 0
 - [Software Specifications](docs/getting-started/software-specifications.md) `2c9f2d329c32`
 - [Feature support based on architecture](docs/getting-started/software-specifications/feature-support-based-on-architecture.md) `6f63c766792f`
 - [Supout.rif](docs/getting-started/supout-rif.md) `b97bf397987a`
-- [Upgrading to v7](docs/getting-started/upgrading-to-v7.md) `cd1193596f52`
+- [Upgrading to v7](docs/getting-started/upgrading-to-v7.md) `3e3209da4a7f`
 - [Hardware](docs/hardware.md) `dc40fe2dedcc`
 - [Disks](docs/hardware/disks.md) `d7605362042a`
 - [S.M.A.R.T. info](docs/hardware/disks/smart.md) `5e49180ccb83`
@@ -1368,7 +1368,7 @@ Pages failed: 0
 - [DHCP Client](docs/network-management/dhcp/client.md) `7afe334746f5`
 - [DHCPv6 Client](docs/network-management/dhcp/dhcpv6-client.md) `7503645537b8`
 - [DHCPv6 Server](docs/network-management/dhcp/dhcpv6-server.md) `c389b3aea07c`
-- [DHCP Relay](docs/network-management/dhcp/relay.md) `a6200eedeb60`
+- [DHCP Relay](docs/network-management/dhcp/relay.md) `7f6cbaaa73d8`
 - [DHCP Server](docs/network-management/dhcp/server.md) `01ffff0ecfc9`
 - [DNS](docs/network-management/dns.md) `68e6af0386e7`
 - [Openflow](docs/network-management/openflow.md) `66930df30509`
@@ -1586,6 +1586,7 @@ Pages failed: 0
 - [DynaDish 6](hardware/dynadish-6.md) `ed9e0ee71b40`
 - [FiberBox Plus](hardware/fiberbox-plus.md) `d83600b88ea6`
 - [FiberBox](hardware/fiberbox.md) `e5ea26dac2e0`
+- [First Steps - Chateau LTE6](hardware/first-steps-chateau-lte6.md) `6d5ddd53f990`
 - [FTC11XG](hardware/ftc11xg.md) `3504bb232326`
 - [FTC21-ups](hardware/ftc21-ups.md) `71c23c92017d`
 - [FTC21](hardware/ftc21.md) `6b91141850cc`
@@ -1691,6 +1692,9 @@ Pages failed: 0
 - [QRT 2](hardware/qrt-2.md) `4f420ed91372`
 - [QRT 5 ac](hardware/qrt-5-ac.md) `fa6c0dcdc014`
 - [QRT 5](hardware/qrt-5.md) `2b9e77c8c798`
+- [Quick Guide - CCR2004-16G-2S+](hardware/quick-guide-ccr2004-16g-2s-plus.md) `e8b0ad1d1ad0`
+- [Quick Guide - CCR2004-1G-12S+2XS](hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md) `287e5640ae49`
+- [Quick Guide G3](hardware/quick-guide-g3.md) `ff5530cc3020`
 - [R11e-LR2](hardware/r11e-lr2.md) `5039049c9207`
 - [R11e-LR8](hardware/r11e-lr8.md) `999e1d4f18a4`
 - [R11e-LR8G](hardware/r11e-lr8g.md) `465dcd7f18a8`
@@ -1721,6 +1725,7 @@ Pages failed: 0
 - [RBM33G](hardware/rbm33g.md) `b79066c7ef99`
 - [ROSE Data Server](hardware/rose-data-server.md) `880bef5b6cb2`
 - [S-3553LC20D](hardware/s-3553lc20d.md) `653d6a340d25`
+- [Safety and regulatory information - Chateau LTE6](hardware/safety-regulatory-information-chateau.md) `5c5139dc2723`
 - [SEXTANT G](hardware/sextant-g.md) `39a0588c2f1a`
 - [SXT 2](hardware/sxt-2.md) `099f8839d35b`
 - [SXT 6](hardware/sxt-6.md) `ed7eaff61277`

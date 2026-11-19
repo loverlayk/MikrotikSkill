@@ -14,19 +14,19 @@ CAKE is different: it controls its memory use with [`cake-memlimit`](./queue-typ
 
 ## Example
 
-This example was created to highlight the queue size impact on traffic that was queued by a specific queue.
+This example shows the impact of the queue size on the traffic that a queue processes.
 
-For a simplified visualization, let's assume we are processing data in steps and we know exactly how many packets will be received/transited in every step and there will be no dropped packet retransmission taking place.
+For a simplified visualization, the data is processed in steps. The number of packets received in every step is known, and dropped packets are not retransmitted.
 
 ![Timeline of 25 steps with 1610 incoming packets](./img/queue-size-01.webp)
 
-As you can see in the picture above there are **25 steps** and there are a total of **1610 incoming packets** over this time frame.
+There are **25 steps** and there are a total of **1610 incoming packets** over this time frame.
 
 ### 100% Shaper
 
 A queue is a 100% shaper when every packet that is over the allowed limits will be dropped immediately. This way all packets that are not dropped will be sent out without any delay.
 
-Let's apply a **max-limit=100 packets per step** limitation to our example:
+Apply a **max-limit=100 packets per step** limitation to the example:
 
 ![100% shaper drops packets above 100 packets per step](./img/queue-size-02.webp)
 
@@ -38,7 +38,7 @@ A queue is 100% Scheduler when there are no packet drops at all, all packets are
 
 In each step, the queue must send out queued packets from previous steps first and only then send out packets from this step; this way it is possible to keep the right sequence of packets.
 
-We will again use the same limit (**100 packets per step**).
+The limit is the same (**100 packets per step**).
 
 ![100% scheduler delays packets above 100 packets per step](./img/queue-size-03.webp)
 
@@ -46,7 +46,7 @@ There was no packet loss, but 630 **(39,1%) packets had 1-step delay**, and the 
 
 ### Default-small queue type
 
-It is also possible to choose the middle way when the queue uses both of these queuing aspects (shaping and scheduling). By default, most of the queues in RouterOS have a queue size of 10.
+It is also possible to choose the middle way when the queue uses both of these queuing aspects (shaping and scheduling). The `default-small` queue type, which simple queues and queue trees use by default, is `pfifo` with a queue size of 10 packets.
 
 ![Default-small queue type drops some packets and delays others](./img/queue-size-04.webp)
 
@@ -54,7 +54,7 @@ There were 320 **(19,9%) packets dropped** and 80 **(5,0%) packets had 1 step de
 
 ### Default queue type
 
-Another popular queue size in RouterOS is 50.
+The `default` queue type is `pfifo` with a queue size of 50 packets.
 
 ![Default queue type drops fewer packets and delays more of them](./img/queue-size-05.webp)
 

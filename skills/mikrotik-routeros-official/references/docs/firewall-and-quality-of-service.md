@@ -4,6 +4,6 @@
 
 # Firewall and Quality of Service
 
-This section covers RouterOS firewall, NAT, connection tracking, queues, packet flow, and QoS features. Use it to secure traffic, classify packets, and control bandwidth or forwarding behavior.
+This section covers the firewall of RouterOS and its quality of service features. Use it to secure the router and the networks behind it, to translate addresses, and to classify traffic and control its bandwidth.
 
 <DocCardList />

@@ -1,80 +1,83 @@
 # Firewall
 
-> MikroTik RouterOS firewall provides stateful and stateless packet filtering, NAT, and advanced traffic classification to secure network data flow and prevent unauthorized access. It includes filter/raw, mangle, and...
+> Overview of the RouterOS firewall: the filter, NAT, mangle and RAW tables, their predefined chains, how the rules of a chain are processed, and how to group rules in your own chains.
 
 # Firewall
 
-![Firewall fundamentals](img/firewall-01.webp)
+![A local network behind a router with a firewall: authorized access to and from the internet passes, unauthorized access from the internet is stopped](img/firewall-01.webp)
 
-The firewall implements stateful (by utilizing connection tracking) and stateless packet filtering and thereby provides security functions that are used to manage data flow to, from, and through the router. Along with the Network Address Translation (NAT), it serves as a tool for preventing unauthorized access to directly attached networks and the router itself as well as a filter for outgoing traffic.
+The firewall manages the data flow to the router, from the router and through the router. It filters packets with and without regard to their connection: [connection tracking](../connection-tracking) gives the firewall the state of each connection. Together with network address translation (NAT), it prevents unauthorized access to the networks behind the router and to the router itself, and it can filter outgoing traffic.
 
-Network firewalls keep outside threats away from sensitive data available inside the network. Whenever different networks are joined together, there is always a threat that someone from outside of your network will break into your LAN. Such break-ins may result in private data being stolen and distributed, valuable data being altered or destroyed, or entire hard drives being erased. Firewalls are used as a means of preventing or minimizing the security risks inherent in connecting to other networks. A properly configured firewall plays a key role in efficient and secure network infrastructure deployment.
+Whenever networks are joined, someone from outside can try to break into your network, to steal, change or destroy data. A firewall prevents or reduces the security risks of connecting to other networks.
 
-MikroTik RouterOS has a very powerful firewall implementation with features including:
+The RouterOS firewall can classify traffic by:
 
-- Stateless packet inspection.
-- Stateful packet inspection.
-- Layer-7 protocol detection.
-- Peer-to-peer protocols filtering.
-- Traffic classification by:
-  - Source MAC address.
-  - IP addresses (network or list) and address types (broadcast, local, multicast, unicast).
-  - Port or port range.
-  - IP protocols.
-  - Protocol options (ICMP type and code fields, TCP flags, IP options and MSS).
-  - Interface the packet arrived from or left through.
-  - Internal flow and connection marks.
-  - DSCP byte.
-  - Packet content.
-  - Rate at which packets arrive and sequence numbers.
-  - Packet size.
-  - Packet arrival time.
+- Source MAC address.
+- IP addresses, as networks or address lists, and address types (broadcast, local, multicast, unicast).
+- Port or port range.
+- IP protocol.
+- Protocol options: ICMP type and code, TCP flags, IP options and MSS.
+- The interface that the packet arrived on or leaves through.
+- Packet marks and connection marks.
+- The DSCP field.
+- Packet content, including Layer 7 protocol detection.
+- The rate at which packets arrive, and their sequence.
+- Packet size.
+- The time when the packet arrives.
 
-and much more!
+## Firewall tables
 
-Firewall is split into three major modules:
+The firewall has four tables. Each is a menu in `/ip/firewall` for IPv4 and in `/ipv6/firewall` for IPv6:
 
-- **filter/raw** - Used to deny traffic based on configured policies. Filtering in the [RAW](./raw) table saves resources if connection tracking is not required.
-- **mangle** - Used to mark certain connections, packets, streams, set priorities and do other tasks.
-- **nat** - Used to set up address translation rules, redirects and port forwarding.
+- [Filter](./filter) accepts or drops packets according to your policies.
+- [RAW](./raw) drops packets or excludes them from connection tracking before connection tracking processes them, which saves resources.
+- [Mangle](./mangle) marks packets, connections and routing decisions, sets priorities and changes fields of the IP header.
+- [NAT](./nat) translates addresses, redirects connections and forwards ports.
+
+[Address lists](./address-lists) hold groups of addresses that the rules of all tables can match. [Common Firewall Matchers and Actions](./common-firewall-matchers-and-actions) describes what the tables have in common: the rule counters and the order of the matchers.
 
 ## Chains
 
-Firewall filtering rules are grouped together in chains. It allows a packet to be matched against one common criterion in one chain, and then passed over to another chain for processing against some other common criteria.
+The rules of each table are grouped in chains. Each table has predefined chains, which process the packets at fixed points of the [packet flow](../packet-flow-in-routeros):
 
-For example, a packet should be matched against the IP address:port pair. Of course, it could be achieved by adding as many rules with IP address:port match as required to the forward chain, but a better way could be to add one rule that matches traffic from a particular IP address. Then, rules that perform matching against separate ports can be added to the "**mychain**" chain without specifying the IP addresses.
+- **raw**: `prerouting`, `output`.
+- **filter**: `input`, `forward`, `output`.
+- **mangle**: `prerouting`, `input`, `forward`, `output`, `postrouting`.
+- **nat**: `srcnat`, `dstnat`, `input`, `output`.
+
+The router takes the rules of a chain in the order in which they are listed, from top to bottom. When a packet matches a rule, the router applies the action of the rule and processes no more rules of the chain. The exceptions are the `passthrough` action and other actions that do not end the processing, such as `fasttrack-connection` in the filter table and some [mangle](./mangle) actions: after them, the router continues with the next rule. A packet that matches no rule of a chain is accepted.
+
+### Chains of your own
+
+You can add chains of your own and send packets to them with `action=jump`. A chain is created when you add its first rule. This lets you match a common condition once and put the detailed rules into a separate chain.
+
+In this example, rules for the public address of an office, 198.51.100.7, are grouped in the chain `office`. The jump rule matches the source address and the interface, and the rules of the chain match only the ports, without repeating them:
 
 ```ros
-/ip/firewall/filter 
-add chain=mychain protocol=tcp dst-port=22 action=accept
-add chain=mychain protocol=tcp dst-port=23 action=accept
-
-add action=jump chain=input src-address=1.1.1.2/32 jump-target="mychain"
+/ip/firewall/filter
+add chain=input action=jump jump-target=office \
+    src-address=198.51.100.7 in-interface-list=WAN \
+    comment="Rules for the office address" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+add chain=office action=accept protocol=tcp dst-port=22 \
+    comment="SSH from the office"
+add chain=office action=accept protocol=tcp dst-port=8291 \
+    comment="WinBox from the office"
 ```
 
-When processing a chain, rules are taken from the chain in the order they are listed, from top to bottom. If a packet matches the criteria of the rule, then the specified action is performed on it, and no more rules are processed in that chain (the exception is the **passthrough** action and some [Mangle](./mangle.md) actions).
+A packet that matches no rule of the `office` chain returns to the `input` chain and continues with the rule after the jump rule. In the default firewall, that is the rule that drops what does not come from the local network.
 
-If a packet has not matched any rule within the chain, then it is accepted.
+```ros
+/ip/firewall/filter/print stats where chain=office or jump-target=office
+```
 
-Each firewall module has its own pre-defined chains:
-
-- **raw**:
-  - prerouting
-  - output
-- **filter**:
-  - input
-  - forward
-  - output
-- **mangle**:
-  - prerouting
-  - input
-  - forward
-  - output
-  - postrouting
-- **nat**:
-  - srcnat
-  - dstnat
-  - input
-  - output
-
-More detailed packet processing in RouterOS is described in the [Packet Flow in the RouterOS](../packet-flow-in-routeros.md) diagram.
+```text
+Columns: CHAIN, ACTION, BYTES, PACKETS
+# CHAIN   ACTION  BYTES  PACKETS
+;;; Rules for the office address
+0 input   jump      300        5
+;;; SSH from the office
+1 office  accept     60        1
+;;; WinBox from the office
+2 office  accept     60        1
+```

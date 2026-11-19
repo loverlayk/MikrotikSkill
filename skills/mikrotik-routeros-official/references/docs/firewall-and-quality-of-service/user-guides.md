@@ -4,6 +4,6 @@
 
 # Firewall and QoS Case Studies
 
-These case studies show practical firewall and QoS configurations, including brute-force prevention, DDoS protection, connection-rate rules, port knocking, and advanced firewall designs. Use them as examples for common security policies.
+The case studies are complete firewall and QoS configurations for one task each: brute-force prevention, DDoS protection, traffic prioritization by connection rate, port knocking and an advanced firewall for IPv4 and IPv6.
 
 <DocCardList />

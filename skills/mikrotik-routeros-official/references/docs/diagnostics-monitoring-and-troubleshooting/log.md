@@ -32,7 +32,7 @@ For a video introduction, see [Logging basics](https://www.youtube.com/watch?v=E
 [admin@MikroTik] > /log/print where topics~"interface|dhcp"
  2026-10-02 17:34:34 interface,info lo link up
  2026-10-02 17:34:42 interface,info ether2 link up (speed 1G, full duplex)
- 2026-10-02 17:34:47 dhcp,info bridge on bridge got IP address 192.168.88.36
+ 2026-10-02 17:34:47 dhcp,info bridge on bridge got IP address 192.168.88.30
 ```
 
 To watch new entries as they arrive, add `follow` (prints the existing entries first) or `follow-only` (new entries only). Press <kbd>Space</kbd> to print a separator line, and <kbd>Control</kbd>+<kbd>C</kbd> to stop. For example, to watch failed logins:
@@ -201,9 +201,9 @@ To encrypt the log, use `remote-protocol=tls`. To check the server certificate, 
 
 When the certificate cannot be verified, the router sends nothing, retries, and logs an `ssld,error` entry that ends with `ssl: no trusted CA certificate found`.
 
-`check-certificate=yes` checks that a trusted certificate signed the server certificate. It does not compare the name in the certificate with the server address, so any certificate from a trusted CA passes: trust only the CA of your log servers, or import the server's own certificate. The router does not present a client certificate.
+`check-certificate=yes` checks that a trusted certificate signed the server certificate and that the certificate belongs to this server: the address or host name in `remote=` must be among the certificate's subject alternative names. A certificate from a trusted CA that names another server is refused, and the log shows `ssld,error ... ssl: name verification failed for: "..."`. The router does not present a client certificate.
 
-Actions that send to the same server address and port share one connection. Give them the same `remote-protocol` and `check-certificate`.
+One action sends to one server address, port and protocol. A second remote action with the same `remote`, `remote-port` and `remote-protocol` is refused with `remote action with these connection settings already exists`, whatever its `check-certificate` says. To send several sets of topics to one collector, use one action and a rule for each topic.
 
 ## Email log messages
 
@@ -378,7 +378,8 @@ The router also lists the topics `amt`, `isdn`, `mme`, `read`, `simulator`, `sta
 | Problem | Cause and fix |
 | :-- | :-- |
 | The syslog server receives nothing. | The default `remote` action has `remote=0.0.0.0`; set the server address. Check that a rule passes entries to the action: a rule with several topics needs all of them. Check that the router reaches the server from `src-address` and in `vrf`, and that the server accepts the protocol and port. |
-| TLS logging sends nothing. | Look for `ssld,error` entries. `no trusted CA certificate found` means that the CA certificate of the server is not imported or not trusted. |
+| TLS logging sends nothing. | Look for `ssld,error` entries. `no trusted CA certificate found` means that the CA certificate of the server is not imported or not trusted; `name verification failed` means that the certificate does not name the server in `remote=`. |
+| `remote action with these connection settings already exists` | Another remote action already sends to this address, port and protocol. Use one action with a rule for each topic, or change `remote-port` or `remote-protocol`. |
 | The server shows several entries as one. | Over TCP and TLS, `default` and `syslog` entries have no delimiter; use `remote-log-format=cef`. |
 | Entries show several times in `/log/print`. | Several actions store them; filter with `where buffer=memory`. |
 | The log is empty after a reboot. | Memory actions do not survive a reboot; log to a disk or a syslog server. |
@@ -394,8 +395,8 @@ The same login failure, as the server receives it in each `remote-log-format` (w
 
 ```text
 system,error,critical login failure for user guest from 192.168.88.17 via ssh
-<27>Oct  2 17:36:35 MikroTik login failure for user guest from 192.168.88.17 via ssh
-Oct  2 17:36:35 MikroTik CEF:0|MikroTik|hAP ax^2|7.25beta5|10|system,error,critical|High|dvchost=MikroTik dvc=192.168.88.36 msg=login failure for user guest from 192.168.88.17 via ssh app=ssh duser=guest outcome=failure src=192.168.88.17
+<27>Nov 18 10:43:49 MikroTik login failure for user guest from 192.168.88.17 via ssh
+Nov 18 10:43:49 MikroTik CEF:0|MikroTik|CHR QEMU Standard PC (i440FX + PIIX, 1996)|7.25.1|10|system,error,critical|High|dvchost=MikroTik dvc=192.168.88.30 msg=login failure for user guest from 192.168.88.17 via ssh app=ssh duser=guest outcome=failure src=192.168.88.17
 ```
 
 - The `syslog` format carries no tag field; the message follows the identity.
@@ -404,7 +405,7 @@ Oct  2 17:36:35 MikroTik CEF:0|MikroTik|hAP ax^2|7.25beta5|10|system,error,criti
 
 ### TCP and TLS
 
-- UDP sends one datagram per entry. TCP and TLS keep one connection per server address and port, shared by all actions that send there.
+- UDP sends one datagram per entry. TCP and TLS keep one connection for the address, port and protocol of the action.
 - While a TCP or TLS server is unreachable, the router keeps the entries in one buffer for all remote actions and retries the connection. The buffer is lost on reboot.
 - While the server is unreachable, up to 1000 entries wait in memory; when the buffer is full, newer entries are dropped.
 - CEF messages end with the delimiter; `default` and `syslog` messages follow each other in the stream without one.

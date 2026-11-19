@@ -211,13 +211,13 @@ Two more cases apply with `use-ip-firewall` enabled:
 
 On the previous topic, we solely discussed software bridging that requires the main CPU processing to forward packets through the correct bridge port. Most of the MikroTik devices are equipped with dedicated switching hardware, the so-called switch chip or switch ASIC. This allows us to offload some of the bridging functions, like packet forwarding between bridge ports or packet filtering, to this specialized hardware chip without consuming any CPU resources. In RouterOS, we have named this function Bridge Hardware (HW) Offloading. Different MikroTik devices might have different switch chips and each chip has a different set of features available, so make sure to visit this article to get more details - [Bridge Hardware Offloading](../bridging-and-switching/index.md#bridge-hardware-offloading).
 
-![](./img/packet-flow-in-routeros-18.webp)
+![Overall packet flow diagram with the path of a hardware offloaded packet: from the physical in-interface through the switching decision directly to the physical out-interface](./img/packet-flow-in-routeros-18.webp)
 
 :::warning
 Interface HTB will not work correctly when the out-interface is hardware offloaded and the bridge Fast Path is not active.
 :::
 
-![](./img/packet-flow-in-routeros-19.webp)
+![Switch diagram: a packet from the physical in-interface goes to the switching decision if the in-interface is hardware offloaded, and from there to the physical out-interface or to the switch-cpu port. A packet from the switch-cpu port goes to the switching decision if the out-interface is hardware offloaded](./img/packet-flow-in-routeros-19.webp)
 
 - **Switching decision** - widely depends on the switch model. This block controls all the switching-related tasks, like host learning, packet forwarding, filtering, VLAN tagging/untagging, etc. Certain switch configurations can alter the packet flow.
 - **switch-cpu port** - a special purpose switch port for communication between the main CPU and other switch ports. Note that the switch-cpu port does not show up anywhere on RouterOS except for the switch menu. None of the software-related configurations (e.g. interface-list) can be applied to this port. Packets that reach the CPU are automatically associated with the physical in-interface.
@@ -235,7 +235,7 @@ We will further discuss a packet flow when bridge hardware offloading is enabled
 1. The switch checks whether the in-interface is a hardware offloaded interface.
 2. The switch runs a packet through the switch host table to make a forwarding decision. If the switch finds a match for the destination MAC address, the packet is sent out through the physical interface. A packet that ends up being flooded (e.g. broadcast, multicast, unknown unicast traffic) gets multiplied and sent out to every hardware offloaded switch port.
 
-![](./img/packet-flow-in-routeros-20.webp)
+![Switch diagram with the switch forward path: physical in-interface, hardware offload check, switching decision, physical out-interface](./img/packet-flow-in-routeros-20.webp)
 
 ### Switch to CPU Input
 
@@ -253,7 +253,7 @@ See the packet walkthrough when an in-interface is hardware offloaded:
 2. Runs a packet through the switch host table to make a forwarding decision. In case any of the above-mentioned points are true, the packet gets forwarded to the switch-cpu port.
 3. The packet exits through the switch-cpu port and it will be further processed by the RouterOS packet flow.
 
-![](./img/packet-flow-in-routeros-21.webp)
+![Switch diagram with the path to the CPU: physical in-interface, hardware offload check, switching decision, switch-cpu port](./img/packet-flow-in-routeros-21.webp)
 
 :::warning
 Any received packet that was flooded by the switch chip will not get flooded again by the software bridge to the same HW offloaded switch group. This prevents the formation of duplicate packets.
@@ -267,7 +267,7 @@ This process takes place when a packet exits the RouterOS software processing an
 2. The switch checks whether the out-interface is a hardware offloaded interface.
 3. The switch runs a packet through the switch host table to make a forwarding decision. If the switch finds a match for the destination MAC address, the packet is sent out through the physical interface. A packet that ends up being flooded (e.g. broadcast, multicast, unknown unicast traffic) gets multiplied and sent out to every hardware offloaded switch port.
 
-![](./img/packet-flow-in-routeros-22.webp)
+![Switch diagram with the path from the CPU: switch-cpu port, hardware offload check of the out-interface, switching decision, physical out-interface](./img/packet-flow-in-routeros-22.webp)
 
 :::warning
 A software bridge that sends a flooded packet through HW offloaded interfaces will only send a single packet copy per HW offloaded switch group rather than per HW offloaded interface. The actual flooding will be done by the switch chip; this prevents the formation of duplicate packets.
@@ -386,7 +386,7 @@ Traffic of an interface that belongs to a VRF passes some chains two times:
 
 ## Fast Path
 
-From what we learned so far, it is quite obvious that such packet processing takes a lot of CPU resources. To speed things up FastPath was introduced in the first RouterOS v6. What it does is it skips processing in the Linux kernel, basically trading some RouterOS functionality for performance. For FastPath to work, interface driver support and specific configuration conditions are required.
+From what we learned so far, it is quite obvious that such packet processing takes a lot of CPU resources. FastPath speeds things up. It skips processing in the Linux kernel, basically trading some RouterOS functionality for performance. For FastPath to work, interface driver support and specific configuration conditions are required.
 
 ### How Fast Path Works
 
@@ -433,7 +433,6 @@ A Bridge handler is used if the following conditions are met:
 - *use-ip-firewall* is disabled.
 - No mesh, MetaRouter interface configuration.
 - sniffer, torch, and traffic generator are not running.
-- bridge vlan-filtering is disabled (condition is removed since RouterOS version 7.2).
 - bridge dhcp-snooping is disabled.
 
 :::warning
@@ -454,7 +453,7 @@ Interfaces that support FastPath:
 |  | bonding interfaces (RX only) |
 |  | PPPoE, L2TP interfaces |
 |  | EoIP, GRE, IPIP, VXLAN interfaces. |
-|  | VPLS (starting from v7.17) |
+|  | VPLS |
 
 EoIP, Gre, IPIP, VXLAN and L2TP interfaces have a per-interface setting *allow-fast-path.* Allowing a fast path on these interfaces has a side effect of bypassing firewall, connection tracking, simple queues, queue tree with parent=global, IPsec, hotspot universal client, vrf assignment for encapsulated packets that go through a fast-path. Also, packet fragments cannot be received in FastPath.
 
@@ -466,19 +465,19 @@ The only interface queue that guarantees FastPath is only-hardware-queue. If you
 
 The packet may go Half-FastPath by switching from FastPath to SlowPath, but not the other way around. So, for example, if the receiving interface has FastPath support, but the out interface does not, then the router will process the packet by FastPath handlers as far as it can and then proceed with SlowPath. If the receiving interface does not support FastPath but the out interface does, the packet will be processed by SlowPath all the way through the router.
 
-![](./img/packet-flow-in-routeros-31.webp)
+![A packet can switch from FastPath to SlowPath, but not from SlowPath to FastPath](./img/packet-flow-in-routeros-31.webp)
 
 ## FastTrack
 
 Fasttrack can be decoded as Fast Path + Connection Tracking. It allows marking connections as "fast-tracked", marking packets that belong to a fast-tracked connection will be sent the fast-path way. The connection table entry for such a connection now will have a fast-tracked flag.
 
-![](./img/packet-flow-in-routeros-32.webp)
+![Diagram of the routing forward FastPath: connection tracking checks whether the connection is FastTracked, and a FastTracked packet takes the FastPath](./img/packet-flow-in-routeros-32.webp)
 
 :::warning
 FastTrack packets bypass firewall, connection tracking, simple queues, queue tree with parent=global, ip traffic-flow, IPSec, hotspot universal client, VRF assignment, so it is up to the administrator to make sure FastTrack does not interfere with other configuration!
 :::
 
-To mark a connection as fast-tracked, a new action was implemented "*fasttrack-connection"* for firewall filter and mangle. Currently, only TCP and UDP connections can be fast-tracked and to maintain connection tracking entries, some random packets will still be sent to a slow path. This must be taken into consideration when designing firewalls with "fasttrack" enabled.
+To mark a connection as fast-tracked, the firewall filter and mangle have the action `fasttrack-connection`. Currently, only TCP and UDP connections can be fast-tracked and to maintain connection tracking entries, some random packets will still be sent to a slow path. This must be taken into consideration when designing firewalls with "fasttrack" enabled.
 
 The FastTrack handler also supports source and destination NAT, so special exceptions for NATed connections are not required.
 
@@ -489,16 +488,17 @@ Traffic that belongs to a fast-tracked connection travels in FastPath, which mea
 The easiest way to start using this feature on home routers is to enable "fasttrack" for all *established, related* connections:
 
 ```ros
-/ip/firewall/filter 
-add chain=forward action=fasttrack-connection connection-state=established,related \
-  comment="fasttrack established/related"
-add chain=forward action=accept connection-state=established,related \
-  comment="accept established/related"
+/ip/firewall/filter
+add chain=forward action=fasttrack-connection \
+    connection-state=established,related comment="fasttrack"
+add chain=forward action=accept \
+    connection-state=established,related,untracked \
+    comment="accept established,related,untracked"
 ```
 
 Notice that the first rule marks established/related connections as fast-tracked, the second rule is still required to accept packets belonging to those connections. The reason for this is that, as was mentioned earlier, some random packets from fast-tracked connections are still sent through the slow pathway and only UDP and TCP are fast-tracked, but we still want to accept packets for other protocols.
 
-![](./img/packet-flow-in-routeros-33.webp)![](./img/packet-flow-in-routeros-34.webp)
+![WinBox Filter Rules list with the dynamic rule "special dummy rule to show fasttrack counters" above the fasttrack-connection rule and the accept rule](./img/packet-flow-in-routeros-33.webp)![WinBox Mangle list with three dynamic dummy rules for fasttrack counters, in the prerouting, forward and postrouting chains](./img/packet-flow-in-routeros-34.webp)
 
 After adding the "FastTrack" rule, a special dummy rule appeared at the top of the list. This is not an actual rule, it is for visual information showing that some of the traffic is traveling FastPath and will not reach other firewall rules.
 
@@ -506,27 +506,46 @@ After adding the "FastTrack" rule, a special dummy rule appeared at the top of t
 FastTrack can process packets only in the main routing table so it is the system administrator's duty to not FastTrack connections that are going through a non-main routing table (thus connections that are processed with mangle action=mark-routing rules). Otherwise packets might be misrouted through the main routing table.
 :::
 
-These rules appear as soon as there is at least one fast-tracked connection tracking entry and will disappear after the last fast-tracked connection times out in the connection table.
+The dummy rules appear when the router has fast-tracked connections.
 
 :::warning
 The connection is FastTracked until a connection is closed, timed out or the router is rebooted.
 :::
 
-#### Configuration example: excluding specific host, from being Fast-Tracked
+### Exclude a host from FastTrack
+
+This example excludes the host 192.168.88.111 from FastTrack. The first two rules accept the packets from and to the host, so that its traffic does not reach the `fasttrack-connection` rule:
 
 ```ros
 /ip/firewall/filter
-add action=accept chain=forward connection-state=established,related src-address=192.168.88.111
-add action=accept chain=forward connection-state=established,related dst-address=192.168.88.111
-add action=fasttrack-connection chain=forward connection-state=established,related hw-offload=no
-add action=accept chain=forward connection-state=established,related
+add chain=forward action=accept \
+    connection-state=established,related \
+    src-address=192.168.88.111 comment="Not FastTracked"
+add chain=forward action=accept \
+    connection-state=established,related \
+    dst-address=192.168.88.111 comment="Not FastTracked"
+add chain=forward action=fasttrack-connection \
+    connection-state=established,related comment="FastTrack"
+add chain=forward action=accept \
+    connection-state=established,related \
+    comment="Accept established, related"
 ```
 
-In this example, we exclude host 192.168.88.111 from being Fast-tracked, by first accepting it with the firewall rule, both for source and destination. The idea is - not allowing the traffic to reach the FastTrack action.
+The exclusion rules must be placed before the `fasttrack-connection` rule; the order is important. A router with the default configuration, or with the rules of the previous example, already has the FastTrack rule and the accept rule. On such a router, add only the two exclusion rules and place them before the FastTrack rule, on the default configuration with `place-before=[find comment="defconf: fasttrack"]`. A connection that is already fast-tracked stays fast-tracked until it is closed.
 
-Note: the "exclusion" rules must be placed before fasttrack filters; order is important.
+Check the result in the connection table. A fast-tracked connection has the `F` flag. The connection of the excluded host does not have it:
 
-#### Requirements
+```ros
+[admin@MikroTik] > /ip/firewall/connection/print where dst-port=2000 and protocol=tcp
+Flags: S - SEEN-REPLY; A - ASSURED; C - CONFIRMED; F - FASTTRACK
+Columns: PROTOCOL, SRC-ADDRESS, SRC-PORT, DST-ADDRESS, DST-PORT, TCP-STATE, 
+         TIMEOUT
+#      PRO  SRC-ADDRESS     SRC-PORT  DST-ADDRESS  DST-  TCP-STATE    TIMEOUT
+0 SAC  tcp  192.168.88.111     46484  10.2.0.13    2000  established  4m59s  
+1 SACF tcp  192.168.88.102     54824  10.2.0.12    2000  established  4m59s  
+```
+
+### Requirements
 
 FastTrack is active if the following conditions are met:
 
@@ -534,7 +553,7 @@ FastTrack is active if the following conditions are met:
 - Sniffer, torch, and traffic generator are not running.
 - `/tool/mac-scan` is not actively used.
 - `/tool/ip-scan` is not actively used.
-- FastPath and Route cache are enabled under IP/Settings (route cache condition does not apply to RouterOS v7 or newer).
+- FastPath is enabled in `/ip/settings` (`allow-fast-path`).
 - Bridge FastPath is enabled if a connection is going over the bridge interface.
 
 ## Packet flow for the visually impaired

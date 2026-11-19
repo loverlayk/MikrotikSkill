@@ -8,9 +8,9 @@
 **Type:** Directory
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
-<ArgTableRow arg="all" typ="switch"></ArgTableRow>
-<ArgTableRow arg="static" typ="switch"></ArgTableRow>
-<ArgTableRow arg="dynamic" typ="switch"></ArgTableRow>
+<ArgTableRow arg="all" typ="switch">Switch of `print`: list the static and the dynamic rules. This is what `print` does without a switch.</ArgTableRow>
+<ArgTableRow arg="static" typ="switch">Switch of `print`: list only the static rules, which are the rules that were added to the configuration.</ArgTableRow>
+<ArgTableRow arg="dynamic" typ="switch">Switch of `print`: list only the dynamic rules, which are the rules that the router adds itself.</ArgTableRow>
 <ArgTableRow arg="chain" typ="enum" mandatory="1">Specifies to which chain the rule will be added. If the input does not match the name of an already defined chain, a new chain will be created.</ArgTableRow>
 <ArgTableRow arg="action" typ="enum (accept | jump | return | log | passthrough | add-src-to-address-list | add-dst-to-address-list | sniff-tzsp | sniff-pc | drop | mark-packet | mark-connection | change-mss | change-dscp | strip-ipv4-options | change-ttl | mark-routing | set-priority | clear-df | fasttrack-connection | route) { accept:0, jump:1, return:2, log:3, passthrough:4, add-src-to-address-list:5, add-dst-to-address-list:6, sniff-tzsp:7, sniff-pc:8, drop:10, mark-packet:30, mark-connection:31, change-mss:32, change-dscp:33, strip-ipv4-options:34, change-ttl:35, mark-routing:36, set-priority:37, clear-df:39, fasttrack-connection:40, route:41 }">
 Action to take if a packet is matched by the rule:

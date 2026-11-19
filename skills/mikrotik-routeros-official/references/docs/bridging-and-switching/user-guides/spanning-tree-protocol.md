@@ -32,6 +32,11 @@ You can check the STP status of a bridge by using the `/interface/bridge/monitor
                 root-port: combo1                          
                port-count: 2                               
     designated-port-count: 0                               
+         topology-changes: 4                               
+     last-topology-change: 24s                             
+                  max-age: 15s                             
+               hello-time: 2s                              
+            forward-delay: 10s                             
         mst-config-digest: 4e22fbb9ede77faa45ec995c4ffa8085
              fast-forward: no                              
          multicast-router: yes                             
@@ -70,6 +75,7 @@ You can check the STP status of a bridge port by using the `/interface/bridge/po
                    tc-tx-rx: 2/2                
            topology-changes: 1                  
        last-topology-change: 4h19m43s           
+                 host-moves: 0                  
            multicast-router: no                 
            hw-offload-group: switch1            
           declared-vlan-ids: 1                  
@@ -374,6 +380,11 @@ Similarly to (R)STP, it is also possible to monitor MSTP status. By monitoring t
                 root-port: ether4
                port-count: 5
     designated-port-count: 3
+         topology-changes: 4
+     last-topology-change: 24s
+                  max-age: 20s
+               hello-time: 2s
+            forward-delay: 15s
         mst-config-digest: 74edbeefdbf82cf63a70cf60e43a56f3
              fast-forward: no                              
          multicast-router: yes                             
@@ -398,6 +409,8 @@ In MSTP it is possible to monitor the MST Instance. This is useful to determine 
                 root-port: ether2
                port-count: 5
     designated-port-count: 1
+         topology-changes: 4
+     last-topology-change: 24s
 ```
 
 It is also possible to monitor a certain MST Override entry. This is useful to determine the port role for a certain MST Instance when configuring root ports and alternate/backup ports in an MSTP region. Below you can find an example to monitor an MST Override entry:

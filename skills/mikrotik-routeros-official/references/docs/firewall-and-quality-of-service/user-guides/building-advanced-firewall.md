@@ -4,331 +4,505 @@
 
 # Building Advanced Firewall
 
-Building on everything we have covered so far, let's now construct an advanced firewall. In this example, we will implement as many firewall features as possible to demonstrate how they work and when they should be used correctly.
+This example builds a complete firewall for a router that connects a local network to the Internet. It uses as many firewall features as possible to show how they work together: interface lists, address lists, connection states, FastTrack, NAT, user-defined chains and RAW rules, for IPv4 and for IPv6.
 
-Most of the filtering will be handled in the RAW firewall. A standard firewall configuration typically includes only a basic rule set that accepts established, related, and untracked connections while dropping everything else that does not originate from the LAN interface, thereby providing full protection for the router.
+Most of the filtering is done in the [RAW](../firewall/raw) table, before connection tracking. The [filter](../firewall/filter) table has only a basic rule set: it accepts established, related and untracked connections and drops everything else that does not come from the LAN.
 
-### Interface Lists
+## Before you start
 
-Two interface lists are defined: **WAN** and **LAN**. These lists simplify future management by grouping interfaces based on their network role. The WAN list contains interfaces connected to the global internet, such as *ether1* in this configuration. The LAN list contains local network interfaces, such as the bridge interface.
+- The example is a complete rule set for a router that has no firewall rules. The default configuration has its own firewall rules, which do a part of the same work. On such a router, the rules of this example replace the default filter, NAT and IPv6 firewall rules; rules that are added after the default ones are duplicates.
+- The LAN network of the example is 192.168.88.0/24 on the interface `bridge`, and the WAN interface is `ether1`. Two RAW rules contain the LAN network. Replace it with your network before you add the rules: the rule "drop local if not from default IP range" drops everything that a LAN device with another address sends, your own session included.
+- Add the rules from a device in the LAN network, and use [Safe Mode](../../management-tools/console#safe-mode). The rules do not accept management access from the WAN side.
+- Every interface must be in the `WAN` or the `LAN` list. The last RAW rule drops all packets that arrive on an interface that is in neither list, for example a PPPoE client, a VPN or a VLAN interface that is added later.
+- Add the blocks in the order of the page, the address lists of a section before its rules. A rule that uses an address list without entries is added without an error.
+- The IPv6 blocks are needed only if the router uses IPv6.
+
+## Interface lists
+
+Two interface lists are used: `WAN` and `LAN`. The lists make the rules independent of interface names. The `WAN` list contains the interfaces that are connected to the Internet, in this example `ether1`. The `LAN` list contains the local network interfaces, in this example `bridge`.
 
 ```ros
 /interface/list
-  add comment=defconf name=WAN
-  add comment=defconf name=LAN
+add name=WAN comment=defconf
+add name=LAN comment=defconf
 /interface/list/member
-  add comment=defconf interface=bridge list=LAN
-  add comment=defconf interface=ether1 list=WAN
+add list=LAN interface=bridge comment=defconf
+add list=WAN interface=ether1 comment=defconf
 ```
 
-This configuration assigns the bridge interface to the LAN list and ether1 to the WAN list, enabling consistent firewall rule application across these interface groups.
+The default configuration already has these lists and members. If your router has them, skip this block.
 
-### Protect the Device
+## Protect the router
 
-The main goal here is to allow access to the router only from LAN and drop everything else.
+The goal is to allow access to the router only from the LAN and to drop everything else.
 
-Notice that ICMP is accepted here as well; it is used to accept ICMP packets that passed RAW rules.
+ICMP is accepted as well. This rule accepts the ICMP packets that have passed the RAW rules.
 
 ```ros
 /ip/firewall/filter
-  add action=accept chain=input comment="defconf: accept ICMP after RAW" protocol=icmp
-  add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
-  add action=drop chain=input comment="defconf: drop all not coming from LAN" in-interface-list=!LAN
+add chain=input action=accept protocol=icmp \
+    comment="defconf: accept ICMP after RAW"
+add chain=input action=accept \
+    connection-state=established,related,untracked \
+    comment="defconf: accept established,related,untracked"
+add chain=input action=drop in-interface-list=!LAN \
+    comment="defconf: drop all not coming from LAN"
 ```
 
-The IPv6 part is a bit more complicated, in addition, UDP traceroute, DHCPv6 client PD, and IPSec (IKE, AH, ESP) are accepted as per RFC recommendations.
+The IPv6 part accepts, in addition, UDP traceroute, DHCPv6 client prefix delegation and IPsec (IKE, AH, ESP), as the RFC recommendations say.
 
 ```ros
 /ipv6/firewall/filter
-add action=accept chain=input comment="defconf: accept ICMPv6 after RAW" protocol=icmpv6
-add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
-add action=accept chain=input comment="defconf: accept UDP traceroute" dst-port=33434-33534 protocol=udp 
-add action=accept chain=input comment="defconf: accept DHCPv6-Client prefix delegation." dst-port=546 protocol=udp src-address=fe80::/10
-add action=accept chain=input comment="defconf: accept IKE" dst-port=500,4500 protocol=udp
-add action=accept chain=input comment="defconf: accept IPSec AH" protocol=ipsec-ah
-add action=accept chain=input comment="defconf: accept IPSec ESP" protocol=ipsec-esp
-add action=drop chain=input comment="defconf: drop all not coming from LAN" in-interface-list=!LAN
+add chain=input action=accept protocol=icmpv6 \
+    comment="defconf: accept ICMPv6 after RAW"
+add chain=input action=accept \
+    connection-state=established,related,untracked \
+    comment="defconf: accept established,related,untracked"
+add chain=input action=accept protocol=udp dst-port=33434-33534 \
+    comment="defconf: accept UDP traceroute"
+add chain=input action=accept protocol=udp dst-port=546 \
+    src-address=fe80::/10 \
+    comment="defconf: accept DHCPv6-Client prefix delegation"
+add chain=input action=accept protocol=udp dst-port=500,4500 \
+    comment="defconf: accept IKE"
+add chain=input action=accept protocol=ipsec-ah \
+    comment="defconf: accept IPSec AH"
+add chain=input action=accept protocol=ipsec-esp \
+    comment="defconf: accept IPSec ESP"
+add chain=input action=drop in-interface-list=!LAN \
+    comment="defconf: drop all not coming from LAN"
 ```
 
 :::warning
-In certain setups where the DHCPv6 relay is used, the src address of the packets may not be from the link-local range. In that case, the src-address parameter of rule #4 must be removed or adjusted to accept the relay address.
+In setups where a DHCPv6 relay is used, the source address of the packets may not be from the link-local range. In that case, remove the `src-address` parameter of the DHCPv6 rule or change it to the address of the relay.
 :::
 
-### Protect the Clients
+## Protect the clients
 
-Before configuring the firewall rules set, create an address list containing all IPv4 and IPv6 addresses that should not be forwarded. This list prevents routing of invalid or reserved addresses through your network.
+Before you add the forward rules, create an address list with the IPv4 addresses that must not be forwarded.
 
-Note that a multicast address range is included in this list. Since multicast is not typically used in most networks, this entry blocks multicast traffic by default. If your network requires multicast forwarding, disable this address list entry.
+The multicast address range is in this list. Multicast is not forwarded in most networks, so this entry blocks it. If your network needs multicast forwarding, disable this address list entry.
 
 ```ros
 /ip/firewall/address-list
-  add address=0.0.0.0/8 comment="defconf: RFC6890" list=no_forward_ipv4
-  add address=169.254.0.0/16 comment="defconf: RFC6890" list=no_forward_ipv4
-  add address=224.0.0.0/4 comment="defconf: multicast" list=no_forward_ipv4
-  add address=255.255.255.255/32 comment="defconf: RFC6890" list=no_forward_ipv4
+add list=no_forward_ipv4 address=0.0.0.0/8 comment="defconf: RFC6890"
+add list=no_forward_ipv4 address=169.254.0.0/16 \
+    comment="defconf: RFC6890"
+add list=no_forward_ipv4 address=224.0.0.0/4 \
+    comment="defconf: multicast"
+add list=no_forward_ipv4 address=255.255.255.255/32 \
+    comment="defconf: RFC6890"
 ```
 
-For IPv6, apply the same principle: if multicast forwarding is required, disable the multicast entry in the address list.
+For IPv6, the same applies: if multicast forwarding is needed, disable the multicast entry.
 
 ```ros
 /ipv6/firewall/address-list
-  add address=fe80::/10  comment="defconf: RFC6890 Link-Scoped Unicast" list=no_forward_ipv6
-  add address=ff00::/8  comment="defconf: multicast" list=no_forward_ipv6
+add list=no_forward_ipv6 address=fe80::/10 \
+    comment="defconf: RFC6890 Link-Scoped Unicast"
+add list=no_forward_ipv6 address=ff00::/8 comment="defconf: multicast"
 ```
 
-The Forward chain contains more rules than the Input chain and performs the following actions:
+The forward chain does the following:
 
-- Accept established, related, and untracked connections
-- FastTrack established and related connections (IPv4 only)
-- Drop invalid connections states
-- Drop bad forward IP addresses that should not be routed
-- Drop connections attempts initiated from the internet (WAN side) that are not destination NATed
-- Drop bogon IP addresses that should not be forwarded
+- FastTracks established and related connections.
+- Accepts established, related and untracked connections.
+- Drops packets with the invalid connection state.
+- Drops new connections from the WAN that are not destination NATed.
+- Drops the addresses that must not be forwarded.
 
-This configuration drops all non-destination-NATed IPv4 packets to protect clients devices from direct attacks if an external attacker knows your internal LAN network range. While this rule is typically unnecessary because RAW filtering already drops these packets, it provides an additional layer of security in case the RAW rules configuration is accidentally modified.
+The rule that drops new connections from the WAN protects the clients from direct access if somebody on the WAN side knows the LAN network. The RAW rules of this example already drop these packets. The filter rule is one more layer of security in case the RAW rules are changed by mistake.
 
 ```ros
 /ip/firewall/filter
-  add action=accept chain=forward comment="defconf: accept all that matches IPSec policy" ipsec-policy=in,ipsec disabled=yes
-  add action=fasttrack-connection chain=forward comment="defconf: fasttrack" connection-state=established,related
-  add action=accept chain=forward comment="defconf: accept established,related, untracked" connection-state=established,related,untracked
-  add action=drop chain=forward comment="defconf: drop invalid" connection-state=invalid
-  add action=drop chain=forward comment="defconf:  drop all from WAN not DSTNATed" connection-nat-state=!dstnat connection-state=new in-interface-list=WAN
-  add action=drop chain=forward src-address-list=no_forward_ipv4 comment="defconf: drop bad forward IPs"
-  add action=drop chain=forward dst-address-list=no_forward_ipv4 comment="defconf: drop bad forward IPs"
+add chain=forward action=accept ipsec-policy=in,ipsec disabled=yes \
+    comment="defconf: accept all that matches IPSec policy"
+add chain=forward action=fasttrack-connection \
+    connection-state=established,related comment="defconf: fasttrack"
+add chain=forward action=accept \
+    connection-state=established,related,untracked \
+    comment="defconf: accept established,related,untracked"
+add chain=forward action=drop connection-state=invalid \
+    comment="defconf: drop invalid"
+add chain=forward action=drop connection-state=new \
+    connection-nat-state=!dstnat in-interface-list=WAN \
+    comment="defconf: drop all from WAN not DSTNATed"
+add chain=forward action=drop src-address-list=no_forward_ipv4 \
+    comment="defconf: drop bad forward IPs"
+add chain=forward action=drop dst-address-list=no_forward_ipv4 \
+    comment="defconf: drop bad forward IPs"
 ```
 
-The IPv6 Forward chain follows a similar structure, with additional rules to accept IPsec and HIP protocols as recommended by RFC standards. ICMPv6 packets with a hop-limit of 1 are dropped.
+The IPv6 forward chain is similar. It also accepts IPsec and HIP, as the RFC recommendations say, and it drops ICMPv6 packets with a hop limit of 1. IPv6 has no NAT in this example, so the last rule drops everything that does not come from the LAN.
 
 ```ros
 /ipv6/firewall/filter
-add action=accept chain=forward comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
-add action=drop chain=forward comment="defconf: drop invalid" connection-state=invalid
-add action=drop chain=forward src-address-list=no_forward_ipv6 comment="defconf: drop bad forward IPs"
-add action=drop chain=forward dst-address-list=no_forward_ipv6 comment="defconf: drop bad forward IPs"
-add action=drop chain=forward comment="defconf: rfc4890 drop hop-limit=1" hop-limit=equal:1 protocol=icmpv6
-add action=accept chain=forward comment="defconf: accept ICMPv6 after RAW" protocol=icmpv6
-add action=accept chain=forward comment="defconf: accept HIP" protocol=139
-add action=accept chain=forward comment="defconf: accept IKE" protocol=udp dst-port=500,4500
-add action=accept chain=forward comment="defconf: accept AH" protocol=ipsec-ah
-add action=accept chain=forward comment="defconf: accept ESP" protocol=ipsec-esp
-add action=accept chain=forward comment="defconf: accept all that matches IPSec policy" ipsec-policy=in,ipsec
-add action=drop chain=forward comment="defconf: drop everything else not coming from LAN" in-interface-list=!LAN
+add chain=forward action=accept \
+    connection-state=established,related,untracked \
+    comment="defconf: accept established,related,untracked"
+add chain=forward action=drop connection-state=invalid \
+    comment="defconf: drop invalid"
+add chain=forward action=drop src-address-list=no_forward_ipv6 \
+    comment="defconf: drop bad forward IPs"
+add chain=forward action=drop dst-address-list=no_forward_ipv6 \
+    comment="defconf: drop bad forward IPs"
+add chain=forward action=drop protocol=icmpv6 hop-limit=equal:1 \
+    comment="defconf: rfc4890 drop hop-limit=1"
+add chain=forward action=accept protocol=icmpv6 \
+    comment="defconf: accept ICMPv6 after RAW"
+add chain=forward action=accept protocol=139 \
+    comment="defconf: accept HIP"
+add chain=forward action=accept protocol=udp dst-port=500,4500 \
+    comment="defconf: accept IKE"
+add chain=forward action=accept protocol=ipsec-ah \
+    comment="defconf: accept AH"
+add chain=forward action=accept protocol=ipsec-esp \
+    comment="defconf: accept ESP"
+add chain=forward action=accept ipsec-policy=in,ipsec \
+    comment="defconf: accept all that matches IPSec policy"
+add chain=forward action=drop in-interface-list=!LAN \
+    comment="defconf: drop everything else not coming from LAN"
 ```
 
-Note the IPsec policy matcher rule. It is critical that IPsec encapsulated traffic bypasses the FastTrack connection feature. For this reason, a disabled rule is included to accept traffic matching IPsec policies. Enable this rule whenever IPsec tunnels are used on the router. IPv6 does not require this consideration since it does not support FastTrack.
+Note the IPsec policy matcher rule of the IPv4 forward chain. IPsec traffic must not be FastTracked. For this reason, a disabled rule that accepts the traffic that matches an IPsec policy is placed before the FastTrack rule. Enable this rule when the router uses IPsec tunnels. The IPv6 rules of this example do not use FastTrack, so they do not need this.
 
-An alternative method to handle IPsec traffic is to add a RAW rule, which will be covered in the RAW section of this documentation.
+Another way to keep IPsec traffic out of FastTrack is a RAW rule, see [IPsec](../../virtual-private-networks/ipsec).
 
-### Masquerade Local Network
+## Masquerade the local network
 
-For local devices behind the router to be able to access the internet, local networks must be masqueraded. In most cases, it is advised to use src-nat instead of masquerade, however, in this case when the WAN address is dynamic it is the only option.
+The devices of the local network need source NAT to reach the Internet. The example uses `masquerade`, which works with a WAN address that changes. See [NAT](../firewall/nat) for the difference between `masquerade` and `src-nat`.
 
 ```ros
 /ip/firewall/nat
-  add action=accept chain=srcnat comment="defconf: accept all that matches IPSec policy" ipsec-policy=out,ipsec disabled=yes
-  add action=masquerade chain=srcnat comment="defconf: masquerade" out-interface-list=WAN
+add chain=srcnat action=accept ipsec-policy=out,ipsec disabled=yes \
+    comment="defconf: accept all that matches IPSec policy"
+add chain=srcnat action=masquerade out-interface-list=WAN \
+    comment="defconf: masquerade"
 ```
 
-Notice the disabled policy matcher rule, the same as in firewall filters, IPSec traffic must be excluded from being NATed (except in specific scenarios where IPsec policy is configured to match NATed address). So whenever IPsec tunnels are used on the router, this rule must be enabled.
+The disabled policy matcher rule has the same purpose as in the filter rules. IPsec traffic must be excluded from NAT, except when the IPsec policy is configured to match the NATed address. Enable this rule when the router uses IPsec tunnels.
 
-## RAW Filtering
+## RAW filtering
 
-### IPv4 Address Lists
+### IPv4 address lists
 
-Before setting RAW rules, let's create some address lists necessary for our filtering policy. RFC 6890 will be used as a reference.
+The RAW rules need several address lists. RFC 6890 is the reference.
 
-First, *address-list* contains all IPv4 addresses that cannot be used as src/dst/forwarded, etc. (will be dropped immediately if such an address is seen)
+The first list has the IPv4 addresses that cannot be used as a source or destination address at all. A packet with such an address is dropped.
 
 ```ros
 /ip/firewall/address-list
-  add address=127.0.0.0/8 comment="defconf: RFC6890" list=bad_ipv4
-  add address=192.0.0.0/24 comment="defconf: RFC6890" list=bad_ipv4
-  add address=192.0.2.0/24 comment="defconf: RFC6890 documentation" list=bad_ipv4
-  add address=198.51.100.0/24 comment="defconf: RFC6890 documentation" list=bad_ipv4
-  add address=203.0.113.0/24 comment="defconf: RFC6890 documentation" list=bad_ipv4
-  add address=240.0.0.0/4 comment="defconf: RFC6890 reserved" list=bad_ipv4
+add list=bad_ipv4 address=127.0.0.0/8 comment="defconf: RFC6890"
+add list=bad_ipv4 address=192.0.0.0/24 comment="defconf: RFC6890"
+add list=bad_ipv4 address=192.0.2.0/24 \
+    comment="defconf: RFC6890 documentation"
+add list=bad_ipv4 address=198.51.100.0/24 \
+    comment="defconf: RFC6890 documentation"
+add list=bad_ipv4 address=203.0.113.0/24 \
+    comment="defconf: RFC6890 documentation"
+add list=bad_ipv4 address=240.0.0.0/4 \
+    comment="defconf: RFC6890 reserved"
 ```
 
-Another address list contains all IPv4 addresses that cannot be routed globally.
+The second list has the IPv4 addresses that are not routed globally.
 
 ```ros
 /ip/firewall/address-list
-  add address=0.0.0.0/8 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=10.0.0.0/8 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=100.64.0.0/10 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=169.254.0.0/16 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=172.16.0.0/12 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=192.0.0.0/29 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=192.168.0.0/16 comment="defconf: RFC6890" list=not_global_ipv4
-  add address=198.18.0.0/15 comment="defconf: RFC6890 benchmark" list=not_global_ipv4
-  add address=255.255.255.255/32 comment="defconf: RFC6890" list=not_global_ipv4
+add list=not_global_ipv4 address=0.0.0.0/8 comment="defconf: RFC6890"
+add list=not_global_ipv4 address=10.0.0.0/8 comment="defconf: RFC6890"
+add list=not_global_ipv4 address=100.64.0.0/10 \
+    comment="defconf: RFC6890"
+add list=not_global_ipv4 address=169.254.0.0/16 \
+    comment="defconf: RFC6890"
+add list=not_global_ipv4 address=172.16.0.0/12 \
+    comment="defconf: RFC6890"
+add list=not_global_ipv4 address=192.0.0.0/29 \
+    comment="defconf: RFC6890"
+add list=not_global_ipv4 address=192.168.0.0/16 \
+    comment="defconf: RFC6890"
+add list=not_global_ipv4 address=198.18.0.0/15 \
+    comment="defconf: RFC6890 benchmark"
+add list=not_global_ipv4 address=255.255.255.255/32 \
+    comment="defconf: RFC6890"
 ```
 
-And the last two address lists are for addresses that cannot be used as destination or source addresses.
+The last two lists have the addresses that cannot be used as a source address (`bad_src_ipv4`) and the addresses that cannot be used as a destination address (`bad_dst_ipv4`).
 
 ```ros
 /ip/firewall/address-list
-  add address=224.0.0.0/4 comment="defconf: multicast" list=bad_src_ipv4
-  add address=255.255.255.255/32 comment="defconf: RFC6890" list=bad_src_ipv4
-  add address=0.0.0.0/8 comment="defconf: RFC6890" list=bad_dst_ipv4
-  add address=224.0.0.0/4 comment="defconf: RFC6890" list=bad_dst_ipv4
+add list=bad_src_ipv4 address=224.0.0.0/4 comment="defconf: multicast"
+add list=bad_src_ipv4 address=255.255.255.255/32 \
+    comment="defconf: RFC6890"
+add list=bad_dst_ipv4 address=0.0.0.0/8 comment="defconf: RFC6890"
+add list=bad_dst_ipv4 address=224.0.0.0/4 comment="defconf: RFC6890"
 ```
 
-### IPv4 RAW Rules
+:::warning
+The `bad_dst_ipv4` list contains the multicast range, so the RAW rules drop all packets with a multicast destination, also the ones that are sent to the router itself. If the router runs a service that receives multicast, for example OSPF, VRRP, IGMP proxy, UPnP or mDNS, or if the network needs multicast forwarding, disable this entry or accept the packets of the service before the drop rule.
+:::
 
-Raw IPv4 rules will perform the following actions:
+### IPv4 RAW rules
 
-- **add disabled "accept" rule** - can be used to quickly disable RAW filtering without disabling all RAW rules.
-- **accept** DHCP discovery - most of the DHCP packets are not seen by an IP firewall, but some of them are, so make sure that they are accepted.
-- **drop** packets that use bogon IPs.
-- **drop** from invalid SRC and DST IPs.
-- **drop** globally unroutable IPs coming from WAN.
-- **drop** packets with source-address not equal to 192.168.88.0/24 (default IP range) coming from LAN.
-- **drop** packets coming from WAN to be forwarded to 192.168.88.0/24 network; this will protect from attacks if the attacker knows the internal network.
-- **drop** bad ICMP, UDP, and TCP.
-- **accept** everything else coming from WAN and LAN.
-- **accept** local traffic between router interfaces.
-- **drop** everything else, to make sure that any newly added interface (like PPPoE connection to service provider) is protected against accidental misconfiguration.
+The IPv4 RAW rules do the following:
+
+- A disabled accept rule at the start, with the comment "enable for transparent firewall". Enable it to switch the RAW filtering off without disabling all RAW rules.
+- Accept DHCP discover packets. Most DHCP packets are not seen by the IP firewall, but some of them are, so make sure that they are accepted.
+- Drop packets with bogon addresses.
+- Drop packets with invalid source and destination addresses.
+- Drop packets from the WAN with a source address that is not globally routable.
+- Drop packets from the WAN that are sent to the 192.168.88.0/24 network. This protects the clients if somebody on the WAN side knows the internal network.
+- Drop packets from the LAN with a source address that is not in 192.168.88.0/24.
+- Drop bad ICMP, UDP and TCP.
+- Accept everything else that comes from the WAN and the LAN.
+- Accept local traffic between the interfaces of the router.
+- Drop everything else, so that an interface that is added later (for example, a PPPoE connection to the service provider) and is not in a list is protected.
+
+:::warning
+If the WAN network of the router uses private addresses, for example behind another router that does NAT or with an ISP that uses carrier-grade NAT (100.64.0.0/10), the rule "drop non global from WAN" drops all packets that come from the addresses of that network, for example the DNS replies of the upstream router. Disable the rule in such a network, or remove the range of the WAN network from the `not_global_ipv4` list.
+:::
 
 ```ros
 /ip/firewall/raw
-add action=accept chain=prerouting comment="defconf: enable for transparent firewall" disabled=yes
-add action=accept chain=prerouting comment="defconf: accept DHCP discover" dst-address=255.255.255.255 dst-port=67 in-interface-list=LAN protocol=udp src-address=0.0.0.0 src-port=68
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" src-address-list=bad_ipv4
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" dst-address-list=bad_ipv4
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" src-address-list=bad_src_ipv4
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" dst-address-list=bad_dst_ipv4
-add action=drop chain=prerouting comment="defconf: drop non global from WAN" src-address-list=not_global_ipv4 in-interface-list=WAN
-add action=drop chain=prerouting comment="defconf: drop forward to local lan from WAN" in-interface-list=WAN dst-address=192.168.88.0/24
-add action=drop chain=prerouting comment="defconf: drop local if not from default IP range" in-interface-list=LAN src-address=!192.168.88.0/24
-add action=drop chain=prerouting comment="defconf: drop bad UDP" port=0 protocol=udp
-add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmp4 protocol=icmp
-add action=jump chain=prerouting comment="defconf: jump to TCP chain" jump-target=bad_tcp protocol=tcp
-add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
-add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
-add action=accept chain=prerouting comment="defconf: accept local traffic between router interfaces" src-address-type=local
-add action=drop chain=prerouting comment="defconf: drop the rest"
+add chain=prerouting action=accept disabled=yes \
+    comment="defconf: enable for transparent firewall"
+add chain=prerouting action=accept protocol=udp \
+    src-address=0.0.0.0 src-port=68 \
+    dst-address=255.255.255.255 dst-port=67 in-interface-list=LAN \
+    comment="defconf: accept DHCP discover"
+add chain=prerouting action=drop src-address-list=bad_ipv4 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop dst-address-list=bad_ipv4 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop src-address-list=bad_src_ipv4 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop dst-address-list=bad_dst_ipv4 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop src-address-list=not_global_ipv4 \
+    in-interface-list=WAN comment="defconf: drop non global from WAN"
+add chain=prerouting action=drop in-interface-list=WAN \
+    dst-address=192.168.88.0/24 \
+    comment="defconf: drop forward to local lan from WAN"
+add chain=prerouting action=drop in-interface-list=LAN \
+    src-address=!192.168.88.0/24 \
+    comment="defconf: drop local if not from default IP range"
+add chain=prerouting action=drop protocol=udp port=0 \
+    comment="defconf: drop bad UDP"
+add chain=prerouting action=jump jump-target=icmp4 protocol=icmp \
+    comment="defconf: jump to ICMP chain"
+add chain=prerouting action=jump jump-target=bad_tcp protocol=tcp \
+    comment="defconf: jump to TCP chain"
+add chain=prerouting action=accept in-interface-list=LAN \
+    comment="defconf: accept everything else from LAN"
+add chain=prerouting action=accept in-interface-list=WAN \
+    comment="defconf: accept everything else from WAN"
+add chain=prerouting action=accept src-address-type=local \
+    comment="defconf: accept local traffic between router interfaces"
+add chain=prerouting action=drop comment="defconf: drop the rest"
 ```
 
-Notice that we used some optional chains, the first **TCP** chain to drop **TCP** packets known to be *invalid.*
+The rules use two more chains. The `bad_tcp` chain drops TCP packets that are known to be invalid:
 
 ```ros
 /ip/firewall/raw
-add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=!fin,!syn,!rst,!ack
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=fin,syn
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=fin,rst
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=fin,!ack
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=fin,urg
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=syn,rst
-add action=drop chain=bad_tcp comment=defconf protocol=tcp tcp-flags=rst,urg
-add action=drop chain=bad_tcp comment="defconf: TCP port 0 drop" port=0 protocol=tcp
+add chain=bad_tcp action=drop protocol=tcp \
+    tcp-flags=!fin,!syn,!rst,!ack comment="defconf: TCP flag filter"
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=fin,syn \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=fin,rst \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=fin,!ack \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=fin,urg \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=syn,rst \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp tcp-flags=rst,urg \
+    comment=defconf
+add chain=bad_tcp action=drop protocol=tcp port=0 \
+    comment="defconf: TCP port 0 drop"
 ```
 
-And another chain for **ICMP**. Note that if you want a very strict firewall then such strict **ICMP** filtering can be used, but in most cases, it is not necessary and simply adds more load on the router's CPU. ICMP rate limit in most cases is also unnecessary since the Linux kernel is already limiting ICMP packets to 100pps.
+The `icmp4` chain accepts only the listed ICMP types and limits the echo requests and echo replies. Such strict ICMP filtering is for a very strict firewall. In most cases it is not necessary, and it adds load to the CPU of the router.
 
 ```ros
 /ip/firewall/raw
-add action=accept chain=icmp4 comment="defconf: echo reply" icmp-options=0:0 limit=5,10:packet protocol=icmp
-add action=accept chain=icmp4 comment="defconf: net unreachable" icmp-options=3:0 protocol=icmp
-add action=accept chain=icmp4 comment="defconf: host unreachable" icmp-options=3:1 protocol=icmp
-add action=accept chain=icmp4 comment="defconf: protocol unreachable" icmp-options=3:2 protocol=icmp
-add action=accept chain=icmp4 comment="defconf: port unreachable" icmp-options=3:3 protocol=icmp
-add action=accept chain=icmp4 comment="defconf: fragmentation needed" icmp-options=3:4 protocol=icmp
-add action=accept chain=icmp4 comment="defconf: echo" icmp-options=8:0 limit=5,10:packet protocol=icmp
-add action=accept chain=icmp4 comment="defconf: time exceeded " icmp-options=11:0-255 protocol=icmp
-add action=drop chain=icmp4 comment="defconf: drop other icmp" protocol=icmp
+add chain=icmp4 action=accept protocol=icmp icmp-options=0:0 \
+    limit=5,10:packet comment="defconf: echo reply"
+add chain=icmp4 action=accept protocol=icmp icmp-options=3:0 \
+    comment="defconf: net unreachable"
+add chain=icmp4 action=accept protocol=icmp icmp-options=3:1 \
+    comment="defconf: host unreachable"
+add chain=icmp4 action=accept protocol=icmp icmp-options=3:2 \
+    comment="defconf: protocol unreachable"
+add chain=icmp4 action=accept protocol=icmp icmp-options=3:3 \
+    comment="defconf: port unreachable"
+add chain=icmp4 action=accept protocol=icmp icmp-options=3:4 \
+    comment="defconf: fragmentation needed"
+add chain=icmp4 action=accept protocol=icmp icmp-options=8:0 \
+    limit=5,10:packet comment="defconf: echo"
+add chain=icmp4 action=accept protocol=icmp icmp-options=11:0-255 \
+    comment="defconf: time exceeded"
+add chain=icmp4 action=drop protocol=icmp \
+    comment="defconf: drop other icmp"
 ```
 
-### IPv6 Address Lists
+### IPv6 address lists
 
-#### List of IPv6 addresses that should be dropped instantly
+The IPv6 addresses that are dropped at once:
 
 ```ros
 /ipv6/firewall/address-list
-add address=::1/128 comment="defconf: RFC6890 lo" list=bad_ipv6
-add address=::ffff:0:0/96 comment="defconf: RFC6890 IPv4 mapped" list=bad_ipv6
-add address=2001::/23 comment="defconf: RFC6890" list=bad_ipv6
-add address=2001:db8::/32 comment="defconf: RFC6890 documentation" list=bad_ipv6
-add address=2001:10::/28 comment="defconf: RFC6890 orchid" list=bad_ipv6
-add address=::/96 comment="defconf: ipv4 compat" list=bad_ipv6
+add list=bad_ipv6 address=::1/128 comment="defconf: RFC6890 lo"
+add list=bad_ipv6 address=::ffff:0:0/96 \
+    comment="defconf: RFC6890 IPv4 mapped"
+add list=bad_ipv6 address=2001::/23 comment="defconf: RFC6890"
+add list=bad_ipv6 address=2001:db8::/32 \
+    comment="defconf: RFC6890 documentation"
+add list=bad_ipv6 address=2001:10::/28 comment="defconf: RFC6890 orchid"
+add list=bad_ipv6 address=::/96 comment="defconf: ipv4 compat"
 ```
 
-#### List of IPv6 addresses that are not globally routable
+The IPv6 addresses that are not globally routable:
 
 ```ros
 /ipv6/firewall/address-list
-add address=100::/64 comment="defconf: RFC6890 Discard-only" list=not_global_ipv6
-add address=2001::/32 comment="defconf: RFC6890 TEREDO" list=not_global_ipv6
-add address=2001:2::/48 comment="defconf: RFC6890 Benchmark" list=not_global_ipv6
-add address=fc00::/7 comment="defconf: RFC6890 Unique-Local" list=not_global_ipv6
+add list=not_global_ipv6 address=100::/64 \
+    comment="defconf: RFC6890 Discard-only"
+add list=not_global_ipv6 address=2001::/32 \
+    comment="defconf: RFC6890 TEREDO"
+add list=not_global_ipv6 address=2001:2::/48 \
+    comment="defconf: RFC6890 Benchmark"
+add list=not_global_ipv6 address=fc00::/7 \
+    comment="defconf: RFC6890 Unique-Local"
 ```
 
-#### List of addresses as an invalid destination address
-
-```ros
-/ipv6/firewall/address-list/add address=::/128 comment="defconf: unspecified" list=bad_dst_ipv6
-```
-
-#### List of addresses as an invalid source address
+The addresses that are invalid as a destination address and as a source address:
 
 ```ros
 /ipv6/firewall/address-list
-  add address=::/128 comment="defconf: unspecified" list=bad_src_ipv6
-  add address=ff00::/8  comment="defconf: multicast" list=bad_src_ipv6
+add list=bad_dst_ipv6 address=::/128 comment="defconf: unspecified"
+add list=bad_src_ipv6 address=::/128 comment="defconf: unspecified"
+add list=bad_src_ipv6 address=ff00::/8 comment="defconf: multicast"
 ```
 
-### IPv6 RAW Rules
+### IPv6 RAW rules
 
-Raw IPv6 rules will perform the following actions:
+The IPv6 RAW rules do the following:
 
-- **Add a disabled accept rule** - can be used to quickly disable RAW filtering without disabling all RAW rules.
-- **Drop** packets that use bogon IPs.
-- **Drop** from invalid SRC and DST IPs.
-- **Drop** globally unroutable IPs coming from WAN.
-- **Drop** bad ICMP.
-- **Accept** everything else coming from WAN and LAN.
-- **Drop** everything else, to make sure that any newly added interface (like PPPoE connection to service provider) is protected against accidental misconfiguration.
+- A disabled accept rule at the start. Enable it to switch the RAW filtering off without disabling all RAW rules.
+- Accept the neighbor solicitation that a host sends from the unspecified address to check that its address is not in use.
+- Drop packets with bogon addresses.
+- Drop packets with invalid source and destination addresses.
+- Drop packets from the WAN with a source address that is not globally routable.
+- Drop bad ICMPv6.
+- Accept the link-local multicast scope and drop other multicast destinations.
+- Accept everything else that comes from the WAN and the LAN.
+- Drop everything else, so that an interface that is added later (for example, a PPPoE connection to the service provider) and is not in a list is protected.
 
 ```ros
 /ipv6/firewall/raw
-add action=accept chain=prerouting comment="defconf: enable for transparent firewall" disabled=yes
-add action=accept chain=prerouting comment="defconf: RFC4291, section 2.7.1" src-address=::/128 dst-address=ff02:0:0:0:0:1:ff00::/104 icmp-options=135 protocol=icmpv6
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" src-address-list=bad_ipv6
-add action=drop chain=prerouting comment="defconf: drop bogon IP's" dst-address-list=bad_ipv6
-add action=drop chain=prerouting comment="defconf: drop packets with bad SRC ipv6" src-address-list=bad_src_ipv6
-add action=drop chain=prerouting comment="defconf: drop packets with bad dst ipv6" dst-address-list=bad_dst_ipv6
-add action=drop chain=prerouting comment="defconf: drop non global from WAN" src-address-list=not_global_ipv6 in-interface-list=WAN
-add action=jump chain=prerouting comment="defconf: jump to ICMPv6 chain" jump-target=icmp6 protocol=icmpv6
-add action=accept chain=prerouting comment="defconf: accept local multicast scope" dst-address=ff02::/16
-add action=drop chain=prerouting comment="defconf: drop other multicast destinations" dst-address=ff00::/8
-add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
-add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
-add action=drop chain=prerouting comment="defconf: drop the rest"
+add chain=prerouting action=accept disabled=yes \
+    comment="defconf: enable for transparent firewall"
+add chain=prerouting action=accept protocol=icmpv6 \
+    icmp-options=135 src-address=::/128 \
+    dst-address=ff02:0:0:0:0:1:ff00::/104 \
+    comment="defconf: RFC4291, section 2.7.1"
+add chain=prerouting action=drop src-address-list=bad_ipv6 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop dst-address-list=bad_ipv6 \
+    comment="defconf: drop bogon IP's"
+add chain=prerouting action=drop src-address-list=bad_src_ipv6 \
+    comment="defconf: drop packets with bad SRC ipv6"
+add chain=prerouting action=drop dst-address-list=bad_dst_ipv6 \
+    comment="defconf: drop packets with bad dst ipv6"
+add chain=prerouting action=drop src-address-list=not_global_ipv6 \
+    in-interface-list=WAN comment="defconf: drop non global from WAN"
+add chain=prerouting action=jump jump-target=icmp6 protocol=icmpv6 \
+    comment="defconf: jump to ICMPv6 chain"
+add chain=prerouting action=accept dst-address=ff02::/16 \
+    comment="defconf: accept local multicast scope"
+add chain=prerouting action=drop dst-address=ff00::/8 \
+    comment="defconf: drop other multicast destinations"
+add chain=prerouting action=accept in-interface-list=WAN \
+    comment="defconf: accept everything else from WAN"
+add chain=prerouting action=accept in-interface-list=LAN \
+    comment="defconf: accept everything else from LAN"
+add chain=prerouting action=drop comment="defconf: drop the rest"
 ```
 
-Notice that the optional **ICMP** chain was used. If you want a very strict firewall then such strict **ICMP** filtering can be used, but in most cases, it is not necessary and simply adds more load on the router's CPU. An ICMP rate limit in most cases is also unnecessary since the Linux kernel is already limiting ICMP packets to 100pps.
+The `icmp6` chain is as strict as the `icmp4` chain: in most cases it is not necessary, and it adds load to the CPU of the router. The first rule of the chain drops ICMPv6 packets to link-local addresses with a hop limit other than 255. Operating systems send packets with different default hop limits, so this rule also drops a ping to the link-local address of the router when the sender does not use 255. Neighbor solicitations, neighbor advertisements and router advertisements are accepted on every interface, because the router needs them to reach its neighbors on the WAN side too. Router solicitations and inverse neighbor discovery are accepted only from the LAN.
 
 ```ros
 /ipv6/firewall/raw
-# Be aware that different operating systems originate packets with different default TTL values
-add action=drop chain=icmp6 comment="defconf: rfc4890 drop ll if hop-limit!=255" dst-address=fe80::/10 hop-limit=not-equal:255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: dst unreachable" icmp-options=1:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: packet too big" icmp-options=2:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: limit exceeded" icmp-options=3:0-1 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: bad header" icmp-options=4:0-2 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: Mobile home agent address discovery" icmp-options=144:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: Mobile home agent address discovery" icmp-options=145:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: Mobile prefix solic" icmp-options=146:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: Mobile prefix advert" icmp-options=147:0-255 protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: echo request limit 5,10" icmp-options=128:0-255 limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: echo reply limit 5,10" icmp-options=129:0-255 limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 router solic limit 5,10 only LAN" hop-limit=equal:255 icmp-options=133:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 router advert limit 5,10 only LAN" hop-limit=equal:255 icmp-options=134:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 neighbor solic limit 5,10 only LAN" hop-limit=equal:255 icmp-options=135:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 neighbor advert limit 5,10 only LAN" hop-limit=equal:255 icmp-options=136:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 inverse ND solic limit 5,10 only LAN" hop-limit=equal:255 icmp-options=141:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=accept chain=icmp6 comment="defconf: rfc4890 inverse ND advert limit 5,10 only LAN" hop-limit=equal:255 icmp-options=142:0-255 in-interface-list=LAN limit=5,10:packet protocol=icmpv6
-add action=drop chain=icmp6 comment="defconf: drop other icmp" protocol=icmpv6
-
+add chain=icmp6 action=drop protocol=icmpv6 dst-address=fe80::/10 \
+    hop-limit=not-equal:255 \
+    comment="defconf: rfc4890 drop ll if hop-limit!=255"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=1:0-255 \
+    comment="defconf: dst unreachable"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=2:0-255 \
+    comment="defconf: packet too big"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=3:0-1 \
+    comment="defconf: limit exceeded"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=4:0-2 \
+    comment="defconf: bad header"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=144:0-255 \
+    comment="defconf: Mobile home agent address discovery"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=145:0-255 \
+    comment="defconf: Mobile home agent address discovery"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=146:0-255 \
+    comment="defconf: Mobile prefix solic"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=147:0-255 \
+    comment="defconf: Mobile prefix advert"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=128:0-255 \
+    limit=5,10:packet comment="defconf: echo request limit 5,10"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=129:0-255 \
+    limit=5,10:packet comment="defconf: echo reply limit 5,10"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=133:0-255 \
+    hop-limit=equal:255 in-interface-list=LAN limit=5,10:packet \
+    comment="defconf: rfc4890 router solic limit 5,10 only LAN"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=134:0-255 \
+    hop-limit=equal:255 limit=5,10:packet \
+    comment="defconf: rfc4890 router advert limit 5,10"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=135:0-255 \
+    hop-limit=equal:255 limit=5,10:packet \
+    comment="defconf: rfc4890 neighbor solic limit 5,10"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=136:0-255 \
+    hop-limit=equal:255 limit=5,10:packet \
+    comment="defconf: rfc4890 neighbor advert limit 5,10"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=141:0-255 \
+    hop-limit=equal:255 in-interface-list=LAN limit=5,10:packet \
+    comment="defconf: rfc4890 inverse ND solic limit 5,10 only LAN"
+add chain=icmp6 action=accept protocol=icmpv6 icmp-options=142:0-255 \
+    hop-limit=equal:255 in-interface-list=LAN limit=5,10:packet \
+    comment="defconf: rfc4890 inverse ND advert limit 5,10 only LAN"
+add chain=icmp6 action=drop protocol=icmpv6 \
+    comment="defconf: drop other icmp"
 ```
+
+## Check the firewall
+
+The counters of the drop rules show what the firewall stops. In this output, a host on the WAN side has sent packets with a private source address to the router, and packets to an address of the LAN network:
+
+```ros
+[admin@MikroTik] > /ip/firewall/raw/print stats where action=drop and packets>0
+Columns: CHAIN, ACTION, BYTES, PACKETS
+# CHAIN       ACTION  BYTES  PACKETS
+;;; defconf: drop non global from WAN
+0 prerouting  drop      168        3
+;;; defconf: drop forward to local lan from WAN
+1 prerouting  drop      168        3
+```
+
+`/ip/firewall/filter/print stats`, `/ipv6/firewall/raw/print stats` and `/ipv6/firewall/filter/print stats` show the counters of the other tables. Check also that a LAN device reaches the Internet, and that the router does not answer a connection to its management ports from the WAN side.
+
+If the RAW rules stop traffic that you need, enable the first RAW rule. It accepts every packet, so the other RAW rules are not used, and the filter rules still protect the router and the clients. The IPv6 RAW table has its own rule with the same comment.
+
+```ros
+/ip/firewall/raw
+enable [find comment="defconf: enable for transparent firewall"]
+```
+
+What the rules mean for normal traffic:
+
+- The echo rules of the `icmp4` and `icmp6` chains limit all echo requests and all echo replies that the router receives, also the forwarded ones, to 5 packets per second with a burst of 10. A ping with a short interval, or pings from several devices at the same time, lose packets. The limit is shared by all senders, also by the pings that the router sends itself, for example to check a gateway.
+- IPv6 hosts in the LAN answer pings from the WAN side, because the forward chain accepts ICMPv6. It also accepts IKE, AH, ESP and HIP to the LAN hosts. Other new connections from the WAN side to the LAN hosts are dropped.

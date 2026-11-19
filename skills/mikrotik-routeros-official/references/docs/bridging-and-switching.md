@@ -104,7 +104,11 @@ To monitor the current status of a bridge interface, use the `monitor` command.
 | **designated-port-count** (*integer*) | Number of designated bridge ports. |
 | **declared-vlan-ids** (*integer 1..4094*) | VLANs declared on the bridge interface via [MVRP protocol](./index.md#mvrp). |
 | **fast-forward** (*yes \| no*) | Whether bridge fast-forward is active. |
+| **forward-delay** (*time*) | Currently used Forward Delay timer, learned from the root bridge or the locally configured `forward-delay` when the bridge is the root. |
+| **hello-time** (*time*) | Currently used Hello timer. |
 | **igmp-querier** (*none* \| *interface & IPv4 address*) | Shows a bridge port and source IP address from the detected IGMP querier. Only shows detected external IGMP querier, local bridge IGMP querier (including IGMP proxy and PIM) will not be displayed. Monitoring value appears only when `igmp-snooping` is enabled. |
+| **last-topology-change** (*time*) | Last topology change timer, records time since the last change. |
+| **max-age** (*time*) | Currently used Max Age timer, learned from the root bridge or the locally configured `max-message-age` when the bridge is the root. |
 | **mld-querier** (*none* \| *interface & IPv6 address*) | Shows a bridge port and source IPv6 address from the detected MLD querier. Only shows detected external MLD querier, local bridge MLD querier will not be displayed. Monitoring value appears only when `igmp-snooping` is enabled and the bridge has an active IPv6 address. |
 | **mst-config-digest** (*integer*) | Computed hash of VLAN mappings to MST Instance IDs. |
 | **multicast-router** (*yes \| no*) | Shows if a multicast router is detected on the port. Monitoring value appears only when `igmp-snooping` is enabled. |
@@ -116,6 +120,7 @@ To monitor the current status of a bridge interface, use the `monitor` command.
 | **root-path-cost** (*integer*) | The total cost of the path to the root-bridge. |
 | **root-port** (*name*) | Port to which the root bridge is connected. |
 | **state** (*enabled \| disabled*) | State of the bridge. |
+| **topology-changes** (*integer*) | Topology change counter for the CIST. |
 
 ```ros
 [admin@MikroTik] /interface/bridge/monitor bridge1
@@ -129,6 +134,11 @@ To monitor the current status of a bridge interface, use the `monitor` command.
                 root-port: none                            
                port-count: 2                               
     designated-port-count: 2                               
+         topology-changes: 4                               
+     last-topology-change: 24s                             
+                  max-age: 20s                             
+               hello-time: 2s                              
+            forward-delay: 15s                             
         mst-config-digest: d2b171a8ad95f593c241fc33d419a88c
              fast-forward: no                              
          multicast-router: no                              
@@ -243,6 +253,7 @@ add bridge=bridge1 interface=ether2
                    tx-rx-tc: 0/2                      2/4            
            topology-changes: 0                        1              
        last-topology-change:                          34m53s         
+                 host-moves: 0                        0              
            multicast-router: no                       yes            
            hw-offload-group: switch1                  switch1        
           declared-vlan-ids:                          
@@ -499,6 +510,7 @@ To monitor the current status of bridge ports, use the `monitor` command.
 | **external-fdb** (*yes \| no*) | Whether the registration table is used instead of a forwarding database. |
 | **forwarding** (*yes \| no*) | Shows if the port is not blocked by (R/M)STP. |
 | **forward-transitions** (*integer*) | Counter, registering how often port transitions into forwarding state |
+| **host-moves** (*integer*) | Counter, registering how often a host's MAC address was moved to this port. |
 | **hw-offload-group** (*switchX*) | Switch chip used by the port. |
 | **interface** (*name*) | Interface name. |
 | **last-topology-change** (*time)* | Last topology change timer, records time since the last change. |
@@ -540,6 +552,7 @@ To monitor the current status of bridge ports, use the `monitor` command.
                    tx-rx-tc: 2/0                     
            topology-changes: 1                       
        last-topology-change: 2m5s                    
+                 host-moves: 1                       
            multicast-router: no                      
            hw-offload-group: switch1                 
           declared-vlan-ids: 1                       
@@ -1562,7 +1575,7 @@ add bridge=bridge tagged=ether1,ether2 vlan-ids=10
 ```
 
 :::info
-Mark all ports as trusted if they receive DHCP messages with already added Option 82, otherwise these messages are dropped.
+DHCP messages that already contain Option 82 are handled according to `dhcp-snooping-option82-policy`. On untrusted ports the default `drop` policy discards them, `keep` forwards them with the original option, and `replace` overwrites it with the values from `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. Messages received on trusted ports are always forwarded unchanged.
 :::
 
 Then enable DHCP snooping. By default it applies to all VLANs. `dhcp-snooping-vlan-ids` limits it to the listed VLANs, as in this example. Option 82 values can use predefined variables (`BRIDGEMAC`, `HOSTNAME`, `INTERFACE`, `VID`). See `dhcp-agent-circuit-id` and `dhcp-agent-remote-id`. If your DHCP server does not support Option 82, this step is optional. Use these commands on SW1 and SW2:

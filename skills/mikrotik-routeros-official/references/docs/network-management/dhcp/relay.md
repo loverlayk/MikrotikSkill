@@ -18,7 +18,7 @@ All relay properties are described in the [`/ip/dhcp-relay`](../../cli-reference
 
 With `add-relay-info=yes`, the relay adds the relay agent information option (option 82) to the requests it forwards. The circuit ID is the MAC address of the relay interface the request came in on, and the remote ID is the MAC address of the client, or the text set in `relay-info-remote-id`.
 
-A RouterOS DHCP server shows these values in the lease (`active-agent-circuit-id`, `active-agent-remote-id`) and passes them to the lease script. A static lease can match a client by them (`agent-circuit-id`, `agent-remote-id`) even when its MAC address differs, and with `dynamic-lease-identifiers=opt-82` the server identifies clients by option 82 alone.
+A RouterOS DHCP server shows these values in the lease (`active-agent-circuit-id` and `active-agent-remote-id` as hex, and `active-agent-circuit-id-ascii` / `active-agent-remote-id-ascii` as readable text) and passes them to the lease script. A static lease can match a client by them (`agent-circuit-id`, `agent-remote-id`) even when its MAC address differs, and with `dynamic-lease-identifiers=opt-82` the server identifies clients by option 82 alone.
 
 ### Configuration example
 

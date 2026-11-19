@@ -1,207 +1,288 @@
 # Connection tracking
 
-> Connection tracking in MikroTik RouterOS enables stateful firewall functionality by monitoring logical network connections, supporting NAT and various firewall features. It assigns packets to states like new,...
+> Connection tracking records the connections that pass through or end at the router. It is the basis of the stateful firewall and NAT: view the connection list, use connection states in firewall rules, adjust the...
 
 # Connection tracking
 
-Connection tracking allows the kernel to keep track of all logical network connections or sessions, and thereby relate all of the packets which may make up that connection.
+Connection tracking records the logical connections that pass through the router or end at it, and relates each packet to its connection. The stateful firewall and NAT are built on it:
 
-NAT relies on this information to translate all related packets in the same way.
+- Firewall rules can match the state of the connection that a packet belongs to, also for protocols that have no connections of their own, such as UDP and ICMP.
+- NAT translates all packets of a connection in the same way.
 
-Because of connection tracking you can use stateful firewall functionality even with stateless protocols such as UDP.
+With the default settings, connection tracking starts when the router has a filter, mangle or NAT rule, so a router with the default configuration tracks connections. You do not have to enable it.
 
-### Firewall features affected by connection tracking
+## View the connections
 
-- NAT
-- Firewall:
-  - connection-bytes
-  - connection-mark
-  - connection-type
-  - connection-state
-  - connection-limit
-  - connection-rate
-  - layer7-protocol
-  - new-connection-mark
-  - tarpit
+The tracked IPv4 connections are in the `/ip/firewall/connection` menu:
 
-The list of tracked connections can be seen in `/ip/firewall/connection` for IPv4 and `/ipv6/firewall/connection` for IPv6.
-
-```text
-      [admin@3C22-atombumba] /ip/firewall/connection> print
-      Flags: S - seen-reply, A - assured
-      #    PR.. SRC-ADDRESS           DST-ADDRESS           TCP-STATE   TIMEOUT
-      0    udp  10.5.8.176:5678       255.255.255.255:5678              0s
-      1    udp  10.5.101.3:646        224.0.0.2:646                     5s
-      2    ospf 10.5.101.161          224.0.0.5                         9m58s
-      3    udp  10.5.8.140:5678       255.255.255.255:5678              8s
-      4 SA tcp  10.5.101.147:48984    10.5.101.1:8291       established 4m59s
-
+```ros
+/ip/firewall/connection/print where src-address=192.168.88.10
 ```
 
 ```text
-      [admin@3C22-atombumba] /ipv6/firewall/connection> print
-      Flags: S - seen reply, A - assured
-      #    PRO.. SRC-ADDRESS                 DST-ADDRESS                 TCP-STATE
-      0    udp   fe80::d6ca:6dff:fe77:3698   ff02::1
-      1    udp   fe80::d6ca:6dff:fe98:7c28   ff02::1
-      2    ospf  fe80::d6ca:6dff:fe73:9822   ff02::5
-
+Flags: S - SEEN-REPLY; A - ASSURED; C - CONFIRMED; s - SRCNAT
+Columns: PROTOCOL, SRC-ADDRESS, SRC-PORT, DST-ADDRESS, DST-PORT, TCP-STATE, 
+         TIMEOUT, ORIG-RATE
+#      PROT  SRC-ADDRESS    SRC-P  DST-ADDRESS      DST-  TCP-STATE  TIM  ORIG
+0   C  udp   192.168.88.10   5678  255.255.255.255  5678             27s  0bps
+1 S Cs icmp  192.168.88.10         10.2.0.2                          9s   0bps
+2 S Cs udp   192.168.88.10  51769  10.2.0.2           53             28s  0bps
+3 SACs tcp   192.168.88.10  53812  10.2.0.2           80  time-wait  7s   0bps
 ```
+
+Each entry is one connection. The command lists the connections that the host 192.168.88.10 has opened. A connection that another host opens to it, for example through a port forward, has the address of the host in `reply-src-address`.
+
+- The `S` flag shows that the destination has replied.
+- The `A` (assured) flag is set on a TCP connection after the handshake, and on a UDP connection that has become a stream.
+- The `C` (confirmed) flag shows that the first packet of the connection has left the router.
+- The `s` and `d` flags show that the router applies source or destination NAT to the connection.
+- The `E` (expected) flag marks a connection that a connection helper created for a related connection, and the `h` (uses-helper) flag marks a connection that a helper handles. The `D` (dying) flag marks an entry that is being removed. The `F` (fasttrack) flag is described under [FastTrack](#fasttrack).
+- `TCP-STATE` is the state of a TCP connection, for example `established`, or `time-wait` for a connection that is closed.
+- `TIMEOUT` is the time after which the router removes the entry if it sees no more packets of the connection.
+
+The console shortens the column names to fit the width of the terminal. The first entry in this output is a broadcast packet that the host has sent.
+
+To see all properties of a connection, use `print detail`. It shows the packet and byte counters of both directions, and the addresses of the reply packets. In this output, `reply-dst-address` is the address of the router, because the router applies source NAT to the connection:
+
+```ros
+/ip/firewall/connection/print detail where dst-port=53
+```
+
+```text
+Flags: S - SEEN-REPLY; C - CONFIRMED; s - SRCNAT
+2 SCs protocol=udp src-address=192.168.88.10 src-port=51769
+      dst-address=10.2.0.2 dst-port=53 reply-src-address=10.2.0.2
+      reply-src-port=53 reply-dst-address=10.2.0.1 reply-dst-port=51769
+      timeout=28s orig-packets=1 orig-bytes=54 orig-fasttrack-packets=0
+      orig-fasttrack-bytes=0 repl-packets=1 repl-bytes=70
+      repl-fasttrack-packets=0 repl-fasttrack-bytes=0 orig-rate=0bps
+      repl-rate=0bps
+```
+
+To count the connections, use `/ip/firewall/connection/print count-only`.
+
+The IPv6 connections are in the `/ipv6/firewall/connection` menu, with the same properties:
+
+```ros
+/ipv6/firewall/connection/print
+```
+
+All flags and properties are described in the CLI reference of [`/ip/firewall/connection`](../cli-reference/ip/firewall/connection) and [`/ipv6/firewall/connection`](../cli-reference/ipv6/firewall/connection).
+
+## Remove connections
+
+To remove connections from the list, use `remove` with `find`. This command removes the connections that the host 192.168.88.10 has opened:
+
+```ros
+/ip/firewall/connection/remove [find src-address=192.168.88.10]
+```
+
+`/ip/firewall/connection/remove [find]` removes all connections.
+
+Removing a connection does not stop its traffic. When the next packet of the connection arrives, the router adds a new entry for it at once, with packet and byte counters that start again from zero. To stop a connection, first add a firewall rule that drops its packets, then remove the connection.
 
 ## Connection states
 
-Based on connection table entries, an arrived packet can get assigned one of the connection states: **new, invalid, established, related,** or **untracked**.
+When a packet arrives, connection tracking looks for its connection in the connection list and gives the packet one of these states. Firewall rules match the state with the `connection-state` property.
 
-There are two different methods when the packet is considered **new**. The first one is in the case of stateless connections (like UDP) when there is no connection entry in the connection table. The other one is in the case of a stateful protocol (TCP). In this case, a new packet that starts a new connection is always a TCP packet with an *SYN* flag.
+- **new** - the packet starts a connection, or belongs to a connection that has seen packets in one direction only. For TCP, the packet that starts a connection is a packet with the SYN flag. For protocols without connections, such as UDP, a packet is new when the connection list has no entry for it.
+- **established** - the packet belongs to a connection in the connection list that has seen packets in both directions.
+- **related** - the packet does not belong to a connection in the list, but is related to one. Examples are ICMP error packets, such as "port unreachable", and the data connection of an FTP session.
+- **invalid** - the packet does not belong to a connection and cannot start one, for example a TCP reply to a connection that the router has not seen. Drop such packets, unless the router has asymmetric routing.
+- **untracked** - the packet was excluded from connection tracking with a [RAW](./firewall/raw) rule that has `action=notrack`.
 
-If a packet is not new, it can belong to either an ***established*** or ***related*** connection or not belong to any connection, making it ***invalid***. A packet with an ***established*** state, as most of you already guessed, belongs to an existing connection from the connection tracking table. A ***related*** state is very similar, except that the packet belongs to a connection that is related to one of the existing connections, for example, ICMP error packets or FTP data connection packets.
-
-Connection state **untracked** is a special case when [RAW](./firewall/raw) firewall rules are used to exclude the connection from connection tracking. This rule would make all forwarded traffic bypass the connection tracking, improving packet processing speed through the device.
-
-Any other packet is considered ***invalid*** and in most cases should be dropped.
-
-Based on this information we can set a basic set of filter rules to speed up packet filtering and reduce the load on the CPU by accepting *established/related* packets, dropping *invalid* packets, and working on more detailed filtering only for *new* packets.
+With these states, the firewall accepts the packets of connections that are already allowed, drops invalid packets, and applies the detailed rules only to the packets that start a connection. This also reduces the load on the CPU:
 
 ```ros
 /ip/firewall/filter
-add chain=input connection-state=invalid action=drop comment="Drop Invalid connections"
-add chain=input connection-state=established,related,untracked action=accept comment="Allow Established/Related/Untracked connections"
+add chain=input action=accept \
+    connection-state=established,related,untracked \
+    comment="accept established,related,untracked"
+add chain=input action=drop connection-state=invalid \
+    comment="drop invalid"
 ```
 
-:::danger
-Such a rule set must not be applied to routers with asymmetric routing, because asymmetrically routed packets may be considered invalid and dropped.
-:::
+A router with the default configuration already has these two rules in the `input` chain and in the `forward` chain: do not add them again. In a firewall that you build yourself, place them before the other rules of the chain, because the order of the rules matters.
 
-## FastTrack
-
-IPv4 FastTrack is a special handler that bypasses Linux facilities, allowing for faster packet forwarding. The handler is used for **TCP** and **UDP** connections marked with the `fasttrack-connection` action. The IPv4 FastTrack handler supports NAT (SNAT, DNAT, or both).
-
-Note that not all packets of the connection can be FastTracked, so you are likely to see some packets going through a slow path even though the connection is marked for FastTrack. This is the reason why **fasttrack-connection** is usually followed by an identical `action=accept` rule.
-
-FastTrack-ed packets are bypassing:
-
-- Firewall.
-- Connection tracking.
-- Simple queues.
-- Queue tree with *parent=global*.
-- IP accounting.
-- IPSec.
-- Hotspot universal client.
-- VRF assignment.
-
-It is up to the administrator to make sure FastTrack does not interfere with other configuration.
-
-### Requirements
-
-IPv4 FastTrack is active if the following conditions are met:
-
-- No mesh, metarouter interface configuration.
-- Sniffer, torch, or traffic generator is not running.
-- *`/tool/mac-scan`* is not actively used.
-- *`/tool/ip-scan`* is not actively used.
-- FastPath and Route cache are enabled under *IP/Settings*.
-
-### Example
-
-For example, for SOHO routers with factory-default configuration, you could FastTrack all LAN traffic with this one rule placed at the top of the Firewall Filter. The same configuration accept rule is required:
+To see how many packets the firewall drops as invalid, print the counters of the drop rules:
 
 ```ros
-/ip/firewall/filter/add chain=forward action=fasttrack-connection connection-state=established,related
-/ip/firewall/filter/add chain=forward action=accept connection-state=established,related
+/ip/firewall/filter/print stats where connection-state~"invalid"
 ```
 
-:::tip
+```text
+Columns: CHAIN, ACTION, BYTES, PACKETS
+# CHAIN    ACTION  BYTES  PACKETS
+;;; defconf: drop invalid
+0 input    drop       60        1
+;;; defconf: drop invalid
+1 forward  drop        0        0
+```
 
-- Connection is FastTracked until the connection is closed, timed out, or the router is rebooted.
-- Dummy rules will disappear only after FastTrack firewall rules are deleted/disabled and the router is rebooted.
-- While FastPath and FastTrack both are enabled on the device only one can be active at a time.
-
-**Warning:** Queues (except Queue Trees parented to interfaces), firewall filter, and mangle rules will not be applied to FastTracked traffic.
+:::warning
+Do not use these rules on a router with asymmetric routing, where the packets of one connection take different paths in the two directions. The router sees only a part of each connection, considers the packets invalid, and drops them.
 :::
+
+### TCP connections that start in the middle
+
+The `loose-tcp-tracking` setting controls what happens to a packet from the middle of a TCP connection that matches no entry of the connection list, for example after the entry was removed:
+
+- With `loose-tcp-tracking=yes`, the default, the router creates an entry from such a packet and the connection continues.
+- With `loose-tcp-tracking=no`, such a packet is invalid, and the "drop invalid" rules drop it.
+
+A packet that starts a new TCP connection is still a SYN in both modes: a SYN-ACK that arrives without a SYN is invalid with `loose-tcp-tracking=yes` as well.
+
+```ros
+/ip/firewall/connection/tracking/set loose-tcp-tracking=no
+```
+
+## How long a connection stays in the list
+
+Each entry has a timeout that depends on the protocol and the state of the connection. When the timeout reaches zero, the router removes the entry. The values are set in the `/ip/firewall/connection/tracking` menu:
+
+- **TCP** - an established connection that is idle stays for `tcp-established-timeout`, one day by default. While sent data is not yet acknowledged, the entry has the shorter `tcp-unacked-timeout`. A connection that is opening or closing has a timeout of a few seconds, set by the timeout of its TCP state, for example `tcp-syn-sent-timeout` and `tcp-time-wait-timeout`.
+- **UDP** - an entry stays for `udp-timeout`. A single request and its reply do not change that. When packets keep flowing in both directions, the entry gets the `A` (assured) flag and stays for the longer `udp-stream-timeout`.
+- **ICMP** - an entry stays for `icmp-timeout`.
+- **Other protocols** - a protocol that connection tracking has no own timeout for, for example IPIP, uses `generic-timeout`.
+
+For example, to keep the entry of a device that sends a UDP request only once in a while, such as a VoIP phone that registers with its server, for one minute:
+
+```ros
+/ip/firewall/connection/tracking/set udp-timeout=1m
+```
+
+To remove idle TCP connections after two hours:
+
+```ros
+/ip/firewall/connection/tracking/set tcp-established-timeout=2h
+```
+
+A changed value applies to new connections, and to an existing connection from its next packet.
 
 ## Connection tracking settings
 
-Connection tracking settings are managed from the `/ip/firewall/connection/tracking` menu.
+The settings and the state of connection tracking are in the `/ip/firewall/connection/tracking` menu:
 
-#### Properties
+```ros
+/ip/firewall/connection/tracking/print
+```
 
-| Property | Description |
-| :-- | :-- |
-| **enabled** (*yes \| no \| auto*; Default: **auto**) | Allows disabling or enabling connection tracking. With disabled connection tracking  firewall features listed above will stop working. If set to "auto" connection tracking is disabled until at least one firewall rule is added. |
-| **liberal-tcp-tracking** (*yes \| no;* Default: **no**) | Enables or disables liberal TCP connection tracking by toggling the kernel parameter `nf_conntrack_tcp_be_liberal`. When set to **yes**, the system marks only out of window RST segments as INVALID. **Caution:** Enabling this setting may allow malformed packets that would otherwise be considered `invalid` by the firewall's `connection-state` matcher. This can increase exposure to certain evasion techniques. This property should be enabled only when troubleshooting or working around known issues.  |
-| **loose-tcp-tracking** (*yes | no*; Default: **yes**) | In case loose-tcp-tracking=yes, the 2nd part (SYN,ACK) and 3rd part (ACK) of the handshake without having seen the first initial SYN will be considered ESTABLISHEDIn case loose-tcp-tracking=no, the 2nd part (SYN,ACK) and 3rd part (ACK) without having seen the first initial SYN will be considered INVALID |
-| **tcp-syn-sent-timeout** (*time*; Default: **5s**) | TCP SYN timeout. |
-| **tcp-syn-received-timeout** (*time*; Default: **5s**) | TCP SYN timeout. |
-| **tcp-established-timeout** (*time*; Default: **1d**) | Time after which established TCP connection times out. |
-| **tcp-fin-wait-timeout** (*time*; Default: **10s**) |  |
-| **tcp-close-wait-timeout** (*time*; Default: **10s**) |  |
-| **tcp-last-ack-timeout** (*time*; Default: **10s**) |  |
-| **tcp-time-wait-timeout** (*time*; Default: **10s**) |  |
-| **tcp-close-timeout** (*time*; Default: **10s**) |  |
-| **udp-timeout** (*time*; Default: **30s**) | Specifies the timeout for UDP connections that have seen packets in one direction |
-| **udp-stream-timeout** (*time*; Default: **3m**) | Specifies the timeout of UDP connections that have seen packets in both directions |
-| **icmp-timeout** (*time*; Default: **10s**) | ICMP connection timeout |
-| **generic-timeout** (*time*; Default: **10m**) | Timeout for all other connection entries |
-| tcp-max-retrans-timeout  | |
-| tcp-unacked-timeout  | |
+```text
+                   enabled: auto  
+               active-ipv4: yes   
+               active-ipv6: no    
+      tcp-syn-sent-timeout: 5s    
+  tcp-syn-received-timeout: 5s    
+   tcp-established-timeout: 1d    
+      tcp-fin-wait-timeout: 10s   
+    tcp-close-wait-timeout: 10s   
+      tcp-last-ack-timeout: 10s   
+     tcp-time-wait-timeout: 10s   
+         tcp-close-timeout: 10s   
+   tcp-max-retrans-timeout: 5m    
+       tcp-unacked-timeout: 5m    
+        loose-tcp-tracking: yes   
+      liberal-tcp-tracking: no    
+               udp-timeout: 30s   
+        udp-stream-timeout: 3m    
+              icmp-timeout: 10s   
+           generic-timeout: 10m   
+               max-entries: 100352
+             total-entries: 2     
+         total-ip4-entries: 2     
+         total-ip6-entries: 0     
+```
 
-**Read-only properties**
+The `enabled` setting has three values:
 
-| Property | Description |
-| :-- | :-- |
-| **max-entries** (*integer*) | Max amount of entries that the connection tracking table can hold. This value depends on the installed amount of RAM.  Note that the system does not create a maximum-size connection tracking table when it starts; it may increase if the situation demands it and the system still has free RAM, but the size will not exceed 1048576 |
-| **total-entries** (*integer*) | Amount of connections that the connection table currently holds |
-| active-ipv4  | |
-| active-ipv6  | |
-| total-ip4-entries  | |
-| total-ip6-entries  | |
+- `auto`, the default - connection tracking is off until the router has an enabled filter, mangle or NAT rule, separately for IPv4 and IPv6. RAW rules alone do not start it. When the last such rule is removed, connection tracking stops again. `active-ipv4` and `active-ipv6` show whether it works at the moment. In this output, the router has IPv4 firewall rules and no IPv6 firewall rules.
+- `yes` - connection tracking works for IPv4 and IPv6, also without firewall rules. Use it to see the connection list on a router that has no firewall rules:
 
-## Connection List
+  ```ros
+  /ip/firewall/connection/tracking/set enabled=yes
+  ```
 
-The list of tracked connections can be seen in `/ip/firewall/connection` for IPv4 and `/ipv6/firewall/connection` for IPv6.
+- `no` - connection tracking is off.
 
-### Properties
+:::warning
+With `enabled=no`, the router keeps no connection list, and the firewall features that need connection tracking stop working. Firewall rules that use them get the `I` flag and match no packets. This includes the masquerade rule and the rules of the default configuration that accept established connections and drop new connections from the internet. The router then forwards packets without NAT and without these checks: hosts behind the router lose their NAT, and the firewall no longer protects them.
+:::
 
-All properties in the connection list are read-only
+`max-entries` is the number of connections that the list can hold. It depends on the amount of RAM. The router does not reserve the memory for all entries when it starts: the list grows when needed while free RAM is available, up to 1048576 entries. `total-entries` is the number of connections in the list now.
 
-| Property | Description |
-| :-- | :-- |
-| **assured** (*yes \| no*) | Indicates that this connection is assured and that it will not be erased if the maximum possible tracked connection count is reached. |
-| **confirmed** (*yes \| no*) | Connection is confirmed and a packet is sent out from the device |
-| **connection-mark** (*string*) | Connection mark that was set by the mangle rule. |
-| **connection-type** (*pptp \| ftp*) | Type of connection, the property is empty if connection tracking is unable to determine a predefined connection type. |
-| **dst-address** (*ip*) | Destination address. |
-| **dst-port**(*integer*) | Destination port. |
-| **dstnat** (*yes \| no*) | A connection has gone through DST-NAT (for example, port forwarding). |
-| **dying** (*yes \| no*) | The connection is dying due to a connection timeout. |
-| **expected** (*yes \| no*) | Connection is set up using connection helpers (pre-defined service rules). |
-| **fasttrack** (*yes \| no*) | Whether the connection is FastTracked. |
-| **gre-key** (*integer*) | Contents of the GRE Key field. |
-| **gre-protocol** (*string*) | Protocol of the encapsulated payload. |
-| **gre-version** (*string*) | A version of the GRE protocol was used in the connection. |
-| **hw-offload**(*yes \| no*) | Hardware offloaded connection. |
-| **icmp-code** (*string*) | ICMP Code Field |
-| **icmp-id** (*integer*) | Contains the ICMP ID |
-| **icmp-type** (*integer*) | ICMP Type Number |
-| **orig-bytes** (*integer*) | Number of bytes sent out from the source address using the specific connection. |
-| **orig-fasttrack-bytes** (*integer*) | Number of FastTracked bytes sent out from the source address using the specific connection. |
-| **orig-fasttrack-packets** (*integer*) | Number of FastTracked packets sent out from the source address using the specific connection. |
-| **orig-packets** (*integer*) | Number of packets sent out from the source address using the specific connection. |
-| **orig-rate** (*integer*) | The data rate at which packets are sent out from the source address using the specific connection. |
-| **protocol** (*string*) | IP protocol type |
-| **repl-bytes** (*integer*) | Number of bytes received from the destination address using the specific connection. |
-| **repl-fasttrack-bytes** (*integer*) | Number of FastTracked bytes received from the destination address using the specific connection. |
-| **repl-fasttrack-packets** (*integer*) | Number of FastTracked packets received from the destination address using the specific connection. |
-| **repl-packets** (*integer*) | Number of packets received from the destination address using the specific connection. |
-| **repl-rate** (*string*) | The data rate at which packets are received from the destination address using the specific connection. |
-| **reply-dst-address** (*ip*) | Destination address expected for return packets. |
-| **reply-dst-port**(*integer*) | Destination port expected for return packets. |
-| **reply-src-address** (*ip*) | Source address expected for return packets. |
-| ****reply-src-port**** (*integer*) | Source port expected for return packets. |
-| **seen-reply** (*yes \| no*) | The destination address has replied to the source address. |
-| **src-address** (*ip*) | The source address. |
-| **src-port**(*integer*) | The source port. |
-| **srcnat** (*yes \| no*) | Connection is going through SRC-NAT, including packets that were masqueraded through NAT. |
-| **tcp-state** (*string*) | The current state of the TCP connection:"established""time-wait""close""syn-sent""syn-recv""fin-wait""close-wait""last-ack""listen" |
-| **timeout** (*time*) | Time after which connection will be removed from the connection list. |
-| **uses-helper**(*yes \| no*) | "IP/Firewall/Service Port" helper has been applied to the particular connection. |
+All settings are described in the CLI reference of [`/ip/firewall/connection/tracking`](../cli-reference/ip/firewall/connection/tracking).
+
+## Features that need connection tracking
+
+These firewall features work only while connection tracking is active:
+
+- NAT.
+- The matchers `connection-state`, `connection-nat-state`, `connection-mark`, `connection-type`, `connection-bytes`, `connection-limit`, `connection-rate` and `layer7-protocol`.
+- The actions `mark-connection` and `tarpit`.
+
+## FastTrack
+
+IPv4 FastTrack forwards the packets of a connection on a fast path that bypasses most of the packet processing of the router. It works for TCP and UDP connections that a firewall rule with `action=fasttrack-connection` has selected. FastTrack supports source NAT, destination NAT, or both.
+
+The default configuration FastTracks the established and related connections that the router forwards, with a pair of rules like this:
+
+```ros
+/ip/firewall/filter
+add chain=forward action=fasttrack-connection \
+    connection-state=established,related comment="fasttrack"
+add chain=forward action=accept \
+    connection-state=established,related,untracked \
+    comment="accept established,related,untracked"
+```
+
+The `fasttrack-connection` action selects the connection for FastTrack and passes the packet on to the next rule. Not all packets of a FastTracked connection take the fast path, so an `accept` rule for established and related packets follows the rule. Without it, the packets that do not take the fast path reach the remaining rules of the chain.
+
+Packets that take the fast path bypass:
+
+- The firewall.
+- Connection tracking.
+- Simple queues.
+- Queue trees with `parent=global`.
+- IPsec.
+- The HotSpot universal client.
+- VRF assignment.
+
+:::warning
+The router does not apply queues, except queue trees that are attached to an interface, and firewall filter and mangle rules to FastTracked traffic. Make sure that FastTrack does not interfere with the rest of the configuration: exclude the traffic that needs these features from the `fasttrack-connection` rule. FastTrack works only with the main routing table, so also exclude the connections that use another routing table. The [Packet flow](./packet-flow-in-routeros) page has an example that excludes one host. A connection is FastTracked while a `fasttrack-connection` rule selects it. When you remove or disable that rule, the packets of the connections that are already open take the normal path again.
+:::
+
+To check whether the firewall has a FastTrack rule:
+
+```ros
+/ip/firewall/filter/print where action=fasttrack-connection
+```
+
+To see which connections are FastTracked, print the connections with the `F` flag. Add an address to see the connections of one host, for example `where fasttrack and src-address=192.168.88.10`:
+
+```ros
+/ip/firewall/connection/print where fasttrack
+```
+
+```text
+Flags: S - SEEN-REPLY; A - ASSURED; C - CONFIRMED; F - FASTTRACK; s - SRCNAT
+Columns: PROTOCOL, SRC-ADDRESS, SRC-PORT, DST-ADDRESS, DST-PORT, TCP-STATE, 
+         TIMEOUT
+#       PRO  SRC-ADDRESS    SRC-PORT  DST-ADDRESS  DST-  TCP-STATE    TIMEOUT
+5 SACFs tcp  192.168.88.10     51638  10.2.0.2     2000  established  4m59s  
+```
+
+When the router has FastTracked connections, the filter, mangle and RAW tables show a dynamic rule with the comment "special dummy rule to show fasttrack counters". It is not a rule that processes packets: its counters show how much traffic takes the fast path. The mangle table has one such rule in each of the `prerouting`, `forward` and `postrouting` chains.
+
+The `ipv4-fasttrack-active`, `ipv4-fasttrack-packets` and `ipv4-fasttrack-bytes` values of `/ip/settings` show the same for the whole router.
+
+### Prerequisites
+
+IPv4 FastTrack is active when all of these conditions are met:
+
+- The packet sniffer, Torch, IP scan and MAC scan are not running. They turn FastTrack off while they run and the router turns it back on when they stop.
+- FastPath is allowed in `/ip/settings`.
+- Bridge FastPath is enabled, if the connection passes through a bridge interface.
+
+FastPath and FastTrack can both be enabled, but only one of them is active at a time.
+
+The [Packet flow](./packet-flow-in-routeros) page shows where FastTrack sits in the packet flow.

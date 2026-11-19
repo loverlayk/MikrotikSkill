@@ -217,6 +217,8 @@ CAKE identifies flows by the source and destination addresses, transport protoco
 - `cake-flowmode=flows`: Applies fairness only between complete five-tuple flows.
 - `cake-flowmode=flowblind`: Disables flow isolation and places all traffic for each tin in one queue.
 
+With `flows`, a host that opens many connections gets a larger share of the rate than a host with one connection. With `dual-srchost` and `triple-isolate`, the share of a host depends much less on the number of its connections.
+
 When the router performs NAT, set `cake-nat=yes` so CAKE can isolate the internal addresses and ports. Keep `triple-isolate` unless the topology requires a specific directional mode. The commonly copied combination of `dual-srchost` for upload and `dual-dsthost` for download is mainly useful when CAKE can already see the required host addresses without a NAT lookup. The NAT lookup has no effect when another device performs NAT or when hardware-offloaded traffic bypasses CAKE.
 
 ## ACK filter

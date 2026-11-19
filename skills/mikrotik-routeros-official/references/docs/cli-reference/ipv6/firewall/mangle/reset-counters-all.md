@@ -1,8 +1,10 @@
 # reset-counters-all
 
-> RouterOS command reference for /ipv6/firewall/mangle/reset-counters-all.
+> Sets the packet and byte counters of all rules of this table back to zero. The counters of the other firewall tables do not change. See Common Firewall Matchers and Actions.
 
 -----------
 
 ## ipv6/firewall/mangle/reset-counters-all 
 **Type:** Command
+
+Sets the packet and byte counters of all rules of this table back to zero. The counters of the other firewall tables do not change. See [Common Firewall Matchers and Actions](../../../../firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions).
