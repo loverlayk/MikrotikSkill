@@ -26,7 +26,7 @@ PerConnectionClassifier ::= [!]ValuesToHash:Denominator/Remainder
 
 ### Example
 
-This configuration will divide all connections into 3 groups based on the source address and port
+These rules classify all connections into three groups based on the source address and port. The classification does not steer traffic anywhere on its own: connection marks take effect only when mark-routing rules convert them into routing marks and the named routing tables hold the matching routes. The Configuration Example near the end of this page assembles a complete working setup:
 
 ```ros
 /ip/firewall/mangle/add chain=prerouting action=mark-connection \
@@ -53,7 +53,7 @@ The hash function is fed 1.1.1.1 as the source IP address, 10000 as the source T
 
 At this point it's important to note that even though PCC is most often used for spreading load across circuits, PCC itself has absolutely nothing to do with routing, routing marks or spreading load. PCC is simply a way to match packets, and not directly related to the action of then marking those matched packets even if that is its main purpose.
 
-Here are three lines often used for PCC, with their explanation:
+Mangle rules that classify connections by PCC look like this:
 
 ```ros
 /ip/firewall/mangle/add chain=prerouting action=mark-connection \
@@ -63,6 +63,8 @@ Here are three lines often used for PCC, with their explanation:
 /ip/firewall/mangle/add chain=prerouting action=mark-connection \
   new-connection-mark=3rd_conn per-connection-classifier=src-address-and-port:3/2
 ```
+
+The three rules classify connections only. In a working load-balancing setup the surrounding pieces matter just as much: which packets are accepted before classification, where connection marks become routing marks, and which routes the special routing tables hold. The Configuration Example puts all of those pieces together.
 
 Here is what the different field options mean for the purpose of packet matching, these are the fields that will be fed into the hashing algorithm (and, for the purpose of spreading load across links, decide what link a packet will be put on). Remember that a hash function will always produce the same output when it's fed the same input:
 
@@ -103,7 +105,7 @@ add disabled=no fib name=ISP1_table
 add disabled=no fib name=ISP2_table
 ```
 
-### Policy routing
+### Keeping connected networks in the main table
 
 ```ros
 /ip/firewall/mangle
@@ -111,7 +113,34 @@ add action=accept chain=prerouting dst-address=10.10.4.0/24 in-interface=ether_L
 add action=accept chain=prerouting dst-address=10.10.5.0/24 in-interface=ether_LAN
 ```
 
-With policy routing it is possible to force all traffic to the specific gateway, even if traffic is destined to the host (other than that gateway) from the connected networks. This way a routing loop will be generated and communications with those hosts will be impossible. To avoid this situation we need to allow usage of the default routing table for traffic to connected networks.
+The classification rules that follow inspect packets from every LAN-side connection. Without these first two accept rules, traffic addressed to hosts in the directly connected ISP subnets (any host other than the gateways) would also be classified and pushed through the ISP gateways: the router would generate a routing loop, and communication with the hosts in those subnets would become impossible. `accept` stops mangle processing for the matching packet, so add these rules before the classification rules and keep traffic to connected networks on the main routing table.
+
+:::tip
+With additional LAN or ISP subnets, collect the connected networks into an address list and accept by the list instead of by individual rules.
+:::
+
+```ros
+/ip/firewall/address-list
+add address=10.10.4.0/24 list=ConnectedNetworks
+add address=10.10.5.0/24 list=ConnectedNetworks
+add address=192.168.100.0/24 list=ConnectedNetworks
+
+/ip/firewall/mangle
+add action=accept chain=prerouting dst-address-list=ConnectedNetworks
+```
+
+### Classifying LAN connections
+
+```ros
+add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP1 per-connection-classifier=both-addresses:2/0
+add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP2 per-connection-classifier=both-addresses:2/1
+```
+
+LAN packets pass through the mangle prerouting chain first, and only after that the router makes its routing decision. `mark-routing` can be used only in the prerouting and output chains, so for LAN-initiated traffic the classification and the routing mark both belong in prerouting. Keep the classification in prerouting instead of the forward chain: prerouting runs before the forward chain, so a connection whose first packet is marked in forward would leave through the main routing table with no routing mark. One-packet connections, such as DNS queries, would leave through the main table every time, and the remaining packets of a TCP connection would leave through a different ISP with a different source public IP, which breaks the connection.
+
+The rules match new connections without a connection mark (`connection-mark=no-mark`, `connection-state=new`): the first packet of each LAN connection is hashed into one of the two buckets, and the stored connection mark then follows every remaining packet of that connection. `dst-address-type=!local` keeps packets addressed to the router itself outside the buckets. PCC divides the traffic into two groups based on source and destination addresses (`both-addresses`).
+
+### The router's own connections
 
 ```ros
 add action=mark-connection chain=input connection-state=new in-interface=ether_ISP1 new-connection-mark=ISP1
@@ -121,14 +150,11 @@ add action=mark-connection chain=output connection-mark=no-mark connection-state
 add action=mark-connection chain=output connection-mark=no-mark connection-state=new new-connection-mark=ISP2 per-connection-classifier=both-addresses:2/1
 ```
 
-First it is necessary to manage connections initiated from outside - replies must leave via the same interface (from the same Public IP) the request came. We will mark all new incoming connections, to remember what the interface was.
+These rules are not part of LAN-to-Internet balancing. Add them when the router receives connections addressed to itself from the Internet, for example on services hosted on the router or on VPN endpoints: the mark stores the interface the connection arrived on, and every reply then leaves through the same interface, from the same public IP. A router that accepts connections only from the LAN can run without them.
 
-```ros
-add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP1 per-connection-classifier=both-addresses:2/0
-add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP2 per-connection-classifier=both-addresses:2/1
-```
+The output rules classify connections that the router itself initiates into the same two PCC buckets, so locally generated traffic also takes part in load balancing. Locally generated packets never traverse prerouting, therefore use the output chain for them.
 
-Action mark-routing can be used only in mangle chain output and prerouting, but mangle chain prerouting is capturing all traffic that is going to the router itself. To avoid this we will use dst-address-type=!local. And with the help of the new PCC we will divide traffic into two groups based on source and destination addresses.
+### Converting connection marks to routing marks
 
 ```ros
 add action=mark-routing chain=output connection-mark=ISP1 new-routing-mark=ISP1_table
@@ -138,7 +164,11 @@ add action=mark-routing chain=output connection-mark=ISP2 new-routing-mark=ISP2_
 add action=mark-routing chain=prerouting connection-mark=ISP2 in-interface=ether_LAN new-routing-mark=ISP2_table
 ```
 
-Then we need to mark all packets from those connections with a proper mark. As policy routing is required only for traffic going to the Internet, do not forget to specify the in-interface option.
+`mark-routing` is available only in the mangle chains prerouting and output. The prerouting rules apply the routing marks to LAN-initiated traffic; `in-interface=ether_LAN` restricts them so that packets arriving through the ISP interfaces always follow the normal routing decision, since policy routing is required only for traffic going to the Internet. The output rules route the connections initiated by the router itself, which were marked in the previous section, through the proper tables.
+
+### Routes
+
+Add a default route to each special routing table:
 
 ```ros
 /ip/route
@@ -146,14 +176,14 @@ add check-gateway=ping disabled=no dst-address=0.0.0.0/0 gateway=10.10.4.1 routi
 add check-gateway=ping disabled=no dst-address=0.0.0.0/0 gateway=10.10.5.1 routing-table=ISP2_table suppress-hw-offload=no
 ```
 
-Create a route for each routing-mark
+Two default routes in the main routing table provide failover:
 
 ```ros
 add distance=1 dst-address=0.0.0.0/0 gateway=10.10.4.1
 add distance=2 dst-address=0.0.0.0/0 gateway=10.10.5.1
 ```
 
-To enable failover, it is necessary to have routes that will jump in as soon as others become inactive on gateway failure. (And that will happen only if check-gateway option is active)
+When `check-gateway` on the special-table routes marks an ISP gateway unreachable, routes through that gateway become inactive: traffic marked for that table falls back to the lookup in the [main routing table](../../user-guides/routing-and-networking-protocols/routing-decision#routing-table-lookup), and the distance=2 default route leads the remaining traffic through the second ISP. A route through a gateway becomes inactive only when `check-gateway` is active on the corresponding routes.
 
 ### NAT
 

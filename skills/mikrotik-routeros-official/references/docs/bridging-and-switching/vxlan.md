@@ -1,172 +1,242 @@
 # VXLAN
 
-> This page documents MikroTik RouterOS's VXLAN implementation, covering its purpose in expanding VLAN IDs, configuration options for VXLAN interfaces and VTEPs, and forwarding table monitoring. It details settings...
+> Configure VXLAN interfaces and static VTEPs, bridge Layer 2 networks and VLANs over IPv4 or IPv6, check the forwarding database, plan MTU, and understand hardware-offload restrictions.
 
 # VXLAN
 
----
+Virtual eXtensible Local Area Network (VXLAN) carries Layer 2 frames over a routed IP network. It uses UDP and a 24-bit VXLAN Network Identifier (VNI) to distinguish overlay networks. The larger identifier space addresses the 4096-VLAN limit of IEEE 802.1Q. [RFC 7348](https://www.rfc-editor.org/rfc/rfc7348) defines the protocol.
 
-Virtual eXtensible Local Area Network (VXLAN) is a tunneling protocol designed to solve the problem of limited VLAN IDs (4096) in IEEE 802.1Q, and it is described by IETF RFC 7348. With VXLAN the size of the identifier is expanded to 24 bits (16777216). It creates a Layer 2 overlay scheme on a Layer 3 network and the protocol runs over UDP. RouterOS VXLAN interface supports IPv4 or IPv6 (since version 7.6), but dual-stack is not supported.
+A VXLAN Tunnel Endpoint (VTEP) encapsulates and decapsulates frames. A VXLAN interface can have multiple remote VTEPs, so it forms a one-to-many overlay rather than a point-to-point link. Configure static remote VTEPs in `/interface/vxlan/vteps`, or use [EVPN](../user-guides/routing-and-networking-protocols/unicast/evpn) to discover VTEPs and distribute MAC reachability through BGP.
 
-:::info
-VXLAN creates a 50-byte overhead for IPv4 and a 70-byte overhead for IPv6. When configuring VXLAN, it is recommended to ensure that the size of the encapsulated Ethernet frame does not exceed the MTU of the underlying network, by configuring the MTU accordingly or by limiting the size of the Ethernet frames.
-:::
+RouterOS supports IPv4 and IPv6 underlays. One VXLAN interface uses one underlay address family, not a dual-stack VTEP list. The underlay routing table selects the egress interface and, when `local-address` is unset, its source address. Set `vtep-vrf` to use an underlay in another VRF; the overlay bridge can remain in `main`.
 
-Only devices within the same VXLAN segment can communicate with each other. Each VXLAN segment is identified through a 24-bit segment ID, termed the VXLAN Network Identifier (VNI). Unlike most tunnels, a VXLAN is a 1-to-N network, not just point-to-point. VXLAN endpoints, which terminate VXLAN tunnels, are known as VXLAN tunnel endpoints (VTEPs). RouterOS only supports statically configured remote VTEPs. When unicast traffic needs to be sent over VXLAN, a device can learn the IP address of the other endpoint dynamically in a manner similar to a learning bridge, and forward traffic only to the necessary VTEP. For traffic that needs to be flooded (broadcast, unknown-unicast, and multicast) to all VTEPs on the same segment, VXLAN can use multicast or unicast with head-end replication to send one replica for every remote VTEP.
+## Connect two Layer 2 networks with static VTEPs
 
-## Configuration options
+This example extends an Ethernet segment between two routers. Each router has a routed underlay on `ether2` and a separate `bridge1` for the overlay. The configuration preserves the underlay's Layer 3 boundary while allowing hosts connected to the overlay bridges to communicate at Layer 2. VXLAN adds encapsulation overhead and does not provide encryption.
 
----
+Router1 uses `192.0.2.2` and `10.255.110.2`; Router2 uses `192.0.2.3` and `10.255.110.3`. The underlay addresses are on a connected subnet, so no additional static route is required. In a routed underlay, add routes to the remote VTEP addresses before configuring the tunnel.
 
-This section describes the VXLAN interface and VTEP configuration options.
-
-**Sub-menu:** `/interface/vxlan`
-
-| Property | Description |
-| :-- | :-- |
-| **allow-fast-path** (*yes \| no*; Default: **yes**) | Whether to allow [Fast Path](../firewall-and-quality-of-service/packet-flow-in-routeros.md#fast-path) processing. Fragmented and flooded packets over VXLAN are redirected via a slow path. Fast Path is disabled for VXLAN interface that uses VRF. The setting is available since RouterOS version 7.8. |
-| **arp** (*disabled \| enabled \| local-proxy-arp \| proxy-arp \| reply-only*; Default: **enabled**) | Address Resolution Protocol setting<code>disabled</code> - the interface will not use ARP<code>enabled</code> - the interface will use ARP<code>local-proxy-arp</code> -  the router performs proxy ARP on the interface and sends replies to the same interface<code>proxy-arp</code> - the router performs proxy ARP on the interface and sends replies to other interfaces<code>reply-only</code> - the interface will only reply to requests originating from matching IP address/MAC address combinations which are entered as static entries in the IP/ARP table. No dynamic entries will be automatically stored in the IP/ARP table. Therefore for communications to be successful, a valid static entry must already exist. |
-| **arp-timeout** (*auto \| integer*; Default: **auto**) | How long the ARP record is kept in the ARP table after no packets are received from IP. Value `auto` equals to the value of `arp-timeout` in IP/Settings, default is the 30s. |
-| **arp-accept** (*yes \| no*; Default: **no**) | Defines the behavior for accepting gratuitous ARP (GARP) frames received from devices that are not already present in the ARP table:<code>no</code> - new entries are not created in the ARP table<code>yes</code> - new entries are created in the ARP table The setting is available since RouterOS version 7.25.1. |
-| **bridge** (*name*; Default: ) | Name of the [bridge](../user-guides/routing-and-networking-protocols/unicast/bgp/index.md) interface to which VXLAN interface will be added as a slave port. |
-| **bridge-pvid** (*integer 1..4094;* Default: **1**) | Used to assign PVID parameter for dynamically bridge port. This property only has an effect when bridge vlan-filtering is set to yes. |
-| **checksum**(*yes \| no*; Default: **no**) | Setting controls whether a UDP checksum is calculated in the transmitted outer VXLAN packets: <code>no</code> – the UDP checksum is set to zero in transmitted outer packets. This also allows receiving VXLAN packets over IPv6 that have a zero UDP checksum.<code>yes</code> - the UDP checksum is calculated in transmitted outer packets. If hardware offloading is used for packet transmission, this setting is ignored, and the behavior defaults to sending packets with a zero UDP checksum. |
-| **comment** (*string*; Default: ) | Short description of the interface. |
-| **disabled** (*yes \| no*; Default: **no**) | Changes whether the interface is disabled. |
-| **dont-fragment**(*auto \| disabled \| enabled \| inherit*; Default: **auto**) | The Don't Fragment (DF) flag controls whether a packet can be broken into smaller packets, called fragments, before being sent over a network. When configuring VXLAN, this setting determines the presence of the DF flag on the outer IPv4 header and can control packet fragmentation if the encapsulated packet exceeds the outgoing interface MTU. This setting has three options: <code>auto</code> - if the device supports VXLAN offloading, the dont-fragment mode will operate as <code>enabled</code>. if VXLAN offloading is not supported, it will use the <code>inherit</code> mode.<code>disabled</code> - the DF flag is not set on the outer IPv4 header, which means that packets can be fragmented if they are too large to be sent over the outgoing interface. This also allows packet fragmentation when VXLAN uses IPv6 underlay. Disables hardware offloading on compatible devices.<code>enabled</code> - the DF flag is always set on the outer IPv4 header, which means that packets will not be fragmented and will be dropped if they exceed the outgoing interface's MTU. This also avoids packet fragmentation when VXLAN uses IPv6 underlay.<code>inherit</code> - The DF flag on the outer IPv4 header is based on the inner IPv4 DF flag. If the inner IPv4 header has the DF flag set, the outer IPv4 header will also have it set. If the packet exceeds the outgoing interface's MTU and DF is set, it will be dropped. If the inner packet is non-IP, the outer IPv4 header will not have the DF flag set and packets can be fragmented. If the inner packet is IPv6, the outer IPv4 header will always set the DF flag and packets cannot be fragmented. Note that when VXLAN uses IPv6 underlay, this setting does not have any effect and is treated the same as <code>disabled</code>. The setting is available since RouterOS version 7.8. |
-| **group** (*IPv4 \| IPv6*; Default: ) | When specified, a multicast group address can be used to forward broadcast, unknown-unicast, and multicast traffic between VTEPs. This property requires specifying the `interface` setting. The interface will use IGMP or MLD to join the specified multicast group, make sure to add the necessary PIM and IGMP/MLD configuration. When this property is set, the `vteps-ip-version` automatically gets updated to the used multicast IP version. Disables hardware offloading on compatible devices. |
-| **hw** (*yes \| no*; Default: **yes**) | Allows to disable hardware offloading, only applies to devices that support VXLAN offloading. |
-| **interface** (*name*; Default: ) | Interface name used for multicast forwarding. This property requires specifying the `group` setting. Disables hardware offloading on compatible devices. |
-| **learning**(*yes \| no*; Default: **yes**) | Setting controls whether inner source MAC addresses and remote VTEP IP/IPv6 addresses are learned dynamically from received packets. |
-| **local-address** (*IPv4 \| IPv6*; Default: ) | Specifies the local source address for the VXLAN interface. If not set, one IP address of the egress interface will be selected as a source address for VXLAN packets. When the property is set, the `vteps-ip-version` automatically gets updated to the used local IP version. The setting is available since RouterOS version 7.7. |
-| **mac-address** (*MAC*; Default: ) | Static MAC address of the interface. A randomly generated MAC address will be assigned when not specified. |
-| **max-fdb-size** (*integer: 1*..65535**; Default: **4096**) | Limits the maximum number of MAC addresses that VXLAN can store in the forwarding database (FDB). |
-| **mtu** (*integer*; Default: **1500**) | For the maximum transmission unit, the VXLAN interface will set MTU to 1500 by default. The `l2mtu` will be set automatically according to the associated `interface` (subtracting 50 bytes corresponding to the VXLAN header). If no interface is specified, the `l2mtu` value of 65535 is used. The `l2mtu` cannot be changed. |
-| **name** (*text*; Default: **vxlan1**) | Name of the interface. |
-| **port** (*integer: 1*..65535**; Default: **4789**) | Used UDP port number for listening and sending packets to remote VTEPs. |
-| **rem-csum** (*both \| none \| rx \| tx*; Default: **none**) | Changes the Remote Checksum Offload (RCO) settings for VXLAN interface. RCO is a technique for eliding the inner checksum of an encapsulated datagram, allowing the outer checksum to be offloaded by network driver. It does, however, involve a change to the encapsulation protocols, which the receiver must also support. For this reason, it is disabled by default and setting is available to ensure compatibility with systems that rely on this feature.  RCO is detailed in the following Internet-Drafts:  Remote checksum offload for VXLAN, draft-herbert-vxlan-rco-00. Remote checksum offload for encapsulation, draft-herbert-remotecsumoffload-00.  If [hardware offloading](./vxlan.md#hardware-offloaded-vxlan) is used, this setting is ignored, and the behavior defaults to none. |
-| **ttl** (*auto \| integer: 0*..255**; Default: **auto**) | Specifies the TTL value to use in outgoing packets. By default, the TTL is set to 64 when using the `auto` option. However, if VXLAN is using a multicast underlay network, the default TTL is set to 1. If the multicast network involves routing, you will need to increase the TTL to a higher value. |
-| **vni** (*integer: 1..16777215*; Default: ) | VXLAN Network Identifier (VNI). |
-| **vtep-vrf** (*name*; Default: **main**) | Set VRF for the VXLAN interface on which the VTEPs listen and make connections. VRF is not supported when using `interface` and multicast `group` settings. The same UDP `port` cannot be used in multiple routing tables at the same time. When using a VRF that is not set as the "main", hardware offloading is disabled on compatible devices. The setting is available since RouterOS version 7.7. |
-| **vteps-ip-version** (*ipv4 \| ipv6*; Default: **ipv4**) | Used IP protocol version for statically configured VTEPs. The RouterOS VXLAN interface does not support dual-stack, any configured remote VTEPs with the opposite IP version will be ignored. When multicast `group` or `local-address` properties are set, the `vteps-ip-version` automatically gets updated to the used IP version. Using IPv6 disables hardware offloading on compatible devices. The setting is available since RouterOS version 7.6. |
-
-**Sub-menu:** `/interface/vxlan/vteps`
-
-| Property | Description |
-| :-- | :-- |
-| **comment** (*string*; Default: ) | Short description of the configured VTEP. |
-| **interface** (*name*; Default: ) | Name of the VXLAN interface. |
-| **remote-ip** (*IPv4 \| IPv6*; Default: ) | Defines the VTEP endpoint IPv4 or IPv6 address which is used when the VXLAN interface needs to send BUM (broadcast, unknown-unicast, multicast) traffic. It is not used as access control. |
-
-## Forwarding table
-
----
-
-Since RouterOS version 7.9, it is possible to monitor the learned MAC addresses from remote VTEPs.
-
-**Sub-menu:** `/interface/vxlan/fdb`
-
-| Property | Description |
-| :-- | :-- |
-| **interface** (*read-only: *name**) | Name of the VXLAN interface. |
-| **mac-address** (*read-only: MAC address*) | MAC address. |
-| **remote-ip** (*read-only: IPv4 \| IPv6 address*) | The IPv4 or IPv6 destination address of the remote VTEP. |
+**Router1:**
 
 ```ros
-[admin@MikroTik] > /interface/vxlan/fdb/print          
- 0 remote-ip=2001::2 mac-address=56:FF:AA:1A:72:33 interface=vxlan1 
-
- 1 remote-ip=2002::2 mac-address=AE:EC:C4:12:8B:B9 interface=vxlan1 
-
- 2 remote-ip=192.168.10.20 mac-address=FE:AF:58:31:A7:B6 interface=vxlan2
+/interface/bridge/add name=bridge1 protocol-mode=none
+/ip/address/add address=192.0.2.2/24 interface=ether2
+/ip/address/add address=10.255.110.2/24 interface=bridge1
+/interface/vxlan/add name=vxlan110 vni=110 \
+    local-address=192.0.2.2 bridge=bridge1
+/interface/vxlan/vteps/add interface=vxlan110 \
+    remote-ip=192.0.2.3
 ```
 
-## Configuration example
-
----
-
-This configuration example creates a single VXLAN tunnel between two statically configured VTEP endpoints.
-
-First, create VXLAN interfaces on both routers.
+**Router2:**
 
 ```ros
-/interface/vxlan
-add name=vxlan1 port=4789 vni=10
+/interface/bridge/add name=bridge1 protocol-mode=none
+/ip/address/add address=192.0.2.3/24 interface=ether2
+/ip/address/add address=10.255.110.3/24 interface=bridge1
+/interface/vxlan/add name=vxlan110 vni=110 \
+    local-address=192.0.2.3 bridge=bridge1
+/interface/vxlan/vteps/add interface=vxlan110 \
+    remote-ip=192.0.2.2
 ```
 
-Then configure VTEPs on both routers with respective IPv4 destination addresses. Both devices should have an active route toward the destination address.
+The `bridge` property adds the VXLAN interface to the bridge as a dynamic port. Add the Ethernet ports that face your Layer 2 hosts to the same bridge. Do not bridge those hosts only to the underlay Ethernet port: traffic between two physical underlay ports does not enter VXLAN.
+
+Both endpoints must use the same VNI and UDP port. The default destination and listening port is 4789. Permit UDP traffic between the VTEP addresses in the underlay firewall.
+
+Ping the remote overlay address to check the tunnel:
 
 ```ros
-# Router1
-/interface/vxlan/vteps
-add interface=vxlan1 remote-ip=192.168.10.10
-
-# Router2
-/interface/vxlan/vteps
-add interface=vxlan1 remote-ip=192.168.20.20
+/ping 10.255.110.3 count=3
 ```
 
-The configuration is complete. It is possible to include the VXLAN interface into a bridge with other Ethernet interfaces.
-
-## Hardware offloaded VXLAN
-
----
-
-Starting from RouterOS version 7.18, initial support for hardware-offloaded VXLAN was introduced. This makes the offloaded VXLAN data plane possible, supporting encapsulation and decapsulation, and allowing for static one-to-one VLAN-to-VXLAN mappings within a vlan-filtering bridge. Refer to the [L3HW Device Support](./l3-hardware-offloading.md#l3hw-device-support) documentation for a list of compatible devices.
-
-At this point, some known features are not yet implemented.
-
-### Underlay (routing encapsulated VXLAN packets)
-
-1. VTEPs are not supported over ECMP.
-
-2. VTEPs are not supported over bond, bridge, VLAN interfaces (only stand-alone routed Ethernet interfaces are supported).
-
-3. VTEPs are not supported over multicast.
-
-4. VTEPs cannot operate within VRFs.
-
-5. VTEPs are not supported with IPv6.
-
-### Overlay (forwarding between Ethernet and VXLAN)
-
-1. Routing between different VXLAN VNIs is not supported.
-
-2. VTEPs are isolated, and there is no mechanism to control "horizon" between them.
-
-3. Bridged VXLAN interfaces do not support IGMP snooping. When snooping is enabled, MDB entries on VXLAN are not offloaded, and multicast traffic gets restricted between Ethernet and VXLAN.
-
-4. Bridged VXLAN interfaces are not supported by MLAG.
-
-### Basic configuration example
-
-In this example, static routing is used to reach remote VTEPs, but dynamic routing protocols like OSPF or BGP could also be used. The upstream interface has a higher MTU to support large packets and VXLAN encapsulation. Below is a network topology overview:
-
-**sfp-sfpplus1** - upstream (underlay) interface  
-**sfp-sfpplus3** - bridged port for untagged VLAN 10  
-**sfp-sfpplus4** - bridged port for untagged VLAN 20  
-**vxlan-10010** - overlay port for untagged VLAN 10  
-**vxlan-10020** - overlay port for untagged VLAN 20
-
-```routeros
-/interface/bridge
-add name=bridge1 vlan-filtering=yes
-/interface/ethernet
-set [ find default-name=sfp-sfpplus1 ] l2mtu=9500 mtu=9500
-/interface/vxlan
-add bridge=bridge1 bridge-pvid=10 local-address=192.168.1.1 name=vxlan-10010 vni=10010
-add bridge=bridge1 bridge-pvid=20 local-address=192.168.1.1 name=vxlan-10020 vni=10020
-/interface/bridge/port
-add bridge=bridge1 interface=sfp-sfpplus3 pvid=10
-add bridge=bridge1 interface=sfp-sfpplus4 pvid=20
-/interface/vxlan/vteps
-add interface=vxlan-10010 remote-ip=192.168.1.2
-add interface=vxlan-10020 remote-ip=192.168.1.2
-/ip/address
-add address=192.168.1.1 interface=lo network=192.168.1.1
-add address=192.168.10.10/24 interface=sfp-sfpplus1 network=192.168.10.0
-/ip/route
-add dst-address=192.168.1.2 gateway=192.168.10.20
-/interface/ethernet/switch
-set 0 l3-hw-offloading=yes
+```text
+  SEQ HOST                                     SIZE TTL TIME       STATUS      
+    0 10.255.110.3                               56  64 870us     
+    1 10.255.110.3                               56  64 391us     
+    2 10.255.110.3                               56  64 588us     
+    sent=3 received=3 packet-loss=0% min-rtt=391us avg-rtt=616us 
+   max-rtt=870us 
 ```
+
+After traffic passes, `/interface/vxlan/fdb/print` maps the remote MAC address to its VTEP:
+
+```text
+Columns: INTERFACE, REMOTE-IP, MAC-ADDRESS
+#  INTERFACE  REMOTE-IP  MAC-ADDRESS      
+0  vxlan110   192.0.2.3  56:9E:4C:61:01:68
+```
+
+## Carry VLANs over VXLAN
+
+A VLAN ID and a VNI are independent identifiers. Bridge VLAN filtering determines which VLANs enter the VXLAN interface. An untagged service commonly uses a one-to-one VLAN-to-VNI mapping. A tagged VXLAN bridge port can carry multiple VLANs over one VNI.
+
+This example continues the preceding topology with untagged VLAN 10 and tagged VLAN 20 in one VNI. Router1 keeps underlay address `192.0.2.2/24` and Router2 keeps `192.0.2.3/24` on `ether2`. Add the following objects without reassigning the underlay addresses.
+
+**Router1:**
+
+```ros
+/interface/bridge/add name=bridge-vlan protocol-mode=none \
+    pvid=10 vlan-filtering=yes
+/ip/address/add address=10.255.70.1/24 interface=bridge-vlan
+/interface/vxlan/add name=vxlan10070 vni=10070 \
+    local-address=192.0.2.2 bridge=bridge-vlan bridge-pvid=10
+/interface/vxlan/vteps/add interface=vxlan10070 \
+    remote-ip=192.0.2.3
+/interface/vlan/add name=vlan20 interface=bridge-vlan vlan-id=20
+/ip/address/add address=10.255.72.1/24 interface=vlan20
+/interface/bridge/vlan/add bridge=bridge-vlan vlan-ids=20 \
+    tagged=bridge-vlan,vxlan10070
+```
+
+**Router2:**
+
+```ros
+/interface/bridge/add name=bridge-vlan protocol-mode=none \
+    pvid=10 vlan-filtering=yes
+/ip/address/add address=10.255.70.3/24 interface=bridge-vlan
+/interface/vxlan/add name=vxlan10070 vni=10070 \
+    local-address=192.0.2.3 bridge=bridge-vlan bridge-pvid=10
+/interface/vxlan/vteps/add interface=vxlan10070 \
+    remote-ip=192.0.2.2
+/interface/vlan/add name=vlan20 interface=bridge-vlan vlan-id=20
+/ip/address/add address=10.255.72.3/24 interface=vlan20
+/interface/bridge/vlan/add bridge=bridge-vlan vlan-ids=20 \
+    tagged=bridge-vlan,vxlan10070
+```
+
+The PVID creates the untagged VLAN 10 membership for the bridge and VXLAN port. The explicit VLAN 20 entry makes the bridge interface and VXLAN port tagged members, allowing the router's local `vlan20` interface and the remote VTEP to exchange tagged frames. See [bridge VLAN configuration](./user-guides/bridge-vlan-table) for physical access and trunk port configuration.
+
+Check both overlay subnets:
+
+```ros
+/ping 10.255.70.3
+/ping 10.255.72.3
+```
+
+## Forward unicast and BUM traffic
+
+The VXLAN forwarding database (FDB) associates inner source MAC addresses with remote VTEP addresses. With `learning=yes`, received packets create these mappings dynamically. Later unicast frames can be sent only to the VTEP that owns the destination MAC. Set `learning=no` to suppress this learning. Static VTEP entries remain available for flooding and are not inbound access-control rules.
+
+Broadcast, unknown-unicast and multicast (BUM) traffic needs replication:
+
+- **Unicast head-end replication** sends one copy to every static remote VTEP. This is the default when no multicast `group` is configured.
+- **Multicast underlay** sends BUM traffic to the configured multicast `group`. Set both `group` and `interface`; either property without the other is rejected.
+
+For example, this interface uses multicast group `239.255.10.30` on the underlay interface:
+
+```ros
+/interface/vxlan/add name=vxlan10030 vni=10030 \
+    local-address=192.0.2.2 group=239.255.10.30 \
+    interface=ether2 bridge=bridge1
+```
+
+Configure the same VNI, group and UDP port on the other VTEPs, with their own local addresses. Static VTEP entries are not required for multicast flooding. The router joins the group with IGMP or MLD. A routed multicast underlay also requires multicast routing, such as PIM, and sufficient `ttl`. The automatic TTL is 1 for multicast and 64 for unicast underlay packets.
+
+A VXLAN interface does not maintain a separate multicast database for each remote VTEP. When an IGMP-snooping bridge forwards a group to a VXLAN port with multiple static VTEPs, VXLAN can replicate it to all of them. Use separate VXLAN interfaces when you need independent flooding domains.
+
+The configured UDP `port` is the listening and destination port. RouterOS varies the outer source port from inner-packet fields to provide entropy for load balancing. Each VTEP must be able to reach the remote listening port. A NAT between VTEPs must maintain return mappings for the entropy-derived source ports and forward incoming traffic to the VTEP behind NAT; do not assume that the source port is also 4789.
+
+## Check the overlay and troubleshoot failures
+
+Inspect the interface, static VTEPs and learned mappings after sending traffic:
+
+```ros
+/interface/vxlan/print detail
+/interface/vxlan/vteps/print
+/interface/vxlan/fdb/print
+/interface/bridge/host/print
+```
+
+Work through the path in order:
+
+1. **Check the underlay route.** Ping the remote VTEP address and confirm that the route uses the intended interface and routing table. Permit the configured UDP port and its return traffic through the underlay firewall.
+2. **Compare the VNI, UDP port and address family.** Both endpoints need the same VNI and port. Remote VTEPs opposite to the interface's `vteps-ip-version` are ignored. A VNI can be assigned to only one VXLAN interface on a router.
+3. **Check the overlay bridge.** The VXLAN interface, not the routed underlay port, belongs in the overlay bridge. For VLAN-filtering bridges, also check PVID and tagged or untagged membership.
+4. **Check learning.** An empty FDB is expected with `learning=no` or before traffic arrives. Static VTEP entries can still flood traffic when no FDB mapping exists.
+5. **Check packet sizes.** Test progressively smaller inner packets with DF set. Reduce the VXLAN MTU or increase the underlay MTU if large frames disappear.
+6. **Capture the underlay.** Compare VNI, UDP ports and inner Ethernet frames at both endpoints. A running interface and configured VTEP do not prove that packets arrive.
+
+Start a UDP port 4789 capture on the underlay interface:
+
+```ros
+/tool/sniffer/set filter-interface=ether2 filter-port=4789 \
+    file-name=vxlan.pcap
+/tool/sniffer/start
+```
+
+Generate overlay traffic, then stop the capture with `/tool/sniffer/stop`.
+
+## Plan MTU and fragmentation
+
+The outer IP packet is larger than the inner IP packet:
+
+| Underlay and inner tagging | Added bytes | Largest inner packet on a 1500-byte underlay |
+| :-- | --: | --: |
+| IPv4, untagged | 50 bytes | 1450 bytes |
+| IPv4, one 802.1Q tag | 54 bytes | 1446 bytes |
+| IPv6, untagged | 70 bytes | 1430 bytes |
+| IPv6, one 802.1Q tag | 74 bytes | 1426 bytes |
+
+Carrying a 1500-byte untagged inner IP packet without fragmentation therefore requires an underlay IP MTU of at least 1550 bytes for IPv4 or 1570 bytes for IPv6. Add another 4 bytes for each 802.1Q tag. Increase the MTU along the entire underlay path, or reduce the VXLAN interface `mtu` to fit the existing path.
+
+Without an associated multicast `interface`, the read-only `l2mtu` is 65535. When the associated interface exposes its own L2MTU, VXLAN subtracts 50 bytes for an IPv4 underlay or 70 bytes for IPv6. Reduce the VXLAN `mtu` if the default 1500 bytes does not fit the associated interface. The L2MTU does not prove that every hop in the underlay supports the required MTU.
+
+The `dont-fragment` property controls outer-packet fragmentation:
+
+- `disabled` clears DF on an IPv4 outer packet and permits fragmentation. It also permits IPv6 outer fragmentation.
+- `enabled` sets DF on an IPv4 outer packet and prevents fragmentation. Oversized payloads are dropped instead of being fragmented. IPv6 outer packets are not fragmented either.
+- `inherit` copies the inner IPv4 DF decision to the IPv4 outer packet. Non-IP inner traffic has no outer DF flag. Inner IPv6 traffic sets outer IPv4 DF. On an IPv6 underlay, `inherit` permits fragmentation like `disabled`.
+- `auto` uses `enabled` on devices with VXLAN hardware offload and `inherit` otherwise.
+
+Prefer an MTU that avoids outer fragmentation. Besides adding processing overhead, fragmentation requires every fragment to reach the remote VTEP before it can decapsulate the inner frame.
+
+## Hardware offloading
+
+Supported switch chips can offload VXLAN encapsulation and decapsulation when `hw=yes`. The `H` flag on VXLAN interfaces and VTEPs indicates hardware-offloaded entries. Consult the [L3HW device support matrix](./l3-hardware-offloading#l3hw-device-support) before designing for offload; a hardware-offloaded bridge port alone does not prove that the complete VXLAN path is offloaded.
+
+The supported underlay is more restricted than software VXLAN:
+
+- Use a standalone routed Ethernet underlay. ECMP and bond, bridge or VLAN underlay interfaces are not supported.
+- Multicast underlay and IPv6 VTEP offload are not supported.
+- VXLAN-VRF offload is supported on CPSS switch chips. On other switch chips, keep the underlay in `main` unless the device support matrix explicitly lists VXLAN-VRF support. The software `vtep-vrf` property does not imply hardware support.
+
+For the overlay, hardware supports static one-to-one untagged VLAN-to-VNI mappings and tagged VLAN-aware mappings within a VLAN-filtering bridge. The following restrictions apply:
+
+- Routing between different VNIs is not supported.
+- VTEPs are isolated, with no configurable horizon between them.
+- MDB entries on VXLAN ports are not offloaded for IGMP snooping. Enabling snooping can restrict multicast forwarding between Ethernet and VXLAN.
+- Bridged VXLAN interfaces are not supported by MLAG.
+
+### Configure static VLAN-to-VNI mappings
+
+This example uses a loopback VTEP address and a routed underlay. Router1 has loopback `192.0.2.1/32`, underlay `198.51.100.1/30`, and access ports in VLANs 10 and 20. Router2 uses `192.0.2.2/32` and `198.51.100.2/30`. Both endpoints have matching VNIs and access-port VLANs. The underlay MTU accommodates large encapsulated frames and must be supported along the whole path.
+
+```ros
+/interface/bridge/add name=bridge1 vlan-filtering=yes
+/interface/ethernet/set [find default-name=sfp-sfpplus1] \
+    l2mtu=9500 mtu=9500
+/interface/vxlan/add name=vxlan-10010 vni=10010 \
+    local-address=192.0.2.1 bridge=bridge1 bridge-pvid=10
+/interface/vxlan/add name=vxlan-10020 vni=10020 \
+    local-address=192.0.2.1 bridge=bridge1 bridge-pvid=20
+/interface/bridge/port/add bridge=bridge1 \
+    interface=sfp-sfpplus3 pvid=10
+/interface/bridge/port/add bridge=bridge1 \
+    interface=sfp-sfpplus4 pvid=20
+/interface/vxlan/vteps/add interface=vxlan-10010 \
+    remote-ip=192.0.2.2
+/interface/vxlan/vteps/add interface=vxlan-10020 \
+    remote-ip=192.0.2.2
+/ip/address/add address=192.0.2.1/32 interface=lo
+/ip/address/add address=198.51.100.1/30 \
+    interface=sfp-sfpplus1
+/ip/route/add dst-address=192.0.2.2/32 gateway=198.51.100.2
+/interface/ethernet/switch/set 0 l3-hw-offloading=yes
+```
+
+On Router2, mirror the configuration with local addresses `192.0.2.2` and `198.51.100.2/30`, remote VTEP `192.0.2.2` replaced by `192.0.2.1`, and the route to `192.0.2.1/32` through `198.51.100.1`.
+
+Static routes are shown for brevity. OSPF or BGP can distribute the loopback VTEP addresses when the underlay meets the hardware restrictions.
+
+For all interface, VTEP and FDB properties, see the [VXLAN CLI reference](../cli-reference/interface/vxlan/).

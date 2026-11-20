@@ -1,113 +1,205 @@
 # MACsec
 
-> MACsec is a security protocol for Ethernet networks providing confidentiality, integrity, and authenticity using GCM-AES-128 encryption. RouterOS supports MACsec with manual key configuration and limited hardware...
+> Configure MACsec on RouterOS with manual CAK/CKN keys, direct and bridged links, cipher selection, MTU planning, monitoring, and troubleshooting.
 
 # MACsec
 
-The MACsec (Media Access Control Security) protocol is a standard security technology employed in Ethernet networks to ensure the confidentiality, integrity, and authenticity of data transmitted over the physical medium. MACsec is defined by IEEE standard 802.1AE.
+Media Access Control Security (MACsec), defined by IEEE 802.1AE, protects Ethernet traffic with confidentiality, integrity and authenticity. After negotiation, MACsec protects Layer 2 payloads, including ARP, DHCP, LLDP and higher-layer protocols.
 
-MACsec utilizes GCM-AES-128 encryption over Ethernet and secures all LAN traffic, including DHCP, ARP, LLDP, and higher-layer protocols.
+RouterOS can run MACsec in software without special hardware. Hardware offload is available only on selected ports and modules; the `H` flag indicates that offload is active.
 
 :::warning
-RouterOS MACsec implementation is in the early stage; it **does not support** dynamic key management via [Dot1x](../authentication-authorization-accounting/dot1x.md) (manual key configuration is required) and hardware-accelerated encryption is only being rolled out on select products.
+RouterOS requires manually configured Connectivity Association Keys (CAKs) and Connectivity Association Names (CKNs). It does not provision or rotate these values automatically through dot1x. The software, CPSS and Alaska MACsec paths do not provide replay protection.
 :::
 
-## Basic Configuration Example
+## Secure a direct link
 
-Imagine Host1 ether1 is connected to Switch ether1 and Host2 ether1 is connected to Switch ether2. In this example, we will create two MACsec interface pairs and use a bridge to create a secure Layer2 connection between both end devices.
+This example creates a routed MACsec link between two routers. Each router uses `ether5` as the physical parent and a MACsec interface for IP traffic. Use a different parent if it is already your management interface, and remove that parent from any bridge first. Only one MACsec interface can exist on a parent.
 
-First, configure MACsec interfaces on Host1 and Host2. We can specify only the Ethernet interface and RouterOS will automatically generate the Connectivity Association Key (CAK) and connectivity association name (CKN). Use the `print` command to see the values:
+On Router1, create the MACsec interface without CAK or CKN to generate random values:
+
+```ros
+/interface/macsec/add name=macsec1 interface=ether5
+/ip/address/add address=192.0.2.1/24 interface=macsec1
+/interface/macsec/print show-sensitive
+```
+
+On Router2, create an interface with the same CAK and CKN. The following values belong to this example only; use the values generated on your own router:
+
+```ros
+/interface/macsec/add name=macsec1 interface=ether5 \
+    cak=30E8EE41D1127D738016A22475AC6459 \
+    ckn=F5032E94636D5B68F3D31A9BB17A1F689B9EC4AD0EC6EC2C6E4BEC652112FD59
+/ip/address/add address=192.0.2.2/24 interface=macsec1
+```
+
+After negotiation, `print show-sensitive` displays the generated values and the open status:
+
+```text
+Flags: R - RUNNING
+1  R name="macsec1" mtu=1468 interface=ether5 status="open-encrypted"
+     cak=30E8EE41D1127D738016A22475AC6459
+     ckn=F5032E94636D5B68F3D31A9BB17A1F689B9EC4AD0EC6EC2C6E4BEC652112FD59
+     profile=default
+```
+
+The CAK is sensitive. Protect configuration exports and terminal output that includes it.
+
+Check the negotiated role and cipher:
+
+```ros
+/interface/macsec/monitor [find name=macsec1] once
+```
+
+```text
+    key-server: yes        
+  cipher-suite: aes-gcm-128
+```
+
+In this example, Router1 is the key server. With equal priorities, the lower MAC address determines that role.
+
+Confirm routed connectivity:
+
+```ros
+/ping 192.0.2.2 count=3
+```
+
+```text
+  SEQ HOST                                     SIZE TTL TIME       STATUS      
+    0 192.0.2.2                                  56  64 558us     
+    1 192.0.2.2                                  56  64 407us     
+    2 192.0.2.2                                  56  64 363us     
+    sent=3 received=3 packet-loss=0% min-rtt=363us avg-rtt=442us 
+   max-rtt=558us 
+```
+
+## Bridge two MACsec links
+
+In this topology, Host1 connects to Switch `ether2` and Host2 connects to Switch `ether3`. The switch has one independently keyed MACsec interface for each host and adds those interfaces to `bridge1`. Do not add the physical parent interfaces to the same bridge.
+
+On Host1 and Host2, create MACsec without keys to generate independent values, then use `print show-sensitive` to read them:
 
 ```ros
 # Host1
-/interface/macsec
-add interface=ether1 name=macsec1
-
-[admin@Host1] /interface/macsec/print show-sensitive
-Flags: I - inactive, X - disabled, R - running 
- 0   name="macsec1" mtu=1468 interface=ether1 status="negotiating" cak=71a7c363794da400dbde595d3926b0e9
-     ckn=f2c4660060169391d29d8db8a1f06e5d4b84a128bad06ad43ea2bd4f7d21968f profile=default
+/interface/macsec/add name=macsec1 interface=ether2
+/ip/address/add address=10.255.10.10/24 interface=macsec1
 
 # Host2
-/interface/macsec
-add interface=ether1 name=macsec1
-
-[admin@Host2] /interface/macsec/print show-sensitive
-Flags: I - inactive, X - disabled, R - running 
- 0   name="macsec1" mtu=1468 interface=ether1 status="negotiating" cak=dc47d94291d19a6bb26a0c393a1af9a4
-     ckn=e9bd0811dad1e56f06876aa7715de1855f1aee0baf5982ac8b508d4fc0f162d9 profile=default
+/interface/macsec/add name=macsec1 interface=ether2
+/ip/address/add address=10.255.10.20/24 interface=macsec1
 ```
 
-On the Switch device, to enable MACsec we need to configure the matching CAK and CKN values for the appropriate Ethernet interface:
+Copy each host's CAK and CKN to the corresponding switch interface. These example values are not suitable for a production deployment:
 
 ```ros
-# Switch
-/interface/macsec
-add comment=Host1 cak=71a7c363794da400dbde595d3926b0e9 ckn=f2c4660060169391d29d8db8a1f06e5d4b84a128bad06ad43ea2bd4f7d21968f interface=ether1 name=macsec1
-add comment=Host2 cak=dc47d94291d19a6bb26a0c393a1af9a4 ckn=e9bd0811dad1e56f06876aa7715de1855f1aee0baf5982ac8b508d4fc0f162d9 interface=ether2 name=macsec2
+# Switch: link to Host1
+/interface/macsec/add name=macsec1 interface=ether2 \
+    comment=Host1 \
+    cak=7A5DF27E34AA7CDDCE49663FEB43B12C \
+    ckn=A682055203B82FF163026274E3127DFF5EBBE5F8E1EAD9ED8BC2D3A606EC26EE
+
+# Switch: link to Host2
+/interface/macsec/add name=macsec2 interface=ether3 \
+    comment=Host2 \
+    cak=9ECB5F80D68594B80C1039F01A7A4BC7 \
+    ckn=C3CB27F1FB0AB62FEE848536A7F45C4B173FC3DC6320AF60C662DCF1A71B962C
 ```
 
-Once the pre-shared keys are successfully exchanged, the MACsec Key Agreement (MKA) protocol is activated. MKA is responsible for ensuring the continuity of MACsec on the link and determines which side becomes the key server in a point-to-point connection. The key server generates a Secure Association Key (SAK) that is shared exclusively with the device on the other end of the link. This SAK is used to secure all data traffic passing through the link. Periodically, the key server generates a new randomly-created SAK and shares it over the point-to-point link to maintain MACsec functionality.
+After both links reach `open-encrypted`, add only the MACsec interfaces to the bridge:
 
-In RouterOS, the MACsec interface can be configured like any Ethernet interface. It can be used as a routable interface with an IP address, or placed inside a bridge. On Host1 and Host2 we will add an IP address from the same network. On Switch, we will use a bridge.
+```ros
+/interface/bridge/add name=bridge1 protocol-mode=none
+/interface/bridge/port/add bridge=bridge1 interface=macsec1
+/interface/bridge/port/add bridge=bridge1 interface=macsec2
+```
+
+Host1 can then reach Host2 through the encrypted bridge:
 
 ```ros
 # Host1
-/ip/address
-add address=192.168.10.10/24 interface=macsec1
-
-# Host2
-/ip/address
-add address=192.168.10.20/24 interface=macsec1
-
-# Switch
-/interface/bridge
-add name=bridge1
-/interface/bridge/port
-add bridge=bridge1 interface=macsec1
-add bridge=bridge1 interface=macsec2
+/ping 10.255.10.20 count=5
 ```
 
-Last, confirm that Host1 can reach Host2 using a ping.
+```text
+  SEQ HOST                                     SIZE TTL TIME       STATUS      
+    0 10.255.10.20                               56  64 981us     
+    1 10.255.10.20                               56  64 571us     
+    2 10.255.10.20                               56  64 605us     
+    3 10.255.10.20                               56  64 953us     
+    4 10.255.10.20                               56  64 855us     
+    sent=5 received=5 packet-loss=0% min-rtt=571us avg-rtt=793us 
+   max-rtt=981us 
+```
+
+## Manage keys and ciphers
+
+The CAK is 16 bytes (32 hexadecimal characters), and the CKN is 32 bytes (64 hexadecimal characters). If you omit either value, RouterOS generates it. Both ends need the same CAK and CKN; a mismatch leaves the link negotiating and prevents forwarding.
+
+The MACsec Key Agreement (MKA) protocol elects a key server for each point-to-point connection and maintains peer liveness. The key server generates and distributes the Secure Association Key (SAK). Packet-number exhaustion triggers SA replacement. `aes-gcm-xpn-128` extends the packet-number space and reduces exhaustion-driven replacements; it does not eliminate them.
+
+Profiles control the election and cipher suites:
+
+- `server-priority` defaults to 10. A lower numeric value wins. Equal priorities use the lowest MAC address as the key server.
+- `ciphers` must be specified for custom profiles. The built-in default profile uses `aes-gcm-128`. The other supported suite is `aes-gcm-xpn-128`; AES-GCM-256 is not supported.
+- The key server selects the first common suite in its own profile order. Peers with no common suite cannot forward traffic. Check both ends: one side can report `open-encrypted` while the other remains `negotiating`.
+
+Create an XPN profile on both routers and assign it to the MACsec interface:
 
 ```ros
- [admin@Host1] > ping 192.168.10.20
-  SEQ HOST                                     SIZE TTL TIME       STATUS
-    0 192.168.10.20                              56  64 1ms438us  
-    1 192.168.10.20                              56  64 818us     
-    2 192.168.10.20                              56  64 791us     
-    3 192.168.10.20                              56  64 817us     
-    4 192.168.10.20                              56  64 783us     
-    sent=5 received=5 packet-loss=0% min-rtt=783us avg-rtt=929us max-rtt=1ms438us
+/interface/macsec/profile/add name=site-xpn \
+    ciphers=aes-gcm-xpn-128 server-priority=20
+/interface/macsec/set [find name=macsec1] profile=site-xpn
 ```
 
-## Property Reference
+Use a single matching suite for a deterministic configuration. When you list multiple suites, check the selected value with `/interface/macsec/monitor`.
 
-### Interface settings
+## Plan MTU
 
-**Sub-menu:** `/interface/macsec`
+MACsec adds 32 bytes. The read-only L2MTU is the parent interface's L2MTU minus those 32 bytes, and it cannot be changed directly. The default MACsec MTU is 1468, which fits a 1500-byte parent MTU.
 
-Configuration settings for the MACsec interface.
+To carry a 1500-byte inner IP packet, increase the physical MTU to 1532 and set the MACsec MTU to 1500 on both routers. Ensure that the physical L2MTU also has enough headroom:
 
-| Property | Description |
-| :-- | :-- |
-| **cak** (*string*; Default: ) *[sensitive](../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | A 16-byte pre-shared connectivity association key (CAK). To enable MACsec, configure the matching CAK and CKN on both ends of the link. When not specified, RouterOS will automatically generate a random value. |
-| **ckn**(*string*; Default: ) | A 32-byte connectivity association name (CKN). To enable MACsec, configure the matching CAK and CKN on both ends of the link. When not specified, RouterOS will automatically generate a random value. |
-| **comment** (*string*; Default: ) | Short description of the interface. |
-| **disabled** (*yes \| no*; Default: **no**) | Changes whether the interface is disabled. |
-| **interface** (*name*; Default: ) | Ethernet interface name where MACsec is created, limited to one MACsec interface per Ethernet. |
-| **mtu** (*integer*; Default: **1468**) | Sets the maximum transmission unit. The `l2mtu` will be set automatically according to the associated `interface` (subtracting 32 bytes corresponding to the MACsec encapsulation). The `l2mtu` cannot be changed. |
-| **name** (*string*; Default: **macsec1**) | Name of the interface. |
-| **profile** (*name*; Default: **default**) | Sets the MACsec profile, used for determining the key server in a point-to-point connection. |
-| **status** (*read-only: disabled \|initializing \| invalid \| negotiating \| open-encrypted*) | Shows the current MACsec interface status. |
+```ros
+/interface/ethernet/set [find default-name=ether5] mtu=1532
+/interface/macsec/set [find name=macsec1] mtu=1500
+```
 
-### Profile settings
+Wait for `open-encrypted` after changing MTU, then test the required packet size:
 
-**Sub-menu:** `/interface/macsec/profile`
+```ros
+/ping 192.0.2.2 size=1500 do-not-fragment
+```
 
-Configuration settings for the MACsec profile.
+Insufficient L2MTU can silently drop traffic even when ping or MACsec negotiation succeeds. Test application-sized packets and every bridge in the path rather than relying on negotiation status alone.
 
-| Property | Description |
-| :-- | :-- |
-| **name** (*string*; Default: ) | Name of the profile. |
-| **server-priority**(*integer: 0..255*; Default: **10**) | Sets the priority for determining the key server in a point-to-point connection. A lower value means higher priority. In case of a priority match, the interface with the lowest MAC address will be acting as a key server. |
+## Monitor and troubleshoot
+
+Use these commands to inspect negotiation, roles and detailed counters:
+
+```ros
+/interface/macsec/print detail
+/interface/macsec/monitor [find name=macsec1] once
+/interface/macsec/print stats
+```
+
+`open-encrypted` indicates local encrypted state, not successful peer negotiation or end-to-end forwarding. Check both peers and then work through the path:
+
+1. **Compare CAK and CKN.** Different values prevent negotiation. Use `print show-sensitive` when reading them.
+2. **Compare profiles.** Both peers need a common cipher suite. Check `cipher-suite` and `key-server` on both monitors.
+3. **Check the parent.** A parent already in a bridge produces an invalid interface with `Interface is already a slave`. A second MACsec on the same parent is rejected with `interface already used`.
+4. **Check MTU and L2MTU.** Small packets can pass while larger application traffic is dropped. Increase physical headroom or reduce the MACsec MTU.
+5. **Check forwarding.** Test routed traffic, bridge traffic and non-IP discovery protocols separately. `/ip/neighbor/print` can help verify CDP, LLDP and MNDP through a MACsec bridge.
+
+The detailed statistics include aggregate Secure Channel (SC) counters and per-Secure Association (SA) values. They cover encrypted/decrypted traffic, validation failures and other error conditions defined by IEEE 802.1AE. Reset all detailed counters when starting a new measurement:
+
+```ros
+/interface/macsec/reset-counters [find name=macsec1]
+```
+
+## Hardware offload
+
+Software MACsec consumes CPU but requires no special MACsec hardware. Offload is optional and depends on the Ethernet port, pluggable module, board revision and cipher suite. XPN support is not available on every MACsec-capable port or module.
+
+The `H` flag indicates active hardware offload; its absence does not prevent software forwarding. Do not infer offload support from the device family alone or assume that offloaded forwarding is always faster.
+
+For all interface, profile, monitor and counter-reset details, see the [MACsec CLI reference](../cli-reference/interface/macsec/).

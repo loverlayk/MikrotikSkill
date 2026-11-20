@@ -1,6 +1,6 @@
 # monitor
 
-> RouterOS command reference for /user-manager/monitor.
+> Shows the number of active sessions.
 
 -----------
 
@@ -8,6 +8,8 @@
 **Package:** userman-5
 **Type:** Command
 
+Shows the number of active sessions.
+
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
-<ArgTableRow arg="active-sessions" typ="num"></ArgTableRow>
+<ArgTableRow arg="active-sessions" typ="num">Number of active sessions of all users.</ArgTableRow>
 </ArgTable>

@@ -19,7 +19,10 @@ the command with short LED blinks and restarts in [RUN](#run) mode.
 contain [version](#version), [serial-number](#serial-number), [cfg-state](#cfg-state), and [dev-health](#dev-health) frames.
 
 - Decode the first uplink to verify temperature, humidity, orientation, battery,
-and device identity data. See [Magnet Switch](#magnet-switch) for command input details.
+and device identity data. Use downlink commands as the primary method for
+configuration and management; see [Device Commands](#device-commands) and [Command Encoding](#command-encoding).
+Magnet switch commands remain available for activation and local operations
+such as profile or region selection; see [Magnet Switch](#magnet-switch).
 
 ## Functionality
 
@@ -248,6 +251,36 @@ Devices come preconfigured with evaluation configuration to showcase some of pos
 
 See [`default-cfg.txt`](pathname:///assets/tg-lrx2-default-cfg.txt) for exact factory default configuration commands.
 
+##### Factory Defaults and Custom Configuration
+
+The device ships with a complete factory configuration. When creating a custom
+configuration, send only the commands needed to change the factory values.
+Settings that are not changed keep their factory values. Reusing factory
+settings reduces both the number and size of downlink messages.
+
+Factory profiles 1-4 also contain example rules. If a custom use case does not
+need those rules, remove all rules at once before adding the new ones:
+
+```none
+data del-rule
+```
+
+[data del-rule](#data-del-rule) without a rule number removes every rule, including the
+factory rules. Rule numbers can then be used for the new configuration without
+mixing it with the factory examples.
+
+To return to a known test state, restore the factory configuration:
+
+```none
+app factory-reset 984651411,,2500
+```
+
+This returns the device to the exact factory state, including the factory rules,
+and resets the join nonces. The device must join the network again, and custom
+credentials or settings that were written after production are lost. Use this
+command when you need a repeatable baseline before experimenting with new
+configurations.
+
 #### Configuring Sensors
 
 ##### Sampling Intervals
@@ -255,6 +288,58 @@ See [`default-cfg.txt`](pathname:///assets/tg-lrx2-default-cfg.txt) for exact fa
 Periodic temperature, humidity and battery voltage sampling can be configured for specific use cases using [data poll-cfg](#data-poll-cfg) command.
 Device can sample data at a higher rate than uplink frames are sent. This gives opportunity to send average values or to perform
 rule based decisions. Since sampling interval influences device power consumption this can be leveraged to improve lifetime.
+
+##### Frame-Triggered Sensor Refresh
+
+[data poll-cfg](#data-poll-cfg) includes the *on-ul-stale* option. It is enabled by default in
+the factory configuration. Its intended use is to keep sensor data reasonably
+fresh and aligned with uplink timing when the normal polling interval is longer
+than the frame interval. In that configuration, frame scheduling acts as an
+additional sensor-polling trigger.
+
+When *on-ul-stale* is enabled, scheduling [current-state](#current-state),
+[device-orientation](#device-orientation), [last-temp](#last-temp), [ema-temp](#ema-temp), [last-humid](#last-humid), [ema-humid](#ema-humid),
+or [dev-health](#dev-health) causes the device to check the age of the temperature/humidity,
+battery, and orientation samples. Any sensor group older than the stale timeout
+is flagged for a forced sample.
+The request is handled asynchronously by the data service and does not block
+frame scheduling. The check covers all three groups regardless of which fields
+the scheduled frame contains. For example, scheduling [current-state](#current-state) can also
+refresh battery and orientation data, and scheduling [dev-health](#dev-health) can refresh
+temperature, humidity, and orientation.
+
+The current stale timeout is 15 seconds. It is a fixed firmware value and is not
+configurable through [data poll-cfg](#data-poll-cfg). The device uses a strict “older than”
+comparison, so a sample that is exactly 15 seconds old is not refreshed. A
+forced sample does not shift the normal periodic sampling schedule. If frames
+are scheduled less than 15 seconds apart, not every frame triggers a new sample.
+
+Frame scheduling as a polling trigger can be configured without changing the
+normal periodic intervals:
+
+```none
+data poll-cfg 32,3600,0,0,0,0,0,1,21600
+frame set-cfg 32,300,0,0,current-state
+```
+
+In this example temperature/humidity have a one-hour periodic interval and
+battery has a six-hour interval, while [current-state](#current-state) is scheduled every five
+minutes. Each scheduled frame refreshes any of the three sensor groups that is
+older than 15 seconds. Because all groups are checked, a frequent [current-state](#current-state)
+frame can also keep battery and orientation sampling active; include this in the
+power budget.
+
+Set *on-ul-stale* to 0 to disable frame-triggered refresh. Frames then use the
+most recent samples even when they are old.
+
+:::warning
+
+*on-ul-stale* is checked when the frame is scheduled, not when it
+is transmitted. If the uplink is delayed by the duty-cycle limit, the frame
+can be transmitted with sensor data older than the stale timeout. The check
+is not repeated while the frame is pending.
+
+:::
 
 ##### Averaging
 
@@ -513,6 +598,14 @@ If &lt;rule-num&gt; is omitted, the first free rule slot is used. [data del-rule
 without a rule number deletes all rules; with a rule number it deletes one rule.
 Rule configuration persists across reboots; rule evaluation state is reset on
 reboot.
+
+:::note
+
+When building a different use case, [data del-rule](#data-del-rule) without a rule
+number removes all factory example rules at once. See [Factory Defaults and
+Custom Configuration](#factory-defaults-and-custom-configuration).
+
+:::
 
 Command syntax to add or override rules:
 
@@ -927,6 +1020,18 @@ accepts either data frame name or integer ID. *tg-lrx2-encode* automatically con
 
 The reference includes advanced manual commands such as [data sample](#data-sample) and
 [data next-epoch](#data-next-epoch). See [Advanced Operations](#advanced-operations).
+
+[frame set-cfg](#frame-set-cfg) accepts multiple frame IDs after the shared period, confirmed,
+and on-join settings. If several frames use the same settings, list them in one
+command instead of repeating the command:
+
+```none
+frame set-cfg 32,900,0,0,current-state,dev-health
+```
+
+The profile mask in the first parameter can also select multiple profiles. Only
+the listed frames and profiles are changed; other configuration remains as it
+was.
 
 #### app set-mode
 
@@ -1819,7 +1924,8 @@ Configuration export frames 25-30 are described in [Advanced Operations](#advanc
 
 The examples below are downlink configuration scripts and assume the device is
 joined. Most examples use profile 5, which is empty by default, so existing
-profile settings remain unchanged.
+profile settings remain unchanged. The day/night example also uses the factory
+default profile 0 and leaves profile 0 unchanged.
 
 #### Temperature and Humidity Reporting
 
@@ -1946,6 +2052,118 @@ After the device joins, it uses profile 2 by default and sends
 [mag_sw_cnt](#mag-sw-cnt) event is generated when the magnet has been removed for at least
 20 seconds. The secondary band remains disabled and profile 2 remains the
 default after reboot.
+
+#### Confirmed Event Journal
+
+Use profile 5 to store temperature, humidity, and battery voltage as events. The
+event frame is sent as a confirmed message in batches:
+
+```none
+data poll-cfg 32,60,0,0,0,0,0,1,120
+data event-cfg 32,100,101,0,1
+data del-rule
+data set-rule 0,timer_1 >= 60,,,temperature,humidity,,,,,,,1
+data set-rule 1,timer_2 >= 120,,,battery_mv,,,,,,,,2
+data timer 0,0
+frame set-cfg 32,360,1,1,device-events
+app profile 5,1
+```
+
+Temperature and humidity are sampled and stored every 60 seconds. Battery
+voltage is sampled and stored every 120 seconds. The first rule uses [timer_1](#timer-1)
+and resets it; the second rule uses [timer_2](#timer-2) and resets it. *data timer 0,0*
+clears both timers, so the first temperature/humidity event is generated after
+60 seconds and the first battery event after 120 seconds.
+
+[data event-cfg](#data-event-cfg) stores up to 100 events. The send threshold is set to 101,
+which is above the maximum stored event count, so automatic event flushing is
+effectively disabled. Events are sent when the [device-events](#device-events) frame is
+scheduled by [frame set-cfg](#frame-set-cfg) every six minutes or on network join. *send-all*
+drains the remaining events after a frame. The [device-events](#device-events) frame is
+confirmed, so pending events are sent after a normal leave/rejoin recovery.
+Event timestamps become absolute after the default time synchronization
+completes.
+
+:::note
+
+Event storage is a finite buffer, not a permanent archive. A long
+outage can fill the 100-record buffer and discard the oldest events.
+
+:::
+
+<Anchor id="day-night-profiles" />
+
+#### Day/Night Profiles
+
+Use the factory default profile 0 for daytime telemetry and profile 5 for
+sparse nighttime telemetry:
+
+```none
+frame set-cfg 32,3600,0,0,current-state,dev-health
+data del-rule
+data set-rule 0,daytime_tm >= 28800,,0
+data set-rule 1,daytime_tm >= 64800,,5
+data set-rule 2,daytime_tm < 28800,,5
+```
+
+Profile 0 is not reconfigured and keeps its factory polling and frame settings.
+Profile 5 sends [current-state](#current-state) and [dev-health](#dev-health) every hour. Profile selection
+is what changes the daytime and nighttime uplink rate.
+
+The third rule handles the midnight boundary. At 00:00, rules 0 and 1 become
+false and rule 2 becomes true, so profile 5 is selected even when this
+configuration is applied at midnight. At 08:00, rule 0 switches back to profile
+0; at 18:00, rule 1 selects profile 5 again.
+
+*data del-rule* removes all user and factory rules, which is required so the
+existing profile rules do not override this schedule. Profile 0 frame
+configuration remains at its factory defaults. Profile 5 is not made the
+default; profile switching is performed only by these rules. [daytime_tm](#daytime-tm) is
+seconds since midnight GMT, and this example does not distinguish weekdays.
+Time synchronization is already enabled in the default configuration.
+
+#### Vehicle Activity Tracking
+
+Use profile 5 to report movement start and stop events for a car or other
+vehicle, together with the accumulated activity time. The [activity](#activity) and
+[device-events](#device-events) frames are confirmed; [dev-health](#dev-health) is a periodic unconfirmed
+uplink.
+
+```none
+data del-rule
+data activity-cfg 32,1,4,63,1
+frame set-cfg 32,0,1,0,activity,device-events
+frame set-cfg 32,3600,0,0,dev-health
+data set-rule 0,timer_1 >= 60
+data set-rule 1,activity_state_etm >= 60
+data set-rule 2,activity_state == 0,,,,,,,,,,,1
+data set-rule 3,activity_state == 0, &1,,activity_state,,,,activity
+data set-rule 4,activity_state != 0, &0,,activity_state,,,,activity
+data timer 500
+app profile 5,1
+```
+
+The final *1* in *data activity-cfg* enables the activity indication LED. After
+testing is complete, disable the LED with:
+
+```none
+data activity-cfg 32,,,,0
+```
+
+Rule 2 resets [timer_1](#timer-1) when the activity state becomes idle. Rule 0 then
+requires [timer_1](#timer-1) to be at least 60 seconds, so rule 4 generates a start event
+only when movement resumes after at least 60 seconds of idle. Rule 1 requires the
+idle state to have lasted 60 seconds, after which rule 3 generates the stop
+event. This suppresses start/stop flapping for short state changes.
+
+*data timer 500* presets [timer_1](#timer-1) so a tag that starts in motion can generate
+an initial start event immediately. If it starts idle, rule 2 clears the timer
+and the first stop event is generated after 60 seconds of idle.
+
+Both transitions schedule the [activity](#activity) frame, which contains the accumulated
+[total_activity_s](#total-activity-s). The event carries [activity_state](#activity-state), which identifies
+whether the transition is a start or a stop. [dev-health](#dev-health) reports battery
+voltage every hour.
 
 ### Known Issues
 

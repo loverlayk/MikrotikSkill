@@ -10,7 +10,6 @@
 
 :::warning
 This device needs to be upgraded to RouterOS v7.11.2 or the latest version to ensure compliance with local authority regulations!
-
 It is the end users' responsibility to follow local country regulations, including operation within legal frequency channels, output power, cabling requirements, and Dynamic Frequency Selection (DFS) requirements. All MikroTik radio devices must be professionally installed.
 :::
 
@@ -32,6 +31,7 @@ Depending on the antenna used, you must set its gain. This is to ensure that EIR
 - Connect the power adapter to the PoE injector;
 - Configure your device using a web browser through *WebFig* or the *WinBox* tool at [https://mt.lv/winbox](https://mt.lv/winbox); **multiple configuration methods are available to ensure accessibility**;
 - Access *WebFig* by opening http://192.168.88.1, and for *WinBox*, download the tool, navigate to the *Neighbors* tab, and click on the MAC address. The username is *"admin"* with no password (or, for some models, check user and wireless passwords on the sticker);
+- Click the "Check for updates" button and update RouterOS to the latest version;
 - For a manual update of the device, visit mikrotik.com, select your model, and locate the required packages in the "Downloads" section;
 - Upload downloaded packages to the *WebFig* or WinBox *"Files"* menu and reboot the device;
 - Updating your RouterOS software to the latest version will ensure the best performance, stability, and security updates;
@@ -79,6 +79,7 @@ Manufacturer: Mikrotikls SIA, Unijas iela 2, Riga, Latvia, LV1039.
 - Свържете захранващия адаптер към PoE инжектора;
 - Конфигурирайте вашето устройство с помощта на уеб браузър чрез *WebFig* или инструмента *WinBox* на [https://mt.lv/winbox](https://mt.lv/winbox); **налични са множество методи за конфигуриране, за да се осигури достъпност;**
 - Достъп до *WebFig,* като отворите http://192.168.88.1, а за *WinBox* изтеглете инструмента, отидете до раздела *Neighbors* и щракнете върху MAC адреса. Потребителското име е *"admin"* без парола (или, за някои модели, проверете потребителските и безжичните пароли на стикера);
+- Кликнете на бутона "Check for updates" и актуализирайте RouterOS до последната версия;
 - За ръчно обновяване на устройството посетете mikrotik.com, изберете модела си и намерете необходимите пакети в секцията "Downloads";
 - Качете изтеглените пакети в менюто *WebFig* или WinBox *"Files"* и рестартирайте устройството;
 - Актуализирането на вашия софтуер RouterOS до най-новата версия ще гарантира най-добра производителност, стабилност и актуализации за сигурност;
@@ -126,6 +127,7 @@ V závislosti na použité anténě musíte nastavit její zisk. Tím je zajišt
 - Připojte napájecí adaptér k PoE injektoru;
 - Nakonfigurujte své zařízení pomocí webového prohlížeče prostřednictvím *WebFig* nebo nástroje *WinBox* na [https://mt.lv/winbox](https://mt.lv/winbox); **je k dispozici více konfiguračních metod k zajištění přístupnosti;**
 - Otevřete *WebFig* otevřením http://192.168.88.1 a pro *WinBox* si stáhněte nástroj, přejděte na kartu *Neighbors* a klikněte na MAC adresu. Uživatelské jméno je *"admin"* bez hesla (nebo u některých modelů zkontrolujte uživatelské a bezdrátové heslo na štítku);
+- Klepněte na tlačítko "Check for updates" a aktualizujte RouterOS na nejnovější verzi;
 - Pro manuální aktualizaci zařízení navštivte mikrotik.com, vyberte svůj model a najděte požadované balíčky v sekci "Downloads";
 - Nahrajte stažené balíčky do nabídky *WebFig* nebo WinBox *"Files"* a restartujte zařízení;
 - Aktualizace softwaru RouterOS na nejnovější verzi zajistí nejlepší výkon, stabilitu a aktualizace zabezpečení;
@@ -173,6 +175,7 @@ Afhængigt af den anvendte antenne skal du indstille dens forstærkning. Dette e
 - Tilslut strømadapteren til PoE-injektoren;
 - Konfigurer din enhed ved hjælp af en webbrowser gennem *WebFig* eller *WinBox* -værktøjet på [https://mt.lv/winbox](https://mt.lv/winbox); **flere konfigurationsmetoder er tilgængelige for at sikre tilgængelighed;**
 - Få adgang til *WebFig* ved at åbne http://192.168.88.1, og for *WinBox*, download værktøjet, naviger til fanen *Neighbors*, og klik på MAC-adressen. Brugernavnet er *"admin"* uden adgangskode (eller, for nogle modeller, tjek brugeradgangskoder og trådløse adgangskoder på mærkaten);
+- Klik på knappen "Check for updates" og opdater RouterOS til den nyeste version;
 - For manuel opdatering af enheden, besøg mikrotik.com, vælg din model og find de nødvendige pakker i sektionen "Downloads";
 - Upload downloadede pakker til menuen *WebFig* eller WinBox *"Files"* og genstart enheden;
 - Opdatering af din RouterOS-software til den nyeste version vil sikre den bedste ydeevne, stabilitet og sikkerhedsopdateringer;
@@ -220,6 +223,7 @@ Abhängig von der verwendeten Antenne müssen Sie die Verstärkung einstellen. D
 - Schließen Sie das Netzteil an den PoE-Injektor an;
 - Konfigurieren Sie Ihr Gerät mit einem Webbrowser über *WebFig* oder das *WinBox*-Tool unter [https://mt.lv/winbox](https://mt.lv/winbox); **mehrere Konfigurationsmethoden stehen zur Verfügung, um die Barrierefreiheit sicherzustellen;**
 - Greifen Sie auf *WebFig zu, indem Sie* http://192.168.88.1 öffnen. Laden Sie für *WinBox* das Tool herunter, navigieren Sie zur Registerkarte *Neighbors* und klicken Sie auf die MAC-Adresse. Der Benutzername lautet *"admin"* ohne Passwort (oder überprüfen Sie bei einigen Modellen die Benutzer- und WLAN-Passwörter auf dem Aufkleber);
+- Klicken Sie auf die Schaltfläche "Check for updates" und aktualisieren Sie RouterOS auf die neueste Version;
 - Für ein manuelles Update des Geräts besuchen Sie mikrotik.com, wählen Ihr Modell aus und finden die erforderlichen Pakete im Abschnitt "Downloads";
 - Laden Sie heruntergeladene Pakete in das Menü *WebFig* oder WinBox *"Files"* hoch und starten Sie das Gerät neu;
 - Durch die Aktualisierung Ihrer RouterOS-Software auf die neueste Version werden die besten Leistungs-, Stabilitäts- und Sicherheitsupdates gewährleistet.
@@ -267,6 +271,7 @@ Hersteller: Mikrotikls SIA, Unijas iela 2, Riga, Lettland, LV1039.
 - Συνδέστε το τροφοδοτικό στον εγχυτήρα PoE.
 - Διαμορφώστε τη συσκευή σας χρησιμοποιώντας ένα πρόγραμμα περιήγησης ιστού μέσω *του WebFig* ή του εργαλείου *WinBox* στη διεύθυνση [https://mt.lv/winbox](https://mt.lv/winbox); **διατίθενται πολλαπλές μέθοδοι ρύθμισης για να διασφαλιστεί η προσβασιμότητα;**
 - Αποκτήστε πρόσβαση *στο WebFig* ανοίγοντας το http://192.168.88.1 και για το *WinBox*, κατεβάστε το εργαλείο, μεταβείτε στην καρτέλα *Neighbors* και κάντε κλικ στη διεύθυνση MAC. Το όνομα χρήστη είναι *"admin"* χωρίς κωδικό πρόσβασης (ή, για ορισμένα μοντέλα, ελέγξτε τους κωδικούς πρόσβασης χρήστη και ασύρματου δικτύου στο αυτοκόλλητο).
+- Κάντε κλικ στο κουμπί "Check for updates" και ενημερώστε το RouterOS στην τελευταία έκδοση;
 - Για χειροκίνητη ενημέρωση της συσκευής, επισκεφθείτε το mikrotik.com, επιλέξτε το μοντέλο σας και εντοπίστε τα απαιτούμενα πακέτα στην ενότητα "Downloads";
 - Μεταφορτώστε τα ληφθέντα πακέτα στο μενού *WebFig* ή WinBox *"Files"* και επανεκκινήστε τη συσκευή.
 - Η ενημέρωση του λογισμικού RouterOS στην πιο πρόσφατη έκδοση θα εξασφαλίσει την καλύτερη απόδοση, σταθερότητα και ενημερώσεις ασφαλείας.
@@ -314,6 +319,7 @@ Dependiendo de la antena utilizada, debe establecer su ganancia. Esto es para ga
 - Conecte el adaptador de corriente al inyector PoE;
 - Configure su dispositivo usando un navegador web a través de *WebFig* o la herramienta *WinBox* en [https://mt.lv/winbox](https://mt.lv/winbox); **hay varios métodos de configuración disponibles para garantizar la accesibilidad;**
 - Acceda *a WebFig* abriendo http://192.168.88.1 y, para *WinBox*, descargue la herramienta, navegue hasta la pestaña *Neighbors* y haga clic en la dirección MAC. El nombre de usuario es *"admin"* sin contraseña (o, para algunos modelos, verifique las contraseñas de usuario y de conexión inalámbrica en la etiqueta);
+- Haga clic en el botón "Check for updates" y actualice RouterOS a la última versión;
 - Para actualizar manualmente el dispositivo, visite mikrotik.com, seleccione su modelo y localice los paquetes requeridos en la sección "Downloads";
 - Cargue los paquetes descargados en el menú *WebFig* o WinBox *"Files"* y reinicie el dispositivo;
 - Actualizar su software RouterOS a la última versión garantizará el mejor rendimiento, estabilidad y actualizaciones de seguridad;
@@ -377,6 +383,7 @@ Sõltuvalt kasutatavast antennist peate määrama selle võimenduse. Selle eesm�
 - Ühendage toiteadapter PoE-pihustiga;
 - Seadistage oma seade veebibrauseri abil *WebFig* või *WinBox* tööriista kaudu aadressil [https://mt.lv/winbox](https://mt.lv/winbox); **ligipääsetavuse tagamiseks on saadaval mitu seadistamismeetodit;**
 - Juurdepääs *numbrile WebFig*, avades numbri http://192.168.88.1, ja *WinBox* jaoks laadige tööriist alla, navigeerige vahekaardile *Neighbors* ja klõpsake MAC-aadressil. Kasutajanimi on *"admin"* ilma paroolita (või mõne mudeli puhul kontrollige kasutaja ja traadita ühenduse paroole kleebiselt);
+- Klõpsake nupul "Check for updates" ja ajakohastage RouterOS viimasele versioonile;
 - Seadme käsitsi uuendamiseks külastage mikrotik.com, valige oma mudel ja leidke vajalikud paketid jaotises "Downloads";
 - Laadige allalaaditud paketid üles menüüsse *WebFig* või WinBox *"Files"* ja taaskäivitage seade;
 - RouterOS-i tarkvara värskendamine uusimale versioonile tagab parima jõudluse, stabiilsuse ja turvavärskendused;
@@ -424,6 +431,7 @@ Käytettävän antennin mukaan sinun on asetettava sen vahvistus. Tällä varmis
 - Liitä virtalähde PoE-suuttimeen;
 - Määritä laitteesi verkkoselaimella *WebFig-* tai *WinBox-* työkalulla osoitteessa [https://mt.lv/winbox](https://mt.lv/winbox); **useita määritysmenetelmiä on saatavilla saavutettavuuden varmistamiseksi;**
 - Käytä *numeroa WebFig* avaamalla http://192.168.88.1 ja lataa työkalu *WinBox*:a varten, siirry **Neighbors**-välilehdelle ja napsauta MAC-osoitetta. Käyttäjätunnus on *"admin"* ilman salasanaa (tai joissakin malleissa tarkista käyttäjän ja langattoman verkon salasanat tarrasta);
+- Napsauta "Check for updates" -painiketta ja päivitä RouterOS uusimpaan versioon;
 - Laitteen manuaalista päivitystä varten siirry osoitteeseen mikrotik.com, valitse mallisi ja etsi tarvittavat paketit osiossa "Downloads";
 - Lataa ladatut paketit valikkoon *WebFig* tai WinBox *"Files"* ja käynnistä laite uudelleen;
 - RouterOS-ohjelmiston päivittäminen uusimpaan versioon varmistaa parhaan suorituskyvyn, vakauden ja tietoturvapäivitykset;
@@ -471,6 +479,7 @@ Selon l'antenne utilisée, vous devez régler son gain. Il s'agit de garantir qu
 - Connectez l'adaptateur secteur à l'injecteur PoE;
 - Configurez votre appareil à l'aide d'un navigateur Web via *WebFig* ou l' outil *WinBox* sur [https://mt.lv/winbox](https://mt.lv/winbox); **plusieurs méthodes de configuration sont disponibles pour garantir l’accessibilité;**
 - Accédez *à WebFig* en ouvrant http://192.168.88.1 et pour *WinBox*, téléchargez l'outil, accédez à l' onglet *Neighbors* et cliquez sur l'adresse MAC. Le nom d'utilisateur est *"admin"* sans mot de passe (ou, pour certains modèles, vérifiez les mots de passe utilisateur et sans fil sur l'autocollant);
+- Cliquez sur le bouton "Check for updates" et mettez à jour RouterOS vers la dernière version;
 - Pour une mise à jour manuelle de l'appareil, rendez-vous sur mikrotik.com, sélectionnez votre modèle et localisez les paquets requis dans la section "Downloads";
 - Téléchargez les packages téléchargés dans le menu *WebFig* ou WinBox *"Files"* et redémarrez l'appareil;
 - La mise à jour de votre logiciel RouterOS vers la dernière version garantira les meilleures mises à jour en termes de performances, de stabilité et de sécurité;
@@ -519,6 +528,7 @@ Fabricant: Mikrotikls SIA, Unijas iela 2, Riga, Lettonie, LV1039.
 - पावर एडेप्टर को PoE इंजेक्टर से जोड़ें;
 - अपने डिवाइस को वेब ब्राउज़र के माध्यम से *WebFig* या *WinBox* टूल (https://mt.lv/WinBox) **का उपयोग करके कॉन्फ़िगर करें; कई कॉन्फ़िगरेशन विधियाँ उपलब्ध हैं ताकि पहुँच सुनिश्चित की जा सके;**
 - *WebFig* तक पहुँचने के लिए http://192.168.88.1 खोलें, और *WinBox* के लिए टूल डाउनलोड करें, *Neighbors* टैब पर जाएँ, और MAC पता क्लिक करें। उपयोगकर्ता नाम "admin" है और कोई पासवर्ड नहीं है (कुछ मॉडलों के लिए, स्टिकर पर दिए गए उपयोगकर्ता और वायरलेस पासवर्ड जांचें);
+- "Check for updates" बटन पर क्लिक करें और RouterOS को नवीनतम संस्करण में अपडेट करें;
 - डिवाइस को मैन्युअल रूप से अपडेट करने के लिए mikrotik.com पर जाएँ, अपना मॉडल चुनें और आवश्यक पैकेजों को "Downloads" सेक्शन में ढूँढें;
 - डाउनलोड किए गए पैकेजों को *WebFig* या *WinBox* के "Files" मेनू में अपलोड करें और डिवाइस को रीबूट करें;
 - अपने RouterOS सॉफ़्टवेयर को नवीनतम संस्करण में अपडेट करने से सर्वोत्तम प्रदर्शन, स्थिरता और सुरक्षा अपडेट सुनिश्चित होंगे;
@@ -573,6 +583,7 @@ Ovisno o anteni koja se koristi, morate postaviti njezino pojačanje. Time se os
 - Spojite strujni adapter na PoE injektor;
 - Konfigurirajte svoj uređaj pomoću web preglednika putem *WebFig* ili alata *WinBox* na [https://mt.lv/winbox](https://mt.lv/winbox); **dostupne su različite metode konfiguracije kako bi se osigurala pristupačnost;**
 - Pristupite *WebFig* otvaranjem http://192.168.88.1, a za *WinBox* preuzmite alat, idite na karticu *Neighbors* i kliknite na MAC adresu. Korisničko ime je *"admin"* bez lozinke (ili, za neke modele, provjerite korisničku i bežičnu lozinku na naljepnici);
+- Kliknite na gumb "Check for updates" i ažurirajte RouterOS na najnoviju verziju;
 - Za ručnu nadogradnju uređaja posjetite mikrotik.com, odaberite svoj model i pronađite potrebne pakete u odjeljku "Downloads";
 - Učitajte preuzete pakete u izbornik *WebFig* ili WinBox *"Files"* i ponovno pokrenite uređaj;
 - Ažuriranje vašeg RouterOS softvera na najnoviju verziju osigurat će najbolju izvedbu, stabilnost i sigurnosna ažuriranja;
@@ -620,6 +631,7 @@ A használt antennától függően be kell állítania annak erősítését. Enn
 - Csatlakoztassa a hálózati adaptert a PoE befecskendezőhöz;
 - Konfigurálja készülékét webböngészővel a *WebFig* vagy a *WinBox* eszköz segítségével a [https://mt.lv/winbox](https://mt.lv/winbox) oldalon; **számos konfigurációs módszer áll rendelkezésre az akadálymentesség biztosításához;**
 - *A WebFig* eléréséhez nyissa meg a http://192.168.88.1 számot, és *WinBox* esetén töltse le az eszközt, lépjen a *Neighbors* lapra, és kattintson a MAC-címre. A felhasználónév *"admin"*, jelszó nélkül (vagy egyes modelleknél ellenőrizze a felhasználói és vezeték nélküli jelszavakat a matricán);
+- Kattintson az "Check for updates" gombra, és frissítse a RouterOS-t a legújabb verzióra;
 - Az eszköz kézi frissítéséhez látogasson el a mikrotik.com oldalra, válassza ki a modelljét, és találja meg a szükséges csomagokat a "Downloads" részben;
 - Töltse fel a letöltött csomagokat a *WebFig* vagy WinBox *"Files"* menübe, és indítsa újra az eszközt;
 - A RouterOS szoftverének a legújabb verzióra való frissítése biztosítja a legjobb teljesítményt, stabilitást és biztonsági frissítéseket;
@@ -666,6 +678,7 @@ Pengguna akhir bertanggung jawab untuk mengikuti peraturan negara setempat, term
 - Hubungkan adaptor daya ke injektor PoE;
 - Konfigurasikan perangkat Anda menggunakan browser web melalui *WebFig* atau alat *WinBox* di [https://mt.lv/winbox](https://mt.lv/winbox); **berbagai metode konfigurasi tersedia untuk memastikan aksesibilitas;**
 - Akses *WebFig* dengan membuka http://192.168.88.1, dan untuk *WinBox*, unduh alatnya, navigasikan ke tab *Neighbors*, dan klik alamat MAC. Nama pengguna adalah *"admin"* tanpa kata sandi (atau, untuk beberapa model, periksa kata sandi pengguna dan nirkabel pada stiker);
+- Klik tombol "Check for updates" dan perbarui RouterOS ke versi terbaru;
 - Untuk pembaruan manual perangkat, kunjungi mikrotik.com, pilih model Anda, dan temukan paket yang diperlukan di bagian "Downloads";
 - Unggah paket yang diunduh ke menu *WebFig* atau WinBox *"Files"* dan reboot perangkat;
 - Memperbarui perangkat lunak RouterOS Anda ke versi terbaru akan memastikan pembaruan kinerja, stabilitas, dan keamanan terbaik;
@@ -713,6 +726,7 @@ A seconda dell'antenna utilizzata, è necessario impostare il suo guadagno. Ques
 - Collegare l'adattatore di alimentazione all'iniettore PoE;
 - Configura il tuo dispositivo utilizzando un browser web tramite *WebFig* o lo strumento *WinBox su*[https://mt.lv/winbox](https://mt.lv/winbox); **sono disponibili diversi metodi di configurazione per garantire l’accessibilità;**
 - Accedi *a WebFig* aprendo http://192.168.88.1 e, per *WinBox*, scarica lo strumento, vai alla scheda *Neighbors* e fai clic sull'indirizzo MAC. Il nome utente è *"admin"* senza password (o, per alcuni modelli, verificare utente e password wireless sull'adesivo);
+- Fai clic sul pulsante "Check for updates" e aggiorna RouterOS all'ultima versione;
 - Per aggiornare manualmente il dispositivo, visitare mikrotik.com, selezionare il modello e individuare i pacchetti necessari nella sezione "Downloads";
 - Carica i pacchetti scaricati nel menu *WebFig* o WinBox *"Files"* e riavvia il dispositivo;
 - L'aggiornamento del software RouterOS alla versione più recente garantirà le migliori prestazioni, stabilità e aggiornamenti di sicurezza;
@@ -760,6 +774,7 @@ Produttore: Mikrotikls SIA, Unijas iela 2, Riga, Lettonia, LV1039.
 - Tengdu straumbreytinn við PoE inndælingartækið;
 - Stilltu tækið þitt með því að nota vafra í gegnum *WebFig* eða *WinBox* tólið á [https://mt.lv/winbox](https://mt.lv/winbox); **margar stillingaraðferðir eru í boði til að tryggja aðgengi;**
 - Fáðu aðgang að *WebFig* með því að opna http://192.168.88.1 og fyrir *WinBox* skaltu hlaða niður tólinu, fara á *Neighbors* flipann og smella á MAC vistfangið. Notandanafnið er *"admin"* án lykilorðs (eða, fyrir sumar gerðir, athugaðu notanda og þráðlausa lykilorð á límmiðanum);
+- Smelltu á "Check for updates" hnappinn og uppfærðu RouterOS á nýjustu útgáfu;
 - Til að uppfæra tækið handvirkt, farðu á mikrotik.com, veldu módelið þitt og finndu nauðsynlegu pakkana í kaflanum "Downloads";
 - Hladdu niður niðurhaluðum pakka í *WebFig* eða WinBox *"Files"* valmyndina og endurræstu tækið;
 - Að uppfæra RouterOS hugbúnaðinn þinn í nýjustu útgáfuna mun tryggja bestu frammistöðu, stöðugleika og öryggisuppfærslur;
@@ -807,6 +822,7 @@ Avhengig av hvilken antenne du bruker, må du stille inn dens forsterkning. Dett
 - Koble strømadapteren til PoE-injektoren;
 - Konfigurer enheten din ved å bruke en nettleser via *WebFig* eller *WinBox-* verktøyet på [https://mt.lv/winbox](https://mt.lv/winbox); **flere konfigurasjonsmetoder er tilgjengelige for å sikre tilgjengelighet;**
 - Få tilgang til *WebFig* ved å åpne http://192.168.88.1, og for *WinBox*, last ned verktøyet, naviger til *Neighbors-* fanen og klikk på MAC-adressen. Brukernavnet er *"admin"* uten passord (eller, for noen modeller, sjekk bruker- og trådløst passord på klistremerket);
+- Klikk på knappen "Check for updates" og oppdater RouterOS til den nyeste versjonen;
 - For manuell oppdatering av enheten, gå til mikrotik.com, velg modellen din og finn de nødvendige pakkene i seksjonen "Downloads";
 - Last ned nedlastede pakker til *WebFig* eller *WinBox* *"Files"* - menyen og start enheten på nytt;
 - Oppdatering av RouterOS-programvaren til den nyeste versjonen vil sikre den beste ytelsen, stabiliteten og sikkerhetsoppdateringene;
@@ -854,6 +870,7 @@ Priklausomai nuo naudojamos antenos, turite nustatyti jos stiprinimą. Tuo sieki
 - Prijunkite maitinimo adapterį prie PoE purkštuko;
 - Sukonfigūruokite įrenginį naudodami žiniatinklio naršyklę naudodami *WebFig* arba *WinBox* įrankį adresu [https://mt.lv/winbox](https://mt.lv/winbox); **galimi keli konfigūravimo metodai prieinamumui užtikrinti;**
 - Pasiekite *WebFig* atidarę http://192.168.88.1 ir *WinBox* atsisiųskite įrankį, eikite į skirtuką *Neighbors* ir spustelėkite MAC adresą. Vartotojo vardas yra *"admin"* be slaptažodžio (arba, kai kuriuose modeliuose, patikrinkite vartotojo ir belaidžio ryšio slaptažodžius ant lipduko);
+- Spustelėkite "Check for updates" mygtuką ir atnaujinkite RouterOS į naujausią versiją;
 - Norėdami rankiniu būdu atnaujinti įrenginį, eikite į mikrotik.com, pasirinkite savo modelį ir raskite reikalingus paketus skiltyje "Downloads";
 - Įkelkite atsisiųstus paketus į *WebFig* arba WinBox *"Files"* meniu ir perkraukite įrenginį;
 - RouterOS programinės įrangos atnaujinimas į naujausią versiją užtikrins geriausią našumą, stabilumą ir saugos naujinimus;
@@ -901,6 +918,7 @@ Atkarībā no izmantotās antenas jums jāiestata tās pastiprinājums. Tas ir p
 - Pievienojiet strāvas adapteri PoE inžektoram;
 - Konfigurējiet savu ierīci, izmantojot tīmekļa pārlūkprogrammu, izmantojot *WebFig* vai *WinBox* rīku vietnē [https://mt.lv/winbox](https://mt.lv/winbox); **vairāki konfigurēšanas veidi ir pieejami piekļūstamības nodrošināšanai;**
 - Pieslēdzieties ierīcei izmantojot *WebFig*, atverot savā pārlūkā http://192.168.88.1, vai lejupielādējiet rīku *WinBox* un dodieties uz cilni *Neighbors* un noklikšķiniet uz MAC adreses. Lietotājvārds ir *"admin"* bez paroles (vai dažiem modeļiem atrodiet lietotāja un bezvadu paroles uz uzlīmes);
+- Noklikšķiniet uz pogas "Check for updates" un atjaunojiet RouterOS līdz jaunākajai versijai;
 - Lai manuāli atjauninātu ierīci, apmeklējiet mikrotik.com, izvēlieties savu modeli un atrodiet nepieciešamās pakotnes sadaļā "Downloads";
 - Augšupielādējiet lejupielādētās pakotnes izvēlnē "Files" un restartējiet ierīci;
 - Izmantojiet jaunāko versiju, lai nodrošināt optimālu veiktspēju, stabilitāti un drošības atjauninājumus;
@@ -948,6 +966,7 @@ Jiddependi fuq l-antenna użata, trid tissettja l-gwadann tagħha. Dan biex jiż
 - Qabbad l-adapter tal-enerġija mal-injettur PoE;
 - Ikkonfigura t-tagħmir tiegħek billi tuża web browser permezz ta' *WebFig* jew l -għodda *WinBox* fuq [https://mt.lv/winbox](https://mt.lv/winbox); **metodi multipli ta’ konfigurazzjoni huma disponibbli biex tiġi żgurata l-aċċessibbiltà;**
 - Aċċessa *WebFig* billi tiftaħ http://192.168.88.1, u għal *WinBox*, niżżel l-għodda, innaviga fit- tab *Neighbors*, u kklikkja fuq l-indirizz MAC. L-isem tal-utent huwa *"admin"* mingħajr password (jew, għal xi mudelli, iċċekkja l-passwords tal-utent u mingħajr fili fuq l-istiker);
+- Ikklikkja fuq il-buttuna "Check for updates" u aġġorna l-RouterOS għall-aħħar verżjoni;
 - Għal aġġornament manwali tal-apparat, żur mikrotik.com, agħżel il-mudell tiegħek u sib il-pakketti meħtieġa fis-sezzjoni "Downloads";
 - Tella' pakketti mniżżla fil- menu *WebFig* jew WinBox *"Files"* u reboot l-apparat;
 - L-aġġornament tas-software RouterOS tiegħek għall-aħħar verżjoni jiżgura l-aħjar prestazzjoni, stabbiltà u aġġornamenti tas-sigurtà;
@@ -995,6 +1014,7 @@ Afhankelijk van de gebruikte antenne, moet u de versterking instellen. Dit is om
 - Sluit de voedingsadapter aan op de PoE-injector;
 - Configureer uw apparaat met behulp van een webbrowser via *WebFig* of de *WinBox* -tool op [https://mt.lv/winbox](https://mt.lv/winbox); **er zijn meerdere configuratiemethoden beschikbaar om toegankelijkheid te waarborgen;**
 - U krijgt toegang tot *WebFig* door http://192.168.88.1 te openen. Voor *WinBox* downloadt u de tool, navigeert u naar het tabblad *Neighbors* en klikt u op het MAC-adres. De gebruikersnaam is *"admin"* zonder wachtwoord (of, voor sommige modellen, controleer de gebruikers- en draadloze wachtwoorden op de sticker);
+- Klik op de knop "Check for updates" en update RouterOS naar de nieuwste versie;
 - Voor een handmatige update van het apparaat, ga naar mikrotik.com, selecteer uw model en vind de benodigde pakketten in de sectie "Downloads";
 - Upload gedownloade pakketten naar het menu *WebFig* of WinBox *"Files"* en start het apparaat opnieuw op;
 - Het updaten van uw RouterOS-software naar de nieuwste versie zorgt voor de beste prestaties, stabiliteit en beveiligingsupdates;
@@ -1042,6 +1062,7 @@ W zależności od zastosowanej anteny należy ustawić jej wzmocnienie. Ma to na
 - Podłącz zasilacz do wtryskiwacza PoE;
 - Skonfiguruj swoje urządzenie za pomocą przeglądarki internetowej za pomocą narzędzia *WebFig* lub *WinBox* pod adresem [https://mt.lv/winbox](https://mt.lv/winbox); **dostępnych jest wiele metod konfiguracji w celu zapewnienia dostępności;**
 - Uzyskaj dostęp do *WebFig,* otwierając http://192.168.88.1, a w przypadku *WinBox* pobierz narzędzie, przejdź do karty *Neighbors* i kliknij adres MAC. Nazwa użytkownika to *"admin"* bez hasła (lub, w przypadku niektórych modeli, sprawdź hasło użytkownika i hasło sieci bezprzewodowej na naklejce);
+- Kliknij przycisk "Check for updates" i zaktualizuj RouterOS do najnowszej wersji;
 - Aby ręcznie zaktualizować urządzenie, odwiedź mikrotik.com, wybierz swój model i znajdź wymagane pakiety w sekcji "Downloads";
 - Prześlij pobrane pakiety do menu *WebFig* lub WinBox *"Files"* i zrestartuj urządzenie;
 - Aktualizacja oprogramowania RouterOS do najnowszej wersji zapewni najlepszą wydajność, stabilność i aktualizacje zabezpieczeń;
@@ -1089,6 +1110,7 @@ Dependendo da antena usada, você deve definir seu ganho. Isso é para garantir 
 - Conecte o adaptador de energia ao injetor PoE;
 - Configure seu dispositivo usando um navegador da web através do *WebFig* ou da ferramenta *WinBox em*[https://mt.lv/winbox](https://mt.lv/winbox); **estão disponíveis vários métodos de configuração para garantir a acessibilidade;**
 - Acesse *WebFig* abrindo http://192.168.88.1, e para *WinBox*, baixe a ferramenta, navegue até a aba *Neighbors* e clique no endereço MAC. O nome de usuário é *"admin"* sem senha (ou, para alguns modelos, verifique as senhas de usuário e wireless no adesivo);
+- Clique no botão "Check for updates" e atualize o RouterOS para a versão mais recente;
 - Para atualizar manualmente o dispositivo, visite mikrotik.com, selecione o seu modelo e localize os pacotes necessários na seção "Downloads";
 - Carregue os pacotes baixados no menu *WebFig* ou WinBox *"Files"* e reinicie o dispositivo;
 - Atualizar o software RouterOS para a versão mais recente garantirá o melhor desempenho, estabilidade e atualizações de segurança;
@@ -1136,6 +1158,7 @@ Este responsabilitatea utilizatorilor finali să urmeze reglementările locale a
 - Conectați adaptorul de alimentare la injectorul PoE;
 - Configurați dispozitivul folosind un browser web prin *WebFig* sau instrumentul *WinBox* la [https://mt.lv/winbox](https://mt.lv/winbox); **sunt disponibile mai multe metode de configurare pentru a asigura accesibilitatea;**
 - Accesați *WebFig* deschizând http://192.168.88.1, iar pentru *WinBox*, descărcați instrumentul, navigați la fila *Neighbors* și faceți clic pe adresa MAC. Numele de utilizator este *"admin"* fără parolă (sau, pentru unele modele, verificați parolele de utilizator și wireless pe autocolant);
+- Faceți clic pe butonul "Check for updates" și actualizați RouterOS la cea mai recentă versiune;
 - Pentru actualizarea manuală a dispozitivului, accesați mikrotik.com, selectați modelul dvs. și găsiți pachetele necesare în secțiunea "Downloads";
 - Încărcați pachetele descărcate în meniul *WebFig* sau WinBox *"Files"* și reporniți dispozitivul;
 - Actualizarea software-ului RouterOS la cea mai recentă versiune va asigura cea mai bună performanță, stabilitate și actualizări de securitate;
@@ -1183,6 +1206,7 @@ V závislosti od použitej antény musíte nastaviť jej zisk. Tým sa zabezpeč
 - Pripojte napájací adaptér k PoE injektoru;
 - Nakonfigurujte svoje zariadenie pomocou webového prehliadača cez *WebFig* alebo nástroj *WinBox* na [https://mt.lv/winbox](https://mt.lv/winbox); **na zabezpečenie prístupnosti sú k dispozícii viaceré metódy konfigurácie;**
 - Prejdite na *číslo WebFig* otvorením http://192.168.88.1 a pre *číslo WinBox* si stiahnite nástroj, prejdite na kartu *Neighbors* a kliknite na adresu MAC. Používateľské meno je *"admin"* bez hesla (alebo pri niektorých modeloch skontrolujte používateľské a bezdrôtové heslo na nálepke);
+- Kliknite na tlačidlo "Check for updates" a aktualizujte RouterOS na najnovšiu verziu;
 - Na manuálnu aktualizáciu zariadenia navštívte mikrotik.com, vyberte svoj model a nájdite požadované balíčky v sekcii "Downloads";
 - Nahrajte stiahnuté balíčky do ponuky *WebFig* alebo WinBox *"Files"* a reštartujte zariadenie;
 - Aktualizácia softvéru RouterOS na najnovšiu verziu zabezpečí najlepší výkon, stabilitu a aktualizácie zabezpečenia;
@@ -1230,6 +1254,7 @@ Glede na uporabljeno anteno morate nastaviti njeno ojačanje. Tako bi zagotovili
 - Priključite napajalnik na injektor PoE;
 - Konfigurirajte svojo napravo s spletnim brskalnikom prek *WebFig* ali orodja *WinBox* na [https://mt.lv/winbox](https://mt.lv/winbox); **na voljo je več metod konfiguracije za zagotovitev dostopnosti;**
 - Dostopite do *WebFig* tako, da odprete http://192.168.88.1, za *WinBox* pa prenesite orodje, pojdite na zavihek *Neighbors* in kliknite naslov MAC. Uporabniško ime je *"admin"* brez gesla (ali pri nekaterih modelih preverite uporabniško in brezžično geslo na nalepki);
+- Kliknite na gumb "Check for updates" in posodobite RouterOS na najnovejšo različico;
 - Za ročno posodobitev naprave obiščite mikrotik.com, izberite svoj model in poiščite potrebne pakete v razdelku "Downloads";
 - Prenesene pakete naložite v meni *WebFig* ali WinBox *"Files"* in znova zaženite napravo;
 - Posodobitev programske opreme RouterOS na najnovejšo različico bo zagotovila najboljše delovanje, stabilnost in varnostne posodobitve;
@@ -1277,6 +1302,7 @@ Beroende på vilken antenn som används måste du ställa in förstärkningen. D
 - Anslut strömadaptern till PoE-injektorn;
 - Konfigurera din enhet med en webbläsare via *WebFig* eller verktyget *WinBox* på [https://mt.lv/winbox](https://mt.lv/winbox); **flera konfigurationsmetoder är tillgängliga för att säkerställa tillgänglighet;**
 - Gå till *WebFig* genom att öppna http://192.168.88.1 och för *WinBox* ladda ner verktyget, navigera till fliken *Neighbors* och klicka på MAC-adressen. Användarnamnet är *"admin"* utan lösenord (eller, för vissa modeller, kontrollera användar- och trådlösa lösenord på klistermärket);
+- Klicka på knappen "Check for updates" och uppdatera RouterOS till den senaste versionen;
 - För manuell uppdatering av enheten, gå till mikrotik.com, välj din modell och hitta de nödvändiga paketen i avsnittet "Downloads";
 - Ladda ner nedladdade paket till menyn *WebFig* eller WinBox *"Files"* och starta om enheten;
 - Om du uppdaterar din RouterOS-programvara till den senaste versionen garanteras bästa prestanda, stabilitet och säkerhetsuppdateringar;
@@ -1324,6 +1350,7 @@ Tillverkare: Mikrotikls SIA, Unijas iela 2, Riga, Lettland, LV1039.
 - 将电源适配器连接至 PoE 供电器；
 - 使用网络浏览器通过 *WebFig* 或 *WinBox* 工具（[https://mt.lv/winbox](https://mt.lv/winbox) ）配置您的设备； **提供多种配置方法以确保可访问性；**
 - 通过打开http://192.168.88.1 访问 *WebFig*，对于 *WinBox* ，下载该工具，导航到 *Neighbors* 选项卡，然后单击 MAC 地址。用户名是 *"admin"* ，没有密码（或者，对于某些型号，请检查贴纸上的用户和无线密码）；
+- 单击"Check for updates"按钮并将RouterOS更新到最新版本;
 - 要手动更新设备，请访问 mikrotik.com，选择您的型号，并在"Downloads"部分找到所需的软件包；
 - 将下载的包上传到 *WebFig* 或 *WinBox* *"Files"* 菜单并重启设备；
 - 将您的 RouterOS 软件更新到最新版本将确保最佳性能、稳定性和安全更新；
@@ -1371,6 +1398,7 @@ Tillverkare: Mikrotikls SIA, Unijas iela 2, Riga, Lettland, LV1039.
 - Подключите адаптер питания к PoE-инжектору;
 - Настройте свое устройство при помощи веб-браузера и *WebFig* или утилиты *WinBox*[https://mt.lv/winbox](https://mt.lv/winbox); **существует несколько методов настройки для обеспечения доступности;**
 - Откройте адрес в веб-браузере http://192.168.88.1, или, используя *WinBox* перейдите на вкладку *Neighbors* и нажмите на MAC-адрес. Имя пользователя - *"admin"* без пароля (или, для некоторых моделей, проверьте пароль пользователя и пароль беспроводной сети на наклейке);
+- Нажмите кнопку "Check for updates" и обновите RouterOS до последней версии;
 - Для ручного обновления устройства зайдите на mikrotik.com, выберите свою модель и найдите необходимые пакеты в разделе "Downloads";
 - Загрузите скачанные пакеты в *WebFig* или WinBox *"Files"* меню и перезагрузите устройство;
 - Обновление программного обеспечения RouterOS до последней версии обеспечит максимальную производительность, стабильность и обновления безопасности;
@@ -1476,6 +1504,7 @@ Tillverkare: Mikrotikls SIA, Unijas iela 2, Riga, Lettland, LV1039.
 - Підключіть адаптер живлення до PoE-інжектора;
 - Налаштуйте свій пристрій за допомогою веб-браузера через *WebFig*, або інструменту *WinBox* [https://mt.lv/winbox](https://mt.lv/winbox); **існує декілька методів налаштування для забезпечення доступності**;
 - Відкритйе адресу http://192.168.88.1 у *WebFig*, або перейдіть на вкладку *Neighbors* у *WinBox*, і натисніть на MAC-адресу. Ім’я користувача *"admin"* без пароля (або, для деяких моделей, перевірте пароль користувача та пароль бездротового зв’язку на наклейці);
+- Натисніть кнопку "Check for updates" і оновіть RouterOS до останньої версії;
 - Щоб оновити пристрій вручну, відвідайте сторінку продуктів за адресою mikrotik.com, виберіть свою модель і знайдіть потрібні пакети в розділі "Downloads";
 - Завантажте пакети в меню *"Files"* *WebFig* або *WinBox* та перезавантажте пристрій;
 - Оновивши програмне забезпечення RouterOS до останньої версії, ви зможете забезпечити оптимальну продуктивність, стабільність і оновлення безпеки;
@@ -1590,7 +1619,7 @@ The same type of antenna and lower antenna gain than those listed above may also
 | SL | Mikrotīkls SIA potrjuje, da je tip radijske opreme RouterBOARD skladen z Direktivo 2014/53/EU. Celotno besedilo izjave EU o skladnosti je na voljo na naslednjem spletnem naslovu: [https://mikrotik.com/products](https://mikrotik.com/products) |
 | SV | Härmed försäkrar Mikrotīkls SIA att denna typ av radioutrustning RouterBOARD överensstämmer med direktiv 2014/53/EU. Den fullständiga texten till EU-försäkran om överensstämmelse finns på följande webbadress: [https://mikrotik.com/products](https://mikrotik.com/products) |
 
-### WLAN
+## WLAN
 
   
     

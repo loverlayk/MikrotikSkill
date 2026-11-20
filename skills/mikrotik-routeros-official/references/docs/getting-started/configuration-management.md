@@ -140,7 +140,7 @@ An export command can be executed from each menu (resulting in configuration exp
 :::danger
 The Export command does not export system user passwords, installed certificates, SSH keys, Dude, or a User-manager database.
 
-[Installed certificates](../../authentication-authorization-accounting/certificates.md#export-certificates), [Dude](../../management-tools/dude.md), and [User Manager](../../authentication-authorization-accounting/user-manager.md#database) databases must be manually exported and imported into a new device.
+[Installed certificates](../../authentication-authorization-accounting/certificates.md#export-certificates), [Dude](../../management-tools/dude.md), and [User Manager](../../authentication-authorization-accounting/user-manager.md) databases must be manually exported and imported into a new device.
 
 System user passwords and user SSH keys can not be exported.
 

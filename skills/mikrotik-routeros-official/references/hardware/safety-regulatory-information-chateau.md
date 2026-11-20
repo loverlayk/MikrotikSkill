@@ -1,32 +1,27 @@
 # Safety and regulatory information - Chateau LTE6
 
-> This device needs to be upgraded to RouterOS v7.10.1 or the latest version to ensure compliance with local country regulations!
-
-# Model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6)
+> It is the end user's responsibility to follow local country regulations, including operation within legal frequency channels, output power, cabling requirements, and Dynamic Frequency Selection (DFS) requirements....
 
 ![](./img/mt_logo_arrow_v2-02.png)
 
 ## EN - English - Safety and Regulatory information
 
-*This device needs to be upgraded to RouterOS v7.10.1 or the latest version to ensure compliance with local country regulations!*
+:::warning
+This device needs to be upgraded to RouterOS v7.10.1 or the latest version to ensure compliance with local country regulations!
 
-*It is the end user's responsibility to follow local country regulations, including operation within legal frequency channels, output power, cabling requirements, and Dynamic Frequency Selection (DFS) requirements. All MikroTik radio devices must be professionally installed.*
+It is the end user's responsibility to follow local country regulations, including operation within legal frequency channels, output power, cabling requirements, and Dynamic Frequency Selection (DFS) requirements. All MikroTik radio devices must be professionally installed.
+:::
 
-*This document covers the model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+This document covers the model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*This is Wireless Network Device. You can find the product model name on the case label (ID).
-![](./img/image2020-1-31_12-4-32.badge.png)
-*
-
-*Please visit the user manual page on https://mt.lv/um for the full up-to-date user manual. Or scan the QR code with your mobile phone.*
-
+*This is Wireless Network Device. You can find the product model name on the case label (ID).*
+*Please visit the user manual page on https://mt.lv/um for the full up-to-date user manual. Or scan the QR code with your mobile phone.*
 *The most important technical specifications for this product can be found on the last page of this document.*
-
 *Technical specifications, brochures, and more info about products at https://mikrotik.com/products*
+*Configuration manual for software in your language with additional information can be found at https://mt.lv/help*
+*MikroTik devices are for professional use. If you do not have qualifications please seek a consultant https://mikrotik.com/consultants*
 
-*Configuration manual for software in your language with additional information can be found at https://mt.lv/help*
-
-*MikroTik devices are for professional use. If you do not have qualifications please seek a consultant https://mikrotik.com/consultants*
+![](./img/image2020-1-31_12-4-32.badge.png)
 
 **Safety Information:**
 
@@ -38,33 +33,31 @@
 - The socket-outlet shall be installed near the equipment and shall be easily accessible.
 - In the case of device failure, please disconnect it from power. The fastest way to do so is by unplugging the power adapter from the power outlet.
 - To avoid contamination of the environment, separate the device from household waste and dispose of it in a safe manner, for example, in designated areas. Become familiar with procedures for properly transporting the equipment to designated collection points in your area.
+
 **Exposure to Radio Frequency Radiation:** This MikroTik equipment complies with the European Union radiation exposure limits set forth for an uncontrolled environment. This MikroTik device should be installed and operated no closer than 20 centimeters from your body, occupational user, or the general public.
 
 Manufacturer: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
 
-**Note:**For some models, check the user and wireless passwords on the sticker.
+**Note:** For some models, check the user and wireless passwords on the sticker.
 
 ## BG - Български. Информация за безопасност и нормативна уредба
 
-*Това устройство трябва да бъде надстроено до RouterOS v7.10.1 или най-новата версия, за да се гарантира спазването на местните регулаторни разпоредби.*
+:::warning
+Това устройство трябва да бъде надстроено до RouterOS v7.10.1 или най-новата версия, за да се гарантира спазването на местните регулаторни разпоредби.
 
-*Крайните потребители са отговорни за спазването на местните разпоредби, включително работата в рамките на законни честотни канали, извеждане на продукция**изисквания за захранване, окабеляване и изисквания за динамичен избор на честота (DFS).* *Всички радиоустройства на MikroTik трябва да бъдат**професионално инсталиран.*
+Крайните потребители са отговорни за спазването на местните разпоредби, включително работата в рамките на законни честотни канали, извеждане на продукция изисквания за захранване, окабеляване и изисквания за динамичен избор на честота (DFS). Всички радиоустройства на MikroTik трябва да бъдат професионално инсталиран.
+:::
 
-*Този документ обхваща модела: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Този документ обхваща модела: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Това е устройство за безжична мрежа.* *Можете да намерите името на модела на продукта на етикета на регистъра (ID).
-![](./img/image2020-2-4_17-15-57.badge.png)
-*
-
-*Моля, посетете страницата с ръководството за потребителя на https://mt.lv/um-bg за пълното актуализирано ръководство за употреба. Или сканирайте QR кода с мобилния си телефон.*
-
+*Това е устройство за безжична мрежа. Можете да намерите името на модела на продукта на етикета на регистъра (ID).*
+*Моля, посетете страницата с ръководството за потребителя на https://mt.lv/um-bg за пълното актуализирано ръководство за употреба. Или сканирайте QR кода с мобилния си телефон.*
 *Най-важните технически спецификации за този продукт могат да бъдат намерени на последната страница на този документ.*
+*Технически спецификации, брошури и повече информация за продуктите на https://mikrotik.com/products*
+*Ръководство за конфигуриране на софтуер на вашия език с допълнителна информация можете да намерите на https://mt.lv/help-bg*
+*Устройствата MikroTik са за професионална употреба. Ако нямате квалификация, моля, потърсете консултант https://mikrotik.com/consultants*
 
-*Технически спецификации, брошури и повече информация за продуктите на https://mikrotik.com/products*
-
-*Ръководство за конфигуриране на софтуер на вашия език с допълнителна информация можете да намерите на https://mt.lv/help-bg*
-
-*Устройствата MikroTik са за професионална употреба. Ако нямате квалификация, моля, потърсете консултант https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-15-57.badge.png)
 
 **Информация за безопасност:**
 
@@ -76,33 +69,31 @@ Manufacturer: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
 - Контактът трябва да бъде монтиран близо до оборудването и да бъде лесно достъпен.
 - В случай на повреда на устройството, моля, изключете го от захранването. Най-бързият начин да направите това е чрез изключване на захранващия адаптер от контакта.
 - За да избегнете замърсяване на околната среда, отделете устройството от битовите отпадъци и го изхвърлете по безопасен начин, например на определени места. Запознайте се с процедурите за правилно транспортиране на оборудването до определените пунктове за събиране във вашия район.
-**Излагане на радиочестотно излъчване:**Това оборудване MikroTik отговаря на ограниченията за радиация на радиационната радиация Европейския съюз, определени за неконтролирана среда.Това устройство MikroTik трябва да бъде инсталирано и експлоатирано на не по-малко от 20 сантиметра от вашето тяло, професионален потребител или широката общественост.
+
+**Излагане на радиочестотно излъчване:** Това оборудване MikroTik отговаря на ограниченията за радиация на радиационната радиация Европейския съюз, определени за неконтролирана среда.Това устройство MikroTik трябва да бъде инсталирано и експлоатирано на не по-малко от 20 сантиметра от вашето тяло, професионален потребител или широката общественост.
 
 Производител: Mikrotikls SIA, Unijas 2, Рига, Латвия, LV1039.
 
-**Забележка:**За някои модели проверете потребителската и безжичната парола на стикера.
+**Забележка:** За някои модели проверете потребителската и безжичната парола на стикера.
 
 ## CS - Česko. Bezpečnostní a regulační informace
 
-*Toto zařízení musí být upgradováno na RouterOS v7.10.1 nebo na nejnovější verzi, aby bylo zajištěno dodržování předpisů místních úřadů.*
+:::warning
+Toto zařízení musí být upgradováno na RouterOS v7.10.1 nebo na nejnovější verzi, aby bylo zajištěno dodržování předpisů místních úřadů.
 
-*Je odpovědností koncových uživatelů dodržovat místní předpisy, včetně provozu v rámci legálních frekvenčních kanálů, výstupů**požadavky na napájení, kabeláž a dynamický výběr frekvence (DFS).* *Všechna rádiová zařízení MikroTik musí být**profesionálně nainstalován.*
+Je odpovědností koncových uživatelů dodržovat místní předpisy, včetně provozu v rámci legálních frekvenčních kanálů, výstupů požadavky na napájení, kabeláž a dynamický výběr frekvence (DFS). Všechna rádiová zařízení MikroTik musí být profesionálně nainstalován.
+:::
 
-*Tento dokument se týká modelu: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Tento dokument se týká modelu: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Toto je bezdrátové síťové zařízení.* *Název modelu produktu najdete na štítku případu (ID).
-![](./img/image2020-2-4_17-16-42.badge.png)
-*
-
-*Úplnou aktuální uživatelskou příručku naleznete na stránce uživatelské příručky na adrese https://mt.lv/um-cs. Nebo naskenujte QR kód pomocí mobilního telefonu.*
-
+*Toto je bezdrátové síťové zařízení. Název modelu produktu najdete na štítku případu (ID).*
+*Úplnou aktuální uživatelskou příručku naleznete na stránce uživatelské příručky na adrese https://mt.lv/um-cs. Nebo naskenujte QR kód pomocí mobilního telefonu.*
 *Nejdůležitější technické specifikace tohoto produktu naleznete na poslední straně tohoto dokumentu.*
+*Technické specifikace, brožury a další informace o produktech na adrese https://mikrotik.com/products*
+*Konfigurační příručku pro software ve vašem jazyce s dalšími informacemi naleznete na adrese https://mt.lv/help-cs*
+*Zařízení MikroTik jsou určena pro profesionální použití. Pokud nemáte kvalifikaci, vyhledejte konzultanta https://mikrotik.com/consultants*
 
-*Technické specifikace, brožury a další informace o produktech na adrese https://mikrotik.com/products*
-
-*Konfigurační příručku pro software ve vašem jazyce s dalšími informacemi naleznete na adrese https://mt.lv/help-cs*
-
-*Zařízení MikroTik jsou určena pro profesionální použití. Pokud nemáte kvalifikaci, vyhledejte konzultanta https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-16-42.badge.png)
 
 **Bezpečná informace:**
 
@@ -114,6 +105,7 @@ Manufacturer: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
 - Zásuvka musí být instalována v blízkosti zařízení a musí být snadno dostupná.
 - V případě poruchy zařízení jej prosím odpojte od napájení. Nejrychlejším způsobem je odpojení napájecího adaptéru ze zásuvky.
 - Abyste zabránili znečištění životního prostředí, oddělte zařízení od domácího odpadu a zlikvidujte jej bezpečným způsobem, například na určených místech. Seznamte se s postupy správné přepravy zařízení na určená sběrná místa ve vaší oblasti.
+
 **Vystavení vysokofrekvenčnímu záření:** Toto zařízení MikroTik splňuje limity pro ozáření Evropské unie stanovené pro nekontrolované prostředí. Toto zařízení MikroTik by mělo být instalováno a provozováno ne dále než 20 centimetrů od těla, profesionálního uživatele nebo široké veřejnosti.
 
 Výrobce: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
@@ -122,25 +114,22 @@ Výrobce: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
 
 ## DA - Dansk. Sikkerhed og lovgivningsmæssige oplysninger
 
-*Denne enhed skal opgraderes til RouterOS v7.10.1 eller den nyeste version for at sikre overholdelse af lokale myndigheders regler.*
+:::warning
+Denne enhed skal opgraderes til RouterOS v7.10.1 eller den nyeste version for at sikre overholdelse af lokale myndigheders regler.
 
-*Det er slutbrugerens ansvar at følge lokale landes regler, herunder drift inden for lovlige frekvenskanaler, output**strøm, kablingskrav og DFS-krav (Dynamic Frequency Selection).* *Alle MikroTik-radioenheder skal være**professionelt installeret.*
+Det er slutbrugerens ansvar at følge lokale landes regler, herunder drift inden for lovlige frekvenskanaler, output strøm, kablingskrav og DFS-krav (Dynamic Frequency Selection). Alle MikroTik-radioenheder skal være professionelt installeret.
+:::
 
-*Dette dokument dækker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Dette dokument dækker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Dette er trådløs netværksenhed.* *Du kan finde produktmodelnavnet på sagetiketten (ID).
-![](./img/image2020-2-4_17-13-55.badge.png)
-*
-
-*Besøg siden med brugermanualen på https://mt.lv/um-da for den fulde ajourførte brugermanual. Eller skan QR-koden med din mobiltelefon.*
-
+*Dette er trådløs netværksenhed. Du kan finde produktmodelnavnet på sagetiketten (ID).*
+*Besøg siden med brugermanualen på https://mt.lv/um-da for den fulde ajourførte brugermanual. Eller skan QR-koden med din mobiltelefon.*
 *De vigtigste tekniske specifikationer for dette produkt kan findes på sidste side i dette dokument.*
+*Tekniske specifikationer, brochurer og mere info om produkter på https://mikrotik.com/products*
+*Konfigurationsvejledning til software på dit sprog med yderligere oplysninger kan findes på https://mt.lv/help-da*
+*MikroTik-enheder er til professionel brug. Hvis du ikke har kvalifikationer, bedes du kontakte en konsulent https://mikrotik.com/consultants*
 
-*Tekniske specifikationer, brochurer og mere info om produkter på https://mikrotik.com/products*
-
-*Konfigurationsvejledning til software på dit sprog med yderligere oplysninger kan findes på https://mt.lv/help-da*
-
-*MikroTik-enheder er til professionel brug. Hvis du ikke har kvalifikationer, bedes du kontakte en konsulent https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-13-55.badge.png)
 
 **Sikkerhedsoplysninger:**
 
@@ -152,6 +141,7 @@ Výrobce: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
 - Stikkontakten skal installeres i nærheden af ​​udstyret og skal være let tilgængelig.
 - I tilfælde af fejl på enheden skal du frakoble det fra strømmen. Den hurtigste måde at gøre det er ved at tage stikket ud af stikkontakten.
 - For at undgå forurening af miljøet skal apparatet adskilles fra husholdningsaffald og bortskaffes på en sikker måde, f.eks. I bestemte områder. Bliv fortrolig med procedurer til korrekt transport af udstyr til udpegede indsamlingssteder i dit område.
+
 **Eksponering for radiofrekvensstråling:** Dette MikroTik-udstyr overholder EU's strålingseksponeringsgrænser, der er fastsat for et ukontrolleret miljø. Denne MikroTik-enhed skal installeres og betjenes ikke nærmere 20 centimeter fra din krop, erhvervsbruger eller offentligheden.
 
 Producent: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
@@ -160,25 +150,22 @@ Producent: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
 
 ## DE - Deutsche. Sicherheits- und aufsichtsrechtliche Informationen
 
-*Dieses Gerät muss auf RouterOS v7.10.1 oder die neueste Version aktualisiert werden, um die Einhaltung der örtlichen behördlichen Vorschriften zu gewährleisten.*
+:::warning
+Dieses Gerät muss auf RouterOS v7.10.1 oder die neueste Version aktualisiert werden, um die Einhaltung der örtlichen behördlichen Vorschriften zu gewährleisten.
 
-*Es liegt in der Verantwortung des Endbenutzers, die örtlichen Vorschriften zu befolgen, einschließlich des Betriebs innerhalb der gesetzlichen Frequenzkanäle und der Ausgabe**Anforderungen an Stromversorgung, Verkabelung und dynamische Frequenzauswahl (Dynamic Frequency Selection, DFS).* *Alle MikroTik Funkgeräte müssen**professionell installiert.*
+Es liegt in der Verantwortung des Endbenutzers, die örtlichen Vorschriften zu befolgen, einschließlich des Betriebs innerhalb der gesetzlichen Frequenzkanäle und der Ausgabe Anforderungen an Stromversorgung, Verkabelung und dynamische Frequenzauswahl (Dynamic Frequency Selection, DFS). Alle MikroTik Funkgeräte müssen professionell installiert.
+:::
 
-*Dieses Dokument behandelt das Modell: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Dieses Dokument behandelt das Modell: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Dies ist ein drahtloses Netzwerkgerät.* *Den Produktmodellnamen finden Sie auf dem Gehäuseaufkleber (ID).
-![](./img/image2020-2-4_17-20-45.badge.png)
-*
-
-*Bitte besuchen Sie die Seite mit dem Benutzerhandbuch unter https://mt.lv/um-de, um das vollständige und aktuelle Benutzerhandbuch zu erhalten. Oder scannen Sie den QR-Code mit Ihrem Handy.*
-
+*Dies ist ein drahtloses Netzwerkgerät. Den Produktmodellnamen finden Sie auf dem Gehäuseaufkleber (ID).*
+*Bitte besuchen Sie die Seite mit dem Benutzerhandbuch unter https://mt.lv/um-de, um das vollständige und aktuelle Benutzerhandbuch zu erhalten. Oder scannen Sie den QR-Code mit Ihrem Handy.*
 *Die wichtigsten technischen Daten zu diesem Produkt finden Sie auf der letzten Seite dieses Dokuments.*
+*Technische Spezifikationen, Broschüren und weitere Informationen zu Produkten finden Sie unter https://mikrotik.com/products*
+*Das Konfigurationshandbuch für Software in Ihrer Sprache mit zusätzlichen Informationen finden Sie unter https://mt.lv/help-de*
+*MikroTik-Geräte sind für den professionellen Einsatz bestimmt. Wenn Sie keine Qualifikationen haben, suchen Sie bitte einen Berater https://mikrotik.com/consultants*
 
-*Technische Spezifikationen, Broschüren und weitere Informationen zu Produkten finden Sie unter https://mikrotik.com/products*
-
-*Das Konfigurationshandbuch für Software in Ihrer Sprache mit zusätzlichen Informationen finden Sie unter https://mt.lv/help-de*
-
-*MikroTik-Geräte sind für den professionellen Einsatz bestimmt. Wenn Sie keine Qualifikationen haben, suchen Sie bitte einen Berater https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-20-45.badge.png)
 
 **Sicherheitsinformation:**
 
@@ -190,6 +177,7 @@ Producent: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
 - Die Steckdose muss in der Nähe des Geräts installiert und leicht zugänglich sein.
 - Trennen Sie das Gerät bei einem Stromausfall vom Stromnetz. Der schnellste Weg, dies zu tun, besteht darin, das Netzteil aus der Steckdose zu ziehen.
 - Um eine Kontamination der Umwelt zu vermeiden, trennen Sie das Gerät vom Hausmüll und entsorgen Sie es auf sichere Weise, z. B. in dafür vorgesehenen Bereichen. Machen Sie sich mit den Verfahren für den ordnungsgemäßen Transport der Geräte zu bestimmten Sammelstellen in Ihrer Nähe vertraut.
+
 **Exposition gegenüber hochfrequenter Strahlung:** Dieses MikroTik-Gerät entspricht den EU-Grenzwerten für die Strahlenexposition in unkontrollierten Umgebungen. Dieses MikroTik-Gerät sollte nicht näher als 20 Zentimeter von Ihrem Körper, berufsmäßigen Verwender oder der Öffentlichkeit entfernt installiert und betrieben werden.
 
 Hersteller: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
@@ -198,25 +186,22 @@ Hersteller: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 
 ## EL - Ελληνικά. Πληροφορίες ασφάλειας και κανονισμών
 
-*Αυτή η συσκευή πρέπει να αναβαθμιστεί στο RouterOS v7.10.1 ή την τελευταία έκδοση για να διασφαλιστεί η συμμόρφωση με τους κανονισμούς της τοπικής αυτοδιοίκησης.*
+:::warning
+Αυτή η συσκευή πρέπει να αναβαθμιστεί στο RouterOS v7.10.1 ή την τελευταία έκδοση για να διασφαλιστεί η συμμόρφωση με τους κανονισμούς της τοπικής αυτοδιοίκησης.
 
-*Είναι ευθύνη των τελικών χρηστών να ακολουθούν τους τοπικούς κανονισμούς των χωρών, συμπεριλαμβανομένης της λειτουργίας εντός των νόμιμων καναλιών συχνότητας, της παραγωγής**ισχύ, απαιτήσεις καλωδίωσης και απαιτήσεις δυναμικής επιλογής συχνότητας (DFS).* *Όλες οι ασύρματες συσκευές MikroTik πρέπει να είναι**επαγγελματικά εγκατεστημένο.*
+Είναι ευθύνη των τελικών χρηστών να ακολουθούν τους τοπικούς κανονισμούς των χωρών, συμπεριλαμβανομένης της λειτουργίας εντός των νόμιμων καναλιών συχνότητας, της παραγωγής ισχύ, απαιτήσεις καλωδίωσης και απαιτήσεις δυναμικής επιλογής συχνότητας (DFS). Όλες οι ασύρματες συσκευές MikroTik πρέπει να είναι επαγγελματικά εγκατεστημένο.
+:::
 
-*Αυτό το έγγραφο καλύπτει το μοντέλο: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Αυτό το έγγραφο καλύπτει το μοντέλο: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Αυτή είναι η ασύρματη συσκευή δικτύου.* *Μπορείτε να βρείτε το όνομα του μοντέλου προϊόντος στην ετικέτα της θήκης (ID).
-![](./img/image2020-2-4_17-25-41.badge.png)
-*
-
-*Επισκεφτείτε τη σελίδα του εγχειριδίου χρήστη στο https://mt.lv/um-el για το πλήρες ενημερωμένο εγχειρίδιο χρήσης. Ή να σαρώσετε τον κωδικό QR με το κινητό σας τηλέφωνο.*
-
+*Αυτή είναι η ασύρματη συσκευή δικτύου. Μπορείτε να βρείτε το όνομα του μοντέλου προϊόντος στην ετικέτα της θήκης (ID).*
+*Επισκεφτείτε τη σελίδα του εγχειριδίου χρήστη στο https://mt.lv/um-el για το πλήρες ενημερωμένο εγχειρίδιο χρήσης. Ή να σαρώσετε τον κωδικό QR με το κινητό σας τηλέφωνο.*
 *Οι πιο σημαντικές τεχνικές προδιαγραφές για αυτό το προϊόν βρίσκονται στην τελευταία σελίδα αυτού του εγγράφου.*
+*Τεχνικές προδιαγραφές, φυλλάδια και περισσότερες πληροφορίες για τα προϊόντα στη διεύθυνση https://mikrotik.com/products*
+*Το εγχειρίδιο διαμόρφωσης για λογισμικό στη γλώσσα σας με πρόσθετες πληροφορίες βρίσκεται στη διεύθυνση https://mt.lv/help-el*
+*Οι συσκευές MikroTik προορίζονται για επαγγελματική χρήση. Εάν δεν έχετε τα προσόντα παρακαλώ ζητήστε έναν σύμβουλο https://mikrotik.com/consultants*
 
-*Τεχνικές προδιαγραφές, φυλλάδια και περισσότερες πληροφορίες για τα προϊόντα στη διεύθυνση https://mikrotik.com/products*
-
-*Το εγχειρίδιο διαμόρφωσης για λογισμικό στη γλώσσα σας με πρόσθετες πληροφορίες βρίσκεται στη διεύθυνση https://mt.lv/help-el*
-
-*Οι συσκευές MikroTik προορίζονται για επαγγελματική χρήση. Εάν δεν έχετε τα προσόντα παρακαλώ ζητήστε έναν σύμβουλο https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-25-41.badge.png)
 
 **Οδηγίες ασφαλείας:**
 
@@ -228,6 +213,7 @@ Hersteller: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - Η πρίζα πρέπει να είναι εγκατεστημένη κοντά στον εξοπλισμό και να είναι εύκολα προσβάσιμη.
 - Σε περίπτωση βλάβης της συσκευής, αποσυνδέστε την από την τροφοδοσία. Ο ταχύτερος τρόπος είναι να αποσυνδέσετε το τροφοδοτικό από την πρίζα.
 - Για να αποφύγετε τη μόλυνση του περιβάλλοντος, διαχωρίστε τη συσκευή από οικιακά απορρίμματα και απορρίψτε την με ασφαλή τρόπο, για παράδειγμα, σε καθορισμένες περιοχές. Εξοικειωθείτε με τις διαδικασίες για τη σωστή μεταφορά του εξοπλισμού σε καθορισμένα σημεία συλλογής στην περιοχή σας.
+
 **Έκθεση σε ακτινοβολία ραδιοσυχνοτήτων:** Αυτός ο εξοπλισμός MikroTik συμμορφώνεται με τα όρια έκθεσης ακτινοβολίας Ευρωπαϊκής Ένωσης που καθορίζονται για ανεξέλεγκτο περιβάλλον. Αυτή η συσκευή MikroTik πρέπει να εγκατασταθεί και να λειτουργήσει σε απόσταση μικρότερη από 20 εκατοστά από το σώμα σας, το επαγγελματικό χρήστη ή το ευρύ κοινό.
 
 Κατασκευαστής: Mikrotikls SIA, Unijas 2, Ρίγα, Λετονία, LV1039.
@@ -236,25 +222,22 @@ Hersteller: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 
 ## ES - Español. Información de seguridad y reglamentaria
 
-*Este dispositivo debe actualizarse a RouterOS v7.10.1 o la última versión para garantizar el cumplimiento de las regulaciones de las autoridades locales.*
+:::warning
+Este dispositivo debe actualizarse a RouterOS v7.10.1 o la última versión para garantizar el cumplimiento de las regulaciones de las autoridades locales.
 
-*Es responsabilidad del usuario final seguir las regulaciones locales del país, incluida la operación dentro de los canales legales de frecuencia, salida**alimentación, requisitos de cableado y requisitos de selección de frecuencia dinámica (DFS).* *Todos los dispositivos de radio MikroTik deben ser**instalado profesionalmente*
+Es responsabilidad del usuario final seguir las regulaciones locales del país, incluida la operación dentro de los canales legales de frecuencia, salida alimentación, requisitos de cableado y requisitos de selección de frecuencia dinámica (DFS). Todos los dispositivos de radio MikroTik deben ser instalado profesionalmente
+:::
 
-*Este documento cubre el modelo: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Este documento cubre el modelo: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Este es un dispositivo de red inalámbrica.* *Puede encontrar el nombre del modelo del producto en la etiqueta del caso (ID).
-![](./img/image2020-2-4_17-27-25.badge.png)
-*
-
-*Visite la página del manual del usuario en https://mt.lv/um-es para obtener el manual del usuario actualizado. O escanee el código QR con su teléfono móvil.*
-
+*Este es un dispositivo de red inalámbrica. Puede encontrar el nombre del modelo del producto en la etiqueta del caso (ID).*
+*Visite la página del manual del usuario en https://mt.lv/um-es para obtener el manual del usuario actualizado. O escanee el código QR con su teléfono móvil.*
 *Las especificaciones técnicas más importantes de este producto se encuentran en la última página de este documento.*
+*Especificaciones técnicas, folletos y más información sobre productos en https://mikrotik.com/products*
+*Puede encontrar el manual de configuración del software en su idioma con información adicional en https://mt.lv/help-es*
+*Los dispositivos MikroTik son para uso profesional. Si no tiene calificaciones, busque un consultor https://mikrotik.com/consultants*
 
-*Especificaciones técnicas, folletos y más información sobre productos en https://mikrotik.com/products*
-
-*Puede encontrar el manual de configuración del software en su idioma con información adicional en https://mt.lv/help-es*
-
-*Los dispositivos MikroTik son para uso profesional. Si no tiene calificaciones, busque un consultor https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-27-25.badge.png)
 
 **Información de seguridad:**
 
@@ -266,6 +249,7 @@ Hersteller: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - El tomacorriente se instalará cerca del equipo y será de fácil acceso.
 - En caso de falla del dispositivo, desconéctelo de la alimentación. La forma más rápida de hacerlo es desconectando el adaptador de alimentación de la toma de corriente.
 - Para evitar la contaminación del medio ambiente, separe el dispositivo de la basura doméstica y deséchelo de manera segura, por ejemplo, en las áreas designadas. Familiarícese con los procedimientos para transportar correctamente el equipo a los puntos de recolección designados en su área.
+
 **Exposición a la radiación de radiofrecuencia:** este equipo MikroTik cumple con los límites de exposición a la radiación de la Unión Europea establecidos para un entorno no controlado. Este dispositivo MikroTik debe instalarse y operarse a no menos de 20 centímetros de su cuerpo, usuario profesional o público en general.
 
 Fabricante: Mikrotikls SIA, Unijas 2, Riga, Letonia, LV1039.
@@ -281,8 +265,6 @@ Rango de frecuencia (potencia de salida máxima): 2400-2483.5 MHz (30 dBm), 572
 
 Número de Certificado de Homologación (IFT): Ver la etiqueta del producto.
 
-EFICIENCIA ENERGETICA CUMPLE CON LA NOM-029-ENER-2017.
-
 La operacion de este equipo esta sujeta a las siguientes dos condiciones:
 
 - Es posible que este equipo o dispositivo no cause interferencia perjudicial y.
@@ -295,25 +277,22 @@ Por favor contacte a su distribuidor local para preguntas regionales específica
 
 ## ET - Eestlane. Ohutus- ja regulatiivne teave
 
-*Kohaliku omavalitsuse eeskirjade järgimise tagamiseks tuleb see seade uuendada versioonile RouterOS v7.10.1 või uusimale versioonile.*
+:::warning
+Kohaliku omavalitsuse eeskirjade järgimise tagamiseks tuleb see seade uuendada versioonile RouterOS v7.10.1 või uusimale versioonile.
 
-*Lõppkasutajate kohustus on järgida kohaliku riigi seadusi, sealhulgas toimimist seaduslikes sageduskanalites, väljund**võimsus, kaabeldusnõuded ja dünaamilise sageduse valiku (DFS) nõuded.* *Kõik MikroTiku raadioseadmed peavad olema**professionaalselt paigaldatud.*
+Lõppkasutajate kohustus on järgida kohaliku riigi seadusi, sealhulgas toimimist seaduslikes sageduskanalites, väljund võimsus, kaabeldusnõuded ja dünaamilise sageduse valiku (DFS) nõuded. Kõik MikroTiku raadioseadmed peavad olema professionaalselt paigaldatud.
+:::
 
-*See dokument hõlmab mudelit: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+See dokument hõlmab mudelit: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*See on traadita võrguseade.* *Toote mudeli nime leiate kohvri sildilt (ID).
-![](./img/image2020-2-4_17-31-19.badge.png)
-*
-
-*Täieliku ja värske kasutusjuhendi saamiseks külastage kasutusjuhendit lehel https://mt.lv/um-et. Või skannige oma mobiiltelefoniga QR-koodi.*
-
+*See on traadita võrguseade. Toote mudeli nime leiate kohvri sildilt (ID).*
+*Täieliku ja värske kasutusjuhendi saamiseks külastage kasutusjuhendit lehel https://mt.lv/um-et. Või skannige oma mobiiltelefoniga QR-koodi.*
 *Selle toote kõige olulisemad tehnilised andmed leiate selle dokumendi viimaselt leheküljelt.*
+*Tehnilised kirjeldused, brošüürid ja lisateave toodete kohta leiate aadressilt https://mikrotik.com/products*
+*Teie keeles oleva tarkvara konfiguratsioonijuhend koos lisateabega leiate aadressilt https://mt.lv/help-et*
+*MikroTik seadmed on mõeldud professionaalseks kasutamiseks. Kui teil pole kvalifikatsiooni, pöörduge konsultandi poole https://mikrotik.com/consultants*
 
-*Tehnilised kirjeldused, brošüürid ja lisateave toodete kohta leiate aadressilt https://mikrotik.com/products*
-
-*Teie keeles oleva tarkvara konfiguratsioonijuhend koos lisateabega leiate aadressilt https://mt.lv/help-et*
-
-*MikroTik seadmed on mõeldud professionaalseks kasutamiseks. Kui teil pole kvalifikatsiooni, pöörduge konsultandi poole https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-31-19.badge.png)
 
 **Ohutusteave:**
 
@@ -325,6 +304,7 @@ Por favor contacte a su distribuidor local para preguntas regionales específica
 - Pistikupesa paigaldatakse seadme lähedusse ja see peab olema kergesti ligipääsetav.
 - Seadme rikke korral eraldage see vooluvõrgust. Kiireim viis selleks on toiteadapteri pistikupesast lahti ühendamine.
 - Keskkonna saastumise vältimiseks eraldage seade olmejäätmetest ja utiliseerige see ohutult, näiteks selleks ettenähtud kohtades. Tutvuge seadmete nõuetekohase transportimise protseduuridega teie piirkonnas asuvatesse kogumispunktidesse.
+
 **Raadiosagedusliku kiirgusega kokkupuude:** see MikroTik seade vastab Euroopa Liidu kiirguskontrolli piirnormidele, mis on kehtestatud kontrollimatu keskkonna jaoks. Seda MikroTiku seadet tuleks paigaldada ja kasutada mitte kaugemal kui 20 sentimeetrit kehast, tööga seotud kasutajast või üldsusest.
 
 Tootja: Mikrotikls SIA, Unijas 2, Riia, Läti, LV1039.
@@ -333,25 +313,22 @@ Tootja: Mikrotikls SIA, Unijas 2, Riia, Läti, LV1039.
 
 ## FI - Suomalainen. Turvallisuus- ja määräystiedot
 
-*Tämä laite on päivitettävä RouterOS v7.10.1 -versioon tai uusimpaan versioon, jotta varmistetaan paikallisviranomaisten määräysten noudattaminen.*
+:::warning
+Tämä laite on päivitettävä RouterOS v7.10.1 -versioon tai uusimpaan versioon, jotta varmistetaan paikallisviranomaisten määräysten noudattaminen.
 
-*Loppukäyttäjien vastuulla on noudattaa paikallisia maalakeja, mukaan lukien toiminta laillisilla taajuuskanavilla, lähtö**teho, kaapelointivaatimukset ja dynaamisen taajuuden valinnan (DFS) vaatimukset.* *Kaikkien MikroTik-radiolaitteiden on oltava**ammattimaisesti asennettu.*
+Loppukäyttäjien vastuulla on noudattaa paikallisia maalakeja, mukaan lukien toiminta laillisilla taajuuskanavilla, lähtö teho, kaapelointivaatimukset ja dynaamisen taajuuden valinnan (DFS) vaatimukset. Kaikkien MikroTik-radiolaitteiden on oltava ammattimaisesti asennettu.
+:::
 
-*Tämä asiakirja kattaa mallin: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Tämä asiakirja kattaa mallin: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Tämä on langaton verkkolaite.* *Tuotemallin nimi löytyy kotelon etiketistä (ID).
-![](./img/image2020-2-4_17-33-3.badge.png)
-*
-
-*Katso täydelliset ja ajantasaiset käyttöohjeet sivulta https://mt.lv/um-fi. Tai skannaa QR-koodi matkapuhelimellasi.*
-
+*Tämä on langaton verkkolaite. Tuotemallin nimi löytyy kotelon etiketistä (ID).*
+*Katso täydelliset ja ajantasaiset käyttöohjeet sivulta https://mt.lv/um-fi. Tai skannaa QR-koodi matkapuhelimellasi.*
 *Tämän tuotteen tärkeimmät tekniset tiedot ovat tämän asiakirjan viimeisellä sivulla.*
+*Tekniset tiedot, esitteet ja lisätietoja tuotteista osoitteessa https://mikrotik.com/products*
+*Kielelläsi olevien ohjelmistojen määritysoppaat, joissa on lisätietoja, ovat osoitteessa https://mt.lv/help-fi*
+*MikroTik-laitteet on tarkoitettu ammattikäyttöön. Jos sinulla ei ole pätevyyttä, ota yhteys konsulttiin https://mikrotik.com/consultants*
 
-*Tekniset tiedot, esitteet ja lisätietoja tuotteista osoitteessa https://mikrotik.com/products*
-
-*Kielelläsi olevien ohjelmistojen määritysoppaat, joissa on lisätietoja, ovat osoitteessa https://mt.lv/help-fi*
-
-*MikroTik-laitteet on tarkoitettu ammattikäyttöön. Jos sinulla ei ole pätevyyttä, ota yhteys konsulttiin https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-33-3.badge.png)
 
 **Turvallisuustieto:**
 
@@ -363,6 +340,7 @@ Tootja: Mikrotikls SIA, Unijas 2, Riia, Läti, LV1039.
 - Pistorasia on asennettava laitteen lähelle ja siihen on oltava helposti saatavilla.
 - Irrota laite sähkövirrasta, jos laite vioittuu. Nopein tapa tehdä tämä on irrottaa virtalähde pistorasiasta.
 - Ympäristön saastumisen välttämiseksi erota laite kotitalousjätteestä ja hävitä se turvallisella tavalla esimerkiksi määrätyillä alueilla. Tutustu toimenpiteisiin, joilla laite kuljetetaan asianmukaisesti alueellesi määritettyihin keräyspisteisiin.
+
 **Radiotaajuussäteilyaltistus:** Tämä MikroTik-laite on Euroopan unionin säteilyaltistusrajojen mukainen, jotka on asetettu hallitsemattomalle ympäristölle. Tämä MikroTik-laite tulisi asentaa ja käyttää vain lähempänä kuin 20 senttimetriä kehosta, ammattilaisista käyttäjistä tai yleisöstä.
 
 Valmistaja: Mikrotikls SIA, Unijas 2, Riika, Latvia, LV1039.
@@ -371,25 +349,22 @@ Valmistaja: Mikrotikls SIA, Unijas 2, Riika, Latvia, LV1039.
 
 ## FR - Français. Informations sur la sécurité et la réglementation
 
-*Cet appareil doit être mis à niveau vers RouterOS v7.10.1 ou la dernière version pour garantir la conformité aux réglementations des autorités locales.*
+:::warning
+Cet appareil doit être mis à niveau vers RouterOS v7.10.1 ou la dernière version pour garantir la conformité aux réglementations des autorités locales.
 
-*Il est de la responsabilité des utilisateurs finaux de suivre les réglementations locales du pays, y compris le fonctionnement dans les canaux de fréquence légaux, la sortie**les exigences d'alimentation, de câblage et de sélection dynamique de fréquence (DFS).* *Tous les appareils radio MikroTik doivent être**installé professionnellement.*
+Il est de la responsabilité des utilisateurs finaux de suivre les réglementations locales du pays, y compris le fonctionnement dans les canaux de fréquence légaux, la sortie les exigences d'alimentation, de câblage et de sélection dynamique de fréquence (DFS). Tous les appareils radio MikroTik doivent être installé professionnellement.
+:::
 
-*Ce document couvre le modèle : D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Ce document couvre le modèle : D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Il s'agit d'un périphérique réseau sans fil.* *Vous pouvez trouver le nom du modèle du produit sur l'étiquette du boîtier (ID).
-![](./img/image2020-2-4_17-35-53.badge.png)
-*
-
-*Veuillez visiter la page du manuel d'utilisation sur https://mt.lv/um-fr pour le manuel d'utilisation complet et à jour. Ou scannez le code QR avec votre téléphone portable.*
-
+*Il s'agit d'un périphérique réseau sans fil. Vous pouvez trouver le nom du modèle du produit sur l'étiquette du boîtier (ID).*
+*Veuillez visiter la page du manuel d'utilisation sur https://mt.lv/um-fr pour le manuel d'utilisation complet et à jour. Ou scannez le code QR avec votre téléphone portable.*
 *Les spécifications techniques les plus importantes pour ce produit se trouvent à la dernière page de ce document.*
+*Spécifications techniques, brochures et plus d'informations sur les produits sur https://mikrotik.com/products*
+*Vous trouverez le manuel de configuration du logiciel dans votre langue avec des informations supplémentaires sur https://mt.lv/help-fr*
+*Les appareils MikroTik sont destinés à un usage professionnel. Si vous n'avez pas de qualifications, veuillez consulter un consultant https://mikrotik.com/consultants*
 
-*Spécifications techniques, brochures et plus d'informations sur les produits sur https://mikrotik.com/products*
-
-*Vous trouverez le manuel de configuration du logiciel dans votre langue avec des informations supplémentaires sur https://mt.lv/help-fr*
-
-*Les appareils MikroTik sont destinés à un usage professionnel. Si vous n'avez pas de qualifications, veuillez consulter un consultant https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-35-53.badge.png)
 
 **Information sur la sécurité:**
 
@@ -401,6 +376,7 @@ Valmistaja: Mikrotikls SIA, Unijas 2, Riika, Latvia, LV1039.
 - La prise de courant doit être installée à proximité de l'équipement et doit être facilement accessible.
 - En cas de panne de l'appareil, veuillez le déconnecter de l'alimentation. La façon la plus rapide de le faire est de débrancher l'adaptateur secteur de la prise de courant.
 - Pour éviter la contamination de l'environnement, séparez l'appareil des déchets ménagers et éliminez-le de manière sûre, par exemple dans des zones désignées. Familiarisez-vous avec les procédures pour transporter correctement l'équipement vers les points de collecte désignés dans votre région.
+
 **Exposition aux rayonnements radiofréquences:** cet équipement MikroTik est conforme aux limites d'exposition aux rayonnements Union européenne établies pour un environnement non contrôlé. Cet appareil MikroTik doit être installé et utilisé à au moins 20 centimètres de votre corps, de l'utilisateur professionnel ou du grand public.
 
 Fabricant: Mikrotikls SIA, Unijas 2, Riga, Lettonie, LV1039.
@@ -409,25 +385,22 @@ Fabricant: Mikrotikls SIA, Unijas 2, Riga, Lettonie, LV1039.
 
 ## HR - Hrvatski. Informacije o sigurnosti i propisima
 
-*Ovaj je uređaj potrebno nadograditi na RouterOS v7.10.1 ili najnoviju verziju kako bi se osigurala sukladnost s lokalnim propisima.*
+:::warning
+Ovaj je uređaj potrebno nadograditi na RouterOS v7.10.1 ili najnoviju verziju kako bi se osigurala sukladnost s lokalnim propisima.
 
-*Odgovornost krajnjih korisnika je da slijede lokalne propise, uključujući rad unutar legalnih frekvencijskih kanala**zahtjevi za napajanje, kabliranje i zahtjevi za dinamički odabir frekvencije (DFS).* *Svi MikroTik radijski uređaji moraju biti**profesionalno instaliran.*
+Odgovornost krajnjih korisnika je da slijede lokalne propise, uključujući rad unutar legalnih frekvencijskih kanala zahtjevi za napajanje, kabliranje i zahtjevi za dinamički odabir frekvencije (DFS). Svi MikroTik radijski uređaji moraju biti profesionalno instaliran.
+:::
 
-*Ovaj dokument pokriva model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Ovaj dokument pokriva model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Ovo je bežični mrežni uređaj.* *Naziv modela proizvoda možete pronaći na naljepnici kućišta (ID).
-![](./img/image2020-2-4_17-37-28.badge.png)
-*
-
-*Molimo posjetite stranicu s priručnikom na https://mt.lv/um-hr za cjeloviti ažurirani korisnički priručnik. Ili skenirajte QR kod sa svojim mobilnim telefonom.*
-
+*Ovo je bežični mrežni uređaj. Naziv modela proizvoda možete pronaći na naljepnici kućišta (ID).*
+*Molimo posjetite stranicu s priručnikom na https://mt.lv/um-hr za cjeloviti ažurirani korisnički priručnik. Ili skenirajte QR kod sa svojim mobilnim telefonom.*
 *Najvažnije tehničke specifikacije za ovaj proizvod nalaze se na zadnjoj stranici ovog dokumenta.*
+*Tehničke specifikacije, brošure i više informacija o proizvodima na https://mikrotik.com/products*
+*Priručnik o konfiguraciji softvera na vašem jeziku s dodatnim informacijama potražite na https://mt.lv/help-hr*
+*MikroTik uređaji su za profesionalnu upotrebu. Ako nemate kvalifikacije, potražite savjetnika https://mikrotik.com/consultants*
 
-*Tehničke specifikacije, brošure i više informacija o proizvodima na https://mikrotik.com/products*
-
-*Priručnik o konfiguraciji softvera na vašem jeziku s dodatnim informacijama potražite na https://mt.lv/help-hr*
-
-*MikroTik uređaji su za profesionalnu upotrebu. Ako nemate kvalifikacije, potražite savjetnika https://mikrotik.com/consultants*
+![](./img/image2020-2-4_17-37-28.badge.png)
 
 **Sigurnosne informacije:**
 
@@ -439,6 +412,7 @@ Fabricant: Mikrotikls SIA, Unijas 2, Riga, Lettonie, LV1039.
 - Utičnica mora biti instalirana u blizini opreme i mora biti lako dostupna.
 - U slučaju kvara uređaja, isključite ga iz napajanja. Najbrži način za to je isključivanjem mrežnog adaptera iz utičnice.
 - Da biste izbjegli onečišćenje okoliša, odvojite uređaj od kućnog otpada i odložite ga na siguran način, na primjer, na za to predviđena mjesta. Upoznajte se s postupcima pravilnog transporta opreme do određenih sabirnih mjesta u vašem području.
+
 **Izloženost radiofrekvencijskom zračenju:** Ova oprema MikroTik udovoljava ograničenjima izloženosti zračenju Europske unije utvrđenim za nekontrolirano okruženje. Ovaj MikroTik uređaj treba instalirati i upravljati ne više od 20 centimetara od vašeg tijela, profesionalnog korisnika ili šire javnosti.
 
 Proizvođač: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
@@ -447,25 +421,22 @@ Proizvođač: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
 
 ## HU - Magyar. Biztonsági és szabályozási információk
 
-*Ezt az eszközt frissíteni kell a RouterOS v7.10.1-ra vagy a legújabb verzióra, hogy biztosítsák a helyi hatóságok előírásainak való megfelelést.*
+:::warning
+Ezt az eszközt frissíteni kell a RouterOS v7.10.1-ra vagy a legújabb verzióra, hogy biztosítsák a helyi hatóságok előírásainak való megfelelést.
 
-*A végfelhasználók felelőssége a helyi országos előírások betartása, ideértve a törvényes frekvenciacsatornákon keresztüli működést is**teljesítményre, kábelezésre és dinamikus frekvenciaválasztásra (DFS) vonatkozó követelmények.* *Az összes MikroTik rádiókészüléknek lennie kell**szakszerűen telepítve.*
+A végfelhasználók felelőssége a helyi országos előírások betartása, ideértve a törvényes frekvenciacsatornákon keresztüli működést is teljesítményre, kábelezésre és dinamikus frekvenciaválasztásra (DFS) vonatkozó követelmények. Az összes MikroTik rádiókészüléknek lennie kell szakszerűen telepítve.
+:::
 
-*Ez a dokumentum a következő modellre vonatkozik: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Ez a dokumentum a következő modellre vonatkozik: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Ez a vezeték nélküli hálózati eszköz.* *A terméktípus nevét a tok címkéjén (ID) találhatja meg.
-![](./img/image2020-2-5_9-0-20.badge.png)
-*
-
-*Kérjük, keresse fel a használati útmutatót a https://mt.lv/um-hu oldalon a teljes, legfrissebb használati útmutatóért. Vagy beolvashatja a QR-kódot mobiltelefonjával.*
-
+*Ez a vezeték nélküli hálózati eszköz. A terméktípus nevét a tok címkéjén (ID) találhatja meg.*
+*Kérjük, keresse fel a használati útmutatót a https://mt.lv/um-hu oldalon a teljes, legfrissebb használati útmutatóért. Vagy beolvashatja a QR-kódot mobiltelefonjával.*
 *A termék legfontosabb műszaki adatai a dokumentum utolsó oldalán találhatók.*
+*Műszaki leírások, brosúrák és további információk a termékekről a https://mikrotik.com/products oldalon*
+*Az Ön nyelvén található szoftver konfigurációs kézikönyve és további információk a következő webhelyen találhatók: https://mt.lv/help-hu*
+*A MikroTik eszközök professzionális használatra készültek. Ha nem rendelkezik képesítéssel, kérjen tanácsadót https://mikrotik.com/consultants*
 
-*Műszaki leírások, brosúrák és további információk a termékekről a https://mikrotik.com/products oldalon*
-
-*Az Ön nyelvén található szoftver konfigurációs kézikönyve és további információk a következő webhelyen találhatók: https://mt.lv/help-hu*
-
-*A MikroTik eszközök professzionális használatra készültek. Ha nem rendelkezik képesítéssel, kérjen tanácsadót https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-0-20.badge.png)
 
 **Biztonsági információk:**
 
@@ -477,6 +448,7 @@ Proizvođač: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
 - Az aljzatot a berendezés közelében kell elhelyezni, és könnyen hozzáférhetőnek kell lennie.
 - Eszköz meghibásodása esetén kérjük, húzza ki a tápkábelt. A leggyorsabb módszer erre az, ha a hálózati adaptert kihúzza a konnektorból.
 - A környezet szennyeződésének elkerülése érdekében különítse el a készüléket a háztartási hulladéktól, és biztonságos módon dobja el, például a kijelölt területekre. Ismerje meg a berendezés megfelelő szállítási eljárásait a környéken található gyűjtőhelyekre.
+
 **Rádiófrekvencia-sugárzás:** Ez a MikroTik berendezés megfelel az Európai Unió sugárterhelési határértékeinek, amelyeket egy ellenőrizetlen környezetre vonatkoznak. Ezt a MikroTik készüléket a testétől, a munkahelyi használótól vagy a lakosságtól legfeljebb 20 centiméter távolságra kell telepíteni és működtetni.
 
 Gyártó: Mikrotikls SIA, Unijas 2, Riga, Lettország, LV1039.
@@ -485,25 +457,22 @@ Gyártó: Mikrotikls SIA, Unijas 2, Riga, Lettország, LV1039.
 
 ## IT - Italiano. Informazioni sulla sicurezza e sulle normative
 
-*Questo dispositivo deve essere aggiornato a RouterOS v7.10.1 o alla versione più recente per garantire la conformità alle normative delle autorità locali.*
+:::warning
+Questo dispositivo deve essere aggiornato a RouterOS v7.10.1 o alla versione più recente per garantire la conformità alle normative delle autorità locali.
 
-*È responsabilità dell'utente finale seguire le normative locali locali, incluso il funzionamento nei canali di frequenza legali, in uscita**requisiti di alimentazione, cablaggio e selezione della frequenza dinamica (DFS).* *Tutti i dispositivi radio MikroTik devono essere**installato professionalmente.*
+È responsabilità dell'utente finale seguire le normative locali locali, incluso il funzionamento nei canali di frequenza legali, in uscita requisiti di alimentazione, cablaggio e selezione della frequenza dinamica (DFS). Tutti i dispositivi radio MikroTik devono essere installato professionalmente.
+:::
 
-*Questo documento riguarda il modello: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Questo documento riguarda il modello: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Questo è un dispositivo di rete wireless.* *È possibile trovare il nome del modello del prodotto sull'etichetta della custodia (ID).
-![](./img/image2020-2-5_9-11-13.badge.png)
-*
-
-*Visitare la pagina del manuale dell'utente su https://mt.lv/um-it per il manuale utente completamente aggiornato. Oppure scansiona il codice QR con il tuo cellulare.*
-
+*Questo è un dispositivo di rete wireless. È possibile trovare il nome del modello del prodotto sull'etichetta della custodia (ID).*
+*Visitare la pagina del manuale dell'utente su https://mt.lv/um-it per il manuale utente completamente aggiornato. Oppure scansiona il codice QR con il tuo cellulare.*
 *Le specifiche tecniche più importanti per questo prodotto si trovano nell'ultima pagina di questo documento.*
+*Specifiche tecniche, brochure e maggiori informazioni sui prodotti su https://mikrotik.com/products*
+*Il manuale di configurazione del software nella tua lingua con informazioni aggiuntive è disponibile all'indirizzo https://mt.lv/help-it*
+*I dispositivi MikroTik sono per uso professionale. Se non si dispone di qualifiche, consultare un consulente https://mikrotik.com/consultants*
 
-*Specifiche tecniche, brochure e maggiori informazioni sui prodotti su https://mikrotik.com/products*
-
-*Il manuale di configurazione del software nella tua lingua con informazioni aggiuntive è disponibile all'indirizzo https://mt.lv/help-it*
-
-*I dispositivi MikroTik sono per uso professionale. Se non si dispone di qualifiche, consultare un consulente https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-11-13.badge.png)
 
 **Informazioni sulla sicurezza:**
 
@@ -515,6 +484,7 @@ Gyártó: Mikrotikls SIA, Unijas 2, Riga, Lettország, LV1039.
 - La presa deve essere installata vicino all'apparecchiatura e deve essere facilmente accessibile.
 - In caso di guasto del dispositivo, scollegarlo dall'alimentazione. Il modo più rapido per farlo è scollegare l'alimentatore dalla presa di corrente.
 - Per evitare la contaminazione dell'ambiente, separare il dispositivo dai rifiuti domestici e smaltirlo in modo sicuro, ad esempio, in aree designate. Acquisire familiarità con le procedure per trasportare correttamente l'attrezzatura ai punti di raccolta designati nella propria zona.
+
 **Esposizione alle radiazioni di radiofrequenza:** questa apparecchiatura MikroTik è conforme ai limiti di esposizione alle radiazioni Unione Europea stabiliti per un ambiente non controllato. Questo dispositivo MikroTik deve essere installato e utilizzato a una distanza non inferiore a 20 centimetri dal proprio corpo, utente professionale o pubblico.
 
 Produttore: Mikrotikls SIA, Unijas 2, Riga, Lettonia, LV1039.
@@ -523,25 +493,22 @@ Produttore: Mikrotikls SIA, Unijas 2, Riga, Lettonia, LV1039.
 
 ## IS - Íslensku. Öryggis- og reglugerðarupplýsingar
 
-*Það þarf að uppfæra þetta tæki í RouterOS v7.10.1 eða nýjustu útgáfuna til að tryggja samræmi við reglugerðir sveitarfélaga.*
+:::warning
+Það þarf að uppfæra þetta tæki í RouterOS v7.10.1 eða nýjustu útgáfuna til að tryggja samræmi við reglugerðir sveitarfélaga.
 
-*Það er ábyrgð notendanna að fylgja reglugerðum á staðnum, þar með talið rekstri innan löglegra tíðnisviða, framleiðsla**afl, kaðall kröfur og Dynamic Frequency Val (DFS) kröfur.* *Öll MikroTik útvarpstæki verða að vera**faglega sett upp.*
+Það er ábyrgð notendanna að fylgja reglugerðum á staðnum, þar með talið rekstri innan löglegra tíðnisviða, framleiðsla afl, kaðall kröfur og Dynamic Frequency Val (DFS) kröfur. Öll MikroTik útvarpstæki verða að vera faglega sett upp.
+:::
 
-*Þetta skjal nær yfir gerð: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Þetta skjal nær yfir gerð: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Þetta er þráðlaust net tæki.* *Þú getur fundið heiti vörulíkansins á merkimiðanum (ID).
-![](./img/image2020-2-5_9-12-32.badge.png)
-*
-
-*Vinsamlegast farðu á notendahandbókarsíðuna á https://mt.lv/um-is fyrir allar uppfærðar notendahandbækur. Eða skannaðu QR kóða með farsímanum þínum.*
-
+*Þetta er þráðlaust net tæki. Þú getur fundið heiti vörulíkansins á merkimiðanum (ID).*
+*Vinsamlegast farðu á notendahandbókarsíðuna á https://mt.lv/um-is fyrir allar uppfærðar notendahandbækur. Eða skannaðu QR kóða með farsímanum þínum.*
 *Mikilvægustu tækniforskriftirnar fyrir þessa vöru er að finna á síðustu síðu þessa skjals.*
+*Tæknilýsingar, bæklingar og frekari upplýsingar um vörur á https://mikrotik.com/products*
+*Stillingarhandbók fyrir hugbúnað á þínu tungumáli með viðbótarupplýsingum er að finna á https://mt.lv/help-is*
+*MikroTik tæki eru til atvinnu notkunar. Ef þú ert ekki með hæfi vinsamlegast leitaðu til ráðgjafa https://mikrotik.com/consultants*
 
-*Tæknilýsingar, bæklingar og frekari upplýsingar um vörur á https://mikrotik.com/products*
-
-*Stillingarhandbók fyrir hugbúnað á þínu tungumáli með viðbótarupplýsingum er að finna á https://mt.lv/help-is*
-
-*MikroTik tæki eru til atvinnu notkunar. Ef þú ert ekki með hæfi vinsamlegast leitaðu til ráðgjafa https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-12-32.badge.png)
 
 **Öryggisupplýsingar:**
 
@@ -553,6 +520,7 @@ Produttore: Mikrotikls SIA, Unijas 2, Riga, Lettonia, LV1039.
 - Innstungan skal vera nálægt búnaðinum og vera aðgengileg.
 - Ef bilun í tæki, vinsamlegast aftengdu það frá rafmagni. Skjótasta leiðin til þess er með því að taka rafmagnstengið úr sambandi.
 - Til að koma í veg fyrir mengun umhverfisins skaltu aðskilja tækið frá heimilissorpi og farga því á öruggan hátt, til dæmis á afmörkuðum svæðum. Kynntu þér verklagsreglur til að flytja búnaðinn rétt til tilnefndra söfnunarstaða á þínu svæði.
+
 **Útsetning fyrir útvarpsbylgjugeislun:** Þessi MikroTik búnaður er í samræmi við váhrifamörk Evrópusambandsins fyrir geislun sem sett eru fyrir stjórnlaust umhverfi. Þetta MikroTik tæki ætti að vera sett upp og starfrækt ekki nær 20 sentímetrum frá líkama þínum, atvinnu notanda eða almenningi.
 
 Framleiðandi: Mikrotikls SIA, Unijas 2, Riga, Lettlandi, LV1039.
@@ -561,25 +529,22 @@ Framleiðandi: Mikrotikls SIA, Unijas 2, Riga, Lettlandi, LV1039.
 
 ## NO - Norsk. Informasjon om sikkerhet og forskrifter
 
-*Denne enheten må oppgraderes til RouterOS v7.10.1 eller den nyeste versjonen for å sikre samsvar med lokale myndighetsbestemmelser.*
+:::warning
+Denne enheten må oppgraderes til RouterOS v7.10.1 eller den nyeste versjonen for å sikre samsvar med lokale myndighetsbestemmelser.
 
-*Det er sluttbrukernes ansvar å følge lokale lands forskrifter, inkludert drift innen lovlige frekvenskanaler, output**strøm, kabling og krav til dynamisk frekvensvalg (DFS).* *Alle MikroTik-radioenheter må være**profesjonelt installert.*
+Det er sluttbrukernes ansvar å følge lokale lands forskrifter, inkludert drift innen lovlige frekvenskanaler, output strøm, kabling og krav til dynamisk frekvensvalg (DFS). Alle MikroTik-radioenheter må være profesjonelt installert.
+:::
 
-*Dette dokumentet dekker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Dette dokumentet dekker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Dette er trådløs nettverksenhet.* *Du kan finne produktmodellnavnet på etiketten (ID).
-![](./img/image2020-2-5_9-13-45.badge.png)
-*
-
-*Vennligst besøk bruksanvisningen på https://mt.lv/um-no for den fulle oppdaterte bruksanvisningen. Eller skann QR-koden med mobiltelefonen din.*
-
+*Dette er trådløs nettverksenhet. Du kan finne produktmodellnavnet på etiketten (ID).*
+*Vennligst besøk bruksanvisningen på https://mt.lv/um-no for den fulle oppdaterte bruksanvisningen. Eller skann QR-koden med mobiltelefonen din.*
 *De viktigste tekniske spesifikasjonene for dette produktet finner du på siste side i dette dokumentet.*
+*Tekniske spesifikasjoner, brosjyrer og mer info om produkter på https://mikrotik.com/products*
+*Konfigurasjonshåndbok for programvare på ditt språk med tilleggsinformasjon finner du på https://mt.lv/help-no*
+*MikroTik-enheter er til profesjonell bruk. Hvis du ikke har kvalifikasjoner, kan du søke en konsulent https://mikrotik.com/consultants*
 
-*Tekniske spesifikasjoner, brosjyrer og mer info om produkter på https://mikrotik.com/products*
-
-*Konfigurasjonshåndbok for programvare på ditt språk med tilleggsinformasjon finner du på https://mt.lv/help-no*
-
-*MikroTik-enheter er til profesjonell bruk. Hvis du ikke har kvalifikasjoner, kan du søke en konsulent https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-13-45.badge.png)
 
 **Sikkerhetsinformasjon:**
 
@@ -591,6 +556,7 @@ Framleiðandi: Mikrotikls SIA, Unijas 2, Riga, Lettlandi, LV1039.
 - Stikkontakten skal installeres i nærheten av utstyret og skal være lett tilgjengelig.
 - Ved feil på enheten må du koble den fra strømmen. Den raskeste måten å gjøre det på er ved å trekke ut strømadapteren fra stikkontakten.
 - For å unngå forurensning av miljøet, må du skille enheten fra husholdningsavfall og kaste den på en sikker måte, for eksempel i bestemte områder. Bli kjent med prosedyrer for riktig transport av utstyret til utpekte innsamlingssteder i ditt område.
+
 **Eksponering for radiofrekvensstråling:** Dette MikroTik-utstyret er i samsvar med EUs strålingseksponeringsgrenser som er angitt for et ukontrollert miljø. Denne MikroTik-enheten skal installeres og betjenes ikke nærmere enn 20 centimeter fra kroppen din, yrkesbrukeren eller allmennheten.
 
 Produsent: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
@@ -599,25 +565,22 @@ Produsent: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
 
 ## LT - Lietuvių. Saugos ir reguliavimo informacija
 
-*Šį įrenginį reikia atnaujinti į „RouterOS v7.10.1“ arba naujausią versiją, kad būtų užtikrinta atitiktis vietinės valdžios nuostatoms.*
+:::warning
+Šį įrenginį reikia atnaujinti į „RouterOS v7.10.1“ arba naujausią versiją, kad būtų užtikrinta atitiktis vietinės valdžios nuostatoms.
 
-*Galutiniai vartotojai yra atsakingi už vietinių šalies įstatymų laikymąsi, įskaitant veikimą legaliais dažnių kanalais**galios, kabelių ir dinaminio dažnio pasirinkimo (DFS) reikalavimai.* *Visi „MikroTik“ radijo prietaisai turi būti**profesionaliai sumontuota.*
+Galutiniai vartotojai yra atsakingi už vietinių šalies įstatymų laikymąsi, įskaitant veikimą legaliais dažnių kanalais galios, kabelių ir dinaminio dažnio pasirinkimo (DFS) reikalavimai. Visi „MikroTik“ radijo prietaisai turi būti profesionaliai sumontuota.
+:::
 
-*Šis dokumentas apima modelius: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Šis dokumentas apima modelius: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Tai yra belaidžio tinklo įrenginys.* *Produkto modelio pavadinimą galite rasti dėklo etiketėje (ID).
-![](./img/image2020-2-5_9-15-30.badge.png)
-*
-
-*Norėdami gauti išsamesnį vartotojo vadovą, apsilankykite vartotojo vadovo puslapyje https://mt.lv/um-lt. Arba nuskaitykite QR kodą savo mobiliuoju telefonu.*
-
+*Tai yra belaidžio tinklo įrenginys. Produkto modelio pavadinimą galite rasti dėklo etiketėje (ID).*
+*Norėdami gauti išsamesnį vartotojo vadovą, apsilankykite vartotojo vadovo puslapyje https://mt.lv/um-lt. Arba nuskaitykite QR kodą savo mobiliuoju telefonu.*
 *Svarbiausias šio gaminio technines specifikacijas rasite paskutiniame šio dokumento puslapyje.*
+*Techninės specifikacijos, brošiūros ir daugiau informacijos apie gaminius rasite https://mikrotik.com/products*
+*Programinės įrangos jūsų kalba konfigūravimo vadovą su papildoma informacija galite rasti tinklalapyje https://mt.lv/help-lt*
+*„MikroTik“ prietaisai yra skirti profesionaliam naudojimui. Jei neturite kvalifikacijos, kreipkitės į konsultantą https://mikrotik.com/consultants*
 
-*Techninės specifikacijos, brošiūros ir daugiau informacijos apie gaminius rasite https://mikrotik.com/products*
-
-*Programinės įrangos jūsų kalba konfigūravimo vadovą su papildoma informacija galite rasti tinklalapyje https://mt.lv/help-lt*
-
-*„MikroTik“ prietaisai yra skirti profesionaliam naudojimui. Jei neturite kvalifikacijos, kreipkitės į konsultantą https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-15-30.badge.png)
 
 **Saugumo informacija:**
 
@@ -629,6 +592,7 @@ Produsent: Mikrotikls SIA, Unijas 2, Riga, Latvia, LV1039.
 - Kištukinis lizdas turi būti įrengtas šalia įrangos ir turi būti lengvai pasiekiamas.
 - Sugedus įrenginiui, atjunkite jį nuo maitinimo. Greičiausias būdas tai padaryti yra atjungus maitinimo adapterį nuo maitinimo lizdo.
 - Kad išvengtumėte aplinkos užteršimo, atskirkite prietaisą nuo buitinių atliekų ir saugiai išmeskite, pavyzdžiui, tam skirtose vietose. Susipažinkite su procedūromis, kaip tinkamai transportuoti įrangą į paskirtus surinkimo punktus jūsų vietovėje.
+
 **Radijo dažnio spinduliuotės poveikis:** Ši „MikroTik“ įranga atitinka Europos Sąjungos radiacijos poveikio ribas, nustatytas nekontroliuojamai aplinkai. Šis „MikroTik“ prietaisas turėtų būti įmontuotas ir valdomas ne arčiau kaip 20 centimetrų atstumu nuo jūsų kūno, profesinio vartotojo ar plačiosios visuomenės.
 
 Gamintojas: Mikrotikls SIA, Unijas 2, Ryga, Latvija, LV1039.
@@ -637,25 +601,22 @@ Gamintojas: Mikrotikls SIA, Unijas 2, Ryga, Latvija, LV1039.
 
 ## LV - Latviešu. Drošības un reglamentējošā informācija
 
-*Šīs ierīces programmatūra ir jāatjaunina uz RouterOS v7.10.1 vai jaunāku versiju, lai nodrošinātu atbilstību vietējās valsts normatīviem.*
+:::warning
+Šīs ierīces programmatūra ir jāatjaunina uz RouterOS v7.10.1 vai jaunāku versiju, lai nodrošinātu atbilstību vietējās valsts normatīviem.
 
-*Gala lietotāju pienākums ir ievērot vietējos valsts normatīvus, ieskaitot darbību likumīgos frekvences kanālos,**jaudas izvadi, kabeļu prasības un dinamiskās frekvences izvēles (DFS) prasības.* *Visām MikroTik radio ierīcēm jābūt**profesionāli uzstādītām.*
+Gala lietotāju pienākums ir ievērot vietējos valsts normatīvus, ieskaitot darbību likumīgos frekvences kanālos,jaudas izvadi, kabeļu prasības un dinamiskās frekvences izvēles (DFS) prasības. Visām MikroTik radio ierīcēm jābūt profesionāli uzstādītām.
+:::
 
-*Šis dokuments attiecas uz modeli: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Šis dokuments attiecas uz modeli: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Šī ir bezvadu tīkla ierīce.* *Produkta modeļa nosaukumu varat atrast uz produkta iepakojuma (ID).
-![](./img/image2020-2-5_9-18-11.badge.png)
-*
-
-*Lūdzu, apmeklējiet lietotāja rokasgrāmatas lapu https://mt.lv/um-lv, lai iegūtu pilnīgu un atjauninātu lietotāja rokasgrāmatu. Vai arī skenējiet QR kodu ar savu mobilo tālruni.*
-
+*Šī ir bezvadu tīkla ierīce. Produkta modeļa nosaukumu varat atrast uz produkta iepakojuma (ID).*
+*Lūdzu, apmeklējiet lietotāja rokasgrāmatas lapu https://mt.lv/um-lv, lai iegūtu pilnīgu un atjauninātu lietotāja rokasgrāmatu. Vai arī skenējiet QR kodu ar savu mobilo tālruni.*
 *Svarīgākās šī izstrādājuma tehniskās specifikācijas ir atrodamas dokumenta pēdējā lapā.*
+*Tehniskās specifikācijas, brošūras un vairāk informācijas par produktiem vietnē https://mikrotik.com/products*
+*Konfigurācijas rokasgrāmata programmatūrai jūsu valodā ar papildu informāciju atrodama vietnē https://mt.lv/help-lv*
+*MikroTik ierīces ir paredzētas profesionālai lietošanai. Ja jums nav kvalifikācijas, lūdzu, meklējiet konsultanta palīdzību https://mikrotik.com/consultants*
 
-*Tehniskās specifikācijas, brošūras un vairāk informācijas par produktiem vietnē https://mikrotik.com/products*
-
-*Konfigurācijas rokasgrāmata programmatūrai jūsu valodā ar papildu informāciju atrodama vietnē https://mt.lv/help-lv*
-
-*MikroTik ierīces ir paredzētas profesionālai lietošanai. Ja jums nav kvalifikācijas, lūdzu, meklējiet konsultanta palīdzību https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-18-11.badge.png)
 
 **Drošības informācija:**
 
@@ -667,6 +628,7 @@ Gamintojas: Mikrotikls SIA, Unijas 2, Ryga, Latvija, LV1039.
 - Kontaktligzdai jābūt uzstādītai netālu no iekārtas un tai jābūt viegli pieejamai.
 - Ierīces kļūmes gadījumā, lūdzu, atvienojiet to no strāvas. Ātrākais veids, kā to izdarīt, ir, atvienojot strāvas adapteri no kontaktligzdas.
 - Lai izvairītos no vides piesārņošanas, atdaliet ierīci no sadzīves atkritumiem un atbrīvojieties no tās drošā un paredzētā veidā, piemēram, noteiktās vietās. Iepazīstieties ar kārtību, kā pareizi transportēt aprīkojumu uz noteiktajiem savākšanas punktiem jūsu apkārtnē.
+
 **Radiofrekvences starojuma iedarbība:** Šī MikroTik iekārta atbilst Eiropas Savienības radiācijas iedarbības ierobežojumiem, kas noteikti nekontrolētai videi. Šī MikroTik ierīce jāuzstāda un jādarbina ne tuvāk par 20 centimetriem no ķermeņa vai plašas sabiedrības.
 
 Ražotājs: Mikrotikls SIA, Ūnijas 2, Rīga, Latvija, LV1039.
@@ -675,25 +637,22 @@ Ražotājs: Mikrotikls SIA, Ūnijas 2, Rīga, Latvija, LV1039.
 
 ## MT - Malti. Informazzjoni dwar is-sigurtà u r-regolamentazzjoni
 
-*Dan l-apparat jeħtieġ li jiġi aġġornat għal RouterOS v7.10.1 jew l-aħħar verżjoni biex tkun assigurata l-konformità mar-regolamenti tal-awtorità lokali.*
+:::warning
+Dan l-apparat jeħtieġ li jiġi aġġornat għal RouterOS v7.10.1 jew l-aħħar verżjoni biex tkun assigurata l-konformità mar-regolamenti tal-awtorità lokali.
 
-*Hija r-responsabbiltà tal-utenti finali li jsegwu r-regolamenti lokali tal-pajjiż, inkluż l-operazzjoni fil-kanali tal-frekwenza legali, tal-ħruġ**qawwa, ħtiġiet ta 'kejbils, u Reklamar ta' Frekwenza Dinamika (DFS).* *L-apparati kollha tar-radju MikroTik għandhom ikunu**installat professjonalment.*
+Hija r-responsabbiltà tal-utenti finali li jsegwu r-regolamenti lokali tal-pajjiż, inkluż l-operazzjoni fil-kanali tal-frekwenza legali, tal-ħruġ qawwa, ħtiġiet ta 'kejbils, u Reklamar ta' Frekwenza Dinamika (DFS). L-apparati kollha tar-radju MikroTik għandhom ikunu installat professjonalment.
+:::
 
-*Dan id-dokument ikopri l-mudell: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Dan id-dokument ikopri l-mudell: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Dan huwa Apparat tan-Netwerk Wireless.* *Tista 'ssib l-isem tal-mudell tal-prodott fuq it-tikketta tal-każ (ID).
-![](./img/image2020-2-5_9-20-59.badge.png)
-*
-
-*Jekk jogħġbok żur il-paġna manwal tal-utent fuq https://mt.lv/um-mt għall-manwal aġġornat tal-utent. Jew skennja l-kodiċi QR bit-telefon ċellulari tiegħek.*
-
+*Dan huwa Apparat tan-Netwerk Wireless. Tista 'ssib l-isem tal-mudell tal-prodott fuq it-tikketta tal-każ (ID).*
+*Jekk jogħġbok żur il-paġna manwal tal-utent fuq https://mt.lv/um-mt għall-manwal aġġornat tal-utent. Jew skennja l-kodiċi QR bit-telefon ċellulari tiegħek.*
 *L-aktar speċifikazzjonijiet tekniċi importanti għal dan il-prodott jistgħu jinstabu fl-aħħar paġna ta 'dan id-dokument.*
+*Speċifikazzjonijiet tekniċi, fuljetti u aktar tagħrif dwar il-prodotti fuq https://mikrotik.com/products*
+*Manwal ta 'konfigurazzjoni għas-softwer fil-lingwa tiegħek b'informazzjoni addizzjonali jista' jinstab fuq https://mt.lv/help-mt*
+*L-apparat MikroTik huwa għal użu professjonali. Jekk m'għandekx kwalifiki jekk jogħġbok fittex konsulent https://mikrotik.com/consultants*
 
-*Speċifikazzjonijiet tekniċi, fuljetti u aktar tagħrif dwar il-prodotti fuq https://mikrotik.com/products*
-
-*Manwal ta 'konfigurazzjoni għas-softwer fil-lingwa tiegħek b'informazzjoni addizzjonali jista' jinstab fuq https://mt.lv/help-mt*
-
-*L-apparat MikroTik huwa għal użu professjonali. Jekk m'għandekx kwalifiki jekk jogħġbok fittex konsulent https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-20-59.badge.png)
 
 **Informazzjoni dwar is-Sikurezza:**
 
@@ -705,6 +664,7 @@ Ražotājs: Mikrotikls SIA, Ūnijas 2, Rīga, Latvija, LV1039.
 - Is-socket-outlet għandu jkun installat ħdejn it-tagħmir u għandu jkun faċilment aċċessibbli.
 - Fil-każ ta 'ħsara fl-apparat, jekk jogħġbok aqla' mill-enerġija. L-iktar mod mgħaġġel biex tagħmel dan huwa billi tiftaħ l-adapter tal-enerġija mill-iżbokk tad-dawl.
 - Biex tevita l-kontaminazzjoni ta 'l-ambjent, issepara l-apparat mill-iskart domestiku u armih b'mod sigur, per eżempju, f'żoni magħżula. Sir familjari mal-proċeduri biex it-tagħmir jiġi ttrasportat sewwa għal punti magħżula tal-ġbir fl-inħawi tiegħek.
+
 **Esponiment għal Radjazzjoni ta 'Frekwenza tar-Radju:** Dan it-tagħmir MikroTik jikkonforma mal-limiti ta' esponiment ta Unjoni Ewropea għar-radjazzjoni stabbiliti għal ambjent mhux kontrollat. Dan l-apparat MikroTik għandu jkun installat u jitħaddem mhux eqreb minn 20 ċentimetru minn ġismek, l-utent okkupazzjonali jew il-pubbliku ġenerali.
 
 Manifattur: Mikrotikls SIA, Unijas 2, Riga, il-Latvja, LV1039.
@@ -713,25 +673,22 @@ Manifattur: Mikrotikls SIA, Unijas 2, Riga, il-Latvja, LV1039.
 
 ## NL - Nederlands. Informatie over veiligheid en regelgeving
 
-*Dit apparaat moet worden geüpgraded naar RouterOS v7.10.1 of de nieuwste versie om te voldoen aan de voorschriften van de lokale autoriteiten.*
+:::warning
+Dit apparaat moet worden geüpgraded naar RouterOS v7.10.1 of de nieuwste versie om te voldoen aan de voorschriften van de lokale autoriteiten.
 
-*Het is de verantwoordelijkheid van de eindgebruiker om de lokale landelijke voorschriften, inclusief werking binnen wettelijke frequentiekanalen, te volgen**vermogen, bekabelingseisen en Dynamic Frequency Selection (DFS) -vereisten.* *Alle MikroTik-radioapparatuur moet zijn**professioneel geïnstalleerd.*
+Het is de verantwoordelijkheid van de eindgebruiker om de lokale landelijke voorschriften, inclusief werking binnen wettelijke frequentiekanalen, te volgen vermogen, bekabelingseisen en Dynamic Frequency Selection (DFS) -vereisten. Alle MikroTik-radioapparatuur moet zijn professioneel geïnstalleerd.
+:::
 
-*Dit document heeft betrekking op het model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Dit document heeft betrekking op het model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Dit is een draadloos netwerkapparaat.* *U kunt de naam van het productmodel vinden op het etiket van de behuizing (ID).
-![](./img/image2020-2-5_9-22-25.badge.png)
-*
-
-*Ga naar de gebruikerspagina op https://mt.lv/um-nl voor de volledige bijgewerkte gebruikershandleiding. Of scan de QR-code met uw mobiele telefoon.*
-
+*Dit is een draadloos netwerkapparaat. U kunt de naam van het productmodel vinden op het etiket van de behuizing (ID).*
+*Ga naar de gebruikerspagina op https://mt.lv/um-nl voor de volledige bijgewerkte gebruikershandleiding. Of scan de QR-code met uw mobiele telefoon.*
 *De belangrijkste technische specificaties van dit product vindt u op de laatste pagina van dit document.*
+*Technische specificaties, brochures en meer informatie over producten op https://mikrotik.com/products*
+*Configuratiehandleiding voor software in uw taal met aanvullende informatie is te vinden op https://mt.lv/help-nl*
+*MikroTik-apparaten zijn voor professioneel gebruik. Als u geen kwalificaties hebt, zoek dan een consultant https://mikrotik.com/consultants*
 
-*Technische specificaties, brochures en meer informatie over producten op https://mikrotik.com/products*
-
-*Configuratiehandleiding voor software in uw taal met aanvullende informatie is te vinden op https://mt.lv/help-nl*
-
-*MikroTik-apparaten zijn voor professioneel gebruik. Als u geen kwalificaties hebt, zoek dan een consultant https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-22-25.badge.png)
 
 **Veiligheidsinformatie:**
 
@@ -743,6 +700,7 @@ Manifattur: Mikrotikls SIA, Unijas 2, Riga, il-Latvja, LV1039.
 - Het stopcontact moet in de buurt van de apparatuur worden geïnstalleerd en moet gemakkelijk toegankelijk zijn.
 - Koppel het apparaat los van de stroom in het geval van een apparaatstoring. De snelste manier om dit te doen, is door de stroomadapter uit het stopcontact te halen.
 - Om milieuverontreiniging te voorkomen, dient u het apparaat van het huisvuil te scheiden en op een veilige manier af te voeren, bijvoorbeeld in daarvoor bestemde ruimtes. Zorg dat u vertrouwd raakt met de procedures voor het correct vervoeren van de apparatuur naar aangewezen inzamelpunten in uw omgeving.
+
 **Blootstelling aan radiofrequente straling:** deze MikroTik-apparatuur voldoet aan de EU-limieten voor blootstelling aan straling die zijn vastgelegd voor een ongecontroleerde omgeving. Dit MikroTik-apparaat moet worden geïnstalleerd en bediend op niet meer dan 20 centimeter van uw lichaam, beroepsgebruiker of het grote publiek.
 
 Fabrikant: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
@@ -751,25 +709,22 @@ Fabrikant: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
 
 ## PL - Polskie. Informacje dotyczące bezpieczeństwa i przepisów
 
-*To urządzenie musi zostać zaktualizowane do wersji RouterOS v7.10.1 lub najnowszej wersji, aby zapewnić zgodność z przepisami władz lokalnych.*
+:::warning
+To urządzenie musi zostać zaktualizowane do wersji RouterOS v7.10.1 lub najnowszej wersji, aby zapewnić zgodność z przepisami władz lokalnych.
 
-*Użytkownicy końcowi są zobowiązani do przestrzegania lokalnych przepisów krajowych, w tym działania w ramach legalnych kanałów częstotliwości**wymagania dotyczące zasilania, okablowania i dynamicznego wyboru częstotliwości (DFS).* *Wszystkie urządzenia radiowe MikroTik muszą być**profesjonalnie zainstalowany.*
+Użytkownicy końcowi są zobowiązani do przestrzegania lokalnych przepisów krajowych, w tym działania w ramach legalnych kanałów częstotliwości wymagania dotyczące zasilania, okablowania i dynamicznego wyboru częstotliwości (DFS). Wszystkie urządzenia radiowe MikroTik muszą być profesjonalnie zainstalowany.
+:::
 
-*Ten dokument dotyczy modelu: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Ten dokument dotyczy modelu: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*To jest urządzenie sieci bezprzewodowej.* *Nazwę modelu produktu można znaleźć na etykiecie skrzynki (ID).
-![](./img/image2020-2-5_9-39-6.badge.png)
-*
-
-*Odwiedź stronę instrukcji użytkownika na https://mt.lv/um-pl, aby uzyskać pełną aktualną instrukcję obsługi. Lub zeskanuj kod QR za pomocą telefonu komórkowego.*
-
+*To jest urządzenie sieci bezprzewodowej. Nazwę modelu produktu można znaleźć na etykiecie skrzynki (ID).*
+*Odwiedź stronę instrukcji użytkownika na https://mt.lv/um-pl, aby uzyskać pełną aktualną instrukcję obsługi. Lub zeskanuj kod QR za pomocą telefonu komórkowego.*
 *Najważniejsze dane techniczne tego produktu znajdują się na ostatniej stronie tego dokumentu.*
+*Dane techniczne, broszury i więcej informacji o produktach na stronie https://mikrotik.com/products*
+*Podręcznik konfiguracji oprogramowania w Twoim języku z dodatkowymi informacjami można znaleźć na stronie https://mt.lv/help-pl*
+*Urządzenia MikroTik są przeznaczone do użytku profesjonalnego. Jeśli nie masz kwalifikacji, poszukaj konsultanta https://mikrotik.com/consultants*
 
-*Dane techniczne, broszury i więcej informacji o produktach na stronie https://mikrotik.com/products*
-
-*Podręcznik konfiguracji oprogramowania w Twoim języku z dodatkowymi informacjami można znaleźć na stronie https://mt.lv/help-pl*
-
-*Urządzenia MikroTik są przeznaczone do użytku profesjonalnego. Jeśli nie masz kwalifikacji, poszukaj konsultanta https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-39-6.badge.png)
 
 **Informacje dotyczące bezpieczeństwa:**
 
@@ -781,6 +736,7 @@ Fabrikant: Mikrotikls SIA, Unijas 2, Riga, Letland, LV1039.
 - Gniazdko powinno być zainstalowane w pobliżu urządzenia i powinno być łatwo dostępne.
 - W przypadku awarii urządzenia odłącz je od zasilania. Najszybszym sposobem jest odłączenie zasilacza od gniazdka elektrycznego.
 - Aby uniknąć zanieczyszczenia środowiska, oddziel urządzenie od odpadów domowych i utylizuj je w bezpieczny sposób, na przykład w wyznaczonych miejscach. Zapoznaj się z procedurami prawidłowego transportu sprzętu do wyznaczonych punktów zbiórki w Twojej okolicy.
+
 **Ekspozycja na promieniowanie o częstotliwości radiowej:** To urządzenie MikroTik jest zgodne z limitami ekspozycji na promieniowanie Unii Europejskiej określonymi dla niekontrolowanego środowiska. To urządzenie MikroTik powinno być instalowane i obsługiwane nie bliżej niż 20 centymetrów od ciała, użytkownika zawodowego lub ogółu społeczeństwa.
 
 Producent: Mikrotikls SIA, Unijas 2, Riga, Łotwa, LV1039.
@@ -789,25 +745,22 @@ Producent: Mikrotikls SIA, Unijas 2, Riga, Łotwa, LV1039.
 
 ## PT - Português. Informações de segurança e regulamentação
 
-*Este dispositivo precisa ser atualizado para o RouterOS v7.10.1 ou a versão mais recente para garantir a conformidade com os regulamentos das autoridades locais.*
+:::warning
+Este dispositivo precisa ser atualizado para o RouterOS v7.10.1 ou a versão mais recente para garantir a conformidade com os regulamentos das autoridades locais.
 
-*É responsabilidade do usuário final seguir as regulamentações locais do país, incluindo a operação dentro dos canais de frequência legal, saída**requisitos de alimentação, cabeamento e Seleção Dinâmica de Frequência (DFS).* *Todos os dispositivos de rádio MikroTik devem ser**instalado profissionalmente.*
+É responsabilidade do usuário final seguir as regulamentações locais do país, incluindo a operação dentro dos canais de frequência legal, saída requisitos de alimentação, cabeamento e Seleção Dinâmica de Frequência (DFS). Todos os dispositivos de rádio MikroTik devem ser instalado profissionalmente.
+:::
 
-*Este documento abrange o modelo: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Este documento abrange o modelo: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Este é o dispositivo de rede sem fio.* *Você pode encontrar o nome do modelo do produto no rótulo da caixa (ID).
-![](./img/image2020-2-5_9-40-42.badge.png)
-*
-
-*Visite a página do manual do usuário em https://mt.lv/um-pt para obter o manual do usuário completo e atualizado. Ou digitalize o código QR com seu telefone celular.*
-
+*Este é o dispositivo de rede sem fio. Você pode encontrar o nome do modelo do produto no rótulo da caixa (ID).*
+*Visite a página do manual do usuário em https://mt.lv/um-pt para obter o manual do usuário completo e atualizado. Ou digitalize o código QR com seu telefone celular.*
 *As especificações técnicas mais importantes deste produto encontram-se na última página deste documento.*
+*Especificações técnicas, brochuras e mais informações sobre produtos em https://mikrotik.com/products*
+*O manual de configuração do software em seu idioma com informações adicionais pode ser encontrado em https://mt.lv/help-pt*
+*Os dispositivos MikroTik são para uso profissional. Se você não possui qualificações, procure um consultor https://mikrotik.com/consultants*
 
-*Especificações técnicas, brochuras e mais informações sobre produtos em https://mikrotik.com/products*
-
-*O manual de configuração do software em seu idioma com informações adicionais pode ser encontrado em https://mt.lv/help-pt*
-
-*Os dispositivos MikroTik são para uso profissional. Se você não possui qualificações, procure um consultor https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-40-42.badge.png)
 
 **Informação de Segurança:**
 
@@ -819,6 +772,7 @@ Producent: Mikrotikls SIA, Unijas 2, Riga, Łotwa, LV1039.
 - A tomada deve ser instalada próxima ao equipamento e deve ser de fácil acesso.
 - No caso de falha do dispositivo, desconecte-o da energia. A maneira mais rápida de fazer isso é desconectando o adaptador de energia da tomada.
 - Para evitar a contaminação do meio ambiente, separe o dispositivo do lixo doméstico e descarte-o de maneira segura, por exemplo, em áreas designadas. Familiarize-se com os procedimentos para o transporte adequado do equipamento aos pontos de coleta designados em sua área.
+
 **Exposição à radiação de radiofrequência:** Este equipamento MikroTik está em conformidade com os limites de exposição à radiação da União Europeia estabelecidos para um ambiente não controlado. Este dispositivo MikroTik deve ser instalado e operado a menos de 20 centímetros de seu corpo, usuário ocupacional ou público em geral.
 
 Fabricante: Mikrotikls SIA, Unijas 2, Riga, Letônia, LV1039.
@@ -827,25 +781,22 @@ Fabricante: Mikrotikls SIA, Unijas 2, Riga, Letônia, LV1039.
 
 ## RO - Română. Informații privind siguranța și reglementările
 
-*Acest dispozitiv trebuie actualizat la RouterOS v7.10.1 sau cea mai recentă versiune pentru a asigura respectarea reglementărilor autorității locale.*
+:::warning
+Acest dispozitiv trebuie actualizat la RouterOS v7.10.1 sau cea mai recentă versiune pentru a asigura respectarea reglementărilor autorității locale.
 
-*Este responsabilitatea utilizatorilor finali să urmeze reglementările locale ale țării, inclusiv operarea în cadrul canalelor de frecvență legale**cerințe de alimentare, cabluri și cerințe de selecție a frecvenței dinamice (DFS).* *Toate dispozitivele radio MikroTik trebuie să fie**instalat profesional.*
+Este responsabilitatea utilizatorilor finali să urmeze reglementările locale ale țării, inclusiv operarea în cadrul canalelor de frecvență legale cerințe de alimentare, cabluri și cerințe de selecție a frecvenței dinamice (DFS). Toate dispozitivele radio MikroTik trebuie să fie instalat profesional.
+:::
 
-*Acest document acoperă modelul: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Acest document acoperă modelul: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Acesta este dispozitivul de rețea wireless.* *Puteți găsi numele modelului produsului pe eticheta carcasei (ID).
-![](./img/image2020-2-5_9-42-33.badge.png)
-*
-
-*Vă rugăm să vizitați pagina manualului utilizatorului de pe https://mt.lv/um-ro pentru manualul complet actualizat. Sau scanează codul QR cu telefonul tău mobil.*
-
+*Acesta este dispozitivul de rețea wireless. Puteți găsi numele modelului produsului pe eticheta carcasei (ID).*
+*Vă rugăm să vizitați pagina manualului utilizatorului de pe https://mt.lv/um-ro pentru manualul complet actualizat. Sau scanează codul QR cu telefonul tău mobil.*
 *Cele mai importante specificații tehnice pentru acest produs pot fi găsite pe ultima pagină a acestui document.*
+*Specificații tehnice, broșuri și mai multe informații despre produse la https://mikrotik.com/products*
+*Manualul de configurare pentru software-ul în limba dvs. cu informații suplimentare poate fi găsit la https://mt.lv/help-ro*
+*Dispozitivele MikroTik sunt destinate utilizării profesionale. Dacă nu aveți calificări, vă rugăm să căutați un consultant https://mikrotik.com/consultants*
 
-*Specificații tehnice, broșuri și mai multe informații despre produse la https://mikrotik.com/products*
-
-*Manualul de configurare pentru software-ul în limba dvs. cu informații suplimentare poate fi găsit la https://mt.lv/help-ro*
-
-*Dispozitivele MikroTik sunt destinate utilizării profesionale. Dacă nu aveți calificări, vă rugăm să căutați un consultant https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-42-33.badge.png)
 
 **Informații de siguranță:**
 
@@ -857,33 +808,31 @@ Fabricante: Mikrotikls SIA, Unijas 2, Riga, Letônia, LV1039.
 - Priza trebuie instalată în apropierea echipamentului și trebuie să fie ușor accesibilă.
 - În cazul unei defecțiuni a dispozitivului, vă rugăm să îl deconectați de la alimentare. Cel mai rapid mod de a face acest lucru este prin a deconecta adaptorul de alimentare de la priza electrică.
 - Pentru a evita contaminarea mediului, separați dispozitivul de deșeurile menajere și aruncați-le într-un mod sigur, de exemplu, în zonele desemnate. Familiarizați-vă cu procedurile pentru transportul corespunzător al echipamentelor la punctele de colectare desemnate din zona dumneavoastră.
+
 **Expunerea la radiații de frecvență radio:** Acest echipament MikroTik respectă limitele de expunere la radiații Uniunea Europeană stabilite pentru un mediu necontrolat. Acest dispozitiv MikroTik ar trebui instalat și funcționat la cel mult 20 centimetri de corpul dvs., de utilizatorul ocupațional sau de publicul larg.
 
 Producător: Mikrotikls SIA, Unijas 2, Riga, Letonia, LV1039.
 
-**Notă:**Pentru unele modele, verificați parolele de utilizator și wireless pe autocolant.
+**Notă:** Pentru unele modele, verificați parolele de utilizator și wireless pe autocolant.
 
 ## SK - Slovenský. Bezpečnostné a regulačné informácie
 
-*Toto zariadenie musí byť aktualizované na RouterOS v7.10.1 alebo na najnovšiu verziu, aby sa zabezpečilo dodržiavanie predpisov miestnych úradov.*
+:::warning
+Toto zariadenie musí byť aktualizované na RouterOS v7.10.1 alebo na najnovšiu verziu, aby sa zabezpečilo dodržiavanie predpisov miestnych úradov.
 
-*Je na koncových užívateľoch, aby dodržiavali miestne predpisy krajiny, vrátane prevádzky v rámci legálnych frekvenčných kanálov a výstupov**požiadavky na energiu, kabeláž a dynamický výber frekvencie (DFS).* *Všetky rádiové zariadenia MikroTik musia byť**profesionálne nainštalovaný.*
+Je na koncových užívateľoch, aby dodržiavali miestne predpisy krajiny, vrátane prevádzky v rámci legálnych frekvenčných kanálov a výstupov požiadavky na energiu, kabeláž a dynamický výber frekvencie (DFS). Všetky rádiové zariadenia MikroTik musia byť profesionálne nainštalovaný.
+:::
 
-*Tento dokument sa vzťahuje na model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Tento dokument sa vzťahuje na model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Toto je bezdrôtové sieťové zariadenie.* *Názov modelu produktu nájdete na štítku prípadu (ID).
-![](./img/image2020-2-5_9-44-55.badge.png)
-*
-
-*Úplnú aktualizovanú používateľskú príručku nájdete na stránke používateľskej príručky na adrese https://mt.lv/um-sk. Alebo naskenujte QR kód pomocou mobilného telefónu.*
-
+*Toto je bezdrôtové sieťové zariadenie. Názov modelu produktu nájdete na štítku prípadu (ID).*
+*Úplnú aktualizovanú používateľskú príručku nájdete na stránke používateľskej príručky na adrese https://mt.lv/um-sk. Alebo naskenujte QR kód pomocou mobilného telefónu.*
 *Najdôležitejšie technické špecifikácie tohto produktu nájdete na poslednej strane tohto dokumentu.*
+*Technické špecifikácie, brožúry a ďalšie informácie o produktoch nájdete na adrese https://mikrotik.com/products*
+*Konfiguračnú príručku pre softvér vo vašom jazyku s ďalšími informáciami nájdete na https://mt.lv/help-sk*
+*Zariadenia MikroTik sú určené pre profesionálne použitie. Ak nemáte kvalifikáciu, obráťte sa na konzultanta https://mikrotik.com/consultants*
 
-*Technické špecifikácie, brožúry a ďalšie informácie o produktoch nájdete na adrese https://mikrotik.com/products*
-
-*Konfiguračnú príručku pre softvér vo vašom jazyku s ďalšími informáciami nájdete na https://mt.lv/help-sk*
-
-*Zariadenia MikroTik sú určené pre profesionálne použitie. Ak nemáte kvalifikáciu, obráťte sa na konzultanta https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-44-55.badge.png)
 
 **Bezpečnostné informácie:**
 
@@ -895,6 +844,7 @@ Producător: Mikrotikls SIA, Unijas 2, Riga, Letonia, LV1039.
 - Zásuvka musí byť inštalovaná v blízkosti zariadenia a musí byť ľahko dostupná.
 - V prípade poruchy zariadenia ho prosím odpojte od napájania. Najrýchlejším spôsobom je odpojenie sieťového adaptéra zo sieťovej zásuvky.
 - Aby ste zabránili kontaminácii životného prostredia, odpojte prístroj od domáceho odpadu a zneškodnite ho bezpečným spôsobom, napríklad na určených miestach. Oboznámte sa s postupmi správnej prepravy zariadenia na určené zberné miesta vo vašej oblasti.
+
 **Vystavenie vysokofrekvenčnému žiareniu:** Toto zariadenie MikroTik spĺňa limity vystavenia žiareniu Európskej únie stanovené pre nekontrolované prostredie. Toto zariadenie MikroTik by malo byť nainštalované a prevádzkované nie ďalej ako 20 centimetrov od vášho tela, profesionálneho používateľa alebo širokej verejnosti.
 
 Výrobca: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
@@ -903,25 +853,22 @@ Výrobca: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
 
 ## SL - Slovenščina. Informacije o varnosti in predpisih
 
-*To napravo je treba nadgraditi na RouterOS v7.10.1 ali najnovejšo različico, da se zagotovi skladnost z lokalnimi predpisi.*
+:::warning
+To napravo je treba nadgraditi na RouterOS v7.10.1 ali najnovejšo različico, da se zagotovi skladnost z lokalnimi predpisi.
 
-*Končni uporabniki so odgovorni za sledenje lokalnim predpisom, vključno z delovanjem v legalnih frekvenčnih kanalih, za doseganje rezultatov**napajanje, zahteve za kabliranje in zahteve za dinamično izbiro frekvence (DFS).* *Vse radijske naprave MikroTik morajo biti**strokovno nameščen.*
+Končni uporabniki so odgovorni za sledenje lokalnim predpisom, vključno z delovanjem v legalnih frekvenčnih kanalih, za doseganje rezultatov napajanje, zahteve za kabliranje in zahteve za dinamično izbiro frekvence (DFS). Vse radijske naprave MikroTik morajo biti strokovno nameščen.
+:::
 
-*Ta dokument zajema model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Ta dokument zajema model: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*To je brezžična omrežna naprava.* *Ime modela izdelka najdete na nalepki (ID).
-![](./img/image2020-2-5_9-46-47.badge.png)
-*
-
-*Za popoln posodobitev uporabniškega priročnika obiščite stran z navodili na strani https://mt.lv/um-sl. Ali pa skenirajte QR kodo s svojim mobilnim telefonom.*
-
+*To je brezžična omrežna naprava. Ime modela izdelka najdete na nalepki (ID).*
+*Za popoln posodobitev uporabniškega priročnika obiščite stran z navodili na strani https://mt.lv/um-sl. Ali pa skenirajte QR kodo s svojim mobilnim telefonom.*
 *Najpomembnejše tehnične specifikacije za ta izdelek najdete na zadnji strani tega dokumenta.*
+*Tehnične specifikacije, brošure in več informacij o izdelkih na https://mikrotik.com/products*
+*Navodila za konfiguracijo programske opreme v vašem jeziku z dodatnimi informacijami najdete na naslovu https://mt.lv/help-sl*
+*Naprave MikroTik so namenjene profesionalni uporabi. Če nimate kvalifikacij, poiščite svetovalca https://mikrotik.com/consultants*
 
-*Tehnične specifikacije, brošure in več informacij o izdelkih na https://mikrotik.com/products*
-
-*Navodila za konfiguracijo programske opreme v vašem jeziku z dodatnimi informacijami najdete na naslovu https://mt.lv/help-sl*
-
-*Naprave MikroTik so namenjene profesionalni uporabi. Če nimate kvalifikacij, poiščite svetovalca https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-46-47.badge.png)
 
 **Varnostne informacije:**
 
@@ -933,6 +880,7 @@ Výrobca: Mikrotikls SIA, Unijas 2, Riga, Lotyšsko, LV1039.
 - Vtičnica mora biti nameščena v bližini opreme in mora biti lahko dostopna.
 - V primeru okvare naprave jo izklopite iz napajanja. Najhitreje to storite tako, da napajalnik odklopite iz vtičnice.
 - Da se izognete onesnaženju okolja, napravo ločite od gospodinjskih odpadkov in jo varno odvrzite, na primer na določena mesta. Spoznajte postopke za pravilen prevoz opreme do določenih zbirnih mest na vašem območju.
+
 **Izpostavljenost radiofrekvenčnim sevanjem:** Ta oprema MikroTik ustreza mejam izpostavljenosti sevanju Evropske unije, določenim za nenadzorovano okolje. To napravo MikroTik je treba namestiti in uporabljati največ 20 centimetrov od vašega telesa, poklicnega uporabnika ali splošne javnosti.
 
 Proizvajalec: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
@@ -941,25 +889,22 @@ Proizvajalec: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
 
 ## SV - Svenska. Säkerhets- och föreskrifter
 
-*Den här enheten måste uppgraderas till RouterOS v7.10.1 eller den senaste versionen för att säkerställa överensstämmelse med lokala myndighetsbestämmelser.*
+:::warning
+Den här enheten måste uppgraderas till RouterOS v7.10.1 eller den senaste versionen för att säkerställa överensstämmelse med lokala myndighetsbestämmelser.
 
-*Det är slutanvändarnas ansvar att följa lokala landsregler, inklusive drift inom lagliga frekvenskanaler, output**kraft, kablingskrav och DFS-krav (Dynamic Frequency Selection).* *Alla MikroTik-radioenheter måste vara**professionellt installerat.*
+Det är slutanvändarnas ansvar att följa lokala landsregler, inklusive drift inom lagliga frekvenskanaler, output kraft, kablingskrav och DFS-krav (Dynamic Frequency Selection). Alla MikroTik-radioenheter måste vara professionellt installerat.
+:::
 
-*Detta dokument täcker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Detta dokument täcker modellen: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Det här är trådlöst nätverksenhet.* *Du hittar produktmodellnamnet på etiketten (ID).
-![](./img/image2020-2-5_9-47-44.badge.png)
-*
-
-*Besök användarmanualsidan på https://mt.lv/um-sv för en fullständig uppdaterad användarmanual. Eller skanna QR-koden med din mobiltelefon.*
-
+*Det här är trådlöst nätverksenhet. Du hittar produktmodellnamnet på etiketten (ID).*
+*Besök användarmanualsidan på https://mt.lv/um-sv för en fullständig uppdaterad användarmanual. Eller skanna QR-koden med din mobiltelefon.*
 *De viktigaste tekniska specifikationerna för denna produkt finns på sista sidan i detta dokument.*
+*Tekniska specifikationer, broschyrer och mer information om produkter på https://mikrotik.com/products*
+*Konfigurationshandbok för programvara på ditt språk med ytterligare information kan hittas på https://mt.lv/help-sv*
+*MikroTik-enheter är för professionellt bruk. Om du inte har behörighet, sök en konsult https://mikrotik.com/consultants*
 
-*Tekniska specifikationer, broschyrer och mer information om produkter på https://mikrotik.com/products*
-
-*Konfigurationshandbok för programvara på ditt språk med ytterligare information kan hittas på https://mt.lv/help-sv*
-
-*MikroTik-enheter är för professionellt bruk. Om du inte har behörighet, sök en konsult https://mikrotik.com/consultants*
+![](./img/image2020-2-5_9-47-44.badge.png)
 
 **Säkerhetsinformation:**
 
@@ -971,6 +916,7 @@ Proizvajalec: Mikrotikls SIA, Unijas 2, Riga, Latvija, LV1039.
 - Uttaget ska installeras nära utrustningen och ska vara lättillgängligt.
 - Vid fel på enheten, koppla bort den från strömmen. Det snabbaste sättet är att koppla ur nätadaptern från eluttaget.
 - För att undvika förorening av miljön, separera enheten från hushållsavfall och kassera den på ett säkert sätt, till exempel i avsedda områden. Bli bekant med procedurer för korrekt transport av utrustningen till utsedda uppsamlingsställen i ditt område.
+
 **Exponering för radiofrekvensstrålning:** Denna MikroTik-utrustning överensstämmer med Europeiska unionens strålningsexponeringsgränser som anges för en okontrollerad miljö. Denna MikroTik-enhet ska installeras och användas högst 20 centimeter från din kropp, yrkesanvändare eller allmänheten.
 
 Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
@@ -1013,29 +959,26 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 
 制造商：Mikrotikls SIA，拉脱维亚Unijas 2, Riga，LV1039。
 
-**笔记:**对于某些型号，请检查标签上的用户密码和无线密码。
+**笔记:** 对于某些型号，请检查标签上的用户密码和无线密码。
 
 ## RU - Русский. Евразийский экономический союз. Информация о безопасности и нормативно-правовая база
 
-*Это устройство должно быть обновлено до RouterOS v7.10.1 или до последней стабильной версии, чтобы обеспечить соответствие местным нормативным требованиям!*
+:::warning
+Это устройство должно быть обновлено до RouterOS v7.10.1 или до последней стабильной версии, чтобы обеспечить соответствие местным нормативным требованиям!
 
-*Конечные пользователи несут ответственность за соблюдение местных нормативных требований, включая работу в рамках допустимых частотных каналов, выходную мощность, требования к кабельным системам и требования к динамическому выбору частоты (DFS). Все радиоустройства MikroTik должны быть установлены в соответствии с инструкциями.*
+Конечные пользователи несут ответственность за соблюдение местных нормативных требований, включая работу в рамках допустимых частотных каналов, выходную мощность, требования к кабельным системам и требования к динамическому выбору частоты (DFS). Все радиоустройства MikroTik должны быть установлены в соответствии с инструкциями.
+:::
 
-*Этот документ относится к модели: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).*
+Этот документ относится к модели: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
-*Это беспроводное сетевое устройство. Название модели указано на корпусе устройства.
-![](./img/image2020-2-5_9-51-14.badge.png)
-  *
-
-*Пожалуйста, посетите страницу руководства пользователя на https://mt.lv/um-ru, чтобы ознакомиться с полным актуальным руководством пользователя. Или отсканируйте QR-код с помощью мобильного телефона.*
-
+*Это беспроводное сетевое устройство. Название модели указано на корпусе устройства.*
+*Пожалуйста, посетите страницу руководства пользователя на https://mt.lv/um-ru, чтобы ознакомиться с полным актуальным руководством пользователя. Или отсканируйте QR-код с помощью мобильного телефона.*
 *Наиболее важные технические характеристики этого продукта можно найти на последней странице этого документа.*
-
-*Технические характеристики, брошюры и дополнительная информация о продуктах на https://mikrotik.com/products*
-
+*Технические характеристики, брошюры и дополнительная информация о продуктах на https://mikrotik.com/products*
 *Наиболее важные технические характеристики этого продукта можно найти на последней странице этого Краткого руководства.*
+*Руководство по настройке программного обеспечения на вашем языке с дополнительной информацией можно найти по адресу https://mt.lv/help-ru*
 
-*Руководство по настройке программного обеспечения на вашем языке с дополнительной информацией можно найти по адресу https://mt.lv/help-ru*
+![](./img/image2020-2-5_9-51-14.badge.png)
 
 *Если вам нужна помощь с настройкой, обратитесь к консультанту https://mikrotik.com/consultants*
 
@@ -1048,24 +991,29 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - Мы не можем гарантировать, что в результате неправильного использования устройства не произойдет несчастных случаев или повреждений. Пожалуйста, используйте этот продукт с осторожностью и действуйте на свой страх и риск!
 - Розетка должна быть установлена ​​рядом с оборудованием и должна быть легко доступна.
 - В случае сбоя устройства отключите его от питания. Самый быстрый способ сделать это - вынуть вилку из розетки.
+
 **Запрещается:**
 
 - Эксплуатация роутера (точки доступа) и её комплектующих с повреждёнными шнурами электропитания;
 - Подключение роутера (точки доступа) и её комплектующих к сети электропитания при открытых корпусах;
 - Открыватькорпус изделия, разбирать, извлекать электронные модули и проводить какие-либо ремонтные работы вне условий ремонтной организации.
+
 **Техническое обслуживание:**
 
 - Роутер (точка доступа) не требует проведения профилактических работ и постоянного присутствия эксплуатационного персонала.
 - Чистка корпуса от пыли и загрязнений выполняется бумажными безворсовыми салфетками.
 - Не брызгайте водой в щели и контакты корпуса изделия.
 - Плохо выводящиеся следы и пятна удаляйте изопропиловым спиртом.
+
 **Текущий ремонт:**
 
 - Все виды ремонта изделия допускается выполнять только аттестованным персоналом в сервисном центре предприятия-изготовителя или в другой уполномоченной изготовителем организации.
 - Замена вышедших из строя технических средств (ТС) изделия должна осуществляться на соответствующие ТС, прошедшие специальные исследования и специальную проверку.
+
 **Хранение:**
 
 - Изделия, упакованные в ящик, следует хранить в складских помещениях при относительная влажность воздуха не более 85%, наличие в воздухе паров кислот, щелочей и прочих агрессивных примесей не допускается.
+
 **Транспортирование:**
 
 - Транспортируют изделия всеми видами транспорта в крытых транспортных средствах в соответствии с правилами перевозки грузов, действующих на данном виде транспорта.
@@ -1073,6 +1021,7 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - В помещениях и транспортных средствах не должно быть паров или аэрозолей агрессивных или вызывающих коррозию веществ.
 - Упакованные изделия должны быть закреплены для предотвращения случайных неконтролируемых перемещений.
 - Транспортирование, хранение и эксплуатация не допустимы в условиях конденсации влаги без защиты от атмосферных осадков и прямых солнечных лучей.
+
 **Гарантийные обязательства:**
 
 - Гарантийный срок эксплуатации − не более 14 суток со дня реализации потребителю.
@@ -1081,9 +1030,11 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - В случае спора о причинах возникновения недостатков товара продавец (изготовитель), уполномоченная организация или уполномоченный индивидуальный предприниматель, импортер обязаны провести экспертизу товара за свой счет.
 - Срок устранения недостатков товара не может превышать сорок пять дней.
 - Действие гарантийных обязательств прекращается:- при нарушении потребителем правил эксплуатации, транспортирования и хранения;- при обнаружении механических повреждений, следов вскрытия, попыток неквалифицированного ремонта;- при обнаружении признаков небрежного обращения, преднамеренного повреждения оборудования;- при попадании внутрь оборудования посторонних предметов, жидкостей и насекомых;- при обнаружении признаков воздействия непреодолимых сил, приведших к выходу из строя роутера (точки доступа).
+
 **Утилизация:**
 
 - Во избежание загрязнения окружающей среды необходимо отделить устройство от бытовых отходов и утилизировать его безопасным способом, например в специально отведенных местах. Ознакомьтесь с процедурами надлежащей транспортировки оборудования к специальным местам утилизации в вашем регионе.
+
 **Воздействие радиочастотного излучения****.*****Это устройство MikroTik должно устанавливаться и эксплуатироваться не ближе 20 сантиметров от человека.***
 
 | Частотный диапазон | Мощность передатчика |
@@ -1108,25 +1059,22 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 
 ## UA - Українська. Інформація про безпеку та нормативні вимоги
 
-*Цей пристрій потрібно оновити до RouterOS v7.10.1 або останньої версії, щоб забезпечити відповідність місцевим нормам влади !*
+:::warning
+Цей пристрій потрібно оновити до RouterOS v7.10.1 або останньої версії, щоб забезпечити відповідність місцевим нормам влади !
 
-*Кінцеві користувачі несуть відповідальність за дотримання місцевих правил, включаючи функціонування в межах законних частотних каналів, вихідну потужність, вимоги до кабелів та вимоги щодо вибору динамічної частоти (DFS). Усі радіопристрої MikroTik повинні бути професійно встановлені.*
+Кінцеві користувачі несуть відповідальність за дотримання місцевих правил, включаючи функціонування в межах законних частотних каналів, вихідну потужність, вимоги до кабелів та вимоги щодо вибору динамічної частоти (DFS). Усі радіопристрої MikroTik повинні бути професійно встановлені.
+:::
 
-*Цей документ стосується моделі: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
-![](./img/image-2022-12-9_12-50-1.badge.png)
-*
+Цей документ стосується моделі: D53G-5HacD2HnD-TC&FG621-EA (Chateau LTE6).
 
 *Це пристрій бездротової мережі. Ви можете знайти назву моделі продукту на етикетці корпусу (ID).*
-
-*Будь ласка, відвідайте сторінку посібника користувача на https://mt.lv/um-ua для повної оновленої посібника користувача. Або скануйте QR-код за допомогою мобільного телефону.*
-
+*Будь ласка, відвідайте сторінку посібника користувача на https://mt.lv/um-ua для повної оновленої посібника користувача. Або скануйте QR-код за допомогою мобільного телефону.*
 *Найважливіші технічні характеристики цього продукту можна знайти на останній сторінці цього документа.*
-
 *Технічні характеристики, брошури та додаткова інформація про продукцію на https://mikrotik.com/products*
-
 *Посібник з налаштування програмного забезпечення на вашій мові з додатковою інформацією можна знайти за посиланням https://mt.lv/help*
-
 *Пристрої MikroTik призначені для професійного використання. Якщо у вас немає кваліфікації, зверніться до консультанта https://mikrotik.com/consultants*
+
+![](./img/image-2022-12-9_12-50-1.badge.png)
 
 **Інформація про безпеку:**
 
@@ -1138,6 +1086,7 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 - Адаптер повинен бути встановлений поблизу обладнання та бути легко доступним.
 - У разі збою пристрою відключіть його від живлення. Найшвидший спосіб зробити це - від'єднати адаптер живлення від електричної розетки.
 - Щоб уникнути забруднення навколишнього середовища, відокремте пристрій від побутових відходів та утилізуйте його безпечним способом, наприклад, у відведених місцях. Ознайомтесь із процедурами належного транспортування обладнання до визначених пунктів збору у вашому районі.
+
 **Вплив радіочастотного випромінювання:** Це обладнання MikroTik відповідає нормам радіаційного опромінення Європейського Союзу, встановленим для неконтрольованого середовища. Цей пристрій MikroTik слід встановлювати та використовувати не ближче 20 сантиметрів від вашого тіла, професійного користувача чи інших людей.
 
 Виробник: Mikrotikls SIA, Unijas 2, Рига, Латвія, LV1039.
@@ -1152,7 +1101,7 @@ Tillverkare: Mikrotikls SIA, Unijas 2, Riga, Lettland, LV1039.
 
 ## UKCA marking
 
-## ![](./img/ukca_black_fill.badge.gif)
+![](./img/ukca_black_fill.badge.gif)
 
 ## CE Declaration of Conformity
 
@@ -1220,9 +1169,16 @@ The WLAN function for this device is restricted to indoor use only when operatin
 
 ![](./img/picto.png)
 
-| ## (EN) Technical Specifications / (DE) Technische Spezifikationen / (FR) Spécifications techniques / (IT) Specifiche tecniche / (ES) Especificaciones técnicas / (RU) Технические характеристики: |  |  |  |
-| --- | --- | --- | --- |
-| (EN) Product Power Input Options (DE) Produkt Stromquellen Optionen (FR) Options d'entrée d'alimentation du produit (IT) Opzioni di ingresso alimentazione del prodotto (ES) Opciones de entrada de energía del producto (RU) Варианты входной мощности продукта | (EN) DC Adapter Output Specification, (V/A) (DE) Ausgangsspezifikationen des Gleichstromadapters, (V/A) (FR) Spécifications de sortie de l'adaptateur de courant continu, (V/A) (IT) Specifiche di uscita dell'adattatore di corrente continua, (V/A) (ES) Especificaciones de salida del adaptador de corriente continua, (V/A) (RU) Выходные характеристики адаптера постоянного тока, (В/А) | (EN) IP class of the enclosure (DE) IP-Klasse des Gehäuses (FR) Classe IP du boîtier (IT) Classe IP della custodia (ES) Clase de IP del recinto (RU) Класс защиты корпуса IP | (EN) Operating Temperature (DE)Betriebstemperatur (FR) température de fonctionnement (IT) temperatura di esercizio (ES) Temperatura de funcionamiento (RU) Рабочая Температура |
-| DC Jack (12-28 V DC) | 24 V / 1.2 A | IP20 | ±0°..+70°C |
+(EN) Technical Specifications / (DE) Technische Spezifikationen / (FR) Spécifications techniques / (IT) Specifiche tecniche / (ES) Especificaciones técnicas / (RU) Технические характеристики:
+
+(EN) Product Power Input Options(DE) Produkt Stromquellen Optionen(FR) Options d'entrée d'alimentation du produit(IT) Opzioni di ingresso alimentazione del prodotto(ES) Opciones de entrada de energía del producto(RU) Варианты входной мощности продукта
+(EN) DC Adapter Output Specification, (V/A)(DE) Ausgangsspezifikationen des Gleichstromadapters, (V/A)(FR) Spécifications de sortie de l'adaptateur de courant continu, (V/A)(IT) Specifiche di uscita dell'adattatore di corrente continua, (V/A)(ES) Especificaciones de salida del adaptador de corriente continua, (V/A)(RU) Выходные характеристики адаптера постоянного тока, (В/А)
+(EN) IP class of the enclosure(DE) IP-Klasse des Gehäuses(FR) Classe IP du boîtier(IT) Classe IP della custodia(ES) Clase de IP del recinto(RU) Класс защиты корпуса IP
+(EN) Operating Temperature(DE) Betriebstemperatur(FR) température de fonctionnement(IT) temperatura di esercizio(ES) Temperatura de funcionamiento(RU) Рабочая Температура
+
+DC Jack (12-28 V DC)
+24 V / 1.2 A
+IP20
+±0°..+70°C
 
 \#73197

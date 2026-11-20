@@ -1,6 +1,6 @@
 # load
 
-> RouterOS command reference for /user-manager/database/load.
+> Replaces the database with a saved one.
 
 -----------
 
@@ -8,6 +8,8 @@
 **Package:** userman-5
 **Type:** Command
 
+Replaces the database with a saved one.
+
 <ArgTable c1="Argument" c2="Type" c3="Description">
-<ArgTableRow arg="name" typ="file"></ArgTableRow>
+<ArgTableRow arg="name" typ="file">Name of the `.umb` file made with `save`.</ArgTableRow>
 </ArgTable>

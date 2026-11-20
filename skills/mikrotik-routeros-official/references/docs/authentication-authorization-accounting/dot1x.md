@@ -1,143 +1,96 @@
 # Dot1X
 
-> This page documents MikroTik RouterOS's Dot1X implementation, covering client and server configurations for IEEE 802.1X port-based network access control using EAP methods like TLS, TTLS, and PEAP.
+> Dot1X is the IEEE 802.1X implementation of RouterOS: authenticate the devices on Ethernet ports with RADIUS, assign VLANs, use guest, reject and server-fail VLANs, authenticate by MAC address, add dynamic switch...
 
 # Dot1X
 
-Dot1X is an implementation of the IEEE 802.1X standard in RouterOS. The main purpose is to provide port-based network access control using EAP over LAN also known as EAPOL. 802.1X consists of a supplicant (client), an authenticator (server) and an authentication server (RADIUS server). Both authenticator and supplicant sides are supported in RouterOS, as well as the authentication server when [User Manager](./user-manager.md) package is installed. Supported EAP methods for the supplicant are EAP-TLS, EAP-TTLS, EAP-MSCHAPv2 and PEAPv0/EAP-MSCHAPv2.
+Dot1X is the RouterOS implementation of IEEE 802.1X, port-based network access control. A device must authenticate before the Ethernet port that it is connected to passes its traffic. The authentication uses EAP over LAN (EAPOL). 802.1X has three roles:
 
-:::warning
-The feature is not supported on SMIPS devices (hAP lite, hAP lite TC and hAP mini).
+- The supplicant is the device that connects, the client. RouterOS can be a supplicant: `/interface/dot1x/client`.
+- The authenticator is the switch or router with the port. RouterOS can be an authenticator: `/interface/dot1x/server`.
+- The authentication server is a [RADIUS](radius) server that checks the credentials. RouterOS can be one with the [User Manager](user-manager) package.
 
+![A supplicant connects to a port of the authenticator, and the authenticator asks the RADIUS server](./img/dot1x-01.webp)
+
+:::note
+Dot1X is not available on SMIPS devices (hAP lite, hAP lite TC and hAP mini).
 :::
 
-## Client
+## Authenticate the devices on a port
 
-Supplicant configuration settings.
-
-**Sub-menu:** `/interface/dot1x/client`
-
-| Property | Description |
-| :-- | :-- |
-| **anon-identity** (*string*; Default: ) | Identity for outer layer EAP authentication. Used only with `eap-ttls` and `eap-peap` methods. If not set, value from `identity` parameter will be used for outer layer EAP authentication. |
-| **client-certificate** (*string*; Default: ) | Name of a certificate listed in [System/Certificates](./certificates.md). Necessary when `eap-tls` method is used. |
-| **comment** (*string*; Default: ) | Short description of the entry. |
-| **disabled** (*yes \| no*; Default: **no**) | Whether client is enabled or not. |
-| **eap-methods** (*eap-tls \| eap-ttls \| eap-peap \| eap-mschapv2*; Default: ) | Ordered list of EAP methods used for authentication. |
-| **identity** (*string*; Default: ) | Supplicant identity used for EAP authentication. |
-| **interface** (*string*; Default: ) | Name of the interface the client will run on. |
-| **password** (*string*; Default: ) *[sensitive](../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Cleartext password for supplicant. |
-
-### Read only properties
-
-| Property | Description |
-| :-- | :-- |
-| **status** (*authenticated \| authenticating \| disabled*) | Possible statuses:authenticated - the client has successfully authenticated.authenticating - the server is reached and the authentication process is ongoing.disabled - the client is disabled.error - an internal error has occurred.interface is down - the parent interface is not running.rejected - the server denied the authentication. |
-
-## Server
-
----
-
-A RouterOS dot1x server acts as an authenticator. An interface where dot1x server is enabled will block all traffic except for EAPOL packets which are used for the authentication. After the client is successfully authenticated, the interface will accept all received traffic on the port. If the interface is connected to a shared medium with multiple hosts, the traffic will be accepted from all hosts when at least one client is successfully authenticated. However, it is possible to [configure dynamic switch rules](./dot1x.md#dynamic-switch-rule-configuration) to accept only the authenticated user source MAC address and drop all other source MAC addresses. In case of failed authentication, it is possible to accept the traffic with a dedicated port VLAN ID.
-
-:::warning
-When a dot1x server is created on a bridge port, the bridge should be running (R/M)STP, otherwise EAP packets from the client will not be correctly accepted. The bridge interface is created with `protocol-mode=rstp` by default. If the bridge port should not send any BPDUs or any received BPDUs should be ignored, use `edge=yes` configuration on bridge ports.
-
-:::
-
-**Sub-menu:** `/interface/dot1x/server`
-
-| Property | Description |
-| :-- | :-- |
-| **accounting** (*yes \| no*; Default: **yes**) | Whether to send RADIUS accounting requests to the authentication server. |
-| **auth-timeout** (*time*; Default: **1m**) | Total time available for EAP authentication. |
-| **auth-types** (*dot1x \| mac-auth*; Default: **dot1x**) | Used authentication type on a server interface. When both options are selected at the same time, the server will prefer `dot1x` authentication type and only after 3 `retrans-timeout` periods, the authentication type will fall back to `mac-auth`. In order for `mac-auth` authentication type to work, the server interface should receive at least one frame containing a client's device source MAC address. |
-| **comment** (*string*; Default: ) | Short description of the entry. |
-| **disabled** (*yes \| no*; Default: **no**) | Whether server config is enabled or not. |
-| **guest-vlan-id** (*integer: 1..4094*; Default: **!guest-vlan-id**) | Assigned VLAN when end devices do not support `dot1x` authentication and no `mac-auth` fall back is configured. The setting will apply after 3 `retrans-timeout` periods. Once a dot1x enabled client is created and successful re-authentication has happened, the port is removed from the guest VLAN. This setting is available since RouterOS 7.2 version and has an effect when bridge `vlan-filtering` is enabled. By default, guest VLAN is disabled. |
-| **interface** (*string*; Default: ) | Name of the interface or interface list the server will run on. |
-| **interim-update** (*time*; Default: **0s**) | Interval between scheduled RADIUS Interim-Update messages. |
-| **mac-auth-mode** (*mac-as-username \| mac-as-username-and-password*; Default: **mac-as-username**) | Allows controlling User-Name and User-Password RADIUS attributes when using MAC authentication. |
-| **radius-mac-format** (*XX-XX-XX-XX-XX-XX \| XX:XX:XX:XX:XX:XX \| XXXXXXXXXXXX \| xx-xx-xx-xx-xx-xx \| xx:xx:xx:xx:xx:xx \| xxxxxxxxxxxx*; Default: **XX:XX:XX:XX:XX:XX**) | Controls how the MAC address of the client is encoded in the User-Name and User-Password attributes when using MAC authentication. |
-| **reauth-period**(*time*; Default: **!reauth-period**) | Enables server port re-authentication. When enabled with `dot1x` authentication type, the server will try to re-authenticate a client by sending EAP-Request Identity to the client. When enabled with `mac-auth` authentication type, the server will try to re-authenticate a client with the RADIUS server by using the last seen MAC address. This setting is available since RouterOS 7.2 version. By default, re-authentication is disabled. |
-| **reject-vlan-id** (*integer: 1..4094*; Default: **!reject-vlan-id**) | Assigned VLAN when authentication failed and a RADIUS server responded with an Access-Reject message. This property will not apply if the RADIUS server is not responding at all, the client authentication will simply timeout and the service will be unavailable. This property only has an effect when bridge `vlan-filtering` is enabled. By default, reject VLAN is disabled. |
-| **retrans-timeout** (*time*; Default: **30s**) | Time interval between message re-transmissions if no response is received from supplicant. |
-| **server-fail-vlan-id** (*integer: 1..4094*; Default: **!server-fail-vlan-id**) | Assigned VLAN when the RADIUS server is not responding and the request timeout has elapsed. This setting is available since RouterOS 7.2 version and has an effect when bridge `vlan-filtering` is enabled. By default, server-fail VLAN is disabled. |
-
-Currently authenticated clients are listed in the active menu (read-only properties).
-
-**Sub-menu:** `/interface/dot1x/server/active`
-
-| Property | Description |
-| :-- | :-- |
-| **auth-info** (*string*) | Authentication information: dot1xdot1x (guest vlan)dot1x (reject vlan)dot1x (server fail vlan)mac-authmac-auth (reject vlan)mac-auth (server fail vlan) |
-| **client-mac** (*mac-address*) | MAC Address of the supplicant. |
-| **interface** (*string*) | Name of the interface. |
-| **session-id** (*string*) | Unique session identifier. |
-| **username** (*string*) | Identity of the supplicant. |
-| **vlan-id** (*string*) | Untagged VLAN ID that is assigned to the interface. VLAN ID filtering must be enabled on bridge. |
-
-Statuses of all active dot1x server interfaces are listed in the state menu (read-only properties).
-
-**Sub-menu:** `/interface/dot1x/server/state`
-
-| Property | Description |
-| :-- | :-- |
-| **interface** (*string*) | Name of the interface. |
-| **status** (*string*) | Possible interface statuses:authorized - access to the interface is granted;iface-down - the interface is not running;rejected-holding - access was rejected by the RADIUS server;un-authorized - access to the interface is not granted. |
-
-## Examples
-
-Described below are the most common configuration examples for dot1x server and client.
-
-### RouterOS Authenticator configuration
-
-![](./img/dot1x-01.webp)
-
-Start off by adding a new RADIUS client. The authentication server (RADIUS) does not necessarily have to be in the same LAN as authenticator, but it must be reachable from the authenticator, so any firewall limitations must be considered.
+Add the RADIUS server for the `dot1x` service, and add the port to the Dot1X server:
 
 ```ros
-/radius 
-add address=10.1.2.3 secret=radiussecret service=dot1x
+/radius/add address=10.1.2.3 secret=Radius-Secret-1 service=dot1x
+/interface/dot1x/server/add interface=ether2
 ```
 
-:::warning
-If RADIUS communication is done over a public network, it is advised to use RadSec for RADIUS communication. More information: [RADIUS](./radius.md)
+- The RADIUS server does not have to be in the same network as the authenticator, but the authenticator must reach it. When the path to the server is not trusted, use RadSec: see [RADIUS](radius).
+- `interface` is an Ethernet interface or an interface list. For many ports, use a list (the example follows).
+- From now on the port passes only EAPOL frames until a device authenticates. Do not add the port that you manage the router through.
 
-:::
-
-Add new dot1x server instances.
+One server entry with an interface list covers several ports:
 
 ```ros
-/interface/dot1x/server
-add interface=ether2 interim-update=30s comment=accounted
-add interface=ether12 accounting=no comment=notaccounted
+/interface/list/add name=dot1x-ports
+/interface/list/member/add list=dot1x-ports interface=ether3
+/interface/list/member/add list=dot1x-ports interface=ether4
+/interface/dot1x/server/add interface=dot1x-ports
 ```
 
-#### Port based VLAN ID assignment
-
-It is possible to assign an authenticated interface to a specific VLAN ID using bridge VLAN filtering. This can be done using RADIUS Tunnel-Type, Tunnel-Medium-Type and Tunnel-Private-Group-ID attributes. Note that only devices with hardware offloaded VLAN filtering will be able to do this in the switch chip.
-
-First of all, make sure the interface is added to a bridge which has VLAN filtering enabled.
+`/interface/dot1x/server/state` shows the state of each port:
 
 ```ros
-/interface/bridge
-add name=bridge1 vlan-filtering=yes
-/interface/bridge/port
-add bridge=bridge1 interface=ether1
-add bridge=bridge1 interface=ether2
-add bridge=bridge1 interface=ether12
+[admin@MikroTik] > /interface/dot1x/server/state/print
+Columns: INTERFACE, STATUS
+#  INTERFACE  STATUS       
+0  ether2     un-authorized
 ```
 
-It is necessary to add static VLAN configuration for tagged VLAN traffic to be sent over the ether1 interface.
+When a device authenticates, the state changes to `authorized` and the device is listed in `/interface/dot1x/server/active`:
 
 ```ros
-/interface/bridge/vlan
-add bridge=bridge1 tagged=ether1 vlan-ids=2
-add bridge=bridge1 tagged=ether1 vlan-ids=12
+[admin@MikroTik] > /interface/dot1x/server/active/print detail
+0  interface=ether2 username="tst" client-mac=52:54:0B:7D:02:01
+   session-id="00002086" auth-info="dot1x"
 ```
 
-With enabled RADIUS debug logs it is possible to see complete RADIUS message packets with all attributes. In our example, Tunnel attributes are received in the Access-Accept message from the RADIUS server:
+| State | Meaning |
+| :-- | :-- |
+| `authorized` | The port passes traffic. |
+| `un-authorized` | No device is authenticated. The port passes only EAPOL frames. |
+| `rejected-holding` | The RADIUS server rejected the device. |
+| `iface-down` | The interface is not running. |
+
+An authorized port accepts all traffic that it receives. If the port is connected to a shared medium with several devices, all of them have access after one of them authenticates. Dynamic switch rules can limit the port to the MAC address of the authenticated device.
+
+## Assign a VLAN from RADIUS
+
+The RADIUS server can put the port of a device into a VLAN. The port must be in a bridge with VLAN filtering. On a router that already has a bridge, read [Bridge VLAN table](../bridging-and-switching/user-guides/bridge-vlan-table) before you turn VLAN filtering on: a wrong order of the steps can cut your access to the router.
+
+```ros
+/interface/bridge/add name=bridge1 vlan-filtering=yes
+/interface/bridge/port/add bridge=bridge1 interface=ether1
+/interface/bridge/port/add bridge=bridge1 interface=ether2
+/interface/bridge/vlan/add bridge=bridge1 tagged=ether1 vlan-ids=12
+```
+
+`ether1` is the uplink and carries VLAN 12 tagged.
+
+The server sends the VLAN in three attributes of the Access-Accept. In the `users` file of FreeRADIUS:
+
+```text
+vlanuser  Cleartext-Password := "Example-pass-1"
+          Tunnel-Type = VLAN,
+          Tunnel-Medium-Type = IEEE-802,
+          Tunnel-Private-Group-Id = "12"
+```
+
+With the `radius,debug` [log](../diagnostics-monitoring-and-troubleshooting/log/) topics, the attributes are in the log of the authenticator:
+
+```ros
+/system/logging/add topics=radius,debug action=memory
+```
 
 ```text
 09:51:45 radius,debug,packet received Access-Accept with id 64 from 10.1.2.3:1812
@@ -148,49 +101,133 @@ With enabled RADIUS debug logs it is possible to see complete RADIUS message pac
 09:51:45 radius,debug,packet     User-Name = "dot1x-user" 
 ```
 
-The VLAN ID is now present in the active session list and untagged ports are added to the previously created static VLAN configuration.
+After the authentication the session has the VLAN ID:
 
 ```ros
-/interface/dot1x/server/active/print 
-  0 interface=ether12 username="dot1x-user" client-mac=00:0C:42:EB:71:F6 session-id="86b00006" vlan-id=12
+[admin@MikroTik] > /interface/dot1x/server/active/print detail
+0  interface=ether2 username="vlanuser" client-mac=52:54:0B:7D:02:01
+   session-id="0f002086" vlan-id=12 auth-info="dot1x"
 ```
 
+The bridge adds the port to VLAN 12 as an untagged port. `/interface/bridge/vlan/print` shows this in a dynamic entry with the comment `added by pvid`.
+
+- Only devices with hardware offloaded VLAN filtering do this in the switch chip.
+- A server that authenticates with EAP-PEAP or EAP-TTLS must send the attributes in the outer reply. In FreeRADIUS this is `use_tunneled_reply = yes`.
+
+## Put devices that fail into a VLAN
+
+A port can get a VLAN when the authentication does not succeed. A typical use is a guest network. All three settings need a bridge with VLAN filtering, and all are off by default.
+
 ```ros
-/interface/bridge/vlan/print detail 
-Flags: X - disabled, D - dynamic 
- 0 D bridge=bridge1 vlan-ids=1 tagged="" untagged="" current-tagged="" current-untagged=bridge1,ether3 
-
- 1   bridge=bridge1 vlan-ids=2 tagged=ether1 untagged="" current-tagged=ether1 current-untagged=ether2 
-
- 2   bridge=bridge1 vlan-ids=12 tagged=ether1 untagged="" current-tagged=ether1 current-untagged=ether12 
+/interface/dot1x/server/set [find interface=ether2] \
+    guest-vlan-id=50 reject-vlan-id=30 server-fail-vlan-id=40
 ```
 
-#### Dynamic switch rule configuration
+| Setting | The port gets the VLAN when | `auth-info` of the session |
+| :-- | :-- | :-- |
+| `guest-vlan-id` | The device does not answer EAP requests, because it has no supplicant. The VLAN is set after three `retrans-timeout` periods. | `dot1x (guest vlan)` |
+| `reject-vlan-id` | The RADIUS server answers with Access-Reject. | `dot1x (reject vlan)` |
+| `server-fail-vlan-id` | The RADIUS server does not answer. | `dot1x (server fail vlan)` |
 
-In some network configurations, additional access rules are needed for a particular supplicant to restrict or allow certain network services. This can be done using a Mikrotik-Switching-Filter attribute, please see the [RADIUS vendor dictionary](./radius.md). When a client is successfully authenticated by an authentication server, the server can pass back the Mikrotik-Switching-Filter attribute. Based on the received information, the authenticator will create dynamic access rules on a switch port where the client resides. These rules will be active as long as the client session is active and the interface is running. There are certain orders and restrictions regarding correct switch rule implementation:
-
-- The `mac-protocol`, `src-mac-address` (available only since RouterOS 7.2 version), `src-address` (IPv4/mask, available only since RouterOS 7.2 version), `dst-address` (IPv4/mask), `protocol` (IPv4) `src-port` (L4, available only since RouterOS 7.2 version), `dst-port` (L4) conditional parameters are supported.
-- Hexadecimal or decimal representation can be used for `mac-protocol` and `protocol` parameters (e.g. `protocol 17` or `protocol 0x11`).
-- The `src-port` and `dst-port` support single or range values (e.g. `src-port 10` or `src-port 10-20`).
-- The `src-mac-address` supports "xx:xx:xx:xx:xx:xx" or "xxxxxxxxxxxx" formats, and a switch rule without any source MAC address can be set with "none" keyword (e.g.`src-mac-address none`).
-- The `src-mac-address` (if not already set by the attribute)`, switch` and `ports` conditional parameters are automatically set for each rule
-- Each rule should end with an action property, supported values are either **drop** or **allow**. If no action property is set, the default **allow** value will be used.
-- Multiple rules are supported for a single supplicant and they must be separated by a comma ",".
-
-Below are some examples of Mikrotik-Switching-Filter attributes and dynamic switch rules they create:
+In each case the state of the port is `authorized` and the session shows the VLAN:
 
 ```ros
-# Drop ARP frames (EtherType: 0x0806 or 2054)
+[admin@MikroTik] > /interface/dot1x/server/active/print detail
+0  interface=ether2 username="vlanuser" client-mac=52:54:0B:7D:02:01
+   session-id="11002086" vlan-id=30 auth-info="dot1x (reject vlan)"
+```
+
+- With the default `retrans-timeout` of 30 seconds, a device without a supplicant gets the guest VLAN after 90 seconds.
+- A device of a visitor that has a supplicant gets an Access-Reject and not the guest VLAN. To give all visitors the same network, set `reject-vlan-id` to the same VLAN as `guest-vlan-id`.
+- Add the VLANs to the uplink port as tagged in the VLAN table of the bridge.
+- When a supplicant starts on a port in the guest VLAN and authenticates, the port leaves the guest VLAN.
+- `reject-vlan-id` is not used when the RADIUS server does not answer. Without `server-fail-vlan-id`, the authentication then times out and the port stays closed.
+
+## Authenticate devices by MAC address
+
+Printers, cameras and other devices without a supplicant can be authenticated by their MAC address. The authenticator asks the RADIUS server with the MAC address of the device as the user name:
+
+```ros
+/interface/dot1x/server/set [find interface=ether2] \
+    auth-types=mac-auth
+```
+
+In the `users` file of FreeRADIUS, an entry for a device with the default settings accepts the MAC address without a password:
+
+```text
+52:54:0B:7D:02:01  Auth-Type := Accept
+```
+
+- The authenticator learns the MAC address from a frame that the device sends. A device that sends nothing is not authenticated.
+- With `mac-auth-mode=mac-as-username` (the default) the password of the request is empty. With `mac-as-username-and-password` the MAC address is also the password.
+- `radius-mac-format` sets how the MAC address is written. The default is `XX:XX:XX:XX:XX:XX`.
+- The RADIUS server can send a VLAN in the same way as for a Dot1X device.
+
+The session has `auth-info="mac-auth"`:
+
+```ros
+[admin@MikroTik] > /interface/dot1x/server/active/print detail
+0  interface=ether2 username="52:54:0B:7D:02:01" client-mac=52:54:0B:7D:02:01
+   session-id="17002086" vlan-id=12 auth-info="mac-auth"
+```
+
+With both types, the authenticator tries Dot1X first. If the device does not answer in three `retrans-timeout` periods, it tries the MAC address:
+
+```ros
+/interface/dot1x/server/set [find interface=ether2] \
+    auth-types=dot1x,mac-auth
+```
+
+A MAC address is easy to copy from another device. Give MAC-authenticated devices only the access that they need, for example their own VLAN.
+
+## Re-authenticate and send accounting
+
+- `reauth-period` makes the authenticator authenticate each device again after this time. A Dot1X device gets a new EAP request, and a MAC-authenticated device is checked with the RADIUS server again. By default devices are not authenticated again.
+- `accounting=yes` (the default) sends the start and the end of each session to the RADIUS server. `interim-update` also sends an update at this interval.
+
+```ros
+/interface/dot1x/server/set [find interface=ether2] \
+    reauth-period=1h interim-update=5m
+```
+
+## Add switch rules for a device
+
+The RADIUS server can limit what an authenticated device can reach. It sends rules in the Mikrotik-Switching-Filter attribute, and the authenticator adds them as dynamic [switch rules](../bridging-and-switching/switch-chip-features) on the port of the device. The rules exist while the session is active and the interface is running.
+
+:::warning
+Dynamic switch rules need a switch chip with rule support: MikroTik devices with a Marvell Prestera switch chip, and the QCA8337, Atheros8327 and Atheros8316 switch chips. CRS1xx and CRS2xx series switches do not support them. Each device has a maximum number of rules: see [MikroTik devices with Marvell Prestera switch](../bridging-and-switching/marvell-prestera-switch-chip-features) and the [switch chip table](../bridging-and-switching/switch-chip-features).
+:::
+
+The format of the attribute:
+
+- The conditions are `mac-protocol`, `src-mac-address`, `src-address` (IPv4 address and mask), `dst-address` (IPv4 address and mask), `protocol` (IPv4), `src-port` and `dst-port`.
+- `mac-protocol` and `protocol` take a decimal or a hexadecimal number, for example `protocol 17` or `protocol 0x11`.
+- `src-port` and `dst-port` take one port or a range, for example `src-port 10` or `src-port 10-20`.
+- `src-mac-address` takes the format `xx:xx:xx:xx:xx:xx` or `xxxxxxxxxxxx`. The word `none` makes a rule without a source MAC address: `src-mac-address none`.
+- The authenticator sets `switch` and `ports` of each rule. It also sets `src-mac-address` to the address of the device, unless the attribute sets it.
+- A rule ends with `action drop` or `action allow`. Without an action, the rule allows.
+- Several rules are separated with commas.
+
+Drop ARP frames (EtherType 0x0806, decimal 2054):
+
+```text
 Mikrotik-Switching-Filter = "mac-protocol 2054 action drop"
+```
 
+```ros
 /interface/ethernet/switch/rule/print
 Flags: X - disabled, I - invalid, D - dynamic 
  0  D ;;; dot1x dynamic
       switch=switch1 ports=ether1 src-mac-address=CC:2D:E0:11:22:33/FF:FF:FF:FF:FF:FF mac-protocol=arp copy-to-cpu=no redirect-to-cpu=no mirror=no new-dst-ports=""
+```
 
-# Allow UDP (IP protocol: 0x11 or 17) destination port 100 and drop all other packets
+Allow UDP (IP protocol 17) to the destination port 100 and drop everything else:
+
+```text
 Mikrotik-Switching-Filter = "protocol 17 dst-port 100 action allow, action drop"
+```
 
+```ros
 /interface/ethernet/switch/rule/print
 Flags: X - disabled, I - invalid, D - dynamic 
  0  D ;;; dot1x dynamic
@@ -198,10 +235,15 @@ Flags: X - disabled, I - invalid, D - dynamic
 
  1  D ;;; dot1x dynamic
       switch=switch1 ports=ether1 src-mac-address=CC:2D:E0:11:22:33/FF:FF:FF:FF:FF:FF copy-to-cpu=no redirect-to-cpu=no mirror=no new-dst-ports=""
+```
 
-# Allow only authenticated source MAC address, drop all other packets
+Allow only the MAC address of the authenticated device and drop all other source addresses:
+
+```text
 Mikrotik-Switching-Filter = "action allow, src-mac-address none action drop"
+```
 
+```ros
 /interface/ethernet/switch/rule/print 
 Flags: X - disabled, I - invalid; D - dynamic 
  0  D ;;; dot1x dynamic
@@ -211,7 +253,9 @@ Flags: X - disabled, I - invalid; D - dynamic
       switch=switch1 ports=ether1 copy-to-cpu=no redirect-to-cpu=no mirror=no new-dst-ports="" 
 ```
 
-In our example, Supplicant2 on ether2 is only allowed to access the 192.168.50.0/24 network with UDP destination port 50; all other traffic should be dropped. First, make sure that hardware offloading is working on bridge ports, otherwise switch rules might not work properly.
+### Example
+
+The device on `ether2` can reach only the network 192.168.50.0/24 on the UDP port 50. The switch rules work on hardware offloaded bridge ports, so check the `H` flag first:
 
 ```ros
 /interface/bridge/port/print
@@ -222,7 +266,7 @@ Flags: X - disabled, I - inactive, D - dynamic, H - hw-offload
  2   H ether12                     bridge1                  yes    1     0x80         10                 10       none
 ```
 
-With enabled RADIUS debug logs it is possible to see complete RADIUS message packets with all attributes. In our example, the Mikrotik-Switching-Filter attribute is received in the Access-Accept message from the Radius server:
+The RADIUS server sends the attribute in the Access-Accept:
 
 ```text
 02:35:38 radius,debug,packet received Access-Accept with id 121 from 10.1.2.3:1812 
@@ -230,7 +274,7 @@ With enabled RADIUS debug logs it is possible to see complete RADIUS message pac
 02:35:38 radius,debug,packet     MT-Switching-Filter = "mac-protocol 2048 dst-address 192.168.50.0/24 dst-port 50 protocol 17 action allow,action drop"
 ```
 
-The dynamic switch rules are now present under the switch menu:
+The authenticator adds two rules:
 
 ```ros
 /interface/ethernet/switch/rule/print 
@@ -242,34 +286,61 @@ Flags: X - disabled, I - invalid; D - dynamic
       switch=switch1 ports=ether2 src-mac-address=CC:2D:E0:11:22:33/FF:FF:FF:FF:FF:FF copy-to-cpu=no redirect-to-cpu=no mirror=no new-dst-ports="" 
 ```
 
-:::warning
-Dynamic switch rules will only apply to RouterBoards with switch rule support - MikroTik devices with Marvell Prestera switch and devices with QCA8337, Atheros8327 and Atheros8316 switch chips. CRS1xx/2xx series switches do not support this functionality. Take into consideration the maximum number of rules for each device, see [MikroTik devices with Marvell Prestera switch](../bridging-and-switching/marvell-prestera-switch-chip-features.md#models) and [basic switch chip table](../bridging-and-switching/switch-chip-features.md)
+## Connect a RouterOS port as a supplicant
 
-:::
+A router or switch can authenticate its own port to an 802.1X network. The methods are EAP-MSCHAPv2, EAP-PEAP (PEAPv0 with EAP-MSCHAPv2), EAP-TTLS and EAP-TLS.
 
-### RouterOS Supplicant configuration
-
-CA certificates are required for `eap-tls, eap-ttls` and `eap-peap` authentication methods. Additionally a client certificate is required for `eap-tls` method. For this example we have already imported a P12 certificate bundle with self-signed client and CA certificates. For more information on how to import certificates in RouterOS, please visit [System/Certificates](./certificates.md).
+With a name and a password:
 
 ```ros
-/certificate/print 
-Flags: K - private-key, L - crl, C - smart-card-key, A - authority, I - issued, R - revoked, E - expired, T - trusted 
- #         NAME                                            COMMON-NAME                                         SUBJECT-ALT-NAME                             FINGERPRINT                                        
- 0 K  A  T dot1x-client                                    ez_dot1x-client                                     IP:10.1.2.34
- 1  L A  T dot1x CA                                        ca            
+/interface/dot1x/client/add interface=ether2 \
+    eap-methods=eap-peap identity=tst password=Example-pass-1
 ```
 
-Simply add a new dot1x client instance that will initiate the authentication process.
+- EAP-PEAP, EAP-TTLS and EAP-TLS check the certificate of the RADIUS server. Import the certificate authority that signed it as a trusted [certificate](certificates) first. Without it the client stays in `authenticating`, and the log has `no trusted CA certificate found`.
+- EAP-MSCHAPv2 needs no certificate, but it does not check the server.
+- `anon-identity` is the name that EAP-PEAP and EAP-TTLS show outside the encrypted tunnel. Without it, `identity` is used. With it, the authenticator lists the session with the outer name.
+- `eap-methods` can list several methods.
+
+EAP-TLS uses a client certificate in place of the password. Import the certificate with its private key, and name it in `certificate`:
 
 ```ros
-/interface/dot1x/client
-add anon-identity=anonymous client-certificate=dot1x-client eap-methods=eap-tls identity=dot1x-user interface=ether1 password=dot1xtest
+/interface/dot1x/client/add interface=ether2 eap-methods=eap-tls \
+    identity=tst certificate=dot1x-client
 ```
-
-If authentication was successful, the interface should have status authenticated.
 
 ```ros
-/interface/dot1x/client/print 
-Flags: I - inactive, X - disabled 
-  0   interface=ether1 eap-methods=eap-tls identity="dot1x-user" password="dot1xtest" anon-identity="anonymous" client-certificate=dot1x-client status="authenticated"
+[admin@MikroTik] > /interface/dot1x/client/print detail
+0  ;;; d1x
+   interface=ether2 eap-methods=eap-tls identity="tst" anon-identity=""
+   certificate=dot1x-client status="authenticated"
 ```
+
+| Status | Meaning |
+| :-- | :-- |
+| `authenticated` | The authentication succeeded. |
+| `authenticating` | The client reached the authenticator and the authentication is in progress. |
+| `rejected` | The server refused the client. |
+| `disabled` | The client is disabled. |
+| `interface is down` | The interface is not running. |
+| `error` | An internal error. |
+
+## Check and troubleshoot
+
+| What you see | What to check |
+| :-- | :-- |
+| The port stays `un-authorized`. | The device has no supplicant. For such devices, use `guest-vlan-id` or `auth-types=dot1x,mac-auth`. |
+| The port is `rejected-holding`, the client is `rejected`. | The RADIUS server refused the name, the password or the certificate. Check the log of the server. |
+| The client stays `authenticating`, and its log has `no trusted CA certificate found`. | Import the certificate authority of the RADIUS server on the client as a trusted certificate. |
+| The client stays `authenticating` and the RADIUS server gets no request. | The authenticator cannot reach the server. Check the `/radius` entry: it needs `service=dot1x`, the address and the secret. See [RADIUS](radius). |
+| The device is authenticated but not in the VLAN. | The bridge needs `vlan-filtering=yes`, and the Access-Accept must have the three tunnel attributes. Check them with the `radius,debug` log topics. |
+
+Keep RSTP or MSTP enabled on a bridge that has Dot1X ports: without a spanning tree protocol, EAP packets from the device may not be accepted. A bridge has `protocol-mode=rstp` by default. For a port that must not send BPDUs or must ignore received BPDUs, set `edge=yes` on the bridge port.
+
+## Read more
+
+- [`/interface/dot1x/server`](../cli-reference/interface/dot1x/server/), [`/interface/dot1x/server/active`](../cli-reference/interface/dot1x/server/active), [`/interface/dot1x/server/state`](../cli-reference/interface/dot1x/server/state), [`/interface/dot1x/client`](../cli-reference/interface/dot1x/client)
+- [RADIUS](radius)
+- [User Manager](user-manager)
+- [Certificates](certificates)
+- [Switch chip features](../bridging-and-switching/switch-chip-features)

@@ -868,9 +868,9 @@ For example: hAP lite, hEX lite, PowerBox, wsAP ac lite, RBmAP2nD. See [Switch C
 | MLAG | ✗ |
 | Horizon | ✗ |
 
-### IPQ-PPE, QCA8386, PIPE 98PX1012
+### IPQ-PPE, PIPE 98PX1012
 
-For example: hAP ax series, cAP ax, Chateau ax series, hAP be³ Media, CCR2004-1G-12S+2XS. See [Switch Chip Features](./switch-chip-features.md).
+For example: hAP ax series, cAP ax, Chateau ax series, CCR2004-1G-12S+2XS. See [Switch Chip Features](./switch-chip-features.md).
 
 | Feature | HW Offload |
 | :-- | :--: |
@@ -891,6 +891,27 @@ For example: hAP ax series, cAP ax, Chateau ax series, hAP be³ Media, CCR2004-1
 Using `protocol-mode=none` on **IPQ-PPE** enables HW offloaded bridge and can cause issues.  
 It is recommended to use a non-HW offloaded bridge by keeping the default `protocol-mode=rstp` setting or by manually setting `hw=no` under `/interface/bridge/port`.
 :::
+
+### QCA8386
+
+For example: hAP be³ Media. See [Switch Chip Features](./switch-chip-features.md).
+
+| Feature | HW Offload |
+| :-- | :--: |
+| STP/RSTP | ✓ |
+| MSTP | ✗ |
+| VLAN Filtering | ✓ |
+| IGMP Snooping | ✓ |
+| DHCP Snooping | ✓ |
+| ARP Inspection | ✗ |
+| IP Source Guard | ✗ |
+| DHCPv6 Snooping | ✓ |
+| RA Guard | ✓ |
+| Bonding¹ | ✓ |
+| MLAG | ✗ |
+| Horizon | ✗ |
+
+¹ Only `mode=802.3ad` (LACP), `mode=balance-xor` (static LAG) and `mode=active-backup` bonding interfaces are hardware offloaded. `mode=balance-rr` disables HW offload.
 
 ### Example
 
@@ -928,7 +949,7 @@ Bridge VLAN Filtering enables VLAN-aware Layer 2 forwarding and allows VLAN tag 
 The primary VLAN setting is `vlan-filtering`, which globally controls VLAN awareness and VLAN tag processing for the bridge. When `vlan-filtering` is set to `no`, the bridge ignores VLAN tags, operates in shared-VLAN-learning (SVL) mode, and cannot modify VLAN tags of packets. Enabling `vlan-filtering` activates all bridge VLAN-related functionality and switches to independent-VLAN-learning (IVL) mode. In addition to joining ports for Layer 2 forwarding, the bridge itself functions as an interface and therefore has a Port VLAN ID (pvid).
 
 :::warning
-Currently, MikroTik devices with Marvell Prestera switch and RTL8367, 88E6393X, 88E6191X, 88E6190, MT7621, MT7531, and EN7523 switch chips (since RouterOS v7) can use bridge VLAN filtering and hardware offloading simultaneously. Other devices cannot utilize the benefits of a built-in switch chip when bridge VLAN filtering is enabled. These devices should be configured according to the method described in the Basic VLAN switching guide. Using an improper configuration method can cause throughput issues in your network.
+Currently, MikroTik devices with Marvell Prestera switch and RTL8367, 88E6393X, 88E6191X, 88E6190, MT7621, MT7531, EN7523 and QCA8386 switch chips can use bridge VLAN filtering and hardware offloading simultaneously. Other devices cannot utilize the benefits of a built-in switch chip when bridge VLAN filtering is enabled. These devices should be configured according to the method described in the Basic VLAN switching guide. Using an improper configuration method can cause throughput issues in your network.
 :::
 
 ### Bridge VLAN Table

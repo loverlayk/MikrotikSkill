@@ -1,407 +1,675 @@
 # RADIUS
 
-> RADIUS enables centralized authentication and accounting for PPP, HotSpot, and other services in MikroTik RouterOS by connecting to a RADIUS server via UDP or RadSec protocol, with configurable ports, shared secrets,...
+> RouterOS RADIUS client: add RADIUS servers, authenticate PPP, router login, DHCP and HotSpot users, send accounting, accept Disconnect and CoA requests, use RadSec, and look up the supported RADIUS attributes.
 
 # RADIUS
 
-RADIUS, short for Remote Authentication Dial-In User Service, is a remote server that provides authentication and accounting facilities to various network appliances. RADIUS authentication and accounting allows the ISP or network administrator to manage PPP user access and accounting from one server throughout a large network. The MikroTik RouterOS has a RADIUS client that can authenticate [router's local](./user.md) [users](./user.md), [HotSpot](./hotspot-captive-portal/index.md), [PPP](../mobile-networking/ppp.md) and ISDN connections. The attributes received from the RADIUS server override the ones set in the default profile, but if some parameters are not received they are taken from the respective default profile.
+RADIUS (Remote Authentication Dial-In User Service) keeps user accounts on a central server. The RouterOS RADIUS client asks the server whether a user is allowed to connect, applies the settings that the server returns for the user (an address, a rate limit, a session time), and reports the session to the server for accounting. One server can manage the users of many routers.
 
-The RADIUS server database is consulted only if no matching user access record is found in the router's local database.
+The `/radius` menu holds the list of servers. Each entry names the router services that use it: `ppp`, `login` ([router users](user)), `hotspot` ([HotSpot](hotspot-captive-portal/)), `dhcp` ([DHCP server](../network-management/dhcp/server)), `dot1x` ([Dot1X](dot1x)), `ipsec` ([IPsec](../virtual-private-networks/ipsec/)) and `wireless`. The `ppp` service covers all PPP servers: PPPoE, L2TP, SSTP and the others. Each service also has its own setting that turns RADIUS on.
 
-If RADIUS accounting is enabled, accounting information is also sent to the default RADIUS server for that service.
+A PPP secret or a router user that exists on the router is checked on the router. The router does not ask the server about that name.
 
-## RADIUS Client
+On the server, add the router as a client with the same shared secret, and load the MikroTik attribute dictionary (see RADIUS attributes at the end of this page). [User Manager](user-manager) is a RADIUS server that runs on RouterOS. The server examples on this page use the `users` file format of FreeRADIUS.
 
-**Sub-menu:** `/radius`
+## Authenticate PPP users
 
-This sub-menu allows adding and removing RADIUS clients.
-
-:::warning
-The order of added items in this list is significant.
-
-:::
-
-### Properties
-
-| Property | Description |
-| :-- | :-- |
-| **accounting-backup** (*yes \| no*; Default: **no**) | Whether the configuration is for the backup RADIUS server |
-| **accounting-port** (*integer [1..65535]*; Default: **1813**) | RADIUS server port used for accounting |
-| **address** (*IPv4/IPv6 address*; Default: **0.0.0.0**) | IPv4 or IPv6 address of RADIUS server.  The following formats are accepted:  - *ipv4* - *ipv4*`@`*vrf* - *ipv6* - *ipv6*`@`*vrf* |
-| **authentication-port** (*integer [1..65535]*; Default: **1812**) | RADIUS server port used for authentication. |
-| **called-id** (*string*; Default: ) | Value depends on Point-to-Point protocol: PPPoE - service name, PPTP - server's IP address, L2TP - server's IP address. |
-| **certificate** (*string*; Default: ) | [Certificate from certificate store](../authentication-authorization-accounting/certificates.md) to use for communicating with RADIUS Server with RadSec enabled. |
-| **comment** (*string*; Default: ) |  |
-| **disabled** (*yes \| no*; Default: **no**) |  |
-| **domain** (*string*; Default: ) | Microsoft Windows domain of client passed to RADIUS servers that require domain validation. |
-| **protocol** (*radsec \| udp*; Default: **udp**) | Specifies the protocol to use when communicating with the RADIUS Server. |
-| **radsec-timeout**(*time,* Default: **3300ms**) | Timeout after which the request should be resent over RadSec protocol. |
-| **require-message-auth** (*no \| yes-for-request-resp* Default: **yes-for-request-resp**) | Specifies if Message-Authenticator attributes are required. |
-| **realm** (*string*; Default: ) | Explicitly stated realm (user domain), so the users do not have to provide proper ISP domain name in the user name. |
-| **secret** (*string*; Default: ) *[sensitive](../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | The shared secret used to access the RADIUS server. |
-| **service** (*ppp\|login\|hotspot\|wireless\|dhcp\|ipsec\|dot1x*; Default: ) | Router services that will use this RADIUS server:hotspot - HotSpot authentication servicelogin - router's local user authenticationppp - Point-to-Point clients authenticationwireless - wireless client authenticationdhcp - DHCP protocol client authentication (client's MAC address is sent as User-Name)ipsec - ipsec client authenticationdot1x - dot1x authentication |
-| **src-address** (*ipv4/ipv6 address*; Default: **0.0.0.0**) | Source IP/IPv6 address of the packets sent to the RADIUS server |
-| **timeout** (*time*; Default: **1100ms**) | Timeout after which the request should be resent. |
-
-:::warning
-When the RADIUS server is authenticating the user with CHAP, MS-CHAPv1, MS-CHAPv2, it is not using a shared secret; the secret is used only in the authentication reply, and the router (RADIUS client) verifies it.So if you have the wrong shared secret, the RADIUS server will accept a request, but the router won't accept the reply. You can see that with the "*`/radius/monitor`*" command, the "bad-replies" number should increase whenever somebody tries to connect.
-
-:::
-
-:::danger
-If RadSec is enabled, make sure your RADIUS Server is using "**radsec**" as the shared secret, otherwise, the RADIUS Server will not be able to decrypt data correctly (unprintable characters).With RadSec, RouterOS forces the shared secret to "radsec" regardless of what has been set manually.For more details see RFC6614.
-
-:::
-
-:::info
-If RadSec is used, RouterOS will override to use TCP port 2083
-:::
-
-### Example
-
-To set up a RADIUS Client for HotSpot and PPP services that will authenticate against a RADIUS Server (10.0.0.3), you need to do the following:
+This example sends the logins of a PPP server, for example a [PPPoE server](../virtual-private-networks/pppoe/), to the RADIUS server at 192.0.2.10. Add the server and turn RADIUS on for PPP:
 
 ```ros
-[admin@MikroTik] > /radius/add service=hotspot,ppp address=10.0.0.3 secret=ex
-[admin@MikroTik] > /radius/print
-Flags: X - disabled
-# SERVICE CALLED-ID DOMAIN ADDRESS SECRET
-0 ppp,hotspot 
-```
-
-To set up a RADIUS Client with RadSec, you need to do the following:
-
-```ros
-[admin@MikroTik] > /radius/add service=hotspot,ppp address=10.0.0.3 secret=radsec protocol=radsec certificate=client.crt
-[admin@MikroTik] > /radius/print
-Flags: X - disabled
-# SERVICE CALLED-ID DOMAIN ADDRESS SECRET
-0 ppp,hotspot 10.0.0.3 radsec
-```
-
-:::warning
-Make sure the specified certificate is trusted and common-name verification on both ends will work properly.
-
-:::
-
-Here is a trivial example of certificates that can be used for RADIUS RadSec configuration:
-
-```ros
-On server:
-
-#CN should be RADIUS server IP
-/certificate/add name=radsec_server common-name=10.155.114.91
-/certificate/sign radsec_server
-
-#CN should be RADIUS client IP
-/certificate/add name=radsec_client1 common-name=10.155.114.92
-/certificate/sign radsec_client1
-/user-manager/set radsec-certificate=radsec_server
-
-#Export certificates on the server in order to apply them on client
-/certificate/export-certificate type=pkcs12 export-passphrase=verystrongpassword radsec_client1
-/certificate/export-certificate type=pkcs12 radsec_server
-
-On client:
-
-#Download both files and upload them to the client
-/certificate/import file-name=cert_export_radsec_client1.p12 passphrase=verystrongpassword
-/certificate/import file-name=cert_export_radsec_server.p12
-/radius/set <radius_client_id_in_list> certificate=cert_export_radsec_client1.p12_0
-
-#After that when RADIUS client tries to connect to the server you should see on status fileld: status="TLS connected".
-```
-
-To view RADIUS Client statistics, you need to do the following:
-
-```ros
-[admin@MikroTik] > /radius/monitor 0
-pending: 0
-requests: 10
-accepts: 4
-rejects: 1
-resends: 15
-timeouts: 5
-bad-replies: 0
-last-request-rtt: 0s
-```
-
-Make sure you enable RADIUS authentication for the desired services:
-
-```ros
+/radius/add service=ppp address=192.0.2.10 secret=Example-secret-1
 /ppp/aaa/set use-radius=yes
-/ip/hotspot/profile/set default use-radius=yes
 ```
 
-## Connection Terminating from RADIUS
+On the server, the user gets a fixed address and a rate limit:
 
-**Sub-menu:** `/radius/incoming`
+```text
+alice Cleartext-Password := "Example-pass-1"
+	Framed-IP-Address = 10.0.0.10,
+	Mikrotik-Rate-Limit = "10M/50M"
+```
 
-This facility supports unsolicited messages sent from the RADIUS server. Unsolicited messages extend RADIUS protocol commands that allow terminating a session that has already been connected from the RADIUS server. For this purpose, DM (Disconnect-Messages) is used. Disconnect messages cause a user session to be terminated immediately.
+When the user connects, the session has the `R` flag and the address from the server:
+
+```ros
+[admin@MikroTik] > /ppp/active/print
+Flags: R - RADIUS
+Columns: NAME, SERVICE, CALLER-ID, ADDRESS, UPTIME
+#   NAME   SERVICE  CALLER-ID          ADDRESS    UPTIME
+0 R alice  pppoe    00:00:5E:00:53:0B  10.0.0.10  9s
+```
+
+The rate limit is a dynamic simple queue on the interface of the user. The first value limits the upload of the user and the second the download:
+
+```ros
+[admin@MikroTik] > /queue/simple/print where dynamic
+Flags: D - DYNAMIC
+0 D name="<pppoe-alice>" target=<pppoe-alice> parent=none packet-marks=""
+    priority=8/8 queue=default-small/default-small limit-at=10M/50M
+    max-limit=10M/50M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
+    bucket-size=0.1/0.1
+```
+
+The default configuration has a FastTrack rule, and simple queues do not limit FastTracked connections. See [Simple queue](../firewall-and-quality-of-service/queues/simple-queue) before you rely on these queues.
+
+Framed-IP-Address or Framed-Pool from the server replaces `remote-address` of the PPP profile. Settings that the server does not send come from the default profile of the PPP server (`default-profile` in the settings of the server). `Mikrotik-Group` in the reply selects another PPP profile for the user.
+
+## Log in to the router with RADIUS accounts
+
+This example lets administrators log in to the router with accounts from the same server. Add `login` to the services of the entry and turn RADIUS on for router users:
+
+```ros
+/radius/set [find address=192.0.2.10] service=ppp,login
+/user/aaa/set use-radius=yes
+```
+
+On the server, `Mikrotik-Group` names the [user group](user) of the account:
+
+```text
+netadmin Cleartext-Password := "Example-pass-2"
+	Mikrotik-Group = "full"
+```
+
+Log in with the account and list the sessions that RADIUS authenticated:
+
+```ros
+[netadmin@MikroTik] > /user/active/print where radius
+Flags: R - RADIUS
+Columns: WHEN, NAME, ADDRESS, VIA
+#   WHEN                 NAME      ADDRESS     VIA
+0 R 2026-11-20 08:57:50  netadmin  192.0.2.20  ssh
+```
+
+`ADDRESS` is the address that the administrator logged in from.
 
 :::warning
-RouterOS doesn't support POD (Packet of Disconnect), the other RADIUS access request packet that performs a similar function to Disconnect Messages
-
+Every account that the server accepts for a login request can log in to the router. An account without `Mikrotik-Group`, or with a group that does not exist on the router, gets the group set in `default-group` of `/user/aaa`, which is `read` by default. The `read` group can do more than look: see [User](user) for its policies. When the same server also holds PPP or HotSpot users, configure it to accept requests with Service-Type `Login` only for administrator accounts.
 :::
 
-### Properties
+The router does not ask the server about names that exist in `/user`, so keep a local administrator account for the time when the server cannot be reached.
 
-| Property | Description |
+## Authorize DHCP clients
+
+With RADIUS, the [DHCP server](../network-management/dhcp/server) asks the RADIUS server before it gives a lease. The server can set the address, the lease time and a rate limit for each device. The example uses the DHCP server of the default configuration, `defconf`:
+
+```ros
+/radius/set [find address=192.0.2.10] service=ppp,login,dhcp
+/ip/dhcp-server/set defconf use-radius=yes
+```
+
+With the default settings, the router sends the MAC address of the device as the user name, with an empty password. On the server, accept the device by its MAC address:
+
+```text
+00:00:5E:00:53:0A Auth-Type := Accept
+	Framed-IP-Address = 192.168.88.50,
+	Session-Timeout = 3600,
+	Mikrotik-Rate-Limit = "5M/20M"
+```
+
+`Session-Timeout` is the lease time in seconds. The lease has the `R` flag:
+
+```ros
+[admin@MikroTik] > /ip/dhcp-server/lease/print
+Flags: R - RADIUS, D - DYNAMIC
+Columns: ADDRESS, MAC-ADDRESS, HOST-NAME, SERVER, RATE-LIMIT, STATUS,
+         LAST-SEEN
+#   ADDRESS        MAC-ADDRESS        HOST-NAME  SERVER   RATE-L  STATUS  LAS
+0 R 192.168.88.50  00:00:5E:00:53:0A  laptop     defconf  5M/20M  bound   12s
+```
+
+A device that the server rejects gets no address. Add all devices of the network to the server before you turn RADIUS on for a DHCP server that is in use.
+
+## Authenticate HotSpot users
+
+Add `hotspot` to the services of the entry and set `use-radius=yes` in the HotSpot server profile. The [HotSpot](hotspot-captive-portal/) page describes the HotSpot server and its profiles.
+
+## Authenticate IPsec users
+
+An IKEv2 server can pass the EAP authentication of its clients to RADIUS. [IPsec](../virtual-private-networks/ipsec/) has the complete server setup; this example shows the RADIUS part. The server certificate is `ike-server`. Add `ipsec` to the services of the entry and set `auth-method=eap-radius` in the identity:
+
+```ros
+/radius/set [find address=192.0.2.10] \
+    service=ppp,login,dhcp,ipsec
+/ip/pool/add name=ike-pool ranges=10.10.10.10-10.10.10.100
+/ip/ipsec/mode-config/add name=ike-conf address-pool=ike-pool
+/ip/ipsec/peer/add name=ike-clients passive=yes exchange-mode=ike2
+/ip/ipsec/identity/add peer=ike-clients auth-method=eap-radius \
+    certificate=ike-server generate-policy=port-strict \
+    mode-config=ike-conf
+```
+
+On the server, Framed-IP-Address gives the client a fixed address in place of one from the pool:
+
+```text
+bob Cleartext-Password := "Example-pass-3"
+	Framed-IP-Address = 10.10.10.50
+```
+
+A client that logs in with EAP-MSCHAPv2 is listed with its user name and the address from the server:
+
+```ros
+[admin@MikroTik] > /ip/ipsec/active-peers/print
+Flags: R - RESPONDER
+Columns: ID, STATE, UPTIME, PH2-TOTAL, REMOTE-ADDRESS, DYNAMIC-ADDRESS
+#   ID   STATE        UPTIME  PH2-TOTAL  REMOTE-ADDRESS  DYNAMIC-ADDRESS
+0 R bob  established  9s              1  192.0.2.50      10.10.10.50
+```
+
+## Authenticate Dot1X clients
+
+The [Dot1X](dot1x) server passes the EAP authentication of the devices on an Ethernet port to RADIUS. Add `dot1x` to the services of the entry and add the port to the Dot1X server:
+
+```ros
+/radius/set [find address=192.0.2.10] \
+    service=ppp,login,dhcp,ipsec,dot1x
+/interface/dot1x/server/add interface=ether2 auth-types=dot1x
+```
+
+```text
+carol Cleartext-Password := "Example-pass-4"
+```
+
+When the device has logged in, the port is authorized:
+
+```ros
+[admin@MikroTik] > /interface/dot1x/server/state/print
+Columns: INTERFACE, STATUS
+#  INTERFACE  STATUS
+0  ether2     authorized
+```
+
+With `auth-types=mac-auth`, the router sends the MAC address of the device as the user name, by default with an empty password, as the DHCP server does. `mac-auth-mode` and `radius-mac-format` of the [Dot1X](dot1x) server change the password and the format of the address.
+
+## Send accounting
+
+The router reports the start and the end of each session to the server, and the traffic counters in between when an interim interval is set. Accounting is on by default in `/ppp/aaa`, `/user/aaa` and the Dot1X server (`accounting=yes`); `interim-update` in the same menus sets the interval. For DHCP, both settings are in `/ip/dhcp-server/config`. In a HotSpot server profile the settings are `radius-accounting` and `radius-interim-update`. The server can set the interval for one session with Acct-Interim-Interval.
+
+## Add a second server
+
+The router uses the entries in the order of the list. This example adds a second server for the time when the first one does not answer, and a third one that keeps a copy of the accounting records:
+
+```ros
+/radius/add service=ppp,login,dhcp address=192.0.2.11 \
+    secret=Example-secret-2
+/radius/add service=ppp,dhcp address=192.0.2.12 \
+    secret=Example-secret-3 accounting-backup=yes
+```
+
+```ros
+[admin@MikroTik] > /radius/print detail
+0  service=ppp,login,dhcp,ipsec,dot1x called-id="" domain="" address=192.0.2.10
+   authentication-port=1812 accounting-port=1813 timeout=1s100ms
+   radsec-timeout=3s300ms accounting-backup=no realm="" protocol=udp
+   certificate=none require-message-auth=yes-for-request-resp status=""
+
+1  service=ppp,login,dhcp called-id="" domain="" address=192.0.2.11
+   authentication-port=1812 accounting-port=1813 timeout=1s100ms
+   radsec-timeout=3s300ms accounting-backup=no realm="" protocol=udp
+   certificate=none require-message-auth=yes-for-request-resp status=""
+
+2  service=ppp,dhcp called-id="" domain="" address=192.0.2.12
+   authentication-port=1812 accounting-port=1813 timeout=1s100ms
+   radsec-timeout=3s300ms accounting-backup=yes realm="" protocol=udp
+   certificate=none require-message-auth=yes-for-request-resp status=""
+```
+
+- The router sends a request to the first enabled entry that matches the service. It sends the request three times. When no answer arrives, it sends the request to the next matching entry.
+- Each new request starts at the first entry again.
+- An entry with `accounting-backup=yes` gets a copy of every accounting request, in addition to the entry that answers. The router does not send authentication requests to it.
+- `place-before` in `/radius/add` puts a new entry before an existing one.
+
+## Change or disconnect a session from the server
+
+The server can end a session with a Disconnect-Request and change a running session with a Change of Authorization (CoA) request (RFC 5176, earlier RFC 3576). The router ignores these requests until you allow them:
+
+```ros
+/radius/incoming/set accept=yes
+```
+
+The router listens on UDP port 3799; `port` changes it, and `vrf` selects the VRF in which the router listens. The server signs the request with the shared secret of its `/radius` entry.
+
+The default firewall drops these requests when the server is on the WAN side. Accept the port from the address of the server, before the default drop rule:
+
+```ros
+/ip/firewall/filter/add chain=input action=accept protocol=udp \
+    dst-port=3799 src-address=192.0.2.10 comment="RADIUS CoA" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+```
+
+This command, run on the server, changes the rate limit of a connected PPP user. `radclient` is part of FreeRADIUS:
+
+```bash
+echo 'User-Name=alice,Mikrotik-Rate-Limit="20M/100M"' | \
+    radclient -x 192.0.2.1:3799 coa Example-secret-1
+```
+
+```text
+Sent CoA-Request Id 179 from 0.0.0.0:52783 to 192.0.2.1:3799 length 43
+	User-Name = "alice"
+	Mikrotik-Rate-Limit = "20M/100M"
+Received CoA-ACK Id 179 from 192.0.2.1:3799 to 192.0.2.10:52783 length 38
+	Message-Authenticator = 0x3e08daec066d6cdd8aab7b9d6f3b98c7
+```
+
+The queue of the user has the new limit, and the session stays connected:
+
+```ros
+[admin@MikroTik] > /queue/simple/print where name~"alice"
+Flags: D - DYNAMIC
+1 D name="<pppoe-alice>" target=<pppoe-alice> parent=none packet-marks=""
+    priority=8/8 queue=default-small/default-small limit-at=20M/100M
+    max-limit=20M/100M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
+    bucket-size=0.1/0.1
+```
+
+This command disconnects the user:
+
+```bash
+echo 'User-Name=alice' | \
+    radclient -x 192.0.2.1:3799 disconnect Example-secret-1
+```
+
+```text
+Sent Disconnect-Request Id 18 from 0.0.0.0:34758 to 192.0.2.1:3799 length 27
+	User-Name = "alice"
+Received Disconnect-ACK Id 18 from 192.0.2.1:3799 to 192.0.2.10:34758 length 38
+	Message-Authenticator = 0x15c3ee3b3b79a6f8b4fd44b83b46bb1a
+```
+
+- A PPP session is found by `User-Name` or by `Acct-Session-Id`.
+- A HotSpot session is found by `Framed-IP-Address`, the address of the device.
+- When no session matches, the router answers with CoA-NAK or Disconnect-NAK.
+- The router does not answer a request with a wrong secret. `/radius/incoming/monitor` counts it in `bad-requests`.
+
+RouterOS doesn't support POD (Packet of Disconnect), an older way to end a session.
+
+## Encrypt the connection with RadSec
+
+RadSec carries RADIUS over TLS on TCP port 2083. Use it when the path between the router and the server is not trusted. The router needs:
+
+- A client certificate with its private key.
+- The certificate authority that signed the certificate of the server, as a trusted certificate.
+- A server certificate that contains the address set in `address` of the entry.
+
+[Certificates](certificates) explains how to create, sign, export and import certificates. In this example the client certificate is imported with the name `radius-client`. Change the entry to RadSec:
+
+```ros
+/radius/set [find address=192.0.2.10] protocol=radsec \
+    certificate=radius-client
+```
+
+After the first request, `status` shows the state of the TLS connection:
+
+```ros
+[admin@MikroTik] > /radius/print detail where address=192.0.2.10
+0  service=ppp,login,dhcp,ipsec,dot1x called-id="" domain="" address=192.0.2.10
+   authentication-port=1812 accounting-port=1813 timeout=1s100ms
+   radsec-timeout=3s300ms accounting-backup=no realm="" protocol=radsec
+   certificate=radius-client require-message-auth=yes-for-request-resp
+   status="TLS connected"
+```
+
+- With RadSec, the router connects to TCP port 2083. `authentication-port` and `accounting-port` are not used.
+- `secret` is not used. RFC 6614 sets the shared secret of RadSec to `radsec`: configure this secret on a server that asks for one.
+
+When the server is [User Manager](user-manager) on another router, set the server certificate and mark the router entry as a RadSec client:
+
+```ros
+/user-manager/set enabled=yes radsec-certificate=radius-server
+/user-manager/router/add name=router1 address=192.0.2.1 \
+    protocol=radsec
+```
+
+## Check and troubleshoot
+
+`/radius/monitor` counts the requests and answers of one entry:
+
+```ros
+[admin@MikroTik] > /radius/monitor [find address=192.0.2.10] once
+           pending: 0
+          requests: 3
+           accepts: 3
+           rejects: 0
+           resends: 0
+          timeouts: 0
+       bad-replies: 0
+  last-request-rtt: 10ms
+```
+
+- `accepts` counts the accepted logins and the accounting answers.
+- `rejects` counts the logins that the server refused.
+- `resends` and `timeouts` count requests without an answer.
+- `bad-replies` counts answers that failed the check of the shared secret or of the Message-Authenticator.
+
+`/radius/reset-counters` sets the counters of all entries to zero. The read-only `status` of an entry shows the last connection error, or the state of the RadSec connection.
+
+To see each request and answer in the log, add the `radius` topic:
+
+```ros
+/system/logging/add topics=radius,debug,!packet
+```
+
+Without `!packet`, the log also has every attribute of every packet.
+
+| Symptom | Cause |
 | :-- | :-- |
-| **accept** (*yes \| no*; Default: **no**) | Whether to accept unsolicited messages |
-| **port** (*integer*; Default: **1700**) | The port number to listen for the requests on |
-| **vrf** (*VRF name*; default value: **main**) | Set VRF on which the service is listening for incoming connections |
+| `timeouts` grows. A PPP login fails with `authentication failed - radius timeout` in the log. | The server is not reachable, the router is not a client on the server, or the shared secret is wrong and the server drops the request. |
+| `bad-replies` grows. | The answer is signed with another secret, or it has no Message-Authenticator. |
+| `rejects` grows. | The server refused the user: a wrong password or an unknown name. |
+| No requests are counted. | RADIUS is not turned on in the service, no entry matches the service, `called-id` or `domain`, or the name exists on the router. |
+| `status` is `connect:Connection refused`. | The server does not listen on TCP port 2083. On User Manager, the router entry needs `protocol=radsec`. |
+| `status` is `client certificate required`. | The RadSec entry has `certificate=none`. |
+| `status` is `ssl: name verification failed`. | The certificate of the server does not contain the value of `address`. |
+| `status` is `ssl: no trusted CA certificate found`. | The certificate authority of the server is not a trusted certificate on the router. |
 
-## Supported RADIUS Attributes
+## How the router selects an entry
 
-Here you can download the [RADIUS reference dictionary.txt](pathname:///assets/319783010_RADIUS_reference_dictionary.txt), that includes all supported RADIUS attributes by MikroTik device. This file is designed for FreeRADIUS, but may also be used by other RADIUS servers. Note, it may conflict with the default configuration file of your RADIUS server. Correct the configuration, not the dictionary, as no other attributes are supported by MikroTik RouterOS. There is also the [MikroTik Vendor attributes.txt](pathname:///assets/319783011_MikroTik_Vendor_attributes.txt) that can be included in an existing dictionary to support MikroTik vendor-specific attributes.
+An entry is used for a request when all of these match:
 
-Below you will find a description about attributes and how they are used on MikroTik devices during communication with RADIUS.
+- `service` contains the service that makes the request.
+- `called-id` is empty or equals the Called-Station-Id of the request. For PPPoE, this is the service name of the PPPoE server.
+- `domain` is empty or equals the domain of the user name. The domain is the part before `\` or after `@`.
 
-### Definitions
+A user who logs in as `EXAMPLE\alice` is sent to the server as `alice`, with `EXAMPLE` in the MS-CHAP-Domain attribute. A user who logs in as `alice@example.org` is sent with the complete name, and `example.org` in MS-CHAP-Domain.
 
-- **PPPs** - PPP, PPTP, PPPoE
-- **default configuration** - settings in default profile (for PPPs) or HotSpot server settings (for HotSpot)
+`realm` sets the Mikrotik-Realm attribute in the Access-Requests of the entry. Without `realm`, the attribute has the domain of the user name, and it is not sent when the name has no domain.
 
-### Access-Request packet
+`src-address` sets the source address of the packets. The same address is sent as NAS-IP-Address.
 
-- **Service-Type** - Always is "Framed" (only for PPPs).
-- **Framed-Protocol** - Always is "PPP" (only for PPPs).
-- **NAS-Identifier** - Router's identity name.
-- **NAS-IP-Address** - IP address of the router itself.
-- **NAS-Port** - This Attribute indicates the physical port number of the NAS which is authenticating the user.
-- **Acct-Session-Id** - Unique session ID. The first two symbols of session ID represent service (PPP, Hotspot, etc.). The next symbol is incremented on each reboot. The last group of symbols is incremented on each new session. This means, that you can not get the same ID for 1 million re-connects on the same boot for the same RADIUS type service. If you lose the session stop message and RADIUS server does still keep the session open, but then receives another session start message, then it must be aware that the stop message was lost, close the old session and start a new session.
-- **NAS-Port-Type** - Async PPP - "Async"; PPTP and L2TP - "Virtual"; PPPoE - "Ethernet"; ISDN - "ISDN Sync"; HotSpot - "Ethernet | Cable | Wireless-802.11" (according to the value of the nas-port-type parameter in `/ip/hotspot/profile`).
-- **Calling-Station-Id** - PPPoE and HotSpot- client MAC address in capital letters; PPTP and L2TP - client public IP address.
-- **Called-Station-Id** - PPPoE - service name; PPTP and L2TP - server IP address; HotSpot - name of the HotSpot server.
-- **NAS-Port-Id** - Async PPP - serial port name; PPPoE - ethernet interface name on which server is running; HotSpot - name of the physical HotSpot interface (if bridged, the bridge port name is shown here); not present for ISDN, PPTP and L2TP.
-- **Framed-IP-Address** - IP address of HotSpot client after Universal Client translation.
-- **Mikrotik-Host-IP** - IP address of HotSpot client before Universal Client translation (the original IP address of the client).
-- **User-Name** - Client login name.
-- **MS-CHAP-Domain** - User domain, if present.
-- **Mikrotik-Realm** - If it is set in /radius menu, it is included in every RADIUS request as the Mikrotik-Realm attribute. If it is not set, the same value is sent as in the MS-CHAP-Domain attribute (if MS-CHAP-Domain is missing, Realm is not included either).
-- **WISPr-Location-ID** - Text string specified in the radius-location-id property of the HotSpot server.
-- **WISPr-Location-Name** - Text string specified in the radius-location-name property of the HotSpot server.
-- **WISPr-Logoff-URL** - Full link to the logout page (for example, **[](http://10.48.0.1/lv/logout)**).
+`address` can be an IPv6 address; the router then sends NAS-IPv6-Address in place of NAS-IP-Address. To reach a server in a VRF, add the VRF name to the address: `address=192.0.2.10@vrf1`.
 
-Depending on authentication methods (NOTE: HotSpot uses CHAP by default and may also use PAP if unencrypted passwords are enabled, it cannot use MSCHAP):
+## Message-Authenticator
 
-- **User-Password** - Encrypted password (used with PAP authentication).
-- **CHAP-Password**, **CHAP-Challenge** - Encrypted password and challenge (used with CHAP authentication).
-- **MS-CHAP-Response**, MS-CHAP-Challenge - Encrypted password and challenge (used with MS-CHAPv1 authentication).
-- **MS-CHAP2-Response**, **MS-CHAP-Challenge** - Encrypted password and challenge (used with MS-CHAPv2 authentication).
+The router adds the Message-Authenticator attribute to every Access-Request. With `require-message-auth=yes-for-request-resp`, the default, the router also drops an answer to an Access-Request that has no Message-Authenticator and counts it in `bad-replies`. Accounting requests and their answers do not have the attribute. Set `require-message-auth=no` only for a server that cannot send the attribute. The router drops an answer with a wrong Message-Authenticator with either value.
 
-### Access-Accepts packet
+## RADIUS attributes
 
-- **Framed-IP-Address** - IP address given to the client. If the address belongs to 127.0.0.0/8 or 224.0.0.0/3 networks, IP pool is used from the default profile to allocate a client IP address. If Framed-IP-Address is specified, Framed-Pool is ignored.
-- **Framed-IP-Netmask** - Client netmask. PPPs - if specified, a route will be created to the network Framed-IP-Address belongs to via the Framed-IP-Address gateway; HotSpot - ignored by HotSpot.
-- **Framed-Pool** - IP pool name (on the router) from which to get an IP address for the client. If Framed-IP-Address is specified, this attribute is ignored.
-- **Framed-IPv6-Prefix** - IPv6 prefix assigned to the client.
-- **Mikrotik-Delegated-IPv6-Pool** - IPv6 pool used for Prefix Delegation.
-- **Delegated-IPv6-Prefix** - IPv6 Prefix.
-- **Delegated-IPv6-Prefix-Pool** - IPv6 Prefix pool used for Prefix Delegation.
+Two dictionary files list the attributes that RouterOS supports:
 
-NOTE: if Framed-IP-Address or Framed-Pool is specified, it overrides remote-address in the default configuration.
+- [RADIUS reference dictionary](pathname:///assets/319783010_RADIUS_reference_dictionary.txt) is a complete dictionary in the FreeRADIUS format. It can conflict with the default dictionary of your RADIUS server. Correct the configuration of the server, not the dictionary: RouterOS supports no other attributes.
+- [MikroTik vendor attributes](pathname:///assets/319783011_MikroTik_Vendor_attributes.txt) has only the MikroTik vendor-specific attributes, to include in an existing dictionary.
 
-- **Idle-Timeout** - Overrides idle-timeout in the default configuration.
-- **Session-Timeout** - Overrides session-timeout in the default configuration.
-- **Port-Limit** - Maximal number of simultaneous connections using the same username (overrides the shared-users property of the HotSpot user profile).
-- **Class** - Cookie. Will be included in Accounting-Request unchanged.
-- **Framed-Route** - Routes to add on the server. Format is specified in RFC 2865 (Ch. 5.22). Can be specified as many times as needed.
-- **Filter-Id** - Firewall filter chain name. It is used to make a dynamic firewall rule. Firewall chain name can have suffix .in or .out, that will install rule only for incoming or outgoing traffic. Multiple Filter-id can be provided, but only last ones for incoming and outgoing are used. For PPPs - filter rules in ppp chain that will jump to the specified chain, if a packet has come to/from the client (that means that you should first create a ppp chain and make jump rules that would put actual traffic to this chain). The same applies for HotSpot, but the rules will be created in hotspot chain.
-- **Mikrotik-Mark-Id** - Firewall mangle chain name (HotSpot only). The MikroTik RADIUS client upon receiving this attribute creates a dynamic firewall mangle rule with action=jump chain=hotspot and jump-target equal to the attribute value. Mangle chain name can have suffixes .in or .out, that will install rule only for incoming or outgoing traffic. Multiple Mark-id attributes can be provided, but only last ones for incoming and outgoing is used.
-- **Acct-Interim-Interval** - Interim-update for RADIUS client. PPP - if 0 uses the one specified in RADIUS client. HotSpot - only respected if radius-interim-update=received in HotSpot server profile.
-- **MS-MPPE-Encryption-Policy** - Require-encryption property (PPPs only).
-- **MS-MPPE-Encryption-Types** - Use-encryption property. Non-zero value means to use encryption (PPPs only).
-- **Ascend-Data-Rate** - Tx/rx data rate limitation if multiple attributes are provided, first limits tx data rate, second - rx data rate. If used together with Ascend-Xmit-Rate, specifies rx rate. 0 if unlimited. Ignored if Rate-Limit attribute is present.
-- **Ascend-Xmit-Rate** - Tx data rate limitation. It may be used to specify tx limit only instead of sending two sequential Ascend-Data-Rate attributes (in that case Ascend-Data-Rate will specify the receive rate). 0 if unlimited. Ignored if Rate-Limit attribute is present.
-- **MS-CHAP2-Success** - Auth. response if MS-CHAPv2 was used (for PPPs only).
-- **MS-MPPE-Send-Key, MS-MPPE-Recv-Key** - Encryption keys for encrypted PPPs provided by RADIUS server only if MS-CHAPv2 was used as authentication (for PPPs only).
-- **Ascend-Client-Gateway** - Client gateway for DHCP-pool HotSpot login method (HotSpot only).
+On a router with User Manager, `/user-manager/attribute/print` lists the attributes that User Manager can send.
+
+The attributes that the server sends override the settings of the service: the PPP profile, the HotSpot user profile or the DHCP server. A setting that the server does not send comes from the service.
+
+### Access-Request
+
+- **Service-Type** - `Framed` for PPP, DHCP, Dot1X and IPsec; `Login` for router login and HotSpot.
+- **Framed-Protocol** - `PPP` (PPP only).
+- **NAS-Identifier** - Identity of the router.
+- **NAS-IP-Address** - Address of the router: the source address of the request. With an IPv6 server, NAS-IPv6-Address is sent.
+- **NAS-Port** - Port number of the session on the router.
+- **Acct-Session-Id** - Session ID, eight hexadecimal digits. The first two digits depend on the service. The next digit is incremented on each reboot, and the last digits on each new session, so an ID is not repeated for 1 million connections of one service after a boot. If the server gets a Start message for a new session while it still keeps an older session open, the Stop message of the older session was lost: the server must close the old session and start the new one.
+- **NAS-Port-Type** - Async PPP and SSTP - `Async`; PPTP, L2TP and IPsec - `Virtual`; PPPoE, DHCP and Dot1X - `Ethernet`; ISDN - `ISDN Sync`; HotSpot - `Ethernet`, `Cable` or `Wireless-802.11`, as set in `nas-port-type` of the HotSpot server profile.
+- **Calling-Station-Id** - PPPoE and HotSpot - MAC address of the client in capital letters; PPTP, L2TP, SSTP and IPsec - public IP address of the client; router login - IP address of the client; DHCP - client ID of the device; Dot1X - MAC address of the device, written with dashes.
+- **Called-Station-Id** - PPPoE - service name; PPTP, L2TP, SSTP and IPsec - IP address of the server; HotSpot - name of the HotSpot server; DHCP - name of the DHCP server; Dot1X - MAC address of the port of the router, written with dashes.
+- **NAS-Port-Id** - Async PPP - serial port name; PPPoE, DHCP and Dot1X - name of the interface on which the server runs; HotSpot - name of the physical HotSpot interface (if bridged, the bridge port name); not present for ISDN, PPTP, L2TP and SSTP.
+- **Framed-IP-Address** - IP address of the HotSpot client after Universal Client translation.
+- **Mikrotik-Host-IP** - IP address of the HotSpot client before Universal Client translation (the original IP address of the client).
+- **User-Name** - Login name of the client. For DHCP and Dot1X MAC authentication, the MAC address of the device, by default in capital letters.
+- **Framed-MTU** - 1400 (Dot1X and IPsec).
+- **EAP-Message** - EAP packet of the client (Dot1X and IPsec).
+- **MS-CHAP-Domain** - Domain of the user name, if present.
+- **Mikrotik-Realm** - Value of `realm` of the entry. Without `realm`, the same value as MS-CHAP-Domain.
+- **WISPr-Location-ID** - Value of `radius-location-id` of the HotSpot server profile.
+- **WISPr-Location-Name** - Value of `radius-location-name` of the HotSpot server profile.
+- **WISPr-Logoff-URL** - Full link to the HotSpot logout page.
+- **Message-Authenticator** - Signature of the request.
+
+The password attributes depend on the authentication method. Router login uses MS-CHAPv2. HotSpot uses CHAP by default, PAP if unencrypted passwords are enabled, and cannot use MS-CHAP. DHCP and Dot1X MAC authentication send an empty User-Password by default. Dot1X and IPsec carry the EAP method of the client in EAP-Message.
+
+- **User-Password** - Encrypted password (PAP).
+- **CHAP-Password**, **CHAP-Challenge** - Encrypted password and challenge (CHAP).
+- **MS-CHAP-Response**, **MS-CHAP-Challenge** - Encrypted password and challenge (MS-CHAPv1).
+- **MS-CHAP2-Response**, **MS-CHAP-Challenge** - Encrypted password and challenge (MS-CHAPv2).
+
+### Access-Accept
+
+- **Framed-IP-Address** - IP address of the client. For PPP, if the address belongs to the 127.0.0.0/8 or 224.0.0.0/3 networks, the address comes from the pool of the profile. If Framed-IP-Address is sent, Framed-Pool is ignored. For IPsec, the address given to the client by mode config.
+- **Framed-IP-Netmask** - Netmask of the client. PPP - together with Framed-IP-Address, adds a route to the network of the address through the client; HotSpot - ignored.
+- **Framed-Pool** - Name of the IP pool on the router that gives the address of the client.
+- **Framed-IPv6-Prefix** - IPv6 prefix that the router advertises to the PPP client.
+- **Framed-IPv6-Pool** - Name of the IPv6 pool on the router that gives the prefix advertised to the PPP client.
+- **Delegated-IPv6-Prefix** - IPv6 prefix that the router delegates to the PPP client with DHCPv6.
+- **Mikrotik-Delegated-IPv6-Pool** - Name of the IPv6 pool on the router that gives the delegated prefix.
+- **Idle-Timeout** - Overrides `idle-timeout` of the service.
+- **Session-Timeout** - Overrides `session-timeout` of the service. For DHCP, the lease time.
+- **Port-Limit** - Maximal number of simultaneous connections with the same user name (overrides `shared-users` of the HotSpot user profile).
+- **Class** - Cookie. The router includes it unchanged in the accounting requests of the session.
+- **Framed-Route** - Route to add on the router. The format is specified in RFC 2865 (chapter 5.22). Can be sent several times.
+- **Filter-Id** - Name of a firewall filter chain. For PPP, the router adds dynamic rules to the `ppp` chain that jump to this chain for the packets from and to the client. For HotSpot, the rules are added to the `hotspot` chain. Jump rules from the `forward` chain to the `ppp` or `hotspot` chain must exist. The suffix `.in` or `.out` after the name adds the rule only for incoming or only for outgoing traffic. If Filter-Id is sent several times, only the last ones for incoming and outgoing are used.
+- **Mikrotik-Mark-Id** - Packet mark (HotSpot only). The router adds dynamic rules to the `hotspot` chain of the firewall mangle that mark the packets from and to the client. The suffix `.in` or `.out` adds the rule only for incoming or only for outgoing traffic. If the attribute is sent several times, only the last ones for incoming and outgoing are used.
+- **Mikrotik-Address-List** - Name of a firewall address list. The router adds the address of the client to the list while the session or the lease is active.
+- **Mikrotik-DHCP-Option-Set** - Name of a DHCP option set on the router that is sent to the device (DHCP only).
+- **Acct-Interim-Interval** - Interval of the Interim-Update accounting requests in seconds. PPP - if 0, the interval of `/ppp/aaa` is used. HotSpot - only respected if `radius-interim-update=received` in the HotSpot server profile.
+- **MS-MPPE-Encryption-Policy** - `require-encryption` property (PPP only).
+- **MS-MPPE-Encryption-Types** - `use-encryption` property. A non-zero value means to use encryption (PPP only).
+- **Ascend-Data-Rate** - Data rate limit. If the attribute is sent two times, the first limits the transmit rate and the second the receive rate. If it is sent together with Ascend-Xmit-Rate, it sets the receive rate. 0 means unlimited. Ignored if Mikrotik-Rate-Limit is present.
+- **Ascend-Xmit-Rate** - Transmit rate limit. 0 means unlimited. Ignored if Mikrotik-Rate-Limit is present.
+- **MS-CHAP2-Success** - Authentication response if MS-CHAPv2 was used.
+- **MS-MPPE-Send-Key**, **MS-MPPE-Recv-Key** - Encryption keys for encrypted PPP, sent by the server only if MS-CHAPv2 was used (PPP only).
+- **Ascend-Client-Gateway** - Client gateway for the DHCP-pool HotSpot login method (HotSpot only).
 - **Mikrotik-Recv-Limit** - Total receive limit in bytes for the client.
-- **Mikrotik-Recv-Limit-Gigawords** - 4G (2^32) bytes of total receive limit (bits 32..63, when bits 0..31 are delivered in Mikrotik-Recv-Limit).
+- **Mikrotik-Recv-Limit-Gigawords** - Upper 32 bits of the receive limit (bits 32..63, when bits 0..31 are sent in Mikrotik-Recv-Limit).
 - **Mikrotik-Xmit-Limit** - Total transmit limit in bytes for the client.
-- **Mikrotik-Xmit-Limit-Gigawords** - 4G (2^32) bytes of total transmit limit (bits 32..63, when bits 0..31 are delivered in Mikrotik-Xmit-Limit).
-- **Mikrotik-Wireless-Forward** - Does not forward the client's frames back to the wireless infrastructure if this attribute is set to "0" (Wireless only).
-- **Mikrotik-Wireless-Skip-Dot1x** - Disables 802.1x authentication for the particular wireless client if set to non-zero value (Wireless only).
-- **Mikrotik-Wireless-Enc-Algo** - WEP encryption algorithm: 0 - no encryption, 1 - 40-bit WEP, 2 - 104-bit WEP (Wireless only).
-- **Mikrotik-Wireless-Enc-Key** - WEP encryption key for the client (Wireless only).
-- **Mikrotik-Wireless-VLANID** - VLAN ID for the client (Wireless only).
-- **Mikrotik-Wireless-VLANID-type** - VLAN ID type for the client. 0 - 802.1q tag and 1 - 802.1ad tag (Wireless only).
-- **Mikrotik-Switching-Filter** - Allows creating dynamic switch rules, when authenticating clients with dot1x server.
-- **Mikrotik-Rate-Limit** - Datarate limitation for clients. Format is: rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold] [rx-burst-time[/tx-burst-time] [priority] [rx-rate-min[/tx-rate-min]]]] from the point of view of the router (so "rx" is client upload, and "tx" is client download). All rates should be numbers with optional 'k' (1,000s) or 'M' (1,000,000s). If tx-rate is not specified, rx-rate is as tx-rate too. Same goes for tx-burst-rate and tx-burst-threshold and tx-burst-time. If both rx-burst-threshold and tx-burst-threshold are not specified (but burst-rate is specified), rx-rate and tx-rate are used as burst thresholds. If both rx-burst-time and tx-burst-time are not specified, 1s is used as default. Priority takes values 1..8, where 1 implies the highest priority, but 8 - the lowest. If rx-rate-min and tx-rate-min are not specified rx-rate and tx-rate values are used. The rx-rate-min and tx-rate-min values can not exceed rx-rate and tx-rate values.
-- **Mikrotik-Group** - Router local user group name (defined in `/user/group`) for local users; HotSpot default profile for HotSpot users; PPP default profile name for PPP users.
-- **Mikrotik-Advertise-URL** - URL of the page with advertisements that should be displayed to clients. If this attribute is specified, advertisements are enabled automatically, including transparent proxy, even if they were explicitly disabled in the corresponding user profile. Multiple attribute instances may be sent by RADIUS server to specify additional URLs which are chosen in round robin fashion.
-- **Mikrotik-Advertise-Interval** - Time interval between two adjacent advertisements. Multiple attribute instances may be sent by RADIUS server to specify additional intervals. All interval values are treated as a list and are taken one-by-one for each successful advertisement. If end of list is reached, the last value is continued to be used.
-- **WISPr-Redirection-URL** - URL, which the clients will be redirected to after successful login.
-- **WISPr-Bandwidth-Min-Up** - Minimal datarate (CIR) provided for the client upload.
-- **WISPr-Bandwidth-Min-Down** - Minimal datarate (CIR) provided for the client download.
-- **WISPr-Bandwidth-Max-Up** - Maximal datarate (MIR) provided for the client upload.
-- **WISPr-Bandwidth-Max-Down** - Maximal datarate (MIR) provided for the client download.
-- **WISPr-Session-Terminate-Time** - Time, when the user should be disconnected; in "YYYY-MM-DDThh:mm:ssTZD" form, where Y - year; M - month; D - day; T - separator symbol (must be written between date and time); h - hour (in 24 hour format); m - minute; s - second; TZD - time zone in one of these forms: "+hh:mm", "+hhmm", "-hh:mm", "-hhmm".
+- **Mikrotik-Xmit-Limit-Gigawords** - Upper 32 bits of the transmit limit (bits 32..63, when bits 0..31 are sent in Mikrotik-Xmit-Limit).
+- **Mikrotik-Total-Limit** - Limit in bytes for the received and transmitted traffic together (HotSpot).
+- **Mikrotik-Wireless-Forward** - Does not forward the frames of the client back to the wireless infrastructure if this attribute is set to "0" (wireless only).
+- **Mikrotik-Wireless-Skip-Dot1x** - Disables 802.1x authentication for the wireless client if set to a non-zero value (wireless only).
+- **Mikrotik-Wireless-Enc-Algo** - WEP encryption algorithm: 0 - no encryption, 1 - 40-bit WEP, 2 - 104-bit WEP (wireless only).
+- **Mikrotik-Wireless-Enc-Key** - WEP encryption key for the client (wireless only).
+- **Mikrotik-Wireless-VLANID** - VLAN ID for the client (wireless only).
+- **Mikrotik-Wireless-VLANIDtype** - VLAN ID type for the client: 0 - 802.1q tag, 1 - 802.1ad tag (wireless only).
+- **Mikrotik-Switching-Filter** - Dynamic switch rules for a client that the [Dot1X](dot1x) server authenticates.
+- **Tunnel-Type**, **Tunnel-Medium-Type**, **Tunnel-Private-Group-ID** - VLAN of a client that the [Dot1X](dot1x) server authenticates.
+- **Mikrotik-Rate-Limit** - Data rate limit for the client. See Rate limit format.
+- **Mikrotik-Group** - Router login - name of the user group; HotSpot - name of the HotSpot user profile; PPP - name of the PPP profile.
+- **Mikrotik-Advertise-URL** - URL of the page with advertisements that is displayed to HotSpot clients. If this attribute is sent, advertisements are enabled, including the transparent proxy, even if they are disabled in the user profile. The server can send the attribute several times; the URLs are used in turn.
+- **Mikrotik-Advertise-Interval** - Time between two advertisements. The server can send the attribute several times. The values are used one by one for each successful advertisement, and the last value is used when the end of the list is reached.
+- **WISPr-Redirection-URL** - URL to which HotSpot clients are redirected after a successful login.
+- **WISPr-Bandwidth-Min-Up** - Minimal data rate (CIR) for the upload of the HotSpot client.
+- **WISPr-Bandwidth-Min-Down** - Minimal data rate (CIR) for the download of the HotSpot client.
+- **WISPr-Bandwidth-Max-Up** - Maximal data rate (MIR) for the upload of the HotSpot client.
+- **WISPr-Bandwidth-Max-Down** - Maximal data rate (MIR) for the download of the HotSpot client.
+- **WISPr-Session-Terminate-Time** - Time when the user is disconnected, in the form "YYYY-MM-DDThh:mm:ssTZD": Y - year; M - month; D - day; T - separator between date and time; h - hour (24-hour format); m - minute; s - second; TZD - time zone as "+hh:mm", "+hhmm", "-hh:mm" or "-hhmm".
 
-The received attributes override the default ones (set in the default profile), but if an attribute is not received from the RADIUS server, the default one is to be used.  Rate-Limit takes precedence over all other ways to specify data rate for the client. Ascend data rate attributes are considered second; and WISPr attributes take the last precedence.
+Mikrotik-Rate-Limit takes precedence over the other ways to set the data rate. The Ascend attributes come second and the WISPr attributes last.
 
-Here are some Rate-Limit examples:
+### Rate limit format
+
+The format of Mikrotik-Rate-Limit is:
+
+```text
+rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate]
+[rx-burst-threshold[/tx-burst-threshold]
+[rx-burst-time[/tx-burst-time] [priority [rx-rate-min[/tx-rate-min]]]]]]
+```
+
+The value is one line with spaces between the fields. The rates are from the point of view of the router: `rx` is the upload of the client and `tx` the download. All rates are numbers with an optional `k` (1 000) or `M` (1 000 000).
+
+- If `tx-rate` is not set, it is the same as `rx-rate`. The same applies to the burst rate, the burst threshold and the burst time.
+- If the burst thresholds are not set but a burst rate is, `rx-rate` and `tx-rate` are the burst thresholds.
+- If the burst times are not set, they are 1 second.
+- `priority` is 1 to 8, where 1 is the highest priority.
+- If `rx-rate-min` and `tx-rate-min` are not set, they are the same as `rx-rate` and `tx-rate`. They cannot be higher than `rx-rate` and `tx-rate`.
+
+Examples:
 
 - **128k** - rx-rate=128000, tx-rate=128000 (no bursts).
 - **64k/128M** - rx-rate=64000, tx-rate=128000000.
 - **64k 256k** - rx/tx-rate=64000, rx/tx-burst-rate=256000, rx/tx-burst-threshold=64000, rx/tx-burst-time=1s.
 - **64k/64k 256k/256k 128k/128k 10/10** - rx/tx-rate=64000, rx/tx-burst-rate=256000, rx/tx-burst-threshold=128000, rx/tx-burst-time=10s.
 
-### Accounting-Request packet
+### Accounting-Request
 
-The accounting request carries the same attributes as Access Request, plus these ones:
+An accounting request has the attributes of the Access-Request, without the password attributes and the Message-Authenticator, and these:
 
 - **Acct-Status-Type** - Start, Stop, or Interim-Update.
-- **Acct-Authentic** - Either authenticated by RADIUS or Local authority (PPPs only).
-- **Class** - RADIUS server cookie, as received in Access-Accept.
-- **Acct-Delay-Time** - How long the router tries to send this Accounting-Request packet.
+- **Acct-Authentic** - Whether RADIUS or the router authenticated the session.
+- **Class** - Cookie of the server, as received in the Access-Accept.
+- **Acct-Delay-Time** - How long the router has tried to send this request.
+- **Event-Timestamp** - Time of the event.
+- **Framed-IP-Address** - Address of the client.
 
-### Stop and Interim-Update Accounting-Request packet
-
-In addition to the accounting start request, the following messages will contain the following attributes:
+Stop and Interim-Update requests also have:
 
 - **Acct-Session-Time** - Connection uptime in seconds.
-- **Acct-Input-Octets** - Bytes received from the client.
-- **Acct-Input-Gigawords** - 4G (2^32) bytes received from the client (bits 32..63, when bits 0..31 are delivered in Acct-Input-Octets).
+- **Acct-Input-Octets** - Bytes received from the client: the upload of the client.
+- **Acct-Input-Gigawords** - Upper 32 bits of the bytes received from the client (bits 32..63, when bits 0..31 are sent in Acct-Input-Octets).
 - **Acct-Input-Packets** - Number of packets received from the client.
-- **Acct-Output-Octets** - Bytes sent to the client.
-- **Acct-Output-Gigawords** - 4G (2^32) bytes sent to the client (bits 32..63, when bits 0..31 are delivered in Acct-Output-Octets).
+- **Acct-Output-Octets** - Bytes sent to the client: the download of the client.
+- **Acct-Output-Gigawords** - Upper 32 bits of the bytes sent to the client (bits 32..63, when bits 0..31 are sent in Acct-Output-Octets).
 - **Acct-Output-Packets** - Number of packets sent to the client.
 
-:::warning
-RADIUS accounting messages in RouterOS represent output as traffic from the client point of view, for example, for VPN user "test" output is user upload.
+Stop requests also have:
 
-:::
+- **Acct-Terminate-Cause** - Cause of the session end (see RFC 2866, chapter 5.10).
 
-### **Stop Accounting-Request packet**
+### Change of Authorization
 
-These packets will, in addition to the Interim Update packets, have:
-
-- **Acct-Terminate-Cause** - session termination cause (see RFC 2866 ch. 5.10)
-  
-  ### **Change of Authorization**
-
-RADIUS disconnect and Change of Authorization (according to RFC3576) are supported as well. These attributes may be changed by a CoA request from the RADIUS server:
+A CoA request can change these attributes of a running session:
 
 - **Mikrotik-Group**
 - **Mikrotik-Recv-Limit**
 - **Mikrotik-Xmit-Limit**
 - **Mikrotik-Rate-Limit**
 - **Ascend-Data-Rate** (only if Mikrotik-Rate-Limit is not present)
-- **Ascend-XMit-Rate** (only if Mikrotik-Rate-Limit is not present)
+- **Ascend-Xmit-Rate** (only if Mikrotik-Rate-Limit is not present)
 - **Mikrotik-Mark-Id**
 - **Filter-Id**
-- **Mikrotik-Advertise-Url**
+- **Mikrotik-Address-List**
+- **Mikrotik-Advertise-URL**
 - **Mikrotik-Advertise-Interval**
 - **Session-Timeout**
 - **Idle-Timeout**
 - **Port-Limit**
 
-Note that it is not possible to change the IP address, the pool or routes that way - for such changes a user must be disconnected first.
+A CoA request cannot change the IP address, the pool or the routes of a session. Disconnect the user to change them.
 
-## MikroTik Specific RADIUS Attribute Numeric Values
+### MikroTik attribute numbers
 
-| Name                                    | VendorID | Value | RFC |
-|:-- | --:| --:|:-- |
-| **MIKROTIK\_RECV\_LIMIT**               | 14988    | 1     |     |
-| **MIKROTIK\_XMIT\_LIMIT**               | 14988    | 2     |     |
-| **MIKROTIK\_GROUP**                     | 14988    | 3     |     |
-| **MIKROTIK\_WIRELESS\_FORWARD**         | 14988    | 4     |     |
-| **MIKROTIK\_WIRELESS\_SKIPDOT1X**       | 14988    | 5     |     |
-| **MIKROTIK\_WIRELESS\_ENCALGO**         | 14988    | 6     |     |
-| **MIKROTIK\_WIRELESS\_ENCKEY**          | 14988    | 7     |     |
-| **MIKROTIK\_RATE\_LIMIT**               | 14988    | 8     |     |
-| **MIKROTIK\_REALM**                     | 14988    | 9     |     |
-| **MIKROTIK\_HOST\_IP**                  | 14988    | 10    |     |
-| **MIKROTIK\_MARK\_ID**                  | 14988    | 11    |     |
-| **MIKROTIK\_ADVERTISE\_URL**            | 14988    | 12    |     |
-| **MIKROTIK\_ADVERTISE\_INTERVAL**       | 14988    | 13    |     |
-| **MIKROTIK\_RECV\_LIMIT\_GIGAWORDS**    | 14988    | 14    |     |
-| **MIKROTIK\_XMIT\_LIMIT\_GIGAWORDS**    | 14988    | 15    |     |
-| **MIKROTIK\_WIRELESS\_PSK**             | 14988    | 16    |     |
-| **MIKROTIK\_TOTAL\_LIMIT**              | 14988    | 17    |     |
-| **MIKROTIK\_TOTAL\_LIMIT\_GIGAWORDS**   | 14988    | 18    |     |
-| **MIKROTIK\_ADDRESS\_LIST**             | 14988    | 19    |     |
-| **MIKROTIK\_WIRELESS\_MPKEY**           | 14988    | 20    |     |
-| **MIKROTIK\_WIRELESS\_COMMENT**         | 14988    | 21    |     |
-| **MIKROTIK\_DELEGATED\_IPV6\_POOL**     | 14988    | 22    |     |
-| **MIKROTIK\_DHCP\_OPTION\_SET**         | 14988    | 23    |     |
-| **MIKROTIK\_DHCP\_OPTION\_PARAM\_STR1** | 14988    | 24    |     |
-| **MIKROTIK\_DHCP\_OPTION\_PARAM\_STR2** | 14988    | 25    |     |
-| **MIKROTIK\_WIRELESS\_VLANID**          | 14988    | 26    |     |
-| **MIKROTIK\_WIRELESS\_VLANIDTYPE**      | 14988    | 27    |     |
-| **MIKROTIK\_WIRELESS\_MINSIGNAL**       | 14988    | 28    |     |
-| **MIKROTIK\_WIRELESS\_MAXSIGNAL**       | 14988    | 29    |     |
+The vendor ID of MikroTik is 14988.
+
+| Name | Vendor ID | Number |
+| :-- | --: | --: |
+| **Mikrotik-Recv-Limit** | 14988 | 1 |
+| **Mikrotik-Xmit-Limit** | 14988 | 2 |
+| **Mikrotik-Group** | 14988 | 3 |
+| **Mikrotik-Wireless-Forward** | 14988 | 4 |
+| **Mikrotik-Wireless-Skip-Dot1x** | 14988 | 5 |
+| **Mikrotik-Wireless-Enc-Algo** | 14988 | 6 |
+| **Mikrotik-Wireless-Enc-Key** | 14988 | 7 |
+| **Mikrotik-Rate-Limit** | 14988 | 8 |
+| **Mikrotik-Realm** | 14988 | 9 |
+| **Mikrotik-Host-IP** | 14988 | 10 |
+| **Mikrotik-Mark-Id** | 14988 | 11 |
+| **Mikrotik-Advertise-URL** | 14988 | 12 |
+| **Mikrotik-Advertise-Interval** | 14988 | 13 |
+| **Mikrotik-Recv-Limit-Gigawords** | 14988 | 14 |
+| **Mikrotik-Xmit-Limit-Gigawords** | 14988 | 15 |
+| **Mikrotik-Wireless-PSK** | 14988 | 16 |
+| **Mikrotik-Total-Limit** | 14988 | 17 |
+| **Mikrotik-Total-Limit-Gigawords** | 14988 | 18 |
+| **Mikrotik-Address-List** | 14988 | 19 |
+| **Mikrotik-Wireless-MPKey** | 14988 | 20 |
+| **Mikrotik-Wireless-Comment** | 14988 | 21 |
+| **Mikrotik-Delegated-IPv6-Pool** | 14988 | 22 |
+| **Mikrotik-DHCP-Option-Set** | 14988 | 23 |
+| **Mikrotik-DHCP-Option-Param-STR1** | 14988 | 24 |
+| **Mikrotik-DHCP-Option-Param-STR2** | 14988 | 25 |
+| **Mikrotik-Wireless-VLANID** | 14988 | 26 |
+| **Mikrotik-Wireless-VLANIDtype** | 14988 | 27 |
+| **Mikrotik-Wireless-Minsignal** | 14988 | 28 |
+| **Mikrotik-Wireless-Maxsignal** | 14988 | 29 |
 | **Mikrotik-Switching-Filter** | 14988 | 30 |
 
-## All Supported Attribute Numeric Values
+### Standard and other vendor attribute numbers
 
-| Name                                   | VendorID | Value | RFC                           |
-|:-- |:-- | --:|:-- |
-| **Acct-Authentic**                     |          | 45    | RFC 2866                      |
-| **Acct-Delay-Time**                    |          | 41    | RFC 2866                      |
-| **Acct-Input-Gigawords**               |          | 52    | RFC 2869                      |
-| **Acct-Input-Octets**                  |          | 42    | RFC 2866                      |
-| **Acct-Input-Packets**                 |          | 47    | RFC 2866                      |
-| **Acct-Interim-Interval**              |          | 85    | RFC 2869                      |
-| **Acct-Output-Gigawords**              |          | 53    | RFC 2869                      |
-| **Acct-Output-Octets**                 |          | 43    | RFC 2866                      |
-| **Acct-Output-Packets**                |          | 48    | RFC 2866                      |
-| **Acct-Session-Id**                    |          | 44    | RFC 2866                      |
-| **Acct-Session-Time**                  |          | 46    | RFC 2866                      |
-| **Acct-Status-Type**                   |          | 40    | RFC 2866                      |
-| **Acct-Terminate-Cause**               |          | 49    | RFC 2866                      |
-| **Ascend-Client-Gateway**              | 529      | 132   |                               |
-| **Ascend-Data-Rate**                   | 529      | 197   |                               |
-| **Ascend-Xmit-Rate**                   | 529      | 255   |                               |
-| **Called-Station-Id**                  |          | 30    | RFC 2865                      |
-| **Calling-Station-Id**                 |          | 31    | RFC 2865                      |
-| **CHAP-Challenge**                     |          | 60    | RFC 2866                      |
-| **CHAP-Password**                      |          | 3     | RFC 2865                      |
-| **Class**                              |          | 25    | RFC 2865                      |
-| **Filter-Id**                          |          | 11    | RFC 2865                      |
-| **Framed-Compression**                 |          | 13    | RFC 2865                      |
-| **Framed-IP-Address**                  |          | 8     | RFC 2865                      |
-| **Framed-IP-Netmask**                  |          | 9     | RFC 2865                      |
-| **Framed-IPv6-Prefix**                 |          | 97    | RFC 3162                      |
-| **Framed-Mtu**                         |          | 12    | RFC 2865                      |
-| **Framed-Pool**                        |          | 88    | RFC 2869                      |
-| **Framed-Protocol**                    |          | 7     | RFC 2865                      |
-| **Framed-Route**                       |          | 22    | RFC 2865                      |
-| **Framed-Routing**                     |          | 10    | RFC 2865                      |
-| **Idle-Timeout**                       |          | 28    | RFC 2865                      |
-| **MS-CHAP-Challenge**                  | 311      | 11    | RFC 2548                      |
-| **MS-CHAP-Domain**                     | 311      | 10    | RFC 2548                      |
-| **MS-CHAP-Response**                   | 311      | 1     | RFC 2548                      |
-| **MS-CHAP2-Response**                  | 311      | 25    | RFC 2548                      |
-| **MS-CHAP2-Success**                   | 311      | 26    | RFC 2548                      |
-| **MS-MPPE-Encryption-Policy**          | 311      | 7     | RFC 2548                      |
-| **MS-MPPE-Encryption-Types**           | 311      | 8     | RFC 2548                      |
-| **MS-MPPE-Recv-Key**                   | 311      | 17    | RFC 2548                      |
-| **MS-MPPE-Send-Key**                   | 311      | 16    | RFC 2548                      |
-| **NAS-Identifier**                     |          | 32    | RFC 2865                      |
-| **NAS-Port**                           |          | 5     | RFC 2865                      |
-| **NAS-IP-Address**                     |          | 4     | RFC 2865                      |
-| **NAS-Port-Id**                        |          | 87    | RFC 2869                      |
-| **NAS-Port-Type**                      |          | 61    | RFC 2865                      |
-| **Port-Limit**                         |          | 62    | RFC 2865                      |
-| **Redback-Agent-Remote-Id**            | 2352     | 96    |                               |
-| **Redback-Agent-Circuit-Id**           | 2352     | 97    |                               |
-| **Service-Type**                       |          | 6     | RFC 2865                      |
-| **Session-Timeout**                    |          | 27    | RFC 2865                      |
-| **User-Name**                          |          | 1     | RFC 2865                      |
-| **User-Password**                      |          | 2     | RFC 2865                      |
-| **WISPr-Bandwidth-Max-Down**           | 14122    | 8     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Bandwidth-Max-Up**             | 14122    | 7     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Bandwidth-Min-Down**           | 14122    | 6     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Bandwidth-Min-Up**             | 14122    | 5     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Location-Id**                  | 14122    | 1     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Location-Name**                | 14122    | 2     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Logoff-URL**                   | 14122    | 3     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Redirection-URL**              | 14122    | 4     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Session-Terminate-Time**       | 14122    | 9     | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Session-Terminate-End-Of-Day** | 14122    | 10    | [wi-fi.org](https://www.wi-fi.org/) |
-| **WISPr-Billing-Class-Of-Service**     | 14122    | 11    | [wi-fi.org](https://www.wi-fi.org/) |
-|                      |          |       |                               |
+| Name | Vendor ID | Number | Defined in |
+| :-- | --: | --: | :-- |
+| **Acct-Authentic** |  | 45 | RFC 2866 |
+| **Acct-Delay-Time** |  | 41 | RFC 2866 |
+| **Acct-Input-Gigawords** |  | 52 | RFC 2869 |
+| **Acct-Input-Octets** |  | 42 | RFC 2866 |
+| **Acct-Input-Packets** |  | 47 | RFC 2866 |
+| **Acct-Interim-Interval** |  | 85 | RFC 2869 |
+| **Acct-Output-Gigawords** |  | 53 | RFC 2869 |
+| **Acct-Output-Octets** |  | 43 | RFC 2866 |
+| **Acct-Output-Packets** |  | 48 | RFC 2866 |
+| **Acct-Session-Id** |  | 44 | RFC 2866 |
+| **Acct-Session-Time** |  | 46 | RFC 2866 |
+| **Acct-Status-Type** |  | 40 | RFC 2866 |
+| **Acct-Terminate-Cause** |  | 49 | RFC 2866 |
+| **Ascend-Client-Gateway** | 529 | 132 |  |
+| **Ascend-Data-Rate** | 529 | 197 |  |
+| **Ascend-Xmit-Rate** | 529 | 255 |  |
+| **Called-Station-Id** |  | 30 | RFC 2865 |
+| **Calling-Station-Id** |  | 31 | RFC 2865 |
+| **CHAP-Challenge** |  | 60 | RFC 2865 |
+| **CHAP-Password** |  | 3 | RFC 2865 |
+| **Class** |  | 25 | RFC 2865 |
+| **Delegated-IPv6-Prefix** |  | 123 | RFC 4818 |
+| **EAP-Message** |  | 79 | RFC 2869 |
+| **Error-Cause** |  | 101 | RFC 5176 |
+| **Event-Timestamp** |  | 55 | RFC 2869 |
+| **Filter-Id** |  | 11 | RFC 2865 |
+| **Framed-Compression** |  | 13 | RFC 2865 |
+| **Framed-IP-Address** |  | 8 | RFC 2865 |
+| **Framed-IP-Netmask** |  | 9 | RFC 2865 |
+| **Framed-IPv6-Pool** |  | 100 | RFC 3162 |
+| **Framed-IPv6-Prefix** |  | 97 | RFC 3162 |
+| **Framed-Mtu** |  | 12 | RFC 2865 |
+| **Framed-Pool** |  | 88 | RFC 2869 |
+| **Framed-Protocol** |  | 7 | RFC 2865 |
+| **Framed-Route** |  | 22 | RFC 2865 |
+| **Framed-Routing** |  | 10 | RFC 2865 |
+| **Idle-Timeout** |  | 28 | RFC 2865 |
+| **Message-Authenticator** |  | 80 | RFC 2869 |
+| **MS-CHAP-Challenge** | 311 | 11 | RFC 2548 |
+| **MS-CHAP-Domain** | 311 | 10 | RFC 2548 |
+| **MS-CHAP-Response** | 311 | 1 | RFC 2548 |
+| **MS-CHAP2-Response** | 311 | 25 | RFC 2548 |
+| **MS-CHAP2-Success** | 311 | 26 | RFC 2548 |
+| **MS-MPPE-Encryption-Policy** | 311 | 7 | RFC 2548 |
+| **MS-MPPE-Encryption-Types** | 311 | 8 | RFC 2548 |
+| **MS-MPPE-Recv-Key** | 311 | 17 | RFC 2548 |
+| **MS-MPPE-Send-Key** | 311 | 16 | RFC 2548 |
+| **NAS-Identifier** |  | 32 | RFC 2865 |
+| **NAS-IP-Address** |  | 4 | RFC 2865 |
+| **NAS-IPv6-Address** |  | 95 | RFC 3162 |
+| **NAS-Port** |  | 5 | RFC 2865 |
+| **NAS-Port-Id** |  | 87 | RFC 2869 |
+| **NAS-Port-Type** |  | 61 | RFC 2865 |
+| **Port-Limit** |  | 62 | RFC 2865 |
+| **Redback-Agent-Remote-Id** | 2352 | 96 |  |
+| **Redback-Agent-Circuit-Id** | 2352 | 97 |  |
+| **Service-Type** |  | 6 | RFC 2865 |
+| **Session-Timeout** |  | 27 | RFC 2865 |
+| **Tunnel-Medium-Type** |  | 65 | RFC 2868 |
+| **Tunnel-Private-Group-ID** |  | 81 | RFC 2868 |
+| **Tunnel-Type** |  | 64 | RFC 2868 |
+| **User-Name** |  | 1 | RFC 2865 |
+| **User-Password** |  | 2 | RFC 2865 |
+| **WISPr-Bandwidth-Max-Down** | 14122 | 8 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Bandwidth-Max-Up** | 14122 | 7 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Bandwidth-Min-Down** | 14122 | 6 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Bandwidth-Min-Up** | 14122 | 5 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Location-Id** | 14122 | 1 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Location-Name** | 14122 | 2 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Logoff-URL** | 14122 | 3 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Redirection-URL** | 14122 | 4 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Session-Terminate-Time** | 14122 | 9 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Session-Terminate-End-Of-Day** | 14122 | 10 | [wi-fi.org](https://www.wi-fi.org/) |
+| **WISPr-Billing-Class-Of-Service** | 14122 | 11 | [wi-fi.org](https://www.wi-fi.org/) |
+
+## Read more
+
+- [`/radius`](../cli-reference/radius/), [`/radius/monitor`](../cli-reference/radius/monitor), [`/radius/incoming`](../cli-reference/radius/incoming/), [`/radius/incoming/monitor`](../cli-reference/radius/incoming/monitor)
+- [User](user)
+- [PPP AAA](ppp-aaa)
+- [HotSpot](hotspot-captive-portal/)
+- [Dot1X](dot1x)
+- [IPsec](../virtual-private-networks/ipsec/)
+- [User Manager](user-manager)
+- [Certificates](certificates)

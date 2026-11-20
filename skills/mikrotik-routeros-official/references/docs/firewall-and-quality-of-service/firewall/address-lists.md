@@ -207,6 +207,6 @@ Anything that is not a valid address is stored as a DNS name, without an error. 
 
 - DNS: a static DNS entry with `address-list` adds the addresses the router answers for the name, see [Use domain names in firewall rules](../../network-management/dns#use-domain-names-in-firewall-rules).
 - DHCP server: `address-lists` on the server or on a lease adds the address of a bound lease, see [`/ip/dhcp-server`](../../cli-reference/ip/dhcp-server/) and [`/ip/dhcp-server/lease`](../../cli-reference/ip/dhcp-server/lease/).
-- PPP: `address-list` in a PPP profile adds the address the server assigns or the client receives, see [User profiles](../../authentication-authorization-accounting/ppp-aaa#user-profiles).
+- PPP: `address-list` in a PPP profile adds the address the server assigns or the client receives, see [PPP AAA](../../authentication-authorization-accounting/ppp-aaa).
 
 For all parameters, see the CLI reference for [`/ip/firewall/address-list`](../../cli-reference/ip/firewall/address-list) and [`/ipv6/firewall/address-list`](../../cli-reference/ipv6/firewall/address-list).

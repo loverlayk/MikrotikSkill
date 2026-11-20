@@ -428,6 +428,8 @@ In the [`/console/settings`](../cli-reference/console/settings) menu, it is poss
 
 The console has built-in help. Press <kbd>F1</kbd> for general console usage help. The general rule is that help shows what you can type in a position where <kbd>F1</kbd> was pressed (similarly to pressing <kbd>Tab</kbd> key twice, but in verbose form and with explanations).
 
+The same data is available to scripts and external tools through [Console inspect](../developer-guides/scripting/console-inspect).
+
 ## List of Keys
 
 | Key | Description |

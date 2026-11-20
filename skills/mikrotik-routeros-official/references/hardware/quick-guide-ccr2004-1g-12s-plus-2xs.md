@@ -1,6 +1,6 @@
 # Quick Guide - CCR2004-1G-12S+2XS
 
-> It is the end users' responsibility to follow local country regulations. All MikroTik devices must be professionally installed. :::
+> This Quick Guide covers the model: CCR2004-1G-12S+2XS.
 
 ![](./img/mt_logo_arrow_v2-02-8.png)
 
@@ -8,7 +8,6 @@
 
 :::warning
 This device needs to be upgraded to RouterOS v7.9 or the latest version to ensure compliance with local authority regulations!
-
 It is the end users' responsibility to follow local country regulations. All MikroTik devices must be professionally installed.
 :::
 
@@ -30,6 +29,7 @@ This Quick Guide covers the model: CCR2004-1G-12S+2XS.
 - Configure the IP settings of your network card to 192.168.88.2/24;
 - Use WebFig in a web browser or the "WinBox" configuration tool [https://mt.lv/winbox](https://mt.lv/winbox); **multiple configuration methods are available to ensure accessibility;**
 - Open http://192.168.88.1 in a web browser to start setup. If the IP address is unavailable, use WinBox and choose the "Neighbors" tab to find the device. Proceed to connect using the MAC address. The username is "admin", and there is no password (or, for some models, check user and wireless passwords on the sticker);
+- Click the "Check for updates" button and update RouterOS to the latest version;
 - For a manual update of the device, visit mikrotik.com, select your model, and locate the required packages in the "Downloads" section;
 - Upload downloaded packages to the WebFig or WinBox "Files" menu and reboot the device;
 - By upgrading your RouterOS software to the latest version, you can ensure optimal performance, stability, and security updates;
@@ -60,6 +60,8 @@ Manufacturer: Mikrotikls SIA, Ūnijas 2, Riga, Latvia, LV1039.
 Крайните потребители са отговорни за спазването на местните разпоредби. Всички устройства на MikroTik трябва да бъдат професионално инсталиран.
 :::
 
+Този документ обхваща модела: CCR2004-1G-12S+2XS.
+
 *Това е мрежово устройство. Можете да намерите името на модела на продукта на етикета на регистъра (ID).*
 *Моля, посетете страницата с ръководството за потребителя на [https://mt.lv/um-bg](https://mt.lv/um-bg) за пълното актуализирано ръководство за употреба. Или сканирайте QR кода с мобилния си телефон.*
 *Най-важните технически спецификации за този продукт могат да бъдат намерени на последната страница на това Кратко ръководство.*
@@ -76,6 +78,7 @@ Manufacturer: Mikrotikls SIA, Ūnijas 2, Riga, Latvia, LV1039.
 - Конфигурирайте IP настройките на мрежовата ви карта на 192.168.88.2/24;
 - Използвайте WebFig в уеб браузър или конфигурационния инструмент "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **налични са множество методи за конфигуриране, за да се осигури достъпност;**
 - Отворете http://192.168.88.1 в уеб браузъра, за да стартирате настройката. Ако IP адресът не е достъпен, използвайте WinBox и изберете раздел "Neighbors", за да намерите устройството. Свържете се чрез MAC адреса. Потребителското име е "admin", а паролата липсва (или, за някои модели, проверете потребителските и безжичните пароли на стикера);
+- Кликнете на бутона "Check for updates" и актуализирайте RouterOS до последната версия;
 - За ръчно обновяване на устройството посетете mikrotik.com, изберете модела си и намерете необходимите пакети в секцията "Downloads";
 - Качете изтеглените пакети в менюто "Files" на WebFig или WinBox и рестартирайте устройството;
 - Чрез актуализиране на софтуера на вашия RouterOS до последната версия, можете да гарантирате оптимална производителност, стабилност и актуализации за сигурност;
@@ -104,8 +107,9 @@ Manufacturer: Mikrotikls SIA, Ūnijas 2, Riga, Latvia, LV1039.
 :::warning
 Toto zařízení musí být upgradováno na RouterOS v7.9 nebo na nejnovější verzi, aby bylo zajištěno dodržování předpisů místních úřadů.
 Je odpovědností koncových uživatelů dodržovat místní předpisy. Všechna zařízení MikroTik musí být profesionálně nainstalován.
-Tento Stručný průvodce se týká modelu: CCR2004-1G-12S+2XS.
 :::
+
+Tento Stručný průvodce se týká modelu: CCR2004-1G-12S+2XS.
 
 *Toto je síťové zařízení. Název modelu produktu najdete na štítku případu (ID).*
 *Úplnou aktuální uživatelskou příručku naleznete na stránce uživatelské příručky na adrese [https://mt.lv/um-cs](https://mt.lv/um-cs). Nebo naskenujte QR kód pomocí mobilního telefonu.*
@@ -123,6 +127,7 @@ Tento Stručný průvodce se týká modelu: CCR2004-1G-12S+2XS.
 - Nakonfigurujte IP nastavení vaší síťové karty na 192.168.88.2/24;
 - Použijte WebFig v webovém prohlížeči nebo konfigurační nástroj "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **je k dispozici více konfiguračních metod k zajištění přístupnosti;**
 - Otevřete http://192.168.88.1 ve webovém prohlížeči pro spuštění nastavení. Pokud není IP adresa k dispozici, použijte WinBox a vyberte záložku "Neighbors" k nalezení zařízení. Pokračujte v připojení pomocí MAC adresy. Uživatelské jméno je "admin", a není žádné heslo (nebo, pro některé modely, zkontrolujte uživatelská a bezdrátová hesla na štítku);
+- Klepněte na tlačítko "Check for updates" a aktualizujte RouterOS na nejnovější verzi;
 - Pro manuální aktualizaci zařízení navštivte mikrotik.com, vyberte svůj model a najděte požadované balíčky v sekci "Downloads";
 - Nahrajte stažené balíčky do menu "Files" ve WebFig nebo WinBox a restartujte zařízení;
 - Aktualizací softwaru RouterOS na nejnovější verzi zajistíte optimální výkon, stabilitu a bezpečnostní aktualizace;
@@ -153,6 +158,8 @@ Denne enhed skal opgraderes til RouterOS v7.9 eller den nyeste version for at si
 Det er slutbrugerens ansvar at følge lokale landes regler. Alle MikroTik-enheder skal være professionelt installeret.
 :::
 
+Dette dokument dækker modellen: CCR2004-1G-12S+2XS.
+
 *Dette er netværksenhed. Du kan finde produktmodelnavnet på sagetiketten (ID).*
 *Besøg siden med brugermanualen på [https://mt.lv/um-da](https://mt.lv/um-da) for den fulde ajourførte brugermanual. Eller skan QR-koden med din mobiltelefon.*
 *De vigtigste tekniske specifikationer for dette produkt findes på den sidste side i denne hurtigvejledning.*
@@ -169,6 +176,7 @@ Det er slutbrugerens ansvar at følge lokale landes regler. Alle MikroTik-enhede
 - Konfigurér IP-indstillingerne på dit netværkskort til 192.168.88.2/24;
 - Brug WebFig i en webbrowser eller konfigurationsværktøjet "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **flere konfigurationsmetoder er tilgængelige for at sikre tilgængelighed;**
 - Åbn http://192.168.88.1 i en webbrowser for at starte opsætningen. Hvis IP-adressen ikke er tilgængelig, skal du bruge WinBox og forbinde ved hjælp af MAC-adressen. Brugernavnet er "admin", og der er ingen adgangskode (eller, for nogle modeller, tjek bruger- og trådløse adgangskoder på klistermærket);
+- Klik på knappen "Check for updates" og opdater RouterOS til den nyeste version;
 - For manuel opdatering af enheden, besøg mikrotik.com, vælg din model og find de nødvendige pakker i sektionen "Downloads";
 - Upload downloadede pakker til WebFig eller WinBox "Files" menu og genstart enheden;
 - Ved at opgradere din RouterOS-software til den nyeste version kan du sikre optimal ydeevne, stabilitet og sikkerhedsopdateringer;
@@ -197,9 +205,9 @@ Producent: Mikrotikls SIA, Ūnijas 2, Riga, Letland, LV1039.
 :::warning
 Dieses Gerät muss auf RouterOS v7.9 oder die neueste Version aktualisiert werden, um die Einhaltung der örtlichen behördlichen Vorschriften zu gewährleisten.
 Es liegt in der Verantwortung des Endbenutzers, die örtlichen Vorschriften zu befolgen. Alle MikroTik-Geräte müssen professionell installiert werden.
+:::
 
 Diese Kurzanleitung behandelt das Modell: CCR2004-1G-12S+2XS.
-:::
 
 *Dies ist das Netzwerkgerät. Den Produktmodellnamen finden Sie auf dem Gehäuseaufkleber (ID).*
 *Bitte besuchen Sie die Seite mit dem Benutzerhandbuch unter [https://mt.lv/um-de](https://mt.lv/um-de), um das vollständige und aktuelle Benutzerhandbuch zu erhalten. Oder scannen Sie den QR-Code mit Ihrem Handy.*
@@ -217,6 +225,7 @@ Diese Kurzanleitung behandelt das Modell: CCR2004-1G-12S+2XS.
 - Konfigurieren Sie die IP-Einstellungen Ihrer Netzwerkkarte auf 192.168.88.2/24;
 - Verwenden Sie WebFig in einem Webbrowser oder das Konfigurationstool "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **mehrere Konfigurationsmethoden stehen zur Verfügung, um die Barrierefreiheit sicherzustellen;**
 - Öffnen Sie http://192.168.88.1 in einem Webbrowser, um das Setup zu starten. Wenn die IP-Adresse nicht verfügbar ist, verwenden Sie WinBox und stellen Sie über die Registerkarte "Neighbors" eine Verbindung zum Gerät her. Fahren Sie mit der Verbindung über die MAC-Adresse fort. Der Benutzername lautet "admin", und es gibt kein Passwort (oder, für einige Modelle, überprüfen Sie Benutzer- und drahtlose Passwörter auf dem Aufkleber);
+- Klicken Sie auf die Schaltfläche "Check for updates" und aktualisieren Sie RouterOS auf die neueste Version;
 - Für ein manuelles Update des Geräts besuchen Sie mikrotik.com, wählen Ihr Modell aus und finden die erforderlichen Pakete im Abschnitt "Downloads";
 - Laden Sie die heruntergeladenen Pakete in das WebFig- oder WinBox-Menü "Files" hoch und starten Sie das Gerät neu;
 - Durch Aktualisieren Ihrer RouterOS-Software auf die neueste Version können Sie eine optimale Leistung, Stabilität und Sicherheitsupdates gewährleisten;
@@ -245,9 +254,9 @@ Hersteller: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 :::warning
 Αυτή η συσκευή πρέπει να αναβαθμιστεί στο RouterOS v7.9 ή την τελευταία έκδοση για να διασφαλιστεί η συμμόρφωση με τους κανονισμούς της τοπικής αυτοδιοίκησης.
 Είναι ευθύνη των τελικών χρηστών να ακολουθούν τους τοπικούς κανονισμούς των χωρών. Όλες οι συσκευές MikroTik πρέπει να εγκατασταθούν επαγγελματικά.
+:::
 
 Αυτός ο γρήγορος οδηγός καλύπτει το μοντέλο: CCR2004-1G-12S+2XS.
-:::
 
 *Αυτή είναι η συσκευή δικτύου*. *Μπορείτε να βρείτε το όνομα του μοντέλου προϊόντος στην ετικέτα της θήκης (ID).*
 *Επισκεφτείτε τη σελίδα του εγχειριδίου χρήστη στο [https://mt.lv/um-el](https://mt.lv/um-el) για το πλήρες ενημερωμένο εγχειρίδιο χρήσης. Ή να σαρώσετε τον κωδικό QR με το κινητό σας τηλέφωνο.*
@@ -265,6 +274,7 @@ Hersteller: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 - Διαμορφώστε τις ρυθμίσεις IP της κάρτας δικτύου σας σε 192.168.88.2/24;
 - Χρησιμοποιήστε το WebFig σε ένα πρόγραμμα περιήγησης ή το εργαλείο ρύθμισης ”WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **διατίθενται πολλαπλές μέθοδοι ρύθμισης για να διασφαλιστεί η προσβασιμότητα;**
 - Ανοίξτε το http://192.168.88.1 σε έναν πρόγραμμα περιήγησης στο διαδίκτυο για να ξεκινήσετε τη ρύθμιση. Εάν η διεύθυνση IP δεν είναι διαθέσιμη, χρησιμοποιήστε το WinBox και επιλέξτε την καρτέλα "Neighbors" για να βρείτε τη συσκευή. Συνεχίστε συνδέοντας χρησιμοποιώντας τη διεύθυνση MAC. Το όνομα χρήστη είναι "admin", και δεν υπάρχει κωδικός πρόσβασης (ή, για ορισμένα μοντέλα, ελέγξτε τους κωδικούς χρήστη και ασύρματους κωδικούς στο αυτοκόλλητο);
+- Κάντε κλικ στο κουμπί "Check for updates" και ενημερώστε το RouterOS στην τελευταία έκδοση;
 - Για χειροκίνητη ενημέρωση της συσκευής, επισκεφθείτε το mikrotik.com, επιλέξτε το μοντέλο σας και εντοπίστε τα απαιτούμενα πακέτα στην ενότητα "Downloads";
 - Μεταφορτώστε τα κατεβασμένα πακέτα στο μενού "Files" του WebFig ή του WinBox και επανεκκινήστε τη συσκευή;
 - Αναβαθμίζοντας το λογισμικό του RouterOS στην πιο πρόσφατη έκδοση, μπορείτε να διασφαλίσετε βέλτιστη απόδοση, σταθερότητα και ενημερώσεις ασφαλείας;
@@ -293,9 +303,9 @@ Hersteller: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 :::warning
 Este dispositivo debe actualizarse a RouterOS v7.9 o la última versión para garantizar el cumplimiento de las regulaciones de las autoridades locales.
 Es responsabilidad del usuario final seguir las regulaciones locales del país. Todos los dispositivos MikroTik deben ser instalados por un profesional.
+:::
 
 Esta guía rápida cubre el modelo: CCR2004-1G-12S+2XS.
-:::
 
 *Este es un dispositivo de red. Puede encontrar el nombre del modelo del producto en la etiqueta del caso (ID).*
 *Visite la página del manual del usuario en [https://mt.lv/um-es](https://mt.lv/um-es) para obtener el manual del usuario actualizado. O escanee el código QR con su teléfono móvil.*
@@ -313,6 +323,7 @@ Esta guía rápida cubre el modelo: CCR2004-1G-12S+2XS.
 - Configura las opciones IP de tu tarjeta de red a 192.168.88.2/24;
 - Utilice WebFig en un navegador web o la herramienta de configuración "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **hay varios métodos de configuración disponibles para garantizar la accesibilidad;**
 - Abre http://192.168.88.1 en un navegador web para comenzar la configuración. Si la dirección IP no está disponible, utiliza WinBox y selecciona la pestaña "Neighbors" para encontrar el dispositivo. Procede a conectar usando la dirección MAC. El nombre de usuario es "admin", y no hay contraseña (o, para algunos modelos, verifica los usuarios y contraseñas inalámbricas en la etiqueta);
+- Haga clic en el botón "Check for updates" y actualice RouterOS a la última versión;
 - Para actualizar manualmente el dispositivo, visite mikrotik.com, seleccione su modelo y localice los paquetes requeridos en la sección "Downloads";
 - Sube los paquetes descargados al menú "Files" de WebFig o WinBox y reinicia el dispositivo;
 - Al actualizar el software de tu RouterOS a la última versión, puedes asegurar un rendimiento óptimo, estabilidad y actualizaciones de seguridad;
@@ -353,8 +364,9 @@ Por favor contacte a su distribuidor local para preguntas regionales específica
 :::warning
 Kohaliku omavalitsuse eeskirjade järgimise tagamiseks tuleb see seade uuendada versioonile RouterOS v7.9 või uusimale versioonile.
 Lõppkasutajate kohustus on järgida kohaliku riigi seadusi. Kõik MikroTiku seadmed peavad olema professionaalselt paigaldatud.
-See kiirjuhend hõlmab mudelit: CCR2004-1G-12S+2XS.
 :::
+
+See kiirjuhend hõlmab mudelit: CCR2004-1G-12S+2XS.
 
 *See on võrguseade. Toote mudeli nime leiate kohvri sildilt (ID).*
 *Täieliku ja värske kasutusjuhendi saamiseks külastage kasutusjuhendit lehel [https://mt.lv/um-et](https://mt.lv/um-et). Või skannige oma mobiiltelefoniga QR-koodi.*
@@ -372,6 +384,7 @@ See kiirjuhend hõlmab mudelit: CCR2004-1G-12S+2XS.
 - Konfigureeri oma võrgukaardi IP-seaded 192.168.88.2/24;
 - Kasutage WebFigi veebi­brauseris või seadistus­tööriista "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **ligipääsetavuse tagamiseks on saadaval mitu seadistamismeetodit;**
 - Ava http://192.168.88.1 veebibrauseris seadistamise alustamiseks. Kui IP-aadress pole kättesaadav, kasuta WinBoxi ja vali seade leidmiseks "Neighbors" vahekaart. Jätka ühendamist MAC-aadressi kasutades. Kasutajanimi on "admin" ja parooli pole (või mõne mudeli puhul kontrollige kasutaja- ja traadita paroole kleebisel);
+- Klõpsake nupul "Check for updates" ja ajakohastage RouterOS viimasele versioonile;
 - Seadme käsitsi uuendamiseks külastage mikrotik.com, valige oma mudel ja leidke vajalikud paketid jaotises "Downloads";
 - Lae allalaaditud paketid üles veebibrauseri WebFig või WinBox "Files" menüüsse ja taaskäivita seade;
 - Värskendades RouterOS tarkvara viimasele versioonile, tagad optimaalse jõudluse, stabiilsuse ja turvavärskendused;
@@ -400,8 +413,9 @@ Tootja: Mikrotikls SIA, Ūnijas 2, Riia, Läti, LV1039.
 :::warning
 Tämä laite on päivitettävä RouterOS v7.9 -versioon tai uusimpaan versioon, jotta varmistetaan paikallisviranomaisten määräysten noudattaminen.
 Loppukäyttäjien vastuulla on noudattaa paikallisia maalakeja. Kaikkien MikroTik-laitteiden on oltava ammattimaisesti asennettu.
-Tämä pikaopas kattaa mallin: CCR2004-1G-12S+2XS.
 :::
+
+Tämä pikaopas kattaa mallin: CCR2004-1G-12S+2XS.
 
 *Tämä on verkkolaite. Tuotemallin nimi löytyy kotelon etiketistä (ID).*
 *Katso täydelliset ja ajantasaiset käyttöohjeet sivulta [https://mt.lv/um-fi](https://mt.lv/um-fi). Tai skannaa QR-koodi matkapuhelimellasi.*
@@ -419,6 +433,7 @@ Tämä pikaopas kattaa mallin: CCR2004-1G-12S+2XS.
 - Määritä verkkokorttisi IP-asetukset 192.168.88.2/24;
 - Käytä WebFigiä web-selaimessa tai konfigurointityökalua "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **useita määritysmenetelmiä on saatavilla saavutettavuuden varmistamiseksi;**
 - Avaa http://192.168.88.1 verkkoselaimeen aloittaaksesi asennuksen. Jos IP-osoite ei ole käytettävissä, käytä WinBoxia ja valitse "Neighbors" -välilehti laitteen löytämiseksi. Jatka yhdistämistä MAC-osoitteen avulla. Käyttäjänimi on "admin", eikä salasanaa ole (tai joissakin malleissa tarkista käyttäjä- ja langattomat salasanat tarrasta);
+- Napsauta "Check for updates" -painiketta ja päivitä RouterOS uusimpaan versioon;
 - Laitteen manuaalista päivitystä varten siirry osoitteeseen mikrotik.com, valitse mallisi ja etsi tarvittavat paketit osiossa "Downloads";
 - Lataa ladatut paketit WebFigin tai WinBoxin "Files" -valikkoon ja käynnistä laite uudelleen;
 - Päivittämällä RouterOS-ohjelmistosi uusimpaan versioon voit varmistaa optimaalisen suorituskyvyn, vakauden ja turvallisuuspäivitykset;
@@ -449,6 +464,8 @@ Cet appareil doit être mis à niveau vers RouterOS v7.9 ou la dernière version
 Il est de la responsabilité des utilisateurs finaux de suivre les réglementations locales du pays. Tous les appareils MikroTik doivent être installé professionnellement.
 :::
 
+Ce document couvre le modèle: CCR2004-1G-12S+2XS.
+
 *Ceci est un périphérique réseau. Vous pouvez trouver le nom du modèle du produit sur l'étiquette du boîtier (ID).*
 *Veuillez visiter la page du manuel d'utilisation sur [https://mt.lv/um-fr](https://mt.lv/um-fr) pour le manuel d'utilisation complet et à jour. Ou scannez le code QR avec votre téléphone portable.*
 *Les spécifications techniques les plus importantes de ce produit se trouvent sur la dernière page de ce guide rapide.*
@@ -465,6 +482,7 @@ Il est de la responsabilité des utilisateurs finaux de suivre les réglementati
 - Configurez les paramètres IP de votre carte réseau à 192.168.88.2/24;
 - Utilisez WebFig dans un navigateur web ou l’outil de configuration "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **plusieurs méthodes de configuration sont disponibles pour garantir l’accessibilité;**
 - Ouvrez http://192.168.88.1 dans un navigateur Web pour démarrer la configuration. Si l'adresse IP n'est pas disponible, utilisez WinBox et sélectionnez l'onglet "Neighbors" pour trouver le périphérique. Procédez à la connexion en utilisant l'adresse MAC. Le nom d'utilisateur est "admin", et il n'y a pas de mot de passe (ou, pour certains modèles, vérifiez les mots de passe utilisateur et sans fil sur l'autocollant);
+- Cliquez sur le bouton "Check for updates" et mettez à jour RouterOS vers la dernière version;
 - Pour une mise à jour manuelle de l'appareil, rendez-vous sur mikrotik.com, sélectionnez votre modèle et localisez les paquets requis dans la section "Downloads";
 - Téléchargez les packages téléchargés dans le menu "Files" de WebFig ou WinBox et redémarrez l'appareil;
 - En mettant à jour votre logiciel RouterOS à la dernière version, vous pouvez assurer des performances optimales, la stabilité et des mises à jour de sécurité;
@@ -493,8 +511,9 @@ Fabricant: Mikrotikls SIA, Ūnijas 2, Riga, Lettonie, LV1039.
 :::warning
 Ovaj je uređaj potrebno nadograditi na RouterOS v7.9 ili najnoviju verziju kako bi se osigurala sukladnost s lokalnim propisima.
 Odgovornost krajnjih korisnika je da slijede lokalne propise. Svi MikroTik uređaji moraju biti profesionalno instaliran.
-Ovaj brzi vodič pokriva model: CCR2004-1G-12S+2XS.
 :::
+
+Ovaj brzi vodič pokriva model: CCR2004-1G-12S+2XS.
 
 *Ovo je mrežni uređaj. Naziv modela proizvoda možete pronaći na naljepnici kućišta (ID).*
 *Molimo posjetite stranicu s priručnikom na [https://mt.lv/um-hr](https://mt.lv/um-hr) za cjeloviti ažurirani korisnički priručnik. Ili skenirajte QR kod sa svojim mobilnim telefonom.*
@@ -512,6 +531,7 @@ Ovaj brzi vodič pokriva model: CCR2004-1G-12S+2XS.
 - Konfigurirajte IP postavke svoje mrežne kartice na 192.168.88.2/24;
 - Koristite WebFig u web-pregledniku ili konfiguracijski alat "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **dostupne su različite metode konfiguracije kako bi se osigurala pristupačnost;**
 - Otvorite http://192.168.88.1 u web pregledniku kako biste započeli postavljanje. Ako IP adresa nije dostupna, koristite WinBox i odaberite karticu "Neighbors" da biste pronašli uređaj. Nastavite s povezivanjem putem MAC adrese. Korisničko ime je "admin", a nema lozinke (ili, za neke modele, provjerite korisničke i bežične lozinke na naljepnici);
+- Kliknite na gumb "Check for updates" i ažurirajte RouterOS na najnoviju verziju;
 - Za ručnu nadogradnju uređaja posjetite mikrotik.com, odaberite svoj model i pronađite potrebne pakete u odjeljku "Downloads";
 - Prenesite preuzete pakete u WebFig ili WinBox "Files" izbornik i ponovno pokrenite uređaj;
 - Ažuriranjem softvera RouterOS na najnoviju verziju možete osigurati optimalne performanse, stabilnost i sigurnosna ažuriranja;
@@ -561,6 +581,7 @@ Proizvođač: Mikrotikls SIA, Ūnijas 2, Riga, Latvija, LV1039.
 - अपने नेटवर्क कार्ड की IP सेटिंग को 192.168.88.2/24 पर कॉन्फ़िगर करें;
 - WebFig को वेब ब्राउज़र में या “WinBox” कॉन्फ़िगरेशन टूल (https://mt.lv/WinBox) में उपयोग करें — कई कॉन्फ़िगरेशन विधियाँ उपलब्ध हैं ताकि पहुँच सुनिश्चित की जा सके;
 - सेटअप शुरू करने के लिए वेब ब्राउज़र में http://192.168.88.1 खोलें। यदि IP पता उपलब्ध नहीं है, तो WinBox का उपयोग करके “Neighbors” टैब चुनें और डिवाइस खोजें। फिर MAC एड्रेस का उपयोग करके कनेक्ट करें। उपयोगकर्ता नाम "admin" है और पासवर्ड नहीं है (या कुछ मॉडलों के लिए, उपयोगकर्ता और वायरलेस पासवर्ड स्टिकर पर दिए गए होते हैं);
+- "Check for updates" बटन पर क्लिक करें और RouterOS को नवीनतम संस्करण में अपडेट करें;
 - डिवाइस को मैन्युअल रूप से अपडेट करने के लिए mikrotik.com पर जाएँ, अपना मॉडल चुनें और आवश्यक पैकेजों को "Downloads" सेक्शन में ढूँढें;
 - डाउनलोड किए गए पैकेजों को WebFig या WinBox के “Files” मेनू में अपलोड करें और डिवाइस को रिबूट करें;
 - अपने RouterOS सॉफ़्टवेयर को नवीनतम संस्करण में अपग्रेड करके प्रदर्शन, स्थिरता और सुरक्षा अद्यतनों को सुनिश्चित करें;
@@ -589,8 +610,9 @@ Proizvođač: Mikrotikls SIA, Ūnijas 2, Riga, Latvija, LV1039.
 :::warning
 Ezt az eszközt frissíteni kell a RouterOS v7.9-ra vagy a legújabb verzióra, hogy biztosítsák a helyi hatóságok előírásainak való megfelelést.
 A végfelhasználók felelőssége a helyi országos előírások betartása. Az összes MikroTik készüléknek lennie kell szakszerűen telepítve.
-Ez a gyors útmutató a következőre vonatkozik: CCR2004-1G-12S+2XS.
 :::
+
+Ez a gyors útmutató a következőre vonatkozik: CCR2004-1G-12S+2XS.
 
 *Ez hálózati eszköz. A terméktípus nevét a tok címkéjén (ID) találhatja meg.*
 *Kérjük, keresse fel a használati útmutatót a [https://mt.lv/um-hu](https://mt.lv/um-hu) oldalon a teljes, legfrissebb használati útmutatóért. Vagy beolvashatja a QR-kódot mobiltelefonjával.*
@@ -608,6 +630,7 @@ Ez a gyors útmutató a következőre vonatkozik: CCR2004-1G-12S+2XS.
 - Konfigurálja hálózati kártyája IP beállításait 192.168.88.2/24-re;
 - Használja a WebFig-et webböngészőben vagy a "WinBox” konfigurációs eszközt [https://mt.lv/winbox](https://mt.lv/winbox); **számos konfigurációs módszer áll rendelkezésre az akadálymentesség biztosításához;**
 - Nyissa meg a http://192.168.88.1 címet egy webböngészőben a beállítás elindításához. Ha az IP cím nem elérhető, használja a WinBoxot, és válassza ki a "Neighbors" fület az eszköz megtalálásához. Folytassa a csatlakozást a MAC cím használatával. A felhasználónév "admin", és nincs jelszó (vagy, néhány modell esetén, ellenőrizze a felhasználói és vezeték nélküli jelszavakat a matricán);
+- Kattintson az "Check for updates" gombra, és frissítse a RouterOS-t a legújabb verzióra;
 - Az eszköz kézi frissítéséhez látogasson el a mikrotik.com oldalra, válassza ki a modelljét, és találja meg a szükséges csomagokat a "Downloads" részben;
 - Töltse fel a letöltött csomagokat a WebFig vagy WinBox "Files" menübe, majd indítsa újra az eszközt;
 - Az RouterOS szoftver frissítésével a legújabb verzióra biztosíthatja az optimális teljesítményt, stabilitást és biztonsági frissítéseket;
@@ -636,8 +659,9 @@ Gyártó: Mikrotikls SIA, Ūnijas 2, Riga, Lettország, LV1039.
 :::warning
 Perangkat ini harus diperbarui ke RouterOS v7.9 atau versi terbaru untuk memastikan kepatuhan terhadap peraturan pemerintah setempat.
 Merupakan tanggung jawab pengguna akhir untuk mengikuti peraturan setempat setempat. Semua perangkat MikroTik harus diinstal secara profesional.
-Panduan memulai cepat ini mencakup model: CCR2004-1G-12S+2XS.
 :::
+
+Panduan memulai cepat ini mencakup model: CCR2004-1G-12S+2XS.
 
 *Ini adalah perangkat jaringan. Anda dapat menemukan nama model produk Anda pada label casing (ID).*
 *Silakan kunjungi halaman panduan pengguna di [https://mt.lv/um-id](https://mt.lv/um-id) untuk panduan pengguna yang diperbarui sepenuhnya. Atau pindai kode QR dengan ponsel Anda.*
@@ -655,6 +679,7 @@ Panduan memulai cepat ini mencakup model: CCR2004-1G-12S+2XS.
 - Konfigurasikan pengaturan IP kartu jaringan Anda ke 192.168.88.2/24;
 - Gunakan WebFig di peramban web atau alat konfigurasi "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **berbagai metode konfigurasi tersedia untuk memastikan aksesibilitas;**
 - Buka http://192.168.88.1 di browser web untuk memulai pengaturan. Jika alamat IP tidak tersedia, gunakan WinBox dan pilih tab "Neighbors" untuk menemukan perangkat. Lanjutkan untuk terhubung menggunakan alamat MAC. Nama penggunanya adalah "admin", dan tidak ada kata sandi (atau, untuk beberapa model, periksa kata sandi pengguna dan nirkabel pada stiker);
+- Klik tombol "Check for updates" dan perbarui RouterOS ke versi terbaru;
 - Untuk pembaruan manual perangkat, kunjungi mikrotik.com, pilih model Anda, dan temukan paket yang diperlukan di bagian "Downloads";
 - Unggah paket yang diunduh ke menu "File" WebFig atau WinBox dan reboot perangkat;
 - Dengan mengupgrade perangkat lunak RouterOS Anda ke versi terbaru, Anda dapat memastikan kinerja, stabilitas, dan pembaruan keamanan yang optimal;
@@ -683,8 +708,9 @@ Pabrikan: Mikrotikls SIA, Ūnijas 2, Riga, Latvia, LV1039.
 :::warning
 Questo dispositivo deve essere aggiornato a RouterOS v7.9 o alla versione più recente per garantire la conformità alle normative delle autorità locali.
 È responsabilità dell'utente finale seguire le normative locali locali. Tutti i dispositivi MikroTik devono essere installato professionalmente.
-Questa guida rapida copre il modello: CCR2004-1G-12S+2XS.
 :::
+
+Questa guida rapida copre il modello: CCR2004-1G-12S+2XS.
 
 *Questo è il dispositivo di rete. È possibile trovare il nome del modello del prodotto sull'etichetta della custodia (ID).*
 *Visitare la pagina del manuale dell'utente su [https://mt.lv/um-it](https://mt.lv/um-it) per il manuale utente completamente aggiornato. Oppure scansiona il codice QR con il tuo cellulare.*
@@ -702,6 +728,7 @@ Questa guida rapida copre il modello: CCR2004-1G-12S+2XS.
 - Configura le impostazioni IP della tua scheda di rete a 192.168.88.2/24;
 - Utilizzare WebFig in un browser web oppure lo strumento di configurazione "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **sono disponibili diversi metodi di configurazione per garantire l’accessibilità;**
 - Apri http://192.168.88.1 in un browser web per avviare la configurazione. Se l'indirizzo IP non è disponibile, utilizza WinBox e scegli la scheda "Neighbors" per trovare il dispositivo. Prosegui con la connessione utilizzando l'indirizzo MAC. Il nome utente è "admin", e non c'è una password (o, per alcuni modelli, controlla gli utenti e le password wireless sull'etichetta);
+- Fai clic sul pulsante "Check for updates" e aggiorna RouterOS all'ultima versione;
 - Per aggiornare manualmente il dispositivo, visitare mikrotik.com, selezionare il modello e individuare i pacchetti necessari nella sezione "Downloads";
 - Carica i pacchetti scaricati nel menu "Files" di WebFig o WinBox e riavvia il dispositivo;
 - Aggiornando il software RouterOS alla versione più recente, puoi garantire prestazioni ottimali, stabilità e aggiornamenti di sicurezza;
@@ -730,9 +757,9 @@ Produttore: Mikrotikls SIA, Ūnijas 2, Riga, Lettonia, LV1039.
 :::warning
 Það þarf að uppfæra þetta tæki í RouterOS v7.9 eða nýjustu útgáfuna til að tryggja samræmi við reglugerðir sveitarfélaga.
 Það er ábyrgð notendanna að fylgja reglugerðum á staðnum. Öll MikroTik tæki verða að vera fagmannlega sett upp.
+:::
 
 Þessi snögga leiðbeining nær yfir gerðina: CCR2004-1G-12S+2XS.
-:::
 
 *Þetta er net tæki. Þú getur fundið heiti vörulíkansins á merkimiðanum (ID).*
 *Vinsamlegast farðu á notendahandbókarsíðuna á [https://mt.lv/um-is](https://mt.lv/um-is) fyrir allar uppfærðar notendahandbækur. Eða skannaðu QR kóða með farsímanum þínum.*
@@ -750,6 +777,7 @@ Produttore: Mikrotikls SIA, Ūnijas 2, Riga, Lettonia, LV1039.
 - Stilla IP stillingar netkortsins þíns á 192.168.88.2/24;
 - Notið WebFig í vefvafra eða uppsetningartól "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **margar stillingaraðferðir eru í boði til að tryggja aðgengi;**
 - Opnaðu http://192.168.88.1 í vefskoðara til að byrja uppsetningu. Ef IP heimilið er ekki tiltækt, notaðu WinBox og veljaðu "Neighbors" flipann til að finna tækið. Halda áfram með að tengjast með MAC heimilisfangi. Notandanafnið er "admin", og engin lykilorð er (eða, fyrir sumar módel, athugaðu notandanöfn og þráðlausa lykilorð á merki);
+- Smelltu á "Check for updates" hnappinn og uppfærðu RouterOS á nýjustu útgáfu;
 - Til að uppfæra tækið handvirkt, farðu á mikrotik.com, veldu módelið þitt og finndu nauðsynlegu pakkana í kaflanum "Downloads";
 - Hlaða niður pökkum á WebFig eða WinBox "Files" valmynd og endurræsa tækið;
 - Með því að uppfæra RouterOS hugbúnaðinn þinn í nýjustu útgáfu getur þú tryggjað bestu árangur, stöðugleika og öryggisuppfærslur;
@@ -780,6 +808,8 @@ Denne enheten må oppgraderes til RouterOS v7.9 eller den nyeste versjonen for �
 Det er sluttbrukernes ansvar å følge lokale lands forskrifter. Alle MikroTik-enheter må være profesjonelt installert.
 :::
 
+Denne hurtigveiledningen dekker modellen: CCR2004-1G-12S+2XS.
+
 *Dette er nettverksenhet. Du kan finne produktmodellnavnet på etiketten (ID).*
 *Vennligst besøk bruksanvisningen på [https://mt.lv/um-no](https://mt.lv/um-no) for den fulle oppdaterte bruksanvisningen. Eller skann QR-koden med mobiltelefonen din.*
 *De viktigste tekniske spesifikasjonene for dette produktet finner du på siste side i denne hurtigveiledningen.*
@@ -796,6 +826,7 @@ Det er sluttbrukernes ansvar å følge lokale lands forskrifter. Alle MikroTik-e
 - Konfigurer IP-innstillingene på nettverkskortet ditt til 192.168.88.2/24;
 - Bruk WebFig i en nettleser eller konfigurasjonsverktøyet "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **flere konfigurasjonsmetoder er tilgjengelige for å sikre tilgjengelighet;**
 - Åpne http://192.168.88.1 i en nettleser for å starte oppsettet. Hvis IP-adressen ikke er tilgjengelig, bruk WinBox og velg "Neighbors"-fanen for å finne enheten. Fortsett å koble til ved hjelp av MAC-adressen. Brukernavnet er "admin", og det er ingen passord (eller, for noen modeller, sjekk bruker- og trådløse passord på etiketten);
+- Klikk på knappen "Check for updates" og oppdater RouterOS til den nyeste versjonen;
 - For manuell oppdatering av enheten, gå til mikrotik.com, velg modellen din og finn de nødvendige pakkene i seksjonen "Downloads";
 - Last opp nedlastede pakker til WebFig eller WinBox "Files"-menyen og start enheten på nytt;
 - Ved å oppgradere RouterOS-programvaren til den nyeste versjonen, kan du sikre optimal ytelse, stabilitet og sikkerhetsoppdateringer;
@@ -824,8 +855,9 @@ Produsent: Mikrotikls SIA, Ūnijas 2, Riga, Latvia, LV1039.
 :::warning
 Šį įrenginį reikia atnaujinti į „RouterOS v7.9“ arba naujausią versiją, kad būtų užtikrinta atitiktis vietinės valdžios nuostatoms.
 Galutiniai vartotojai yra atsakingi už vietinių šalies įstatymų laikymąsi. Visi „MikroTik“ prietaisai turi būti profesionaliai sumontuota.
-Šis trumpasis vadovas apima modelį: CCR2004-1G-12S+2XS.
 :::
+
+Šis trumpasis vadovas apima modelį: CCR2004-1G-12S+2XS.
 
 *Tai yra tinklo įrenginys. Produkto modelio pavadinimą galite rasti dėklo etiketėje (ID).*
 *Norėdami gauti išsamesnį vartotojo vadovą, apsilankykite vartotojo vadovo puslapyje [https://mt.lv/um-lt](https://mt.lv/um-lt). Arba nuskaitykite QR kodą savo mobiliuoju telefonu.*
@@ -843,6 +875,7 @@ Galutiniai vartotojai yra atsakingi už vietinių šalies įstatymų laikymąsi.
 - Sukonfigūruokite savo tinklo plokštės IP nustatymus į 192.168.88.2/24;
 - Naudokite WebFig naršyklėje arba konfigūravimo įrankį "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **galimi keli konfigūravimo metodai prieinamumui užtikrinti;**
 - Atidarykite http://192.168.88.1 naršyklėje, norėdami pradėti sąranką. Jei IP adresas nepasiekiamas, naudokite WinBox ir pasirinkite "Neighbors" skirtuką, kad rastumėte įrenginį. Tęskite prisijungdami naudodami MAC adresą. Vartotojo vardas yra "admin", o slaptažodžio nėra (arba, kai kuriems modeliams, patikrinkite vartotojo ir belaidžio slaptažodžius ant lipduko);
+- Spustelėkite "Check for updates" mygtuką ir atnaujinkite RouterOS į naujausią versiją;
 - Norėdami rankiniu būdu atnaujinti įrenginį, eikite į mikrotik.com, pasirinkite savo modelį ir raskite reikalingus paketus skiltyje "Downloads";
 - Įkraukite atsisiųstus paketus į WebFig arba WinBox "Files" meniu ir paleiskite įrenginį iš naujo;
 - Atnaujindami savo RouterOS programinę įrangą iki naujausios versijos, galite užtikrinti optimalų našumą, stabilumą ir saugumo atnaujinimus;
@@ -871,8 +904,9 @@ Gamintojas: Mikrotikls SIA, Ūnijas 2, Ryga, Latvija, LV1039.
 :::warning
 Šīs ierīces programmatūra ir jāatjaunina uz RouterOS v7.9 vai jaunāku versiju, lai nodrošinātu atbilstību vietējās likumdošanas noteikumiem.
 Gala lietotāju pienākums ir ievērot vietējos valsts normatīvus. Visām MikroTik ierīcēm jābūt profesionāli uzstādītām.
-Šī īsā rokasgrāmata attiecas uz modeli: CCR2004-1G-12S+2XS.
 :::
+
+Šī īsā rokasgrāmata attiecas uz modeli: CCR2004-1G-12S+2XS.
 
 *Šī ir tīkla ierīce. Produkta modeļa nosaukumu varat atrast uz produkta iepakojuma (ID).*
 *Lūdzu, apmeklējiet lietotāja rokasgrāmatas lapu [https://mt.lv/um-lv](https://mt.lv/um-lv), lai iegūtu pilnīgu un atjauninātu lietotāja rokasgrāmatu. Vai arī skenējiet QR kodu ar savu mobilo tālruni.*
@@ -890,6 +924,7 @@ Gala lietotāju pienākums ir ievērot vietējos valsts normatīvus. Visām Mikr
 - Konfigurējiet savas tīkla kartes IP iestatījumus uz 192.168.88.2/24;
 - Izmantojiet WebFig tīmekļa pārlūkā vai konfigurācijas rīku "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **vairāki konfigurēšanas veidi ir pieejami piekļūstamības nodrošināšanai;**
 - Atveriet http://192.168.88.1 tīmekļa pārlūkprogrammā, lai sāktu iestatīšanu. Ja IP adrese nav pieejama, izmantojiet WinBox un atlasiet cilni "Neighbors", lai atrastu ierīci. Turpiniet savienojumu, izmantojot MAC adresi. Lietotājvārds ir "admin", un nav parole (vai, dažiem modeļiem, pārbaudiet lietotāja un bezvadu paroles uz līmplēves);
+- Noklikšķiniet uz pogas "Check for updates" un atjaunojiet RouterOS līdz jaunākajai versijai;
 - Lai manuāli atjauninātu ierīci, apmeklējiet mikrotik.com, izvēlieties savu modeli un atrodiet nepieciešamās pakotnes sadaļā "Downloads";
 - Augšupielādējiet lejupielādētās pakotnes uz WebFig vai WinBox "Files" izvēlni un pārstartējiet ierīci;
 - Jauninot savu RouterOS programmatūru līdz jaunākajai versijai, varat nodrošināt optimālu veiktspēju, stabilitāti un drošības atjauninājumus;
@@ -918,9 +953,9 @@ Ražotājs: Mikrotikls SIA, Ūnijas 2, Rīga, Latvija, LV1039.
 :::warning
 Dan l-apparat jeħtieġ li jiġi aġġornat għal RouterOS v7.9 jew l-aħħar verżjoni biex tkun assigurata l-konformità mar-regolamenti tal-awtorità lokali.
 Hija r-responsabbiltà tal-utenti finali li jsegwu r-regolamenti lokali tal-pajjiż. L-apparati kollha MikroTik iridu jkunu installati professjonalment.
+:::
 
 Din il-Gwida Quick tkopri l-mudell: CCR2004-1G-12S+2XS.
-:::
 
 *Dan huwa apparat tan-netwerk. Tista 'ssib l-isem tal-mudell tal-prodott fuq it-tikketta tal-każ (ID).*
 *Jekk jogħġbok żur il-paġna manwal tal-utent fuq [https://mt.lv/um-mt](https://mt.lv/um-mt) għall-manwal aġġornat tal-utent. Jew skennja l-kodiċi QR bit-telefon ċellulari tiegħek.*
@@ -938,6 +973,7 @@ Din il-Gwida Quick tkopri l-mudell: CCR2004-1G-12S+2XS.
 - Ikkonfigurat is-settings IP tal-karta tan-netwerk tiegħek għal 192.168.88.2/24;
 - Uża WebFig f’web browser jew l-għodda ta’ konfigurazzjoni “WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **metodi multipli ta’ konfigurazzjoni huma disponibbli biex tiġi żgurata l-aċċessibbiltà;**
 - Agħlaq http://192.168.88.1 f'browser web biex tibda l-setup. Jekk l-indirizz IP mhux disponibbli, uża l-WinBox u għażel it-tab "Neighbors" biex tiskopri d-dispositiv. Kompli b'konnessjoni bl-użu tal-MAC address. Il-username huwa "admin", u m'hemmx password ( jew, għal xi mudelli, iċċekkja passwords tal-utent u tal-wi-fi fuq l-isticker);
+- Ikklikkja fuq il-buttuna "Check for updates" u aġġorna l-RouterOS għall-aħħar verżjoni;
 - Għal aġġornament manwali tal-apparat, żur mikrotik.com, agħżel il-mudell tiegħek u sib il-pakketti meħtieġa fis-sezzjoni "Downloads";
 - Uploadja tal-pakketti miżjuda fil-menu "Files" ta' WebFig jew WinBox u rerew boot l-apparat;
 - Billi tnaqqas il-software RouterOS tiegħek għall-aħħar verżjoni, tista' tażżura prestazzjoni ottimale, stabbiltà u aġġornamenti ta' sikurezza;
@@ -968,6 +1004,8 @@ Dit apparaat moet worden geüpgraded naar RouterOS v7.9 of de nieuwste versie om
 Het is de verantwoordelijkheid van de eindgebruiker om de lokale landelijke voorschriften. Alle MikroTik-apparatuur moet zijn professioneel geïnstalleerd.
 :::
 
+Deze beknopte handleiding behandelt het model: CCR2004-1G-12S+2XS.
+
 *Dit is een netwerkapparaat. U kunt de naam van het productmodel vinden op het etiket van de behuizing (ID).*
 *Ga naar de gebruikerspagina op [https://mt.lv/um-nl](https://mt.lv/um-nl) voor de volledige bijgewerkte gebruikershandleiding. Of scan de QR-code met uw mobiele telefoon.*
 *De belangrijkste technische specificaties voor dit product vindt u op de laatste pagina van deze Quick Guide.*
@@ -984,6 +1022,7 @@ Het is de verantwoordelijkheid van de eindgebruiker om de lokale landelijke voor
 - Configureer de IP-instellingen van uw netwerkkaart naar 192.168.88.2/24;
 - Gebruik WebFig in een webbrowser of de configuratietool "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **er zijn meerdere configuratiemethoden beschikbaar om toegankelijkheid te waarborgen;**
 - Open http://192.168.88.1 in een webbrowser om de installatie te starten. Als het IP-adres niet beschikbaar is, gebruik dan WinBox en kies het tabblad "Neighbors" om het apparaat te vinden. Ga verder met verbinden via het MAC-adres. De gebruikersnaam is "admin" en er is geen wachtwoord (of, voor sommige modellen, controleer gebruikers- en draadloze wachtwoorden op de sticker);
+- Klik op de knop "Check for updates" en update RouterOS naar de nieuwste versie;
 - Voor een handmatige update van het apparaat, ga naar mikrotik.com, selecteer uw model en vind de benodigde pakketten in de sectie "Downloads";
 - Upload gedownloade pakketten naar het WebFig- of WinBox-"Files"-menu en herstart het apparaat;
 - Door uw RouterOS-software bij te werken naar de nieuwste versie, kunt u optimale prestaties, stabiliteit en beveiligingsupdates garanderen;
@@ -1012,8 +1051,9 @@ Fabrikant: Mikrotikls SIA, Ūnijas 2, Riga, Letland, LV1039.
 :::warning
 To urządzenie musi zostać zaktualizowane do wersji RouterOS v7.9 lub najnowszej wersji, aby zapewnić zgodność z przepisami władz lokalnych.
 Użytkownicy końcowi są zobowiązani do przestrzegania lokalnych przepisów krajowych. Wszystkie urządzenia MikroTik muszą być profesjonalnie zainstalowany.
-Niniejszy Krótki przewodnik obejmuje model: CCR2004-1G-12S+2XS.
 :::
+
+Niniejszy Krótki przewodnik obejmuje model: CCR2004-1G-12S+2XS.
 
 *To jest urządzenie sieciowe. Nazwę modelu produktu można znaleźć na etykiecie skrzynki (ID).*
 *Odwiedź stronę instrukcji użytkownika na [https://mt.lv/um-pl](https://mt.lv/um-pl), aby uzyskać pełną aktualną instrukcję obsługi. Lub zeskanuj kod QR za pomocą telefonu komórkowego.*
@@ -1031,6 +1071,7 @@ Niniejszy Krótki przewodnik obejmuje model: CCR2004-1G-12S+2XS.
 - Skonfiguruj ustawienia IP karty sieciowej na 192.168.88.2/24;
 - Użyj WebFig w przeglądarce internetowej lub narzędzia konfiguracyjnego "WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **dostępnych jest wiele metod konfiguracji w celu zapewnienia dostępności;**
 - Otwórz http://192.168.88.1 w przeglądarce internetowej, aby rozpocząć konfigurację. Jeśli adres IP jest niedostępny, użyj WinBox i wybierz zakładkę "Neighbors", aby znaleźć urządzenie. Kontynuuj łączenie za pomocą adresu MAC. Nazwa użytkownika to "admin", a hasła nie ma (lub, dla niektórych modeli, sprawdź nazwy użytkowników i hasła bezprzewodowe na naklejce);
+- Kliknij przycisk "Check for updates" i zaktualizuj RouterOS do najnowszej wersji;
 - Aby ręcznie zaktualizować urządzenie, odwiedź mikrotik.com, wybierz swój model i znajdź wymagane pakiety w sekcji "Downloads";
 - Prześlij pobrane paczki do menu "Files" WebFig lub WinBox i zrestartuj urządzenie;
 - Aktualizując oprogramowanie RouterOS do najnowszej wersji, zapewnisz optymalną wydajność, stabilność i aktualizacje zabezpieczeń;
@@ -1059,8 +1100,9 @@ Producent: Mikrotikls SIA, Ūnijas 2, Riga, Łotwa, LV1039.
 :::warning
 Este dispositivo precisa ser atualizado para o RouterOS v7.9 ou a versão mais recente para garantir a conformidade com os regulamentos das autoridades locais.
 É responsabilidade do usuário final seguir as regulamentações locais do país. Todos os dispositivos MikroTik devem ser instalado profissionalmente.
-Este Guia Rápido cobre o modelo: CCR2004-1G-12S+2XS.
 :::
+
+Este Guia Rápido cobre o modelo: CCR2004-1G-12S+2XS.
 
 *Este é o dispositivo de rede. Você pode encontrar o nome do modelo do produto no rótulo da caixa (ID).*
 *Visite a página do manual do usuário em [https://mt.lv/um-pt](https://mt.lv/um-pt) para obter o manual do usuário completo e atualizado. Ou digitalize o código QR com seu telefone celular.*
@@ -1078,6 +1120,7 @@ Este Guia Rápido cobre o modelo: CCR2004-1G-12S+2XS.
 - Configure as definições de IP do seu cartão de rede para 192.168.88.2/24;
 - Use o WebFig num navegador ou a ferramenta de configuração "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **estão disponíveis vários métodos de configuração para garantir a acessibilidade;**
 - Abra http://192.168.88.1 num navegador web para iniciar a configuração. Se o endereço IP não estiver disponível, utilize o WinBox e escolha a aba "Neighbors" para encontrar o dispositivo. Prossiga para conectar usando o endereço MAC. O nome de usuário é "admin", e não há senha (ou, para alguns modelos, verifique os nomes de usuário e senhas sem fio no adesivo);
+- Clique no botão "Check for updates" e atualize o RouterOS para a versão mais recente;
 - Para atualizar manualmente o dispositivo, visite mikrotik.com, selecione o seu modelo e localize os pacotes necessários na seção "Downloads";
 - Faça o upload dos pacotes baixados para o menu "Files" do WebFig ou WinBox e reinicie o dispositivo;
 - Ao atualizar o software do RouterOS para a versão mais recente, você pode garantir um desempenho, estabilidade e atualizações de segurança ótimos;
@@ -1106,8 +1149,9 @@ Fabricante: Mikrotikls SIA, Ūnijas 2, Riga, Letônia, LV1039.
 :::warning
 Acest dispozitiv trebuie actualizat la RouterOS v7.9 sau cea mai recentă versiune pentru a asigura respectarea reglementărilor autorității locale.
 Este responsabilitatea utilizatorilor finali să urmeze reglementările locale ale țării. Toate dispozitivele MikroTik trebuie să fie instalat profesional.
-Acest Ghid rapid acoperă modelul: CCR2004-1G-12S+2XS.
 :::
+
+Acest Ghid rapid acoperă modelul: CCR2004-1G-12S+2XS.
 
 *Acesta este dispozitivul de rețea. Puteți găsi numele modelului produsului pe eticheta carcasei (ID).*
 *Vă rugăm să vizitați pagina manualului utilizatorului de pe [https://mt.lv/um-ro](https://mt.lv/um-ro) pentru manualul complet actualizat. Sau scanează codul QR cu telefonul tău mobil.*
@@ -1125,6 +1169,7 @@ Acest Ghid rapid acoperă modelul: CCR2004-1G-12S+2XS.
 - Configurați setările IP ale plăcii de rețea la 192.168.88.2/24;
 - Utilizați WebFig într-un browser web sau instrumentul de configurare "WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **sunt disponibile mai multe metode de configurare pentru a asigura accesibilitatea;**
 - Deschideți http://192.168.88.1 într-un browser web pentru a începe configurarea. Dacă adresa IP nu este disponibilă, utilizați WinBox și alegeți fila "Neighbors" pentru a găsi dispozitivul. Continuați conectarea folosind adresa MAC. Numele de utilizator este "admin", și nu există parolă (sau, pentru unele modele, verificați utilizatori și parole wireless pe autocolant);
+- Faceți clic pe butonul "Check for updates" și actualizați RouterOS la cea mai recentă versiune;
 - Pentru actualizarea manuală a dispozitivului, accesați mikrotik.com, selectați modelul dvs. și găsiți pachetele necesare în secțiunea "Downloads";
 - Încărcați pachetele descărcate în meniul "Files" al WebFig sau WinBox și reporniți dispozitivul;
 - Prin actualizarea software-ului RouterOS la cea mai recentă versiune, puteți asigura performanță optimă, stabilitate și actualizări de securitate;
@@ -1153,8 +1198,9 @@ Producător: Mikrotikls SIA, Ūnijas 2, Riga, Letonia, LV1039.
 :::warning
 Toto zariadenie musí byť aktualizované na RouterOS v7.9 alebo na najnovšiu verziu, aby sa zabezpečilo dodržiavanie predpisov miestnych úradov.
 Je na koncových užívateľoch, aby dodržiavali miestne predpisy krajiny. Všetky zariadenia MikroTik musia byť profesionálne nainštalovaný.
-Táto Stručná príručka sa týka modelu: CCR2004-1G-12S+2XS.
 :::
+
+Táto Stručná príručka sa týka modelu: CCR2004-1G-12S+2XS.
 
 *Toto je sieťové zariadenie. Názov modelu produktu nájdete na štítku prípadu (ID).*
 *Úplnú aktualizovanú používateľskú príručku nájdete nastránke používateľskej príručky na adrese [https://mt.lv/um-sk](https://mt.lv/um-sk). Alebo naskenujte QR kód pomocou mobilného telefónu.*
@@ -1172,6 +1218,7 @@ Táto Stručná príručka sa týka modelu: CCR2004-1G-12S+2XS.
 - Nakonfigurujte IP nastavenia vašej sieťovej karty na 192.168.88.2/24;
 - Použite WebFig v webovom prehliadači alebo konfiguračný nástroj "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **na zabezpečenie prístupnosti sú k dispozícii viaceré metódy konfigurácie;**
 - Otvorte http://192.168.88.1 vo webovom prehliadači pre začiatok nastavenia. Ak nie je k dispozícii IP adresa, použite WinBox a vyberte kartu "Neighbors" na nájdenie zariadenia. Pokračujte v pripájaní pomocou MAC adresy. Užívateľské meno je "admin", a nie je heslo (alebo, pre niektoré modely, skontrolujte užívateľské a heslá pre bezdrôtové pripojenie na štítku);
+- Kliknite na tlačidlo "Check for updates" a aktualizujte RouterOS na najnovšiu verziu;
 - Na manuálnu aktualizáciu zariadenia navštívte mikrotik.com, vyberte svoj model a nájdite požadované balíčky v sekcii "Downloads";
 - Nahrajte stiahnuté balíky do menu "Files" vo WebFig alebo WinBox a reštartujte zariadenie;
 - Aktualizáciou softvéru RouterOS na najnovšiu verziu môžete zabezpečiť optimálnu výkon, stabilitu a bezpečnostné aktualizácie;
@@ -1200,8 +1247,9 @@ Výrobca: Mikrotikls SIA, Ūnijas 2, Riga, Lotyšsko, LV1039.
 :::warning
 To napravo je treba nadgraditi na RouterOS v7.9 ali najnovejšo različico, da se zagotovi skladnost z lokalnimi predpisi.
 Končni uporabniki so odgovorni za sledenje lokalnim predpisom. Vse naprave MikroTik morajo biti strokovno nameščen.
-Ta hitri vodnik zajema model: CCR2004-1G-12S+2XS.
 :::
+
+Ta hitri vodnik zajema model: CCR2004-1G-12S+2XS.
 
 *To je omrežna naprava. Ime modela izdelka najdete na nalepki (ID).*
 *Za popoln posodobitev uporabniškega priročnika obiščite stran z navodili na strani [https://mt.lv/um-sl](https://mt.lv/um-sl). Ali pa skenirajte QR kodo s svojim mobilnim telefonom.*
@@ -1219,6 +1267,7 @@ Ta hitri vodnik zajema model: CCR2004-1G-12S+2XS.
 - Nastavite IP nastavitve svoje omrežne kartice na 192.168.88.2/24;
 - Uporabite WebFig v spletni brskalniku ali konfiguracijsko orodje "WinBox“ [https://mt.lv/winbox](https://mt.lv/winbox); **na voljo je več metod konfiguracije za zagotovitev dostopnosti;**
 - Odpri http://192.168.88.1 v spletnem brskalniku, da začneš nastavljanje. Če IP naslov ni na voljo, uporabi WinBox in izberi zavihek "Neighbors" za iskanje naprave. Nadaljuj s povezovanjem prek MAC naslova. Uporabniško ime je "admin", in ni gesla (ali, za nekatere modele, preveri uporabniška imena in gesla brezžične povezave na nalepki);
+- Kliknite na gumb "Check for updates" in posodobite RouterOS na najnovejšo različico;
 - Za ročno posodobitev naprave obiščite mikrotik.com, izberite svoj model in poiščite potrebne pakete v razdelku "Downloads";
 - Naložite prenesene pakete v meni "Files" WebFig ali WinBox in znova zaženite napravo;
 - Z nadgradnjo programske opreme RouterOS na najnovejšo različico zagotovite optimalno delovanje, stabilnost in varnostne posodobitve;
@@ -1249,6 +1298,8 @@ Den här enheten måste uppgraderas till RouterOS v7.9 eller den senaste version
 Det är slutanvändarnas ansvar att följa lokala landsregler. Alla MikroTik-enheter måste vara professionellt installerat.
 :::
 
+Detta dokument täcker modellen: CCR2004-1G-12S+2XS.
+
 *Det här är nätverksenhet. Du hittar produktmodellnamnet på etiketten (ID).*
 *Besök användarmanualsidan på [https://mt.lv/um-sv](https://mt.lv/um-sv) för en fullständig uppdaterad användarmanual. Eller skanna QR-koden med din mobiltelefon.*
 *De viktigaste tekniska specifikationerna för denna produkt finns på den sista sidan i denna snabbguide.*
@@ -1265,6 +1316,7 @@ Det är slutanvändarnas ansvar att följa lokala landsregler. Alla MikroTik-enh
 - Konfigurera IP-inställningarna för ditt nätverkskort till 192.168.88.2/24;
 - Använd WebFig i en webbläsare eller konfigurationsverktyget "WinBox" [https://mt.lv/winbox](https://mt.lv/winbox); **flera konfigurationsmetoder är tillgängliga för att säkerställa tillgänglighet;**
 - Öppna http://192.168.88.1 i en webbläsare för att starta inställningen. Om IP-adressen inte är tillgänglig, använd WinBox och välj fliken "Neighbors" för att hitta enheten. Fortsätt att ansluta med MAC-adressen. Användarnamnet är "admin", och det finns inget lösenord (eller, för vissa modeller, kontrollera användar- och trådlösa lösenord på klistermärket);
+- Klicka på knappen "Check for updates" och uppdatera RouterOS till den senaste versionen;
 - För manuell uppdatering av enheten, gå till mikrotik.com, välj din modell och hitta de nödvändiga paketen i avsnittet "Downloads";
 - Ladda upp nedladdade paket till WebFig eller WinBox "Files" -menyn och starta om enheten;
 - Genom att uppgradera din RouterOS-programvara till den senaste versionen kan du säkerställa optimal prestanda, stabilitet och säkerhetsuppdateringar;
@@ -1293,9 +1345,9 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 :::warning
 该设备需要升级到RouterOS v7.9或最新版本，以确保符合地方当局法规。
 最终用户有责任遵守当地的法规。所有 MikroTik 设备都必须经过专业安装。
+:::
 
 本快速指南介绍了以下型号：CCR2004-1G-12S+2XS。
-:::
 
 *这是网络设备。* *您可以在包装箱标签（ID）上找到产品型号名称。*
 *请访问[https://mt.lv/um-zh](https://mt.lv/um-zh) 上的用户手册页面，以获取最新的用户手册。 或使用手机扫描QR码。*
@@ -1313,6 +1365,7 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 - 配置您网络卡的IP设置为192.168.88.2/24;
 - 在网络浏览器中使用 WebFig 或使用“WinBox”配置工具 [https://mt.lv/winbox](https://mt.lv/winbox) **提供多种配置方法以确保可访问性；**
 - 在Web浏览器中打开http://192.168.88.1 以开始设置。如果IP地址不可用，请使用WinBox并选择“Neighbors”选项卡查找设备。通过MAC地址继续连接。用户名是“admin”，没有密码（或者对于某些型号，请检查贴纸上的用户和无线密码）;
+- 单击"Check for updates"按钮并将RouterOS更新到最新版本;
 - 要手动更新设备，请访问 mikrotik.com，选择您的型号，并在"Downloads"部分找到所需的软件包；
 - 将下载的软件包上传到WebFig或WinBox的“Files”菜单，并重新启动设备;
 - 通过将RouterOS软件升级到最新版本，您可以确保最佳性能、稳定性和安全更新;
@@ -1341,8 +1394,9 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 :::warning
 Это устройство должно быть обновлено до RouterOS v7.9 или до последней версии, чтобы обеспечить соответствие требованиям местных органов власти.
 Конечные пользователи несут ответственность за соблюдение местных нормативов. Все устройства MikroTik должны быть профессионально установлены.
-Это краткое руководство охватывает модель: CCR2004-1G-12S+2XS.
 :::
+
+Это краткое руководство охватывает модель: CCR2004-1G-12S+2XS.
 
 *Это сетевое устройство. Вы можете найти название модели продукта на ярлыке кейса (ID).*
 *Пожалуйста, посетите страницу руководства пользователя на [https://mt.lv/um-ru](https://mt.lv/um-ru), чтобы ознакомиться с полным актуальным руководством пользователя. Или отсканируйте QR-код с помощью мобильного телефона.*
@@ -1360,6 +1414,7 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 - Настройте IP-адрес вашей сетевой карты на 192.168.88.2/24;
 - Используйте WebFig в веб-браузере или инструмент настройки ”WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **доступно несколько методов настройки для обеспечения доступности;**
 - Откройте http://192.168.88.1 в веб-браузере, чтобы начать установку. Если IP-адрес недоступен, используйте WinBox и выберите вкладку "Neighbors", чтобы найти устройство. Продолжите подключение, используя MAC-адрес. Имя пользователя - "admin", и пароля нет (или, для некоторых моделей, проверьте имена пользователей и пароли Wi-Fi на наклейке);
+- Нажмите кнопку "Check for updates" и обновите RouterOS до последней версии;
 - Для ручного обновления устройства зайдите на mikrotik.com, выберите свою модель и найдите необходимые пакеты в разделе "Downloads";
 - Загрузите скачанные пакеты в меню "Files" WebFig или WinBox и перезагрузите устройство;
 - Обновив программное обеспечение RouterOS до последней версии, вы можете обеспечить оптимальную производительность, стабильность и обновления безопасности;
@@ -1437,8 +1492,9 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 :::warning
 Цей пристрій потрібно оновити до RouterOS v7.9 або останньої версії, щоб забезпечити відповідність місцевим нормам влади!
 Кінцеві користувачі несуть відповідальність за дотримання місцевих правил. Усі пристрої MikroTik повинні бути встановлені відповідно до інструкцій.
-Цей короткий посібник стосується моделі: CCR2004-1G-12S+2XS.
 :::
+
+Цей короткий посібник стосується моделі: CCR2004-1G-12S+2XS.
 
 *Це мережевий пристрій. Ви можете знайти назву моделі продукту на етикетці корпусу (ID).*
 *Будь ласка, відвідайте сторінку посібника користувача на [https://mt.lv/um-ua](https://mt.lv/um-ua) для повної оновленої версії посібника користувача. Або скануйте QR-код за допомогою мобільного телефону.*
@@ -1456,6 +1512,7 @@ Tillverkare: Mikrotikls SIA, Ūnijas 2, Riga, Lettland, LV1039.
 - Налаштуйте IP-адресу вашої мережевої карти на 192.168.88.2/24;
 - Використовуйте WebFig у веб-браузері або інструмент конфігурації ”WinBox” [https://mt.lv/winbox](https://mt.lv/winbox); **доступно декілька методів налаштування для забезпечення доступності;**
 - Відкрийте веб-браузер і перейдіть за адресою http://192.168.88.1 для початку налаштувань. У випадку відсутності IP-адреси скористайтеся WinBox та оберіть вкладку "Neighbors", щоб знайти пристрій. Продовжте підключення за допомогою MAC-адреси. Ім'я користувача - "admin", і відсутній пароль (або, для деяких моделей, перевірте імена користувачів та паролі Wi-Fi на наклейці);
+- Натисніть кнопку "Check for updates" і оновіть RouterOS до останньої версії;
 - Щоб оновити пристрій вручну, відвідайте сторінку продуктів за адресою mikrotik.com, виберіть свою модель і знайдіть потрібні пакети в розділі "Downloads";
 - Завантажте завантажені пакети в меню "Files" WebFig або WinBox та перезавантажте пристрій;
 - Оновивши програмне забезпечення RouterOS до останньої версії, ви можете забезпечити оптимальну продуктивність, стабільність та оновлення безпеки;

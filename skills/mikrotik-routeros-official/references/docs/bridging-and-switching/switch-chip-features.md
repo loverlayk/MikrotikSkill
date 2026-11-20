@@ -24,10 +24,11 @@ Cloud Router Switch (CRS) series devices have highly advanced switch chips built
 | Atheros7240 | ✓ | ✓ | ✓ | ✗ | up to 2K | 16 | ✗ |
 | ICPlus175D | ✓ | ✓ | ✗ | ✗ | up to 2K | ✗ | ✗ |
 | IPQ-PPE | ✓ | ✗ | ✗ | ✗ | up to 2K | ✗ | ✗ |
-| PIPE 98PX1012, QCA8386 | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| PIPE 98PX1012 | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| QCA8386 | ✓ | ✓ | ✗ | ✗ | up to 2K | via bridge² | up to 96 rules |
 
 1. For RTL8367, 88E6393X, 88E6191X, 88E6190, MT7621, MT7531 and EN7523 Tx/Rx rate limit can be changed with `egress-rate` and `ingress-rate` properties on `/interface/ethernet/switch/port` menu. For QCA8337, Atheros8327, Atheros8316, Atheros8227, and Atheros7240 the Tx/Rx rate limits can be changed with the `bandwidth` property on the `/interface/ethernet` menu, see more details in the [Ethernet manual](../wired-connections/ethernet.md).
-2. For 88E6393X, 88E6191X, 88E6190, MT7621, MT7531, EN7523, RTL8367 switch chips, the VLAN table is configured through [bridge HW vlan-filtering](index.md#bridge-vlan-filtering) using the `/interface/bridge` menu. For other switches with VLAN table support, see [VLAN Table](./switch-chip-features.md#vlan-table) and configure the VLAN table using the `/interface/ethernet/switch/vlan` menu.
+2. For 88E6393X, 88E6191X, 88E6190, MT7621, MT7531, EN7523, RTL8367, QCA8386 switch chips, the VLAN table is configured through [bridge HW vlan-filtering](index.md#bridge-vlan-filtering) using the `/interface/bridge` menu. For other switches with VLAN table support, see [VLAN Table](./switch-chip-features.md#vlan-table) and configure the VLAN table using the `/interface/ethernet/switch/vlan` menu.
 
 | RouterBoard | Switch-chip description |
 | :-- | :-- |

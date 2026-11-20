@@ -1,5 +1,5 @@
 {
-  "index_sha256": "73a6577c1673ea34e6f67707f0754243e638401a9499eeb7f5b425aa402c9191",
+  "index_sha256": "3b8bc4d51dced49433aafa7a5215129ed7aaa5d8bac4e151e83335c0c0eeb2ff",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -161,13 +161,13 @@
       "title": "Configuration Management",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management.md",
       "path": "docs/getting-started/configuration-management.md",
-      "sha256": "feec985c25e32d7eef6af58292ecc0a2ddb2bbbf9c346f5713ce725c9fd02f72"
+      "sha256": "fb28142f83aea5653489877a2c6704312e0975df6ebae6b25725bea88e61ed12"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/backup.md": {
       "title": "Backup",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/backup.md",
       "path": "docs/getting-started/configuration-management/backup.md",
-      "sha256": "35543b82e148e69460c337a94dd70599e1bfb73b339b030de33e59cc1210538d"
+      "sha256": "8a4092bb7dec9e06992d7008c8d931af0424b47882746c8be89de19f809c3e50"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/default-configuration-passwords.md": {
       "title": "Default Configuration Passwords",
@@ -185,7 +185,7 @@
       "title": "List of menus with sensitive parameters",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
       "path": "docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
-      "sha256": "5a5131025774db4b43e17d17e1f564fdf799c3330af1e73ce0f0292beb0c1269"
+      "sha256": "a5fda2f9ce3e99708a25865efa93979aefa4767a4cb9734bb5e4624cf2015c45"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/routeros-configuration-reset.md": {
       "title": "RouterOS configuration reset",
@@ -281,7 +281,7 @@
       "title": "Console",
       "markdown_url": "https://manual.mikrotik.com/docs/management-tools/console.md",
       "path": "docs/management-tools/console.md",
-      "sha256": "55964efcaf7112b15890664e0b2266ba9b908f7f0bf9bfa7ea1ec98c6cfc4a6a"
+      "sha256": "b4f58eb08f8e53f626c8e7bc5f0c07e082c3c8b83142c601ec19c9b99684ad6d"
     },
     "https://manual.mikrotik.com/docs/management-tools/serial-console.md": {
       "title": "Serial Console",
@@ -983,7 +983,7 @@
       "title": "Bridging and Switching",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching.md",
       "path": "docs/bridging-and-switching.md",
-      "sha256": "20183448ce31614483763cd41f69304cb818db41e653f9a769cadcb993ccda7a"
+      "sha256": "535ff01712870c57b3a034d802e233780b14b1e189c3d541c6b187659d7db152"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/marvell-prestera-switch-chip-features.md": {
       "title": "Marvell Prestera switch chip features",
@@ -995,7 +995,7 @@
       "title": "L3 Hardware Offloading",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/l3-hardware-offloading.md",
       "path": "docs/bridging-and-switching/l3-hardware-offloading.md",
-      "sha256": "7516a33c6b797751af1898d3323826ab10f60e2fba51fd22d831e590e12ccd8d"
+      "sha256": "eb44dcf0c008dd4b51c571c82bb20f03032c9c03a9a036f3efa58b6412653cf7"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md": {
       "title": "Quality of Service",
@@ -1007,7 +1007,7 @@
       "title": "MACsec",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/macsec.md",
       "path": "docs/bridging-and-switching/macsec.md",
-      "sha256": "f261ba4fa85efb3451700d80b3b3ae35564ba38af5ed6715277a790c3527a0a4"
+      "sha256": "a26eb6d2613a3c12df6e06aff0ca79cdf215d171688785ee8439e3aeb6c655a3"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/macvlan.md": {
       "title": "MACVLAN",
@@ -1019,13 +1019,13 @@
       "title": "VXLAN",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/vxlan.md",
       "path": "docs/bridging-and-switching/vxlan.md",
-      "sha256": "ae2e8d9d61eff5a040774cb8cdb32522ce1d1686997f8a7f55ba17ffc64f7541"
+      "sha256": "b7c6bb57d3290b912f87f40044b5a8f259eff0fe832bcecaa34884a933364e1c"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/switch-chip-features.md": {
       "title": "Switch Chip Features",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/switch-chip-features.md",
       "path": "docs/bridging-and-switching/switch-chip-features.md",
-      "sha256": "50bafc241d023623200ffb5483c0b4e7349c095f13fee62614b69bdd2c782a36"
+      "sha256": "7922ce54d6d385c8ab8c1380e5c8ad72191f28e8074890151c333827469a4c10"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/vlan.md": {
       "title": "VLAN",
@@ -1475,7 +1475,7 @@
       "title": "Address lists",
       "markdown_url": "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/address-lists.md",
       "path": "docs/firewall-and-quality-of-service/firewall/address-lists.md",
-      "sha256": "a9883ddfaab1b80a887e79a72391fabbd9fbfcfba396e148e80a7035a4bac068"
+      "sha256": "a7bceeae3dff8d875bc11a49debcef21e28d0b621338d32dcfeda50f80ced0e6"
     },
     "https://manual.mikrotik.com/docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md": {
       "title": "Common Firewall Matchers and Actions",
@@ -1775,7 +1775,7 @@
       "title": "AAA and User Management",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting.md",
       "path": "docs/authentication-authorization-accounting.md",
-      "sha256": "b1b3b2b2ba6fc71bcb49e0d1c24157cfe108e23cfe340b63ca168d8be1a1399d"
+      "sha256": "1369d69874649732ffb2728e02e6d65639c9441494f637c5f4867aa50eb19aab"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/certificates.md": {
       "title": "Certificates",
@@ -1787,7 +1787,7 @@
       "title": "Dot1X",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/dot1x.md",
       "path": "docs/authentication-authorization-accounting/dot1x.md",
-      "sha256": "1cc1fd3126fa554194c6cd6bb782170e9ad886ca3f07f48e6855429e3622bfde"
+      "sha256": "05f46e78e5dd008d01f0840a5055c6b9590107cb19b6fd062f5b68ec6c990db6"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/hotspot-captive-portal.md": {
       "title": "HotSpot - Captive portal",
@@ -1805,19 +1805,19 @@
       "title": "PPP AAA",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/ppp-aaa.md",
       "path": "docs/authentication-authorization-accounting/ppp-aaa.md",
-      "sha256": "47038484e7997b623c22806b39338a2cd2c797d3ef6da178072cd5d0eb2fe989"
+      "sha256": "49a49d7e96fc00a1de9182e60a3d7026c4d2dc2fdca95f17447ebe093a942bd8"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/radius.md": {
       "title": "RADIUS",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/radius.md",
       "path": "docs/authentication-authorization-accounting/radius.md",
-      "sha256": "face7418e7a0555ac19d3ce5be07f71319dd64c276e5c34846dc4c53a131a2d9"
+      "sha256": "c64902dc8085514935e57a01087998a858ee5c331c28400eff005717d72e8b1b"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/user-manager.md": {
       "title": "User Manager",
       "markdown_url": "https://manual.mikrotik.com/docs/authentication-authorization-accounting/user-manager.md",
       "path": "docs/authentication-authorization-accounting/user-manager.md",
-      "sha256": "c9b001bb1e5841d31781c4798eb6714925ccb3ffadd15541ca4a24c8401d8f28"
+      "sha256": "d857e3df660f2b9af80ab8f051a3cbe0e9e68e6f858378b045a19f40c7c09fbf"
     },
     "https://manual.mikrotik.com/docs/authentication-authorization-accounting/user.md": {
       "title": "User",
@@ -1847,13 +1847,13 @@
       "title": "Failover (WAN Backup)",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
       "path": "docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
-      "sha256": "6d6e7967023a41cdaf36f3998e8e8d81e13630ffc381477da0f6f27e2e50d76e"
+      "sha256": "95b50cf50f1580dba75a5e5ff6a4589212668357e11993d4c3edbefaf8af0e74"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/per-connection-classifier.md": {
       "title": "Per connection classifier",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/per-connection-classifier.md",
       "path": "docs/high-availability-solutions/load-balancing/per-connection-classifier.md",
-      "sha256": "9a658aaa58d9889d87f9ff2785dca508dab214791daab58e75a3b5afdbf42789"
+      "sha256": "e6a06bf8407c83cf2fe2780eda4f8c7ab3fd16a0032ba3497627a32224296945"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/multi-chassis-link-aggregation-group.md": {
       "title": "Multi-chassis Link Aggregation Group",
@@ -2261,13 +2261,19 @@
       "title": "REST API",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/rest-api.md",
       "path": "docs/developer-guides/rest-api.md",
-      "sha256": "bbcd2136ae9f03414af9279bb84366feb34e3535dba4422c82c8464f5622f1d2"
+      "sha256": "091712b19384b16a7a47f717f61ac42f0e3084c100291d3074bff6bfe5371213"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting.md": {
       "title": "Scripting",
       "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting.md",
       "path": "docs/developer-guides/scripting.md",
       "sha256": "26b6093ef4474ddf8c80802a83405c7eb1764f94a989b27f023ede908d3681fd"
+    },
+    "https://manual.mikrotik.com/docs/developer-guides/scripting/console-inspect.md": {
+      "title": "Console inspect",
+      "markdown_url": "https://manual.mikrotik.com/docs/developer-guides/scripting/console-inspect.md",
+      "path": "docs/developer-guides/scripting/console-inspect.md",
+      "sha256": "5de9990159ed2c6139dc44d71eba31f39357cdcd610099ce45f760aca74ca1e3"
     },
     "https://manual.mikrotik.com/docs/developer-guides/scripting/scripting-examples.md": {
       "title": "Scripting examples",
@@ -2861,7 +2867,7 @@
       "title": "/console/inspect",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/console/inspect.md",
       "path": "docs/cli-reference/console/inspect.md",
-      "sha256": "fe0f79c23a991eae6f5ffad0b5576a8a831af23282c0bc2940ef25ee726aa124"
+      "sha256": "1cdce7844256f449f9bfeec14e40e55cd5b4a66568311c7eb741198f98059491"
     },
     "https://manual.mikrotik.com/docs/cli-reference/console/settings.md": {
       "title": "/console/settings",
@@ -3521,25 +3527,25 @@
       "title": "/interface/dot1x/client",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/client.md",
       "path": "docs/cli-reference/interface/dot1x/client.md",
-      "sha256": "e3f61a0b16820c47cc6b564b80538a73d35cfa6b6aa52c82cb804f1f9f4e9b80"
+      "sha256": "233752f5b3b4b09811c230b3014ea3cc6f8719f6114f78580c9ba9c814df811d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server.md": {
       "title": "/interface/dot1x/server",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server.md",
       "path": "docs/cli-reference/interface/dot1x/server.md",
-      "sha256": "9ae57014548a4bd3783565192d657de103821e46233de2329482fe14e3741669"
+      "sha256": "03027a1c294e319c9ee69792ac602fe86b3132606354f1db2f8118eb0b472eb0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server/active.md": {
       "title": "/interface/dot1x/server/active",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server/active.md",
       "path": "docs/cli-reference/interface/dot1x/server/active.md",
-      "sha256": "18ebcc2f2341b1f07576017de9d3388ea280bafb4fa44bedf9c27666250acd28"
+      "sha256": "1a8cb5bb6bcf9b73931a6a02e840e3660e2beba150cb1447886a5bcf65130639"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server/state.md": {
       "title": "/interface/dot1x/server/state",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/dot1x/server/state.md",
       "path": "docs/cli-reference/interface/dot1x/server/state.md",
-      "sha256": "5580efcb6978f3f895c81a5246f20b04e1d0dde37225c64e9d57b28f74daa6a0"
+      "sha256": "997e1fa76e2638fb6d20f5f5748967a8606b7adc19381ebee164a1410363681e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/eoip.md": {
       "title": "/interface/eoip",
@@ -4109,25 +4115,25 @@
       "title": "/interface/macsec",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macsec.md",
       "path": "docs/cli-reference/interface/macsec.md",
-      "sha256": "6bf6ae92365bcd37326d61e6474bbf2609b1c06def3c387f1b20a7563545c301"
+      "sha256": "200dc148e7ef324de272ce82d32b11f9597c8eea97248d63a0cc986b1c5b5904"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/monitor.md": {
       "title": "/interface/macsec/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/monitor.md",
       "path": "docs/cli-reference/interface/macsec/monitor.md",
-      "sha256": "0dad41a8b32aa758cf7c2d3ebf0327d590931823d0f3b78b7d259d7e43d213c1"
+      "sha256": "9e44a7e6325d90c854c689c11f5cc9e859e78b9d3e0f6a16e296b5c941dbdea0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/profile.md": {
       "title": "/interface/macsec/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/profile.md",
       "path": "docs/cli-reference/interface/macsec/profile.md",
-      "sha256": "98dbe046e79cefebc3c6e7a8253d4d70b818f7db8d7dbdc08bfe74d28f99e24b"
+      "sha256": "2685473f9eb926604e78c5ba9a1521d3947cb512cc026b46197fd01b871fbaa8"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/reset-counters.md": {
       "title": "/interface/macsec/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/macsec/reset-counters.md",
       "path": "docs/cli-reference/interface/macsec/reset-counters.md",
-      "sha256": "64ebbc0121122e70261ff1fbaf49c79d2e1d7b0a67c2537a03265e664def79c0"
+      "sha256": "7876bfdf414e3f18c322f23b44859b6babb20fa0952b86b30997da7e677b7435"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/macvlan.md": {
       "title": "/interface/macvlan",
@@ -4445,19 +4451,19 @@
       "title": "/interface/vxlan",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan.md",
       "path": "docs/cli-reference/interface/vxlan.md",
-      "sha256": "4fe68d4e2fd0224f92dcd0cb0e3b42c566a5059117df6f56d50720b228caf5df"
+      "sha256": "c505154603657744a7d2041d3744839ba78f6e67fe16f1b886cf4a616fdb81f0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan/fdb.md": {
       "title": "/interface/vxlan/fdb",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan/fdb.md",
       "path": "docs/cli-reference/interface/vxlan/fdb.md",
-      "sha256": "c27ffd31be57f4789e6eacd2123c4d4235ed87ba675bb1158c4a78f2be3b36a4"
+      "sha256": "d5849fc6dbb38f13f7380cab6766007106d1cceb482caa85a582e7e68dc89cb6"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan/vteps.md": {
       "title": "/interface/vxlan/vteps",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/vxlan/vteps.md",
       "path": "docs/cli-reference/interface/vxlan/vteps.md",
-      "sha256": "71b6bf9c6c73ca44ec092b0489d752e0bdb4925ea56f0f3b4aed1ee14b14583a"
+      "sha256": "28cb523fc9e5f6663ad640496f068a3f1d31d89eb52ac66b7def74b44c0a8022"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/w60g.md": {
       "title": "/interface/w60g",
@@ -6917,31 +6923,31 @@
       "title": "/ppp/aaa",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ppp/aaa.md",
       "path": "docs/cli-reference/ppp/aaa.md",
-      "sha256": "1eced85c430a799afcd456c1367fc353f739829985939ffceab02861e7d66ae2"
+      "sha256": "a82ed62672aeedcdf6dac1a3eedb912d92b35ae158f4a882af10546c285bf306"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ppp/active.md": {
       "title": "/ppp/active",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ppp/active.md",
       "path": "docs/cli-reference/ppp/active.md",
-      "sha256": "bc9b37a7884ccc04e32f493c8993abfc25af79c39742d9c4c83056e5b6d18e1c"
+      "sha256": "5708a88e10d96df4c67f13213b65214686bb48da052c2d69116671ddc326c126"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ppp/l2tp-secret.md": {
       "title": "/ppp/l2tp-secret",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ppp/l2tp-secret.md",
       "path": "docs/cli-reference/ppp/l2tp-secret.md",
-      "sha256": "a128c8e9c65648aaba7859f0b8bf6adda5a966b66d708f985f612358dbf318b2"
+      "sha256": "91e8f2db273abd4eca12a201db2ee0e49d5d3f756c58d1282d42b571808cffcb"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ppp/profile.md": {
       "title": "/ppp/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ppp/profile.md",
       "path": "docs/cli-reference/ppp/profile.md",
-      "sha256": "c6626e37bfb018d0b4b4e1cec75f744b06b99810e826522abd2702bc3abd69b3"
+      "sha256": "f9c7563628539b923962867672ccb3b261fd94c33064b8b0bd588dc773824938"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ppp/secret.md": {
       "title": "/ppp/secret",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ppp/secret.md",
       "path": "docs/cli-reference/ppp/secret.md",
-      "sha256": "eaa3c7e8f49052d1de63929b5146383bbd79d36aa907fbcf78eb80cb32345234"
+      "sha256": "7066f111b20d01ec173fb48f9be528873759a03b0ccec89c46ffc3068f88574f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/queue/interface.md": {
       "title": "/queue/interface",
@@ -7007,37 +7013,37 @@
       "title": "/radius",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius.md",
       "path": "docs/cli-reference/radius.md",
-      "sha256": "c4118720775f11d3f74408019f3cd4be58c7736a6a0630e79df230031944d621"
+      "sha256": "a3c0e3073ba16586308f552abb7e4860a2b4de7f9ae5c89f901667f7d904359a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/radius/incoming.md": {
       "title": "/radius/incoming",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius/incoming.md",
       "path": "docs/cli-reference/radius/incoming.md",
-      "sha256": "6dc6e0a905fba157d92fdc3aefb6ecb5ee6eb095abbda9cf5f89b3329f7903c6"
+      "sha256": "0b6b7f554e33ffa06bef2847c508a67108bfc6e2f88bb5e8bf2ac6e08ae2f0e1"
     },
     "https://manual.mikrotik.com/docs/cli-reference/radius/incoming/monitor.md": {
       "title": "/radius/incoming/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius/incoming/monitor.md",
       "path": "docs/cli-reference/radius/incoming/monitor.md",
-      "sha256": "8c737ec9274f2917620bb7d89e5bf57cd3b03636edc4a32a79baae39f9c3da02"
+      "sha256": "667e6317eefdd59ff560f319eda846d11902c6a5de57a68e44c8a22b5f488df7"
     },
     "https://manual.mikrotik.com/docs/cli-reference/radius/incoming/reset-counters.md": {
       "title": "/radius/incoming/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius/incoming/reset-counters.md",
       "path": "docs/cli-reference/radius/incoming/reset-counters.md",
-      "sha256": "b1952e2b8a80e077a47214f5e599cde26346415992c4348795fe8e2f33037570"
+      "sha256": "9cf682f518232545b7dc60fa9f14631afaae815285d72a732d162cd9cbeede9b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/radius/monitor.md": {
       "title": "/radius/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius/monitor.md",
       "path": "docs/cli-reference/radius/monitor.md",
-      "sha256": "f3786aff1d09859cb24147dcd77d91e8f1458cc2f233fcc79a5fa222765c424a"
+      "sha256": "0bb7d2467f01930a7c758d9a53e495d60144f31444b3741c4a99600ca0917b80"
     },
     "https://manual.mikrotik.com/docs/cli-reference/radius/reset-counters.md": {
       "title": "/radius/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/radius/reset-counters.md",
       "path": "docs/cli-reference/radius/reset-counters.md",
-      "sha256": "4f4986d94f8266ab1a4d7f3560404b2184c01540d03a4f4d31c22ff90351c23d"
+      "sha256": "2fd99f0c83ccc99635f93d161ed5b0c8d655cb473eace65d602e6ebd865e180b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/redo.md": {
       "title": "/redo",
@@ -8789,31 +8795,31 @@
       "title": "/user-manager",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager.md",
       "path": "docs/cli-reference/user-manager.md",
-      "sha256": "30fdd9d7943c3b71a2b33c14bc53bddfb42865298ecd61b0c25190b992ef639e"
+      "sha256": "c2a7d550677d3ab182a878a20279a7d50ba3dfbedbba8af7e8c5d3b7f0424d79"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/advanced.md": {
       "title": "/user-manager/advanced",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/advanced.md",
       "path": "docs/cli-reference/user-manager/advanced.md",
-      "sha256": "12a76069c2e5dc2af31e44d9906351b650c79b537c49c40034b63661b6c0b19f"
+      "sha256": "ab672d4858939783ccc7c4640c6976bda6bd58b8363efaa9341ec002e3d4d722"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/attribute.md": {
       "title": "/user-manager/attribute",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/attribute.md",
       "path": "docs/cli-reference/user-manager/attribute.md",
-      "sha256": "aa755908f1ca6344095300ec8590dea0f95fd86f645730d095453c361e8c33fa"
+      "sha256": "022214c78c88e1d6372c27cbeb753c36c65b3be6e555a598ad4a0abd74694db1"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/database.md": {
       "title": "/user-manager/database",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/database.md",
       "path": "docs/cli-reference/user-manager/database.md",
-      "sha256": "14f22dab1a2ec4074ee32dd836fabc2bc9ce1359b21ca434446e1dca5065aa82"
+      "sha256": "a812016d2263bd94aaabec4221e95caae5b9f1fd6792a103e793664acb47ccc0"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/load.md": {
       "title": "/user-manager/database/load",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/load.md",
       "path": "docs/cli-reference/user-manager/database/load.md",
-      "sha256": "292c7600c654ef54a1b8af4168b1f1c0a20aee56ba61a6631679515401b60996"
+      "sha256": "94bbfe420b7e1c9f245a7ea27925fda1ea6e496ded12afcbb09e1057ae880e9f"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/migrate-legacy-db.md": {
       "title": "/user-manager/database/migrate-legacy-db",
@@ -8825,121 +8831,121 @@
       "title": "/user-manager/database/optimize-db",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/optimize-db.md",
       "path": "docs/cli-reference/user-manager/database/optimize-db.md",
-      "sha256": "b418d898582ab3436a647532851e7691723688613261f4b829ae701a43eb68f2"
+      "sha256": "3549b0e14cff6bd190cc6d818cad8bf7d0ad3f1b6dd3f763d5f0adaf783ab5a6"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/save.md": {
       "title": "/user-manager/database/save",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/database/save.md",
       "path": "docs/cli-reference/user-manager/database/save.md",
-      "sha256": "a9d25165492b5db6b448f6fe19fd7a3d8f8375a7124d9cd0b41a1b24ea76fe23"
+      "sha256": "1b6c4d4c2e2834908c8774d3dfa293c1e8f3f7d407bbb6e44a988c15d63ca928"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/generate-report.md": {
       "title": "/user-manager/generate-report",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/generate-report.md",
       "path": "docs/cli-reference/user-manager/generate-report.md",
-      "sha256": "7ad32b347cd5c53d8a93ccac149ec3c2eedf15e6a22e86b60b372697acd3ff02"
+      "sha256": "2957213438b43e3315e3474d5146383cec68bb33ce5a000ac851d79a5d5a18a2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/limitation.md": {
       "title": "/user-manager/limitation",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/limitation.md",
       "path": "docs/cli-reference/user-manager/limitation.md",
-      "sha256": "641512146bb530ea9ee16b6799c229c3cf7a2373e2fd496b28aaec174627aeb7"
+      "sha256": "b9c0ee68eadecfaa26681885049f6b509759dc94c721f2b4f2101cce8a99bd05"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/monitor.md": {
       "title": "/user-manager/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/monitor.md",
       "path": "docs/cli-reference/user-manager/monitor.md",
-      "sha256": "6d4d000ad878c4dbeb2ed34be15132e815e38790466fd26bffd5f6e15114455a"
+      "sha256": "3410c3e4efc598bccd5f14afe775c439f5175d263f8695675fca53c307912a3a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/payment.md": {
       "title": "/user-manager/payment",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/payment.md",
       "path": "docs/cli-reference/user-manager/payment.md",
-      "sha256": "c756c75736d98fe03a9ca951a45cac9e326774e3a7bc55fdb9e4c65dbc061e77"
+      "sha256": "e72195608fd399e5720f6c2140e4c705fefa5bb22545cac110f7f2bd986a8994"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/profile-limitation.md": {
       "title": "/user-manager/profile-limitation",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/profile-limitation.md",
       "path": "docs/cli-reference/user-manager/profile-limitation.md",
-      "sha256": "64614507789e59b4db810741ae40d866ee4e792284eb85d00ced17ad000ef39d"
+      "sha256": "784ebe006e1e83c6536b357217ce7e9eee6f874862c6f0e232f7462c5333deeb"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/profile.md": {
       "title": "/user-manager/profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/profile.md",
       "path": "docs/cli-reference/user-manager/profile.md",
-      "sha256": "468dca21a862b8df27e2a6d6388b4c77f7679ec7b947d8e1ea878632fb7519f5"
+      "sha256": "3526dd1f039963ad513e6d10d428ed1a82ed77ca04cd3dc5f9ec7a512e6678dc"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/router.md": {
       "title": "/user-manager/router",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/router.md",
       "path": "docs/cli-reference/user-manager/router.md",
-      "sha256": "ddc025c07dfbfbf1bb2f1105d1605cedb5ee53bb9e17d0dbeace15ee9702287b"
+      "sha256": "9d1a3b4f341a25cac81c60fbb8190fa5ec1aba9284caffae3e689697162edd1a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/router/monitor.md": {
       "title": "/user-manager/router/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/router/monitor.md",
       "path": "docs/cli-reference/user-manager/router/monitor.md",
-      "sha256": "f731a50ac53fbf58abd213517674ebc2b58f2c2aea10e4c17f8c440ba145f2a6"
+      "sha256": "85250b9992505243098189364d96c412e1a4cd8d483c1a03bef9a186a48ab95b"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/router/reset-counters.md": {
       "title": "/user-manager/router/reset-counters",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/router/reset-counters.md",
       "path": "docs/cli-reference/user-manager/router/reset-counters.md",
-      "sha256": "df6ac94ab91714e46a3ca8a83f1de108d423e70405dfba2e675f35effdeee7a9"
+      "sha256": "6a83d91b76a754e6bd7de426a901d653ab7b25feba3ea83eda58bdbe9d8e184d"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/session.md": {
       "title": "/user-manager/session",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/session.md",
       "path": "docs/cli-reference/user-manager/session.md",
-      "sha256": "2e819ba567834fb9d628caa18bb7b4267113b52331053fdb98a7dbc64c4eb519"
+      "sha256": "5dd4f3bbfb8c6fe8cdf636ced1699c16973d0ef7a90a27c3ca258d0b3e077aa2"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/session/close-session.md": {
       "title": "/user-manager/session/close-session",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/session/close-session.md",
       "path": "docs/cli-reference/user-manager/session/close-session.md",
-      "sha256": "7613a6c5b4a89a34d172fc02daa18d9c5bfba0503e0da87f4c0a9612a03379be"
+      "sha256": "78789b4d3a965ff5b5479927005f11d3ec4723d1af6fa554b5a3fc17ab14129e"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user.md": {
       "title": "/user-manager/user",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user.md",
       "path": "docs/cli-reference/user-manager/user.md",
-      "sha256": "c0c95f30f6ae568b640294aaf1fbfb76118eb227e67ed95638434c461578a34c"
+      "sha256": "e84791098f980a6b6bf681d9cf9bbbcd93363b6a071a8a83afb6531e65e00895"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/add-batch-users.md": {
       "title": "/user-manager/user/add-batch-users",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/add-batch-users.md",
       "path": "docs/cli-reference/user-manager/user/add-batch-users.md",
-      "sha256": "6e1de73d2943ce02dbd192bb5c3ef9521d5e957e4b0fa8fe16a0f2022d2d2a4c"
+      "sha256": "e851b4a185c08346f5f0a753b29511950cd6a0a64d805aa631e1a250df132c47"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/generate-voucher.md": {
       "title": "/user-manager/user/generate-voucher",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/generate-voucher.md",
       "path": "docs/cli-reference/user-manager/user/generate-voucher.md",
-      "sha256": "7bdc8fb17dad5b4ded3048b859c3ac814edb3c64ec731c84c683f41f59d3eedf"
+      "sha256": "386e1cbeeaca41c83749be2bb02003ae43d28f435a5a6038dcf49bdd2fa78fde"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/group.md": {
       "title": "/user-manager/user/group",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/group.md",
       "path": "docs/cli-reference/user-manager/user/group.md",
-      "sha256": "a2c32ebf8211950836d3c0227a2e3707c87ae0adf4cde34f2c49827b52a7c2a9"
+      "sha256": "a35be7bffcf9c5a7e936f639934fa15dc31737f58096be597f5e73e4ce4e3bbc"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/monitor.md": {
       "title": "/user-manager/user/monitor",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user/monitor.md",
       "path": "docs/cli-reference/user-manager/user/monitor.md",
-      "sha256": "63f70488eecc14a081f452f75174c2f2cc8f426919fbb48f33067a1559faa4d2"
+      "sha256": "e0ef024ba1bfef73cdf0c2485bb44126bb64069bb24faec497721f75e7273929"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user-profile.md": {
       "title": "/user-manager/user-profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user-profile.md",
       "path": "docs/cli-reference/user-manager/user-profile.md",
-      "sha256": "9013283ec0bbe119a754ea398c0cfd5d1a236d65159b0b7ac02b691469c55cf1"
+      "sha256": "53eac7220985f0463148fb212c8448f6e4bc5fae3736f27a49693b852fe1730a"
     },
     "https://manual.mikrotik.com/docs/cli-reference/user-manager/user-profile/activate-user-profile.md": {
       "title": "/user-manager/user-profile/activate-user-profile",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/user-manager/user-profile/activate-user-profile.md",
       "path": "docs/cli-reference/user-manager/user-profile/activate-user-profile.md",
-      "sha256": "5070fbf972b1e3eb1d1979394d1f0c108e90c1c2b5941654fcb7501b87b13b36"
+      "sha256": "a35ce9a44a53a64242c9c5cc6ff1e5281efeb1c20ac56c893c03f6d504058945"
     },
     "https://manual.mikrotik.com/docs/cli-reference/zerotier.md": {
       "title": "/zerotier",
@@ -8982,6 +8988,84 @@
       "markdown_url": "https://manual.mikrotik.com/hardware.md",
       "path": "hardware.md",
       "sha256": "864892387386966a0cb5c72ce02b091ca7a8037667bba5a0fab6272babdb2fd5"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-5ghz-routerboard-ax-series.md": {
+      "title": "Quick Guide - 5GHz RouterBOARD ax series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-5ghz-routerboard-ax-series.md",
+      "path": "hardware/quick-guide-5ghz-routerboard-ax-series.md",
+      "sha256": "e11abb82c46775947ffcfd3370465d9992c3736af2e7b435fc8b631061672b38"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-atl-lte18-kit.md": {
+      "title": "Quick Guide - ATL LTE18 kit",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-atl-lte18-kit.md",
+      "path": "hardware/quick-guide-atl-lte18-kit.md",
+      "sha256": "ec20ccce9122800ddefa3e4fdcdf1f6b60bae437792b1133eddd20462da1a31f"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-audience-series.md": {
+      "title": "Quick Guide - Audience series",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-audience-series.md",
+      "path": "hardware/quick-guide-audience-series.md",
+      "sha256": "135659bb04ac89f5bceff1ce10a19b34e0adad39bcbaaa87b74cb8a0ea9ba6e3"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-cap-ax.md": {
+      "title": "Quick Guide - cAP ax",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-cap-ax.md",
+      "path": "hardware/quick-guide-cap-ax.md",
+      "sha256": "97afd1e9052a98370217d3329c51642a8108dfcdcf01bcbb369660ddbe9a6223"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-cap-xl-ac.md": {
+      "title": "Quick Guide - cAP XL ac",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-cap-xl-ac.md",
+      "path": "hardware/quick-guide-cap-xl-ac.md",
+      "sha256": "f3af408cd1c8fbdb2d120b504ef3409c946ab78956cb6fd772142f52553da42f"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus-pc.md": {
+      "title": "Quick Guide - CCR2004-16G-2S+PC",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus-pc.md",
+      "path": "hardware/quick-guide-ccr2004-16g-2s-plus-pc.md",
+      "sha256": "a43d114e2950108eb1f789c5607a587fb353f3d451126f3429608d1470cf328f"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus.md": {
+      "title": "Quick Guide - CCR2004-16G-2S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus.md",
+      "path": "hardware/quick-guide-ccr2004-16g-2s-plus.md",
+      "sha256": "c4d08a709cf093da0f376b9edc34b764eac91dc31176ca1f7fea6e1461045799"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md": {
+      "title": "Quick Guide - CCR2004-1G-12S+2XS",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md",
+      "path": "hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md",
+      "sha256": "cefcb3d938ffb01737dcecadafc5e68f71905787ffe46809afe570776edb38f6"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-2xs-pcie.md": {
+      "title": "Quick Guide - CCR2004-1G-2XS-PCIe",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-2xs-pcie.md",
+      "path": "hardware/quick-guide-ccr2004-1g-2xs-pcie.md",
+      "sha256": "105ec98ae29d331549faff96e0d2b7fe11ebd3a5c0a4c92893212662b0dd0ca8"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2116-12g-4s-plus.md": {
+      "title": "Quick Guide - CCR2116-12G-4S+",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2116-12g-4s-plus.md",
+      "path": "hardware/quick-guide-ccr2116-12g-4s-plus.md",
+      "sha256": "efcd80fa216f62d015bfe552344f8321c1ebda7f59ec26651b9a4a00ccd1a535"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-ccr2216-1g-12xs-2xq.md": {
+      "title": "Quick Guide - CCR2216-1G-12XS-2XQ",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2216-1g-12xs-2xq.md",
+      "path": "hardware/quick-guide-ccr2216-1g-12xs-2xq.md",
+      "sha256": "70f50a692cfdd4abf48ba41a4ead886e5f36fe2ece40bfe56ecfd855df467c7e"
+    },
+    "https://manual.mikrotik.com/hardware/quick-guide-g3.md": {
+      "title": "Quick Guide G3",
+      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-g3.md",
+      "path": "hardware/quick-guide-g3.md",
+      "sha256": "250f870b0fd6cdbf6076c794c8e36e51022878d146681f1f090e3e179a9cc0f0"
+    },
+    "https://manual.mikrotik.com/hardware/safety-regulatory-information-chateau.md": {
+      "title": "Safety and regulatory information - Chateau LTE6",
+      "markdown_url": "https://manual.mikrotik.com/hardware/safety-regulatory-information-chateau.md",
+      "path": "hardware/safety-regulatory-information-chateau.md",
+      "sha256": "c4f5042b7df67db8d65a349445d9fa020c6b54b0ef6cc3b5ec9d3221cb665c15"
     },
     "https://manual.mikrotik.com/hardware/cube-60g-ac.md": {
       "title": "Cube 60G ac",
@@ -9036,36 +9120,6 @@
       "markdown_url": "https://manual.mikrotik.com/hardware/wireless-wire-dish.md",
       "path": "hardware/wireless-wire-dish.md",
       "sha256": "69127e27342dce2705b7aeabcd35dc21f641bee065da0da3e62964633470ba5b"
-    },
-    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus.md": {
-      "title": "Quick Guide - CCR2004-16G-2S+",
-      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-16g-2s-plus.md",
-      "path": "hardware/quick-guide-ccr2004-16g-2s-plus.md",
-      "sha256": "e8b0ad1d1ad0c345588899662b800dc5ea6101064b293916b3d1ff400f217a3d"
-    },
-    "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md": {
-      "title": "Quick Guide - CCR2004-1G-12S+2XS",
-      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md",
-      "path": "hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md",
-      "sha256": "287e5640ae491bea6c993b2838d9f73606a3ea94c22459896fdb6817a91b715f"
-    },
-    "https://manual.mikrotik.com/hardware/quick-guide-g3.md": {
-      "title": "Quick Guide G3",
-      "markdown_url": "https://manual.mikrotik.com/hardware/quick-guide-g3.md",
-      "path": "hardware/quick-guide-g3.md",
-      "sha256": "ff5530cc3020370baae70229148631e32a52eb39b7135e415fedcd97dcdbbe55"
-    },
-    "https://manual.mikrotik.com/hardware/safety-regulatory-information-chateau.md": {
-      "title": "Safety and regulatory information - Chateau LTE6",
-      "markdown_url": "https://manual.mikrotik.com/hardware/safety-regulatory-information-chateau.md",
-      "path": "hardware/safety-regulatory-information-chateau.md",
-      "sha256": "5c5139dc27232bf9ea27e9ee385b58907016d12218b1d5fc140dee4f5696606e"
-    },
-    "https://manual.mikrotik.com/hardware/first-steps-chateau-lte6.md": {
-      "title": "First Steps - Chateau LTE6",
-      "markdown_url": "https://manual.mikrotik.com/hardware/first-steps-chateau-lte6.md",
-      "path": "hardware/first-steps-chateau-lte6.md",
-      "sha256": "6d5ddd53f9901faea8a8a72a74530862ba43597cde11fbdcd3a3cc54eb618064"
     },
     "https://manual.mikrotik.com/hardware/apa-1.md": {
       "title": "APA-1",
@@ -9731,7 +9785,7 @@
       "title": "TG-LR82 / TG-LR92 User Manual",
       "markdown_url": "https://manual.mikrotik.com/hardware/tg-lr-setup-guide.md",
       "path": "hardware/tg-lr-setup-guide.md",
-      "sha256": "d6564287d8e6f26811eb71954cff9f97b419cb8d3d26da5b64a84ef82b7f8a9e"
+      "sha256": "3bc3e3788021dee0f64d507d06e46b6a5c62b16a5f63384bf336606ff457771b"
     },
     "https://manual.mikrotik.com/hardware/tg-lr82.md": {
       "title": "TG-LR82",

@@ -539,7 +539,7 @@ A web dashboard, a status page or an integration with another system can read th
 - **Its own user, and short requests.** Requests of one user run one at a time, so a dashboard that polls many values at once waits for each. Use `monitor` commands with `once`, `ping` with `count`, and `.proplist` to keep replies small.
 - **Strings in replies.** Every value arrives as a string: convert numbers before calculating. Traffic rates are in bits per second, memory and disk sizes in bytes, `cpu-load` in percent, and durations such as `uptime` in the RouterOS format, for example `1d7h44m20s`.
 - **One connection.** Reuse an HTTP connection (keep-alive) for the polls to save the TCP and TLS setup. The router keeps the user's login for 10 minutes on any connection, so frequent polls do not log in every time.
-- **The menus and parameters.** The [CLI reference](../cli-reference/) describes every menu and parameter. The router also describes itself through `/console/inspect`, which lists the commands and parameters of a menu:
+- **The menus and parameters.** The [CLI reference](../cli-reference/) describes every menu and parameter. The router also describes itself through [`/console/inspect`](./scripting/console-inspect), which lists the commands and parameters of a menu:
 
 ```bash
 curl --cacert rest-ca.crt -u monitoring -X POST \

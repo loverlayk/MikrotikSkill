@@ -1,28 +1,28 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `73a6577c1673ea34e6f67707f0754243e638401a9499eeb7f5b425aa402c9191`
-Pages in current index: 1754
-Pages changed/written: 61
-Pages removed: 0
+Index SHA-256: `3b8bc4d51dced49433aafa7a5215129ed7aaa5d8bac4e151e83335c0c0eeb2ff`
+Pages in current index: 1763
+Pages changed/written: 81
+Pages removed: 1
 Pages failed: 0
 
-- [AAA and User Management](docs/authentication-authorization-accounting.md) `b1b3b2b2ba6f`
+- [AAA and User Management](docs/authentication-authorization-accounting.md) `1369d6987464`
 - [Certificates](docs/authentication-authorization-accounting/certificates.md) `da247ac1e3c3`
-- [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `1cc1fd3126fa`
+- [Dot1X](docs/authentication-authorization-accounting/dot1x.md) `05f46e78e5dd`
 - [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `22ddbfbe3c00`
 - [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `dfd3c1dda6f7`
-- [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `47038484e799`
-- [RADIUS](docs/authentication-authorization-accounting/radius.md) `face7418e7a0`
-- [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c9b001bb1e58`
+- [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `49a49d7e96fc`
+- [RADIUS](docs/authentication-authorization-accounting/radius.md) `c64902dc8085`
+- [User Manager](docs/authentication-authorization-accounting/user-manager.md) `d857e3df660f`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
-- [Bridging and Switching](docs/bridging-and-switching.md) `20183448ce31`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `7516a33c6b79`
-- [MACsec](docs/bridging-and-switching/macsec.md) `f261ba4fa85e`
+- [Bridging and Switching](docs/bridging-and-switching.md) `535ff0171287`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `eb44dcf0c008`
+- [MACsec](docs/bridging-and-switching/macsec.md) `a26eb6d2613a`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `8135bf84fc73`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `559b92535fb8`
 - [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `37162e58113b`
-- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `50bafc241d02`
+- [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `7922ce54d6d3`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
 - [CSS106 (RB260) series Manual](docs/bridging-and-switching/swos/css106.md) `8101fbc475de`
@@ -40,7 +40,7 @@ Pages failed: 0
 - [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
 - [VLAN](docs/bridging-and-switching/vlan.md) `670eea913665`
-- [VXLAN](docs/bridging-and-switching/vxlan.md) `ae2e8d9d61ef`
+- [VXLAN](docs/bridging-and-switching/vxlan.md) `b7c6bb57d329`
 - [/address-flags](docs/cli-reference.md) `8049423092b3`
 - [/app](docs/cli-reference/app.md) `7391a7b8a073`
 - [/app/check-update](docs/cli-reference/app/check-update.md) `0fe2eb18e406`
@@ -137,7 +137,7 @@ Pages failed: 0
 - [/cmr/wifi](docs/cli-reference/cmr/wifi.md) `70c4e120199e`
 - [/cmr/wifi/radio](docs/cli-reference/cmr/wifi/radio.md) `37c28ee29d72`
 - [/compare-versions](docs/cli-reference/compare-versions.md) `4eac1a1b6193`
-- [/console/inspect](docs/cli-reference/console/inspect.md) `fe0f79c23a99`
+- [/console/inspect](docs/cli-reference/console/inspect.md) `1cdce7844256`
 - [/console/settings](docs/cli-reference/console/settings.md) `328cd2ddd5bc`
 - [/container](docs/cli-reference/container.md) `c61b59420e5b`
 - [/container/check-update](docs/cli-reference/container/check-update.md) `772c230050fa`
@@ -247,10 +247,10 @@ Pages failed: 0
 - [/interface/detect-internet](docs/cli-reference/interface/detect-internet.md) `de165f9934d6`
 - [/interface/detect-internet/state](docs/cli-reference/interface/detect-internet/state.md) `435dd45b3521`
 - [/interface/dot1x](docs/cli-reference/interface/dot1x.md) `654e75415860`
-- [/interface/dot1x/client](docs/cli-reference/interface/dot1x/client.md) `e3f61a0b1682`
-- [/interface/dot1x/server](docs/cli-reference/interface/dot1x/server.md) `9ae57014548a`
-- [/interface/dot1x/server/active](docs/cli-reference/interface/dot1x/server/active.md) `18ebcc2f2341`
-- [/interface/dot1x/server/state](docs/cli-reference/interface/dot1x/server/state.md) `5580efcb6978`
+- [/interface/dot1x/client](docs/cli-reference/interface/dot1x/client.md) `233752f5b3b4`
+- [/interface/dot1x/server](docs/cli-reference/interface/dot1x/server.md) `03027a1c294e`
+- [/interface/dot1x/server/active](docs/cli-reference/interface/dot1x/server/active.md) `1a8cb5bb6bcf`
+- [/interface/dot1x/server/state](docs/cli-reference/interface/dot1x/server/state.md) `997e1fa76e26`
 - [/interface/eoip](docs/cli-reference/interface/eoip.md) `11336c25dd57`
 - [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `17e94191801b`
 - [/interface/ethernet](docs/cli-reference/interface/ethernet.md) `9f1fbfdde76c`
@@ -345,10 +345,10 @@ Pages failed: 0
 - [/interface/lte/scan](docs/cli-reference/interface/lte/scan.md) `1f778a290af0`
 - [/interface/lte/settings](docs/cli-reference/interface/lte/settings.md) `87bd00891a92`
 - [/interface/lte/show-capabilities](docs/cli-reference/interface/lte/show-capabilities.md) `0cc4c69eeb1d`
-- [/interface/macsec](docs/cli-reference/interface/macsec.md) `6bf6ae92365b`
-- [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `0dad41a8b32a`
-- [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `98dbe046e79c`
-- [/interface/macsec/reset-counters](docs/cli-reference/interface/macsec/reset-counters.md) `64ebbc012112`
+- [/interface/macsec](docs/cli-reference/interface/macsec.md) `200dc148e7ef`
+- [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `9e44a7e6325d`
+- [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `2685473f9eb9`
+- [/interface/macsec/reset-counters](docs/cli-reference/interface/macsec/reset-counters.md) `7876bfdf414e`
 - [/interface/macvlan](docs/cli-reference/interface/macvlan.md) `33557d0aa7ec`
 - [/interface/mesh](docs/cli-reference/interface/mesh.md) `715a3eef6843`
 - [/interface/mesh/fdb](docs/cli-reference/interface/mesh/fdb.md) `abd06562903b`
@@ -401,9 +401,9 @@ Pages failed: 0
 - [/interface/vpls](docs/cli-reference/interface/vpls.md) `b51b597ecf6b`
 - [/interface/vpls/monitor](docs/cli-reference/interface/vpls/monitor.md) `9b57bb6933b7`
 - [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `3f37781dc343`
-- [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `4fe68d4e2fd0`
-- [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `c27ffd31be57`
-- [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `71b6bf9c6c73`
+- [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `c50515460365`
+- [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `d5849fc6dbb3`
+- [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `28cb523fc9e5`
 - [/interface/w60g](docs/cli-reference/interface/w60g.md) `8d1e15c36739`
 - [/interface/w60g/align](docs/cli-reference/interface/w60g/align.md) `2b78f9af8ed9`
 - [/interface/w60g/monitor](docs/cli-reference/interface/w60g/monitor.md) `c7198bcbf971`
@@ -813,11 +813,11 @@ Pages failed: 0
 - [/password](docs/cli-reference/password.md) `0d9b7abe2edd`
 - [/port](docs/cli-reference/port.md) `49e865c6c178`
 - [/port/remote-access](docs/cli-reference/port/remote-access.md) `b5a5100ad370`
-- [/ppp/aaa](docs/cli-reference/ppp/aaa.md) `1eced85c430a`
-- [/ppp/active](docs/cli-reference/ppp/active.md) `bc9b37a7884c`
-- [/ppp/l2tp-secret](docs/cli-reference/ppp/l2tp-secret.md) `a128c8e9c656`
-- [/ppp/profile](docs/cli-reference/ppp/profile.md) `c6626e37bfb0`
-- [/ppp/secret](docs/cli-reference/ppp/secret.md) `eaa3c7e8f490`
+- [/ppp/aaa](docs/cli-reference/ppp/aaa.md) `a82ed62672ae`
+- [/ppp/active](docs/cli-reference/ppp/active.md) `5708a88e10d9`
+- [/ppp/l2tp-secret](docs/cli-reference/ppp/l2tp-secret.md) `91e8f2db273a`
+- [/ppp/profile](docs/cli-reference/ppp/profile.md) `f9c756362853`
+- [/ppp/secret](docs/cli-reference/ppp/secret.md) `7066f111b20d`
 - [/queue/interface](docs/cli-reference/queue/interface.md) `4b6a0ef359f5`
 - [/queue/monitor](docs/cli-reference/queue/monitor.md) `d2b5eeb63b98`
 - [/queue/simple](docs/cli-reference/queue/simple.md) `b3af9d90c614`
@@ -828,12 +828,12 @@ Pages failed: 0
 - [/queue/tree/reset-counters](docs/cli-reference/queue/tree/reset-counters.md) `8584a4ccb3d5`
 - [/queue/type](docs/cli-reference/queue/type.md) `c1e89430e17f`
 - [/quit](docs/cli-reference/quit.md) `dce55e7a1e7e`
-- [/radius](docs/cli-reference/radius.md) `c4118720775f`
-- [/radius/incoming](docs/cli-reference/radius/incoming.md) `6dc6e0a905fb`
-- [/radius/incoming/monitor](docs/cli-reference/radius/incoming/monitor.md) `8c737ec9274f`
-- [/radius/incoming/reset-counters](docs/cli-reference/radius/incoming/reset-counters.md) `b1952e2b8a80`
-- [/radius/monitor](docs/cli-reference/radius/monitor.md) `f3786aff1d09`
-- [/radius/reset-counters](docs/cli-reference/radius/reset-counters.md) `4f4986d94f82`
+- [/radius](docs/cli-reference/radius.md) `a3c0e3073ba1`
+- [/radius/incoming](docs/cli-reference/radius/incoming.md) `0b6b7f554e33`
+- [/radius/incoming/monitor](docs/cli-reference/radius/incoming/monitor.md) `667e6317eefd`
+- [/radius/incoming/reset-counters](docs/cli-reference/radius/incoming/reset-counters.md) `9cf682f51823`
+- [/radius/monitor](docs/cli-reference/radius/monitor.md) `0bb7d2467f01`
+- [/radius/reset-counters](docs/cli-reference/radius/reset-counters.md) `2fd99f0c83cc`
 - [/redo](docs/cli-reference/redo.md) `7f9e0426397e`
 - [/root/terminal](docs/cli-reference/root/terminal.md) `aa21ab7e0597`
 - [/routing/bfd/authentication](docs/cli-reference/routing/bfd/authentication.md) `cbd7608fc94f`
@@ -1115,32 +1115,32 @@ Pages failed: 0
 - [/tr069-client](docs/cli-reference/tr069-client.md) `9d04ecc3b23c`
 - [/tr069-client/reset-tr069-config](docs/cli-reference/tr069-client/reset-tr069-config.md) `993d7977d027`
 - [/undo](docs/cli-reference/undo.md) `c657ae47abdc`
-- [/user-manager](docs/cli-reference/user-manager.md) `30fdd9d7943c`
-- [/user-manager/advanced](docs/cli-reference/user-manager/advanced.md) `12a76069c2e5`
-- [/user-manager/attribute](docs/cli-reference/user-manager/attribute.md) `aa755908f1ca`
-- [/user-manager/database](docs/cli-reference/user-manager/database.md) `14f22dab1a2e`
-- [/user-manager/database/load](docs/cli-reference/user-manager/database/load.md) `292c7600c654`
+- [/user-manager](docs/cli-reference/user-manager.md) `c2a7d550677d`
+- [/user-manager/advanced](docs/cli-reference/user-manager/advanced.md) `ab672d485893`
+- [/user-manager/attribute](docs/cli-reference/user-manager/attribute.md) `022214c78c88`
+- [/user-manager/database](docs/cli-reference/user-manager/database.md) `a812016d2263`
+- [/user-manager/database/load](docs/cli-reference/user-manager/database/load.md) `94bbfe420b7e`
 - [/user-manager/database/migrate-legacy-db](docs/cli-reference/user-manager/database/migrate-legacy-db.md) `e0ae938564f7`
-- [/user-manager/database/optimize-db](docs/cli-reference/user-manager/database/optimize-db.md) `b418d898582a`
-- [/user-manager/database/save](docs/cli-reference/user-manager/database/save.md) `a9d25165492b`
-- [/user-manager/generate-report](docs/cli-reference/user-manager/generate-report.md) `7ad32b347cd5`
-- [/user-manager/limitation](docs/cli-reference/user-manager/limitation.md) `641512146bb5`
-- [/user-manager/monitor](docs/cli-reference/user-manager/monitor.md) `6d4d000ad878`
-- [/user-manager/payment](docs/cli-reference/user-manager/payment.md) `c756c75736d9`
-- [/user-manager/profile-limitation](docs/cli-reference/user-manager/profile-limitation.md) `64614507789e`
-- [/user-manager/profile](docs/cli-reference/user-manager/profile.md) `468dca21a862`
-- [/user-manager/router](docs/cli-reference/user-manager/router.md) `ddc025c07dfb`
-- [/user-manager/router/monitor](docs/cli-reference/user-manager/router/monitor.md) `f731a50ac53f`
-- [/user-manager/router/reset-counters](docs/cli-reference/user-manager/router/reset-counters.md) `df6ac94ab917`
-- [/user-manager/session](docs/cli-reference/user-manager/session.md) `2e819ba56783`
-- [/user-manager/session/close-session](docs/cli-reference/user-manager/session/close-session.md) `7613a6c5b4a8`
-- [/user-manager/user-profile](docs/cli-reference/user-manager/user-profile.md) `9013283ec0bb`
-- [/user-manager/user-profile/activate-user-profile](docs/cli-reference/user-manager/user-profile/activate-user-profile.md) `5070fbf972b1`
-- [/user-manager/user](docs/cli-reference/user-manager/user.md) `c0c95f30f6ae`
-- [/user-manager/user/add-batch-users](docs/cli-reference/user-manager/user/add-batch-users.md) `6e1de73d2943`
-- [/user-manager/user/generate-voucher](docs/cli-reference/user-manager/user/generate-voucher.md) `7bdc8fb17dad`
-- [/user-manager/user/group](docs/cli-reference/user-manager/user/group.md) `a2c32ebf8211`
-- [/user-manager/user/monitor](docs/cli-reference/user-manager/user/monitor.md) `63f70488eecc`
+- [/user-manager/database/optimize-db](docs/cli-reference/user-manager/database/optimize-db.md) `3549b0e14cff`
+- [/user-manager/database/save](docs/cli-reference/user-manager/database/save.md) `1b6c4d4c2e28`
+- [/user-manager/generate-report](docs/cli-reference/user-manager/generate-report.md) `2957213438b4`
+- [/user-manager/limitation](docs/cli-reference/user-manager/limitation.md) `b9c0ee68eade`
+- [/user-manager/monitor](docs/cli-reference/user-manager/monitor.md) `3410c3e4efc5`
+- [/user-manager/payment](docs/cli-reference/user-manager/payment.md) `e72195608fd3`
+- [/user-manager/profile-limitation](docs/cli-reference/user-manager/profile-limitation.md) `784ebe006e1e`
+- [/user-manager/profile](docs/cli-reference/user-manager/profile.md) `3526dd1f0399`
+- [/user-manager/router](docs/cli-reference/user-manager/router.md) `9d1a3b4f341a`
+- [/user-manager/router/monitor](docs/cli-reference/user-manager/router/monitor.md) `85250b999250`
+- [/user-manager/router/reset-counters](docs/cli-reference/user-manager/router/reset-counters.md) `6a83d91b76a7`
+- [/user-manager/session](docs/cli-reference/user-manager/session.md) `5dd4f3bbfb8c`
+- [/user-manager/session/close-session](docs/cli-reference/user-manager/session/close-session.md) `78789b4d3a96`
+- [/user-manager/user-profile](docs/cli-reference/user-manager/user-profile.md) `53eac7220985`
+- [/user-manager/user-profile/activate-user-profile](docs/cli-reference/user-manager/user-profile/activate-user-profile.md) `a35ce9a44a53`
+- [/user-manager/user](docs/cli-reference/user-manager/user.md) `e84791098f98`
+- [/user-manager/user/add-batch-users](docs/cli-reference/user-manager/user/add-batch-users.md) `e851b4a185c0`
+- [/user-manager/user/generate-voucher](docs/cli-reference/user-manager/user/generate-voucher.md) `386e1cbeeaca`
+- [/user-manager/user/group](docs/cli-reference/user-manager/user/group.md) `a35be7bffcf9`
+- [/user-manager/user/monitor](docs/cli-reference/user-manager/user/monitor.md) `e0ef024ba1bf`
 - [/user](docs/cli-reference/user.md) `5cf8ebbb38b0`
 - [/user/aaa](docs/cli-reference/user/aaa.md) `56bc134b8afd`
 - [/user/active](docs/cli-reference/user/active.md) `60fda5842d54`
@@ -1173,8 +1173,9 @@ Pages failed: 0
 - [Developer Guides](docs/developer-guides.md) `e69d65dac54c`
 - [API](docs/developer-guides/api.md) `40f0f636b33a`
 - [Python3 Example](docs/developer-guides/api/python3-example.md) `e056b7f9eda6`
-- [REST API](docs/developer-guides/rest-api.md) `bbcd2136ae9f`
+- [REST API](docs/developer-guides/rest-api.md) `091712b19384`
 - [Scripting](docs/developer-guides/scripting.md) `26b6093ef447`
+- [Console inspect](docs/developer-guides/scripting/console-inspect.md) `5de9990159ed`
 - [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `87a15948365a`
 - [Scripting Tips and Tricks](docs/developer-guides/scripting/scripting-tips-and-tricks.md) `8b61e0af2544`
 - [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
@@ -1206,7 +1207,7 @@ Pages failed: 0
 - [Firewall and Quality of Service](docs/firewall-and-quality-of-service.md) `0aaff9f56453`
 - [Connection tracking](docs/firewall-and-quality-of-service/connection-tracking.md) `ed2c4a21d27a`
 - [Firewall](docs/firewall-and-quality-of-service/firewall.md) `73f30893430c`
-- [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a9883ddfaab1`
+- [Address lists](docs/firewall-and-quality-of-service/firewall/address-lists.md) `a7bceeae3dff`
 - [Common Firewall Matchers and Actions](docs/firewall-and-quality-of-service/firewall/common-firewall-matchers-and-actions.md) `9ddb4f68781e`
 - [Filter](docs/firewall-and-quality-of-service/firewall/filter.md) `6c6bc3937e0f`
 - [Layer7](docs/firewall-and-quality-of-service/firewall/layer7.md) `9579a02f2389`
@@ -1238,11 +1239,11 @@ Pages failed: 0
 - [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `8095f2d4b529`
 - [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
-- [Configuration Management](docs/getting-started/configuration-management.md) `feec985c25e3`
-- [Backup](docs/getting-started/configuration-management/backup.md) `35543b82e148`
+- [Configuration Management](docs/getting-started/configuration-management.md) `fb28142f83ae`
+- [Backup](docs/getting-started/configuration-management/backup.md) `8a4092bb7dec`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `ee72052ed4f1`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `5a5131025774`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `a5fda2f9ce3e`
 - [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `4285d02ab78d`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
@@ -1295,8 +1296,8 @@ Pages failed: 0
 - [High Availability Solutions](docs/high-availability-solutions.md) `8b14eea47d66`
 - [Bonding](docs/high-availability-solutions/bonding.md) `8f5c62b4931b`
 - [Load Balancing](docs/high-availability-solutions/load-balancing.md) `182c27a3b77b`
-- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `6d6e7967023a`
-- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `9a658aaa58d9`
+- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `95b50cf50f15`
+- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `e6a06bf8407c`
 - [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f87c7314736a`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `567ce371eb6a`
@@ -1334,7 +1335,7 @@ Pages failed: 0
 - [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
 - [CMR](docs/management-tools/cmr.md) `d5eeb823d1c7`
 - [CMR-Client](docs/management-tools/cmr/client.md) `69b99e59fd00`
-- [Console](docs/management-tools/console.md) `55964efcaf71`
+- [Console](docs/management-tools/console.md) `b4f58eb08f8e`
 - [Dude](docs/management-tools/dude.md) `b29b19f874f5`
 - [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
 - [MAC server](docs/management-tools/mac-server.md) `d2d84ca5b3ab`
@@ -1586,7 +1587,6 @@ Pages failed: 0
 - [DynaDish 6](hardware/dynadish-6.md) `ed9e0ee71b40`
 - [FiberBox Plus](hardware/fiberbox-plus.md) `d83600b88ea6`
 - [FiberBox](hardware/fiberbox.md) `e5ea26dac2e0`
-- [First Steps - Chateau LTE6](hardware/first-steps-chateau-lte6.md) `6d5ddd53f990`
 - [FTC11XG](hardware/ftc11xg.md) `3504bb232326`
 - [FTC21-ups](hardware/ftc21-ups.md) `71c23c92017d`
 - [FTC21](hardware/ftc21.md) `6b91141850cc`
@@ -1692,9 +1692,18 @@ Pages failed: 0
 - [QRT 2](hardware/qrt-2.md) `4f420ed91372`
 - [QRT 5 ac](hardware/qrt-5-ac.md) `fa6c0dcdc014`
 - [QRT 5](hardware/qrt-5.md) `2b9e77c8c798`
-- [Quick Guide - CCR2004-16G-2S+](hardware/quick-guide-ccr2004-16g-2s-plus.md) `e8b0ad1d1ad0`
-- [Quick Guide - CCR2004-1G-12S+2XS](hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md) `287e5640ae49`
-- [Quick Guide G3](hardware/quick-guide-g3.md) `ff5530cc3020`
+- [Quick Guide - 5GHz RouterBOARD ax series](hardware/quick-guide-5ghz-routerboard-ax-series.md) `e11abb82c467`
+- [Quick Guide - ATL LTE18 kit](hardware/quick-guide-atl-lte18-kit.md) `ec20ccce9122`
+- [Quick Guide - Audience series](hardware/quick-guide-audience-series.md) `135659bb04ac`
+- [Quick Guide - cAP ax](hardware/quick-guide-cap-ax.md) `97afd1e9052a`
+- [Quick Guide - cAP XL ac](hardware/quick-guide-cap-xl-ac.md) `f3af408cd1c8`
+- [Quick Guide - CCR2004-16G-2S+PC](hardware/quick-guide-ccr2004-16g-2s-plus-pc.md) `a43d114e2950`
+- [Quick Guide - CCR2004-16G-2S+](hardware/quick-guide-ccr2004-16g-2s-plus.md) `c4d08a709cf0`
+- [Quick Guide - CCR2004-1G-12S+2XS](hardware/quick-guide-ccr2004-1g-12s-plus-2xs.md) `cefcb3d938ff`
+- [Quick Guide - CCR2004-1G-2XS-PCIe](hardware/quick-guide-ccr2004-1g-2xs-pcie.md) `105ec98ae29d`
+- [Quick Guide - CCR2116-12G-4S+](hardware/quick-guide-ccr2116-12g-4s-plus.md) `efcd80fa216f`
+- [Quick Guide - CCR2216-1G-12XS-2XQ](hardware/quick-guide-ccr2216-1g-12xs-2xq.md) `70f50a692cfd`
+- [Quick Guide G3](hardware/quick-guide-g3.md) `250f870b0fd6`
 - [R11e-LR2](hardware/r11e-lr2.md) `5039049c9207`
 - [R11e-LR8](hardware/r11e-lr8.md) `999e1d4f18a4`
 - [R11e-LR8G](hardware/r11e-lr8g.md) `465dcd7f18a8`
@@ -1725,7 +1734,7 @@ Pages failed: 0
 - [RBM33G](hardware/rbm33g.md) `b79066c7ef99`
 - [ROSE Data Server](hardware/rose-data-server.md) `880bef5b6cb2`
 - [S-3553LC20D](hardware/s-3553lc20d.md) `653d6a340d25`
-- [Safety and regulatory information - Chateau LTE6](hardware/safety-regulatory-information-chateau.md) `5c5139dc2723`
+- [Safety and regulatory information - Chateau LTE6](hardware/safety-regulatory-information-chateau.md) `c4f5042b7df6`
 - [SEXTANT G](hardware/sextant-g.md) `39a0588c2f1a`
 - [SXT 2](hardware/sxt-2.md) `099f8839d35b`
 - [SXT 6](hardware/sxt-6.md) `ed7eaff61277`
@@ -1738,7 +1747,7 @@ Pages failed: 0
 - [SXTsq-series](hardware/sxtsq-series.md) `33aca22b21f0`
 - [TG-BT5-IN](hardware/tg-bt5-in.md) `f43c1d7f762b`
 - [TG-BT5-OUT](hardware/tg-bt5-out.md) `74b328f6b894`
-- [TG-LR82 / TG-LR92 User Manual](hardware/tg-lr-setup-guide.md) `d6564287d8e6`
+- [TG-LR82 / TG-LR92 User Manual](hardware/tg-lr-setup-guide.md) `3bc3e3788021`
 - [TG-LR82](hardware/tg-lr82.md) `1a02f40e5f2a`
 - [TG-LR92](hardware/tg-lr92.md) `2c42b4eccdf9`
 - [UP1302C-12](hardware/up1302c-12.md) `25cca035dbe3`
@@ -1761,3 +1770,7 @@ Pages failed: 0
 - [Wireless Wire Dish](hardware/wireless-wire-dish.md) `69127e27342d`
 - [Woobm-USB](hardware/woobm-usb.md) `90a7c6a71c07`
 - [wsAP ac lite](hardware/wsap-ac-lite.md) `0589c5252ed0`
+
+## Removed pages
+
+- `hardware/first-steps-chateau-lte6.md`

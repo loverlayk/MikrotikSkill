@@ -53,7 +53,7 @@ Restore the backup on the same RouterOS version the backup was made on. To load 
 
 ## What the backup does not contain
 
-The system backup does not include the databases of [The Dude](../../management-tools/dude) or [User Manager](../../authentication-authorization-accounting/user-manager#database). Both store their data separately on the device, so use their own backup mechanisms to save these databases.
+The system backup does not include the databases of [The Dude](../../management-tools/dude) or [User Manager](../../authentication-authorization-accounting/user-manager). Both store their data separately on the device, so use their own backup mechanisms to save these databases.
 
 ## Cloud backup
 

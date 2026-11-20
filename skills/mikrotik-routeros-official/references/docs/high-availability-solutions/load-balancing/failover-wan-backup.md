@@ -28,7 +28,15 @@ add chain=srcnat action=masquerade out-interface=ether1
 add chain=srcnat action=masquerade out-interface=ether2
 ```
 
-Next, we need to define two reachable hosts on the internet to monitor the status of each uplink. These hosts should be reliable and respond to ICMP requests. In this example, we use Google's DNS servers (8.8.8.8 and 8.8.4.4). The first two routes reach each test host through its own uplink. The default routes then resolve recursively through the test hosts, and the ISP1 connection serves as the primary link (configured with a lower distance value):
+The simplest failover setup relies on `distance` alone to prefer the primary WAN over the backup WAN. The `distance=1` route forwards traffic until it becomes inactive, and the `distance=2` route takes the traffic over at that point. RouterOS can tie route activity to gateway reachability: with `check-gateway=ping`, the router sends ICMP pings to the route gateway and marks the route inactive if the gateway stops responding (the probe interval and timeout are covered on the [Routing decision](../../user-guides/routing-and-networking-protocols/routing-decision) page):
+
+```ros
+/ip/route
+add distance=1 gateway=10.111.0.1 check-gateway=ping
+add distance=2 gateway=10.112.0.1 check-gateway=ping
+```
+
+Replies from the ISP gateway confirm only the link between the router and the gateway. The gateway can stay reachable while its internet uplink is down, so this check does not prove internet reachability through the uplink. To monitor the internet path, define two reachable hosts on the internet instead, one for each uplink. These hosts should be reliable and respond to ICMP requests. In this example, we use Google's DNS servers (8.8.8.8 and 8.8.4.4). The first two routes reach each test host through its own uplink. The default routes then resolve recursively through the test hosts, and the ISP1 connection serves as the primary link (configured with a lower distance value):
 
 ```ros
 /ip/route
