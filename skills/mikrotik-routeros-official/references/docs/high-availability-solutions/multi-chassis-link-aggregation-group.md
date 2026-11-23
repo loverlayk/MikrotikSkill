@@ -31,7 +31,7 @@ In networks with a larger number of hosts, MLAG on these switches may lead to un
 
 :::
 
-![](./img/multi-chassis-link-aggregation-group-01.png)
+![Two MLAG peer switches connected with a peer port, and a client connected to both with one LACP bond](./img/multi-chassis-link-aggregation-group-01.png)
 
 ### Packet forwarding and load balancing
 
@@ -59,7 +59,9 @@ The unicast traffic behaves similarly, but there is one key difference when comp
 
 In this example, CRS317 and CRS309 devices are used as MLAG peers, and any device with two SFP+ interfaces can be used as an LACP client. The SFP+1 interface is used on both peer nodes to create `mlag-peer-port`, and it is used for ICCP, see a network scheme below.
 
-![](./img/multi-chassis-link-aggregation-group-02.png)Configure bonding interfaces for MLAG on **Peer1** and **Peer2** devices, use a matching `mlag-id` setting on both peer devices, and set the 1-second LACPDU transmission rate:
+![Peer1 and Peer2 connected through sfp-sfpplus1, and a client connected to sfp-sfpplus2 of each peer](./img/multi-chassis-link-aggregation-group-02.png)
+
+Configure bonding interfaces for MLAG on **Peer1** and **Peer2** devices, use a matching `mlag-id` setting on both peer devices, and set the 1-second LACPDU transmission rate:
 
 ```ros
 # Peer1
@@ -77,7 +79,7 @@ In this example, we want both MLAG nodes to act as the root bridge, so we assign
 
 Optionally, you can set `frame-types=admit-only-vlan-tagged` on the bridge interface to disable the default untagged VLAN 1 (`pvid=1`).
 
-```routeros
+```ros
 # Peer1
 /interface/bridge
 add name=bridge1 vlan-filtering=yes mlag-peer-port=sfp-sfpplus1 mlag-priority=50 priority=0x1000 frame-types=admit-only-vlan-tagged
@@ -180,7 +182,7 @@ Last, check MLAG status on peer devices and make sure that Client LACP has both 
 
 ```
 
-If the **Client** device is RouterOS, below is the configuration command to create a regular [LACP bonding](./bonding.md#8023ad). To speed up LACP link establishment, use a 1-second LACPDU transmission rate:
+If the **Client** device is RouterOS, below is the configuration command to create a regular [LACP bonding](./bonding.md). To speed up LACP link establishment, use a 1-second LACPDU transmission rate:
 
 ```ros
 /interface/bonding
@@ -215,4 +217,4 @@ Use the `/interface/bridge/monitor` commands to see the current MLAG state and a
        mlag-active-role: primary   
 ```
 
-LACP bonding interface and bonding slave ports can be monitored with `monitor` and `monitor-slaves` commands. See more details on [Bonding monitoring](./bonding.md#bonding-monitoring).
+LACP bonding interface and bonding slave ports can be monitored with `monitor` and `monitor-slaves` commands. See more details on [Bonding monitoring](./bonding.md).

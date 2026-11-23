@@ -118,9 +118,9 @@ Below is the list of supported services.
 | **[EoIP](../../virtual-private-networks/eoip.md)** | + | `/interface/eoip add remote-address=192.168.1.1@vrf1` |
 | **[IPIP](../../virtual-private-networks/ipip.md)** | + | `/interface/ipip/add remote-address=192.168.1.1@vrf1` |
 | **[GRE](../../virtual-private-networks/gre.md)** | + | `/interface/gre/add remote-address=192.168.1.1@vrf1` |
-| **[SSTP-client](../../virtual-private-networks/sstp.md#sstp-client)** | + | `/interface/sstp-client/add connect-to=192.168.1.1@vrf1` |
+| **[SSTP-client](../../virtual-private-networks/sstp.md)** | + | `/interface/sstp-client/add connect-to=192.168.1.1@vrf1` |
 | **[OVPN server and client](../../virtual-private-networks/openvpn.md)** | + | `/interface/ovpn-client/add connect-to=192.168.1.1@vrf1` |
-| **[L2TP-ether](../../virtual-private-networks/l2tp/index.md#l2tp-ether)** | + | `/interface/l2tp-ether/add connect-to=192.168.2.2@vrf` |
+| **[L2TP-ether](../../virtual-private-networks/l2tp/index.md)** | + | `/interface/l2tp-ether/add connect-to=192.168.2.2@vrf` |
 | **[VXLAN](../../bridging-and-switching/vxlan.md)** | + | `/interface/vxlan/add vni=10 vtep-vrf=vrf1` |
 | **[Fetch](../../system-information-and-utilities/fetch.md)** | + | `/tool/fetch address=10.155.28.236@vrf1 mode=ftp src-path=my_file.pcap user=admin password=""` |
 | **[DNS](../../network-management/dns)** | +  Starting from RouterOS v7.21 | Specifies in which VRF the router will listen for DNS queries.`/ip/dns/set vrf=vrf1`Specifies which VRF is used to contact upstream servers.`/ip/dns/set servers=8.8.8.8@vrf1` |

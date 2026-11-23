@@ -1,118 +1,87 @@
 # Bonding Examples
 
-> This page demonstrates how to bond EoIP tunnels over two wireless links using MikroTik RouterOS, showing configuration steps for creating bonded interfaces and verifying traffic distribution across the links.
+> Bonding example for RouterOS: join two EoIP tunnels over two separate links between two routers into one bonded link, test it, and add ARP link monitoring so that a failed link is not used.
 
 # Bonding Examples
 
-## Bonding EoIP tunnels over two wireless links
+## Bond two EoIP tunnels over two links
 
-This is an example of aggregating multiple network interfaces into a single pipe. In particular, it is shown how to aggregate multiple virtual (EoIP) interfaces to get maximum throughput (MT) with emphasis on availability.
+Two routers are connected with two separate IP links, for example two wireless links. This example joins the two links into one, to use the capacity of both and to keep the connection when one fails.
 
-### Network Diagram
+![Two routers connected with two wireless links, with an EoIP tunnel over each link and a bonding interface over the tunnels](./img/bonding-examples-01.webp)
 
-Two routers R1 and R2 are interconnected via wireless links. Wireless interfaces on both sides have assigned IP addresses.
+Bonding works on layer 2 (Ethernet) interfaces only, so each link first gets an [EoIP](../../virtual-private-networks/eoip) tunnel. The bond then uses the two tunnels.
 
-### ![](./img/bonding-examples-01.webp)Configuration
+In the example the first link has the network 10.0.1.0/24 and the second 10.2.2.0/24. R1 has the addresses 10.0.1.2 and 10.2.2.2, and R2 has 10.0.1.1 and 10.2.2.1.
 
-Bonding could be used only on OSI layer 2 (Ethernet level) connections. Thus we need to create EoIP interfaces on each of the wireless links. This is done as follows:
+### Configuration
 
-On router R1:
-
-```ros
-/interface/eoip/add remote-address=10.0.1.1 tunnel-id=1 
-/interface/eoip/add remote-address=10.2.2.1 tunnel-id=2
-```
-
-and on router R2:
+Add an EoIP tunnel over each link. On R1:
 
 ```ros
-/interface/eoip/add remote-address=10.0.1.2 tunnel-id=1 
-/interface/eoip/add remote-address=10.2.2.2 tunnel-id=2
+/interface/eoip/add name=eoip-tunnel1 remote-address=10.0.1.1 \
+    tunnel-id=1
+/interface/eoip/add name=eoip-tunnel2 remote-address=10.2.2.1 \
+    tunnel-id=2
 ```
 
-The second step is to add a bonding interface and specify EoIP interfaces as slaves:
-
-R1:
+On R2:
 
 ```ros
-/interface/bonding/add slaves=eoip-tunnel1,eoip-tunnel2 mode=balance-rr
+/interface/eoip/add name=eoip-tunnel1 remote-address=10.0.1.2 \
+    tunnel-id=1
+/interface/eoip/add name=eoip-tunnel2 remote-address=10.2.2.2 \
+    tunnel-id=2
 ```
 
-R2:
+Add a bonding interface with the tunnels as slaves, and an address on it. On R1:
 
 ```ros
-/interface/bonding/add slaves=eoip-tunnel1,eoip-tunnel2 mode=balance-rr
+/interface/bonding/add name=bond1 mode=balance-rr \
+    slaves=eoip-tunnel1,eoip-tunnel2
+/ip/address/add address=192.168.0.1/24 interface=bond1
 ```
 
-The last step is to add IP addresses to the bonding interfaces:
-
-R1:
+On R2:
 
 ```ros
-/ip/address/add address=192.168.0.1/24 interface=bonding1
+/interface/bonding/add name=bond1 mode=balance-rr \
+    slaves=eoip-tunnel1,eoip-tunnel2
+/ip/address/add address=192.168.0.2/24 interface=bond1
 ```
 
-R2:
+### Add link monitoring
+
+The default link monitoring (MII) does not help here: the bond does not notice with it that the link of a tunnel failed, so it keeps sending packets into the failed tunnel and most of the traffic is lost. Use ARP monitoring, which checks that each tunnel really passes packets. On R1:
 
 ```ros
-/ip/address/add address=192.168.0.2/24 interface=bonding1
+/interface/bonding/set [find name=bond1] link-monitoring=arp \
+    arp-ip-targets=192.168.0.2
 ```
 
-### Test the configuration
-
-Now two routers are able to reach each other using addresses from the 192.168.0.0/24 network. To verify bonding interface functionality, do the following:
-
-R1:
+On R2:
 
 ```ros
-/interface/monitor-traffic eoip-tunnel1,eoip-tunnel2
+/interface/bonding/set [find name=bond1] link-monitoring=arp \
+    arp-ip-targets=192.168.0.1
 ```
 
-R2:
+When a link fails, the bond now moves its tunnel to `inactive-ports` and uses the other one:
 
 ```ros
-/tool/bandwidth-test 192.168.0.1 direction=transmit
+[admin@R1] > /interface/bonding/monitor bond1 once
+            mode: balance-rr  
+    active-ports: eoip-tunnel1
+  inactive-ports: eoip-tunnel2
 ```
 
-You should see that traffic is distributed equally across both EoIP interfaces:
+### Test
 
-```ros
-/int monitor-traffic eoip-tunnel1,eoip-tunnel2              
-    received-packets-per-second: 685      685                                  
-       received-bits-per-second: 8.0Mbps  8.0Mbps                              
-        sent-packets-per-second: 21       20                                   
-           sent-bits-per-second: 11.9kbps 11.0kbps                             
-    received-packets-per-second: 898      899                                  
-       received-bits-per-second: 10.6Mbps 10.6Mbps                             
-        sent-packets-per-second: 20       21                                   
-           sent-bits-per-second: 11.0kbps 11.9kbps                             
-    received-packets-per-second: 975      975                                  
-       received-bits-per-second: 11.5Mbps 11.5Mbps                             
-        sent-packets-per-second: 22       22                                   
-           sent-bits-per-second: 12.4kbps 12.3kbps                             
-    received-packets-per-second: 980      980                                  
-       received-bits-per-second: 11.6Mbps 11.6Mbps                             
-        sent-packets-per-second: 21       21                                   
-           sent-bits-per-second: 11.9kbps 11.8kbps                             
-    received-packets-per-second: 977      977                                  
-       received-bits-per-second: 11.6Mbps 11.5Mbps                             
-        sent-packets-per-second: 21       21                                   
-           sent-bits-per-second: 11.9kbps 11.8kbps                             
--- [Q quit|D dump|C-z pause]
-```
+The two routers reach each other with the addresses of 192.168.0.0/24. To see that the traffic uses both tunnels, watch the tunnels on R1 with `/interface/monitor-traffic eoip-tunnel1,eoip-tunnel2`, and send traffic from R2 with `/tool/bandwidth-test 192.168.0.1 direction=transmit`. The traffic is spread over both tunnels.
 
-### Link Monitoring
+`balance-rr` sends the packets of one connection through both links, so they can arrive out of order when the links have different delays.
 
-It is easy to notice that with the configuration above as soon as any individual link fails, the bonding interface throughput collapses. That's because no link monitoring is performed; consequently, the bonding driver is unaware of problems with the underlying links. Enabling link monitoring is a must in most bonding configurations. To enable ARP link monitoring, do the following:
+## Read more
 
-#### R1
-
-```ros
-/interface/bonding/set bonding1 link-monitoring=arp arp-ip-targets=192.168.0.2
-```
-
-#### R2
-
-```ros
-/interface/bonding/set bonding1 link-monitoring=arp arp-ip-targets=192.168.0.1
-```
+- [Bonding](../bonding)
+- [EoIP](../../virtual-private-networks/eoip)

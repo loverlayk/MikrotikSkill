@@ -1,5 +1,5 @@
 {
-  "index_sha256": "3b8bc4d51dced49433aafa7a5215129ed7aaa5d8bac4e151e83335c0c0eeb2ff",
+  "index_sha256": "9dd48a7fcbf0c1b8e2dbe16b164c6b6dcba602c596e3afae93a61a4170b31e92",
   "pages": {
     "https://manual.mikrotik.com/docs/introduction.md": {
       "title": "Introduction",
@@ -185,7 +185,7 @@
       "title": "List of menus with sensitive parameters",
       "markdown_url": "https://manual.mikrotik.com/docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
       "path": "docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md",
-      "sha256": "a5fda2f9ce3e99708a25865efa93979aefa4767a4cb9734bb5e4624cf2015c45"
+      "sha256": "8020e76a21b6c71fa99f1270bea567544be6959de629d41722ef61677252e012"
     },
     "https://manual.mikrotik.com/docs/getting-started/configuration-management/routeros-configuration-reset.md": {
       "title": "RouterOS configuration reset",
@@ -1001,7 +1001,7 @@
       "title": "Quality of Service",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/quality-of-service.md",
       "path": "docs/bridging-and-switching/quality-of-service.md",
-      "sha256": "37162e58113bdf470ca67f4f13cb20756a3f527fe7c022920871ddeafce70286"
+      "sha256": "c1030bd6f2cc93a225f65d9d0171165be3a7afa3ae80466afaaf33a559613355"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/macsec.md": {
       "title": "MACsec",
@@ -1103,13 +1103,19 @@
       "title": "Layer2 misconfiguration",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/layer2-misconfiguration.md",
       "path": "docs/bridging-and-switching/user-guides/layer2-misconfiguration.md",
-      "sha256": "728f0aa530a2c3dbb01c7fd00c4080395f87c5f64847f8993c1952cfbeb171ef"
+      "sha256": "2e8f85b252cac03b0b950ee9c4ee0c8ceb4782655cb709a9d5577b5abd2353b6"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/loop-protect.md": {
       "title": "Loop Protect",
       "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/loop-protect.md",
       "path": "docs/bridging-and-switching/user-guides/loop-protect.md",
       "sha256": "2b501fda13d9675b214b2652c93186a56052d3c1a156132b9831ee4754e7e68c"
+    },
+    "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md": {
+      "title": "NVIDIA DGX Spark clusters",
+      "markdown_url": "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md",
+      "path": "docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md",
+      "sha256": "9e8c33dc33047c468950761d875d0270f9a1e612fcfb1e2035626932f2ad5ecb"
     },
     "https://manual.mikrotik.com/docs/bridging-and-switching/user-guides/spanning-tree-protocol.md": {
       "title": "Spanning Tree Protocol",
@@ -1181,7 +1187,7 @@
       "title": "DHCP Server",
       "markdown_url": "https://manual.mikrotik.com/docs/network-management/dhcp/server.md",
       "path": "docs/network-management/dhcp/server.md",
-      "sha256": "01ffff0ecfc941e32ee30a4559ff80bdcc424e7ba239e45268064da37bdec421"
+      "sha256": "614a49a7386d5e0582d40df9324e57e02bc8029fe16279442e7b36ce53dcc7bb"
     },
     "https://manual.mikrotik.com/docs/network-management/dhcp/relay.md": {
       "title": "DHCP Relay",
@@ -1229,7 +1235,7 @@
       "title": "Reverse Proxy",
       "markdown_url": "https://manual.mikrotik.com/docs/network-management/proxy/reverse-proxy.md",
       "path": "docs/network-management/proxy/reverse-proxy.md",
-      "sha256": "a5f9b5adc222a6f71451b5b3d49f1d3e9d87e2ee324181cd8c4f02737223a930"
+      "sha256": "f635359bb90f7d26fc2d4086208b316fc5353d8d8cd63d9bb6231523ffae2ae3"
     },
     "https://manual.mikrotik.com/docs/network-management/socks.md": {
       "title": "SOCKS",
@@ -1277,7 +1283,7 @@
       "title": "VRF",
       "markdown_url": "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/vrf.md",
       "path": "docs/user-guides/routing-and-networking-protocols/vrf.md",
-      "sha256": "34fa57d21e483aeb724c9e2a41b8f4e0f15ed417050514ab7b84d51eeb25247e"
+      "sha256": "8feb57bd0f20d480901debe732dfecd606a6f871ed23226d9ff0e68edb2de873"
     },
     "https://manual.mikrotik.com/docs/user-guides/routing-and-networking-protocols/unicast.md": {
       "title": "Unicast routing protocols",
@@ -1667,13 +1673,13 @@
       "title": "Virtual Private Networks",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks.md",
       "path": "docs/virtual-private-networks.md",
-      "sha256": "0e9c42e1a2f2ea885c652b16d2e1f54b2e3521265bfb1282a4dceccbc277ecb7"
+      "sha256": "8d8065af7f6c8a31303f3c7467061f5733e260e7249366a2802f292e3be1ea00"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/6to4.md": {
       "title": "6to4",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/6to4.md",
       "path": "docs/virtual-private-networks/6to4.md",
-      "sha256": "24262eebf7f104611b594c00aad7fc1c56b6299c722a008a1bcfb51972fbc5fc"
+      "sha256": "85d3e52d3145cc06f64b7493e79571c8e86dc89f5824e12d28124faaa7918bbb"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/eoip.md": {
       "title": "EoIP",
@@ -1697,7 +1703,43 @@
       "title": "IPsec",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec.md",
       "path": "docs/virtual-private-networks/ipsec.md",
-      "sha256": "87c1f5d4e2a930fe3167fd650f84dbc9c543df8ff96b0b118429c6b27369bb07"
+      "sha256": "74db890f8e59badb38da92f8491934936eb57fac12531cdeeea2b2ff81af33f4"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/site-to-site.md": {
+      "title": "Site-to-site tunnel",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/site-to-site.md",
+      "path": "docs/virtual-private-networks/ipsec/site-to-site.md",
+      "sha256": "0d8b1a86282c05944b7ae65615fd3602ecebc3dfdef4f6d7c445f2ae43a48454"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/road-warrior-ikev2-certificates.md": {
+      "title": "Road warrior with certificates",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/road-warrior-ikev2-certificates.md",
+      "path": "docs/virtual-private-networks/ipsec/road-warrior-ikev2-certificates.md",
+      "sha256": "be2cc6d9a1ffa64507c8018a6b7aa9c1c005681d0abb866d67fb8e849e4a57f0"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/road-warrior-ikev2-eap.md": {
+      "title": "Road warrior with EAP and User Manager",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/road-warrior-ikev2-eap.md",
+      "path": "docs/virtual-private-networks/ipsec/road-warrior-ikev2-eap.md",
+      "sha256": "7c4561868d5fc14ab257526f94552a7c86c77587204a6e9f18e5378d8fd003ab"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/route-based-ipsec-xfrm.md": {
+      "title": "Route-based IPsec with XFRM",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/route-based-ipsec-xfrm.md",
+      "path": "docs/virtual-private-networks/ipsec/route-based-ipsec-xfrm.md",
+      "sha256": "375fd28422a0b08868cae8be719d389f1afa92dad962dc323eccfff6bd598739"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/firewall-and-routing.md": {
+      "title": "Firewall and routing for IPsec",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/firewall-and-routing.md",
+      "path": "docs/virtual-private-networks/ipsec/firewall-and-routing.md",
+      "sha256": "9df2c40d2cd6bbfd889e28d3895b7a217398a5c04eaa83a0b4f48497129fb25a"
+    },
+    "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/troubleshooting.md": {
+      "title": "Troubleshooting",
+      "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/troubleshooting.md",
+      "path": "docs/virtual-private-networks/ipsec/troubleshooting.md",
+      "sha256": "2be0ee1ca3ffab018910405bcf92333225f5e4cd6eb4c161702c918a57a386f0"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md": {
       "title": "IKEv2 EAP between NordVPN and RouterOS",
@@ -1715,7 +1757,7 @@
       "title": "L2TP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/l2tp.md",
       "path": "docs/virtual-private-networks/l2tp.md",
-      "sha256": "307b4bed84754f8577dec99720d0da08b18129477f82ec588eeb3c577999fffa"
+      "sha256": "06e27a3601092eee6a611c49e6a7e3ec3cd92685abe32d7840440868570bd717"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/l2tp/lac-and-lns-setup-with-cisco-as-lac.md": {
       "title": "LAC and LNS setup with Cisco as LAC",
@@ -1727,25 +1769,25 @@
       "title": "OpenVPN",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/openvpn.md",
       "path": "docs/virtual-private-networks/openvpn.md",
-      "sha256": "7973c1c4a64f0cc27ba6116068334e12ae09684c3ba446ab3c4ded7cc8762c9d"
+      "sha256": "adc5c3bb4c4a104f9c345da826bfbafffe1996570e57ffe35b8ff06a8de78bed"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe.md": {
       "title": "PPPoE",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe.md",
       "path": "docs/virtual-private-networks/pppoe.md",
-      "sha256": "850d209cc3573c4e97eb7f67df493ce874fd8917cd4c7445ae41c114fd75cad7"
+      "sha256": "7c026226d9835467a3d3a2fb1d9f36943e342d28ee84d71f185df9b9c04da81f"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md": {
       "title": "IPv6 PD over PPP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md",
       "path": "docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md",
-      "sha256": "538fb7ab9b7b4b76cf23fe2ac7cff3bf1924dca7db28dc72b824d29ce88854ca"
+      "sha256": "a0c0aa43f9c36306e5f7b73a582b7feca9c02594ff34146610886874a1854aaf"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md": {
       "title": "MLPPP over single and multiple links",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md",
       "path": "docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md",
-      "sha256": "ec3daa96dc9e12f5a6588abe9fa5f7641d54f17f43b5361f0d41f92ceb01afbb"
+      "sha256": "dc455489cd859f582947ff6f521097152a16f41d78178506d272347dcd172f0f"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/pptp.md": {
       "title": "PPTP",
@@ -1757,7 +1799,7 @@
       "title": "SSTP",
       "markdown_url": "https://manual.mikrotik.com/docs/virtual-private-networks/sstp.md",
       "path": "docs/virtual-private-networks/sstp.md",
-      "sha256": "22e4e7d4c9c3ec667db07f573ddd62eb93a170cff53bae556f9ad3f1f8ae314d"
+      "sha256": "47b6dd2203d036d916b251169249ad8c2415e50f58cefd334a22f1a395351c1c"
     },
     "https://manual.mikrotik.com/docs/virtual-private-networks/wireguard.md": {
       "title": "WireGuard",
@@ -1829,43 +1871,43 @@
       "title": "High Availability Solutions",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions.md",
       "path": "docs/high-availability-solutions.md",
-      "sha256": "8b14eea47d669bd4c6de58a4b5405b158386b9bb4fd9aa8e38386c151441331d"
+      "sha256": "cb0e33a4fe008fe4504c22adfc43d91c420384f36213605b91999846b6665cd3"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/bonding.md": {
       "title": "Bonding",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/bonding.md",
       "path": "docs/high-availability-solutions/bonding.md",
-      "sha256": "8f5c62b4931bc7105840acd367c6452d453a6031f502ff57a1515d44392ce7d3"
+      "sha256": "d41a76ab3e50dc8c547c12f4c49cef4e5c761c6a9ac723d68a25dbfbea34cc6f"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing.md": {
       "title": "Load Balancing",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing.md",
       "path": "docs/high-availability-solutions/load-balancing.md",
-      "sha256": "182c27a3b77bd44570afcad01b2472a825eff47a481e4e4c6dccb3c891e371ce"
+      "sha256": "7f1afe690374d60dfe30c9df1bfca8cb47b7aa3a86c24424e13d1c4c2abd587c"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/failover-wan-backup.md": {
       "title": "Failover (WAN Backup)",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
       "path": "docs/high-availability-solutions/load-balancing/failover-wan-backup.md",
-      "sha256": "95b50cf50f1580dba75a5e5ff6a4589212668357e11993d4c3edbefaf8af0e74"
+      "sha256": "df58c5fad7c73508aec6f723d96df6b9cba1e3b2254fc8630939ffb714bf6ecd"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/per-connection-classifier.md": {
       "title": "Per connection classifier",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/load-balancing/per-connection-classifier.md",
       "path": "docs/high-availability-solutions/load-balancing/per-connection-classifier.md",
-      "sha256": "e6a06bf8407c83cf2fe2780eda4f8c7ab3fd16a0032ba3497627a32224296945"
+      "sha256": "b8d51ab2d59c8c84f95e9a76470bcbdda1d07450c4bb9e8cf17aae258c8858dd"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/multi-chassis-link-aggregation-group.md": {
       "title": "Multi-chassis Link Aggregation Group",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
       "path": "docs/high-availability-solutions/multi-chassis-link-aggregation-group.md",
-      "sha256": "f87c7314736a9880fc3508d1a60dc3584354b6e93a4f395180ef653d4502c298"
+      "sha256": "f70db174fccbba56b3ca955165fffa82e31326cea72100961f5a6b73c1ebdc94"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/bonding-examples.md": {
       "title": "Bonding Examples",
       "markdown_url": "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/bonding-examples.md",
       "path": "docs/high-availability-solutions/user-guides/bonding-examples.md",
-      "sha256": "f52eaea824dd6c6182aba17635c58853778939612a6ef189f6221d6c27d4f70c"
+      "sha256": "79c3b33ebbc48ba4f19f175c66677ae066e1f612171de273fb00bad91a6b4786"
     },
     "https://manual.mikrotik.com/docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md": {
       "title": "VRRP Configuration Examples",
@@ -3815,7 +3857,7 @@
       "title": "/interface/ethernet/switch/qos/priority-flow-control",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md",
       "path": "docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md",
-      "sha256": "ac639c07bab82629b2f30f7518032c8d4bd1986fce6332fcf5f5a896fc8606c9"
+      "sha256": "17976720584ee6bc0dc218cc1ba50c1fd63e26d959fe34b3d02158d0308e4a0c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/profile.md": {
       "title": "/interface/ethernet/switch/qos/profile",
@@ -3833,7 +3875,7 @@
       "title": "/interface/ethernet/switch/qos/settings",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/settings.md",
       "path": "docs/cli-reference/interface/ethernet/switch/qos/settings.md",
-      "sha256": "ba1f5f83088e08708e86e3ff1c1bc77623939ffcec62f7ebd48e85e0ceed51b0"
+      "sha256": "2b5575f73a540464c76d7efc8487d2d2d2e9a123c118173e5687c130e1c98a59"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/ethernet/switch/qos/tx-manager.md": {
       "title": "/interface/ethernet/switch/qos/tx-manager",
@@ -4265,7 +4307,7 @@
       "title": "/interface/pppoe-client",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/pppoe-client.md",
       "path": "docs/cli-reference/interface/pppoe-client.md",
-      "sha256": "f3a1678d2d31ad683ced9603bae3b7afb5a459a4e7075c49e0d506bffe576971"
+      "sha256": "b389942b636fc35c0846c09a74ea7b48f854d9a04d11a8656084e5f23963a5ee"
     },
     "https://manual.mikrotik.com/docs/cli-reference/interface/pppoe-client/monitor.md": {
       "title": "/interface/pppoe-client/monitor",
@@ -5087,7 +5129,7 @@
       "title": "/interface/xfrm",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/interface/xfrm.md",
       "path": "docs/cli-reference/interface/xfrm.md",
-      "sha256": "0028b7936068835e81b0215a2dfa94ed1dd59835556ac0df0a605c34cdffef63"
+      "sha256": "e27ac1eaa73d604bc581f9b178efe5409bd8a6c7921a26fa4eb796c5c75afa35"
     },
     "https://manual.mikrotik.com/docs/cli-reference/iot/bluetooth.md": {
       "title": "/iot/bluetooth",
@@ -6245,7 +6287,7 @@
       "title": "/ip/reverse-proxy",
       "markdown_url": "https://manual.mikrotik.com/docs/cli-reference/ip/reverse-proxy.md",
       "path": "docs/cli-reference/ip/reverse-proxy.md",
-      "sha256": "ef349be938098ddeb56eca4d70ad36a2f5b590f42010053167581f1c76e923c7"
+      "sha256": "791e7758167d8949bfec3039a6f7c68f5bb9e8b73f72560f3124a4776e07161c"
     },
     "https://manual.mikrotik.com/docs/cli-reference/ip/route.md": {
       "title": "/ip/route",

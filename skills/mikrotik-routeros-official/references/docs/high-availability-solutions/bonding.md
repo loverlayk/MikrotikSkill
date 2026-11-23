@@ -1,205 +1,140 @@
 # Bonding
 
-> Bonding allows combining multiple ethernet interfaces into a single virtual link for higher bandwidth and failover, with MikroTik RouterOS supporting various modes including LACP and hardware offloading for specific...
+> Bonding in RouterOS: join several Ethernet-like interfaces into one link for more capacity and failover, monitor the links with MII or ARP, choose a mode (LACP, balance-xor, balance-rr, active-backup and others) and...
 
 # Bonding
 
-## Summary
-
----
-
-Bonding is a technology that allows aggregation of multiple ethernet-like interfaces into a single virtual link, thus getting higher data rates and providing failover.
+Bonding joins several Ethernet-like interfaces into one virtual interface. The traffic is spread over the links, and when a link fails the others carry it.
 
 :::warning
-Interface bonding does not create an interface with a larger link speed. Interface bonding creates a virtual interface that can load balance traffic over multiple interfaces. More details can be found in the [LAG interfaces and load balancing](../bridging-and-switching/user-guides/layer2-misconfiguration.md#lag-interfaces-and-load-balancing) page.
-
+A bonding interface does not have a larger link speed. It balances traffic over its links, so one connection is not faster than one link in most modes. See [LAG interfaces and load balancing](../bridging-and-switching/user-guides/layer2-misconfiguration).
 :::
 
-:::info
-MikroTik devices with Marvell Prestera switch and 88E6393X, 88E6191X, 88E6190 switch chips support bridge hardware offloading with bonding interfaces.
+## Join two links between two routers
 
-Only `802.3ad` (LACP), `balance-xor` (static LAG) and `active-backup` bonding modes are hardware offloaded; other bonding modes will use the CPU's resources.
-
-MikroTik devices with Marvell Prestera switch will always use Layer2+Layer3+Layer4 for a transmit hash policy, while 88E6393X, 88E6191X, 88E6190 switch chips are limited to Layer2 transmit hash. Changing the transmit hash policy manually while HW offloading is used will have no effect.
-
-See more details on [Marvell Prestera switch chip features](../bridging-and-switching/marvell-prestera-switch-chip-features.md).
-
-:::
-
-## Quick Setup Guide
-
----
-
-Let us assume that we have two Ethernet interfaces on each router (Router1 and Router2) and want to get the maximum data rate between these two routers. To make this possible, follow these steps:
-
-1. Make sure that you do not have IP addresses on interfaces that will be enslaved for a bonding interface.
-2. Add a bonding interface and an IP address on Router1:
-
-   ```ros
-   /interface/bonding/add slaves=ether1,ether2 name=bond1
-   /ip/address/add address=172.16.0.1/24 interface=bond1
-   ```
-
-3. Do the same thing on Router2:
-
-   ```ros
-   /interface/bonding/add slaves=ether1,ether2 name=bond1
-   /ip/address/add address=172.16.0.2/24 interface=bond1
-   ```
-
-4. Test the link from Router1:
-
-   ```ros
-   [admin@Router1] > ping 172.16.0.2
-     SEQ HOST                                 SIZE TTL TIME  STATUS                   
-       0 172.16.0.2                             56  64 0ms  
-       1 172.16.0.2                             56  64 0ms  
-       2 172.16.0.2                             56  64 0ms  
-       sent=3 received=3 packet-loss=0% min-rtt=0ms avg-rtt=0ms max-rtt=0ms
-   ```
-
-:::warning
-The bonding interface needs a couple of seconds to get connectivity with its peers.
-
-:::
-
-Without `mode`, the bonding interface uses `balance-rr`. To connect to a switch with LACP, use `mode=802.3ad`, described in the following 802.3ad section.
-
-## Link Monitoring
-
----
-
-It is essential to enable one of the available link monitoring options. In the example above, if one of the bonded links were to fail, the bonding driver would continue to send packets over the failed link, leading to network degradation. RouterOS bonding currently supports two methods for monitoring the link state of slave devices: MII and ARP monitoring. Due to restrictions in the bonding driver, it is not possible to use both methods simultaneously.
-
-### ARP Monitoring
-
-ARP monitoring determines link status by sending ARP queries and using the responses as an indication that the link is operational. The ARP replies are not validated—any packet received by the slave interface will mark that interface as active. This approach provides assurance that traffic is actually flowing over the links.
-
-When using balance-rr or balance-xor modes, the connected switch must be configured to evenly distribute packets across all links paths. Otherwise, all ARP replies from the target will be received on the same slave interface, which could cause the other bonded links to appear failed.
-
-ARP monitoring is enabled by configuring three properties: link-monitoring, arp-ip-targets, and arp-interval. Multiple ARP targets addresses can be specified, which is particularly useful in high availability setups. Relying on a single target creates a potential failure point—configuring additional targets increases the reliability of the ARP monitoring mechanism.
-
-To enable ARP monitoring on Router1:
+The interfaces of a bond must not have IP addresses of their own. Add a bonding interface with the two interfaces as `slaves`, and an address on it. On Router1:
 
 ```ros
-/interface/bonding/set [find name=bond1] link-monitoring=arp arp-ip-targets=172.16.0.2
+/interface/bonding/add name=bond1 slaves=ether1,ether2
+/ip/address/add address=172.16.0.1/24 interface=bond1
 ```
 
-And on Router2:
+On Router2:
 
 ```ros
-/interface/bonding/set [find name=bond1] link-monitoring=arp arp-ip-targets=172.16.0.1
+/interface/bonding/add name=bond1 slaves=ether1,ether2
+/ip/address/add address=172.16.0.2/24 interface=bond1
 ```
 
-The arp-interval value defaults to 100ms in RouterOS and does not need modification in this example. To verify that link monitoring functions correctly, disconnect one of the cable links. You may observe some ping timeouts until the ARP monitoring detects the link failure.
+The bond needs a few seconds before it passes traffic. Then test it with `/ping 172.16.0.2` on Router1. `/interface/bonding/monitor bond1` shows the mode and the links in `active-ports` and `inactive-ports`.
 
-```text
-[admin@MikroTik] > /ping 172.16.0.2
-  SEQ HOST                                     SIZE TTL TIME  STATUS                                 
-    0 172.16.0.2                                 56  64 0ms  
-    1 172.16.0.2                                 56  64 0ms  
-    2 172.16.0.2                                 56  64 0ms  
-    3 172.16.0.2                                 56  64 0ms  
-    4 172.16.0.2                                              timeout                                
-    5 172.16.0.2                                 56  64 0ms  
-    6 172.16.0.2                                 56  64 0ms  
-    sent=7 received=6 packet-loss=14% min-rtt=0ms avg-rtt=0ms max-rtt=0ms
-```
+Without `mode`, the bond uses `balance-rr`. To connect to a switch with LACP, use `mode=802.3ad`.
 
-:::note
-ARP monitoring does not require an IP address to be configured on the device—it functions regardless of the IP address set on any interface.
+## Monitor the links
 
-:::
+The bond must know when a link fails, or it keeps sending packets to the failed link and they are lost. There are two checks, and a bond uses one of them (`link-monitoring=none` turns both off).
 
-:::danger
-When ARP monitoring is active, the bonding slave will transmit ARP requests without a VLAN tag, even when an IP address is configured on a VLAN interface within the same subnet as the arp-ip-targets address.
+### MII monitoring
 
-:::
+`link-monitoring=mii` is the default. It looks at the state of the local interface: when the interface has no link, the bond stops using it (`mii-interval`, 100 ms by default).
 
-### MII Monitoring
+If the driver of an interface does not report the link state, the link always looks up. A failure that MII monitoring sees is found almost at once, sooner than with ARP monitoring.
 
-MII monitoring monitors only the state of the local interface. MII Type 1 is a method where the device driver determines whether a link is up or down. If the device driver does not support this option, the link will always appear as up. The main disadvantage of MII monitoring is that it cannot determine if the link can actually pass packet traffic, even when the link is detected as being up. MII monitoring is configured by setting the link-monitoring and mii-interval parameters.
+MII monitoring cannot see whether the link really passes traffic. If the link stays up while the path is broken, for example through a media converter, a switch or a tunnel, MII monitoring does not notice the failure.
 
-To enable MII Type1 monitoring on Router1 and Router2:
+### ARP monitoring
+
+`link-monitoring=arp` sends ARP requests to one or more addresses through each link, and uses the answers as the sign that the link works. It sees failures that MII monitoring does not. On Router1:
 
 ```ros
-/interface/bonding/set [find name=bond1] link-monitoring=mii
+/interface/bonding/set [find name=bond1] link-monitoring=arp \
+    arp-ip-targets=172.16.0.2
 ```
 
-We will leave mii-interval to its default value (100ms). When unplugging one of the cables, the failure will be detected almost instantly compared to ARP link monitoring.
+On Router2:
+
+```ros
+/interface/bonding/set [find name=bond1] link-monitoring=arp \
+    arp-ip-targets=172.16.0.1
+```
+
+When a link fails, a few packets can be lost until the check notices it. The failed link is then in `inactive-ports` of `/interface/bonding/monitor bond1`.
+
+- `arp-interval` is 100 ms by default.
+- Give several addresses in `arp-ip-targets` where you can. With one target, a failure of the target looks like a failure of all links.
+- The answers are not checked: any packet that arrives on the interface marks it as active.
+- With `balance-rr` or `balance-xor` through a switch, the switch must spread the packets evenly over the links. If all ARP answers arrive on one link, the other links look failed.
+- ARP monitoring works without an IP address on the device.
+- The ARP requests of the bond have no VLAN tag, also when the address of the target network is on a VLAN interface.
 
 ## Bonding modes
 
----
-
 ### 802.3ad
 
-802.3ad mode is an IEEE standard also known as LACP (Link Aggregation Control Protocol). It provides automatic configuration of the aggregate, requiring minimal switch configuration. This standard also mandates that frames are delivered in order, so connections should not experience packet misordering. Additionally, all devices in the aggregate must operate at the same speed and duplex mode.
-
-To create an LACP bond, set `mode=802.3ad`. The device at the other end, usually a switch, must run LACP on the same links:
+IEEE 802.3ad is the standard for link aggregation, also known as LACP (Link Aggregation Control Protocol). The two devices agree on the links of the group automatically, so the switch needs little configuration. The standard requires that frames arrive in order, so connections do not get packets out of order. All links of the group must have the same speed and duplex.
 
 ```ros
 /interface/bonding/add name=bond1 slaves=ether1,ether2 mode=802.3ad
 ```
 
-Check the bond with `/interface/bonding/monitor bond1`. When LACP works, both ports are in `active-ports` and `lacp-partner-system-id` shows the other device. If the other end does not run LACP, `lacp-partner-system-id` is missing, only one port is active, and the link can lose traffic.
+The device at the other end, usually a switch, must run LACP on the same links. Check the bond with `monitor`: when LACP works, all ports are in `active-ports` and `lacp-partner-system-id` shows the other device. If the other end does not run LACP, there is no `lacp-partner-system-id`, only one port is active, and the link can lose traffic.
 
-LACP balances outgoing traffic across the active ports based on hashed protocol header information and accepts incoming traffic from any active port. The hash includes the Ethernet source and destination address, the VLAN tag (if available), and the IPv4/IPv6 source and destination address. The calculation method depends on the transmit-hash-policy parameter. ARP link monitoring is not recommended, because ARP replies packets might arrive only on one slave port due to the transmit hash policy on the LACP peer device. This can result in unbalanced transmitted traffic, so MII link monitoring is the recommended option.
-
-:::warning
-The layer-3-and-4 transmit hash mode is not fully compatible with LACP. More details can be found in https://www.kernel.org/doc/Documentation/networking/bonding.txt
-
-:::
+- LACP balances the outgoing traffic over the active ports by a hash of the packet headers, and accepts incoming traffic on any active port. `transmit-hash-policy` selects the fields of the hash: the Ethernet addresses, the VLAN tag, and with the layer 3 policies the IP addresses.
+- Do not use ARP monitoring with LACP: the other device can send all ARP answers through one port because of its own hash.
+- `lacp-rate=1sec` makes the devices exchange LACP packets every second in place of every 30 seconds.
+- The `layer-3-and-4` hash policy is not fully compatible with LACP: see the [Linux bonding documentation](https://www.kernel.org/doc/Documentation/networking/bonding.txt).
 
 ### balance-xor
 
-This mode balances outgoing traffic across the active ports using a hashed protocol header and accepts incoming traffic from any active port. The mode is very similar to LACP, except that it is not standardized. This mode can be used together with static Link Aggregation Group (LAG) interface configurations on the connected switch.
+This mode balances the outgoing traffic over the active ports by a hash of the packet headers and accepts incoming traffic on any active port. It is like LACP without the protocol. Use it with a static link aggregation group (LAG) on the switch.
 
 ### balance-rr
 
-When this mode is set, packets are transmitted in sequential order from the first available slave to the last. The balance-rr mode is the only bonding mode that can send packets across multiple interfaces that belong to the same TCP/IP connection. When utilizing multiple sending and multiple receiving links, packets are often received out of order, which results in segment retransmission. For other protocols such as UDP, this is not a problem if client software can tolerate out-of-order packets. If a switch is used to aggregate links together, then appropriate switch port configuration is required; however, many switches do not support balance-rr. The [Quick setup guide](#quick-setup-guide) demonstrates the usage of the balance-rr bonding mode. As you can see, it is quite simple to set up. Balance-rr is also useful for bonding several wireless links; however, it requires equal bandwidth for all bonded links. If the bandwidth of one bonded link drops, then the total bandwidth of the bond will be equal to the bandwidth of the slowest bonded link.
+Packets are sent in turn through each link, from the first to the last. This is the only mode that sends the packets of one connection through several links. With several links on both sides, packets often arrive out of order, and TCP then sends segments again. For other protocols such as UDP this is not a problem if the application accepts packets out of order. This mode can join several wireless links, but the links need equal bandwidth: with one slower link, the bond has the bandwidth of the slowest link on each of its links. If a switch connects the links, its ports need a matching configuration, and many switches do not support this mode.
 
 ### active-backup
 
-This mode uses only one active slave to transmit packets. The secondary slave becomes active only if the primary slave fails. The MAC address of the bonding interface is presented on the active port to prevent switch confusion. Active-backup is the best choice for high availability setups with multiple interconnected switches.
+Only one link sends and receives. Another link takes over when the active one fails. `primary` selects the link to use when it works:
+
+```ros
+/interface/bonding/add name=bond1 slaves=ether1,ether2 \
+    mode=active-backup primary=ether1
+```
+
+The MAC address of the bond is seen on the active port only, so switches are not confused. This mode is the best choice for high availability with several switches that are connected to each other.
 
 :::warning
-ARP monitoring does not work correctly when both router devices are directly connected. In such setups, MII monitoring must be used, or a switch should be placed between the router devices and its peer.
-
+ARP monitoring does not work correctly in this mode when the two routers are connected directly. Use MII monitoring, or put a switch between the routers.
 :::
 
 ### broadcast
 
-When ports are configured with broadcast mode, all slave ports transmit the same data to the destination. This mode provides fault tolerance but does not provide load balancing.
+All links send the same data. This gives fault tolerance but no balancing.
 
 ### balance-tlb
 
-This mode balances outgoing traffic per peer. Each bonded link can operate at different speeds and duplex settings, and unlike other bonding modes, no specific switch configuration is required. The limitation of this mode is that it supports only MII link monitoring—ARP monitoring is ignored when configured—and incoming traffic is not balanced. Incoming traffic will use the link designated as the "primary" interface.
+This mode balances the outgoing traffic for each peer. The links can have different speeds and duplex settings, and the switch needs no configuration. Only MII monitoring works in this mode (ARP monitoring is ignored), and incoming traffic is not balanced: it uses the `primary` link.
 
-#### Configuration example
-
-Let's assume that the router has two links - **ether1** max bandwidth is 10Mbps and **ether2** max bandwidth is 5Mbps. The first link has more bandwidth, so we set it as a primary link:
+In this example `ether1` can carry 10 Mbps and `ether2` 5 Mbps. The first link has more capacity, so it is the primary one:
 
 ```ros
-/interface/bonding/add mode=balance-tlb slaves=ether1,ether2 primary=ether1
+/interface/bonding/add mode=balance-tlb slaves=ether1,ether2 \
+    primary=ether1
 ```
 
-![](./img/bonding-01.webp)
+![A router connected to a switch with two links, with balance-tlb: outgoing traffic uses both links, incoming traffic uses the primary link](./img/bonding-01.webp)
 
-No additional configuration is required for the switch. The image above illustrates how balance-tlb mode works. As you can see the router can communicate to all the clients connected to the switch with a total bandwidth of both links (15Mbps). But as you already know, balance-tlb is not balancing incoming traffic. In our example, clients can communicate to the router with a total bandwidth of the primary link which is 10Mbps in our configuration.
+The router can send to the clients behind the switch with the capacity of both links together (15 Mbps). The clients can send to the router with the capacity of the primary link (10 Mbps).
 
 ### balance-alb
 
-The mode is basically the same as balance-tlb but incoming IPv4 traffic is also balanced. The receive load balancing is achieved by ARP negotiation. The bonding driver intercepts locally generated ARP messages on their way out and overwrites the source hardware address with the unique address of one of the slaves in the bond such that different peers use different hardware addresses. Only MII link monitoring is supported (ARP link monitoring is ignored when configured). The additional downside of this mode is that it requires device driver capability to change MAC address. The mode is not compatible with the local-proxy-arp setting.
+This mode is like `balance-tlb`, and it also balances incoming IPv4 traffic. It does this with ARP: the bond changes the source MAC address in the ARP messages that the router sends, so that different peers use the MAC addresses of different links. Only MII monitoring works (ARP monitoring is ignored). The drivers of the interfaces must be able to change the MAC address, and the mode does not work together with `local-proxy-arp`.
 
-![](./img/bonding-02.webp)  
-The image above illustrates how balance-alb mode works. Compared to balance-tlb mode, traffic from clients can also use the secondary link to communicate with the router.
+![A router connected to a switch with two links, with balance-alb: outgoing and incoming traffic use both links](./img/bonding-02.webp)
 
-## Bonding monitoring
+## Check the state of a bond
 
----
-
-For the `802.3ad` bonding mode, more detailed monitoring options are available.
+`monitor` shows the active and inactive ports of each bond. For `802.3ad` it also shows the LACP system IDs:
 
 ```text
 /interface/bonding/monitor [find] 
@@ -212,7 +147,7 @@ For the `802.3ad` bonding mode, more detailed monitoring options are available.
     lacp-partner-system-id: B8:69:F4:44:55:66
 ```
 
-To monitor individual bonding ports, use a `monitor-slaves` command.
+`monitor-slaves` shows the LACP state of each port of a bond:
 
 ```text
 /interface/bonding/monitor-slaves bond1
@@ -222,6 +157,18 @@ Flags: A - active, P - partner
  AP port=ether5 key=17 flags="A-GSCD--" partner-sys-id=D4:CA:6D:12:06:65 partner-sys-priority=65535 partner-key=9 partner-flags="A-GSCD--" 
 ```
 
-## See also
+## Hardware offloading
 
-- [Configuration example - VLANs with bonds](../bridging-and-switching/marvell-prestera-switch-chip-features.md#configuration-example---vlans-with-bonds)
+MikroTik devices with a Marvell Prestera switch chip and with the 88E6393X, 88E6191X and 88E6190 switch chips support bridge hardware offloading with bonding interfaces.
+
+- Only the modes `802.3ad`, `balance-xor` and `active-backup` are hardware offloaded. The other modes use the CPU.
+- Devices with a Marvell Prestera switch chip always use the layer 2, 3 and 4 fields for the transmit hash. The 88E6393X, 88E6191X and 88E6190 chips use layer 2 only. A change of `transmit-hash-policy` has no effect while hardware offloading is used.
+
+See [Marvell Prestera switch chip features](../bridging-and-switching/marvell-prestera-switch-chip-features), which also has an example of VLANs with bonds.
+
+## Read more
+
+- [`/interface/bonding`](../cli-reference/interface/bonding/)
+- [Bonding Examples](user-guides/bonding-examples)
+- [Multi-chassis Link Aggregation Group](multi-chassis-link-aggregation-group)
+- [Layer 2 misconfiguration](../bridging-and-switching/user-guides/layer2-misconfiguration)

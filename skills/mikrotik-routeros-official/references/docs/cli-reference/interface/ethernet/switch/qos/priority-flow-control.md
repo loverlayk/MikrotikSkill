@@ -25,10 +25,10 @@
 <ArgTableRow arg="tx" typ="bool">Enables transmission of PFC frames.</ArgTableRow>
 <ArgTableRow arg="pause-threshold" typ="alt { pause-threshold-pct: num [ .. 100]
 , pause-threshold-byte: num [1536 .. ]
- }">Transmits a pause frame (XOFF) when the total size of enqueued packets reaches this threshold. Enqueued packets are counted per ingress port. Applies only when **tx=yes**. The value can be given either explicitly in bytes or percent of the respective shared pool size (**shared-poolX-byte-cap**).</ArgTableRow>
+ }">Transmits a pause frame (XOFF) when the total size of enqueued packets reaches this threshold. Enqueued packets are counted per ingress port. Applies only when **tx=yes**. The value can be given either explicitly in bytes or percent of the respective shared pool size (**shared-poolX-byte-cap**). With `auto` (default), the switch pauses when the shared lossless pool fills, which pauses all ports that use the profile at once; an explicit value pauses only the ingress ports that reach it. On switch chips with dynamic buffer allocation, such as the one in the CRS804, the switch applies the closest available share of the free lossless pool (the value divided by `lossless-pool-byte-cap` of `/interface/ethernet/switch/qos/monitor`), so the threshold shrinks as the pool fills.</ArgTableRow>
 <ArgTableRow arg="resume-threshold" typ="alt { resume-threshold-pct: num [ .. 100]
 , resume-threshold-byte: num [256 .. ]
- }">Transmits a resume frame (XON) when the total size of enqueued packets drops down to this threshold. Enqueued packets are counted per ingress port. Applies only when **tx=yes**. The value can be given either explicitly in bytes or percent of the respective shared pool size (**shared-poolX-byte-cap**).</ArgTableRow>
+ }">Transmits a resume frame (XON) when the total size of enqueued packets drops this far below **pause-threshold**. For example, with `pause-threshold=128KiB` and `resume-threshold=32KiB`, the resume frame is sent at 96 KiB. Enqueued packets are counted per ingress port. Applies only when **tx=yes**. The value cannot exceed **pause-threshold**. The value can be given either explicitly in bytes or percent of the respective shared pool size (**shared-poolX-byte-cap**).</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

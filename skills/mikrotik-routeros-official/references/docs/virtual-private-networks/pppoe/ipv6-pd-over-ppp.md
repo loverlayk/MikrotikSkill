@@ -1,74 +1,85 @@
 # IPv6 PD over PPP
 
-> This page demonstrates configuring IPv6 Prefix Delegation over PPPoE in RouterOS, showing how to set up DHCPv6-PD pools on servers and clients, including interface configuration and verification of dynamic prefix...
+> IPv6 prefix delegation over PPP in RouterOS: give each PPPoE user an IPv6 prefix from a pool with a dynamic DHCPv6 server, request the prefix on the client, and use it on the LAN.
 
 # IPv6 PD over PPP
 
-This example demonstrates how to set up PPPoE server and client to use IPv6 Prefix Delegation.
+A PPP server can give each user an IPv6 prefix for the network behind the user's router. This is DHCPv6 prefix delegation (PD) over the PPP link: when a user connects, the server adds a dynamic [DHCPv6 server](../../network-management/dhcp/dhcpv6-server) on the interface of the user, and the router of the user asks it for a prefix with a DHCPv6 client.
 
-IPv6 Prefixes can be delegated over PPP interfaces. When a client connects, PPP will automatically add a dynamic  [DHCPv6-PD server](../../network-management/dhcp/dhcpv6-server). This allows running a DHCPv6 client on PPP interfaces.
+The example uses PPPoE.
 
-### Configuration
+## Server
 
-### Server
-
-The dhcpv6-pd-pool parameter under PPP Profiles is used to enable PPP-PD. PPP will use the specified  [IPv6 pool](../../cli-reference/ipv6/pool/pool.md) to create a dynamic DHCP server.
-
-So the first step is to add an IPv6 pool:
+Add an IPv6 pool. This pool gives a /60 prefix to each user from a /56 block:
 
 ```ros
-/ipv6/pool
-add name=myPool prefix=2001:db8:7501:ff00::/60 prefix-length=62
+/ipv6/pool/add name=pd-pool prefix=2001:db8:7501:ff00::/56 \
+    prefix-length=60
 ```
 
-Now we can configure a PPP profile and add a PPPoE server
+Set the pool in `dhcpv6-pd-pool` of the PPP profile that the users have:
 
 ```ros
-/ppp/profile/set default dhcpv6-pd-pool=myPool
-
-/interface/pppoe-server/server 
-add service-name=test interface=ether1
+/ppp/profile/set subscribers dhcpv6-pd-pool=pd-pool
 ```
 
-### Client
+The setting applies to users that connect after the change. [PPPoE](./) shows how to add the server, the profile and the users.
 
-On the client side we need to set up PPPoE client interface and run DHCP client on it.
+## Client
+
+On the router of the user, add a DHCPv6 client on the PPPoE client interface. It asks for a prefix and puts it into an IPv6 pool:
 
 ```ros
-/interface/pppoe-client
-add name=client-test interface=ether1 user=a1 service-name=test
-
-/ipv6/dhcp-client 
-add interface=client-test pool-name=ppp-test pool-prefix-length=64
+/ipv6/dhcp-client/add interface=pppoe-out1 request=prefix \
+    pool-name=lan-pool pool-prefix-length=64 add-default-route=yes
 ```
 
-### Testing status
-
-On the server side check if a dynamic DHCP server is added and prefix is bound to a specific client:
+Give the LAN an address from the pool. `advertise=yes` announces the prefix to the devices of the LAN:
 
 ```ros
-[admin@RB1100] /ipv6/dhcp-server> print 
-Flags: D - dynamic, X - disabled, I - invalid 
- #    NAME              INTERFACE            ADDRESS-POOL            LEASE-TIME
- 0 D  <pppoe-a1>        <pppoe-a1>           myPool                  3d        
-
-[admin@RB1100] /ipv6/dhcp-server/binding> print 
-Flags: X - disabled, D - dynamic 
- #   ADDRESS                                        DU       IAID SER.. STATUS 
- 1 D 2001:db8:7501:ff04::/62                                  247 <pp.. bound  
- 
+/ipv6/address/add interface=bridge from-pool=lan-pool advertise=yes
 ```
 
-On the client side, check if DHCP client is bound and pool is added:
+## Check
+
+On the server, a dynamic DHCPv6 server exists for the user, and the binding shows the prefix:
 
 ```ros
-[admin@x86-test] /ipv6/dhcp-client> print 
-Flags: D - dynamic, X - disabled, I - invalid 
- #    INTERFACE           STATUS        PREFIX                            EXPIRES-AFTER  
-0    client-test          bound         2001:db8:7501:ff04::/62           2d23h18m17s  
+[admin@Server] > /ipv6/dhcp-server/print
+Flags: D - DYNAMIC
+Columns: NAME, INTERFACE, ADDRESS-POOL, PREFIX-POOL, PREFERENCE, LEASE-TIME
+#   NAME           INTERFACE      ADDRESS-POOL  PREFIX-POOL  PREFERENCE  LE
+0 D <pppoe-alice>  <pppoe-alice>  static-only   pd-pool             255  1d
 
-[admin@x86-test] /ipv6/pool> print 
-Flags: D - dynamic 
- #   NAME                        PREFIX                                   PREFIX-LENGTH
- 0 D ppp-test                    2001:db8:7501:ff04::/62                             64
+[admin@Server] > /ipv6/dhcp-server/binding/print
+Flags: D - DYNAMIC
+Columns: ADDRESS, DUID, SERVER, STATUS
+#   ADDRESS                  DUID                    SERVER         STATUS
+0 D 2001:db8:7501:ff00::/60  0x0003000152540b7e0101  <pppoe-alice>  bound 
 ```
+
+The server also adds a route for the prefix through the interface of the user.
+
+On the client, the DHCPv6 client is `bound` and the pool has the prefix:
+
+```ros
+[admin@Client] > /ipv6/dhcp-client/print
+Columns: INTERFACE, STATUS, REQUEST, PREFIX
+# INTERFACE   STATUS  REQUEST  PREFIX                            
+0 pppoe-out1  bound   prefix   2001:db8:7501:ff00::/60, 23h59m45s
+
+[admin@Client] > /ipv6/pool/print
+Flags: D - DYNAMIC
+Columns: NAME, PREFIX, PREFIX-LENGTH, ACTUAL-PREFIX, VALID-LIFETIME
+#   NAME      PREFIX                   PR  ACTUAL-PREFIX            VALID-LIF
+0 D lan-pool  2001:db8:7501:ff00::/60  64  2001:db8:7501:ff00::/60  23h59m44s
+```
+
+The LAN interface then has a /64 prefix from the pool, here 2001:db8:7501:ff00::/64: see `/ipv6/address/print`.
+
+## Read more
+
+- [`/ppp/profile`](../../cli-reference/ppp/profile), [`/ipv6/dhcp-client`](../../cli-reference/ipv6/dhcp-client/), [`/ipv6/pool`](../../cli-reference/ipv6/pool/)
+- [PPP AAA](../../authentication-authorization-accounting/ppp-aaa)
+- [PPPoE](./)
+- [DHCPv6 server](../../network-management/dhcp/dhcpv6-server)

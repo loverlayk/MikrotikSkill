@@ -66,6 +66,12 @@ The router keeps the `Host` header of the request and adds headers that tell the
 - `X-Forwarded-Host` - The host name the client requested.
 - `Forwarded` - The address of the router, the address of the client, the protocol and the host name, in the format of RFC 7239.
 
+### Servers in a VRF
+
+The router connects to the server in the VRF of the rule, `main` by default. When the server is reachable only through a [VRF](../../user-guides/routing-and-networking-protocols/vrf), set the `vrf` of the rule to that VRF. When the server is not reachable in the VRF of the rule, the client receives a `502 Bad Gateway` response.
+
+The `vrf` of a rule does not change where the reverse proxy accepts clients. The reverse proxy listens in the VRF of the `reverse-proxy` service in [`/ip/service`](../../system-information-and-utilities/services). The two settings are independent: a client that connects in one VRF can be forwarded to a server in another.
+
 ## Service port
 
 The reverse proxy listens on the port of the `reverse-proxy` service in [`/ip/service`](../../system-information-and-utilities/services), 443 by default. The port is open only while at least one enabled rule exists.

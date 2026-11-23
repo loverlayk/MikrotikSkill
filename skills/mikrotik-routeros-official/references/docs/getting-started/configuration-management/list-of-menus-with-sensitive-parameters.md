@@ -19,7 +19,7 @@ The table lists the menus where sensitive parameters can be configured, the para
 | `/interface/6to4` | ipsec-secret | [6to4#6to4-PropertyDescription](../../virtual-private-networks/6to4.md) |
 | `/interface/ppp-client` | password, pin | Work in Progress [PPP](../../mobile-networking/ppp.md) |
 | `/interface/sstp-client` | password | [SSTP#Properties](../../virtual-private-networks/sstp.md) |
-| `/interface/l2tp-server`  `/interface/l2tp-client`  `/interface/l2tp-ether` | ipsec-secret, password | ipsec-secret, password - [L2TP#L2TPClient](../../virtual-private-networks/l2tp/index.md#l2tp-client)  ipsec-secret - [L2TP#L2TPServer](../../virtual-private-networks/l2tp/index.md#l2tp-server)  ipsec-secret - [L2TP#L2TPEther](../../virtual-private-networks/l2tp/index.md#l2tp-ether)|
+| `/interface/l2tp-server`  `/interface/l2tp-client`  `/interface/l2tp-ether` | ipsec-secret, password | ipsec-secret, password - [L2TP#L2TPClient](../../virtual-private-networks/l2tp/index.md)  ipsec-secret - [L2TP#L2TPServer](../../virtual-private-networks/l2tp/index.md)  ipsec-secret - [L2TP#L2TPEther](../../virtual-private-networks/l2tp/index.md)|
 | `/interface/ovpn-client` | password | [OpenVPN#OVPNClient](../../virtual-private-networks/openvpn.md) |
 | `/interface/pptp-client` | password | [PPTP#PPTPClient](../../virtual-private-networks/pptp.md) |
 | `/interface/pppoe-client` | password | [PPPoE#PPPoEClient](../../virtual-private-networks/pppoe/index.md) |

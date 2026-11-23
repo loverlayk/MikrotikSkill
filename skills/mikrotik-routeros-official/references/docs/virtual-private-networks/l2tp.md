@@ -1,132 +1,268 @@
 # L2TP
 
-> This page documents MikroTik RouterOS L2TP configuration, covering client and server setup with properties like authentication methods, MTU/MRRU settings, IPsec integration, and dynamic interface management for Layer...
+> L2TP in RouterOS: set up an L2TP server and client, protect the tunnel with IPsec, open the firewall for it, carry large packets and bridge Ethernet over the PPP link, use L2TPv3, and connect two sites at layer 2...
 
 # L2TP
 
-This section covers L2TP examples. Use it to configure LAC and LNS scenarios and related L2TP interoperability cases.
+The Layer Two Tunneling Protocol (L2TP, [RFC 2661](https://tools.ietf.org/html/rfc2661)) carries a PPP link over an IP network. RouterOS uses it in two ways:
 
-Layer Two Tunneling Protocol "L2TP" extends the PPP model by allowing the L2 and PPP endpoints to reside on different devices interconnected by a packet-switched network. L2TP includes PPP authentication and accounting for each L2TP connection. Full authentication and accounting of each connection may be done through a RADIUS client or locally. L2TP traffic uses the UDP protocol for both control and data packets. UDP port 1701 is used only for link establishment, further traffic uses any available UDP port (which can be different from 1701). This means that L2TP can be used with most firewalls and routers (even with NAT) by allowing UDP traffic through the firewall or router. The L2TP standard is defined in [RFC 2661](https://tools.ietf.org/html/rfc2661). L2TPv3 support was added in version 7.1. It supports IPv4 and IPv6.
+- An L2TP server gives remote users and remote routers a PPP connection into the network. The users and their settings are in the PPP user database or on a RADIUS server: see [PPP AAA](../../authentication-authorization-accounting/ppp-aaa).
+- L2TP Ether connects two sites at layer 2: it carries Ethernet frames with L2TPv3 ([RFC 3931](https://tools.ietf.org/html/rfc3931)).
 
-## Introduction
-
-L2TP can be used as any other tunneling protocol with or without encryption. The L2TP standard says that the most secure way to encrypt data is with L2TP over IPsec (this is the default mode for the Microsoft L2TP client), as all L2TP control and data packets for a particular tunnel appear as homogeneous UDP/IP data packets to the IPsec system.
-
-Multilink PPP (MP) is supported to provide MRRU (the ability to transmit full-sized 1500 and larger packets) and bridging over PPP links with Bridge Control Protocol (BCP), which allows sending raw Ethernet frames over PPP links. This allows setting up bridging without EoIP. The bridge should either have an administratively set MAC address or an Ethernet-like interface in it, as PPP links do not have MAC addresses.
+L2TP runs over IPv4 and IPv6. It uses UDP port 1701 for both the control and the data packets, so it passes most firewalls and NAT.
 
 :::warning
-L2TP does not provide encryption mechanisms for tunneled traffic. IPsec can be used for additional security layers.
+L2TP does not encrypt the traffic. Use it with IPsec when the tunnel crosses a network that you do not trust.
 :::
 
-## Quick Example
+![An L2TP client connects to an L2TP server over the internet](./img/l2tp-01.webp)
 
-![](./img/l2tp-01.webp)
+## Set up a server and a client
 
-### L2TP Server
-
-On the server side, enable L2TP-server and create a PPP profile for a particular user:
+On the server, add a pool, a profile and a user, and enable the L2TP server. The router gets the address 10.0.0.1 inside the tunnels:
 
 ```ros
-[admin@MikroTik] > /interface/l2tp-server/server/set enabled=yes
-[admin@MikroTik] > /ppp/secret/add local-address=10.0.0.2 name=MT-User password=StrongPass profile=default-encryption remote-address=10.0.0.1 service=l2tp
+/ip/pool/add name=vpn-pool ranges=10.0.0.10-10.0.0.100
+/ppp/profile/add name=vpn local-address=10.0.0.1 \
+    remote-address=vpn-pool
+/ppp/secret/add name=alice password=Example-pass-1 profile=vpn \
+    service=l2tp
+/interface/l2tp-server/server/set enabled=yes default-profile=vpn
 ```
 
-### L2TP Client
-
-This example configures an L2TP client with username "MT-User", password "StrongPass" and server 192.168.51.3:
+On the client, a RouterOS router in this example, add an L2TP client with the address of the server:
 
 ```ros
-[admin@MikroTik] > /interface/l2tp-client \
-add connect-to=192.168.51.3 disabled=no name=MT-User password=StrongPass user=MT-User
-[admin@MikroTik] > /interface/l2tp-client/print 
-Flags: X - disabled, R - running 
-0 R name="MT-User" max-mtu=1450 max-mru=1450 mrru=disabled connect-to=192.168.51.3 user="MT-User" 
-password="StrongPass" profile=default-encryption keepalive-timeout=60 use-ipsec=no ipsec-secret="" 
-allow-fast-path=no add-default-route=no dial-on-demand=no allow=pap,chap,mschap1,mschap2
+/interface/l2tp-client/add name=l2tp-office connect-to=203.0.113.1 \
+    user=alice password=Example-pass-1 disabled=no
 ```
 
-## L2TP Ether
+The client shows the state and the addresses of the link:
 
-### Overview
+```ros
+[admin@Client] > /interface/l2tp-client/monitor l2tp-office once
+               status: connected           
+               uptime: 10s                 
+             encoding:                     
+                  mtu: 1450                
+                  mru: 1450                
+        local-address: 10.0.0.100          
+       remote-address: 10.0.0.1            
+   local-ipv6-address: fe80::978e:f47e:0:5 
+  remote-ipv6-address: fe80::2562:b1b9:f0:0
+```
 
-Layer 2 Tunnel Protocol Version 3 (L2TPv3) is defined by [RFC 3931](https://tools.ietf.org/html/rfc3931) from the Internet Engineering Task Force (IETF). It introduces various improvements to the original L2TP, allowing the encapsulation of Layer 2 (L2) payloads within L2TP for use in L2 virtual private networks (VPNs). An L2TP Ether tunnel transports raw Ethernet frames (an Ethernet pseudowire, Pseudowire-Type 5) between two endpoints.
+The server adds a dynamic interface for the user and lists the user in `/ppp/active`:
 
-To establish an L2TP Ether tunnel, the L2TP Ether interface must be created on the client side, while the L2TP server must be enabled on the remote (server) side. Once both sides are configured correctly, a dynamic interface is automatically created between them, forming a transparent Layer 2 connection across the IP network.
+```ros
+[admin@Server] > /interface/l2tp-server/print detail
+Flags: D - DYNAMIC; R - RUNNING
+0 DR name="<l2tp-alice>" user="alice" mtu=1450 mru=1450
+     client-address="203.0.113.2" uptime=10s encoding=""
+```
 
-L2TP Ether can encapsulate over UDP (`l2tp-proto-version=l2tpv3-udp`, the default) or directly over IP (`l2tp-proto-version=l2tpv3-ip`). Both IPv4 and IPv6 overlay networks are supported; `connect-to` accepts either an IPv4 or an IPv6 address.
+- An empty `encoding` means that the link is not encrypted.
+- To send the traffic for the office network through the tunnel, add a route on the client with the client interface as the gateway, or set `add-default-route=yes` to send all traffic through it.
+- The client and the server both use UDP port 1701. With `random-source-port=yes` the client uses a random source port.
 
-### Topology and roles
+## Protect the tunnel with IPsec
 
-An L2TP Ether tunnel has two distinct roles:
+With `use-ipsec`, the server and the client add the IPsec configuration for the tunnel themselves. Both sides need the same `ipsec-secret`:
 
-- **Active (client) side** — you create an `/interface/l2tp-ether` entry with `connect-to=` pointing at the server. This side initiates the L2TPv3 control connection and the Ethernet session.
-- **Passive (server) side** — you only enable the L2TP server (`/interface/l2tp-server/server`). When the active side connects, RouterOS **automatically creates a dynamic** `l2tp-ether` interface (flag `D`) on the server; you do not configure one by hand there.
+```ros
+/interface/l2tp-server/server/set use-ipsec=required \
+    ipsec-secret=Example-ipsec-secret-1
+```
 
-Typically you add both interfaces to a bridge so the two sites share a Layer 2 domain.
+```ros
+/interface/l2tp-client/set l2tp-office use-ipsec=yes \
+    ipsec-secret=Example-ipsec-secret-1
+```
 
-### Configuration Example
+- `use-ipsec=yes` on the server accepts clients with and without IPsec. `use-ipsec=required` refuses a client without IPsec, and the log of the server has `L2TP connection rejected no IPsec encryption while it was required`.
+- The server adds a dynamic IPsec peer `l2tp-in-server` and, for each client, a dynamic policy for UDP port 1701 in transport mode. The client adds a dynamic peer and policy with the name of its interface.
+- Several clients behind the same NAT address cannot use L2TP with IPsec at the same time in this mode.
+- Microsoft Windows uses L2TP with IPsec by default.
+- Take care if the router also has static IPsec peers: the dynamic peer of the L2TP server listens for all addresses.
 
-This example establishes an L2TP Ether tunnel between two routers.
+When IPsec protects the link, `encoding` shows the algorithms:
 
-#### Server Side (L2TP Server)
+```ros
+[admin@Server] > /interface/l2tp-server/print detail
+Flags: D - DYNAMIC; R - RUNNING
+0 DR name="<l2tp-alice>" user="alice" mtu=1450 mru=1450
+     client-address="203.0.113.2" uptime=25s encoding="cbc(aes) + hmac(sha1)"
+```
+
+## Allow L2TP in the firewall
+
+The default firewall drops connections that come from the internet. For L2TP with IPsec, accept IKE, IPsec ESP, and UDP port 1701 only when IPsec protects it. Put the rules before the default drop rule:
+
+```ros
+/ip/firewall/filter
+add chain=input action=accept protocol=udp dst-port=500,4500 \
+    in-interface-list=WAN comment="accept IKE" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+add chain=input action=accept protocol=ipsec-esp \
+    in-interface-list=WAN comment="accept IPsec ESP" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+add chain=input action=accept protocol=udp dst-port=1701 \
+    ipsec-policy=in,ipsec in-interface-list=WAN \
+    comment="accept L2TP over IPsec" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+```
+
+All three rules are needed: the client connects only when the last one is in place. UDP port 4500 is used when there is NAT between the client and the server.
+
+For L2TP without IPsec, one rule accepts UDP port 1701, without `ipsec-policy`.
+
+A connected user can reach the devices of the LAN, but not the services of the router. [PPP AAA](../../authentication-authorization-accounting/ppp-aaa) shows how to limit what the users reach.
+
+## Connect a branch office
+
+An L2TP client on a branch router connects the branch network to the office. The tunnel is a routed link, so each side needs a route to the network of the other side. In this example the office LAN is 192.168.88.0/24 and the branch LAN is 192.168.2.0/24.
+
+On the office router, give the branch a fixed address and a route to its LAN in the user entry. The router adds the route when the branch connects:
+
+```ros
+/ppp/secret/add name=branch1 password=Example-pass-2 profile=vpn \
+    service=l2tp remote-address=10.0.0.5 \
+    routes="192.168.2.0/24 10.0.0.5 1"
+```
+
+On the branch router, add the client and a route to the office LAN through it:
+
+```ros
+/interface/l2tp-client/add name=l2tp-office connect-to=203.0.113.1 \
+    user=branch1 password=Example-pass-2 use-ipsec=yes \
+    ipsec-secret=Example-ipsec-secret-1 disabled=no
+/ip/route/add dst-address=192.168.88.0/24 gateway=l2tp-office
+```
+
+- The two LANs must use different networks.
+- For a tunnel between two routers with static addresses, [IPsec](../ipsec/site-to-site) or [WireGuard](../wireguard) needs no PPP users.
+
+## Send large packets and bridge Ethernet
+
+The MTU of an L2TP link is 1450 bytes by default, so a 1500-byte packet that must not be fragmented does not pass. Multilink PPP splits such packets and joins them on the other side. Set `mrru` on the server and on the client:
+
+```ros
+/interface/l2tp-server/server/set mrru=1600
+```
+
+```ros
+/interface/l2tp-client/set l2tp-office mrru=1600
+```
+
+A PPP link can also carry Ethernet frames, with the Bridge Control Protocol (BCP). Name a bridge in the PPP profile on both sides, and the router adds the link to the bridge as a dynamic port when the user connects:
+
+```ros
+/ppp/profile/set vpn bridge=bridge
+```
+
+- Set `mrru` as well, so that full-size Ethernet frames pass.
+- A PPP link has no MAC address. The bridge needs an Ethernet-like port or a MAC address that you set (`admin-mac`).
+- To connect two sites at layer 2 only, L2TP Ether is simpler.
+
+## Use L2TPv3
+
+The client uses L2TP version 2 by default. `l2tp-proto-version` selects version 3 over UDP (`l2tpv3-udp`) or directly over IP (`l2tpv3-ip`, IP protocol 115). Version 3 needs a circuit ID on the client:
+
+```ros
+/interface/l2tp-client/set l2tp-office \
+    l2tp-proto-version=l2tpv3-udp l2tpv3-circuit-id=office
+```
+
+The server accepts both versions by default. `accept-proto-version` of the server limits it to one, and `accept-pseudowire-type` limits it to PPP sessions (`ppp`) or to Ethernet sessions (`ether`).
+
+## Connect two sites at layer 2 with L2TP Ether
+
+An L2TP Ether tunnel carries Ethernet frames between two routers. One router connects to the other:
+
+- The active side has an `/interface/l2tp-ether` entry with the address of the other router in `connect-to`.
+- The passive side has the L2TP server enabled.
+
+On the passive side, enable the server and add an interface for the tunnel. `connect-to=0.0.0.0` makes it wait for the connection, and `circuit-id` names the tunnel:
 
 ```ros
 /interface/l2tp-server/server/set enabled=yes
+/interface/l2tp-ether/add name=l2tp-site1 connect-to=0.0.0.0 \
+    circuit-id=site1
 ```
 
-#### Client Side (L2TP Ether Interface)
+On the active side, use the same circuit ID:
 
 ```ros
-/interface/l2tp-ether/add connect-to=1.1.1.1 disabled=no
+/interface/l2tp-ether/add name=l2tp-ether1 connect-to=203.0.113.1 \
+    circuit-id=site1
 ```
 
-Verify the session on the active side (example output):
+Add the interface to the LAN bridge on each side (`l2tp-ether1` on the active side), and the two networks are one layer 2 network. Both sides then share one network: use one DHCP server and different addresses for the two routers.
 
 ```ros
-[admin@MikroTik] > /interface/l2tp-ether/print
-Flags: X - disabled, R - running, D - dynamic, u - unmanaged 
- 0 R name="l2tp-ether1" mac-address=02:3D:2B:00:00:00 connect-to=1.1.1.1 ...
+/interface/bridge/port/add bridge=bridge interface=l2tp-site1
 ```
 
-On the passive side, a **dynamic** interface (flag `D`) appears automatically once the tunnel is up (example output):
+`monitor` shows the state of the tunnel:
 
 ```ros
-[admin@MikroTik] > /interface/l2tp-ether/print
-Flags: X - disabled, R - running, D - dynamic, u - unmanaged 
- 0 DR name="l2tp-ether1" mac-address=02:3D:2B:00:00:01 connect-to=0.0.0.0 ...
+[admin@Client] > /interface/l2tp-ether/monitor l2tp-ether1 once
+           status: link up    
+       circuit-id: site1      
+    cookie-length: 0          
+    header-format: L2TPv3 UDP 
+      l2-sublayer: no         
+   remote-sess-id: 33         
+    local-sess-id: 125        
+  control-conn-id: 104        
+     peer-address: 203.0.113.1
+           uptime: 17s        
 ```
 
-### Server-side session acceptance
+- The MTU of the interface is 1450 bytes. Check that the bridge and the devices behind it can work with this MTU.
+- `l2tp-proto-version=l2tpv3-ip` on the active side carries the tunnel directly over IP and not over UDP.
+- `use-ipsec` and `ipsec-secret` protect the tunnel in the same way as for an L2TP client, and the firewall rules for L2TP with IPsec apply. On the passive side, these settings and the cookie and digest settings are in `/interface/l2tp-server/server`, not in the interface.
+- A static tunnel without a control connection is also possible: `unmanaged-mode` with the tunnel IDs, session IDs and cookies set by hand. See the [CLI reference](../../cli-reference/interface/l2tp-ether/).
 
-Whether the server accepts an incoming Ethernet session is controlled by the L2TP server settings in `/interface/l2tp-server/server`. See the [CLI reference](../../cli-reference/interface/l2tp-server/server) for the full property list.
+### Dynamic interfaces on the passive side
 
-| Setting | What it controls |
-|---|---|
-| `max-sessions` | Maximum number of concurrent L2TP sessions on the server. Once the limit is reached, the server rejects new sessions. |
-| `accept-proto-version` | Which L2TP protocol versions to accept (`all`, `l2tpv2`, `l2tpv3`). |
-| `accept-pseudowire-type` | Which pseudowire types to accept (`all`, `ether`, `ppp`). This must allow `ether` for an L2TP Ether tunnel. |
-| `l2tpv3-ether-interface-list` | The interface list the dynamic Ethernet pseudowire endpoints are attached to. |
-| `l2tpv3-circuit-id` | The L2TPv3 circuit identifier the server uses for incoming sessions. |
-| `l2tpv3-cookie-length` | The L2TPv3 cookie length the server advertises. |
-| `l2tpv3-digest-hash` | The L2TPv3 digest hash algorithm the server uses. |
-
-### Matching circuit-id and cookies
-
-When the server sets `l2tpv3-circuit-id`, `l2tpv3-cookie-length` or `l2tpv3-digest-hash`, corresponding values are expected on the client-side `l2tp-ether` entry (`circuit-id`, `cookie-length`, `digest-hash`). If these do not align, the session may fail even though the control connection comes up — check that both ends agree. See the [L2TP Ether CLI reference](../../cli-reference/interface/l2tp-ether/) for the client-side properties.
-
-### Verify and troubleshoot
-
-If the L2TP control connection comes up but the Ethernet session is immediately torn down, the tunnel will not work even though the transport appears healthy.
-
-| Symptom | Likely cause | Check |
-|---|---|---|
-| Log shows `maximum session count reached`, then CDN (`Result-Code=4`) and the tunnel disconnects | Session rejected when the server session limit is reached — a common cause to check, not a guaranteed diagnosis | Confirm `max-sessions` on `/interface/l2tp-server/server` is not limiting new sessions |
-| Session rejected, no dynamic interface on the server | Pseudowire or protocol type not accepted | `accept-pseudowire-type` should allow `ether`; `accept-proto-version` should allow `l2tpv3` |
-| No dynamic interface on the passive side | The interface list does not cover the tunnel endpoint | Review `l2tpv3-ether-interface-list` |
-| Session establishes but no traffic passes | `circuit-id` / `cookie-length` / `digest-hash` not aligned between client and server | Compare the `l2tp-ether` and `l2tp-server` settings |
-
-Inspect a live session at any time with the [monitor](../../cli-reference/interface/l2tp-ether/monitor) command:
+When the active side has no circuit ID, the passive side does not need an interface: the server adds a dynamic one for each tunnel.
 
 ```ros
-/interface/l2tp-ether/monitor l2tp-ether1
+[admin@Server] > /interface/l2tp-ether/print detail
+Flags: D - DYNAMIC; R - RUNNING
+0 DR name="<l2eth-23>" mtu=auto actual-mtu=1450 connect-to=0.0.0.0
+     mac-address=FE:36:0B:1B:B5:5E use-ipsec=no allow-fast-path=no
+     l2tp-proto-version=l2tpv3-udp circuit-id="<l2eth-23>" cookie-length=0
+     digest-hash=md5 use-l2-specific-sublayer=no
 ```
+
+A dynamic interface gets a new name with each connection. To use it in a bridge, set `l2tpv3-ether-interface-list` of the server: the server adds each dynamic interface to this interface list, and a bridge port can be an interface list.
+
+```ros
+/interface/list/add name=l2tp-ether-ports
+/interface/l2tp-server/server/set \
+    l2tpv3-ether-interface-list=l2tp-ether-ports
+/interface/bridge/port/add bridge=bridge interface=l2tp-ether-ports
+```
+
+### Troubleshoot L2TP Ether
+
+Log the `l2tp` topic on the passive side to see why a tunnel does not come up:
+
+```ros
+/system/logging/add topics=l2tp,debug action=memory
+```
+
+| What you see | What to check |
+| :-- | :-- |
+| The active side shows `status: link down`. The log of the passive side has `has reached maximum session count, disconnecting`, and the server answers with CDN and `Result-Code=4`. | The server found no interface for the session. If the active side has a `circuit-id`, the passive side needs an `l2tp-ether` interface with `connect-to=0.0.0.0` and the same `circuit-id`. Also check `max-sessions` of the server. |
+| The tunnel does not come up at all. | `accept-proto-version` of the server must allow `l2tpv3`, and `accept-pseudowire-type` must allow `ether`. In a firewall, accept UDP port 1701, or IP protocol 115 for `l2tpv3-ip`. |
+| The tunnel does not come up after a change of `digest-hash`. | With `digest-hash=none` on one side and a hash on the other, the tunnel stays down. Use the same value on the active side and in `l2tpv3-digest-hash` of the server. |
+
+## Read more
+
+- [`/interface/l2tp-server/server`](../../cli-reference/interface/l2tp-server/server), [`/interface/l2tp-server`](../../cli-reference/interface/l2tp-server/), [`/interface/l2tp-client`](../../cli-reference/interface/l2tp-client/), [`/interface/l2tp-ether`](../../cli-reference/interface/l2tp-ether/)
+- [PPP AAA](../../authentication-authorization-accounting/ppp-aaa)
+- [IPsec](../ipsec/)
+- [LAC and LNS setup with Cisco as LAC](lac-and-lns-setup-with-cisco-as-lac)

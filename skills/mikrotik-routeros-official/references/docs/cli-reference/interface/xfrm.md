@@ -9,7 +9,7 @@
 
 An XFRM interface provides a route-based IPsec endpoint. Bind an IPsec policy group to the interface, then route traffic for the remote network through the interface. The policies in the bound group encrypt traffic that enters the interface, and decrypted traffic is delivered through the same interface.
 
-See [Route-based IPsec with XFRM interfaces](../../virtual-private-networks/ipsec/#route-based-ipsec-with-xfrm-interfaces) for a configuration example.
+See [Route-based IPsec with XFRM interfaces](../../virtual-private-networks/ipsec/route-based-ipsec-xfrm) for a configuration example.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">Whether the interface is disabled.</ArgTableRow>

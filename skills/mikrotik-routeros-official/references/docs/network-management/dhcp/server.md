@@ -107,6 +107,40 @@ To set the address before the device connects, add a static lease with its MAC a
 
 The address does not have to be in the pool.
 
+### IPv6-mostly network
+
+In an IPv6-mostly network, devices that can work without IPv4 use only IPv6, and the other devices still get an IPv4 address. A device that can work without IPv4 asks the DHCP server for the IPv6-Only Preferred option (option 108, RFC 8925). With `ipv6-only-preferred=yes`, the server answers such a client with the option and without an address, and does not create a lease for it. Clients that do not ask for the option get an address from the pool.
+
+Prerequisites:
+
+- The clients get IPv6 addresses and an IPv6 default route on this network.
+- The network has a NAT64 translator, through which the IPv6-only clients reach IPv4 destinations. RouterOS does not support NAT64 (see [NAT](../../firewall-and-quality-of-service/firewall/nat)), so the translator is another device.
+
+Enable the option on the DHCP server, here the `defconf` server of the default configuration:
+
+```ros
+/ip/dhcp-server/set defconf ipv6-only-preferred=yes
+```
+
+The clients also need the prefix of the NAT64 translator. The router sends it in its router advertisements when `pref64` is set in [`/ipv6/nd`](../../cli-reference/ipv6/nd). This example uses the well-known NAT64 prefix; set the prefix of your translator:
+
+```ros
+/ipv6/nd/set [find default=yes] pref64=64:ff9b::/96
+```
+
+To check the result, connect a client that asks for the option and one that does not, and print the leases. Only the client that did not ask for the option has a lease:
+
+```ros
+/ip/dhcp-server/lease/print
+```
+
+```text
+Flags: D - DYNAMIC
+Columns: ADDRESS, MAC-ADDRESS, SERVER, STATUS, LAST-SEEN
+#   ADDRESS         MAC-ADDRESS        SERVER   STATUS  LAST-SEEN
+0 D 192.168.88.252  D4:CA:6D:11:22:33  defconf  bound   0s
+```
+
 ## Properties
 
 All properties of the DHCP server are described in the [`/ip/dhcp-server`](../../cli-reference/ip/dhcp-server/) CLI reference. The following behavior needs more explanation.

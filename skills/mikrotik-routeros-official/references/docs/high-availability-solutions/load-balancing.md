@@ -1,23 +1,15 @@
 # Load Balancing
 
-> Network load balancing in MikroTik RouterOS allows distributing traffic across multiple links without dynamic routing, with options for per-connection or per-packet methods. The documentation includes setup examples...
+> Load balancing in RouterOS: use two or more links at the same time, the difference between per-connection and per-packet balancing, which method does which, and a simple failover example.
 
 # Load Balancing
 
-- [Failover (WAN Backup)](./failover-wan-backup.md)
-- [Firewall Marking](../../firewall-and-quality-of-service/firewall/mangle.md)
-- [Bonding Load Balancing](../bonding.md)
-- [OSPF Load Balancing](../../user-guides/routing-and-networking-protocols/unicast/ospf/index.md)
-- [Per connection classifier](./per-connection-classifier.md)
+Load balancing spreads traffic over two or more links. A router with two internet links can use both at the same time, and keep working when one of them fails.
 
-## Introduction
+There are two kinds of balancing:
 
-Network load balancing is the ability to balance traffic across two or more links.
-
-There are two types of balancing methods:
-
-- per-packet - each packet of a single stream can be forwarded over different links. This method will work reliably especially on TCP and secure connections only when you are able to control both balancing endpoints.
-- per-connection - all packets of the same connection (stream) are always sent over one link. This method is mandatory in setups where only one end of the balancing is under our control, for example, a home router with multiple WAN connections.
+- **Per-connection.** All packets of one connection use the same link. This is the only kind that works when you control one end only, for example a home or office router with two internet providers: the other end sees each connection from one public address.
+- **Per-packet.** The packets of one connection can use different links. This works reliably, especially for TCP and encrypted connections, only when you control both ends of the links.
 
 | Method |  | Per-connection | Per-packet |
 | :-- | :-- | :-- | :-- |
@@ -29,19 +21,25 @@ There are two types of balancing methods:
 | OSPF |  | **Yes** | No |
 | BGP |  | **Yes** | No |
 
-## Simple Failover Example
+| You want to | See |
+| :-- | :-- |
+| Use the second internet link only when the first fails | [Failover (WAN Backup)](failover-wan-backup) |
+| Use two internet links at the same time | [Per connection classifier](per-connection-classifier) |
+| Join several links between two of your own devices | [Bonding](../bonding) |
+| Balance over equal routes of a routing protocol | [OSPF](../../user-guides/routing-and-networking-protocols/unicast/ospf/) |
+| Mark packets and connections for your own balancing rules | [Mangle](../../firewall-and-quality-of-service/firewall/mangle) |
 
-The simplest failover setup would be to use multiple gateways when one gateway is active and another one takes over when the first one fails.
+## Simple failover
 
-To make this work, configure a larger **distance** value for the secondary one, and **check-gateway** for the first one:
+The simplest setup with two gateways uses one gateway and changes to the other when the first one fails. Give the second route a larger `distance`, and add `check-gateway` to the routes:
 
 ```ros
 /ip/route/add gateway=192.168.1.1 distance=1 check-gateway=ping
-/ip/route/add gateway=192.168.2.1 distance=2
+/ip/route/add gateway=192.168.2.1 distance=2 check-gateway=ping
 ```
 
-The *check-gateway* will make sure the gateway is up only when actual traffic can reach the gateway. When the ping fails the first gateway will become inactive and the second one will take over,  and when the first gateway recovers  it will become active and make the second gateway work again as a backup.
+The router pings the gateway of each route. When the first gateway does not answer, its route becomes inactive and the second route takes over. When the first gateway answers again, its route is active again and the second is the backup. [Failover (WAN Backup)](failover-wan-backup) has the complete setup and a way to check the path behind the gateway.
 
-## Related topics
+## In this section
 
 <DocCardList />

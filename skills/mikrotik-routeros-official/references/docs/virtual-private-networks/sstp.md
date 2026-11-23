@@ -1,116 +1,159 @@
 # SSTP
 
-> SSTP provides secure remote access over HTTPS using TLS encryption, enabling VPN connections through firewalls and NAT devices. The page details SSTP client and server properties including authentication, encryption...
+> SSTP in RouterOS: set up an SSTP server and client, secure the tunnel with a server certificate, require client certificates, choose the TLS settings, open the firewall, and find why a client does not connect.
 
 # SSTP
 
-Secure Socket Tunneling Protocol (SSTP) encapsulates Point-to-Point Protocol (PPP) traffic within a Transport Layer Security (TLS) session to provide secure remote access over the internet. SSTP uses HTTPS over TCP port 443, allowing VPN traffic to pass through most firewalls, network address translation (NAT) devices, and proxy servers that typically permit standard web traffic.
+The Secure Socket Tunneling Protocol (SSTP) carries a PPP link inside a TLS session. It uses TCP port 443, the port of HTTPS, so it passes most firewalls, NAT devices and web proxies. Use SSTP where networks block other VPN protocols.
 
-SSTP supports strong encryption, authentication, and data integrity through TLS, helping protect transmitted data from interception or tampering. Because it relies on TCP, SSTP can provide reliable connections in unstable network conditions, although it introduces additional overhead compared to VPN protocols based on UDP.
+- The users and their settings are in the PPP user database or on a RADIUS server: see [PPP AAA](../authentication-authorization-accounting/ppp-aaa).
+- SSTP runs over TCP. It is reliable on a bad link, but it has more overhead than a VPN protocol that uses UDP.
+- Microsoft Windows has an SSTP client.
 
-SSTP is commonly used in environments where other VPN protocols, such as PPTP, L2TP/IPsec, or OpenVPN on non-standard ports, are blocked by network restrictions.
+A connection is made in four steps:
 
-## Introduction
+![The four steps of an SSTP connection between a client and a server](./img/sstp-01.webp)
 
-The SSTP connection mechanism:
+1. The client opens a TCP connection to the server, to port 443 by default.
+2. TLS starts, and the client checks the certificate of the server if it is set to do so.
+3. The client sends SSTP control packets inside the HTTPS session, and both sides set up the SSTP connection.
+4. PPP starts over SSTP: the client authenticates and the link gets its addresses.
 
-![](./img/sstp-01.webp)
+## Set up a server and a client
 
-1. A TCP connection is established from client to server (by default on port 443).
-2. SSL validates the server certificate. If a certificate is valid, a connection is established; otherwise, the connection is turned down (see the note below).
-3. The client sends SSTP control packets within the HTTPS session which establishes the SSTP state machine on both sides.
-4. PPP negotiation over SSTP. The client authenticates to the server and binds IP addresses to the SSTP interface.
+![An SSTP client connects to an SSTP server over the internet](./img/sstp-02.webp)
 
-The SSTP tunnel is now established and packet encapsulation can begin.
-
-:::warning
-Starting from v5.0beta2, SSTP does not require certificates to operate and can use any available authentication type. This feature works only between two MikroTik routers, as it is not in accordance with Microsoft standards. Otherwise, to establish secure tunnels, **mschap** authentication and client/server certificates from the same chain should be used.
-
-**Warning:** TLS SNI support has been added starting with the 7.15beta10 version, the extension is added to client hello packets if the "Add SNI" checkbox is checked or set in CLI:
-
-`/interface/sstp-client/set` add-sni=yes
-:::
-
-## Certificates
-
-To set up a secure SSTP tunnel, certificates are required. On the server, authentication is done only by username and password, but on the client the server is authenticated with a server certificate. It is also used by the client to cryptographically bind SSL and PPP authentication — the client sends a special value over the SSTP connection to the server, derived from the key data generated during PPP authentication and the server certificate. This allows the server to check if both channels are secure.
-
-If SSTP clients are on Windows PCs, the only way to set up a secure SSTP tunnel with a self-signed certificate is by importing the "server" certificate on the SSTP server and adding a CA certificate on the Windows PC in the [trusted root](https://technet.microsoft.com/en-us/library/dd458982.aspx).
-
-:::warning
-If your server certificate is issued by a CA which is already known to Windows, the Windows client works without any additional certificate imports into a trusted root.
-
-**Caution:** RSA key length must be at least 472 bits if a certificate is used by SSTP. Shorter keys are considered security threats.
-:::
-
-A similar configuration on a RouterOS client is to import the CA certificate and enable the verify-server-certificate option. In this scenario, Man-in-the-Middle attacks are not possible.
-
-Between two MikroTik routers, it is also possible to set up an insecure tunnel without certificates. In this case, data going through the SSTP tunnel uses anonymous DH and Man-in-the-Middle attacks are easily accomplished. This scenario is not compatible with Windows clients.
-
-It is also possible to make a secure SSTP tunnel by adding additional authorization with a client certificate. Configuration requirements are:
-
-- Certificates on both server and client.
-- Verification options enabled on server and client.
-
-This scenario is not possible with Windows clients, because there is no way to set up a client certificate on Windows.
-
-#### Certificate Error Messages
-
-When the SSL handshake fails, you see one of the following certificate errors:
-
-- **Certificate is not yet valid** - notBefore certificate date is after the current time.
-- **Certificate has expired** - certificate expiry date is before the current time.
-- **Invalid certificate purpose** - the supplied certificate cannot be used for the specified purpose.
-- **Self signed certificate in a chain** - the certificate chain could be built up with the untrusted certificates but the root could not be found locally.
-- **Unable to get issuer certificate locally** - CA certificate is not imported locally.
-- **Server's IP address does not match certificate** - server address verification is enabled, but the address provided in certificate does not match the server's address.
-
-## Quick Example
-
-![](./img/sstp-02.webp)
-
-### SSTP Client
-
-This example creates a simple SSTP client without a certificate:
+On the server, add a pool, a profile and a user, and enable the SSTP server:
 
 ```ros
-[admin@MikroTik] > /interface/sstp-client/add connect-to=192.168.62.2 disabled=no name=sstp-out1 password=StrongPass profile=default-encryption user=MT-User
-[admin@MikroTik] > /interface/sstp-client/print
+/ip/pool/add name=vpn-pool ranges=10.0.0.10-10.0.0.100
+/ppp/profile/add name=vpn local-address=10.0.0.1 \
+    remote-address=vpn-pool
+/ppp/secret/add name=alice password=Example-pass-1 profile=vpn \
+    service=sstp
+/interface/sstp-server/server/set enabled=yes default-profile=vpn
 ```
 
-Flags: X - disabled; R - running
- 0  R name="sstp-out1" max-mtu=1500 max-mru=1500 mrru=disabled connect-to=192.168.62.2:443
-      http-proxy=0.0.0.0:443 certificate=none verify-server-certificate=no
-      verify-server-address-from-certificate=yes user="MT-User" password="StrongPass"
-      profile=default-encryption keepalive-timeout=60 add-default-route=no dial-on-demand=no
-      authentication=pap,chap,mschap1,mschap2 pfs=no tls-version=any
-
-```
-
-### SSTP Server
-
-Configure a PPP secret for a particular user, then enable the SSTP server:
+On a RouterOS client, add an SSTP client with the address of the server:
 
 ```ros
-[admin@MikroTik] > /ppp/secret/add local-address=10.0.0.1 name=MT-User password=StrongPass remote-address=10.0.0.5 service=sstp
-[admin@MikroTik] > /interface/sstp-server/server/set default-profile=default-encryption enabled=yes
-[admin@MikroTik] > /interface/sstp-server/server/print
-                    enabled: yes
-                       port: 443
-                    max-mtu: 1500
-                    max-mru: 1500
-                       mrru: disabled
-          keepalive-timeout: 60
-            default-profile: default-encryption
-             authentication: pap,chap,mschap1,mschap2
-                certificate: none
-  verify-client-certificate: no
-                        pfs: no
-                tls-version: any
+/interface/sstp-client/add name=sstp-office connect-to=203.0.113.1 \
+    user=alice password=Example-pass-1 disabled=no
 ```
 
-:::info
-In P2P setups the network address is the same as the other endpoint's local address.
+```ros
+[admin@Client] > /interface/sstp-client/monitor sstp-office once
+               status: connected            
+               uptime: 11s                  
+             encoding: AES256-CBC           
+                  mtu: 1500                 
+        local-address: 10.0.0.99            
+       remote-address: 10.0.0.1             
+   local-ipv6-address: fe80::885c:c65:0:8   
+  remote-ipv6-address: fe80::c17c:122c:f0:18
+```
 
-**Important:** As with any other PPP tunnel, SSTP also supports BCP which allows it to bridge the SSTP tunnel with a local interface. For example, in setups where routers are connected to the Internet through ether1 and workstations and laptops are connected to ether2, both local networks are routed through the SSTP client and they are not in the same broadcast domain. BCP is used.
+The server adds a dynamic interface for the user:
+
+```ros
+[admin@Server] > /interface/sstp-server/print detail
+Flags: D - DYNAMIC; R - RUNNING
+0 DR name="<sstp-alice>" user="alice" mtu=1500 client-address="203.0.113.2"
+     uptime=12s encoding="AES256-CBC"
+```
+
+:::warning
+This tunnel has no certificates. It works only between two RouterOS devices, and it is encrypted but not protected against an attacker in the path, who can pretend to be the server. Use a server certificate for a tunnel over the internet.
 :::
+
+## Secure the tunnel with a server certificate
+
+With a certificate, the client can check that it talks to the right server. The server needs a certificate with its address or DNS name, and the client needs the certificate authority (CA) that signed it. [Certificates](../authentication-authorization-accounting/certificates) explains how to create, sign, export and import certificates. In this example the server certificate has the name `sstp-server` and contains the address 203.0.113.1.
+
+On the server, set the certificate:
+
+```ros
+/interface/sstp-server/server/set certificate=sstp-server
+```
+
+On the client, import the CA certificate as a trusted certificate and turn the check on:
+
+```ros
+/interface/sstp-client/set sstp-office verify-server-certificate=yes
+```
+
+- The client connects only when a trusted CA signed the certificate of the server.
+- With `verify-server-address-from-certificate=yes` (the default), the address or name in `connect-to` must also be in the certificate.
+- The client uses the certificate to bind the TLS session to the PPP authentication, and this lets the server check that both are secure. For this, use MS-CHAPv2 authentication.
+- A Windows client always checks the server certificate. A certificate from a CA that Windows already trusts works at once. For your own CA, import the CA certificate into the trusted root store of the Windows computer.
+- The RSA key of a certificate for SSTP must have at least 472 bits.
+- `add-sni=yes` on the client adds the server name (TLS SNI) to the first TLS packet.
+
+## Require a client certificate
+
+The server can also ask each client for a certificate. Give the client a certificate that the CA of the server trusts, with its private key:
+
+```ros
+/interface/sstp-client/set sstp-office certificate=sstp-client
+```
+
+On the server, the CA must be a trusted certificate. Turn the check on:
+
+```ros
+/interface/sstp-server/server/set verify-client-certificate=yes
+```
+
+A client without a certificate is then refused, and the log of the server has `ssl: empty certificate chain received`. A Windows client cannot send a client certificate, so this setup is for RouterOS clients.
+
+## Choose the TLS settings
+
+- `tls-version` on the server and on the client: `any`, `only-1.2`, `only-1.3`, `min-1.2` or `min-1.3`.
+- `pfs` selects the key exchange. `yes` uses ECDHE-RSA and DHE-RSA, which give perfect forward secrecy, and `required` uses only ECDHE.
+- `ciphers` selects the encryption algorithms.
+- `port` of the server and of the client changes the TCP port.
+- `http-proxy` and `proxy-port` of the client connect through a web proxy.
+
+Use settings that both sides allow, for example `tls-version=only-1.2 pfs=yes` on the server and on the client.
+
+## Allow SSTP in the firewall
+
+The default firewall drops connections that come from the internet. Accept the port of the SSTP server before the default drop rule:
+
+```ros
+/ip/firewall/filter/add chain=input action=accept protocol=tcp \
+    dst-port=443 in-interface-list=WAN comment="accept SSTP" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+```
+
+## Bridge Ethernet over the tunnel
+
+As other PPP tunnels, SSTP can carry Ethernet frames with the Bridge Control Protocol (BCP), so that the networks on both sides are one layer 2 network. Set `bridge` in the PPP profile on both sides: see [L2TP](l2tp/) for the steps.
+
+## Troubleshoot
+
+A RouterOS client writes the reason of a failed connection to its log. In this output the client connected to another address of the server than the one in the certificate:
+
+```ros
+[admin@Client] > /log/print where topics~"sstp"
+ 2026-11-20 09:11:23 sstp,ppp,info sstp-office: terminating... - ssl: name verification failed for: "CN=203.0.113.1" (6)
+ 2026-11-20 09:11:23 sstp,ppp,info sstp-office: disconnected
+```
+
+| Message | Meaning |
+| :-- | :-- |
+| `name verification failed` | The address or name in `connect-to` is not in the certificate of the server. Connect by the name in the certificate, or set `verify-server-address-from-certificate=no`. |
+| `empty certificate chain received` (on the server) | The server asks for a client certificate and the client has none. |
+| `Certificate is not yet valid` | The start date of the certificate is in the future. Check the clock of the router. |
+| `Certificate has expired` | The end date of the certificate is in the past. Check the clock of the router. |
+| `Invalid certificate purpose` | The certificate cannot be used for this purpose. |
+| `Self signed certificate in a chain` | The certificate chain has no trusted root on this router. |
+| `Unable to get issuer certificate locally` | The CA certificate is not imported on this router. |
+
+When the client stays `disconnected` without a message, check that the CA certificate on the client is trusted, that the firewall of the server accepts the port, and that the user name and the password are right.
+
+## Read more
+
+- [`/interface/sstp-server/server`](../cli-reference/interface/sstp-server/server), [`/interface/sstp-server`](../cli-reference/interface/sstp-server/), [`/interface/sstp-client`](../cli-reference/interface/sstp-client/)
+- [PPP AAA](../authentication-authorization-accounting/ppp-aaa)
+- [Certificates](../authentication-authorization-accounting/certificates)
+- [L2TP](l2tp/)

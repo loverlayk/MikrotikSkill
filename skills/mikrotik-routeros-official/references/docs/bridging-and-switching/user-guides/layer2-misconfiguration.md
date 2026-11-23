@@ -142,7 +142,7 @@ Below is a list of possible symptoms that might be a result of this kind of misc
 
 ### Solution
 
-Choose the proper transmit hash policy and test your network's throughput properly. The simplest way to test such setups is to use multiple destinations, for example, instead of sending data to just one server, send data to multiple servers. This will generate a different transmit hash for each packet and will make load balancing across LAG members possible. For some setups, you might want to change the bonding interface mode to increase the total throughput. For UDP traffic `balance-rr` mode might be sufficient, but can cause issues for TCP traffic. You can read more about selecting the right mode for your setup [here](../../high-availability-solutions/bonding.md#bonding-modes).
+Choose the proper transmit hash policy and test your network's throughput properly. The simplest way to test such setups is to use multiple destinations, for example, instead of sending data to just one server, send data to multiple servers. This will generate a different transmit hash for each packet and will make load balancing across LAG members possible. For some setups, you might want to change the bonding interface mode to increase the total throughput. For UDP traffic `balance-rr` mode might be sufficient, but can cause issues for TCP traffic. You can read more about selecting the right mode for your setup [here](../../high-availability-solutions/bonding.md).
 
 ## VLAN interface on a slave interface
 

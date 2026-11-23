@@ -1,10 +1,10 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `3b8bc4d51dced49433aafa7a5215129ed7aaa5d8bac4e151e83335c0c0eeb2ff`
-Pages in current index: 1763
-Pages changed/written: 81
-Pages removed: 1
+Index SHA-256: `9dd48a7fcbf0c1b8e2dbe16b164c6b6dcba602c596e3afae93a61a4170b31e92`
+Pages in current index: 1770
+Pages changed/written: 34
+Pages removed: 0
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `1369d6987464`
@@ -21,7 +21,7 @@ Pages failed: 0
 - [MACsec](docs/bridging-and-switching/macsec.md) `a26eb6d2613a`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `8135bf84fc73`
 - [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `559b92535fb8`
-- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `37162e58113b`
+- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `c1030bd6f2cc`
 - [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `7922ce54d6d3`
 - [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
@@ -34,8 +34,9 @@ Pages failed: 0
 - [Bridge IGMP/MLD snooping](docs/bridging-and-switching/user-guides/bridge-igmp-mld-snooping.md) `ddfed5c977a1`
 - [Bridge VLAN Table](docs/bridging-and-switching/user-guides/bridge-vlan-table.md) `cf1e054f0645`
 - [CRS1xx/2xx series switch examples](docs/bridging-and-switching/user-guides/crs1xx-2xx-series-switches-examples.md) `be52875f5fa7`
-- [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `728f0aa530a2`
+- [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `2e8f85b252ca`
 - [Loop Protect](docs/bridging-and-switching/user-guides/loop-protect.md) `2b501fda13d9`
+- [NVIDIA DGX Spark clusters](docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md) `9e8c33dc3304`
 - [Spanning Tree Protocol](docs/bridging-and-switching/user-guides/spanning-tree-protocol.md) `3b29b09bf67f`
 - [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
@@ -296,10 +297,10 @@ Pages failed: 0
 - [/interface/ethernet/switch/qos/monitor](docs/cli-reference/interface/ethernet/switch/qos/monitor.md) `769f24ad70b0`
 - [/interface/ethernet/switch/qos/port](docs/cli-reference/interface/ethernet/switch/qos/port.md) `39b5c265b165`
 - [/interface/ethernet/switch/qos/port/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/port/reset-counters.md) `ac1f1738b444`
-- [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `ac639c07bab8`
+- [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `17976720584e`
 - [/interface/ethernet/switch/qos/profile](docs/cli-reference/interface/ethernet/switch/qos/profile.md) `272bcc190d77`
 - [/interface/ethernet/switch/qos/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/reset-counters.md) `e98135dcb4b4`
-- [/interface/ethernet/switch/qos/settings](docs/cli-reference/interface/ethernet/switch/qos/settings.md) `ba1f5f83088e`
+- [/interface/ethernet/switch/qos/settings](docs/cli-reference/interface/ethernet/switch/qos/settings.md) `2b5575f73a54`
 - [/interface/ethernet/switch/qos/tx-manager](docs/cli-reference/interface/ethernet/switch/qos/tx-manager.md) `72f0b5aca15a`
 - [/interface/ethernet/switch/qos/tx-manager/queue](docs/cli-reference/interface/ethernet/switch/qos/tx-manager/queue.md) `d186caa5b8c5`
 - [/interface/ethernet/switch/reserved-fdb](docs/cli-reference/interface/ethernet/switch/reserved-fdb.md) `4f24831add5c`
@@ -370,7 +371,7 @@ Pages failed: 0
 - [/interface/ppp-client/scan](docs/cli-reference/interface/ppp-client/scan.md) `11b40866c6dd`
 - [/interface/ppp-server](docs/cli-reference/interface/ppp-server.md) `8927c21bde19`
 - [/interface/ppp-server/monitor](docs/cli-reference/interface/ppp-server/monitor.md) `60fc62c0757b`
-- [/interface/pppoe-client](docs/cli-reference/interface/pppoe-client.md) `f3a1678d2d31`
+- [/interface/pppoe-client](docs/cli-reference/interface/pppoe-client.md) `b389942b636f`
 - [/interface/pppoe-client/monitor](docs/cli-reference/interface/pppoe-client/monitor.md) `a2aaaf1c919d`
 - [/interface/pppoe-client/scan](docs/cli-reference/interface/pppoe-client/scan.md) `ca4a979d8832`
 - [/interface/pppoe-server](docs/cli-reference/interface/pppoe-server.md) `c46545356f0a`
@@ -507,7 +508,7 @@ Pages failed: 0
 - [/interface/wireless/wds/monitor](docs/cli-reference/interface/wireless/wds/monitor.md) `e296e77bfad5`
 - [/interface/wireless/wps-client](docs/cli-reference/interface/wireless/wps-client.md) `68d93e68c1dc`
 - [/interface/wireless/wps-push-button](docs/cli-reference/interface/wireless/wps-push-button.md) `a970689ebef9`
-- [/interface/xfrm](docs/cli-reference/interface/xfrm.md) `0028b7936068`
+- [/interface/xfrm](docs/cli-reference/interface/xfrm.md) `e27ac1eaa73d`
 - [/iot/bluetooth](docs/cli-reference/iot/bluetooth.md) `5e3cd2fb0250`
 - [/iot/bluetooth/advertisers](docs/cli-reference/iot/bluetooth/advertisers.md) `512eb7e5775f`
 - [/iot/bluetooth/advertisers/ad-structures](docs/cli-reference/iot/bluetooth/advertisers/ad-structures.md) `67a32bd143a8`
@@ -700,7 +701,7 @@ Pages failed: 0
 - [/ip/proxy/monitor](docs/cli-reference/ip/proxy/monitor.md) `7cee1697b0b3`
 - [/ip/proxy/refreshes](docs/cli-reference/ip/proxy/refreshes.md) `b8aa456106fb`
 - [/ip/proxy/reset-html](docs/cli-reference/ip/proxy/reset-html.md) `9320cddf223b`
-- [/ip/reverse-proxy](docs/cli-reference/ip/reverse-proxy.md) `ef349be93809`
+- [/ip/reverse-proxy](docs/cli-reference/ip/reverse-proxy.md) `791e7758167d`
 - [/ip/route](docs/cli-reference/ip/route.md) `7d527fa548ad`
 - [/ip/route/check](docs/cli-reference/ip/route/check.md) `1441ead60ef8`
 - [/ip/service](docs/cli-reference/ip/service.md) `93a010f1c457`
@@ -1243,7 +1244,7 @@ Pages failed: 0
 - [Backup](docs/getting-started/configuration-management/backup.md) `8a4092bb7dec`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `ee72052ed4f1`
 - [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `a5fda2f9ce3e`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `8020e76a21b6`
 - [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `4285d02ab78d`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
@@ -1293,13 +1294,13 @@ Pages failed: 0
 - [S+RJ10 general guidance](docs/hardware/s-plus-rj10-general-guidance.md) `8ee401bde01e`
 - [Try Before RMA](docs/hardware/try-before-rma.md) `720e1b72cbd9`
 - [USB Features](docs/hardware/usb-features.md) `ebadd3a1ed08`
-- [High Availability Solutions](docs/high-availability-solutions.md) `8b14eea47d66`
-- [Bonding](docs/high-availability-solutions/bonding.md) `8f5c62b4931b`
-- [Load Balancing](docs/high-availability-solutions/load-balancing.md) `182c27a3b77b`
-- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `95b50cf50f15`
-- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `e6a06bf8407c`
-- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f87c7314736a`
-- [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `f52eaea824dd`
+- [High Availability Solutions](docs/high-availability-solutions.md) `cb0e33a4fe00`
+- [Bonding](docs/high-availability-solutions/bonding.md) `d41a76ab3e50`
+- [Load Balancing](docs/high-availability-solutions/load-balancing.md) `7f1afe690374`
+- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `df58c5fad7c7`
+- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `b8d51ab2d59c`
+- [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f70db174fccb`
+- [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `79c3b33ebbc4`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `567ce371eb6a`
 - [VRRP](docs/high-availability-solutions/vrrp.md) `669d48f4fa40`
 - [Internet of Things](docs/internet-of-things.md) `345029d5fceb`
@@ -1370,11 +1371,11 @@ Pages failed: 0
 - [DHCPv6 Client](docs/network-management/dhcp/dhcpv6-client.md) `7503645537b8`
 - [DHCPv6 Server](docs/network-management/dhcp/dhcpv6-server.md) `c389b3aea07c`
 - [DHCP Relay](docs/network-management/dhcp/relay.md) `7f6cbaaa73d8`
-- [DHCP Server](docs/network-management/dhcp/server.md) `01ffff0ecfc9`
+- [DHCP Server](docs/network-management/dhcp/server.md) `614a49a7386d`
 - [DNS](docs/network-management/dns.md) `68e6af0386e7`
 - [Openflow](docs/network-management/openflow.md) `66930df30509`
 - [Proxy](docs/network-management/proxy.md) `9a6f70829eef`
-- [Reverse Proxy](docs/network-management/proxy/reverse-proxy.md) `a5f9b5adc222`
+- [Reverse Proxy](docs/network-management/proxy/reverse-proxy.md) `f635359bb90f`
 - [Web Proxy](docs/network-management/proxy/web-proxy.md) `c18bde24b066`
 - [SOCKS](docs/network-management/socks.md) `5088b70b47d3`
 - [Socksify](docs/network-management/socks/socksify.md) `05ede0211b0a`
@@ -1451,23 +1452,29 @@ Pages failed: 0
 - [Understanding OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf/understanding-ospf.md) `85551c60d0dc`
 - [RIP](docs/user-guides/routing-and-networking-protocols/unicast/rip.md) `cdfb0e3cc272`
 - [RPKI](docs/user-guides/routing-and-networking-protocols/unicast/rpki.md) `8985d50209a9`
-- [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `34fa57d21e48`
-- [Virtual Private Networks](docs/virtual-private-networks.md) `0e9c42e1a2f2`
-- [6to4](docs/virtual-private-networks/6to4.md) `24262eebf7f1`
+- [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `8feb57bd0f20`
+- [Virtual Private Networks](docs/virtual-private-networks.md) `8d8065af7f6c`
+- [6to4](docs/virtual-private-networks/6to4.md) `85d3e52d3145`
 - [EoIP](docs/virtual-private-networks/eoip.md) `9d2bf92faaec`
 - [GRE](docs/virtual-private-networks/gre.md) `7bd2a35e6191`
 - [IPIP](docs/virtual-private-networks/ipip.md) `41297150b5c6`
-- [IPsec](docs/virtual-private-networks/ipsec.md) `87c1f5d4e2a9`
+- [IPsec](docs/virtual-private-networks/ipsec.md) `74db890f8e59`
+- [Firewall and routing for IPsec](docs/virtual-private-networks/ipsec/firewall-and-routing.md) `9df2c40d2cd6`
 - [IKEv2 EAP between NordVPN and RouterOS](docs/virtual-private-networks/ipsec/ikev2-eap-between-nordvpn-and-routeros.md) `9fd7c06ab7bf`
 - [QKD Integration in RouterOS IPsec (PPK)](docs/virtual-private-networks/ipsec/qkd-integration-in-routeros-ipsec-ppk.md) `8c24ee335038`
-- [L2TP](docs/virtual-private-networks/l2tp.md) `307b4bed8475`
+- [Road warrior with certificates](docs/virtual-private-networks/ipsec/road-warrior-ikev2-certificates.md) `be2cc6d9a1ff`
+- [Road warrior with EAP and User Manager](docs/virtual-private-networks/ipsec/road-warrior-ikev2-eap.md) `7c4561868d5f`
+- [Route-based IPsec with XFRM](docs/virtual-private-networks/ipsec/route-based-ipsec-xfrm.md) `375fd28422a0`
+- [Site-to-site tunnel](docs/virtual-private-networks/ipsec/site-to-site.md) `0d8b1a86282c`
+- [Troubleshooting](docs/virtual-private-networks/ipsec/troubleshooting.md) `2be0ee1ca3ff`
+- [L2TP](docs/virtual-private-networks/l2tp.md) `06e27a360109`
 - [LAC and LNS setup with Cisco as LAC](docs/virtual-private-networks/l2tp/lac-and-lns-setup-with-cisco-as-lac.md) `ed49da94e4a9`
-- [OpenVPN](docs/virtual-private-networks/openvpn.md) `7973c1c4a64f`
-- [PPPoE](docs/virtual-private-networks/pppoe.md) `850d209cc357`
-- [IPv6 PD over PPP](docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md) `538fb7ab9b7b`
-- [MLPPP over single and multiple links](docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md) `ec3daa96dc9e`
+- [OpenVPN](docs/virtual-private-networks/openvpn.md) `adc5c3bb4c4a`
+- [PPPoE](docs/virtual-private-networks/pppoe.md) `7c026226d983`
+- [IPv6 PD over PPP](docs/virtual-private-networks/pppoe/ipv6-pd-over-ppp.md) `a0c0aa43f9c3`
+- [MLPPP over single and multiple links](docs/virtual-private-networks/pppoe/mlppp-over-single-and-multiple-links.md) `dc455489cd85`
 - [PPTP](docs/virtual-private-networks/pptp.md) `3582192f410d`
-- [SSTP](docs/virtual-private-networks/sstp.md) `22e4e7d4c9c3`
+- [SSTP](docs/virtual-private-networks/sstp.md) `47b6dd2203d0`
 - [WireGuard](docs/virtual-private-networks/wireguard.md) `dae1f955b845`
 - [ZeroTier](docs/virtual-private-networks/zerotier.md) `690c5a15399b`
 - [Wired Connections](docs/wired-connections.md) `5e4863bfb3b0`
@@ -1770,7 +1777,3 @@ Pages failed: 0
 - [Wireless Wire Dish](hardware/wireless-wire-dish.md) `69127e27342d`
 - [Woobm-USB](hardware/woobm-usb.md) `90a7c6a71c07`
 - [wsAP ac lite](hardware/wsap-ac-lite.md) `0589c5252ed0`
-
-## Removed pages
-
-- `hardware/first-steps-chateau-lte6.md`

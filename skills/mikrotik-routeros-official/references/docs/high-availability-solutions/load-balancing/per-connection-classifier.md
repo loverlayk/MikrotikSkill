@@ -1,19 +1,12 @@
 # Per connection classifier
 
-> Per connection classifier (PCC) in MikroTik RouterOS divides traffic into streams using IP header fields like source/destination addresses and ports to distribute connections across links, with hashing for load...
+> Per connection classifier (PCC) in RouterOS: balance connections over two internet links with mangle rules, routing tables and failover, a complete example, and how the classifier divides connections.
 
 # Per connection classifier
 
-PCC matcher will allow you to divide traffic into equal streams with the ability to keep packets with a specific set of options in one particular stream (you can specify this set of options from src-address, src-port, dst-address, dst-port)
+The per connection classifier (PCC) is a firewall matcher that divides connections into groups and keeps all packets of a connection in the same group. Its most common use is to share the connections of a network between two or more internet links.
 
-### Theory
-
-PCC takes selected fields from the IP header, and with the help of a hashing algorithm converts selected fields into a 32-bit value. This value then is divided by a specified *Denominator* and the remainder then is compared to a specified *Remainder*, if equal then the packet will be captured. You can choose from src-address, dst-address, src-port, dst-port from the header to use in this operation.
-
-:::danger
-PCC is not a valid method, in the case of Hotspot(captive portal) -  due to the fact  that Hotspot  uses web-proxy and it uses only the default routing table, at the moment.
-
-:::
+PCC takes selected fields of the packet header (addresses, ports), makes a 32-bit hash of them, divides the hash by a number (the denominator) and compares the remainder with a given value. The syntax is:
 
 ```ros
 per-connection-classifier=
@@ -24,20 +17,148 @@ PerConnectionClassifier ::= [!]ValuesToHash:Denominator/Remainder
   src-address|src-port|both-addresses-and-ports|dst-address|dst-port|src-address-and-port 
 ```
 
-### Example
+For example, `both-addresses:2/0` and `both-addresses:2/1` are the two halves of all pairs of source and destination address.
 
-These rules classify all connections into three groups based on the source address and port. The classification does not steer traffic anywhere on its own: connection marks take effect only when mark-routing rules convert them into routing marks and the named routing tables hold the matching routes. The Configuration Example near the end of this page assembles a complete working setup:
+PCC only matches packets. It does not send traffic anywhere: the connection marks have an effect only when other rules change them into routing marks, and routing tables with those names have routes. The example on this page has all the parts.
+
+:::warning
+PCC does not work together with HotSpot: HotSpot uses a web proxy, which uses only the main routing table.
+:::
+
+## Balance two internet links
+
+![A router with a LAN and two links to two internet providers](./img/per-connection-classifier-01.webp)
+
+In this example the router has two provider interfaces, `ether_ISP1` with the address 10.10.4.100/24 and the gateway 10.10.4.1, and `ether_ISP2` with 10.10.5.100/24 and the gateway 10.10.5.1. The LAN interface `ether_LAN` has 192.168.100.1/24. On a router with the default configuration, use your interface names: the LAN interface is `bridge`, and the second provider port must first be removed from the bridge (`/interface/bridge/port/remove [find interface=ether2]`).
 
 ```ros
-/ip/firewall/mangle/add chain=prerouting action=mark-connection \
- new-connection-mark=1st_conn per-connection-classifier=src-address-and-port:3/0
-/ip/firewall/mangle/add chain=prerouting action=mark-connection \
-  new-connection-mark=2nd_conn per-connection-classifier=src-address-and-port:3/1
-/ip/firewall/mangle/add chain=prerouting action=mark-connection \
-  new-connection-mark=3rd_conn per-connection-classifier=src-address-and-port:3/2
+/ip/address
+add address=10.10.4.100/24 interface=ether_ISP1
+add address=10.10.5.100/24 interface=ether_ISP2
+add address=192.168.100.1/24 interface=ether_LAN
 ```
 
-### How PCC works
+### Routing tables
+
+Add a routing table for each provider:
+
+```ros
+/routing/table
+add name=ISP1_table fib
+add name=ISP2_table fib
+```
+
+### Keep connected networks in the main table
+
+The classification rules that follow look at all connections from the LAN. Traffic to the networks that are connected to the router must not get a routing mark, or the router sends it to a provider gateway and the hosts of those networks cannot be reached. Put the connected networks into an address list and accept them before the other mangle rules. `accept` ends the mangle processing of a packet:
+
+```ros
+/ip/firewall/address-list
+add address=10.10.4.0/24 list=ConnectedNetworks
+add address=10.10.5.0/24 list=ConnectedNetworks
+add address=192.168.100.0/24 list=ConnectedNetworks
+/ip/firewall/mangle
+add chain=prerouting action=accept \
+    dst-address-list=ConnectedNetworks
+add chain=output action=accept dst-address-list=ConnectedNetworks
+```
+
+The rule in the `output` chain does the same for the connections of the router itself. Without it, the router cannot reach the devices of its own LAN after the rules for its own connections are added.
+
+### Classify the connections of the LAN
+
+```ros
+/ip/firewall/mangle
+add chain=prerouting action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    dst-address-type=!local in-interface=ether_LAN \
+    per-connection-classifier=both-addresses:2/0 \
+    new-connection-mark=ISP1
+add chain=prerouting action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    dst-address-type=!local in-interface=ether_LAN \
+    per-connection-classifier=both-addresses:2/1 \
+    new-connection-mark=ISP2
+```
+
+- The rules match the first packet of each new connection without a mark, and put the connection into one of two groups by its source and destination address. The connection mark then stays with all packets of the connection.
+- `dst-address-type=!local` leaves out packets for the router itself.
+- The rules are in the `prerouting` chain, because the routing mark must be set before the routing decision. A connection that is marked first in the `forward` chain leaves with its first packet through the main table: connections of one packet, such as DNS requests, would always use the main table, and the other packets of a TCP connection would leave through another provider than the first one.
+
+### Classify the connections of the router
+
+```ros
+/ip/firewall/mangle
+add chain=input action=mark-connection connection-state=new \
+    in-interface=ether_ISP1 new-connection-mark=ISP1
+add chain=input action=mark-connection connection-state=new \
+    in-interface=ether_ISP2 new-connection-mark=ISP2
+add chain=output action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    per-connection-classifier=both-addresses:2/0 \
+    new-connection-mark=ISP1
+add chain=output action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    per-connection-classifier=both-addresses:2/1 \
+    new-connection-mark=ISP2
+```
+
+- The `input` rules are for connections that come to the router from the internet, for example to a VPN server on the router. The mark remembers the interface that the connection came in on, so the answers leave through the same interface from the same public address. A router that accepts connections from the LAN only does not need them.
+- The `output` rules put the connections that the router itself starts into the same two groups. Packets of the router do not pass the `prerouting` chain, so these rules are in `output`.
+
+### Change the connection marks into routing marks
+
+```ros
+/ip/firewall/mangle
+add chain=output action=mark-routing connection-mark=ISP1 \
+    new-routing-mark=ISP1_table
+add chain=prerouting action=mark-routing connection-mark=ISP1 \
+    in-interface=ether_LAN new-routing-mark=ISP1_table
+add chain=output action=mark-routing connection-mark=ISP2 \
+    new-routing-mark=ISP2_table
+add chain=prerouting action=mark-routing connection-mark=ISP2 \
+    in-interface=ether_LAN new-routing-mark=ISP2_table
+```
+
+`mark-routing` works only in the `prerouting` and `output` chains. The `prerouting` rules have `in-interface=ether_LAN`, so that packets that arrive from the providers follow the normal routing decision: only the traffic to the internet needs the routing marks.
+
+### Routes
+
+Add a default route to each provider table, and two default routes with different distances to the main table:
+
+```ros
+/ip/route
+add gateway=10.10.4.1 routing-table=ISP1_table check-gateway=ping
+add gateway=10.10.5.1 routing-table=ISP2_table check-gateway=ping
+add gateway=10.10.4.1 distance=1 check-gateway=ping
+add gateway=10.10.5.1 distance=2 check-gateway=ping
+```
+
+The routes of the main table give failover. When a provider gateway does not answer, `check-gateway` makes the route of its table inactive. The traffic with that routing mark then uses the [main routing table](../../user-guides/routing-and-networking-protocols/routing-decision), where the route through the other provider is active.
+
+The routes of the main table need `check-gateway=ping` too. Without it, the route through a failed gateway stays active there, and connections of that group are lost. Connections that are open when a gateway fails or comes back can break and must be opened again.
+
+### NAT
+
+With the default configuration, add both provider interfaces to the `WAN` interface list: its masquerade rule and its firewall then cover both, and the two rules below are not needed. The FastTrack rule of the default configuration can stay: connections keep the provider of their group with it.
+
+Without the default configuration, add a masquerade rule for each interface. The routing decision is made by now. The NAT rules only set the source address of the packets: 10.10.4.100 for those that leave through `ether_ISP1` and 10.10.5.100 for `ether_ISP2`.
+
+```ros
+/ip/firewall/nat
+add chain=srcnat action=masquerade out-interface=ether_ISP1
+add chain=srcnat action=masquerade out-interface=ether_ISP2
+```
+
+### Check
+
+- `/ip/firewall/mangle/print stats` shows the packet counters of the rules. With traffic from several devices to several destinations, both `mark-connection` rules of the LAN count packets.
+- `/ip/route/print` shows the routes of the three tables. A route of a failed gateway has the flag `I`.
+- `/ip/firewall/connection/print` shows the mark of each connection in `connection-mark`.
+
+With `both-addresses`, all connections between one device and one server use the same provider. Different servers can use different providers, so a test to a single server always shows the same link.
+
+## How PCC works
 
 This article aims to explain in simple terms how PCC works. The definition from the official manual wiki page reads: "PCC takes selected fields from the IP header, and with the help of a hashing algorithm converts selected fields into a 32-bit value. This value then is divided by a specified Denominator and the remainder then is compared to a specified Remainder, if equal then the packet will be captured. You can choose from src-address, dst-address, src-port, dst-port from the header to use in this operation.", with the full number of fields available being: "both-addresses|both-ports|dst-address-and-port|src-address|src-port|both-addresses-and-ports|dst-address|dst-port|src-address-and-port". If you understand that definition, there'll be nothing interesting in this article for you.
 
@@ -79,118 +200,3 @@ Here is what the different field options mean for the purpose of packet matching
 - both-addresses-and-ports: This is the most random way to spread traffic across links, since it has the most number of variables.
 
 It's important to note that even though the hash function discussed in this article is greatly simplified and not what is used in real life, it nicely demonstrates another property of hash functions: two completely different inputs can produce the same output. In our example, 3 % 3 = 0, and 6 % 3 = 0; we get back 0 when we feed it a 3 as well as when we feed it a 6. The same is true for the actual function used for PCC, even though I don't know what it is, we do know from the definition that it produces a 32-bit value as output. IP addresses are 32 bits, and ports are 16 bits, so assuming that we're using both-addresses-and-ports, we'd be feeding it 32+32+16+16 = 96 bits of input and would only receive 32 bits back, so it must be producing the same output for different inputs. This means that two completely unrelated connections could match the same PCC matcher, and would be put on the same line. PCC works better the more connections you put across it so that the hash function has more chances to produce different outputs.
-
-### Configuration Example
-
-Let's assume this configuration:
-
-![](./img/per-connection-classifier-01.webp)
-
-### IP Addresses
-
-```ros
-/ip/address
-add address=10.10.4.100/24 interface=ether_ISP1 network=10.10.4.0
-add address=10.10.5.100/24 interface=ether_ISP2 network=10.10.5.0
-add address=192.168.100.1/24 interface=ether_LAN network=192.168.100.0
-```
-
-The router has two upstream (ISP) interfaces with the addresses of 10.10.4.100/24 and 10.10.5.100/24. The LAN interface has an IP address of 192.168.100.1/24.
-
-We are adding two new Routing tables, which will be used later:
-
-```ros
-/routing/table
-add disabled=no fib name=ISP1_table
-add disabled=no fib name=ISP2_table
-```
-
-### Keeping connected networks in the main table
-
-```ros
-/ip/firewall/mangle
-add action=accept chain=prerouting dst-address=10.10.4.0/24 in-interface=ether_LAN
-add action=accept chain=prerouting dst-address=10.10.5.0/24 in-interface=ether_LAN
-```
-
-The classification rules that follow inspect packets from every LAN-side connection. Without these first two accept rules, traffic addressed to hosts in the directly connected ISP subnets (any host other than the gateways) would also be classified and pushed through the ISP gateways: the router would generate a routing loop, and communication with the hosts in those subnets would become impossible. `accept` stops mangle processing for the matching packet, so add these rules before the classification rules and keep traffic to connected networks on the main routing table.
-
-:::tip
-With additional LAN or ISP subnets, collect the connected networks into an address list and accept by the list instead of by individual rules.
-:::
-
-```ros
-/ip/firewall/address-list
-add address=10.10.4.0/24 list=ConnectedNetworks
-add address=10.10.5.0/24 list=ConnectedNetworks
-add address=192.168.100.0/24 list=ConnectedNetworks
-
-/ip/firewall/mangle
-add action=accept chain=prerouting dst-address-list=ConnectedNetworks
-```
-
-### Classifying LAN connections
-
-```ros
-add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP1 per-connection-classifier=both-addresses:2/0
-add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=new dst-address-type=!local in-interface=ether_LAN new-connection-mark=ISP2 per-connection-classifier=both-addresses:2/1
-```
-
-LAN packets pass through the mangle prerouting chain first, and only after that the router makes its routing decision. `mark-routing` can be used only in the prerouting and output chains, so for LAN-initiated traffic the classification and the routing mark both belong in prerouting. Keep the classification in prerouting instead of the forward chain: prerouting runs before the forward chain, so a connection whose first packet is marked in forward would leave through the main routing table with no routing mark. One-packet connections, such as DNS queries, would leave through the main table every time, and the remaining packets of a TCP connection would leave through a different ISP with a different source public IP, which breaks the connection.
-
-The rules match new connections without a connection mark (`connection-mark=no-mark`, `connection-state=new`): the first packet of each LAN connection is hashed into one of the two buckets, and the stored connection mark then follows every remaining packet of that connection. `dst-address-type=!local` keeps packets addressed to the router itself outside the buckets. PCC divides the traffic into two groups based on source and destination addresses (`both-addresses`).
-
-### The router's own connections
-
-```ros
-add action=mark-connection chain=input connection-state=new in-interface=ether_ISP1 new-connection-mark=ISP1
-add action=mark-connection chain=input connection-state=new in-interface=ether_ISP2 new-connection-mark=ISP2
-
-add action=mark-connection chain=output connection-mark=no-mark connection-state=new new-connection-mark=ISP1 per-connection-classifier=both-addresses:2/0
-add action=mark-connection chain=output connection-mark=no-mark connection-state=new new-connection-mark=ISP2 per-connection-classifier=both-addresses:2/1
-```
-
-These rules are not part of LAN-to-Internet balancing. Add them when the router receives connections addressed to itself from the Internet, for example on services hosted on the router or on VPN endpoints: the mark stores the interface the connection arrived on, and every reply then leaves through the same interface, from the same public IP. A router that accepts connections only from the LAN can run without them.
-
-The output rules classify connections that the router itself initiates into the same two PCC buckets, so locally generated traffic also takes part in load balancing. Locally generated packets never traverse prerouting, therefore use the output chain for them.
-
-### Converting connection marks to routing marks
-
-```ros
-add action=mark-routing chain=output connection-mark=ISP1 new-routing-mark=ISP1_table
-add action=mark-routing chain=prerouting connection-mark=ISP1 in-interface=ether_LAN new-routing-mark=ISP1_table
-
-add action=mark-routing chain=output connection-mark=ISP2 new-routing-mark=ISP2_table
-add action=mark-routing chain=prerouting connection-mark=ISP2 in-interface=ether_LAN new-routing-mark=ISP2_table
-```
-
-`mark-routing` is available only in the mangle chains prerouting and output. The prerouting rules apply the routing marks to LAN-initiated traffic; `in-interface=ether_LAN` restricts them so that packets arriving through the ISP interfaces always follow the normal routing decision, since policy routing is required only for traffic going to the Internet. The output rules route the connections initiated by the router itself, which were marked in the previous section, through the proper tables.
-
-### Routes
-
-Add a default route to each special routing table:
-
-```ros
-/ip/route
-add check-gateway=ping disabled=no dst-address=0.0.0.0/0 gateway=10.10.4.1 routing-table=ISP1_table suppress-hw-offload=no
-add check-gateway=ping disabled=no dst-address=0.0.0.0/0 gateway=10.10.5.1 routing-table=ISP2_table suppress-hw-offload=no
-```
-
-Two default routes in the main routing table provide failover:
-
-```ros
-add distance=1 dst-address=0.0.0.0/0 gateway=10.10.4.1
-add distance=2 dst-address=0.0.0.0/0 gateway=10.10.5.1
-```
-
-When `check-gateway` on the special-table routes marks an ISP gateway unreachable, routes through that gateway become inactive: traffic marked for that table falls back to the lookup in the [main routing table](../../user-guides/routing-and-networking-protocols/routing-decision#routing-table-lookup), and the distance=2 default route leads the remaining traffic through the second ISP. A route through a gateway becomes inactive only when `check-gateway` is active on the corresponding routes.
-
-### NAT
-
-```ros
-/ip/firewall/nat
-add action=masquerade chain=srcnat out-interface=ether_ISP1
-add action=masquerade chain=srcnat out-interface=ether_ISP2
-```
-
-As the routing decision is already made we just need rules that will fix src-addresses for all outgoing packets. If this packet leaves via ether\_ISP1 it will be NATed to 10.10.4.100, if via ether\_ISP2 then it is NATed to 10.10.5.100

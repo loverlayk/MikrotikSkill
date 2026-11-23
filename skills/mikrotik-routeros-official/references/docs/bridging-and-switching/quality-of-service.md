@@ -255,9 +255,11 @@ RoCE achieves this through the use of **ECN** and **PFC** mechanisms. These feat
 
 There are two main versions of RoCE. RoCEv1 operates as an Ethernet link layer protocol and uses Ethertype 0x8915. RoCEv2 works over standard IP networks, using UDP destination port number 4791. ECN bits in the IP header are marked to signal network congestion, and a Congestion Notification Packet (CNP) is used to acknowledge congestion to the sender. For traffic prioritization, DSCP 26 is used for RoCEv2 traffic, while DSCP 48 is used for CNPs.
 
-The following example can be used for lossless RoCEv2 with PFC and ECN, and it assumes that the switch is using its default configuration, which includes a default bridge interface with all Ethernet interfaces added as bridge ports. The minimal recommended RouterOS version is 7.17.
+The following example configures lossless RoCEv2 with PFC on four 100 Gbit/s ports. It assumes that the switch has its default configuration, with a bridge that has all Ethernet interfaces as bridge ports.
 
-First, configure additional profiles. Non-RoCE traffic will be assigned to the already existing "default" profile with traffic-class 1, RoCEv2 to traffic-class 3, and CNP to traffic-class 6.
+The hosts take part in the configuration. Each host marks its RoCEv2 packets with DSCP 26, trusts the DSCP value of received packets, and runs PFC on priority 3. Without the marking, the packets stay in the default traffic class, and PFC does not protect them. For a host configuration with NVIDIA ConnectX adapters, see [NVIDIA DGX Spark clusters](./user-guides/nvidia-dgx-spark).
+
+First, create the profiles. Non-RoCE traffic stays in the existing `default` profile with traffic class 1, RoCEv2 goes to traffic class 3, and CNP to traffic class 6. The switch maps the DSCP values to these profiles by itself.
 
 ```routeros
 /interface/ethernet/switch/qos/profile
@@ -265,64 +267,76 @@ add dscp=26 name=roce traffic-class=3
 add dscp=48 name=cnp traffic-class=6
 ```
 
-If you are running RouterOS version 7.23 or later, the IP DSCP mapping is created automatically, so this step is not required. If you are using an earlier RouterOS version, create a QoS mapping to match QoS profiles based on DSCP values.
-
-```routeros
-/interface/ethernet/switch/qos/map/ip
-add dscp=26 profile=roce
-add dscp=48 profile=cnp
-```
-
-Configure hardware queue and scheduler. Use ETS (`schedule=high-priority-group`) for traffic-class 1 and traffic-class 3 with 50% bandwidth assignment each (`weight=1`), and strict priority scheduling for traffic-class 6. Additionally, enable ECN (`ecn=yes`) for traffic-class 3 to mark IP packets in the switch that experience congestion.
+Configure the hardware queues and the scheduler. Use ETS (`schedule=high-priority-group`) for traffic class 1 and traffic class 3 with 50% of the bandwidth each (`weight=1`), and strict priority scheduling for traffic class 6.
 
 ```routeros
 /interface/ethernet/switch/qos/tx-manager/queue
-set 1 schedule=high-priority-group weight=1
-set 3 schedule=high-priority-group weight=1 ecn=yes
-set 6 schedule=strict-priority
+set [find traffic-class=1] schedule=high-priority-group weight=1
+set [find traffic-class=3] schedule=high-priority-group weight=1
+set [find traffic-class=6] schedule=strict-priority
 ```
 
 :::tip
 Although using `schedule=low-priority-group` allows you to create separate ETS scheduling and bandwidth allocation for a different set of traffic-classes, it is not recommended to use this setting together with `lldp-dcbx=yes`. The reason is that the ETS Configuration/Recommendation TLVs are designed to handle a single bandwidth allocation across traffic classes, thus `schedule=high-priority-group` should be used instead.
 :::
 
-Configure a PFC profile for traffic-class 3 to ensure a lossless environment for RoCEv2 traffic.
+Create a PFC profile for traffic class 3 with a pause threshold of 128 KiB and a resume threshold of 64 KiB.
 
 ```routeros
 /interface/ethernet/switch/qos/priority-flow-control
-add name=pfc-tc3 rx=yes traffic-class=3 tx=yes
+add name=pfc-tc3 rx=yes traffic-class=3 tx=yes \
+    pause-threshold=128KiB resume-threshold=64KiB
 ```
 
-Set Layer3 trust mode (`trust-l3=keep`) on switch ports where RoCEv2 traffic is expected. Set PFC (`pfc=pfc-tc3`) and egress rate for queue3 to comply with PFC requirements (`egress-rate-queue3=10.0Gbps`). In this example, 10Gbps SFP+ interfaces is used, and the egress rate can be set to match the physical speed of the interface. Change this property depending on your interface speeds.
+With these thresholds, the switch pauses a port when the packets it received fill 128 KiB of the buffer, and lets the port send again when they drop 64 KiB below that. The switch pauses only the ports that send to a congested port.
+
+Set Layer3 trust mode (`trust-l3=keep`) on the switch ports of the RoCEv2 hosts. Assign the PFC profile, and set the egress rate of queue 3 to the link speed (`egress-rate-queue3=100.0Gbps`), which PFC receive uses to calculate the pause time. The example uses 100 Gbit/s QSFP28 ports. Change the port names and the rate to match your interfaces.
 
 ```routeros
 /interface/ethernet/switch/qos/port
-set sfp-sfpplus1 egress-rate-queue3=10.0Gbps pfc=pfc-tc3 trust-l3=keep
-set sfp-sfpplus2 egress-rate-queue3=10.0Gbps pfc=pfc-tc3 trust-l3=keep
-set sfp-sfpplus3 egress-rate-queue3=10.0Gbps pfc=pfc-tc3 trust-l3=keep
-set sfp-sfpplus4 egress-rate-queue3=10.0Gbps pfc=pfc-tc3 trust-l3=keep
+set qsfp28-1-1 egress-rate-queue3=100.0Gbps pfc=pfc-tc3 trust-l3=keep
+set qsfp28-2-1 egress-rate-queue3=100.0Gbps pfc=pfc-tc3 trust-l3=keep
+set qsfp28-3-1 egress-rate-queue3=100.0Gbps pfc=pfc-tc3 trust-l3=keep
+set qsfp28-4-1 egress-rate-queue3=100.0Gbps pfc=pfc-tc3 trust-l3=keep
 ```
 
-Enable QoS hardware offloading for the above settings to start working.
+Enable QoS hardware offloading for the settings to start working.
 
 ```routeros
 /interface/ethernet/switch
 set switch1 qos-hw-offloading=yes
 ```
 
-Enable the LLDP Data Center Bridging Capability Exchange Protocol (DCBX) to share QoS settings and capabilities with other neighboring devices.
+Enable the LLDP Data Center Bridging Capability Exchange Protocol (DCBX) to share the QoS settings and capabilities with neighboring devices. Hosts without a DCBX agent ignore these announcements: configure their QoS by hand.
 
 ```routeros
 /ip/neighbor/discovery-settings
 set lldp-dcbx=yes
 ```
 
-As an optional step, increase the L2MTU to accommodate larger data packets.
+Set the L2MTU for jumbo frames, and an MTU of 9000 on the hosts. RDMA then sends the same data in fewer, larger packets. A change of `l2mtu` restarts the link for a few seconds.
 
 ```routeros
 /interface/ethernet
 set [find switch=switch1] l2mtu=9500
 ```
+
+To check the configuration, print the QoS settings of the ports. A `;;;` comment line under a port names a setting that the port is missing.
+
+```routeros
+/interface/ethernet/switch/qos/port/print
+```
+
+PFC frames appear only under congestion, for example when two hosts send to a third host at the full link rate. Reset the counters, run such a transfer, and read the counters:
+
+```routeros
+/interface/ethernet/reset-counters [find name~"qsfp28-.-1"]
+/interface/ethernet/print stats where name~"qsfp28-.-1"
+```
+
+On a working configuration, `tx-pause` grows on the ports of the sending hosts, and `tx-drop-queue3-packet` and `rx-fcs-error` stay at 0 on all ports.
+
+For complete switch and host configurations for a cluster of NVIDIA DGX Spark units, with PFC and with 802.3x flow control, see [NVIDIA DGX Spark clusters](./user-guides/nvidia-dgx-spark).
 
 ## QoS Marking
 
