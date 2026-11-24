@@ -1,14 +1,14 @@
 # NVIDIA DGX Spark clusters
 
-> Plan an NVIDIA DGX Spark cluster with a MikroTik switch: choose the hardware, compare measured performance, and follow tested configurations to run a local coding assistant for a small team.
+> Plan an NVIDIA DGX Spark cluster with a MikroTik switch: choose the hardware, see what performance to expect, and follow example configurations to run a local coding assistant for a small team.
 
 # NVIDIA DGX Spark clusters
 
 NVIDIA DGX Spark is a desktop AI computer with 128 GB of memory. Connect several units into a cluster to run a model too large for one unit, or to share a local AI assistant with a team. A model that fits on one unit can also answer faster when several units share the work.
 
-A MikroTik switch lets every unit communicate with every other unit through one high-speed cable per unit. The same network can distribute model files, carry other transfers while the model runs, and connect the units to a storage server or router if you leave ports available.
+A MikroTik switch configured as on this page runs a model across several units as fast as direct cables between the units, and adds what direct cables cannot. Every unit reaches every other unit through one high-speed cable, so you can add units or split them into separate model servers without recabling. The same network can distribute model files, carry other transfers while the model runs, and connect the units to a storage server or router if you leave ports available.
 
-This page helps you choose the number of units and a switch, and shows what performance to expect. It then walks through two tested four-unit setups: a CRS504 at 100 Gbit/s per unit and a CRS804 at 200 Gbit/s per unit. Both lead to the same practical example: DeepSeek V4.1 Flash as a coding assistant for a small team, with the source code kept in the office.
+This page helps you choose the number of units and a switch, and shows what performance to expect. It then walks through two four-unit setups: a CRS504 at 100 Gbit/s per unit and a CRS804 at 200 Gbit/s per unit. Both lead to the same practical example: DeepSeek V4.1 Flash as a coding assistant for a small team, with the source code kept in the office.
 
 ## Plan the cluster
 
@@ -17,19 +17,25 @@ Choose enough units to hold the model you want to run, then decide how to share 
 | Goal | Units | Switch example | Model server |
 | :-- | :-- | :-- | :-- |
 | Run a model too large for one unit | 2 to 4, depending on the model's memory needs | CRS504 or CRS804 | One server across all units |
-| Give each user faster answers | 4 | CRS504 or CRS804 | One server across all four units |
-| Serve more users than one server runs at a time | 4 | CRS504 or CRS804 | Two servers of two units each, for a model that fits two units |
+| Faster replies for one or a few users | 4 | CRS504 or CRS804 | One server across all four units |
+| Increase total throughput with many users | 4 | CRS504 or CRS804 | Consider two servers of two units each, for a model that fits two units |
 | Copy large files between units while the model runs | 4 | CRS804 | Keep the model's traffic separate from bulk traffic |
 
 For example, DeepSeek V4 Flash (167 GB) runs on two units. The larger DeepSeek V4.1 Flash (510 GB) does not fit on two; the walkthrough uses four units, with a copy of the model on each unit's disk.
 
-For models that fit on two units, four units can run either one shared server or two separate servers. Which arrangement serves more users depends on the model and the server settings. The examples under "Recommended settings" explain that choice.
+### Cluster size and server layout
+
+For a model that fits on two units, four units can run either one shared server or two separate servers:
+
+- One four-unit server can give faster replies to individual users. For example, DeepSeek V4 Flash generates about 54 tok/s for one user on two units and 82 tok/s on four.
+- With many simultaneous requests, two two-unit servers can generate more text in total. The point at which this helps depends on the model, prompt lengths and server settings; compare both layouts with your workload.
+- Check the server's request limit (`--max-num-seqs`) before deciding to split the cluster. Requests beyond this limit wait in a queue. Raising the limit can help a shared server serve more users, provided it has enough memory for their contexts.
 
 ## Choose a switch
 
-The CRS504 provides a simple four-unit setup for running a model on a dedicated network. The CRS804 provides 200 Gbit/s links and is used here for the example that shares the network with bulk transfers.
+The CRS504 suits four units on a network that carries only the cluster's traffic. The CRS804 gives each unit 200 Gbit/s and suits a network that also carries bulk transfers.
 
-The configurations and performance results on this page use four units on a CRS504 or CRS804. The table lists how many units each switch can connect at the stated link speed.
+The examples on this page use four units on a CRS504 or CRS804. The table lists how many units each switch connects at the stated link speed.
 
 | Switch | Ports for the units | Units connected at the listed speed | Link per unit |
 | :-- | :-- | :-- | :-- |
@@ -38,36 +44,40 @@ The configurations and performance results on this page use four units on a CRS5
 | CRS804-4DDQ-hRM | 4 × 400G QSFP56-DD | 4, or 8 with 400G to 2 × 200G breakout cables | 200 Gbit/s |
 | CRS812-8DS-2DQ-2DDQ-RM | 2 × 400G QSFP56-DD, 2 × 200G QSFP56 | 6, with breakout cables on the 400G ports | 200 Gbit/s |
 
-- **Text generation:** the tested 100 and 200 Gbit/s clusters generated text at similar speeds. A faster network link does not by itself mean faster answers.
+- **Text generation:** the model examples on this page run at similar speeds at 100 and 200 Gbit/s. A faster network link does not by itself mean faster answers.
 - **Network capacity:** a 200 Gbit/s link gives twice the capacity for model loading, storage traffic and long prompts. How much faster a task finishes depends on the workload. NVIDIA's switched DGX Spark setup specifies 200 Gbit/s per unit.
 - **Other devices:** count a port for a storage server or a link to another switch. Four units use all four QSFP ports of a CRS504.
-- **Cables:** each four-unit example uses four QSFP cables, one from each unit to the switch. The CRS504 setup uses 100 Gbit/s direct attach copper (DAC) cables; the CRS804 setup uses 200 Gbit/s links. The breakout options in the table split one 400 Gbit/s switch port into two 200 Gbit/s connections, one per unit. Also allow for each unit's separate Ethernet connection to the office network and access to the switch's management port.
-- **Shared traffic:** both the CRS504 and CRS804 support Priority-based Flow Control (PFC) to protect model traffic when it shares a network with bulk transfers. The shared-network example uses the CRS804; the CRS504 example uses a simpler configuration for a dedicated network. The CRS812 has the same switch chip as the CRS804 (98DX7335). See [QoS device support](../quality-of-service#qos-device-support) for support across switch models.
+- **Cables:** one QSFP cable from each unit to the switch, at the speed of the switch port (see [Cables and links](#cables-and-links)). The breakout options in the table split one 400 Gbit/s switch port into two 200 Gbit/s connections, one per unit. Also allow for each unit's separate Ethernet connection to the office network and access to the switch's management port.
+- **Shared traffic:** both the CRS504 and CRS804 support Priority-based Flow Control (PFC), which protects model traffic on a network shared with bulk transfers. A 100 Gbit/s network for the cluster alone needs no flow control, as in the CRS504 example. The CRS804 example uses PFC. The CRS812 has the same switch chip as the CRS804 (98DX7335). See [QoS device support](../quality-of-service#qos-device-support) for support across switch models.
 
 ## What performance to expect
 
-The DeepSeek V4.1 Flash example runs one model server across four units. Its measured text generation speed is 75 to 80 tokens per second (tok/s) for one user, about 40 tok/s per user for four users, and about 26 tok/s per user for eight users. These rates include the model's thinking tokens, so they do not tell you how soon a complete answer arrives.
+These figures are examples for the model and settings shown; performance varies with prompt length, concurrent requests and reuse of cached context.
 
-The model can generate internal reasoning ("thinking") before it answers. In the coding sessions, turning thinking off shortened the wait substantially:
+The DeepSeek V4.1 Flash example runs one model server across four units. It generates text at 75 to 80 tokens per second (tok/s) for one user, about 40 tok/s per user for four users, and about 26 tok/s per user for eight users. These rates include the model's thinking tokens, so they do not tell you how soon a complete answer arrives.
+
+The model can generate internal reasoning ("thinking") before it answers. Turning thinking off shortens the wait for a complete answer:
 
 | Coding session | Complete answer with thinking on, median | Complete answer with thinking off, median |
 | :-- | --: | --: |
 | One user | 18–19 s | 4–7 s |
 | Three users at the same time | 30–31 s | 9 s |
 
-These medians cover multiple turns of each session. The first turn takes longer because the server must read the new prompt: in the single-user sessions, the first token arrived after 9 to 10 s on the first turn and about 1 s on later turns. Very long prompts take longer and can slow the replies to other users.
+The first turn takes longer because the server must read the new prompt. For one user with 30,000 tokens of source code, the first token arrives after about 9 to 10 s. Later turns reuse the cached context and start after about 1 s. Very long prompts take longer and can slow the replies to other users.
 
-Both switches delivered similar results with the example's settings. The "Example results" section gives the full measurements and test conditions; other models, prompts and settings give different results.
+Both switch configurations give similar results for this example. The "Example results" section has more detail.
 
 ## Before you begin
 
 Each DGX Spark has a ConnectX-7 network adapter with two QSFP ports. The cluster network is also called the fabric; the examples keep it separate from the office network.
 
-- Each unit has one cable from its first QSFP port to the switch.
-- The two network interfaces of that port have IP addresses in NetworkManager profiles, as in the following table. NVIDIA's cluster setup creates such profiles (see the [DGX Spark playbooks](https://build.nvidia.com/spark)).
+- Each unit has one cable from its first QSFP port, the one with the interfaces `enp1s0f0np0` and `enP2p1s0f0np0`, to the switch.
+- Both network interfaces of the connected port have persistent IPv4 addresses in NetworkManager profiles.
 - Management traffic (SSH, model downloads, users of the model server) uses another network port of the units, not the cluster fabric.
 - The commands on this page use `nmcli`, `mlnx_qos`, `ethtool`, `show_gids` and `ib_write_bw`. DGX OS includes them.
 - The switch's QSFP ports carry no other configuration, and you reach the switch through its management port.
+
+For fresh units, follow NVIDIA's [manual cluster setup](https://build.nvidia.com/spark/connect-multiple-sparks/advance) and choose a switched topology. Create the bridge described in the switch example before running NVIDIA's setup helper. The following table shows the addresses used throughout this page. If your setup assigns different addresses, substitute them in the network checks, model-copy commands and server scripts, including their subnet ranges.
 
 | Unit | `enp1s0f0np0` (RDMA device `rocep1s0f0`) | `enP2p1s0f0np0` (RDMA device `roceP2p1s0f0`) |
 | :-- | :-- | :-- |
@@ -85,22 +95,41 @@ graph TB
     s2["DGX Spark 2192.168.100.22192.168.101.22"]
     s3["DGX Spark 3192.168.100.23192.168.101.23"]
     s4["DGX Spark 4192.168.100.24192.168.101.24"]
-    sw["MikroTik switch: cluster fabricbridge1, jumbo frames,802.3x or PFC"]
+    sw["MikroTik switch: cluster fabricbridge1, jumbo frames,PFC on the CRS804"]
     lan -.- s1 & s2 & s3 & s4
     s1 & s2 & s3 & s4 --- sw
 ```
 
 The solid lines are the QSFP cables of the cluster fabric. The dotted lines are the units' Ethernet connections to the office network, through the office's own switch. The two networks stay separate: the fabric carries only traffic between the units.
 
+### Cables and links
+
+A DGX Spark QSFP port takes up to 200 Gbit/s. Connect each unit to the switch with a direct attach copper (DAC) cable that matches the speed of the switch port:
+
+| Switch | Link per unit | Cable for each unit |
+| :-- | :-- | :-- |
+| CRS504, CRS520 | 100 Gbit/s | 100G QSFP28 DAC, such as MikroTik XQ+DA0001 (1 m) or XQ+DA0003 (3 m) |
+| CRS804, CRS812 | 200 Gbit/s | 200G QSFP56 DAC (200GBASE-CR4), or a 400G QSFP56-DD to 2 × 200G QSFP56 breakout cable for two units on one switch port |
+
+A 100G QSFP28 cable also fits the 400G ports of the CRS804 and CRS812, and the unit then connects at 100 Gbit/s.
+
+The switch and the units bring up the links by themselves. After cabling, check each switch port that connects a unit, for example:
+
+```routeros
+/interface/ethernet/monitor qsfp28-1-1 once
+```
+
+A working link shows `status: link-ok` and `rate: 100Gbps`, or `200Gbps` on the CRS804. The `sfp-vendor-part-number` line names the cable. On the unit, `ethtool enp1s0f0np0` shows the same speed and `Link detected: yes`. If a link does not come up, see [Troubleshoot](#troubleshoot).
+
 ### How the cluster network works
 
-The units exchange data with remote direct memory access (RDMA) over Converged Ethernet version 2 (RoCEv2). RoCEv2 recovers lost packets, but slowly: on a network that drops packets under load, its throughput falls sharply. Both configurations use jumbo frames and flow control to prevent RDMA packet loss.
+The units exchange data with remote direct memory access (RDMA) over Converged Ethernet version 2 (RoCEv2). RoCEv2 recovers lost packets, but slowly: when several units send bulk traffic to one at the same time, a switch without flow control drops packets and the transfer slows down sharply.
 
-802.3x flow control pauses all traffic on a link, which suits a fabric that carries only the cluster's inference traffic. PFC pauses only the lossless traffic class, so bulk transfers in another class do not pause the inference traffic. The CRS504 example uses 802.3x for a simpler configuration; the CRS804 example uses PFC to carry both types of traffic.
+A model server's own traffic stays far below the link rate (see [Network load of a model server](#network-load-of-a-model-server)), so a fabric that carries only the cluster's inference traffic needs no flow control. The CRS504 example uses jumbo frames alone. Priority-based Flow Control (PFC) pauses the senders of one traffic class instead of dropping their packets, and leaves other classes alone. The CRS804 example uses PFC with ECN to keep the inference traffic lossless and fast at 200 Gbit/s, also next to bulk transfers.
 
 ## Connect four units to a CRS504 at 100 Gbit/s
 
-A team runs a coding assistant on four DGX Spark units, with one 100 Gbit/s cable from each unit to a CRS504-4XQ. The fabric carries only the cluster's inference traffic. The configuration gives the units jumbo frames and 802.3x flow control: when several units send to one at the same time, the switch pauses the senders instead of dropping their packets. Flow control pauses the whole link, so keep storage and other bulk transfers off this fabric, or use PFC as in the CRS804 example.
+A team runs a coding assistant on four DGX Spark units, with one 100 Gbit/s cable from each unit to a CRS504-4XQ. The fabric carries only the cluster's inference traffic, so the configuration needs no flow control: a hardware-offloaded bridge, jumbo frames and forward error correction. To carry storage or other bulk transfers on the same fabric, use PFC as in the CRS804 example.
 
 ### Configure the switch
 
@@ -115,22 +144,23 @@ add bridge=bridge1 interface=qsfp28-3-1
 add bridge=bridge1 interface=qsfp28-4-1
 ```
 
-Set the L2MTU for jumbo frames, and turn on Reed-Solomon forward error correction (RS-FEC) and 802.3x flow control on the four ports:
+Set the L2MTU for jumbo frames, and turn on Reed-Solomon forward error correction (RS-FEC) on the four ports:
 
 ```routeros
 /interface/ethernet
 set [find name~"qsfp28-"] l2mtu=9500
-set [find name~"qsfp28-.-1"] fec-mode=fec91 \
-    rx-flow-control=on tx-flow-control=on
+set [find name~"qsfp28-.-1"] fec-mode=fec91
 ```
 
+With the default `fec-mode=auto`, a 100 Gbit/s port runs without forward error correction. The units connect that way too, but the link then corrupts some packets, so set `fec91` on the switch; the units follow it by themselves. At 200 Gbit/s, as on the CRS804, the switch and the units agree on RS-FEC by themselves.
+
 :::note
-A change of `l2mtu`, `fec-mode` or flow control restarts the link for a few seconds. Make the change before you start the model servers.
+A change of `l2mtu` or `fec-mode` restarts the link for a few seconds. Make the change before you start the model servers.
 :::
 
 ### Configure the units
 
-A DGX Spark sends and obeys 802.3x pause frames by default. Set the MTU to 9000 on both network interfaces of the connected port. The commands set it in the NetworkManager profile of each interface, so that it stays after a restart, and bind each profile to its interface:
+Set the MTU to 9000 on both network interfaces of the connected port. The commands set it in the NetworkManager profile of each interface, so that it stays after a restart, and bind each profile to its interface:
 
 ```bash
 for i in enp1s0f0np0 enP2p1s0f0np0; do
@@ -158,54 +188,13 @@ On the switch, check that the four bridge ports have the `H` (hardware offloaded
 /interface/bridge/port/print
 ```
 
-Pause frames appear only under congestion. With no traffic, or with one sender for each receiver, the pause counters stay at 0. To see flow control work, let units 2 and 3 send to unit 1 at the same time, so that unit 1's port receives twice its link rate.
-
-1. Reset the counters on the switch:
-
-   ```routeros
-   /interface/ethernet/reset-counters [find name~"qsfp28-.-1"]
-   ```
-
-2. On each unit, find the RoCEv2 GID index of `rocep1s0f0`: the line of `show_gids rocep1s0f0` with `v2` and the unit's IPv4 address. Use it as `<GID>` in the following commands.
-3. On unit 1, start one receiver for each sender:
-
-   ```bash
-   ib_write_bw -d rocep1s0f0 -x <GID> -F --report_gbits \
-       -s 65536 -q 4 -D 10 -p 18601 &
-   ib_write_bw -d rocep1s0f0 -x <GID> -F --report_gbits \
-       -s 65536 -q 4 -D 10 -p 18602
-   ```
-
-4. On units 2 and 3, start the senders at the same time, with port 18601 on unit 2 and 18602 on unit 3:
-
-   ```bash
-   ib_write_bw -d rocep1s0f0 -x <GID> -F --report_gbits \
-       -s 65536 -q 4 -D 10 -p 18601 192.168.100.21
-   ```
-
-5. Read the counters on the switch:
-
-   ```routeros
-   /interface/ethernet/print stats where name~"qsfp28-.-1"
-   ```
-
-On a working configuration, the two receivers on unit 1 together report about 98 Gbit/s, `tx-pause` grows on the ports of units 2 and 3, and `tx-drop-packet` and `rx-fcs-error` stay at 0 on all four ports.
-
-Read the drop counters of unit 1's network adapter before and after the check. They do not grow:
-
-```bash
-ethtool -S enp1s0f0np0 | grep -e rx_discards_phy -e rx_out_of_buffer
-```
-
 ## Connect four units to a CRS804 at 200 Gbit/s with PFC
 
-The same team also copies model files between the units and runs a second job on the cluster. The four units connect to a CRS804-4DDQ, one 200 Gbit/s cable each. PFC keeps the inference traffic lossless in traffic class 3, and its thresholds make the switch pause only the units that send to a busy port, so a transfer into one unit does not stop the inference traffic of the others. Leave the bulk transfers in the default class: the switch drops them under congestion, their protocols recover, and text generation keeps most of its speed. Bulk RDMA traffic that must not lose packets can share traffic class 3, at a larger cost to text generation (see [Bulk transfers and text generation](#bulk-transfers-and-text-generation)). Both still share the link bandwidth and the units' network adapters. It costs a QoS configuration on the switch and on each unit, and the model servers must mark their RDMA traffic.
+The same team also copies model files between the units and runs a second job on the cluster. The four units connect to a CRS804-4DDQ, one 200 Gbit/s cable each. PFC keeps the inference traffic lossless in traffic class 3 and pauses only the units that send to a busy port. Explicit Congestion Notification (ECN) makes those units slow down before the switch has to pause them, so the queues stay short and the inference traffic does not wait behind bulk data. Bulk RDMA transfers can share traffic class 3: they lose no packets, and text generation keeps most of its speed (see [Bulk transfers and text generation](#bulk-transfers-and-text-generation)). Leave other bulk traffic, such as file copies over TCP, in the default class: the switch drops it under congestion, and its protocols recover. All traffic still shares the link bandwidth and the units' network adapters. It costs a QoS configuration on the switch and on each unit, and the model servers must mark their RDMA traffic.
 
-PFC works in both directions. The switch pauses the units that send to a busy port, and a receiving unit pauses the switch: each of its two network interfaces takes about 100 Gbit/s, so it cannot always take a 200 Gbit/s burst on one interface. Without PFC, for example with ECN alone, the receiving unit drops packets in its network adapter, and bulk RDMA traffic in traffic class 3 slows text generation to a few tokens per second. Keep PFC on, also when you add ECN.
+PFC works in both directions. The switch pauses the units that send to a busy port, and a receiving unit pauses the switch: each of its two network interfaces takes about 100 Gbit/s, so it cannot always take a 200 Gbit/s burst on one interface. Without PFC, for example with ECN alone, the receiving unit drops packets in its network adapter. Use ECN together with PFC, not instead of it.
 
-The CRS804 does not send 802.3x pause frames. Use PFC on it.
-
-Other devices on the fabric bridge, such as a router or a storage server, send their traffic in the default class. A few Gbit/s of such traffic has no measurable effect on text generation. Without IGMP snooping, the bridge floods multicast from these devices to every unit and to the switch CPU, and a multicast stream of several Gbit/s keeps the switch CPU busy (see [Bridge IGMP/MLD snooping](./bridge-igmp-mld-snooping)).
+Other devices on the fabric bridge, such as a router or a storage server, send their traffic in the default class. A few Gbit/s of such traffic has little effect on text generation. If these devices send multicast, enable IGMP snooping, so that the bridge does not flood it to every unit and to the switch CPU (see [Bridge IGMP/MLD snooping](./bridge-igmp-mld-snooping)).
 
 ### Configure the switch
 
@@ -222,7 +211,7 @@ add bridge=bridge1 interface=qsfp56-dd-4-1
 set [find name~"qsfp56-dd-"] l2mtu=9500
 ```
 
-Map RoCEv2 traffic (DSCP 26) to traffic class 3 and congestion notification packets (DSCP 48) to traffic class 6. Create a PFC profile for traffic class 3 with a pause threshold of 128 KiB and a resume threshold of 64 KiB, and apply it to the four ports. The ports trust the DSCP value of the packets (`trust-l3=keep`).
+Map RoCEv2 traffic (DSCP 26) to traffic class 3 and congestion notification packets (DSCP 48) to traffic class 6. Create a PFC profile for traffic class 3 with a pause threshold of 10% and a resume threshold of 5%, and apply it to the four ports. The ports trust the DSCP value of the packets (`trust-l3=keep`). Turn on ECN marking for traffic class 3, with the high WRED threshold.
 
 ```routeros
 /interface/ethernet/switch/qos/profile
@@ -230,25 +219,48 @@ add dscp=26 name=roce traffic-class=3
 add dscp=48 name=cnp traffic-class=6
 /interface/ethernet/switch/qos/priority-flow-control
 add name=pfc-tc3 rx=yes traffic-class=3 tx=yes \
-    pause-threshold=128KiB resume-threshold=64KiB
+    pause-threshold=10% resume-threshold=5%
 /interface/ethernet/switch/qos/port
 set [find name~"qsfp56-dd-.-1"] pfc=pfc-tc3 trust-l3=keep
+/interface/ethernet/switch/qos/tx-manager/queue
+set [find traffic-class=3] ecn=yes
+/interface/ethernet/switch/qos/settings
+set wred-threshold=high
 ```
 
-With these thresholds, the switch pauses a unit that sends to a busy port when that unit's packets fill 128 KiB of the switch's buffer, and lets it send again when they drop 64 KiB below that. The other units keep sending. With the default `auto` thresholds, the switch pauses all four ports when its shared lossless buffer fills, and one transfer into one unit stops the inference traffic of every unit. PFC receive also needs the egress rate of queue 3, which the switch sets on these ports by itself.
+When the queue of traffic class 3 grows, the switch marks its packets with ECN. The receiving unit answers with congestion notification packets, and the senders slow down before their data reaches the pause threshold. PFC pauses a unit that sends to a busy port only when a burst comes faster: at 10% of the free lossless buffer, and it lets the unit send again 5% below that. The other units keep sending. PFC receive also needs the egress rate of queue 3, which the switch sets on these ports by itself. See [PFC thresholds and ECN](#pfc-thresholds-and-ecn) for other values.
 
 ### Configure the units
 
-Set the MTU to 9000 on both interfaces as for the CRS504. Then make each unit trust the DSCP value, run PFC on priority 3 and stop 802.3x pause frames. A unit maps DSCP 26 to priority 3.
+Set the MTU to 9000 on both interfaces as for the CRS504. Then make each unit trust the DSCP value, run PFC on priority 3 and stop 802.3x pause frames. A unit maps DSCP 26 to priority 3. The units answer ECN marks and slow down by themselves: their RoCE congestion control is on by default.
+
+These settings do not stay after a restart, so a service applies them at every start of the unit, before Docker starts. Create and start the service on every unit:
 
 ```bash
-for i in enp1s0f0np0 enP2p1s0f0np0; do
-  sudo mlnx_qos -i $i --trust=dscp --pfc=0,0,0,1,0,0,0,0
-  sudo ethtool -A $i rx off tx off
-done
+sudo tee /etc/systemd/system/fabric-qos.service > /dev/null <<EOF
+[Unit]
+Description=PFC on priority 3 for the cluster fabric
+Requires=sys-subsystem-net-devices-enp1s0f0np0.device
+After=sys-subsystem-net-devices-enp1s0f0np0.device
+Requires=sys-subsystem-net-devices-enP2p1s0f0np0.device
+After=sys-subsystem-net-devices-enP2p1s0f0np0.device
+Before=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=mlnx_qos -i enp1s0f0np0 --trust=dscp --pfc=0,0,0,1,0,0,0,0
+ExecStart=mlnx_qos -i enP2p1s0f0np0 --trust=dscp --pfc=0,0,0,1,0,0,0,0
+ExecStart=-ethtool -A enp1s0f0np0 rx off tx off
+ExecStart=-ethtool -A enP2p1s0f0np0 rx off tx off
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable --now fabric-qos
 ```
 
-These settings do not stay after a restart of the unit. Run the loop again after each start, and check that `mlnx_qos -i enp1s0f0np0` prints `Priority trust state: dscp` and, in its PFC section, `enabled 0 0 0 1 0 0 0 0`.
+Check that `mlnx_qos -i enp1s0f0np0` prints `Priority trust state: dscp` and, in its PFC section, `enabled 0 0 0 1 0 0 0 0`.
 
 ### Mark the traffic and use both interfaces
 
@@ -261,7 +273,7 @@ Pass these settings to the model server's container on every unit, for example w
 | `NCCL_IB_TC` | `106` | NCCL marks its RDMA traffic with DSCP 26. |
 | `B12X_ROCE_TRAFFIC_CLASS` | `106` | NVIDIA's RDMA all-reduce in the vLLM image of the DeepSeek V4.1 Flash example marks its traffic the same way. |
 
-The value 106 is DSCP 26 with the ECN-capable bits set, which the switch maps to traffic class 3. Other RDMA software has its own traffic class setting; set it to 106 too. Leave bulk traffic unmarked.
+The value 106 is DSCP 26 with the ECN-capable bits set, which the switch maps to traffic class 3. Other RDMA software, also for bulk transfers, has its own traffic class setting; set it to 106 too. Leave other bulk traffic unmarked.
 
 ### Check the network
 
@@ -273,12 +285,65 @@ Check jumbo frames and the bridge as for the CRS504. Then print the QoS port set
 
 A `;;;` comment line under a port names a setting that the port is missing.
 
-Run the congestion check of the CRS504 example with the port names `qsfp56-dd-.-1`, and mark the test traffic for the lossless class: add `--tclass=106 -S 3` to each `ib_write_bw` command. Run it on both interfaces at the same time, with `roceP2p1s0f0`, its own GID index, the 192.168.101.x addresses and ports 18603 and 18604 for the second pair.
+### Test PFC under load
+
+Pause frames appear only under congestion: with no traffic, or with one sender for each receiver, the pause counters stay at 0. This test creates congestion on purpose. Units 2 and 3 send to unit 1 at the same time on both interfaces, so that unit 1's port receives twice its link rate, and the switch must pause the senders instead of dropping their packets. The test traffic is marked for the lossless class (`--tclass=106 -S 3`).
+
+1. Reset the counters on the switch:
+
+   ```routeros
+   /interface/ethernet/reset-counters [find name~"qsfp56-dd-.-1"]
+   ```
+
+2. On each unit, find the RoCEv2 GID index of both RDMA devices: the line of `show_gids` with `v2` and the IPv4 address of the interface. Use the index of `rocep1s0f0` as `<GID1>` and that of `roceP2p1s0f0` as `<GID2>` in the following commands.
+3. On unit 1, start one receiver for each sender on each interface:
+
+   ```bash
+   for p in 18601 18602; do
+     ib_write_bw -d rocep1s0f0 -x <GID1> -F --report_gbits \
+         --tclass=106 -S 3 -s 65536 -q 4 -D 10 -p $p &
+   done
+   for p in 18603 18604; do
+     ib_write_bw -d roceP2p1s0f0 -x <GID2> -F --report_gbits \
+         --tclass=106 -S 3 -s 65536 -q 4 -D 10 -p $p &
+   done
+   wait
+   ```
+
+4. On units 2 and 3, start the senders at the same time. Unit 2 uses ports 18601 and 18603, as here; unit 3 uses 18602 and 18604:
+
+   ```bash
+   ib_write_bw -d rocep1s0f0 -x <GID1> -F --report_gbits \
+       --tclass=106 -S 3 -s 65536 -q 4 -D 10 -p 18601 192.168.100.21 &
+   ib_write_bw -d roceP2p1s0f0 -x <GID2> -F --report_gbits \
+       --tclass=106 -S 3 -s 65536 -q 4 -D 10 -p 18603 192.168.101.21 &
+   wait
+   ```
+
+5. Read the counters on the switch:
+
+   ```routeros
+   /interface/ethernet/print stats where name~"qsfp56-dd-.-1"
+   ```
 
 On a working configuration, the receivers on unit 1 together report about 196 Gbit/s, `tx-pause` grows on the ports of units 2 and 3 and stays at 0 on the ports of units 1 and 4, and `tx-drop-queue3-packet` stays at 0. `rx-pause` can also grow on the port of unit 1: unit 1 pauses the switch when one of its interfaces receives faster than it can take. On units 2 and 3, `rx_prio3_pause` grows:
 
 ```bash
 ethtool -S enp1s0f0np0 | grep prio3_pause
+```
+
+On unit 1, the count of ECN-marked packets grows:
+
+```bash
+cat /sys/class/infiniband/rocep1s0f0/ports/1/hw_counters/np_ecn_marked_roce_packets
+```
+
+The drop counters of both interfaces of unit 1 do not grow:
+
+```bash
+for i in enp1s0f0np0 enP2p1s0f0np0; do
+  ethtool -S $i | grep -e rx_discards_phy -e rx_out_of_buffer
+done
 ```
 
 While the senders run, the switch's lossless buffer holds a few hundred KiB, far below its capacity:
@@ -287,7 +352,7 @@ While the senders run, the switch's lossless buffer holds a few hundred KiB, far
 /interface/ethernet/switch/qos/monitor once
 ```
 
-`lossless-pool-byte-use` near half of `lossless-pool-byte-cap`, with `tx-pause` on all four ports, means the PFC profile uses `auto` thresholds.
+A `lossless-pool-byte-use` above 1 MiB means higher thresholds than those of the example.
 
 ## Recommended settings
 
@@ -297,8 +362,8 @@ The two switch examples apply these settings:
 
 | Choice | Recommended setting | Reason |
 | :-- | :-- | :-- |
-| Flow control on a fabric with only the cluster's inference traffic | 802.3x, as in the CRS504 example | The switch drops no packets, with the least configuration. |
-| Flow control on a CRS804, or on a fabric shared with bulk transfers | PFC on traffic class 3 with a 128 KiB pause threshold and a 64 KiB resume threshold | A transfer into one unit does not pause the inference traffic of the others. |
+| Flow control on a 100 Gbit/s fabric with only the cluster's inference traffic | None, as in the CRS504 example | The model server's traffic stays far below the link rate. |
+| Flow control on a CRS804, or on a fabric shared with bulk transfers | PFC on traffic class 3 with a 10% pause threshold and a 5% resume threshold, and ECN on traffic class 3 with `wred-threshold=high` | The senders slow down before the switch has to pause them, so the queues stay short and inference traffic keeps most of its speed next to bulk transfers. |
 | Frame size | MTU 9000 on the units, `l2mtu=9500` on the switch | RDMA sends the same data in fewer, larger packets. |
 
 ### Model server settings for DeepSeek V4.1 Flash
@@ -307,27 +372,18 @@ These settings apply to the model and vLLM build used in the walkthrough, which 
 
 | Choice | Recommended setting | Reason |
 | :-- | :-- | :-- |
-| Model servers | One server across all four units | The model needs the memory of all four units. |
-| Data exchange between the units | NVIDIA's RDMA all-reduce (`VLLM_ENABLE_ROCE_ALLREDUCE=1`) on the first interface | Text generation is about one sixth faster than with NCCL. |
+| Model servers | One server across all four units | Two units cannot hold the model. |
+| Data exchange between the units | NVIDIA's RDMA all-reduce (`VLLM_ENABLE_ROCE_ALLREDUCE=1`) on the first interface | With DeepSeek V4 Flash and a 27-billion-parameter model, text generation was about one sixth faster than with NCCL. |
 | Speculative decoding | The model's own draft model with 5 draft tokens | It roughly doubles the speed for one user. 5 draft tokens also serve 8 to 16 users best. |
-| Requests served at the same time | `--max-num-seqs 16` | Published recipes set 2 or 8, and further requests wait in a queue. Values of 8 and 16 give the same speed for up to 8 users. |
-| Context cache | `--kv-cache-memory-bytes 6G` | Without the option, the cache takes all the GPU memory the model leaves. With a fixed 6 GiB, 18 to 20 GB stay free on every unit while the server reads long prompts, instead of 2 to 3 GB. |
-| Prompts that wait | `--max-parallel-prefills auto --prefill-policy decode-aware` | The server reads several waiting prompts at the same time, a part of each in every step. A short request does not wait until another user's long prompt is read: behind a 90,000-token prompt, it starts after 3 s instead of 26 s. |
-| Prompts that arrive while others receive text | `--prefill-schedule-interval 8` | The server reads prompts in every eighth step. The other users keep 33 to 47% of their speed instead of 5 to 10%. |
+| Requests served at the same time | `--max-num-seqs 16` | Allows up to 16 active requests; further requests wait in a queue. With up to eight users, this setting gives similar speed to a limit of eight. |
+| Context cache | `--kv-cache-memory-bytes 6G` | Leaves memory available while the server reads long prompts. Without the option, the cache takes all the GPU memory the model leaves. |
+| Prompts that wait | `--max-parallel-prefills auto --prefill-policy decode-aware` | The server reads several waiting prompts at the same time, a part of each in every step. A short request does not wait until another user's long prompt is read. |
+| Prompts that arrive while others receive text | `--prefill-schedule-interval 8` | The server reads prompts in every eighth step, reducing interruptions to replies already in progress. |
 | Thinking | Set by each request: off for quick edits, with a thinking budget otherwise | With thinking on, most of the wait for an answer is thinking. |
-
-### Cluster size and server layout
-
-DeepSeek V4.1 Flash needs all four units in this example. For a model that fits on two units, the choice between one four-unit server and two two-unit servers depends on the workload and the server's request limit:
-
-- For one user, a server on four units generated text about one and a half times faster than a server on two units in the tests.
-- DeepSeek V4 Flash (167 GB) ran on two units at 54 tok/s for one user, and on four units at 82 tok/s. DeepSeek V4.1 Flash (510 GB) generates text about as fast on four units, and answers a coding question three to four times sooner because it thinks less.
-- A 27-billion-parameter model gave the most answers in total from one four-unit server at 8 and 16 users, and from two two-unit servers at 32 users.
-- With a limit of 8 simultaneous requests per server, 16 users of DeepSeek V4 Flash got more answers from two two-unit servers: on one server, 8 users waited in a queue. With the limit raised to 32, one four-unit server gave more answers.
 
 ## Run DeepSeek V4.1 Flash for a small team
 
-A team of four developers wants a coding assistant that runs in the office and keeps the source code there. Four DGX Spark units on one of the networks of this page serve DeepSeek V4.1 Flash, and each developer connects a coding agent to it. Each developer gets 40 to 75 tok/s, depending on how many are active at once. The model needs the memory of all four units and 510 GB of disk space on each.
+A team of four developers wants a coding assistant that runs in the office and keeps the source code there. Four DGX Spark units on one of the networks of this page serve DeepSeek V4.1 Flash, and each developer connects a coding agent to it. Each developer gets 40 to 75 tok/s, depending on how many are active at once. The server runs on all four units, and each unit keeps a 510 GB copy of the model on its disk.
 
 The steps use the vLLM image `eugr/spark-vllm-b12x:nightly-20261015`, the model checkpoint `DeepSeek-V4.1-Flash-1017` and Pi 0.87.
 
@@ -346,6 +402,13 @@ On every unit, download the model server image and create the model folder:
 docker pull eugr/spark-vllm-b12x:nightly-20261015
 sudo mkdir -p /opt/models
 sudo chown $USER /opt/models
+```
+
+Check that you have the build this page uses. The command prints `eugr/spark-vllm-b12x@sha256:03a956544e9f9b4b7ba91690469fbe7848bdbef29a7d2e0f5788368467bb3595`.
+
+```bash
+docker image inspect --format '{{index .RepoDigests 0}}' \
+    eugr/spark-vllm-b12x:nightly-20261015
 ```
 
 On unit 1, download the model with the `hf` tool of the image. If the download stops, run the command again: it continues where it stopped.
@@ -396,13 +459,14 @@ IP=192.168.100.21
 HEADLESS=
 ```
 
-The rest of the file is the same on every unit. It finds the RoCEv2 GID index of the unit's first interface, and starts the server with the settings of the previous section.
+The rest of the file is the same on every unit. It finds the RoCEv2 GID index of the unit's first interface, stops if the unit has none, and starts the server with the settings of the previous section.
 
 ```bash
 [ -f ~/dgx-spark.key ] && export VLLM_API_KEY=$(cat ~/dgx-spark.key)
 docker rm -f vllm > /dev/null 2>&1
 GID=$(show_gids rocep1s0f0 | awk -v ip=$IP \
     '$5 == ip && $6 == "v2" {print $3}')
+[ -n "$GID" ] || { echo "No RoCEv2 GID for $IP"; exit 1; }
 DRAFT='{"method":"dspark","num_speculative_tokens":5,
   "draft_tensor_parallel_size":4,"attention_backend":"B12X",
   "draft_sample_method":"probabilistic",
@@ -451,8 +515,16 @@ docker run -d --name vllm --network host --ipc host \
 ```
 
 - `-e VLLM_API_KEY` passes the key of unit 1 to the server. The other units have no key file.
-- Unit 1 serves the API on port 8000 of all its addresses. The API is plain HTTP: let only networks you trust reach the port.
-- On the CRS804 configuration, also pass the four settings of the table under "Mark the traffic and use both interfaces", and set `NCCL_IB_ADDR_RANGE=192.168.100.0/23` so that the range has both networks.
+- Unit 1 serves the API on port 8000 of all its addresses. The API is plain HTTP, so the API key, the prompts and the source code in them cross the network unencrypted. Let only networks you trust reach the port, or connect through an SSH tunnel as described under "Connect the Pi coding agent".
+
+On the CRS804 configuration, replace the two lines that set `NCCL_IB_HCA` and `NCCL_IB_ADDR_RANGE` with the following lines. They add the settings of "Mark the traffic and use both interfaces", and the address range covers both networks.
+
+```bash
+    -e NCCL_IB_HCA=rocep1s0f0,roceP2p1s0f0 -e NCCL_IB_MERGE_NICS=1 \
+    -e NCCL_IB_ROCE_VERSION_NUM=2 -e NCCL_IB_TC=106 \
+    -e B12X_ROCE_TRAFFIC_CLASS=106 \
+    -e NCCL_IB_ADDR_RANGE=192.168.100.0/23 \
+```
 
 Start the server on every unit, unit 1 first:
 
@@ -490,7 +562,7 @@ The reply is a JSON object with the answer in `choices[0].message.content` and t
 
 [Pi](https://pi.dev) is a coding agent for the terminal. Each developer installs it as its documentation describes, and then adds the cluster as a model provider.
 
-Copy the API key from unit 1. In these commands, 192.168.88.21 is the address of unit 1 on the office network:
+Copy the API key from unit 1 with your SSH login there. In these commands, 192.168.88.21 is the address of unit 1 on the office network:
 
 ```bash
 mkdir -p ~/.pi/agent
@@ -562,18 +634,19 @@ pi --model dgx-spark/deepseek-v4.1-flash
 
 - Pi reads the key from the file for each request, so the key is not in the configuration.
 - The thinking levels of Pi map to the values the server accepts: `off` turns thinking off, `minimal` and `low` send `low`, `medium` and `high` send `high`, and `xhigh` sends `max`. With each level Pi also sends a thinking budget.
-- The configuration limits a session to 262,144 tokens of context. The server accepts up to 1,048,576.
+- The configuration limits a session to 262,144 tokens of context.
+- To encrypt the traffic on the office network, keep `ssh -N -L 8000:localhost:8000 192.168.88.21` running, and set `baseUrl` to `http://localhost:8000/v1`. Pi then reaches the server through SSH.
 
 Other clients connect to the same address with the OpenAI chat completions API. The server also answers requests in the Anthropic format at `/v1/messages`. For any client:
 
 - **Thinking is set by each request.** `"chat_template_kwargs": {"thinking": false}` turns it off, and so does `"reasoning_effort": "none"` for clients that only have the OpenAI field. With thinking on, the effort is `low`, `high`, `max` or a number from 1 to 100.
 - **The server rejects the effort values `medium` and `minimal`** with HTTP 400. Some clients send `medium` by default.
-- **A thinking budget caps the thinking.** `"thinking_token_budget": 2000` in a request stops the thinking after exactly 2,000 tokens. Without a budget, the model can use the whole output limit for thinking: open design questions with a 6,000-token limit got no answer. With a budget of 500 or 2,000 tokens, the answer followed. The answer still needs its own room in the output limit: one of six such answers was cut off at 6,000 tokens.
+- **A thinking budget caps the thinking.** `"thinking_token_budget": 2000` in a request stops the thinking after 2,000 tokens. Without a budget, the model can spend the whole output limit on thinking and return no answer. Keep the budget lower than the output limit, so that the answer has room.
 - **A client that sends no sampling settings gets DeepSeek's:** temperature 1.0 and top-p 1.0.
 
 ### Keep the server running
 
-A unit keeps its network settings over a restart: the MTU, the addresses and 802.3x flow control. The model server does not start by itself, and it needs all four units. When one unit restarts, the server on the other three stops answering requests, although `/health` still returns 200. To recover, run `bash ~/start-vllm.sh` on all four units again.
+A unit keeps its network settings over a restart: the MTU, the addresses and, on the CRS804 configuration, the PFC settings of the `fabric-qos` service. The model server does not start by itself, and it needs all four units. When one unit restarts, the server on the other three stops answering requests, although `/health` still returns 200. To recover, run `bash ~/start-vllm.sh` on all four units again.
 
 A script on unit 1 does that by itself. Every minute it asks the server a one-token question. When three questions in a row get no answer, it waits until the other units are up, and starts the server on all four. Create the file `~/watch-vllm.sh` on unit 1:
 
@@ -629,42 +702,41 @@ EOF
 sudo systemctl enable --now vllm-watch
 ```
 
-With the service on the CRS504 configuration, the server answered again 4 to 8 minutes after a restart of one unit, and about 5 minutes after a restart of all four. `journalctl -u vllm-watch` shows each time the script started the server. On the CRS804 configuration, also reapply the QoS loop from "Configure the units" after a unit restarts.
+Allow several minutes for recovery after a unit restarts: the CRS504 example recovered in 4 to 8 minutes. `journalctl -u vllm-watch` shows each time the script started the server. On the CRS804 configuration, the `fabric-qos` service sets PFC before Docker starts, so a restarted unit rejoins the server with its PFC settings.
+
+To stop or restart the server by hand, stop the script first, or it starts the server again within a minute: run `sudo systemctl stop vllm-watch` on unit 1, then `docker rm -f vllm` on every unit. `sudo systemctl start vllm-watch` starts the script again.
 
 ## Example results: DeepSeek V4.1 Flash
 
-These results show what the server of the previous section delivers on the two networks of this page. Other models, settings and prompts give other numbers.
-
-- **Benchmark prompts:** coding questions from NVIDIA's SPEED-Bench, thinking on, DeepSeek's sampling settings. One user: 10 prompts with up to 8,192 output tokens each. Several users: three prompts per user with up to 2,048 output tokens each.
-- **Working sessions:** each user has a context of 36,000 tokens, a 6,000-token system prompt and 30,000 tokens of source code, and asks six questions. Every turn adds 2,000 tokens, and an answer has up to 4,000 tokens.
+The following examples use the server configuration of the previous section on both networks.
 
 ### Speed for each user
 
-| Users at the same time | CRS504: speed per user | CRS504: first token | CRS804: speed per user | CRS804: first token |
-| --: | --: | --: | --: | --: |
-| 1 | 75 tok/s | 0.28 s | 80 tok/s | 0.30 s |
-| 2 | 56 tok/s | 0.56 s | 58 tok/s | 0.55 s |
-| 4 | 40 tok/s | 0.76 s | 40 tok/s | 0.67 s |
-| 8 | 26 tok/s | 1.12 s | 26 tok/s | 0.98 s |
+For individual coding questions from NVIDIA's SPEED-Bench, with thinking on:
 
-- **Speed per user** is the rate at which one request receives tokens after its first token. **First token** is the median time from the request to its first token.
-- The rows for several users measure speed, not complete answers. Their limit of 2,048 output tokens is short for a model that thinks first: about a third of these requests ended before the answer began.
-- Both clusters give similar speeds. The differences, up to 6% for one user, are what two starts of the same server differ by.
+| Users at the same time | Speed per user | First token |
+| --: | --: | --: |
+| 1 | 75–80 tok/s | 0.3 s |
+| 2 | 56–58 tok/s | 0.6 s |
+| 4 | 40 tok/s | 0.7–0.8 s |
+| 8 | 26 tok/s | 1.0–1.1 s |
+
+**Speed per user** is the rate at which one request receives tokens after its first token, including thinking tokens. **First token** is the median time from the request to its first token.
 
 ### Time to an answer
 
-DeepSeek V4.1 Flash thinks before it answers, and a request can turn thinking off. That choice changes the wait for an answer more than any server setting. The ranges in the table are the results on the two switches.
+These working sessions start with 36,000 tokens of instructions and source code and include follow-up questions. Each reply has an output limit of 4,000 tokens. Turning thinking off shortens the wait for an answer.
 
-| Working session | Thinking | Complete answer, median | Complete answer, 9 of 10 turns within | First token, first turn | First token, later turns |
-| :-- | :-- | --: | --: | --: | --: |
-| 1 user | On | 18–19 s | 27–29 s | 9–10 s | 1.0 s |
-| 1 user | Off | 4–7 s | 12–13 s | 9–10 s | 1.0 s |
-| 3 users at the same time | On | 30–31 s | 89–95 s | 23–24 s | 1.2–1.5 s |
-| 3 users at the same time | Off | 9 s | 32–33 s | 20–23 s | 1.2–1.3 s |
+| Working session | Thinking | Complete answer, median | First token, first turn | First token, later turns |
+| :-- | :-- | --: | --: | --: |
+| 1 user | On | 18–19 s | 9–10 s | 1.0 s |
+| 1 user | Off | 4–7 s | 9–10 s | 1.0 s |
+| 3 users at the same time | On | 30–31 s | 23–24 s | 1.2–1.5 s |
+| 3 users at the same time | Off | 9 s | 20–23 s | 1.2–1.3 s |
 
 - **The first turn of a session is slow, later turns are not.** The server reads a new prompt at about 3,400 tok/s: 2 s for 8,000 tokens, 9 s for 31,000 and 38 s for 125,000. It keeps what it has read, so on later turns it reads only the new part.
 - **With thinking on, most of the wait is thinking.** The model writes 1,400 to 2,500 thinking tokens before a short answer, and the amount varies a lot from turn to turn. With thinking off, the answer starts with the first token.
-- **Thinking can use the whole output limit.** In the sessions of three users with thinking on, 3 or 4 of the 18 turns ended at the 4,000-token limit with no answer. A thinking budget lower than the output limit prevents it.
+- **Thinking can use the whole output limit.** With a 4,000-token limit, some turns end in thinking with no answer. A thinking budget lower than the output limit leaves room for the answer.
 
 ### Long prompts on a shared server
 
@@ -677,18 +749,19 @@ DeepSeek V4.1 Flash thinks before it answers, and a request can turn thinking of
 - A single new prompt of 90,000 tokens gets its first token after 26 to 28 s.
 - Two long prompts that arrive together take longer: 2 to 3.5 minutes each for 130,000 to 240,000 tokens.
 - A new session that starts while the server reads two long prompts waits 40 to 65 s for its first token. A turn of a session in progress waits 5 to 7 s.
-- The server stays stable under this load. In a 45-minute run, three users worked in sessions and two new prompts of 130,000 to 240,000 tokens arrived every four minutes. All 131 turns and all 20 long prompts completed without an error, no reply paused for more than 1.7 s, and 18 to 20 GB of memory stayed free on every unit. In 6 of the turns, the thinking used the whole 4,000-token limit.
 
 ## Troubleshoot
 
+- **A switch port shows `status: no-link`:** check that the monitor output shows `sfp-module-present: yes`, and that the cable is in the unit's first QSFP port: `ip -br link` on the unit shows `NO-CARRIER` on the interfaces of the port without a cable. If the cable is in the other port (`enp1s0f1np1`), move it. If a 100 Gbit/s link still does not come up, set the link speed of the switch port by hand: `/interface/ethernet/set qsfp28-1-1 auto-negotiation=no speed=100G-baseCR4`. Keep auto-negotiation on for the 200 Gbit/s links of the CRS804.
+- **A CRS804 port runs at 100 Gbit/s:** the cable is a 100G QSFP28 cable. Use a 200G QSFP56 cable.
 - **The full-size ping fails:** a switch port has an `l2mtu` lower than 9000, or a unit has a different MTU.
-- **The pause counters stay at 0:** without congestion this is expected. Run the congestion check.
-- **`rx-fcs-error` grows on a 100 Gbit/s port:** set `fec-mode=fec91` on that port.
+- **The pause counters stay at 0 on the CRS804:** pause frames appear only when several units send to one. Run the [PFC test](#test-pfc-under-load).
+- **`rx-fcs-error` grows on a 100 Gbit/s port:** set `fec-mode=fec91` on that port. Without forward error correction, the link comes up but corrupts some packets.
 - **A 200 Gbit/s link carries only about 100 Gbit/s:** the application uses one interface. Give it both RDMA devices (`NCCL_IB_HCA`, `NCCL_IB_MERGE_NICS`).
 - **NCCL finds no RoCE device after a link restart:** check with `ip -br addr` that each address is on its own interface. A NetworkManager profile that is not bound to its interface can come up on the other interface of the port; the MTU commands bind each profile.
-- **`tx-drop-queue3-packet` grows on the CRS804:** check that the units trust DSCP and run PFC on priority 3 (`mlnx_qos -i enp1s0f0np0`), and that the QoS port print shows no comment line.
-- **`tx-pause` grows on all four ports in the congestion check:** the PFC profile uses `auto` thresholds. Set the thresholds of the CRS804 example.
-- **Text generation stops while a large transfer runs:** the transfer is marked for the lossless class and the PFC profile uses `auto` thresholds. Set the thresholds of the CRS804 example, or leave bulk traffic unmarked.
+- **`tx-drop-queue3-packet` grows on the CRS804:** check that the units trust DSCP and run PFC on priority 3 (`mlnx_qos -i enp1s0f0np0`, `systemctl status fabric-qos`), and that the QoS port print shows no comment line.
+- **Text generation almost stops while a large transfer runs:** the transfer is marked for the lossless class, and ECN is off on queue 3 or the PFC profile uses higher thresholds than the CRS804 example. Use the PFC and ECN settings of the CRS804 example.
+- **The model server starts again after `docker rm -f vllm`:** the `vllm-watch` script starts it. Stop the script first with `sudo systemctl stop vllm-watch`.
 - **The first start of the model server takes half an hour:** the server compiles and tunes its GPU code on the first start, and keeps the result in `~/.cache` for later starts.
 - **A client gets HTTP 400 from the model server:** the client sends the thinking effort `medium` or `minimal`. Set the effort to `low`, `high` or `max`, or map the levels of the client as in the Pi configuration.
 - **A reply has thinking and no answer:** the thinking used the whole output limit of the request. Set a thinking budget, raise the output limit, or turn thinking off for the request.
@@ -708,43 +781,42 @@ DeepSeek V4.1 Flash thinks before it answers, and a request can turn thinking of
 
 The IP traffic class is the whole IP header byte: DSCP 26 shifted by two bits (104) plus the ECN-capable bits (2).
 
-### PFC thresholds
+### PFC thresholds and ECN
 
-The switch counts the packets waiting in its buffer per ingress port, and pauses a port when its count reaches the pause threshold. The CRS804 measurements:
+A pause threshold is set in bytes, for example `pause-threshold=128KiB`, or as a share of the free lossless buffer, as in the CRS804 example. With the default, `auto`, RouterOS chooses the thresholds. The switch rounds the value to one of a few steps, so close values behave the same. The resume threshold is the distance below the pause threshold at which a paused unit may send again.
 
-- Pause thresholds from 32 to 512 KiB all paused only the units that sent to the busy port, dropped no packets and kept the receivers at line rate.
-- With the 128 KiB threshold, each paused unit held about 180 KiB: the threshold plus the packets still on their way after the pause. Two units sending to one port used about 360 KiB of the 3.9 MiB lossless buffer.
-- At 1 MiB, two senders reached the shared limit, and the switch paused all ports, as with `auto`. Keep the pause threshold at 512 KiB or lower.
-- Resume thresholds of 16 to 112 KiB below a 128 KiB pause threshold made no measurable difference.
-- ECN on queue 3 (`ecn=yes` in `/interface/ethernet/switch/qos/tx-manager/queue`) can stay on with these thresholds. The switch marked no packets in the tests: PFC keeps the queues shorter than the marking level. It cost no throughput either.
+Every threshold keeps the class lossless and pauses only the units that send to a busy port. Without ECN, the switch holds the paused units' data up to the threshold, and inference traffic that shares the class with a bulk transfer waits behind it: the higher the threshold, the slower text generation gets. With ECN, the senders slow down before they reach the threshold, the queues stay short, and the threshold matters much less. ECN does not replace PFC: without PFC, the receiving units drop packets.
+
+The size of the lossless buffer (`lossless-buffers` in `/interface/ethernet/switch/qos/settings`) and cut-through forwarding can stay at their defaults.
 
 ### Bulk transfers and text generation
 
-Units 3 and 4 sent bulk RDMA traffic into unit 1 at about 200 Gbit/s, while a 27-billion-parameter model on all four units generated text for one and for eight users (CRS804 configuration, NVIDIA's RDMA all-reduce, speculative decoding). The table shows the text generation speed as a share of the speed without the transfer.
+This example uses a 27-billion-parameter model on four units connected to a CRS804. While two units send bulk RDMA traffic into a third at about 200 Gbit/s, text generation keeps the following share of its speed without the transfer:
 
 | Bulk traffic | Flow control | One user | Eight users | Bulk packets lost |
 | :-- | :-- | --: | --: | :-- |
-| Unmarked (default class) | PFC | 92% | 67% | Yes, recovered by the senders |
-| Marked (traffic class 3) | PFC, thresholds of the CRS804 example | 89% | 55% | None |
-| Marked (traffic class 3) | PFC, `auto` thresholds | Under 1% | Under 1% | None |
+| Marked (traffic class 3) | PFC 10% / 5% and ECN, as in the CRS804 example | 95% | 89% | None |
+| Marked (traffic class 3) | PFC 128 KiB / 64 KiB and ECN | 94% | 84% | None |
+| Unmarked (default class) | PFC | 92% | 68% | Yes, recovered by the senders |
+| Marked (traffic class 3) | PFC 128 KiB / 64 KiB, no ECN | 88% | 54% | None |
+| Marked (traffic class 3) | PFC 10% / 5%, no ECN | 71% | 35% | None |
+| Marked (traffic class 3) | PFC 25% / 12%, no ECN | 30% | 15% | None |
 | Marked (traffic class 3) | ECN, no PFC | 9% | 2% | Some |
 
-- Unmarked bulk traffic leaves the most speed to text generation. The senders resend what the switch drops.
-- Marked bulk traffic loses nothing. The switch pauses units 3 and 4, and their inference traffic waits behind their own bulk traffic, so text generation for several users slows down more.
-- With `auto` thresholds, the switch pauses all four ports and text generation stops.
-- With ECN alone, the units slow down the inference traffic together with the bulk traffic.
+- With PFC and ECN, marked bulk traffic loses nothing and costs text generation the least: the senders slow down before the switch pauses them, so the inference traffic does not wait behind bulk data.
+- Unmarked bulk traffic loses packets under congestion. The senders resend what the switch drops.
+- With PFC alone, the switch pauses the senders, and their inference traffic waits behind their own bulk traffic. The higher the pause threshold, the more bulk traffic waits in the switch, and the slower text generation gets.
+- With ECN alone, the receiving units drop packets, and the units slow down the inference traffic together with the bulk traffic.
 
 ### Network load of a model server
 
-The vLLM example uses NVIDIA's RDMA all-reduce, which requires each unit to communicate directly with every other unit over the cluster network. The switch provides that connectivity through one cable per unit. In the tests, NVIDIA's RDMA all-reduce generated text about one sixth faster than NCCL.
+The vLLM example uses NVIDIA's RDMA all-reduce, which requires each unit to communicate directly with every other unit over the cluster network. The switch provides that connectivity through one cable per unit.
 
 A model server split across units exchanges many small messages for each generated token. The traffic stays low: on average a few Gbit/s per unit for one user, and less than 40 Gbit/s per unit for 16 users with speculative decoding. RDMA latency between two units through the switch is under 3 µs, which is a small part of the time each token takes. Link speed and switch latency therefore have little effect on text generation speed. Model loading and storage use the full link.
 
-The four-unit CRS504 and CRS804 clusters generated text with DeepSeek V4 Flash and DeepSeek V4.1 Flash at speeds within about 6% of each other. Two starts of the same model server differ by as much.
+Long prompts send more: DeepSeek V4.1 Flash with the settings of the example sends 18 to 20 Gbit/s per unit while it reads a 100,000-token prompt, well within a 100 Gbit/s link.
 
-Long prompts send more: DeepSeek V4.1 Flash with the settings of the example sends 18 to 20 Gbit/s per unit while it reads a 100,000-token prompt. Neither a 100 Gbit/s link nor the disk limits that speed: the disk of each unit works at 3 to 4% of its capacity.
-
-With these settings, the model server reads long prompts at a similar speed on both clusters. With prompt batches four times larger (`--max-num-batched-tokens 16384`), the 200 Gbit/s cluster read long prompts 9 to 16% faster than the 100 Gbit/s cluster. That setting suits a server that mostly reads long prompts: with several users, it pauses the text of the others for 4 to 7 s.
+With these settings, long prompts are read at a similar speed at 100 and 200 Gbit/s. A server that mostly reads long prompts can use prompt batches four times larger (`--max-num-batched-tokens 16384`): it then reads them 9 to 16% faster on 200 Gbit/s links than on 100 Gbit/s links, but with several users it pauses the text of the others for 4 to 7 s.
 
 ### DeepSeek V4.1 Flash on four units
 

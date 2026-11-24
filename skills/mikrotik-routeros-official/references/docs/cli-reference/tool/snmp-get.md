@@ -23,7 +23,7 @@ Retrieves one OID from an SNMP agent — for example to test that a router answe
 <ArgTableRow arg="authentication-password" typ="string">SNMPv3 authentication password (at least 8 characters).</ArgTableRow>
 <ArgTableRow arg="authentication-protocol" typ="enum (MD5 | SHA1 | SHA256 | SHA384 | SHA512)">SNMPv3 authentication protocol: `MD5`, `SHA1`, `SHA256`, `SHA384`, or `SHA512`.</ArgTableRow>
 <ArgTableRow arg="encryption-password" typ="string">SNMPv3 encryption password (at least 8 characters).</ArgTableRow>
-<ArgTableRow arg="encryption-protocol" typ="enum (DES | AES)">SNMPv3 encryption protocol: `DES` or `AES`.</ArgTableRow>
+<ArgTableRow arg="encryption-protocol" typ="enum (DES | AES | AES256)">SNMPv3 encryption protocol: `DES`, `AES`, or `AES256`.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

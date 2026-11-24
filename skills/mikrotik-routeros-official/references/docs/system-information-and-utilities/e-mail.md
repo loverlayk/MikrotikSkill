@@ -95,7 +95,7 @@ Send the router's configuration export to an administrator every night.
        start-time=00:00:00 interval=24h
    ```
 
-The export hides passwords and other sensitive values by default, see [Configuration export](../getting-started/configuration-management/#configuration-export).
+The export hides passwords and other sensitive values by default, see [Configuration export](../getting-started/configuration-management/#export-the-configuration).
 
 ## Troubleshoot
 

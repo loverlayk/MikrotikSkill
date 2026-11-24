@@ -4,9 +4,9 @@
 
 # Backup
 
-The system backup saves the whole router configuration to a single binary file. Save a backup before a risky change, for example before an upgrade or a batch of firewall edits, and restore it when the configuration breaks. For a change that can cut your connection, or one you plan to undo, [safe mode](./#safe-mode) and [undo/redo](./#configuration-undo-and-redo) are lighter alternatives.
+The system backup saves the whole router configuration to a single binary file. Save a backup before a risky change, for example before an upgrade or a batch of firewall edits, and restore it when the configuration breaks. For a change that can cut your connection, or one you plan to undo, [safe mode](./#work-safely-with-safe-mode) and [undo/redo](./#undo-and-redo-changes) are lighter alternatives.
 
-A backup restores reliably only on the device it was made on. The backup contains the device's MAC addresses, so restoring it on another device can leave the interfaces misconfigured. To copy a configuration between devices, [export and import](./#configuration-export) it instead.
+A backup restores reliably only on the device it was made on. The backup contains the device's MAC addresses, so restoring it on another device can leave the interfaces misconfigured. To copy a configuration between devices, [export and import](./#export-the-configuration) it instead.
 
 :::warning
 A backup contains sensitive parameters, such as passwords and keys; see the [list of menus with sensitive parameters](./list-of-menus-with-sensitive-parameters). A backup saved without a password stores the configuration in readable form. Encrypt the backup and keep it in a safe place.

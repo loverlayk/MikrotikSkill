@@ -98,7 +98,7 @@ add afi=evpn instance=evpn-inst local.address=203.0.113.1 .role=ebgp multihop=ye
 add instance=evpn-inst name=bgp-evpn-1o vni=100040
 ```
 
-For simple setups with only one VNI, there is no need to set a route distinguisher or [`import.route-targets`](../../../cli-reference/routing/bgp/evpn.md#import.route-targets)/[`export.route-targets`](../../../cli-reference/routing/bgp/evpn.md#export.route-targets).
+For simple setups with only one VNI, there is no need to set a route distinguisher or [`import.route-targets`](../../../cli-reference/routing/bgp/evpn/#import.route-targets)/[`export.route-targets`](../../../cli-reference/routing/bgp/evpn/#export.route-targets).
 
 :::info
 When [RTs](../route-distinguisher-and-route-target.md#route-targets) or [RD](../route-distinguisher-and-route-target.md#route-distinguisher) are not specified, values are derived automatically. Route targets are set to `<PE ASN>:<VNI>`, route distinguishers `<PE address>:<num derived from config id>`).
@@ -263,7 +263,7 @@ Flags: E - established
 
 Just for demonstration purposes, on RouterOS leaf we will be sending vlan tagged traffic to the host.
 
-VXLAN learning should be disabled as we are using [BGP EVPN](../../../cli-reference/routing/bgp/evpn.md) for discovery. The EVPN configuration is done under [`/routing/bgp/evpn`](../../../cli-reference/routing/bgp/evpn.md) menu.
+VXLAN learning should be disabled as we are using [BGP EVPN](../../../cli-reference/routing/bgp/evpn/) for discovery. The EVPN configuration is done under [`/routing/bgp/evpn`](../../../cli-reference/routing/bgp/evpn/) menu.
 
 ```routeros
 /interface/bridge

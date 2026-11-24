@@ -22,7 +22,6 @@ Ordered list of cipher suites permitted for MACsec negotiation. Custom profiles 
 
 - `aes-gcm-128` - AES-GCM with a 128-bit key.
 - `aes-gcm-xpn-128` - AES-GCM with a 128-bit key and extended packet numbering (XPN). XPN extends the packet-number space before Secure Association replacement is required; it does not provide an unlimited Secure Association lifetime.
-
 </ArgTableRow>
 <ArgTableRow arg="server-priority" typ="num">Priority used to elect the key server in a point-to-point connection. A lower numeric value takes precedence. If both peers have equal priority, the peer with the lower MAC address becomes key server. Accepted range: `0..255`. Default: `10`.</ArgTableRow>
 </ArgTable>

@@ -13,6 +13,7 @@ When a RouterBOARD is placed in flash‑boot mode and powered on within a Layer�
 The FlashFig utility is downloadable from the MikroTik [Downloads](https://mikrotik.com/download) page.
 
 FlashFig mode is enabled by default on all RouterBOARD units manufactured since March 2010. For older models, FlashFig can be activated by setting the [`boot-device`](../cli-reference/system/routerboard/settings#boot-device) to `flash‑boot` or `flash‑boot‑once‑then‑nand` in RouterBOARD settings:
+
 ```ros
 /system/routerboard/settings/set boot-device=flash-boot-once-then-nand
 # or
@@ -41,7 +42,7 @@ This is a step-by-step example of how to use the FlashFig process to apply a cho
 The Windows computer must be equipped with the following ports and contain the following files:
 
 - A working Ethernet port.
-- Valid *Config* and/or *Mode* script file with MikroTik RouterOS configuration similar to an [export/import file](../getting-started/configuration-management#configuration-export-and-import). In addition to valid MikroTik RouterOS CLI commands, you can also re-apply the factory passwords by using the read-only variables *$defconfPassword* and *$defconfWifiPassword*;
+- Valid *Config* and/or *Mode* script file with MikroTik RouterOS configuration similar to an [export/import file](../getting-started/configuration-management#import-a-configuration). In addition to valid MikroTik RouterOS CLI commands, you can also re-apply the factory passwords by using the read-only variables *$defconfPassword* and *$defconfWifiPassword*;
 - Always use the latest FlashFig program available from the [downloads](https://mikrotik.com/download) page.
 - The RouterBOARD has to be in flash-boot mode. If this is the very first boot, nothing needs to be done.
 
@@ -54,7 +55,7 @@ Be aware of the text editor's treatment of CR/LF characters and test that the co
 ##### Windows Computer
 
 - Run FlashFig.
-- Prepare *Config* and/or *Mode* script **.rsc** file/s. *Config* and/or *Mode* script file is a [regular/import file](../getting-started/configuration-management#configuration-export-and-import), it accepts valid MikroTik RouterOS CLI commands. You can create a .rsc file with any text editor program (Notepad, Notepad++, Text Editor, TextEdit, Microsoft Word, OpenOffice Writer).
+- Prepare *Config* and/or *Mode* script **.rsc** file/s. *Config* and/or *Mode* script file is a [regular/import file](../getting-started/configuration-management#import-a-configuration), it accepts valid MikroTik RouterOS CLI commands. You can create a .rsc file with any text editor program (Notepad, Notepad++, Text Editor, TextEdit, Microsoft Word, OpenOffice Writer).
 
 ![](img/editor_1.png)
 

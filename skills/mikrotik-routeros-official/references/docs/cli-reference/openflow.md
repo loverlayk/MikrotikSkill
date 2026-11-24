@@ -11,7 +11,7 @@
 This menu lists the configuration of OpenFlow clients.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
-<ArgTableRow arg="X" typ="disabled"></ArgTableRow>
+<ArgTableRow arg="X" typ="disabled">The entry is disabled.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
@@ -19,8 +19,13 @@ This menu lists the configuration of OpenFlow clients.
 <ArgTableRow arg="datapath-id" typ="super { number: num [0 .. 65535]
 , [mac-address] /macAddr
  }">Datapath ID consisting of two parts (integer number [0..65535] and MAC address) separated by a slash.</ArgTableRow>
-<ArgTableRow arg="version" typ="enum (default | 1 | 1.3)">Version of the OpenFlow standard to be used.</ArgTableRow>
-<ArgTableRow arg="passive-port" typ="num">The port on which the OpenFlow agent listens for connections from the controller.</ArgTableRow>
+<ArgTableRow arg="version" typ="enum (default | 1 | 1.3)">
+Version of the OpenFlow standard to be used.
+- `default` (default) - agreed with the controller; with Faucet this is 1.3.
+- `1` - OpenFlow 1.0.
+- `1.3` - OpenFlow 1.3.
+</ArgTableRow>
+<ArgTableRow arg="passive-port" typ="num">The port on which the OpenFlow agent listens for connections from the controller. Default: `disabled`.</ArgTableRow>
 <ArgTableRow arg="controllers" typ="object { contr: super { controler-protocol: enum (tcp | tls)
 , [controller-address] /ip6Addr
 , [controller-port] /num [1 .. 65535]
@@ -33,5 +38,5 @@ This menu lists the configuration of OpenFlow clients.
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="openflow-fast-path-packets" typ="num">Number of packets sent to fast path.</ArgTableRow>
-<ArgTableRow arg="openflow-fast-path-bytes" typ="num">Number of bytes set to fast path.</ArgTableRow>
+<ArgTableRow arg="openflow-fast-path-bytes" typ="num">Number of bytes sent to fast path.</ArgTableRow>
 </ArgTable>

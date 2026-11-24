@@ -171,7 +171,16 @@ add address=192.168.99.0/24 gateway=192.168.99.1 dns-server=192.168.99.1
 
 ### Problem
 
-When you add an interface to a bridge, the bridge becomes the master interface and all bridge ports become slave ports. This means that all traffic that is received on a bridge port is captured by the bridge interface and all traffic is forwarded to the CPU using the bridge interface instead of the physical interface. As a result, a VLAN interface that is created on a slave interface will never capture any traffic at all since it is immediately forwarded to the master interface before any packet processing is being done. The usual side effect is that some DHCP clients receive IP addresses and some don't.
+When you add an interface to a bridge, the bridge becomes the master interface and all bridge ports become slave ports. This means that all traffic that is received on a bridge port is captured by the bridge interface and all traffic is forwarded to the CPU using the bridge interface instead of the physical interface. As a result, packet reception on a VLAN interface that is created on a slave interface is undefined. The usual side effect is that some DHCP clients receive IP addresses and some don't.
+
+RouterOS marks such a VLAN interface with a warning and keeps the interface valid:
+
+```ros
+/interface/vlan/print
+;;; VLAN interface can not be set on slave interface
+0 R name="VLAN99" mtu=1500 l2mtu=1588 mac-address=18:FD:74:00:00:01
+     vlan-id=99 interface=ether1
+```
 
 ### Symptoms
 

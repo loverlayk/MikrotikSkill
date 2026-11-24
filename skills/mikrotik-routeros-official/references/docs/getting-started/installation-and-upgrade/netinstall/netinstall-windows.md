@@ -47,7 +47,7 @@ The tool requires the target device to be booted in BOOTP mode in order to be de
 | **Mode Script** | Specifies a one-time custom script that runs on the device's first boot after installation. Use this script to configure **device‑mode**, **protected‑routerboot**, and other settings during device deployment. The mode script executes before any custom or default configuration scripts. Upon completion, the script is automatically removed from the device. If the script modifies the device-mode, the device reboots immediately after execution. **This feature requires RouterOS and Netinstall version 7.22 or newer.** |
 | **IP Address / Gateway / Baudrate** | Netinstall auto-creates a Configure script with the specified parameters for initial device configuration using IPv4 connectivity or serial console. This parameter is available only when installing to an empty configuration, meaning no other configuration options are specified. |
 
->Configure and Mode scripts are [regular/import files](../../configuration-management/index.md#configuration-export-and-import), accept valid MikroTik RouterOS CLI commands.
+>Configure and Mode scripts are [regular/import files](../../configuration-management/index.md#import-a-configuration), accept valid MikroTik RouterOS CLI commands.
 
 ## Prepare Your Computer Network
 

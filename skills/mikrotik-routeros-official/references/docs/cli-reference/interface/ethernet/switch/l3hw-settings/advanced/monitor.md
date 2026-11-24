@@ -60,8 +60,8 @@ An enhanced version of [Monitor](../monitor.md) with extra telemetry data for ad
 <ArgTableRow arg="route-queue-size" typ="num" syscap="!prestera-cpss">The number of routes in the queue for processing by the switch chip driver. Under normal working conditions, this field is 0, meaning that all routes are processed by the driver.</ArgTableRow>
 <ArgTableRow arg="route-queue-rate" typ="num" syscap="!prestera-cpss">The rate at which routes are added to the queue for processing by the switch driver (growth rate of `route-queue-size` routes per second).</ArgTableRow>
 <ArgTableRow arg="route-process-rate" typ="num" syscap="!prestera-cpss">The rate at which previously queued routes are processed by the switch driver (shrink rate of `route-queue-size` routes per second)..</ArgTableRow>
-<ArgTableRow arg="nexthop-cap" typ="num">The nexthop capacity.</ArgTableRow>
-<ArgTableRow arg="nexthop-usage" typ="num">The number of currently used nexthops.</ArgTableRow>
+<ArgTableRow arg="nexthop-cap" typ="num">The maximum number of hardware nexthop entries the switch chip provides.</ArgTableRow>
+<ArgTableRow arg="nexthop-usage" typ="num">The number of hardware nexthop entries currently in use. The count includes the entries the switch driver reserves for itself, so it is not zero even before any route is offloaded. A route through a single gateway uses one entry, while each path of an ECMP group uses one entry per unit of weight.</ArgTableRow>
 <ArgTableRow arg="vxlan-mtu-packet-drop" typ="num" syscap="prestera-bc2">The number of dropped VXLAN packets due to exceeded interface MTU settings.</ArgTableRow>
 <ArgTableRow arg="fasttrack-ipv4-conns" typ="num" syscap="prestera-bc2">The number of hardware-offloaded FastTrack connections. Parammeter appear only when hardware offloading of FastTrack connections is enabled.</ArgTableRow>
 <ArgTableRow arg="fasttrack-queue-size" typ="num" syscap="prestera-bc2">The number of FastTrack connections in the queue for processing by the switch chip driver.</ArgTableRow>

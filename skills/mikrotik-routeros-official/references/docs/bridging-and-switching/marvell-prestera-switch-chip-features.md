@@ -866,7 +866,7 @@ An Access Control List contains ingress policy engines and egress policy engines
 
 ACL rules are checked for each received packet until a match has been found. If there are multiple rules that can match, then only the first rule will be triggered. A rule without any action parameters is a rule to accept the packet.
 
-Enabling features such as IGMP snooping, DHCP snooping, RoMON, PTP, or loop-protect can automatically create dynamic ACL rules. Dynamic rules that redirect or copy traffic to the CPU use the CPU high-priority queue. These rules should be considered when adding new ACL entries. Use the `place-before` property when creating a new rule, or the `move` command to adjust the ACL rule order.
+Enabling features such as IGMP snooping, DHCP snooping, RoMON, PTP, or loop-protect can automatically create dynamic ACL rules. Every dynamic rule carries a `comment` naming the feature that created it, so you can tell them apart in the ACL table. Dynamic rules that redirect or copy traffic to the CPU use the CPU high-priority queue. These rules should be considered when adding new ACL entries. Use the `place-before` property when creating a new rule, or the `move` command to adjust the ACL rule order.
 
 :::warning
 It is not required to set `mac-protocol` to a certain IP version when using L3 or L4 matchers, however, it is recommended to set the `mac-protocol=ip` or `mac-protocol=ipv6`  when filtering any IP packets.

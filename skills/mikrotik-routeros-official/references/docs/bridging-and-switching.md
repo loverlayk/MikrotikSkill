@@ -1679,9 +1679,11 @@ Check the `/interface/ethernet/switch/rule` to verify switch ACL rules are appli
 ```ros
 [admin@MikroTik] > /interface/ethernet/switch/rule/print 
 Flags: D - DYNAMIC
-0 D switch=switch1 mac-protocol=ip protocol=udp src-port=67-68 dst-port=67-68 copy-to-cpu=no redirect-to-cpu=yes mirror=no
+0 D ;;; DHCP Snooping
+    switch=switch1 mac-protocol=ip protocol=udp src-port=67-68 dst-port=67-68 copy-to-cpu=no redirect-to-cpu=yes mirror=no
  
-1 D switch=switch1 ports=ether2,ether3,ether4 mac-protocol=arp copy-to-cpu=no redirect-to-cpu=yes mirror=no
+1 D ;;; ARP Inspection
+    switch=switch1 ports=ether2,ether3,ether4 mac-protocol=arp copy-to-cpu=no redirect-to-cpu=yes mirror=no
  
 2 D ;;; IPSG (Pass Untrusted)
     switch=switch1 ports=ether2 src-mac-address=D6:3F:38:20:8D:2B/FF:FF:FF:FF:FF:FF mac-protocol=ip src-address=192.168.88.8/255.255.255.255 copy-to-cpu=no redirect-to-cpu=no mirror=no

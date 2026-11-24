@@ -35,7 +35,6 @@ Current MACsec interface state.
 - `invalid` - The configuration cannot be used. For example, the parent interface already belongs to a bridge.
 - `negotiating` - MACsec Key Agreement has not established an operational secure channel. Check that both peers have matching CAK and CKN values and a common cipher suite.
 - `open-encrypted` - The local interface reports an encrypted channel open. This alone does not prove peer negotiation or end-to-end forwarding.
-
 </ArgTableRow>
 <ArgTableRow arg="tx-untagged" typ="num">Transmitted frames sent without a SecTAG because MACsec protection was not applied.</ArgTableRow>
 <ArgTableRow arg="rx-untagged" typ="num">Received frames without a SecTAG that were accepted when frame validation was not Strict.</ArgTableRow>

@@ -17,6 +17,5 @@ Cipher suite selected for the active MACsec session. The key server selects the 
 
 - `aes-gcm-128` - AES-GCM with a 128-bit key.
 - `aes-gcm-xpn-128` - AES-GCM with a 128-bit key and extended packet numbering (XPN).
-
 </ArgTableRow>
 </ArgTable>

@@ -158,6 +158,33 @@ add chain=srcnat action=masquerade out-interface=ether_ISP2
 
 With `both-addresses`, all connections between one device and one server use the same provider. Different servers can use different providers, so a test to a single server always shows the same link.
 
+## Failover with more than two links
+
+Extend the example above with a third provider on `ether_ISP3` (gateway 10.10.6.1), the routing table `ISP3_table`, and a third masquerade rule (or move all provider interfaces into the `WAN` list).
+
+With one default route in each provider table, the share of a failed link falls back to the main table and leaves through one provider by distance. To divide the failed share over all remaining links instead, each table keeps the remaining gateways as one equal-distance set:
+
+```ros
+/ip/route
+add gateway=10.10.4.1 routing-table=ISP1_table check-gateway=ping
+add gateway=10.10.5.1 routing-table=ISP1_table distance=2 check-gateway=ping
+add gateway=10.10.6.1 routing-table=ISP1_table distance=2 check-gateway=ping
+
+add gateway=10.10.5.1 routing-table=ISP2_table check-gateway=ping
+add gateway=10.10.4.1 routing-table=ISP2_table distance=2 check-gateway=ping
+add gateway=10.10.6.1 routing-table=ISP2_table distance=2 check-gateway=ping
+
+add gateway=10.10.6.1 routing-table=ISP3_table check-gateway=ping
+add gateway=10.10.4.1 routing-table=ISP3_table distance=2 check-gateway=ping
+add gateway=10.10.5.1 routing-table=ISP3_table distance=2 check-gateway=ping
+```
+
+Each table carries its traffic through its own provider first. When the gateway of a table stops answering, the two `distance=2` routes join into one ECMP route (flag `+` in `/ip/route/print`), and the share of the failed link leaves equally through the two remaining links. In the three-link setup, every link carries a third of the connections, and each remaining link ends up with half of the full flow.
+
+The split between the remaining links follows the ECMP hash policy. By default, the Layer3 policy hashes each connection by its addresses and keeps it on one link. With [L3 hardware offloading](../../bridging-and-switching/l3-hardware-offloading.md), the switch uses its own hash mask, and the configured hash policy is ignored; [Multipath (ECMP) routes](../../user-guides/routing-and-networking-protocols/routing-decision#multipath-ecmp-routes) describes the details. Connections that are open when a link fails or comes back follow the two-link rule: they break and must be opened again.
+
+If the failed share should move in a known order instead of spreading equally, give each fallback route in a table a different `distance`. Every table then sends its traffic to the lowest active distance, and each table keeps its own preference order.
+
 ## How PCC works
 
 This article aims to explain in simple terms how PCC works. The definition from the official manual wiki page reads: "PCC takes selected fields from the IP header, and with the help of a hashing algorithm converts selected fields into a 32-bit value. This value then is divided by a specified Denominator and the remainder then is compared to a specified Remainder, if equal then the packet will be captured. You can choose from src-address, dst-address, src-port, dst-port from the header to use in this operation.", with the full number of fields available being: "both-addresses|both-ports|dst-address-and-port|src-address|src-port|both-addresses-and-ports|dst-address|dst-port|src-address-and-port". If you understand that definition, there'll be nothing interesting in this article for you.

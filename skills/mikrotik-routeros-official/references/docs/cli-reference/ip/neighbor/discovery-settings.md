@@ -12,6 +12,7 @@
 , discover-interface-list: enum
  }">Interface list whose members the discovery protocol will run on. Default: static.</ArgTableRow>
 <ArgTableRow arg="discover-interval" typ="time">Frequency at which neighbor discovery packets are transmitted. Also adjusts the TTL TLV value for CDP and LLDP packets using the formula: (discover-interval * 4) + 1. Range: 5s..9h6m8s. Default: 30s.</ArgTableRow>
+<ArgTableRow arg="cdp-version" typ="enum (auto | 1 | 2)"></ArgTableRow>
 <ArgTableRow arg="lldp-med" typ="bool">Whether to advertise the LLDP-MED Media Capabilities TLV. Must be enabled when lldp-med-net-policy-vlan is used. Default: yes.</ArgTableRow>
 <ArgTableRow arg="lldp-med-net-policy-vlan" typ="alt { constant: enum (disabled)
 , vlan-id: num [ .. 4094]

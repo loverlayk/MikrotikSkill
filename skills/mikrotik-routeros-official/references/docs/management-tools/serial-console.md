@@ -6,7 +6,7 @@
 
 The Serial Console and Serial Terminal are tools used to communicate with devices and other systems that are interconnected through the serial port. The serial terminal is used to monitor and configure many devices - including modems, network devices (including MikroTik routers), and any device that can be connected to a serial (asynchronous) port.
 
-The Serial Console feature is for configuring direct-access configuration facilities (monitor/keyboard and serial port) that are mostly used for initial or recovery configuration. A special null-modem cable is needed to connect two hosts (like two PCs, or two routers; not modems). A terminal emulation program (for example, HyperTerminal on Windows or minicom on Linux) is required to access the serial console from another computer. Default settings of the router's serial port are 115200 bits/s (for x86 the default is 9600 bits/s), 8 data bits, 1 stop bit, no parity, hardware (RTS/CTS) flow control.
+The Serial Console feature is for configuring direct-access configuration facilities (monitor/keyboard and serial port) that are mostly used for initial or recovery configuration. A special null-modem cable is needed to connect two hosts (like two PCs, or two routers; not modems). A terminal emulation program (for example, HyperTerminal on Windows or minicom on Linux) is required to access the serial console from another computer. Default settings of the router's serial port are 115200 bits/s, 8 data bits, 1 stop bit, no parity, hardware (RTS/CTS) flow control. On x86 and CHR the default is 9600 bits/s without flow control. `/port/print detail` shows the settings of a port.
 
 The Serial Terminal (managing side) feature is useful in the following situations:
 
@@ -108,7 +108,7 @@ This type of port is used on RouterBOARD 2011, 3011, 4011, CCR1072, CCR1036 r2, 
 
 #### RJ45 to DB9 Cable Pinout
 
-![](./img/serial-console-01.webp)
+![Wiring from an RJ45 serial port to a DB-9 connector: RTS-CTS, DTR-DSR, TXD-RXD, GND, RXD-TXD, DSR-DTR, CTS-RTS](./img/serial-console-01.webp)
 
 | Signal | Console Port (DTE) RJ-45 | RJ-45 Rolled Cable RJ-45 Pin | Adapter DB-9 Pin | Adapter DB-25 Pin | Signal |
 | :-- | --: | --: | --: | --: | :-- |
@@ -131,7 +131,7 @@ The Cloud Core Router series devices have a serial header on the PCB board, call
 
 Here is the pin-out of that connector:
 
-![](./img/serial-console-02.webp)
+![Pinout of the J402 serial header (HDR2X5) with the TXD, RXD, RTS and CTS pins](./img/serial-console-02.webp)
 
 ## Serial Terminal Usage
 
@@ -139,7 +139,7 @@ RouterOS allows communication with devices and other systems that are connected 
 
 First, you must have a free serial port. If the device has only one serial port (like all RouterBoards, WRAP/ALIX boards, and so on), you must disable the system console on this serial port to be able to use it as **Serial Terminal** for connection to other equipment (switches, modems, for example):
 
-```ros
+```routeros
 /system/console/disable 0
 ```
 
@@ -161,19 +161,19 @@ Caveats to be aware of when connecting a device to a serial port on a RouterBoar
 
 Next, you must configure your serial port according to the serial port settings of the connected device. By using the following command you set your serial port to 19200 Baud 8N1. What settings you need to use depends on the device you connect to:
 
-```ros
+```routeros
 /port/set serial0 baud-rate=19200 data-bits=8 parity=none stop-bits=1
 ```
 
 You can also try to let RouterOS guess the needed baud rate by setting
 
-```ros
+```routeros
 /port/set serial0 baud-rate=auto
 ```
 
-Now is the time to connect your device if not already done. Typically, you need a [null modem cable](#serial-console-connections) (the same thing as a cross-over-cable for Ethernet). Now you are ready:
+Now is the time to connect your device if not already done. Typically, you need a null modem cable (see Serial Console Connections) (the same thing as a cross-over-cable for Ethernet). Now you are ready:
 
-```ros
+```routeros
 /system/serial-terminal serial0
 ```
 
@@ -191,7 +191,7 @@ Special login can be used to access another device (like a switch, for example) 
 
 This demonstration uses two RouterBoards and one PC.
 
-![](./img/serial-console-03.webp)
+![A PC connected to R1 with a network cable, and R1 connected to R2 with a serial cable](./img/serial-console-03.webp)
 
 Routers R1 and R2 are connected with a serial cable and a PC is connected to R1 through ethernet. To access router R2 through a serial cable from the PC, you must set up a serial interface proxy on R1. This is done by using a feature called **special-login**.
 
@@ -201,44 +201,47 @@ By default console is bound to the serial port.
 
 First, unbind the console from serial by disabling the entry in the [`/system/console`](../cli-reference/system/console) menu:
 
-```ros
-[admin@MikroTik] /system/console> print
-Flags: X - disabled, U - used, F - free
- #   PORT                                                                    TERM
- 0 X serial0                                                                 vt102
+```routeros
+/system/console/disable 0
+/system/console/print
+```
+
+```text
+Flags: * - DEFAULT; X - DISABLED, F - FREE
+Columns: PORT, VCNO, TERM
+#    PORT     VCNO  TERM
+0 *X serial0        vt102
+1 *F             1  linux
 ```
 
 Next, add a new user, in this case *serial*, and bind it to the serial port:
 
-```ros
-[admin@MikroTik] > /user/add name=serial group=full
-[admin@MikroTik] > /special-login/add user=serial port=serial0 disabled=no
-[admin@MikroTik] > /special-login/print
-Flags: X - disabled
- #   USER                                                                    PORT
- 0   serial                                                                  serial0
+```routeros
+/user/add name=serial group=full password=Serial-pw-1
+/special-login/add user=serial port=serial0 disabled=no
+/special-login/print
 ```
 
-Now you can access R2 from the PC.
+```text
+Columns: USER, PORT, CHANNEL
+# USER    PORT     CHANNEL
+0 serial  serial0        0
+```
 
-```ros
-maris@bumba:/$ ssh serial@10.1.101.146
+Now you can access R2 from the PC: log in to R1 as `serial`, for example with
+`ssh serial@192.168.88.1`, and press <kbd>Enter</kbd>. The session shows the serial console of R2:
 
+```text
 [Ctrl-A is the prefix key]
-R2 4.0beta4
+MikroTik 7.25.1
 R2 Login:
-
-[admin@R2] >
 ```
 
 To exit the special login mode, press <kbd>Control</kbd>+<kbd>A</kbd> and <kbd>Q</kbd>:
 
-```ros
-[admin@MikroTik] >
+```text
 [Q - quit connection]      [B - send break]
 [A - send Ctrl-A prefix]   [R - autoconfigure rate]
-
-Connection to 10.1.101.146 closed.
 ```
 
 :::danger
@@ -251,7 +254,7 @@ To fix this problem you need to allow access to the bootloader main menu from **
 - Select `k` for boot key options.
 - Select `2` to change key to <kbd>Delete</kbd>.
 
-```
+```text
 What do you want to configure?
 d - boot delay
 k - boot key

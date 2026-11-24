@@ -38,10 +38,11 @@ Authentication protocol for SNMPv3 with `security=authorized` or `private`; all 
 - `SHA384`
 - `SHA512`
 </ArgTableRow>
-<ArgTableRow arg="encryption-protocol" typ="enum (DES | AES)">
+<ArgTableRow arg="encryption-protocol" typ="enum (DES | AES | AES256)">
 Encryption protocol for SNMPv3 with `security=private`.
 - `DES` (default)
 - `AES` - AES-128, defined in RFC 3826.
+- `AES256` - AES-256.
 </ArgTableRow>
 <ArgTableRow arg="authentication-password" typ="string">Password for SNMPv3 authentication, at least 8 characters. Sensitive; see the [list of menus with sensitive parameters](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters).</ArgTableRow>
 <ArgTableRow arg="encryption-password" typ="string">Password for SNMPv3 encryption, at least 8 characters. Sensitive; see the [list of menus with sensitive parameters](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters).</ArgTableRow>

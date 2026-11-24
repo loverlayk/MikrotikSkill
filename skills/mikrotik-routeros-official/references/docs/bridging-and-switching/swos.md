@@ -1,12 +1,12 @@
-# SwOS
+# Introduction to SwitchOS (SwOS)
 
-> SwOS is a lightweight operating system built exclusively for the administration of MikroTik switching hardware. It delivers maximum wire-speed Layer 2 forwarding capability across all standard Ethernet frames,...
+> SwitchOS (SwOS) is a lightweight operating system built exclusively for the administration of MikroTik switching hardware. It delivers maximum wire-speed Layer 2 forwarding capability across all standard Ethernet...
 
-# Introduction to SwOS
+# Introduction to SwitchOS (SwOS)
 
-SwOS is a lightweight operating system built exclusively for the administration of MikroTik switching hardware. It delivers maximum wire-speed Layer 2 forwarding capability across all standard Ethernet frames, handling IPv4, IPv6, and non-IP traffic seamlessly.
+SwitchOS (SwOS) is a lightweight operating system built exclusively for the administration of MikroTik switching hardware. It delivers maximum wire-speed Layer 2 forwarding capability across all standard Ethernet frames, handling IPv4, IPv6, and non-IP traffic seamlessly.
 
-### Core & Advanced Features
+## Core & Advanced Features
 
 Beyond standard managed switch capabilities, SwOS offers a robust suite of networking features:
 
@@ -17,7 +17,9 @@ Beyond standard managed switch capabilities, SwOS offers a robust suite of netwo
 * **Hardware Offloading:** Direct hardware-driven manipulation of specific MAC and IP header fields on supported device models.
 
 :::note Management Limitation
+
 SwOS is configured exclusively through a standard web browser (HTTP) over IPv4. It does not support command-line interface (CLI) access via serial console/SSH, API access, WinBox, or other alternative management protocols.
+
 :::
 
 <DocCardList />

@@ -4,7 +4,11 @@
 
 # List of menus with sensitive parameters
 
-Sensitive parameters — passwords, keys and secrets — are left out of `export` and `print` output unless you use the [`show-sensitive`](./#configuration-export) flag. WinBox hides them when the "Hide password" option is enabled. The one exception is `user` passwords: they are stored hashed and are never exported, not even with `show-sensitive`.
+Sensitive parameters (passwords, keys and secrets) are left out of `export` and `print` output
+unless you add `show-sensitive`, for example `/ppp/secret/print show-sensitive` or
+`/export show-sensitive` (see [Export the configuration](./#export-the-configuration)). WinBox hides
+them when the "Hide password" option is enabled. User accounts are not exported at all (user groups
+are), so their passwords are never in an export, not even with `show-sensitive`.
 
 The table lists the menus where sensitive parameters can be configured, the parameter names, and links to the menu documentation.
 

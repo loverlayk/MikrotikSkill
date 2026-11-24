@@ -39,7 +39,7 @@ Container package is compatible with **arm, arm64** and **x86** architectures. U
 
 Before you add the first container:
 
-1. Install the `container` package, see [Installing packages](../getting-started/installation-and-upgrade/packages#installing-packages).
+1. Install the `container` package, see [Installing packages](../getting-started/installation-and-upgrade/packages#install-a-package-from-the-router).
 2. Enable containers in device-mode, where they are off by default:
 
    ```ros

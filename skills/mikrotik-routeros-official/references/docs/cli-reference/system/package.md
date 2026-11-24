@@ -10,8 +10,8 @@
 Commands executed in this menu will take place only on the restart of the router. Until then, you can freely schedule or revert the set actions.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
-<ArgTableRow arg="X" typ="disabled"></ArgTableRow>
-<ArgTableRow arg="A" typ="available"></ArgTableRow>
+<ArgTableRow arg="X" typ="disabled">The package is disabled, or it is not installed yet (with `A`).</ArgTableRow>
+<ArgTableRow arg="A" typ="available">The package is available on the download server but not installed. It is listed after `/system/package/update/check-for-updates`; `enable` and `apply-changes` download and install it.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

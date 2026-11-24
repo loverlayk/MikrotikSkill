@@ -15,10 +15,11 @@ All MikroTik devices come with some kind of default configuration. There are sev
 - IP Only
 - CAP
 
-You can run the command `/system/default-configuration/print` to see the exact applied default configuration commands.
+Run `/system/default-configuration/print` to see the default configuration script of your device.
+If a custom default configuration script is installed, `/system/default-configuration/custom-script/print`
+shows it.
 
 ## CPE Router
----
 
 In this type of configuration, the router is set up as a wireless client device. The WAN interface is a **Wireless** interface. The WAN port has a DHCP client configured, is protected by an IP firewall, and MAC discovery and connection are disabled.
 
@@ -41,7 +42,7 @@ List of routers using this type of configuration:
 
 **wlan1 Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *mode* | station |
 | *band* | 2ghz-b/g/n |
@@ -53,7 +54,7 @@ List of routers using this type of configuration:
 
 **LAN Configuration:**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *IP address* | 192.168.88.1/24 is set on ether1 (LAN port) |
 | *DHCP Server* | enabled |
@@ -61,7 +62,7 @@ List of routers using this type of configuration:
 
 **WAN (gateway) Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *gateway* | wlan1 |
 | *ip4 firewall* | enabled |
@@ -77,7 +78,6 @@ List of routers using this type of configuration:
 [CPE_Router.txt](pathname:///assets/167706794_CPE_Router.txt).
 
 ## LTE CPE AP router
----
 
 This configuration type is applied to routers that have both LTE and wireless interfaces. The LTE interface is the WAN port, protected by a firewall and with MAC discovery and connection disabled. The IP address on the WAN port is acquired automatically. The wireless interface is configured as an access point and bridged with all available Ethernet ports.
 
@@ -91,15 +91,12 @@ List of routers using this type of configuration:
 
 **LTE CPE AP Router Mode**
 
-- wireless interface is connected to the provider's network (WAN)
-
-This refers to the LTE interface, not a wireless interface.
-
+- LTE interface is connected to the provider's network (WAN)
 - WAN port is protected by the firewall and has DHCP client enabled
 
 **LAN Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *IP address* | 192.168.188.1/24 is set on the bridge (LAN port) |
 | *DHCP Server* | enabled |
@@ -107,7 +104,7 @@ This refers to the LTE interface, not a wireless interface.
 
 **WAN (gateway) Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *gateway* | lte1 |
 | *ip4 firewall* | enabled |
@@ -122,7 +119,6 @@ This refers to the LTE interface, not a wireless interface.
 [LTE_CPE_AP_router.txt](pathname:///assets/167706791_LTE_CPE_AP_router.txt).
 
 ## AP Router
----
 
 This configuration type is applied to home access point routers to be used without additional configuration (except router passwords and wireless keys).
 
@@ -150,7 +146,7 @@ List of routers using this type of configuration:
 
 **LAN Configuration:**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *IP address* | 192.168.88.1/24 is set on the bridge (LAN port) |
 | *DHCP Server* | enabled |
@@ -158,7 +154,7 @@ List of routers using this type of configuration:
 
 **wlan1 Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *mode* | ap-bridge |
 | *band* | 2ghz-b/g/n |
@@ -170,7 +166,7 @@ List of routers using this type of configuration:
 
 **WAN (gateway) Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *ip4 firewall* | enabled |
 | *ip6 firewall* | enabled |
@@ -185,7 +181,6 @@ List of routers using this type of configuration:
 [RouterMode.txt](pathname:///assets/167706790_RouterMode.txt)
 
 ## PTP Bridge
----
 
 Ethernet is bridged with a wireless interface. IP address 192.168.88.1/24 is set on the bridge interface. There are two options - CPE and AP. For CPE, the wireless interface uses "station-bridge" mode, and for AP, it uses "bridge" mode.
 
@@ -197,8 +192,6 @@ List of routers using this type of configuration:
 
 - Wireless and LAN interfaces are bridged;
 
-**LAN Configuration:**
-
 **Login**
 
 - admin user is protected by a password
@@ -207,7 +200,6 @@ List of routers using this type of configuration:
 [PTP_Bridge.txt](pathname:///assets/167706792_PTP_Bridge.txt)
 
 ## W60G Bridge
----
 
 This configuration type is applied to routers that have a 60 GHz point-to-point link.
 
@@ -224,7 +216,7 @@ List of routers using this type of configuration:
 
 **wlan60-1 Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *SSID* | MikroTik |
 | *mode* | station-bridge |
@@ -239,7 +231,6 @@ List of routers using this type of configuration:
 [W60G_Bridge.txt](pathname:///assets/167706793_W60G_Bridge.txt)
 
 ## WISP Bridge
----
 
 The configuration matches PTP Bridge in AP mode, except that wireless mode is set to ap\_bridge for PTMP setups. You can access the router directly by using a MAC address. If the device is connected to a network with an enabled DHCP server, a DHCP client configured on the bridge interface gets an IP address that you can use to access the router.
 
@@ -259,7 +250,7 @@ List of routers using this type of configuration:
 
 **wlan1 Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *mode* | ap-bridge |
 | *band* | 2ghz-b/g/n |
@@ -271,7 +262,7 @@ List of routers using this type of configuration:
 
 **wlan2 Configuration**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *mode* | ap-bridge |
 | *band* | 5ghz-a/n/ac |
@@ -283,7 +274,7 @@ List of routers using this type of configuration:
 
 **LAN Configuration:**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *DHCP Client* | enabled on bridge (LAN port) |
 
@@ -295,7 +286,6 @@ List of routers using this type of configuration:
 [WISP_Bridge.txt](pathname:///assets/167706789_WISP_Bridge.txt)
 
 ## Switch
----
 
 This configuration uses switch chip features to configure a basic switch. All Ethernet ports are added to the switch group and IP address 192.168.88.1/24 is set on the bridge interface.
 
@@ -316,7 +306,6 @@ List of routers using this type of configuration:
 [switch.txt](pathname:///assets/234914118_switch.txt)
 
 ## IP Only
----
 
 When no specific configuration is found, IP address 192.168.88.1/24 is set on ether1, or combo1, or sfp1.
 
@@ -327,7 +316,7 @@ List of routers using this type of configuration:
 
 **LAN**
 
-|  |  |
+| Setting | Value |
 | :-- | :-- |
 | *IP on etherx* | 192.168.88.1/24 |
 
@@ -339,10 +328,9 @@ List of routers using this type of configuration:
 [ccr.txt](pathname:///assets/234914117_ccr.txt)
 
 ## CAP
----
 
-This configuration type is used when a device needs to operate as a wireless client device controlled by [CAPsMAN](../../wireless/abgn/capsman/index.md).
+This configuration type is used when a device needs to operate as a wireless client device controlled by [CAPsMAN](../../wireless/abgn/capsman/).
 
 When the CAP default configuration is loaded, ether1 is the management port with a DHCP client configured. All other Ethernet interfaces are bridged, and wlan1 is managed by CAPsMAN.
 
-To load the CAP configuration, refer to [Reset Button manual](./routeros-configuration-reset.md).
+To load the CAP configuration, see [RouterOS configuration reset](./routeros-configuration-reset).

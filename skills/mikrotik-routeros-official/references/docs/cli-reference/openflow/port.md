@@ -11,9 +11,9 @@
 This menu lists the ports controlled by OpenFlow.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
-<ArgTableRow arg="X" typ="disabled"></ArgTableRow>
-<ArgTableRow arg="I" typ="inactive"></ArgTableRow>
-<ArgTableRow arg="D" typ="dynamic"></ArgTableRow>
+<ArgTableRow arg="X" typ="disabled">The entry is disabled.</ArgTableRow>
+<ArgTableRow arg="I" typ="inactive">The entry is inactive.</ArgTableRow>
+<ArgTableRow arg="D" typ="dynamic">The entry is dynamic.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Argument" c2="Type" c3="Description">

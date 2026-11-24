@@ -151,14 +151,11 @@ If you want virtual interfaces to be basic interfaces (non-MLO), use `multi-link
 The only difference between the non-MLO and MLO CAP scenarios is that an MLO CAP gets MLD interfaces added automatically and should have `mld-datapath=capdp` configured under `/interface/wifi/cap`.
 :::
 
-:::warning
-If the CAP is hAP ax<sup>2</sup> or hAP ax<sup>3</sup>, it is strongly recommended to enable RSTP in the bridge configuration, on the CAP
-
-configuration.manager should only be set on the CAP device itself, don't pass it to the CAP or configuration profile that you provision.
-:::
-
 :::info
-The interface that should act as CAP needs additional configuration under `/interface/wifi/set wifi1 configuration.manager=`
+
+- If the CAP is hAP ax<sup>2</sup> or hAP ax<sup>3</sup>, it is strongly recommended to enable RSTP in the bridge configuration, on the CAP.
+- On the CAP device, configure `configuration.manager` under `/interface/wifi` for the WiFi interfaces that CAPsMAN should manage. Do not pass it from CAPsMAN through a provisioning rule or a configuration profile.
+
 :::
 
 ### CAPsMAN - CAP VLAN configuration example
@@ -166,7 +163,7 @@ The interface that should act as CAP needs additional configuration under `/inte
 In this example, we will assign VLAN10 to our main SSID, and will add VLAN20 for the guest network, ether5 from CAPsMAN is connected to CAP.
 
 :::info
-CAPs using "wifi-qcom" package can get "vlan-id" via Datapath from CAPsMAN, CAPs using "wifi-qcom-ac" package will need to use the configuration provided at the end of this example.
+CAPs using `wifi-qcom` package can get "vlan-id" via Datapath from CAPsMAN, CAPs using `wifi-qcom-ac` package will need to use the configuration provided at the end of this example.
 :::
 
 #### CAPsMAN

@@ -11,7 +11,7 @@
 This menu lists the installed flows responsible for packet forwarding between OpenFlow ports.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
-<ArgTableRow arg="I" typ="inactive"></ArgTableRow>
+<ArgTableRow arg="I" typ="inactive">The entry is inactive.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

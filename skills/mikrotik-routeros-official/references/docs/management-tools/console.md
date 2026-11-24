@@ -14,7 +14,7 @@ Console login options enable or disable various console features like color, ter
 
 Additional login parameters can be appended to the login name after the '+' sign.
 
-```
+```text
     login_name ::= user_name [ '+' parameters ]
     parameters ::= parameter [ parameters ]
     parameter ::= [ number ] 'a'..'z'
@@ -24,6 +24,8 @@ Additional login parameters can be appended to the login name after the '+' sign
 If the parameter is not present, then the default value is used. If the number is not present, then the implicit value of the parameter is used.
 
 Example: `admin+ct80w` - disables console colors, disables auto detection, and then sets terminal width to 80.
+With an SSH client, use the extended name as the user name, for example
+`ssh admin+ct@192.168.88.1`.
 
 | Param | Default | Implicit | Description |
 | :-- | :-- | :-- | :-- |
@@ -37,7 +39,7 @@ Example: `admin+ct80w` - disables console colors, disables auto detection, and t
 
 The login process displays the MikroTik banner and short help after validating the user name and password.
 
-```ros
+```text
   MMM      MMM       KKK                          TTTTTTTTTTT      KKK
   MMMM    MMMM       KKK                          TTTTTTTTTTT      KKK
   MMM MMMM MMM  III  KKK  KKK  RRRRRR     OOOOOO      TTT     III  KKK  KKK
@@ -45,34 +47,17 @@ The login process displays the MikroTik banner and short help after validating t
   MMM      MMM  III  KKK KKK   RRRRRR    OOO  OOO     TTT     III  KKK KKK
   MMM      MMM  III  KKK  KKK  RRR  RRR   OOOOOO      TTT     III  KKK  KKK
 
-  MikroTik RouterOS 7.23.2 (c) 1999-2026       https://www.mikrotik.com/
+  MikroTik RouterOS 7.25.2 (c) 1999-2026       https://www.mikrotik.com/
 
 Press F1 for help
 ```
 
-After the banner, other important information can be printed, like [`/system/note`](../cli-reference/system/note) set by another admin, the last few critical log messages, demo version upgrade reminder, and default configuration description.
-
-For example, the demo license prompt and the last critical messages are printed:
-
-```ros
-UPGRADE NOW FOR FULL SUPPORT
-----------------------------
-FULL SUPPORT benefits:
-- receive technical support
-- one year feature support
-- one year online upgrades
-    (avoid re-installation and re-configuring your router)
-To upgrade, register your license "software ID"
-on our account server www.mikrotik.com
-
-Current installation "software ID": ABCD-456
-
-Please press "Enter" to continue!
-
-2007-12-10 10:40:06 system,error,critical login failure for user root from 10.0.0.1 via telnet
-2007-12-10 10:40:07 system,error,critical login failure for user root from 10.0.0.1 via telnet
-2007-12-10 10:40:09 system,error,critical login failure for user test from 10.0.0.1 via telnet
-```
+After the banner, the router can print other information: the
+[`/system/note`](../cli-reference/system/note) when it is set to show at login, the most recent
+critical log messages, for example `system,error,critical login failure for user admin from
+<address> via ssh`, and, on a router with the default configuration, its description. On the
+first login after an installation or a configuration reset, the router asks whether to show the
+software license and asks for a new password if the account has none.
 
 ## Command Prompt
 
@@ -82,10 +67,10 @@ The default command prompt consists of user name, system identity, and current c
 
 For example, change the current path from the root to the interface, then go back to the root:
 
-```ros
-  [admin@MikroTik] > interface [enter]
-  [admin@MikroTik] /interface> / [enter]
-  [admin@MikroTik] >
+```text
+[admin@MikroTik] > interface
+[admin@MikroTik] /interface> /
+[admin@MikroTik] >
 ```
 
 Use <kbd>↑</kbd> to recall previous commands from command history (commands that added sensitive data, like passwords, are not available in the history). If a multiline command is recalled, press <kbd>F8</kbd> to expand it. Use <kbd>Tab</kbd> to autocomplete commands and see available options — pressing <kbd>Tab</kbd> twice shows all possible completions. Press <kbd>Enter</kbd> to execute the command, <kbd>Control</kbd>+<kbd>C</kbd> to interrupt the currently running command and return to the prompt, and <kbd>F1</kbd> to display built-in help.
@@ -94,97 +79,74 @@ The easiest way to log out of the console is to press <kbd>Control</kbd>+<kbd>D<
 
 It is possible to write commands that consist of multiple lines. When the entered line is not a complete command and more input is expected, the console shows a continuation prompt that lists all open parentheses, braces, brackets, and quotes, and also a trailing backslash if the previous line ended with **backslash**-white-space.
 
-```ros
-    [admin@MikroTik] > {
-    {... :put (\
-    {(\... 1+2)}
-    3
+```text
+[admin@MikroTik] > {
+{... :put (\
+{(\... 1+2)}
+3
 ```
 
 When you are editing such multiple line entries, the prompt shows the number of current lines and total line count instead of the usual username and system name.
 
-```
+```text
 line 2 of 3> :put (\
 ```
 
-Sometimes commands ask for additional input from the user. For example, the command `/password` asks for old and new passwords. In such cases, the prompt shows the name of the requested value, followed by a colon and a space.
+Sometimes commands ask for additional input from the user. For example, the command `/password` asks for the old and the new password. In such cases, the prompt shows the name of the requested value, followed by a colon and a space:
 
-```ros
-    [admin@MikroTik] > /password
-    old password: ******
-    new password: **********
-    retype new password: **********
+```text
+[admin@MikroTik] > /password
+old-password:
 ```
 
 ## Hierarchy
 
 The console allows the configuration of the router's settings using text commands. Since there are a lot of available commands, they are split into groups organized into hierarchical menu levels. The name of a menu level reflects the configuration information accessible in the relevant section.
 
-For example, you can issue the `/ip/route/print` command:
+For example, you can issue the `/ip/route/print` command from any menu level. Instead of typing
+the `/ip/route` path before each command, the path can be typed only once to move into this branch
+of the menu hierarchy, and the commands then run there:
 
-```ros
-[admin@MikroTik] > /ip/route/print 
-Flags: X - disabled, A - active, D - dynamic, 
-C - connect, S - static, r - rip, b - bgp, o - ospf, m - mme,
-B - blackhole, U - unreachable, P - prohibit
- # DST-ADDRESS PREF-SRC G GATEWAY DIS INTE... 
-0 A S 0.0.0.0/0 r 10.0.3.1 1 bridge1 
-1 ADC 1.0.1.0/24 1.0.1.1 0 bridge1 
-2 ADC 1.0.2.0/24 1.0.2.1 0 ether3 
-3 ADC 10.0.3.0/24 10.0.3.144 0 bridge1 
-4 ADC 10.10.10.0/24 10.10.10.1 0 wlan1 
-[admin@MikroTik] >
-```
-
-Instead of typing `/ip/route` path before each command, the path can be typed only once to move into this particular branch of the menu hierarchy. Thus, the previous example could also be executed like this:
-
-```ros
-[admin@MikroTik] > /ip/route 
-[admin@MikroTik] /ip/route> print 
-Flags: X - disabled, A - active, D - dynamic, 
-C - connect, S - static, r - rip, b - bgp, o - ospf, m - mme,
- B - blackhole, U - unreachable, P - prohibit # 
-DST-ADDRESS PREF-SRC G GATEWAY DIS INTE... 
-0 A S 0.0.0.0/0 r 10.0.3.1 1 bridge1 
-1 ADC 1.0.1.0/24 1.0.1.1 0 bridge1 
-2 ADC 1.0.2.0/24 1.0.2.1 0 ether3 
-3 ADC 10.0.3.0/24 10.0.3.144 0 bridge1 
-4 ADC 10.10.10.0/24 10.10.10.1 0 wlan1 
-[admin@MikroTik] /ip/route>
+```text
+[admin@MikroTik] > /ip/route
+[admin@MikroTik] /ip/route> print
 ```
 
 Each word in the path can be separated by a **space** or by `/`.
 
 Notice that the prompt changes to reflect where you are located in the menu hierarchy. To move to the top level again, type `/`
 
-```ros
-[admin@MikroTik] > /ip/route 
-[admin@MikroTik] /ip/route> /
+```text
+[admin@MikroTik] /ip> /
 [admin@MikroTik] >
 ```
 
 To move up one command level, type `..`
 
-```ros
-[admin@MikroTik] /ip/route> .. 
+```text
+[admin@MikroTik] /ip/route> ..
 [admin@MikroTik] /ip>
 ```
 
-You can also use `/` and `..` to execute commands from other menu levels without changing the current level:
+You can also use `/` and `..` to run commands from other menu levels without changing the current
+level, for example `/ping 192.0.2.1` from any level, or the service ports from the NAT menu:
 
-```ros
-[admin@MikroTik] /ip/route> /ping 10.0.0.1 
-10.0.0.1 ping timeout 
-2 packets transmitted, 0 packets received, 100% packet loss 
+```text
 [admin@MikroTik] /ip/firewall/nat> ../service-port/print
-Flags: X - disabled, I - invalid 
-# NAME PORTS 
-0 ftp 21 
-1 tftp 69 
-2 irc 6667 
-3 h323 
-4 sip 
-5 pptp 
+Flags: X - DISABLED, I - INVALID
+Columns: NAME, PORTS
+#   NAME     PORTS
+0   ftp         21
+1   tftp        69
+2 X irc       6667
+3   h323
+4   sip       5060
+              5061
+5   pptp
+6 X rtsp       554
+7   udplite
+8   dccp
+9   sctp
 [admin@MikroTik] /ip/firewall/nat>
 ```
 
@@ -206,25 +168,24 @@ Item numbers are assigned by the print command and are not constant - two succes
 
 It is possible to use item numbers without running the **print** command. Numbers are assigned just as if the **print** command was executed.
 
-You can specify multiple items as targets for some commands. Almost everywhere, where you can write the number of an item, you can also write a list of numbers.
+You can specify multiple items as targets for some commands. Almost everywhere, where you can write the number of an item, you can also write a list of numbers or names, for example `/interface/vlan/set vlan10,vlan20 mtu=1400`.
 
-```ros
-[admin@MikroTik] > /interface/print 
-Flags: X - disabled, D - dynamic, R - running 
-# NAME TYPE MTU 
-0 R ether1 ether 1500 
-1 R ether2 ether 1500 
-2 R ether3 ether 1500 
-3 R ether4 ether 1500 
-[admin@MikroTik] > /interface/set 0,1,2 mtu=1460 
-[admin@MikroTik] > /interface/print
- Flags: X - disabled, D - dynamic, R - running 
-# NAME TYPE MTU 
-0 R ether1 ether 1460 
-1 R ether2 ether 1460 
-2 R ether3 ether 1460 
-3 R ether4 ether 1500 
-[admin@MikroTik] >
+```text
+[admin@MikroTik] > /interface/vlan/print
+Flags: R - RUNNING
+Columns: NAME, MTU, ARP, VLAN-ID, INTERFACE, MAC-ADDRESS
+#   NAME     MTU  ARP      VLAN-ID  INTERFACE  MAC-ADDRESS
+0 R vlan10  1500  enabled       10  ether1     52:54:00:12:34:56
+1 R vlan20  1500  enabled       20  ether1     52:54:00:12:34:56
+2 R vlan30  1500  enabled       30  ether1     52:54:00:12:34:56
+[admin@MikroTik] > /interface/vlan/set 0,1 mtu=1400
+[admin@MikroTik] > /interface/vlan/print
+Flags: R - RUNNING
+Columns: NAME, MTU, ARP, VLAN-ID, INTERFACE, MAC-ADDRESS
+#   NAME     MTU  ARP      VLAN-ID  INTERFACE  MAC-ADDRESS
+0 R vlan10  1400  enabled       10  ether1     52:54:00:12:34:56
+1 R vlan20  1400  enabled       20  ether1     52:54:00:12:34:56
+2 R vlan30  1500  enabled       30  ether1     52:54:00:12:34:56
 ```
 
 :::warning
@@ -238,8 +199,9 @@ Some commands are common to nearly all menu levels, namely: **add**, **edit**, *
 :::info
 You can combine commands. Here are two variants of the same command that place a new firewall filter entry, by looking up the comment:
 
-```ros
-/ip/firewall/filter/add chain=forward place-before=[find where comment=CommentX]
+```routeros
+/ip/firewall/filter/add chain=forward \
+    place-before=[find where comment=CommentX]
 /ip/firewall/filter/add chain=forward place-before="CommentX"
 ```
 
@@ -261,55 +223,26 @@ It is possible to switch between several input modes:
 
 - **Normal mode** - indicated by a normal command prompt.
 - **Safe mode** - indicated by the word SAFE after the command prompt.
-- **Hot-lock mode** - indicated by an additional yellow >. Autocompletes commands.
+- **Hot-lock mode** - indicated by an additional `>` in the prompt. Autocompletes commands.
 
 ### Safe Mode
 
-It is sometimes possible to change the router configuration in a way that makes the router inaccessible (except from the local console). Usually, this is done by accident, but there is no way to undo the last change when the connection to the router is already cut. Safe mode can be used to minimize such risk.
+Safe mode undoes every configuration change made while it is on, including changes from other
+sessions, if the session that holds it ends without releasing it, for example when a change cuts
+your own connection to the router. Press <kbd>Control</kbd>+<kbd>X</kbd> (or
+<kbd>F4</kbd>) to take it. The router answers `Taking Safe Mode session... Success!`, and the prompt
+shows `<SAFE>`:
 
-The **"Safe Mode"** button in the WinBox GUI allows you to enter Safe Mode, while in the CLI, you can access it by either using the keyboard shortcut <kbd>F4</kbd> or pressing <kbd>Control</kbd>+<kbd>X</kbd>. To exit without saving the changes made in CLI, hit <kbd>Control</kbd>+<kbd>D</kbd>.
-
-```ros
-[admin@MikroTik] /ip/route>[CTRL]+[X] 
-[Safe Mode taken] 
-[admin@MikroTik] /ip/route<SAFE>
+```text
+[admin@MikroTik] <SAFE>
 ```
 
-![](./img/safe-mode-cli.png)
-
-Message **Safe Mode taken** is displayed and the prompt changes to reflect that session is now in safe mode. All configuration changes that are made (also from other login sessions), while the router is in safe mode, are automatically undone if the safe mode session terminates abnormally. You can see all such changes that are automatically undone, tagged with an **F** flag in the system history:
-
-```ros
-[admin@MikroTik] /ip/route> 
-[Safe Mode taken]
-[admin@MikroTik] /ip/route<SAFE>/add
-[admin@MikroTik] /ip/route<SAFE> /system/history/print
-Flags: U, F - FLOATING-UNDO
-Columns: ACTION, BY, POLICY
-  ACTION                 BY     POLICY
-F route 0.0.0.0/0 added  admin  write
-```
-
-Now, if the telnet connection (or WinBox terminal) is cut, then after a while (TCP timeout is **9** minutes) all changes that were made while in safe mode are undone. Exiting the session by <kbd>Control</kbd>+<kbd>D</kbd> also undoes all safe mode changes, while **/quit** does not.
-
-If another user tries to enter safe mode, they are given the following message:
-
-```ros
-[admin@MikroTik] > 
-Hijacking Safe Mode from someone - unroll/release/don't take it [u/r/d]:
-```
-
-- [u] - undoes all safe mode changes, and puts the current session in safe mode.
-- [r] - keeps all current safe mode changes, and puts the current session in safe mode. The previous owner of safe mode is notified about this:
-
-```ros
-[admin@MikroTik] /ip/firewall/rule/input 
-[Safe mode released by another user]
-```
-
-- [d] - leaves everything as-is.
-
-If too many changes are made while in safe mode, and there's no room in history to hold them all (currently history keeps up to the 100 most recent actions), then the session is automatically put out of safe mode, and no changes are automatically undone. Thus, it is best to change the configuration in small steps, while in safe mode. Pressing <kbd>Control</kbd>+<kbd>X</kbd> twice is an easy way to empty the safe mode action list.
+Press <kbd>Control</kbd>+<kbd>X</kbd> again to release safe mode and keep the changes. <kbd>Control</kbd>+<kbd>D</kbd>,
+or `/quit` answered with `y`, ends the session and undoes them; answering `n` keeps the session in
+safe mode. Safe mode remembers at most 100 changes: with more, the session leaves safe mode and no
+changes are undone, so change the configuration in small steps. For what happens when the
+connection is lost and when another session asks for safe mode, see
+[Work safely with safe mode](../getting-started/configuration-management/#work-safely-with-safe-mode).
 
 :::warning
 As "Safe Mode" operates within the user's session and stores configuration changes, it is ignored for commands requiring a reboot, such as resetting configuration or restoring from a backup.
@@ -321,37 +254,26 @@ When HotLock mode is enabled, commands are auto-completed.
 
 To enter/exit HotLock mode press <kbd>F7</kbd>.
 
-```ros
-[admin@MikroTik] /ip/address> [F7]
-[admin@MikroTik] /ip/address>>
-
+```text
+[admin@MikroTik] >>
 ```
 
-Double `>>` is an indication that HotLock mode is enabled. For example, if you type "`/in et"`, it is auto-completed to:
+Double `>>` is an indication that HotLock mode is enabled. For example, typing `/i` completes to
+`/interface/`, and then typing `e` completes to `/interface/ethernet/`:
 
-```ros
-[admin@MikroTik] /ip/address>> /interface/ethernet/
+```text
+[admin@MikroTik] >> /interface/ethernet/
 ```
 
 ### Lock Mode
 
-The **:lock** command locks the screen.
+The `:lock` command locks the session: the router clears the screen and shows the version line with
+`Session is locked (Ctrl-D to Quit)` and a password prompt. Enter the password of the logged-in
+user to continue the session, or press <kbd>Control</kbd>+<kbd>D</kbd> to log out:
 
-```ros
-[admin@MikroTik] > :lock
-...
-  MMM      MMM       KKK                          TTTTTTTTTTT      KKK
-  MMMM    MMMM       KKK                          TTTTTTTTTTT      KKK
-  MMM MMMM MMM  III  KKK  KKK  RRRRRR     OOOOOO      TTT     III  KKK  KKK
-  MMM  MM  MMM  III  KKKKK     RRR  RRR  OOO  OOO     TTT     III  KKKKK
-  MMM      MMM  III  KKK KKK   RRRRRR    OOO  OOO     TTT     III  KKK KKK
-  MMM      MMM  III  KKK  KKK  RRR  RRR   OOOOOO      TTT     III  KKK  KKK
-
-  MikroTik RouterOS 7.16rc1 (c) 1999-2024       https://www.mikrotik.com/
-
+```text
 Session is locked       (Ctrl-D to Quit)
-
- password for admin: 
+ password for admin:
 ```
 
 ## Quick Typing
@@ -366,67 +288,61 @@ If there is more than one match, but they all have a common beginning, which is 
 
 If you've typed just the common part, pressing <kbd>Tab</kbd> once has no effect. However, pressing it for the second time shows all possible completions in compact form:
 
-```ros
-[admin@MikroTik] > /interface/set e[Tab]_ 
-[admin@MikroTik] > /interface/set ether[Tab]_ 
-[admin@MikroTik] > /interface/set ether[Tab]_ 
-ether1 ether5 
-[admin@MikroTik] > interface set ether_
+```text
+[admin@MikroTik] > /interface/set e[Tab]_
+[admin@MikroTik] > /interface/set ether[Tab]_
+[admin@MikroTik] > /interface/set ether[Tab]_
+ether1 ether5
+[admin@MikroTik] > /interface/set ether_
 ```
 
 The <kbd>Tab</kbd> key can be used in almost any context where the console might have a clue about possible values - command names, argument names, arguments that have only several possible values (like names of items in some lists or names of protocols in firewall and NAT rules). You cannot complete numbers, IP addresses, and similar values.
 
 Another way to press fewer keys while typing is to abbreviate command and argument names. You can type only the beginning of the command name, and, if it is not ambiguous, the console accepts it as a full name. So typing:
 
-```ros
-[admin@MikroTik] > pin 10.1 c 3 si 100
+```routeros
+pin 10.1 c 3 si 100
 ```
 
 equals:
 
-```ros
-[admin@MikroTik] > ping 10.0.0.1 count 3 size 100
+```routeros
+ping 10.0.0.1 count 3 size 100
 ```
 
-It is possible to complete not only the beginning, but also any distinctive substring of a name: if there is no exact match, the console starts looking for words that have the string being completed as the first letters of a multiple-word name, or that simply contain letters of this string in the same order. If a single such word is found, it is completed at the cursor position. For example:
+(`10.1` is the short form of the address `10.0.0.1`.)
 
-```ros
-[admin@MikroTik] > /interface/x[TAB][TAB]_ 
-dot1x  vxlan  export
-[admin@MikroTik] > /interface/mt[TAB]_
-[admin@MikroTik] > /interface/monitor-traffic _
-
-```
+It is possible to complete not only the beginning, but also any distinctive substring of a name: if there is no exact match, the console starts looking for words that have the string being completed as the first letters of a multiple-word name, or that simply contain letters of this string in the same order. If a single such word is found, it is completed at the cursor position. For example, `/interface/mt` <kbd>Tab</kbd> becomes `/interface/monitor-traffic`.
 
 ## Console Search
 
-Console search allows performing keyword search through the list of RouterOS menus and the history. The search prompt is accessible with the <kbd>Control</kbd>+<kbd>R</kbd> shortcut.
+Console search allows performing keyword search through the list of RouterOS menus and the history. Press <kbd>Control</kbd>+<kbd>R</kbd>: the prompt changes to `[admin@MikroTik] []>`, and the text you type between the brackets selects the matching earlier commands.
 
 ## Internal Chat System
 
-RouterOS console has a built-in internal chat system. This allows remotely located admins to talk to each other directly in RouterOS CLI. To start the conversation, prefix the intended message with the # symbol. Anyone who is logged in at the time of sending the message sees it.
+RouterOS console has a built-in internal chat system. This allows remotely located admins to talk to each other directly in RouterOS CLI. To start the conversation, type the message at the command prompt with the # symbol in front. The other console sessions that are open at that moment see it. In scripts, # starts a comment.
 
-```ros
-[admin@MikroTik] > # ready to break internet?
-[admin@MikroTik] > 
-fake_admin: i was born ready
-[admin@MikroTik] > 
+```text
+[admin@MikroTik] > # ready to upgrade?
 ```
 
-```ros
-[fake_admin@MikroTik] > 
-admin: ready to break internet?
-[fake_admin@MikroTik] > # i was born ready
-[fake_admin@MikroTik] > 
+Another console session of the same user shows:
+
+```text
+[admin@MikroTik] > admin: ready to upgrade?
 ```
 
 ## Settings
 
-In the [`/console/settings`](../cli-reference/console/settings) menu, it is possible to enable an option for replacing reserved characters with underscores for file names.
+In the [`/console/settings`](../cli-reference/console/settings) menu:
+
+- `sanitize-names` replaces reserved characters (`\ / : * ? |`) with underscores in file and script names. Default: `no`.
+- `log-script-errors` writes errors of scripts that run in the background to the log. Default: `yes`.
+- `tab-width` sets the tab width in the full-screen editor. Default: `4`.
 
 ## Built-in Help
 
-The console has built-in help. Press <kbd>F1</kbd> for general console usage help. The general rule is that help shows what you can type in a position where <kbd>F1</kbd> was pressed (similarly to pressing <kbd>Tab</kbd> key twice, but in verbose form and with explanations).
+The console has built-in help. The general rule is that help shows what you can type in a position where <kbd>F1</kbd> was pressed (similarly to pressing <kbd>Tab</kbd> key twice, but in verbose form and with explanations). For example, <kbd>F1</kbd> after `/ip/address/` lists the commands of the menu with a short description, and ends with `Press F1 for general console usage help`.
 
 The same data is available to scripts and external tools through [Console inspect](../developer-guides/scripting/console-inspect).
 

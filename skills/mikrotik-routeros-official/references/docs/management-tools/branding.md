@@ -99,7 +99,7 @@ Custom files will be copied into a folder named "branding" and will be accessibl
 A RouterOS CAPs mode script that will override the RouterOS default CAPs mode script. It is possible to reapply the factory passwords by utilizing the read-only variables *$defconfPassword* and *$defconfWifiPassword* (available starting from RouterOS 7.15).
 
 :::warning
-Any reset button mode will restore the default configuration from the branding package. The CAPs mode script can only be applied via the GUI or CLI by performing a [configuration reset](../getting-started/configuration-management/index.md#configuration-reset) after the device has fully booted.
+Any reset button mode will restore the default configuration from the branding package. The CAPs mode script can only be applied via the GUI or CLI by performing a [configuration reset](../getting-started/configuration-management/index.md#reset-the-configuration) after the device has fully booted.
 
 :::
 

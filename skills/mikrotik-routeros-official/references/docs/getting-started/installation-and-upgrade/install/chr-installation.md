@@ -50,6 +50,10 @@ The minimum required RAM depends on your CPU count and interface count. Use the 
 - **Hyper-V disk image**: `.vhdx` file
 - **OVA appliance**: `.ova` file
 
+The RAW, VDI, VMDK and VHDX images are distributed as ZIP archives, for example
+`chr-<version>.img.zip`; extract the image before you attach it. The OVA appliance is a plain `.ova`
+file.
+
 :::warning
 These are disk images only and must be attached to a virtual machine.
 :::
@@ -81,7 +85,7 @@ These are disk images only and must be attached to a virtual machine.
 - Username: `admin`
 - Password: none (you should set a strong password immediately after first login)
 
-After first boot, CHR runs on a Free license by default. To activate a trial or upgrade, use `/system/license/renew`.
+After first boot, CHR runs on the free license level (`level: free` in `/system/license/print`). To activate a trial or upgrade, use `/system/license/renew`.
 
 ## Platform-specific guides
 
@@ -98,9 +102,10 @@ After first boot, CHR runs on a Free license by default. To activate a trial or 
 CHR cannot run on the **bhyve** hypervisor. CHR does not support para-virtualized platforms.
 :::
 
-> **Note:** Only Generation 1 virtual machines are supported when using Hyper-V.
-
-> **Important:** Paravirtualization is not supported on any hypervisor.
+:::note
+Only Generation 1 virtual machines are supported when using Hyper-V. Paravirtualization is not
+supported on any hypervisor.
+:::
 
 ### Supported Cloud Platforms
 

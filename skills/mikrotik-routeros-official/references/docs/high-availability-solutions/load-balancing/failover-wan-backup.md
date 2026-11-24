@@ -64,6 +64,8 @@ add distance=2 gateway=8.8.4.4 target-scope=11 check-gateway=ping
 
 These are recursive routes: the gateway of a default route is not directly connected, and the router finds the way to it through another route. `scope` and `target-scope` control which routes can be used for this: a route can resolve its gateway through routes whose `scope` is not greater than its `target-scope`. The host routes have `scope=10`, and the default routes have `target-scope=11`.
 
+The `scope=10` counts. A static route has the default scope of 30, and a host route that kept the default could not resolve the gateway of the route with `target-scope=11`: the default route would then have no valid next hop and stays inactive. [Routing decision](../../user-guides/routing-and-networking-protocols/routing-decision) lists the default `scope` and `target-scope` of connected, IGP, static and BGP routes.
+
 The detail output shows the real next hop of each default route in `immediate-gw`:
 
 ```ros

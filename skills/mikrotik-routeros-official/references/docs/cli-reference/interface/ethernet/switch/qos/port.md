@@ -109,6 +109,14 @@ pfc3-resume-threshold:        10 240
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="name" typ="string">Port name.</ArgTableRow>
 <ArgTableRow arg="switch" typ="enum">Switch chip name.</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue0-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue0</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue1-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue1</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue2-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue2</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue3-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue3</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue4-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue4</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue5-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue5</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue6-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue6</ArgTableRow>
+<ArgTableRow arg="egress-rate-queue7-actual" typ="num" syscap="switch-rate">Actual egress-rate-queue7</ArgTableRow>
 <ArgTableRow arg="tx-packet" typ="multi { counter: num
  }">The total number of packets transmitted via this port.</ArgTableRow>
 <ArgTableRow arg="tx-bytes" typ="multi { counter: num

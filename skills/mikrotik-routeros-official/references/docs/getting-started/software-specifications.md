@@ -41,7 +41,7 @@ RouterOS 7 with default configuration requires at least 32 MB of RAM, but for mo
 ## Backup/Restore
 
 - Binary configuration [backup](../../getting-started/configuration-management/backup) saving and loading.
-- [Configuration export and import](../../getting-started/configuration-management#configuration-export-and-import) in human-readable text format.
+- [Configuration export and import](../../getting-started/configuration-management#export-the-configuration) in human-readable text format.
 
 ## Firewall
 

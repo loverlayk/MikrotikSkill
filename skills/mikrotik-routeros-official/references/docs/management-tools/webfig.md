@@ -20,7 +20,7 @@ WebFig supports three primary functions:
 
 As described in the [First Time Configuration](../getting-started/first-time-configuration) section, the device is accessible by default using the username **admin** and either no password or a default password provided on the device label (depending on the model). Open a web browser and enter the device IP address in the address bar; by default this is `192.168.88.1`. Ensure the management device is configured with an IP address in the same subnet (for example, `192.168.88.2`), otherwise Layer 3 connectivity does not work.
 
-![](./img/webfig_01.png)
+![WebFig login page with Login and Password fields and links to Apps, Graphs, License and Help](./img/webfig_01.png)
 
 ## Enable HTTPS
 
@@ -31,9 +31,9 @@ Which kind of certificate to use depends on how you reach the router:
 - **By its LAN IP address or an internal hostname (the usual case)** — use a self-signed certificate generated on the router. Public Certificate Authorities cannot issue certificates for private addresses such as `192.168.88.1`, so this is the default approach.
 - **By a real, public domain name** — you can use a publicly trusted certificate from Let's Encrypt and avoid browser warnings without distributing a CA. This only helps if you actually open WebFig by using that domain name, so it mainly applies to routers managed over a public name rather than a LAN IP (described in the following section).
 
-### Use a self-signed certificate
+### Use a certificate from your own CA
 
-A self-signed certificate encrypts the connection immediately. Browsers do not trust it on first use, but you can remove the warning by exporting the router's root CA and importing it into the trusted store of the computers you manage the router from.
+A certificate signed by a CA that you create on the router encrypts the connection immediately. Browsers do not trust it on first use, but you can remove the warning by exporting the router's root CA and importing it into the trusted store of the computers you manage the router from.
 
 :::tip
 WebFig supports wildcard certificates. You can generate one by specifying a wildcard in the common-name property, for example, `common-name=*.mikrotik.com`.
@@ -43,10 +43,10 @@ To generate your own certificates and enable HTTPS access, you must configure th
 
 #### Create your own root CA on the router and sign it
 
-```ros
-[admin@MikroTik] > certificate add name=local-cert common-name=local-cert key-usage=key-cert-sign,crl-sign 
-[admin@MikroTik] > /certificate/sign local-cert 
-  progress: done
+```routeros
+/certificate/add name=local-cert common-name=local-cert \
+    key-usage=key-cert-sign,crl-sign
+/certificate/sign local-cert
 ```
 
 :::warning
@@ -55,32 +55,39 @@ If you already have a Certificate Authority or are using an external service to 
 
 #### Create a certificate for WebFig (end-entity certificate)
 
-```ros
-[admin@MikroTik] > certificate add name=WebFig common-name=192.168.88.1
-[admin@MikroTik] > certificate sign WebFig 
-  progress: done
+Sign it with the CA from the previous step, and put the router's address in the subject alternative
+name, which browsers check:
+
+```routeros
+/certificate/add name=WebFig common-name=192.168.88.1 \
+    subject-alt-name=IP:192.168.88.1
+/certificate/sign WebFig ca=local-cert
+/certificate/print
 ```
 
-Example certificate list:
-
-```ros
-[admin@MikroTik] > /certificate/print
-Flags: K - private-key; A - authority; T - trusted
-Columns:NAME        COMMON-NAME     FINGERPRINT                                                     
-0  KAT  local-cert  local-cert      9b6363d033c4b2e6893c340675cfb8d1e330977526dba347a440fabffd983c5d
-1  KAT  WebFig      192.168.88.1    9f84ac2979bea65dccd02652056e5559bcdf866f8da5f924139d99453402bd02
+```text
+Flags: K - PRIVATE-KEY; A - AUTHORITY; I - ISSUED; T - TRUSTED
+Columns: NAME, TRUST-STORE, COMMON-NAME, SUBJECT-ALT-NAME
+#      NAME        TRUST-STORE  COMMON-NAME   SUBJECT-ALT-NAME
+0 KA T local-cert  all          local-cert
+1 KAI  WebFig      all          192.168.88.1  IP:192.168.88.1
 ```
+
+Without `ca=`, the router signs the WebFig certificate with its own key, and the root CA does not
+help browsers trust it.
 
 #### Enable the HTTPS service and assign the certificate
 
-```ros
-[admin@MikroTik] > /ip/service/set www-ssl certificate=WebFig disabled=no
+```routeros
+/ip/service/set www-ssl certificate=WebFig disabled=no
 ```
 
 You can now access WebFig at **`https://192.168.88.1`**.
 
 :::warning
-Most web browsers do not trust self-signed certificates by default, so the first time you connect you need to accept the warning or manually trust the certificate. Alternatively, export the root CA certificate and import it into your operating system or browser trust store. Browsers keep their own trust stores, which may differ from the operating system's — trusting the certificate at the OS level may not affect the browser.
+Most web browsers do not trust self-signed certificates by default, so the first time you connect you need to accept the warning or manually trust the certificate. Alternatively, export the root CA certificate with `/certificate/export-certificate local-cert file-name=local-cert`
+(this writes `local-cert.crt` to the router's files) and import it into your operating system or
+browser trust store. Browsers keep their own trust stores, which may differ from the operating system's — trusting the certificate at the OS level may not affect the browser.
 :::
 
 ### Use a publicly trusted certificate (Let's Encrypt)
@@ -95,20 +102,20 @@ Before choosing this option, note how it interacts with a LAN-only setup:
 
 Request a certificate for the router's IP Cloud DDNS name:
 
-```ros
+```routeros
 /ip/cloud/set ddns-enabled=yes
 /certificate/add-acme domain-names=[/ip/cloud/get dns-name]
 ```
 
 Or for your own domain:
 
-```ros
+```routeros
 /certificate/add-acme domain-names=router.example.com
 ```
 
 The issued certificate is named after the domain and is shown with the `a` (acme-manage) flag in `/certificate/print`. Assign it to the `www-ssl` service and then open WebFig by that domain name:
 
-```ros
+```routeros
 /ip/service/set www-ssl certificate=router.example.com disabled=no
 ```
 
@@ -126,13 +133,13 @@ WebFig **Design Skin** is a tool used to customize the appearance of the interfa
 
 ### Designing skins
 
-If the user has sufficient permissions (the user group has the `policy` and `sensitive` policies enabled), the **Design Skin** button becomes available. Enabling this option opens the interface customization tools.
+If the user has sufficient permissions (the user group has the `policy` and `sensitive` policies enabled), **Design Skin** is available in the menu (⋮) at the top right, next to **Terminal**. Selecting it opens the Skin Designer.
 
-To restrict access to the **Design Skin** menu, disable the `policy` and `sensitive` permissions in the user group configuration.
+To remove **Design Skin** from the menu, disable the `policy` and `sensitive` permissions in the user group configuration.
+
+![WebFig menu at the top right with Design Skin, Show Passwords, Help Center, Get Apps, About, Reboot and Logout](./img/webfig-design-skin_01.png)
 
 **Available operations:**
-
-![](./img/webfig-design-skin_01.png)
 
 - **Hide menu** - hides a menu and all of its submenus.
 - **Hide submenu** - hides a specific submenu.
@@ -142,13 +149,13 @@ To restrict access to the **Design Skin** menu, disable the `policy` and `sensit
 - **Make item read-only** - prevents editing of selected fields for safety.
 - **Hide flags** - hides flags in both list and detailed views.
 
-![](./img/webfig-design-skin_02.png)
+![Skin Designer list of menus with check boxes and the Type, Title, Read-only, Note and Limit columns](./img/webfig-design-skin_02.png)
 
 - **Add field limits** - restricts allowed values in the detailed view:
   - **Numeric intervals (..)** - defines allowed ranges, for example `1..10` for numeric fields such as **MTU**.
   - **Field prefix limits** - restricts allowed prefixes for text-based fields. A trailing `$` enforces exact prefix matching. For example, `station$` limits values to **station** only.
 
-  ![](./img/webfig-design-skin_03.png)
+  ![Skin Designer row with a value in the Limit column](./img/webfig-design-skin_03.png)
 
 - **Add tab** - inserts a labeled section divider before a field.
 - **Add separator** - inserts a horizontal separator before a field.
@@ -169,13 +176,13 @@ Restrictions applied to combo-box fields also limit the available dropdown optio
 
 To restrict a user to specific services, add a limit to the RADIUS Service field.
 
-![](./img/webfig-01.webp)
+![New RADIUS Server window with all Service check boxes available](./img/webfig-01.webp)
 
 The resulting configuration allows only the services specified in the **Limit** field.
 
-![](./img/webfig-02.webp)
+![Skin Designer rows of the RADIUS menu with a limit on the Service field](./img/webfig-02.webp)
 
-![](./img/webfig-03.webp)
+![New RADIUS Server window that offers only the services allowed by the limit](./img/webfig-03.webp)
 
 ### Customizing skins
 
@@ -186,7 +193,7 @@ The status content follows this structure:
 
 Status records are displayed in sequential order, for example:
 
-```json
+```text
 "7": {
   "alias": (path to the record),
   "note": (optional; free form text that appears under the record),
@@ -207,13 +214,13 @@ The alias path (for example: **`"IP:Firewall:Filter Rules:*17:Statistics:Packet 
 - **Tab name** (if applicable) → `Statistics`
 - **Field name** → `Packet Rate Graph`
 
-![](./img/webfig-design-skin_04.png)
+![Customized WebFig Status page with IP Cloud, system information, health and traffic graph sections](./img/webfig-design-skin_04.png)
 
 ### Using skins
 
 To apply a skin, assign it to a user group. After assignment, all users in that group automatically use the selected skin when logging in to WebFig or WinBox.
 
-```ros
+```routeros
 /user/group/set your_group_name skin=your_skin
 ```
 

@@ -34,7 +34,7 @@ Attempting to install a version older than `minimum-version` can cause severe sy
 
 ## Before you start
 
-- **Back up everything.** Configuration syntax changes between major versions. A direct downgrade can corrupt settings. Generate a [binary backup (`.backup`)](../getting-started/configuration-management/backup.md) and an [export file (`.rsc`)](../getting-started/configuration-management/#configuration-export) before proceeding.
+- **Back up everything.** Configuration syntax changes between major versions. A direct downgrade can corrupt settings. Generate a [binary backup (`.backup`)](../getting-started/configuration-management/backup.md) and an [export file (`.rsc`)](../getting-started/configuration-management/#export-the-configuration) before proceeding.
 - **Security and stability.** Keep in mind that reverting to legacy versions exposes your router to older software bugs and patched security vulnerabilities.
 
 ## Downgrade procedure

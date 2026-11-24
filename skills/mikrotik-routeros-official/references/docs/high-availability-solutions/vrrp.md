@@ -210,9 +210,9 @@ invalid with the status comment `No IPv4 address!`, and a member whose authority
 ## Hardware offloading
 
 A master VRRP instance is hardware-offloaded when L3 hardware offloading is enabled. The switch then
-uses the virtual MAC address as the source for routed traffic and routes frames addressed to the
-virtual MAC address. The instance reports the read-only `hw-offloaded` property as the `H` flag in
-`/interface/vrrp/print`.
+routes frames addressed to the virtual MAC address. The source MAC address of the routed traffic
+stays the parent interface MAC address, not the virtual MAC address. The instance reports the
+read-only `hw-offloaded` property as the `H` flag in `/interface/vrrp/print`.
 
 Offloading is removed when the instance is not master or when L3 hardware offloading is disabled.
 VRRP hardware offloading is not available on every switch that supports L3 hardware offloading. See

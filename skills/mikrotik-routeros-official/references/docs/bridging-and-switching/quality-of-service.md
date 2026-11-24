@@ -503,6 +503,8 @@ One packet descriptor may use multiple buffers (depending on the payload size), 
 
 Hardware resources can be limited per destination type (multicast/unicast), per port, and per TX queue. When any of these limits are reached, no additional packets can be enqueued for transmission, and subsequent packets get dropped.
 
+Packets dropped because the multicast limit is reached are counted by the `multicast-packet-drop` field in [QoS Monitor](../cli-reference/interface/ethernet/switch/qos/monitor.md).
+
 RouterOS abstracts low-level hardware details, allowing resource limits to be configured either in terms of packets or as a percentage of the total amount. RouterOS automatically calculates the required hardware descriptor and buffer count based on the user-specified packet limit and port's MTU. Additionally, RouterOS includes preconfigured hardware resources, eliminating the need for manual configuration in common QoS scenarios.
 
 :::danger

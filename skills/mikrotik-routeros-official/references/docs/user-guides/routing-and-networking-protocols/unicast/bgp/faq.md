@@ -30,3 +30,15 @@ Most common misconfiguration:
 
 - Output [filter](../../../../cli-reference/routing/filter/rule) is blocking redistribution.
 - Both peers are not running on the same [BGP instance](../../../../cli-reference/routing/bgp/instance.md).
+
+## Why does SNMP monitoring degrade performance with a full BGP feed?
+
+With a full feed, the routing table holds hundreds of thousands of routes. Some monitoring tools collect the routing table by walking the `ipCidrRouteTable` MIB subtree (`1.3.6.1.2.1.4.24.4`). Walking this table makes the SNMP agent read and encode every route, which uses CPU and memory and can degrade routing performance on a busy router.
+
+When a tool does not need routing-table data, deny the OID for the community that the tool uses. For the default `public` community:
+
+```ros
+/snmp/community/set [find name=public] denied-oids=1.3.6.1.2.1.4.24.4
+```
+
+A denied OID returns no-such-object and a walk skips the blocked subtree, so the rest of the monitoring continues to work. The setting is per [community](../../../../cli-reference/snmp/community#denied-oids); set it on every community that can be used to poll the routing table.

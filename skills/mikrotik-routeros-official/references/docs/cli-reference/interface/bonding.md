@@ -70,6 +70,18 @@ Specifies whether ports actively or passively participates in the LACP.
 <ArgTableRow arg="lacp-strict" typ="bool"></ArgTableRow>
 <ArgTableRow arg="lacp-system-id" typ="macAddr">Specifies the LACP system ID used for LACP negotiations.</ArgTableRow>
 <ArgTableRow arg="lacp-system-priority" typ="num">Specifies the LACP system priority used for LACP negotiations.</ArgTableRow>
+<ArgTableRow arg="esi" typ="object { esi-value: super { byte0: string
+, [byte1] :string
+, [byte2] :string
+, [byte3] :string
+, [byte4] :string
+, [byte5] :string
+, [byte6] :string
+, [byte7] :string
+, [byte8] :string
+, [byte9] :string
+ }
+ }"></ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

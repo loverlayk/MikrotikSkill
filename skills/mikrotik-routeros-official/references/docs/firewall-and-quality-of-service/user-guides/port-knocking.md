@@ -84,7 +84,7 @@ add chain=input action=add-src-to-address-list \
 - The second rule slows port scans down until they are pointless, without locking out a real user for long: a connection attempt to one of the listed ports puts the source on the blacklist for one minute. The list can hold every port apart from the knock ports. It skips addresses on the `secured` list, so after a successful knock you can use these ports.
 
 :::warning
-You can block yourself. When the rules are enabled, connecting to SSH or WinBox before you knock puts your own address on the blacklist for a minute, and your knocks are dropped during that time. A client that was blocked keeps retrying its connection for a while, and each retry can renew the entry: wait a minute after a blocked attempt before you knock again. Enable the rules only when you have another way to reach the router, or in [Safe Mode](../../getting-started/configuration-management/#safe-mode).
+You can block yourself. When the rules are enabled, connecting to SSH or WinBox before you knock puts your own address on the blacklist for a minute, and your knocks are dropped during that time. A client that was blocked keeps retrying its connection for a while, and each retry can renew the entry: wait a minute after a blocked attempt before you knock again. Enable the rules only when you have another way to reach the router, or in [Safe Mode](../../getting-started/configuration-management/#work-safely-with-safe-mode).
 :::
 
 When you are ready, enable the rules:

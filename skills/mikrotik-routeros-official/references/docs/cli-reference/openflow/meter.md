@@ -11,7 +11,7 @@
 The sub-menu lists the traffic meters installed by the controller. Meters enable rate monitoring before output and applying action instructions.
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
-<ArgTableRow arg="I" typ="inactive"></ArgTableRow>
+<ArgTableRow arg="I" typ="inactive">The entry is inactive.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

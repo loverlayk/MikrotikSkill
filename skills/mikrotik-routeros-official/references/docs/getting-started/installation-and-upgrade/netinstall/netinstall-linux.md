@@ -24,7 +24,7 @@ This tool requires root privileges. You must run it as root or use `sudo` to exe
 
 The `netinstall-cli` command syntax is:
 
-```
+```text
 netinstall-cli [-r] [-e] [-b] [-m [-o]] [-f] [-c] [-v] [--reboot] [--shutdown] [-k <keyfile>] [-s <userscript>] [-sm <modescript>] [--mac <mac address>] {-i <interface> | -a <client-ip>} [PACKAGE]+ 
 ```
 
@@ -110,7 +110,7 @@ sudo ip link set eth0 up
 Run the installation. The tool requires root privileges, use sudo:
 
 ```bash
-sudo ./netinstall-cli [-parameters] [address/interface] routeros-[architecture]-[package VERSION].npk
+sudo ./netinstall-cli [-parameters] [address/interface] routeros-[VERSION]-[architecture].npk
 ```
 
 ```bash

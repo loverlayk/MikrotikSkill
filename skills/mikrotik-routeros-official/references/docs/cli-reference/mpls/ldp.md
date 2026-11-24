@@ -25,4 +25,5 @@
 <ArgTableRow arg="vrf" typ="enum" unset="1">Name of the VRF table this instance will operate on.</ArgTableRow>
 <ArgTableRow arg="afi" typ="ubit (ip, ipv6)" unset="1">Determines supported address families by the instance.</ArgTableRow>
 <ArgTableRow arg="preferred-afi" typ="enum (ip | ipv6)" unset="1">Determines which address family connection is preferred. Value is also set in dual-stack element (if used).</ArgTableRow>
+<ArgTableRow arg="tcp-md5-key" typ="string" unset="1"></ArgTableRow>
 </ArgTable>

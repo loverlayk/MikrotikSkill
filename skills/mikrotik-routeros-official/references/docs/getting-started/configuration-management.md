@@ -1,336 +1,335 @@
 # Configuration Management
 
-> This page explains configuration management in MikroTik RouterOS, detailing how to undo and redo actions using the /system/history interface or CLI commands, with examples for firewall rule modifications.
+> Manage the RouterOS configuration: undo and redo changes, use safe mode to avoid locking yourself out, export the configuration as a script and import it on another router, run scripts automatically after upload, and...
 
 # Configuration Management
 
-This article describes a set of commands used for configuration management.
+RouterOS records every configuration change, so you can undo it, and offers safe mode, which
+undoes your changes when the connection to the router is lost. The configuration can be exported
+as a script, imported on the same or another router, and reset to the defaults. For a binary copy
+of the whole configuration, see [Backup](./backup).
 
-## Configuration Undo and Redo
+## Undo and redo changes
 
-Any action done in the GUI or any command executed from the CLI is recorded in `/system/history`.  You can undo or redo any action by running undo or redo commands from the CLI or by clicking on Undo and Redo buttons from the GUI.
+Every configuration change, made from the CLI, WinBox, WebFig or the API, is recorded in
+`/system/history`. The `/undo` and `/redo` commands, or the Undo and Redo buttons in WinBox,
+take back the last change or apply it again. Each further `/undo` takes back the change before it. The history keeps the last 100 changes and is cleared when the router reboots.
 
-A simple example to demonstrate the addition of the firewall rule and how to undo and redo the action:
+Add a firewall rule and look at the history:
 
-```ros
-[admin@v7_ccr_bgp] /ip/firewall/filter> add chain=forward action=drop 
-
-[admin@v7_ccr_bgp] /ip/firewall/filter> print 
-Flags: X - disabled, I - invalid; D - dynamic 
-0 X chain=input action=drop protocol=icmp src-address=10.155.101.1 log=no 
-log-prefix=""
-
-1 chain=forward action=drop
-
-[admin@v7_ccr_bgp] /ip/firewall/filter> /system/history/print 
-Flags: U - undoable, R - redoable, F - floating-undo
-Columns: ACTION, BY, POLICy
-ACTION BY POLIC
-F filter rule added admin write
-U --- write
-[admin@v7_ccr_bgp] /ip/firewall/filter>
+```routeros
+/ip/firewall/filter/add chain=forward action=drop
+/system/history/print
 ```
 
-We have added a firewall rule and in `/system/history` we can see all that was done.
-
-Let's undo everything:
-
-```ros
-[admin@v7_ccr_bgp] /ip/firewall/filter> /undo 
-[admin@v7_ccr_bgp] /ip/firewall/filter> print 
-Flags: X - disabled, I - invalid; D - dynamic 
-0 X chain=input action=drop protocol=icmp src-address=10.155.101.1 log=no 
-log-prefix=""
-
-[admin@v7_ccr_bgp] /ip/firewall/filter>
+```text
+Flags: U - UNDOABLE
+Columns: ACTION, BY, POLICY, TIME
+  ACTION              BY     POLICY  TIME
+U filter rule added   admin  write   2026-11-23 09:39:35
+U user admin changed  admin  write   2026-11-23 09:39:34
+                             policy
 ```
 
-As you can see the firewall rule disappeared.  
-Now redo the last change:
+Undo the change. The rule is removed, and the history marks the action as redoable (`R`):
 
-```ros
-[admin@v7_ccr_bgp] /ip/firewall/filter> /redo 
-[admin@v7_ccr_bgp] /ip/firewall/filter> print 
-Flags: X - disabled, I - invalid; D - dynamic 
-0 X chain=input action=drop protocol=icmp src-address=10.155.101.1 log=no 
-log-prefix=""
-
-1 chain=forward action=drop 
-
-[admin@v7_ccr_bgp] /ip/firewall/filter>
+```routeros
+/undo
+/system/history/print
 ```
 
-System history is capable of showing exact CLI commands that will be executed during "Undo" or "Redo" actions even if we perform the action from the GUI, for example, detailed history output after adding a TCP accept rule from WinBox:
-
-```ros
-[admin@v7_ccr_bgp] /system/history> print detail 
-Flags: U - undoable, R - redoable, F - floating-undo 
- F redo=
-      /ip/firewall/filter/add action=accept chain=forward disabled=no log=no \
-          log-prefix="" protocol=tcp
-    undo=/ip/firewall/filter/remove *4 action="filter rule added" by="admin" 
-    policy=write time=2019-10-10 18:51:05 
-
- F redo=/ip/firewall/filter/add action=accept chain=forward 
-    undo=/ip/firewall/filter/remove *3 action="filter rule added" by="admin" 
-    policy=write time=2019-10-10 18:49:03 
-
-U redo="" undo="" action="---" by="" policy=write time=2019-09-27 13:07:35 
-[admin@v7_ccr_bgp] /system/history> 
+```text
+Flags: U - UNDOABLE, R - REDOABLE
+Columns: ACTION, BY, POLICY, TIME
+  ACTION              BY     POLICY  TIME
+R filter rule added   admin  write   2026-11-23 09:39:35
+U user admin changed  admin  write   2026-11-23 09:39:34
+                             policy
 ```
 
-## Safe Mode
+`/redo` adds the rule again. The detailed history shows the commands that undo and redo each
+action, also for changes made over the API or in the GUI:
 
-It is sometimes possible to change router configuration in a way that will make the router inaccessible (except from the local console). Usually, this is done by accident, but there is no way to undo the last change when the connection to the router is already cut. Safe mode can be used to minimize such risk.
+```routeros
+/redo
+/system/history/print detail proplist=action,redo,undo
+```
 
-The **"Safe Mode"** button in the Winbox GUI allows you to enter Safe Mode, while in the CLI, you can access it by either using the keyboard shortcut <kbd>F4</kbd> or pressing **[CTRL]+[X]**. To exit without saving the changes made in CLI, hit **[CTRL]+[D].**
+```text
+Flags: U - UNDOABLE
+U action="filter rule added"
+  redo=/ip firewall filter add action=drop chain=forward
+  undo=/ip firewall filter remove *1
+
+U action="user admin changed"
+```
+
+## Work safely with safe mode
+
+A configuration change can cut your own connection to the router, for example a firewall rule or
+a wrong address. Safe mode protects against this: if the session that holds safe mode ends
+without releasing it, the router undoes every change made while safe mode was on, including changes made
+from other sessions.
+
+- In the CLI, press <kbd>Control</kbd>+<kbd>X</kbd> (or <kbd>F4</kbd>). The router answers
+  `Taking Safe Mode session... Success!` and the prompt shows `<SAFE>`, for example
+  `[admin@MikroTik] <SAFE>`.
+- In WinBox, select **Safe Mode** in the toolbar.
 
 ![WinBox window with the Safe Mode button in the toolbar and an open terminal](./img/configuration-management-01.webp)
 
-```ros
-[admin@MikroTik] /ip/route>[CTRL]+[X] 
-[Safe Mode taken] 
-[admin@MikroTik] /ip/route<SAFE>
-```
+Changes made in safe mode are listed with the `F` (floating-undo) flag in `/system/history/print`.
+How the session ends decides what happens to them:
 
-The message **Safe Mode taken** is displayed and the prompt changes to reflect that the session is now in safe mode. All configuration changes that are made (also from other login sessions), while the router is in safe mode, are automatically undone if the safe mode session terminates abnormally. You can see all such changes that will be automatically undone and tagged with an **F** flag in the system history:
-
-```ros
-[admin@MikroTik] /ip/route> 
-[Safe Mode taken] 
-[admin@MikroTik] /ip/route<SAFE> add 
-[admin@MikroTik] /ip/route<SAFE> /system/history/print 
-Flags: U, F - FLOATING-UNDO 
-Columns:
- ACTION, BY, POLICY ACTION BY POLICY 
-F route 0.0.0.0/0 added admin write 
-```
-
-Now, if the telnet connection (or WinBox terminal) is cut, then after a while (TCP timeout is **9** minutes) all changes that were made while in safe mode will be undone. Exiting the session by **[Ctrl]+[D]** also undoes all safe mode changes, while **/quit** does not.
-
-If another user tries to enter safe mode, he's given the following message:
-
-```ros
-[admin@MikroTik] >
-Hijacking Safe Mode from someone - unroll/release/don't take it [u/r/d]:
-```
-
-- [u] - undoes all safe mode changes, and puts the current session in safe mode.
-- [r] - keeps all current safe mode changes, and puts the current session in safe mode. The previous owner of safe mode is notified about this.
-
-```ros
-[admin@MikroTik] >
-[Safe mode released by another user]
-```
-
-- [d] - leaves everything as-is.
-
-If too many changes are made while in safe mode, and there's no room in history to hold them all (currently history keeps up to the 100 most recent actions), then the session is automatically put out of the safe mode, and no changes are automatically undone. Thus, it is best to change the configuration in small steps, while in safe mode. Pressing **[Ctrl]**+**[X]** twice is an easy way to empty the safe mode action list.
-
-## System Backup and Restore
-
-[System backup](./backup.md) is the way to completely clone the router configuration in binary format.
-
-## Configuration Export and Import
-
-RouterOS allows exporting and importing parts of the configuration in plain text format. This method can be used to copy bits of configuration between different devices, for example, clone the whole firewall from one router to another.
-
-An export command can be executed from each menu (resulting in configuration export only from this specific menu and all its sub-menus) or from the root menu for complete config export and is available for the CLI only.
-
-:::danger
-The Export command does not export system user passwords, installed certificates, SSH keys, Dude, or a User-manager database.
-
-[Installed certificates](../../authentication-authorization-accounting/certificates.md#export-certificates), [Dude](../../management-tools/dude.md), and [User Manager](../../authentication-authorization-accounting/user-manager.md) databases must be manually exported and imported into a new device.
-
-System user passwords and user SSH keys can not be exported.
-
-**Warning:** During config import, we suggest using the same RouterOS version used during config export to prevent cases when some of the commands do not exist in one or another RouterOS version.
-:::
-
-### Configuration Export
-
-The following command parameters are accepted:
-
-| Property | Description |
+| Action | Changes |
 | :-- | :-- |
-| **compact** | Outputs only the modified configuration. Starting from v6rc1, "export compact" became the default behavior, so "export" and "export compact" now produce identical output. |
-| **file** | Exports configuration to a specified file. When the file is not specified export output will be printed to the terminal |
-| **path** | The parameter allows including or excluding specific configuration menus from the router's entire configuration |
-| **show-sensitive** | Shows sensitive information, like passwords, keys, etc. By default, sensitive information is hidden. [List of menus with sensitive parameters](./list-of-menus-with-sensitive-parameters.md) |
-| **terse** | With this parameter, the export command will output the configuration as full commands on separate lines, each including the corresponding menu path. |
-| **verbose** | With this parameter, the export command will output the whole configuration parameters and items including defaults. |
+| <kbd>Control</kbd>+<kbd>X</kbd> again (`Releasing Safe Mode... Success!`) | Kept. Safe mode ends. |
+| <kbd>Control</kbd>+<kbd>D</kbd> | Undone. The session ends. |
+| `/quit`, then `y` at `You are in Safe Mode. Quitting will unroll changes. Quit? [y/N]:` | Undone. The session ends. |
+| The client closes the connection, for example the terminal window is closed | Undone. |
+| The connection is cut without being closed, for example by a firewall rule | Undone when the router detects that the session is gone, which can take about a quarter of an hour. |
 
-For example, export configuration from the `/ip/address` menu and save it to a file:
+If your connection drops and the old session still holds safe mode when you log in again, press <kbd>Control</kbd>+<kbd>X</kbd> and answer `u` to the question that follows to undo its
+changes at once.
 
-```ros
-    [admin@MikroTik] > /ip/address/print
-    Flags: X - disabled, I - invalid, D - dynamic
-    #   ADDRESS            NETWORK         BROADCAST       INTERFACE
-    0   10.1.0.172/24      10.1.0.0        10.1.0.255      bridge1
-    1   10.5.1.1/24        10.5.1.0        10.5.1.255      ether1
-    [admin@MikroTik] > /ip/address/export file=address
-    [admin@MikroTik] > /file/print
-    # NAME                            TYPE         SIZE       CREATION-TIME
-    0  address.rsc                     script       315        2003-12-23 13:21:48
-    [admin@MikroTik] >
+Pressing <kbd>Control</kbd>+<kbd>X</kbd> twice keeps the changes made so far and starts safe mode
+again with an empty list. Change the configuration in small steps: safe mode remembers at most
+100 changes. With more, the session leaves safe mode and no changes are undone.
+
+Only one session can hold safe mode. When another session presses <kbd>Control</kbd>+<kbd>X</kbd>, the
+router asks:
+
+```text
+Safe Mode is taken by current user in another session.
+Unroll, release or abort [u/r]?
 ```
 
-By default, the export command writes only user-edited configuration and RouterOS defaults are omitted.
+- `u` undoes the changes of the other session and gives safe mode to this session. The other
+  session sees `Safe Mode unrolled by another user`.
+- `r` keeps the changes of the other session and gives safe mode to this session. The other session
+  sees `Safe Mode released by another user`.
+- <kbd>Control</kbd>+<kbd>C</kbd> leaves safe mode with the other session.
 
-For example, the IPSec default policy will not be exported, and if we change one property then only our change will be exported:
+## Export the configuration
 
-```ros
-    [admin@rack1_b4] /ip/ipsec/policy> print
-    Flags: T - template, X - disabled, D - dynamic, I - inactive, * - default
-    0 T * group=default src-address=::/0 dst-address=::/0 protocol=all
-          proposal=default template=yes
-    [admin@rack1_b4] /ip/ipsec/policy> export
-    # 1970-04-02 17:59:14 by RouterOS 6.22
-    # software id = DB0D-LK67
-    #
-    [admin@rack1_b4] /ip/ipsec/policy> set 0 protocol=gre
-    [admin@rack1_b4] /ip/ipsec/policy> export
-    # 1970-04-02 17:59:30 by RouterOS 6.22
-    # software id = DB0D-LK67
-    #
-    /ip/ipsec/policy
-    set 0 protocol=gre
-```
+The `export` command prints the configuration as RouterOS commands, which can be imported on the
+same or another router. Run it from the root menu for the whole configuration, or from a menu for
+that menu and its sub-menus. Export is a CLI command.
 
-Example of how to export entire `/ip/firewall` configuration, except `/ip/firewall/nat`
+By default, the export contains only settings that differ from the defaults. Arguments:
+
+- `file` writes the export to a file (`.rsc`) instead of the terminal.
+- `verbose` also exports default values.
+- `terse` writes every command on one line with its full menu path.
+- `show-sensitive` includes passwords, keys and other secrets, which are left out by default (see
+  [List of menus with sensitive parameters](./list-of-menus-with-sensitive-parameters)).
+- `path` exports only the listed menus. A menu with `!` in front is left out.
+- `where` exports only the items that match a condition.
+- `compact` is the default and gives the same output as a plain `export`.
+
+Arguments can be combined, for example `/export path=/ip/firewall,!/ip/firewall/nat file=fw`.
+
+Export the addresses to the file `address.rsc`:
 
 ```routeros
-/export path=/ip/firewall,!/ip/firewall/nat
-
-/ip/firewall/address-list
-add address=1.1.1.1 list=dns
-/ip/firewall/filter
-add action=passthrough chain=unused-hs-chain comment="place hotspot rules here" disabled=yes
-add action=add-src-to-address-list address-list=12345 address-list-timeout=15s chain=input disabled=yes
-add action=accept chain=output dst-port=80,443 log=yes protocol=tcp
-/ip/firewall/mangle
-add chain=prerouting
-add action=accept chain=prerouting
-add action=accept chain=prerouting dst-address=192.168.88.0/24 in-interface=ether2
+/ip/address/add address=192.0.2.1/24 interface=ether1
+/ip/address/export file=address
+/file/print where name=address.rsc
 ```
 
-:::info
-Note:
+```text
+Columns: NAME, TYPE, SIZE, LAST-MODIFIED
+# NAME         TYPE    SIZE  LAST-MODIFIED
+0 address.rsc  script   146  2026-11-23 09:39:50
+```
 
-The **\*** flag indicates that the entry is system default and cannot be removed manually.
+Export the whole firewall configuration except NAT:
+
+```routeros
+/ip/firewall/address-list/add list=mylist address=198.51.100.1
+/ip/firewall/address-list/add list=other address=198.51.100.2
+/ip/firewall/nat/add chain=srcnat action=masquerade out-interface=ether1
+/export path=/ip/firewall,!/ip/firewall/nat
+```
+
+```text
+# 2026-11-23 09:40:04 by RouterOS 7.25.1
+# system id = aX+jcgZWr+J
+#
+/ip firewall address-list
+add address=198.51.100.1 list=mylist
+add address=198.51.100.2 list=other
+/ip firewall filter
+add action=drop chain=forward
+```
+
+Export one address list:
+
+```routeros
+/ip/firewall/address-list/export where list=mylist
+```
+
+```text
+# 2026-11-23 09:40:07 by RouterOS 7.25.1
+# system id = aX+jcgZWr+J
+#
+/ip firewall address-list
+add address=198.51.100.1 disabled=no dynamic=no list=mylist
+```
+
+If a menu does not answer the export command in time, the export prints
+`#error exporting "/<menu>" (timeout)` for it and continues with the next menu.
+
+:::warning
+The export does not contain:
+
+- User accounts and their passwords. User groups and SSH public keys (`/user/ssh-keys`) are
+  exported, so create the users on the new router before you import.
+- Certificates. Export and import them separately, see
+  [Certificates](../../authentication-authorization-accounting/certificates#export-certificates).
+- The databases of [The Dude](../../management-tools/dude) and
+  [User Manager](../../authentication-authorization-accounting/user-manager).
+
+Import the file on the same RouterOS version where possible: a command or parameter that does not
+exist in the other version stops the import.
 :::
 
-Here is the list of all menus containing default system entries
+### Default entries
 
-| Menu | Default Entry |
+Some menus contain built-in default entries, shown with the `*` flag. They cannot be removed, for
+example `/ppp/profile/remove default` fails with `can not remove default profile`. The
+export lists them only when you change them, with `set`, for example:
+
+```text
+/ppp profile
+set *0 use-encryption=yes
+```
+
+| Menu | Default entries |
 | :-- | :-- |
 | `/interface/wireless/security-profiles` | default |
-| `/ppp/profile` | "default", "default-encryption" |
 | `/ip/hotspot/profile` | default |
 | `/ip/hotspot/user/profile` | default |
-| `/ip/ipsec/policy` | default |
+| `/ip/ipsec/mode-config` | request-only |
+| `/ip/ipsec/policy` | the default template policy |
 | `/ip/ipsec/policy/group` | default |
+| `/ip/ipsec/profile` | default |
 | `/ip/ipsec/proposal` | default |
-| `/ip/ipsec/mode-conf` | read-only |
 | `/ip/smb/shares` | pub |
 | `/ip/smb/users` | guest |
-| `/ipv6/nd` | any |
-| `/mpls/interface` | all |
-| `/routing/bfd/interface` | all |
-| `/routing/bgp/instance` | default |
-| `/routing/ospf/instance` | default |
-| `/routing/ospf/area` | backbone |
-| `/routing/ospf-v3/instance` | default |
-| `/routing/ospf-v3/area` | backbone |
+| `/ipv6/nd` | the entry for interface `all` |
+| `/ppp/profile` | default, default-encryption |
+| `/routing/bgp/template` | default |
+| `/queue/type` | default, ethernet-default, wireless-default, synchronous-default, hotspot-default, pcq-upload-default, pcq-download-default, only-hardware-queue, multi-queue-ethernet-default, default-small |
 | `/snmp/community` | public |
-| `/tool/mac-server/mac-winbox` | all |
-| `/tool/mac-server` | all |
-| `/system/logging` | "info", "error", "warning", "critical" |
-| `/system/logging/action` | "memory", "disk", "echo", "remote" |
-| `/queue/type` | "default", "ethernet-default", "wireless-default", "synchronous-default", "hotspot-default", "only-hardware-queue", "multi-queue-ethernet-default", "default-small" |
+| `/system/logging` | the rules for info, error, warning and critical |
+| `/system/logging/action` | memory, disk, echo, remote |
 
-:::danger
-If some specific menu will not be able to respond to the export command, starting from RouterOS v7.11, an error message will be printed out in the export command output after a timeout ("#error exporting "/xxx" (timeout)") and the process will move on to the next menu.
-:::
+## Import a configuration
 
-Starting from RouterOS 7.13, you can export parts of a specific menu. For instance, it is possible to export a specific address-list among multiple address-lists on your router.
+`/import` runs a script file (`.rsc`) line by line. The file can contain any console command,
+including scripts.
 
-```ros
-[admin@MikroTik] > ip firewall address-list export where list=mylist
-
+```routeros
+/ip/address/remove [find address="192.0.2.1/24"]
+/import address.rsc
 ```
 
-### Configuration Import
-
-Root menu command import allows running a configuration script from the specified file. The script file (with extension ".rsc") can contain any console command including complex scripts.
-
-For example, load a saved configuration file
-
-```ros
-[admin@MikroTik] > import address.rsc
-Opening script file address.rsc
-
+```text
 Script file loaded and executed successfully
-[admin@MikroTik] >
 ```
 
-Import command allows you to specify the following parameters:
+The import adds to the existing configuration and removes nothing. Firewall rules from the file are
+added after the rules that are already there, also when they are the same, and an entry that
+already exists, such as an address or an address-list entry, makes the import fail. On a router
+with the default configuration, remove or adapt the default items that the file also contains
+before you import.
 
-| Property | Description |
-| :-- | :-- |
-| **from-line** | Start executing the script from the specified line number. This option is only available in verbose mode. |
-| **file-name** | Name of the script (.rsc) file to be executed. |
-| **verbose** | Reads each line from the file and executes individually, allowing one to debug syntax or other errors more easily. |
-| **dry-run** | Simulates the import without making any configuration changes. This helps in catching syntax errors. This option is only available in verbose mode. |
+The import stops at the first line that fails and reports it, for example:
 
-:::tip
-If the device has a default or existing configuration that requires replacement, it is necessary to initiate a configuration reset.
-
-This involves applying a clean, empty configuration using the command `/system/reset-configuration` no-defaults=yes, followed by a device reboot.
-:::
-
-### Auto Import
-
-It is also possible to **automatically** execute scripts after uploading to the router with FTP or SFTP. The script file must be named with the extension \*.auto.rsc. Once the commands in the file are executed, a new \*.auto.log file is created which contains import success or failure information.
-
-:::tip
-".auto.rsc" in the filename is mandatory for a file to be automatically executed.
-:::
-
-### Import troubleshooting
-
-#### Configuration parts to watch out for in exported .rsc files
-
-Things that should be removed from export files that were created with "/export", before attempting import on a new device:
-
-- Interface renaming conflicts with the default ethernet naming scheme.
-
-```ros
-/interface/ethernet
-set [ find default-name=ether5 ] auto-negotiation=no name=ether1-gateway
-set [ find default-name=ether6 ] name=ether2
-set [ find default-name=ether7 ] name=ether3
-set [ find default-name=ether8 ] name=ether4
-set [ find default-name=ether1 ] name=ether5
-set [ find default-name=ether2 ] name=ether6
-set [ find default-name=ether3 ] name=ether7
-set [ find default-name=ether4 ] name=ether8
+```text
+Script Error: failure: already have such address (/ip/address/add; line 5) (:import; line 1)
 ```
 
-- In older versions "export" default entries might show with "add" instead of the "set" command. That should be edited before import to avoid errors.
-- Check if the total number of physical interfaces matches the new and old devices. If there are some missing that will result in an error during .rsc import.
+`line 5` is the line in the file. The lines before it stay applied. To replace the whole configuration of a router with a file,
+export it with `show-sensitive` so that it contains passwords and keys, reset the router and run
+the file instead of the default configuration (add `keep-users=yes`, as the file contains no
+users):
 
-In case of a problematic import, attempt the following:
+```routeros
+/system/reset-configuration no-defaults=yes keep-users=yes \
+    run-after-reset=config.rsc
+```
 
-- Use the **dry-run** parameter to simulate the import without making any configuration changes. This helps in catching syntax errors. This option is only available in verbose mode.
-- Reset the configuration on that device.
-- Run the import command again with the "verbose=yes" argument. It will also stop the import process on a problem that you already encountered, but will also show the place where the export failed. This way shows you the place where things need to be edited in the .rsc import file.
+A failing line in such a file is logged as
+`error while running run-after-reset script:` followed by the error.
+
+### Check a file before you import it
+
+`verbose=yes` prints each line with its number before it runs, so you can see where an import
+stops. With `dry-run`, the router only checks the syntax and changes nothing: it does not find
+entries that already exist. `from-line` starts the import at a
+line of the file, for example to continue after you fixed the line that failed. `dry-run` and
+`from-line` work only together with `verbose=yes`.
+
+```routeros
+/import address.rsc verbose=yes dry-run
+```
+
+```text
+#line 1
+# 2026-11-23 09:39:50 by RouterOS 7.25.1
+#line 2
+# system id = aX+jcgZWr+J
+#line 3
+#
+#line 4
+/ip address
+#line 5
+add address=192.0.2.1/24 interface=ether1 network=192.0.2.0
+No syntax errors found in the import file
+```
+
+### Import automatically after upload
+
+A file whose name ends in `.auto.rsc` runs as soon as it is uploaded over FTP or SFTP. The router
+writes the result to a file with the same name and the `.auto.log` extension, for example
+`Script file loaded and executed successfully`, or the script error. Files created on the router
+or downloaded with `/tool/fetch` do not run automatically.
+
+### Troubleshoot an import
+
+Before you import an export from another router, check the file for:
+
+- Interface names: renamed interfaces can clash with the default names on the new router. In this
+  export, ether6 is renamed to ether2 while ether2 still exists, so the second line fails:
+
+  ```routeros
+  /interface/ethernet
+  set [ find default-name=ether5 ] auto-negotiation=no name=ether1-gateway
+  set [ find default-name=ether6 ] name=ether2
+  set [ find default-name=ether7 ] name=ether3
+  set [ find default-name=ether8 ] name=ether4
+  set [ find default-name=ether1 ] name=ether5
+  set [ find default-name=ether2 ] name=ether6
+  set [ find default-name=ether3 ] name=ether7
+  set [ find default-name=ether4 ] name=ether8
+  ```
+
+- Interfaces that do not exist on the new router: a command for a missing interface fails.
+- Default entries written with `add` instead of `set` by an older version: change them to `set`.
+
+Then check the syntax with `verbose=yes dry-run`, run the import with `verbose=yes` to find the
+line that fails, fix the file, and continue with `from-line` from that line.
 
 #### Startup delay
 
-If your configuration relies on interfaces that might not yet have started up upon command execution, it is suggested to introduce delays or to monitor until all needed interfaces are available. This example script allows you to set how many interfaces you are expecting, and how long to wait until they become available:
+A script that runs at boot, for example a default configuration script or an import right after a
+reset, can start before all interfaces exist. Wait for them before the commands that use them. This
+script waits until there are at least 10 interfaces (count them on your router with
+`/interface/print count-only`) or 30 seconds, and logs a warning if they did not appear:
 
-```ros
+```routeros
 {
 :local i 0
 #Number of interfaces. It is necessary to reconfigure this number for each device (/interface/print count-only)
@@ -350,42 +349,45 @@ if ($i = $t) do={
 }
 ```
 
-The above script will wait until there are 10 interfaces visible, or 30 seconds. If there are not 10 interfaces at this time, it will put a message in the log. Modify the variables according to your needs.
+## Reset the configuration
 
-## Configuration Reset
+`/system/reset-configuration` removes the configuration, reboots the router and applies the default
+configuration (see [Default configurations](./default-configurations)). In an interactive session
+it asks `Dangerous! Reset anyway? [y/N]:` first. To reset with the button on the router, see
+[RouterOS configuration reset](./routeros-configuration-reset).
 
-RouterOS allows resetting configuration with the `/system/reset-configuration` command
+- Users are removed, and `admin` gets its default password back: none, or the password printed
+  on the device sticker. Without a password, the router asks you to set one at the first login.
+- Before the reset, the router saves the old configuration to `auto-before-reset.backup`, so a
+  reset made by mistake can be undone by [restoring it](./backup#restore-a-backup). Files on the router are kept.
+- At the first interactive login after a reset, the router offers to show the software license.
+- If a custom default configuration script is installed, for example with Netinstall or TR-069,
+  the reset runs that script instead of MikroTik's default configuration.
 
-This command clears all configuration of the router and sets it to the factory defaults including the login name and password ('admin' with an empty password or, for some models, the user and wireless passwords on the sticker). For more details on the default configuration [see the list](./default-configurations.md).
+Arguments change what the reset does, for example:
 
-After executing the configuration reset command, the router will reboot and load the default configuration. Starting from version 7.13, following the reset, a license prompt will be displayed with the option to view the end-user license agreement.
+- `keep-users=yes` keeps users and their passwords.
+- `no-defaults=yes` does not apply the default configuration.
+- `skip-backup=yes` saves no backup.
+- `run-after-reset` runs a script file after the reset instead of the default configuration. A
+  script that runs longer than two minutes is stopped, and the log shows
+  `error while running run-after-reset script: runtime limit exceeded` (in rare cases
+  `std failure: timeout`).
+- `caps-mode=yes` runs the CAPs mode script after the reset.
+- `shutdown=yes` powers the router off instead of rebooting. It starts with the reset
+  configuration when it is powered on.
 
-:::tip
-The backup file of the existing configuration is stored before reset. That way you can easily restore any previous configuration if the reset is done by mistake.
+Reset without the default configuration and without a backup:
 
-**Caution:** If the router was installed using [Netinstall](../installation-and-upgrade/netinstall/index.md) and had a script specified as the initial configuration, the reset command executes this script after purging the configuration. To stop it from doing so, you will have to reinstall the router.
-:::
-
-It is possible to override the default reset behavior with the parameters below:
-
-| Property | Description |
-| :-- | :-- |
-| **keep-users** | Do not remove existing users from the configuration |
-| **no-defaults** | Do not load the default configuration, just clear the configuration |
-| **skip-backup** | Skip automatic backup file generation before reset |
-| **run-after-reset** | Run the specified .rsc file after reset. That way you can load your custom configuration. **Warning:** If a specific .rsc file execution takes more than 2 minutes, a script will fail, and LOG will contain *"runtime limit exceeded"* or in rare cases *"std failure: timeout"* error.  |
-| **caps-mode** | Run the *caps-mode* script after configuration reset.  |
-
-For example, hard reset configuration without loading default config and skipping backup file:
-
-```ros
-[admin@MikroTik] > /system/reset-configuration no-defaults=yes skip-backup=yes
-Dangerous! Reset anyway? [y/N]: y
+```routeros
+/system/reset-configuration no-defaults=yes skip-backup=yes
 ```
 
-And the same using Winbox:
+The same in WinBox:
 
 ![WinBox Reset Configuration dialog with No Default Configuration and Do Not Backup selected](./img/configuration-management-02.webp)
+
+For all arguments, see [`/system/reset-configuration`](../../cli-reference/system/reset-configuration).
 
 ## Related topics
 

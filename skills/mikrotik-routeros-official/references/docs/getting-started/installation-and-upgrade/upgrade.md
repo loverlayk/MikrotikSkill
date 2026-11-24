@@ -1,6 +1,6 @@
 # Upgrade
 
-> This page documents RouterOS upgrade procedures for MikroTik devices, covering automatic updates with release chains (Long term, Stable, Testing, Development), manual upgrades through WinBox/WebFig/FTP, and...
+> Upgrade RouterOS from the router with check-for-updates and the release channels (long-term, stable, testing, development), upgrade from uploaded package files, automate upgrades with the scheduler, troubleshoot the...
 
 # Upgrade
 
@@ -17,7 +17,7 @@ RouterOS versions are released in several "release chains": Long term, Stable, T
 - **Testing**: Released every few weeks, undergoes only basic internal testing, and should not be used in production.
 - **Development**: Released when necessary. Includes raw changes and is available for software enthusiasts for testing new features.
 
-<center>![](./img/upgrade-01.webp)</center>
+![Diagram of the release chains: development (alpha), beta and release candidates, stable and long-term, and how versions move between them](./img/upgrade-01.webp)
 
 ## Standard upgrade
 
@@ -27,47 +27,67 @@ After selecting the *Check for Updates* button in QuickSet or in the System → 
 
 From the command line, check for a new version, then install it:
 
-```ros
+```routeros
 /system/package/update/check-for-updates
 /system/package/update/install
 ```
 
-`check-for-updates` shows the installed version and the latest version in the channel. `install` works like *Download&Install*: it downloads the new packages and reboots the router to install them. To download now and reboot later, use `/system/package/update/download`.
+`check-for-updates` shows the installed version and the latest version in the channel, with the status `New version is available`. `install` works like *Download&Install*: it downloads the new packages and reboots the router to install them. To download now and reboot later, use `/system/package/update/download`: the status changes to `Downloaded, please reboot router to upgrade it`, and the router installs the packages at the next reboot. If the router is up to date, the status is
+`System is already up to date`. If it cannot reach the server, the status starts with `ERROR:`, for
+example `ERROR: IPv4: could not resolve dns name (timeout)` or `ERROR: IPv4: server is not
+responding`; see Troubleshooting below.
 
-The versions offered depend on the selected release channel. Not all versions may be available. It is not possible to upgrade from an older version to the latest version in one step with the check-for-updates approach. For example, if running RouterOS v6.x, even when selecting the major release upgrade channel called "Upgrade", you will only see v7.12.1 as the available version. You must first upgrade to that intermediate version, and only then will newer releases be available in the channels. This intermediate step can be done with check for updates as well; you will simply need to repeat check for updates after the first update to the intermediate version.
+Make a [backup](../configuration-management/backup) before an upgrade.
 
-If custom packages are installed, the downloader takes this into account and downloads all necessary packages.
+The versions offered depend on the selected release channel. The channel offers only its latest version; to install a specific version, upload its package
+files. A channel can also offer an older version than the installed one, for example `long-term` on a router that runs the stable release; installing it downgrades the router. On RouterOS 6.49, the `upgrade` channel offers RouterOS v7 and installs it in one step.
+
+If extra packages are installed, the router downloads their new versions too.
 
 ### Check for Updates settings
 
 The connection to the MikroTik download server can be fine-tuned in the System → Packages → Check for Updates window, or with the [`/system/package/update/set`](../../cli-reference/system/package/update) command:
 
-- **Channel**: Upgrade channel to use when checking for new versions. The [release chains](#version-numbering) are described in the Version numbering section.
+- **Channel**: Upgrade channel to use when checking for new versions. The release chains are described in the Version numbering section.
 - **Mode**: Protocol for connecting to the MikroTik download server. Use `http` only if your network blocks HTTPS. HTTPS is recommended.
 - **IP version**: IP version preference for connecting to the MikroTik download server.
 - **Check certificate**: Whether and how to validate the server SSL certificate. Always use `yes` to ensure a secure connection. `yes-without-crl` can be used to skip CRL validation.
 
-```ros
-/system/package/update/set channel=stable mode=https ip-version=auto check-certificate=yes
+```routeros
+/system/package/update/set channel=stable mode=https \
+    ip-version=auto check-certificate=yes
 ```
 
 :::warning
-It is strongly recommended to upgrade the bootloader after RouterOS update. To upgrade the bootloader, execute the [`/system/routerboard/upgrade`](../../cli-reference/system/routerboard/upgrade.md) command in CLI, followed by a reboot. Alternatively, navigate to the GUI System → RouterBOARD menu and select the "Upgrade" button, then reboot the device.
+On RouterBOARD devices, it is strongly recommended to upgrade the bootloader after RouterOS update. To upgrade the bootloader, execute the [`/system/routerboard/upgrade`](../../cli-reference/system/routerboard/upgrade.md) command in CLI, followed by a reboot. Alternatively, navigate to the GUI System → RouterBOARD menu and select the "Upgrade" button, then reboot the device.
 :::
 
-You can **automate** the upgrade process by running a script in the system scheduler. This script queries the MikroTik upgrade servers for new versions. If the response received says "New version is available", the script then issues the upgrade command below. This will not work if you are running it for the first time on an older release. It might not see the latest versions as available, if you are running v6.x, you would first have to manually select the "Upgrade" channel to do a major release upgrade to v7.12.1 intermediate version, and only afterwards newer v7 releases will be visible in the upgrade channels.
+You can **automate** the upgrade process by running a script in the system scheduler. This script asks the MikroTik upgrade server for a new version in the selected channel and, if the status is `New version is available`, installs it. Save it as a script and add a scheduler entry that runs it every week; the script
+waits 10 seconds for the server's answer:
 
-```ros
+```routeros
+/system/script/add name=auto-upgrade source={
 /system/package/update/check-for-updates
-:delay 3s;
-:if ( [/system/package/update get status] = "New version is available") do={ /system/package/update/install }
+:delay 10s
+:local status [/system/package/update/get status]
+:if ($status = "New version is available") do={
+    /system/package/update/install
+}
+}
+/system/scheduler/add name=auto-upgrade interval=7d \
+    start-time=03:00:00 on-event=auto-upgrade
 ```
+
+The script installs whatever the channel offers. With the `long-term` channel on a router that
+runs a newer stable release, it installs the older long-term release.
 
 ### Troubleshooting
 
-If the device does not detect an available upgrade, verify that it can resolve and reach the upgrade server.
+If the router does not offer a version you expect, check the channel first: a new version is in
+the testing or development channel before it reaches stable. If the status shows an `ERROR:`,
+verify that the router can resolve and reach the upgrade server, `upgrade.mikrotik.com`.
 
-```ros
+```routeros
 :put [:resolve upgrade.mikrotik.com]
 ```
 
@@ -75,18 +95,19 @@ The result should be `159.148.147.251`. If the address does not resolve or resol
 
 Once DNS resolution is confirmed, verify that the device can reach the server:
 
-```ros
+```routeros
 /tool/ping address=159.148.147.251
 ```
 
-If the ping fails, check your firewall rules, routing, or upstream connectivity.
+If the ping fails, check your firewall rules, routing, or upstream connectivity. A failed ping alone
+does not prove that the server is unreachable: continue with the next check.
 
-Once the IP connectivity is confirmed working, verify that 443 port is reachable:
+Once the IP connectivity is confirmed working, verify that TCP port 443 is reachable. The
+router prints `Connected to 159.148.147.251` if it is; press <kbd>Control</kbd>+<kbd>C</kbd> to close
+the connection:
 
-```ros
-[admin@MikroTik] > /system/telnet 159.148.147.251 port=443
-Connecting to 159.148.147.251
-Connected to 159.148.147.251
+```routeros
+/system/telnet 159.148.147.251 port=443
 ```
 
 ## Manual upgrade
@@ -95,18 +116,18 @@ You can upgrade RouterOS in the following ways:
 
 - WinBox – drag and drop files to the Files menu.
 - WebFig - upload files from the Files menu.
-- FTP - upload files to the root directory.
+- FTP or SFTP - upload files to the root directory.
 
 :::warning
-It is strongly recommended to upgrade the bootloader after upgrading RouterOS. To upgrade the bootloader, execute the [`/system/routerboard/upgrade`](../../cli-reference/system/routerboard/upgrade.md) command in CLI, followed by a reboot. Alternatively, navigate to the GUI System → RouterBOARD menu and select the "Upgrade" button, then reboot the device.
+On RouterBOARD devices, it is strongly recommended to upgrade the bootloader after upgrading RouterOS. To upgrade the bootloader, execute the [`/system/routerboard/upgrade`](../../cli-reference/system/routerboard/upgrade.md) command in CLI, followed by a reboot. Alternatively, navigate to the GUI System → RouterBOARD menu and select the "Upgrade" button, then reboot the device.
 
 **Warning:** RouterOS cannot be upgraded through a serial cable. Only [RouterBOOT](./routerboot.md#simple-upgrade) is upgradeable with this method.
 :::
 
 ### Manual upgrade process
 
-- Visit [www.mikrotik.com](http://www.mikrotik.com) and navigate to the Software page, then choose the architecture of the system you have RouterOS installed on (system architecture can be found in the System → Resource section).
-- Download the **routeros *(main)*** and extra packages that are installed on the device.
+- Open the [MikroTik download page](https://mikrotik.com/download) and choose the architecture of the router (System → Resources, or `architecture-name` in `/system/resource/print`).
+- Download the **routeros** package and the extra packages that are installed on the router. File names are listed on the [Packages](./packages) page.
 - Upload packages to the device with one of the methods listed above.
 
 If you need to skip some specific package upgrade or a package file is no longer available, then use [`/system/package/update/install ignore-missing`](../../cli-reference/system/package/update/install.md) to skip missing packages.
@@ -115,7 +136,7 @@ If you need to skip some specific package upgrade or a package file is no longer
 
 Choose your system type and download the upgrade package. Connect to your router with WinBox. Select the downloaded file with your mouse and drag it to the Files menu. If some files are already present, make sure to put the package in the root menu, not inside the hotspot folder! The upload will start.
 
-<center>![](./img/upgrade-02.webp)</center>
+![WinBox File List with a RouterOS package upload in progress](./img/upgrade-02.webp)
 
 After it finishes, reboot the device. The new version number will be seen in the WinBox title and in the Packages menu.
 
@@ -124,36 +145,44 @@ After it finishes, reboot the device. The new version number will be seen in the
 - Open an S/FTP client, select the package, and upload it to your router.
 - You can check if the file is successfully transferred onto the router (optional).
 
-```ros
-[admin@MikroTik] >/file/print
-Columns: NAME, TYPE, SIZE, CREATION-TIME
-#  NAME                  TYPE       SIZE     CREATION-TIME       
-0  routeros-7.9-arm.npk  package    13.0MiB  2023-05-18 16:16:18
-1  pub                   directory           2022-11-04 11:22:19
-2  ramdisk               directory           1970-01-01 03:00:24
+```routeros
+/file/print where type=package
+```
+
+```text
+Columns: NAME, TYPE, SIZE, LAST-MODIFIED
+# NAME                 TYPE     SIZE      LAST-MODIFIED
+0 iot-7.25.1.npk       package  576.1KiB  2026-11-23 09:55:33
+1 routeros-7.25.1.npk  package  19.9MiB   2026-11-23 09:55:32
 ```
 
 - Reboot the device for the upgrade to begin.
 
-```ros
-[admin@MikroTik] >/system/reboot
-Reboot, yes? [y/N]: y
-
+```routeros
+/system/reboot
 ```
 
-- After the reboot, your router will be up to date, and you can check it in this menu:
+- After the reboot, check the installed packages and the log:
 
-```ros
+```routeros
 /system/package/print
-
+/log/print where message~"install"
 ```
 
-- If your router did not upgrade correctly, make sure you check the **log**
+```text
+Columns: NAME, VERSION, BUILD-TIME, SIZE
+# NAME      VERSION  BUILD-TIME           SIZE
+0 iot       7.25.1   2026-11-02 12:39:53  576.1KiB
+1 routeros  7.25.1   2026-11-02 12:39:53  19.9MiB
 
-```ros
-/log/print without-paging
-
+ 2026-11-23 09:56:17 system,info installed system-7.25.1
+ 2026-11-23 09:56:17 system,info installed iot-7.25.1
 ```
+
+If a package was not installed, the log says why, for example `omitting package system-<version>:
+newer package system-<version> is already installed` when the uploaded package is older than the
+installed one (to install an older version, see [Packages](./packages)). The uploaded files are
+removed after the reboot.
 
 ## RouterOS local upgrade
 
@@ -161,33 +190,33 @@ You can upgrade one or multiple MikroTik routers within your local network by us
 
 - Place needed packages under the Files menu, on your main router:
 
-<center>![](./img/upgrade-03.webp)</center>
+![WinBox Files menu on the main router with the RouterOS packages](./img/upgrade-03.webp)
 
 **Optional:** you can set a mirror device between the main ones. If not needed, skip this step:
 
 - Choose Local Package Sources and enable Mirror device. Set Primary Server (10.155.136.50) where the packages are located. The Check Interval **minimum** setting can be set to 00:07:12, at which the device will connect by using WinBox to a main device and check for packages.  
   If new packages are available, it will begin to download. The download process is slow and may require some time when many files are used. In case of some failures, download will resume on next Check.
 
-<center>![](./img/upgrade-04.webp)</center>
+![WinBox Local Package Sources tab with the Upgrade Mirror dialog: enabled, primary server, check interval, user and password](./img/upgrade-04.webp)
 
 - A new `packs` folder is created, where the mirror device will store packages:
 
-<center>![](./img/upgrade-05.webp)</center>
+![WinBox Files menu of the mirror device with the packs folder](./img/upgrade-05.webp)
 
 - Add a new package source on the device which will be updated, in this example we use mirror device 10.155.136.71:
 
-<center>![](./img/upgrade-06.webp)</center>
+![WinBox Package Source dialog with the address, user and password of the mirror device](./img/upgrade-06.webp)
 
 - When you select **Refresh** in the Local Update packages tab, the device in WinBox will connect to the source and check if there are new packages.
 
-<center>![](./img/upgrade-07.webp)</center>
+![WinBox Local Update Packages tab after Refresh, listing the packages of the source](./img/upgrade-07.webp)
 
 - Choose packages and select **Download**. After download completes, reboot the device.
 
-<center>![](./img/upgrade-08.webp)</center>
+![WinBox Local Update Packages tab with packages selected for download](./img/upgrade-08.webp)
 
 - Use `/system/package/local-update/refresh` to automate this in your scripts. The Fetch tool can be used to download packages from our web page, for example:
 
-```ros
-/tool/fetch url=https://download.mikrotik.com/routeros/7.16.1/routeros-7.16.1-arm.npk
+```routeros
+/tool/fetch url=https://download.mikrotik.com/routeros/7.25.2/routeros-7.25.2-arm.npk
 ```

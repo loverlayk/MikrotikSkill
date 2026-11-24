@@ -27,6 +27,7 @@ List of discovered and statically configured LDP neighbors.
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="transport" typ="address (flags=46vi)" mandatory="1">Remote transport address.</ArgTableRow>
 <ArgTableRow arg="send-targeted" typ="bool" unset="1">Specifies whether to try to send targeted hellos, used for targeted (not directly connected) LDP sessions.</ArgTableRow>
+<ArgTableRow arg="tcp-md5-key" typ="string" unset="1"></ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

@@ -10,12 +10,11 @@ To reset RouterOS to its factory defaults (including removing the current passwo
 
 1. Disconnect the device from power.
 2. Press and hold the reset button.
+3. While holding the button, reconnect power to the device.
+4. Watch the LEDs. One of the LEDs (typically the USR/User LED) will begin flashing.
+5. Release the reset button when the LED starts flashing.
 
 ![Reset button](./img/reset-button_01.png)
-
-1. While holding the button, reconnect power to the device.
-2. Watch the LEDs. One of the LEDs (typically the USR/User LED) will begin flashing.
-3. Release the reset button when the LED starts flashing.
 
 The device will reboot with the default configuration.
 
@@ -23,9 +22,12 @@ The device will reboot with the default configuration.
 
 If you still have access to the device, you can restore the default configuration directly from RouterOS:
 
-- Run the following command in the terminal: **`/system/reset-configuration`**
+- Run `/system/reset-configuration` in the terminal.
+- Or open **System → Reset Configuration** in [WinBox](../../management-tools/winbox) or [WebFig](../../management-tools/webfig).
 
-- Or navigate to **System → Reset Configuration** in **[WinBox](../../management-tools/winbox)** or **[WebFig](../../management-tools/webfig)**.
+The command resets users and the `admin` password, saves a backup first, and has options to keep
+users, skip the default configuration or run your own script. See [Reset the
+configuration](./#reset-the-configuration).
 
 ## Using the Reset Button
 
@@ -67,15 +69,15 @@ For detailed Netinstall instructions, see the **[Netinstall documentation](../in
 
 Older RouterBOARD models are also fitted with a reset jumper hole. Some devices might need an opening of the enclosure. RB750/RB951/RB751 have the jumper hole under one of the rubber feet of the enclosure.
 
-Short the reset jumper using a metal screwdriver and boot the board until the configuration is cleared:  
+Short the reset jumper using a metal screwdriver and boot the board until the configuration is cleared:
 
-![](./img/reset_hole_01.jpg) ![](./img/reset_hole_02.jpg)
+![Circuit board with an arrow to the reset jumper hole: hold a metal object in it while the board boots](./img/reset_hole_01.jpg) ![Screwdriver shorting the reset jumper hole on a circuit board](./img/reset_hole_02.jpg)
 
 ### Jumper reset for older models
 
 The image below shows the location of the Reset Jumper on older RouterBOARDs like RB133C:
 
-![](./img/jumper_set_01.jpg)
+![RB133 circuit board with an arrow to the Soft Reset jumper](./img/jumper_set_01.jpg)
 
 :::danger
 Don't forget to remove the jumper after the configuration has been reset, or it will be reset every time you reboot!

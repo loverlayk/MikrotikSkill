@@ -1,10 +1,10 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `9dd48a7fcbf0c1b8e2dbe16b164c6b6dcba602c596e3afae93a61a4170b31e92`
-Pages in current index: 1770
-Pages changed/written: 34
-Pages removed: 0
+Index SHA-256: `c1c04cc8a733adb98d147ec85145565bb00b874f93af10af2712c811cc685708`
+Pages in current index: 1783
+Pages changed/written: 83
+Pages removed: 1
 Pages failed: 0
 
 - [AAA and User Management](docs/authentication-authorization-accounting.md) `1369d6987464`
@@ -16,14 +16,14 @@ Pages failed: 0
 - [RADIUS](docs/authentication-authorization-accounting/radius.md) `c64902dc8085`
 - [User Manager](docs/authentication-authorization-accounting/user-manager.md) `d857e3df660f`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
-- [Bridging and Switching](docs/bridging-and-switching.md) `535ff0171287`
-- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `eb44dcf0c008`
+- [Bridging and Switching](docs/bridging-and-switching.md) `1b8d5cf42f76`
+- [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `5791fa40eb2d`
 - [MACsec](docs/bridging-and-switching/macsec.md) `a26eb6d2613a`
 - [MACVLAN](docs/bridging-and-switching/macvlan.md) `8135bf84fc73`
-- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `559b92535fb8`
-- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `c1030bd6f2cc`
+- [Marvell Prestera switch chip features](docs/bridging-and-switching/marvell-prestera-switch-chip-features.md) `59a9d618a0c7`
+- [Quality of Service](docs/bridging-and-switching/quality-of-service.md) `8198498a209e`
 - [Switch Chip Features](docs/bridging-and-switching/switch-chip-features.md) `7922ce54d6d3`
-- [SwOS](docs/bridging-and-switching/swos.md) `7630bb33e105`
+- [Introduction to SwitchOS (SwOS)](docs/bridging-and-switching/swos.md) `bd048884231e`
 - [CRS3xx and CSS3xx Series Manual](docs/bridging-and-switching/swos/crs3.md) `581fad6f6a17`
 - [CSS106 (RB260) series Manual](docs/bridging-and-switching/swos/css106.md) `8101fbc475de`
 - [CSS610 series Manual](docs/bridging-and-switching/swos/css610.md) `7278f059f5fd`
@@ -34,9 +34,9 @@ Pages failed: 0
 - [Bridge IGMP/MLD snooping](docs/bridging-and-switching/user-guides/bridge-igmp-mld-snooping.md) `ddfed5c977a1`
 - [Bridge VLAN Table](docs/bridging-and-switching/user-guides/bridge-vlan-table.md) `cf1e054f0645`
 - [CRS1xx/2xx series switch examples](docs/bridging-and-switching/user-guides/crs1xx-2xx-series-switches-examples.md) `be52875f5fa7`
-- [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `2e8f85b252ca`
-- [Loop Protect](docs/bridging-and-switching/user-guides/loop-protect.md) `2b501fda13d9`
-- [NVIDIA DGX Spark clusters](docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md) `9e8c33dc3304`
+- [Layer2 misconfiguration](docs/bridging-and-switching/user-guides/layer2-misconfiguration.md) `5ca5a30203f1`
+- [Loop Protect](docs/bridging-and-switching/user-guides/loop-protect.md) `665b83800f64`
+- [NVIDIA DGX Spark clusters](docs/bridging-and-switching/user-guides/nvidia-dgx-spark.md) `7b707ccfe17e`
 - [Spanning Tree Protocol](docs/bridging-and-switching/user-guides/spanning-tree-protocol.md) `3b29b09bf67f`
 - [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
@@ -139,7 +139,7 @@ Pages failed: 0
 - [/cmr/wifi/radio](docs/cli-reference/cmr/wifi/radio.md) `37c28ee29d72`
 - [/compare-versions](docs/cli-reference/compare-versions.md) `4eac1a1b6193`
 - [/console/inspect](docs/cli-reference/console/inspect.md) `1cdce7844256`
-- [/console/settings](docs/cli-reference/console/settings.md) `328cd2ddd5bc`
+- [/console/settings](docs/cli-reference/console/settings.md) `2410b7e18f57`
 - [/container](docs/cli-reference/container.md) `c61b59420e5b`
 - [/container/check-update](docs/cli-reference/container/check-update.md) `772c230050fa`
 - [/container/config](docs/cli-reference/container/config.md) `a38e830eebf2`
@@ -216,11 +216,11 @@ Pages failed: 0
 - [/file/sync](docs/cli-reference/file/sync.md) `6f3a536e5fff`
 - [/file/sync/monitor](docs/cli-reference/file/sync/monitor.md) `c750fc089462`
 - [/file/tail](docs/cli-reference/file/tail.md) `a84c30b31b28`
-- [/import](docs/cli-reference/import.md) `101e8333123c`
+- [/import](docs/cli-reference/import.md) `e9138931f7f3`
 - [/interface](docs/cli-reference/interface.md) `fa7f820562d8`
 - [/interface/6to4](docs/cli-reference/interface/6to4.md) `9aef6ed36dcb`
 - [/interface/blink](docs/cli-reference/interface/blink.md) `4c30ae93519b`
-- [/interface/bonding](docs/cli-reference/interface/bonding.md) `7b52b3e99b20`
+- [/interface/bonding](docs/cli-reference/interface/bonding.md) `c9b4eaed019a`
 - [/interface/bonding/monitor-slaves](docs/cli-reference/interface/bonding/monitor-slaves.md) `9ec8962033f3`
 - [/interface/bonding/monitor](docs/cli-reference/interface/bonding/monitor.md) `90a842e2f15d`
 - [/interface/bridge](docs/cli-reference/interface/bridge.md) `113242d64117`
@@ -276,10 +276,10 @@ Pages failed: 0
 - [/interface/ethernet/switch/host](docs/cli-reference/interface/ethernet/switch/host.md) `28d9d1c6d880`
 - [/interface/ethernet/switch/ingress-port-policer](docs/cli-reference/interface/ethernet/switch/ingress-port-policer.md) `246a6467ba67`
 - [/interface/ethernet/switch/ingress-vlan-translation](docs/cli-reference/interface/ethernet/switch/ingress-vlan-translation.md) `d3e23216489e`
-- [/interface/ethernet/switch/l3hw-settings](docs/cli-reference/interface/ethernet/switch/l3hw-settings.md) `5145e0fa56d2`
+- [/interface/ethernet/switch/l3hw-settings](docs/cli-reference/interface/ethernet/switch/l3hw-settings.md) `3a5aad30b6e3`
 - [/interface/ethernet/switch/l3hw-settings/advanced](docs/cli-reference/interface/ethernet/switch/l3hw-settings/advanced.md) `f08aa7a49659`
-- [/interface/ethernet/switch/l3hw-settings/advanced/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/advanced/monitor.md) `cfa6ddb56aa7`
-- [/interface/ethernet/switch/l3hw-settings/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/monitor.md) `a4f73fea0f46`
+- [/interface/ethernet/switch/l3hw-settings/advanced/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/advanced/monitor.md) `a09bc429f180`
+- [/interface/ethernet/switch/l3hw-settings/monitor](docs/cli-reference/interface/ethernet/switch/l3hw-settings/monitor.md) `f69f621e38ba`
 - [/interface/ethernet/switch/mac-based-vlan](docs/cli-reference/interface/ethernet/switch/mac-based-vlan.md) `15cea1146c2b`
 - [/interface/ethernet/switch/multicast-fdb](docs/cli-reference/interface/ethernet/switch/multicast-fdb.md) `2cf74201aa56`
 - [/interface/ethernet/switch/one2one-vlan-switching](docs/cli-reference/interface/ethernet/switch/one2one-vlan-switching.md) `73a04e46e4d6`
@@ -295,9 +295,9 @@ Pages failed: 0
 - [/interface/ethernet/switch/qos/map/ip](docs/cli-reference/interface/ethernet/switch/qos/map/ip.md) `52604afa7045`
 - [/interface/ethernet/switch/qos/map/vlan](docs/cli-reference/interface/ethernet/switch/qos/map/vlan.md) `656b60233ab7`
 - [/interface/ethernet/switch/qos/monitor](docs/cli-reference/interface/ethernet/switch/qos/monitor.md) `769f24ad70b0`
-- [/interface/ethernet/switch/qos/port](docs/cli-reference/interface/ethernet/switch/qos/port.md) `39b5c265b165`
+- [/interface/ethernet/switch/qos/port](docs/cli-reference/interface/ethernet/switch/qos/port.md) `911f8892fd09`
 - [/interface/ethernet/switch/qos/port/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/port/reset-counters.md) `ac1f1738b444`
-- [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `17976720584e`
+- [/interface/ethernet/switch/qos/priority-flow-control](docs/cli-reference/interface/ethernet/switch/qos/priority-flow-control.md) `4bc0a1b04879`
 - [/interface/ethernet/switch/qos/profile](docs/cli-reference/interface/ethernet/switch/qos/profile.md) `272bcc190d77`
 - [/interface/ethernet/switch/qos/reset-counters](docs/cli-reference/interface/ethernet/switch/qos/reset-counters.md) `e98135dcb4b4`
 - [/interface/ethernet/switch/qos/settings](docs/cli-reference/interface/ethernet/switch/qos/settings.md) `2b5575f73a54`
@@ -346,9 +346,9 @@ Pages failed: 0
 - [/interface/lte/scan](docs/cli-reference/interface/lte/scan.md) `1f778a290af0`
 - [/interface/lte/settings](docs/cli-reference/interface/lte/settings.md) `87bd00891a92`
 - [/interface/lte/show-capabilities](docs/cli-reference/interface/lte/show-capabilities.md) `0cc4c69eeb1d`
-- [/interface/macsec](docs/cli-reference/interface/macsec.md) `200dc148e7ef`
-- [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `9e44a7e6325d`
-- [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `2685473f9eb9`
+- [/interface/macsec](docs/cli-reference/interface/macsec.md) `70f0c07a592a`
+- [/interface/macsec/monitor](docs/cli-reference/interface/macsec/monitor.md) `6ff065fcac6c`
+- [/interface/macsec/profile](docs/cli-reference/interface/macsec/profile.md) `6d762028a208`
 - [/interface/macsec/reset-counters](docs/cli-reference/interface/macsec/reset-counters.md) `7876bfdf414e`
 - [/interface/macvlan](docs/cli-reference/interface/macvlan.md) `33557d0aa7ec`
 - [/interface/mesh](docs/cli-reference/interface/mesh.md) `715a3eef6843`
@@ -539,7 +539,6 @@ Pages failed: 0
 - [/iot/lora/netid](docs/cli-reference/iot/lora/netid.md) `ceb0e11bf4c4`
 - [/iot/lora/radios](docs/cli-reference/iot/lora/radios.md) `c94097bd7d9e`
 - [/iot/lora/reset-devices](docs/cli-reference/iot/lora/reset-devices.md) `92c15f510ea3`
-- [/iot/lora/send](docs/cli-reference/iot/lora/send.md) `24671d1c6409`
 - [/iot/lora/servers](docs/cli-reference/iot/lora/servers.md) `b07ca337b223`
 - [/iot/lora/servers/reset-servers](docs/cli-reference/iot/lora/servers/reset-servers.md) `de00cc3e67b0`
 - [/iot/lora/traffic](docs/cli-reference/iot/lora/traffic.md) `e7e15baee678`
@@ -678,7 +677,7 @@ Pages failed: 0
 - [/ip/nat-pmp](docs/cli-reference/ip/nat-pmp.md) `8226b991db68`
 - [/ip/nat-pmp/interfaces](docs/cli-reference/ip/nat-pmp/interfaces.md) `cef39aacff66`
 - [/ip/neighbor](docs/cli-reference/ip/neighbor.md) `b3ed8070877f`
-- [/ip/neighbor/discovery-settings](docs/cli-reference/ip/neighbor/discovery-settings.md) `04ca7f1c624a`
+- [/ip/neighbor/discovery-settings](docs/cli-reference/ip/neighbor/discovery-settings.md) `6536dd524d9a`
 - [/ip/neighbor/lldp](docs/cli-reference/ip/neighbor/lldp.md) `69be00381684`
 - [/ip/packing](docs/cli-reference/ip/packing.md) `c1121497ed87`
 - [/ip/pool](docs/cli-reference/ip/pool.md) `0b547eab9eff`
@@ -783,12 +782,12 @@ Pages failed: 0
 - [/log](docs/cli-reference/log.md) `c152b0af4e41`
 - [/mpls/forwarding-table](docs/cli-reference/mpls/forwarding-table.md) `8d2b1443a077`
 - [/mpls/interface](docs/cli-reference/mpls/interface.md) `afce568ce433`
-- [/mpls/ldp](docs/cli-reference/mpls/ldp.md) `594cfd550471`
+- [/mpls/ldp](docs/cli-reference/mpls/ldp.md) `e2e68bd68472`
 - [/mpls/ldp/accept-filter](docs/cli-reference/mpls/ldp/accept-filter.md) `690208d11845`
 - [/mpls/ldp/advertise-filter](docs/cli-reference/mpls/ldp/advertise-filter.md) `2c4b9dddd303`
 - [/mpls/ldp/interface](docs/cli-reference/mpls/ldp/interface.md) `7817a1fe6424`
 - [/mpls/ldp/local-mapping](docs/cli-reference/mpls/ldp/local-mapping.md) `9b7fcfb04f95`
-- [/mpls/ldp/neighbor](docs/cli-reference/mpls/ldp/neighbor.md) `4a861e7bc431`
+- [/mpls/ldp/neighbor](docs/cli-reference/mpls/ldp/neighbor.md) `38feb4e3714c`
 - [/mpls/ldp/remote-mapping](docs/cli-reference/mpls/ldp/remote-mapping.md) `363fdb70e0b3`
 - [/mpls/mangle](docs/cli-reference/mpls/mangle.md) `3f66a060641d`
 - [/mpls/mangle/reset-counters-all](docs/cli-reference/mpls/mangle/reset-counters-all.md) `633cc5e7752a`
@@ -800,11 +799,11 @@ Pages failed: 0
 - [/mpls/traffic-eng/path](docs/cli-reference/mpls/traffic-eng/path.md) `9e38e20118d6`
 - [/mpls/traffic-eng/tunnel](docs/cli-reference/mpls/traffic-eng/tunnel.md) `e873ead3cb69`
 - [/mpls/traffic-eng/tunnel/reoptimize](docs/cli-reference/mpls/traffic-eng/tunnel/reoptimize.md) `642b5cca7bee`
-- [/openflow](docs/cli-reference/openflow.md) `eabf65f49913`
-- [/openflow/flow](docs/cli-reference/openflow/flow.md) `ac410feb3841`
-- [/openflow/group](docs/cli-reference/openflow/group.md) `85250069ba16`
-- [/openflow/meter](docs/cli-reference/openflow/meter.md) `ba86c5473710`
-- [/openflow/port](docs/cli-reference/openflow/port.md) `e320bc6ade3a`
+- [/openflow](docs/cli-reference/openflow.md) `dbde06388cb4`
+- [/openflow/flow](docs/cli-reference/openflow/flow.md) `00db02a2b243`
+- [/openflow/group](docs/cli-reference/openflow/group.md) `cc732be21c7b`
+- [/openflow/meter](docs/cli-reference/openflow/meter.md) `ed2026a39585`
+- [/openflow/port](docs/cli-reference/openflow/port.md) `ae34b92b0ed2`
 - [/partitions](docs/cli-reference/partitions.md) `9666e4306fa9`
 - [/partitions/activate](docs/cli-reference/partitions/activate.md) `d5eb67cc0902`
 - [/partitions/copy-to](docs/cli-reference/partitions/copy-to.md) `8874ba206f83`
@@ -844,6 +843,7 @@ Pages failed: 0
 - [/routing/bgp/advertisements](docs/cli-reference/routing/bgp/advertisements.md) `d5d9abe5277a`
 - [/routing/bgp/connection](docs/cli-reference/routing/bgp/connection.md) `4b5e480e0e98`
 - [/routing/bgp/evpn](docs/cli-reference/routing/bgp/evpn.md) `f17b42a5390b`
+- [/routing/bgp/evpn/esi](docs/cli-reference/routing/bgp/evpn/esi.md) `6a33eb650de1`
 - [/routing/bgp/instance](docs/cli-reference/routing/bgp/instance.md) `d0bb66528d75`
 - [/routing/bgp/session](docs/cli-reference/routing/bgp/session.md) `59a471e4e8b4`
 - [/routing/bgp/session/clear](docs/cli-reference/routing/bgp/session/clear.md) `af2062adb68c`
@@ -921,7 +921,7 @@ Pages failed: 0
 - [/routing/table](docs/cli-reference/routing/table.md) `4bc71be2e7a6`
 - [/safe-mode](docs/cli-reference/safe-mode.md) `370b1bceb1ee`
 - [/snmp](docs/cli-reference/snmp.md) `ea8f5c07c93f`
-- [/snmp/community](docs/cli-reference/snmp/community.md) `b8d70d719613`
+- [/snmp/community](docs/cli-reference/snmp/community.md) `d52b172992e1`
 - [/snmp/send-trap](docs/cli-reference/snmp/send-trap.md) `65e4e0012cf8`
 - [/special-login](docs/cli-reference/special-login.md) `58d417a0ddc8`
 - [/system/backup/cloud](docs/cli-reference/system/backup/cloud.md) `6423febfd6f5`
@@ -940,7 +940,7 @@ Pages failed: 0
 - [/system/dashboard/show](docs/cli-reference/system/dashboard/show.md) `23b0de233e1a`
 - [/system/default-configuration](docs/cli-reference/system/default-configuration.md) `2c4e2cdff49b`
 - [/system/default-configuration/caps-mode-script](docs/cli-reference/system/default-configuration/caps-mode-script.md) `d048f2966d96`
-- [/system/default-configuration/custom-script](docs/cli-reference/system/default-configuration/custom-script.md) `38f5e1031b5d`
+- [/system/default-configuration/custom-script](docs/cli-reference/system/default-configuration/custom-script.md) `73d183848483`
 - [/system/default-configuration/script](docs/cli-reference/system/default-configuration/script.md) `9439389f0538`
 - [/system/default-configuration/wps-sync-mode-script](docs/cli-reference/system/default-configuration/wps-sync-mode-script.md) `f54b91378288`
 - [/system/device-mode](docs/cli-reference/system/device-mode.md) `c16c214bd7a5`
@@ -950,7 +950,7 @@ Pages failed: 0
 - [/system/health](docs/cli-reference/system/health.md) `adca4b3c64c4`
 - [/system/health/settings](docs/cli-reference/system/health/settings.md) `318323236799`
 - [/system/health/settings/detect-fans](docs/cli-reference/system/health/settings/detect-fans.md) `8863817a1424`
-- [/system/history](docs/cli-reference/system/history.md) `d6acdfff6b5e`
+- [/system/history](docs/cli-reference/system/history.md) `85556496fe0c`
 - [/system/identity](docs/cli-reference/system/identity.md) `e8b081373727`
 - [/system/keymat-provider](docs/cli-reference/system/keymat-provider.md) `3cae65eb767f`
 - [/system/keymat-provider/qkd-get-key-with-ids](docs/cli-reference/system/keymat-provider/qkd-get-key-with-ids.md) `10b7803edf44`
@@ -972,7 +972,7 @@ Pages failed: 0
 - [/system/ntp/key](docs/cli-reference/system/ntp/key.md) `7596bb288612`
 - [/system/ntp/monitor-peers](docs/cli-reference/system/ntp/monitor-peers.md) `12553c7a7407`
 - [/system/ntp/server](docs/cli-reference/system/ntp/server.md) `2158747cb9c1`
-- [/system/package](docs/cli-reference/system/package.md) `802632d6f747`
+- [/system/package](docs/cli-reference/system/package.md) `a64b720946ca`
 - [/system/package/apply-changes](docs/cli-reference/system/package/apply-changes.md) `aabbe4e86b70`
 - [/system/package/disable](docs/cli-reference/system/package/disable.md) `f7387651ecfc`
 - [/system/package/downgrade](docs/cli-reference/system/package/downgrade.md) `f244a2d97506`
@@ -986,7 +986,7 @@ Pages failed: 0
 - [/system/package/local-update/update-package-source](docs/cli-reference/system/package/local-update/update-package-source.md) `1c64c8db1b1e`
 - [/system/package/uninstall](docs/cli-reference/system/package/uninstall.md) `e2c6b5d35803`
 - [/system/package/unschedule](docs/cli-reference/system/package/unschedule.md) `59c9d422cc23`
-- [/system/package/update](docs/cli-reference/system/package/update.md) `43298640f625`
+- [/system/package/update](docs/cli-reference/system/package/update.md) `ae2fcde2ee7f`
 - [/system/package/update/cancel](docs/cli-reference/system/package/update/cancel.md) `98661128dba4`
 - [/system/package/update/check-for-updates](docs/cli-reference/system/package/update/check-for-updates.md) `a1ee0aad0846`
 - [/system/package/update/download](docs/cli-reference/system/package/update/download.md) `480d9f619597`
@@ -997,7 +997,7 @@ Pages failed: 0
 - [/system/ptp/status](docs/cli-reference/system/ptp/status.md) `b479f6a5dee5`
 - [/system/reboot](docs/cli-reference/system/reboot.md) `7c0dac4cb6f0`
 - [/system/regulatory](docs/cli-reference/system/regulatory.md) `b2fec9e67ae9`
-- [/system/reset-configuration](docs/cli-reference/system/reset-configuration.md) `df8de202f002`
+- [/system/reset-configuration](docs/cli-reference/system/reset-configuration.md) `1e8d40a3652d`
 - [/system/resource](docs/cli-reference/system/resource.md) `2dc5cf2bc2e1`
 - [/system/resource/cpu](docs/cli-reference/system/resource/cpu.md) `7038f713f4cf`
 - [/system/resource/hardware](docs/cli-reference/system/resource/hardware.md) `440a6fb100e1`
@@ -1036,6 +1036,9 @@ Pages failed: 0
 - [/system/swos/reset-config](docs/cli-reference/system/swos/reset-config.md) `2d9e995ed0e0`
 - [/system/swos/save-config](docs/cli-reference/system/swos/save-config.md) `ad6d94d7156e`
 - [/system/swos/upgrade](docs/cli-reference/system/swos/upgrade.md) `317c2a19d38d`
+- [/system/sync-e](docs/cli-reference/system/sync-e.md) `68d46088ec8f`
+- [/system/sync-e/monitor](docs/cli-reference/system/sync-e/monitor.md) `733fa618f206`
+- [/system/sync-e/port](docs/cli-reference/system/sync-e/port.md) `9a125d3c3be7`
 - [/system/telnet](docs/cli-reference/system/telnet.md) `2eedff7c091c`
 - [/system/ups](docs/cli-reference/system/ups.md) `9722a001b4ee`
 - [/system/ups/beep](docs/cli-reference/system/ups/beep.md) `709c2f04b4fd`
@@ -1071,7 +1074,7 @@ Pages failed: 0
 - [/tool/mac-server/ping](docs/cli-reference/tool/mac-server/ping.md) `9061dd693936`
 - [/tool/mac-server/sessions](docs/cli-reference/tool/mac-server/sessions.md) `40890a5f1282`
 - [/tool/mac-telnet](docs/cli-reference/tool/mac-telnet.md) `3f22130478b2`
-- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `49d762b49082`
+- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `991fa0fb4b93`
 - [/tool/ping-speed](docs/cli-reference/tool/ping-speed.md) `a9642af639ea`
 - [/tool/ping](docs/cli-reference/tool/ping.md) `863cbc1bab4f`
 - [/tool/profile](docs/cli-reference/tool/profile.md) `5bcb9eadbffd`
@@ -1092,8 +1095,8 @@ Pages failed: 0
 - [/tool/sniffer/save](docs/cli-reference/tool/sniffer/save.md) `643c32bc0af6`
 - [/tool/sniffer/start](docs/cli-reference/tool/sniffer/start.md) `1740e0acea1c`
 - [/tool/sniffer/stop](docs/cli-reference/tool/sniffer/stop.md) `bd9c318f24fa`
-- [/tool/snmp-get](docs/cli-reference/tool/snmp-get.md) `b6a04e30f09c`
-- [/tool/snmp-walk](docs/cli-reference/tool/snmp-walk.md) `c46ff946201e`
+- [/tool/snmp-get](docs/cli-reference/tool/snmp-get.md) `6769b6c761b2`
+- [/tool/snmp-walk](docs/cli-reference/tool/snmp-walk.md) `5fcee358cacd`
 - [/tool/speed-test](docs/cli-reference/tool/speed-test.md) `af925141f480`
 - [/tool/torch](docs/cli-reference/tool/torch.md) `9434224495ba`
 - [/tool/traceroute](docs/cli-reference/tool/traceroute.md) `960be20bd575`
@@ -1113,8 +1116,8 @@ Pages failed: 0
 - [/tool/traffic-generator/stream](docs/cli-reference/tool/traffic-generator/stream.md) `f826c8ac65d8`
 - [/tool/traffic-monitor](docs/cli-reference/tool/traffic-monitor.md) `6434e3f7f998`
 - [/tool/wol](docs/cli-reference/tool/wol.md) `1f14fc2d2f5a`
-- [/tr069-client](docs/cli-reference/tr069-client.md) `9d04ecc3b23c`
-- [/tr069-client/reset-tr069-config](docs/cli-reference/tr069-client/reset-tr069-config.md) `993d7977d027`
+- [/tr069-client](docs/cli-reference/tr069-client.md) `f8c8bade5e35`
+- [/tr069-client/reset-tr069-config](docs/cli-reference/tr069-client/reset-tr069-config.md) `a6f2515b8d58`
 - [/undo](docs/cli-reference/undo.md) `c657ae47abdc`
 - [/user-manager](docs/cli-reference/user-manager.md) `c2a7d550677d`
 - [/user-manager/advanced](docs/cli-reference/user-manager/advanced.md) `ab672d485893`
@@ -1140,7 +1143,7 @@ Pages failed: 0
 - [/user-manager/user](docs/cli-reference/user-manager/user.md) `e84791098f98`
 - [/user-manager/user/add-batch-users](docs/cli-reference/user-manager/user/add-batch-users.md) `e851b4a185c0`
 - [/user-manager/user/generate-voucher](docs/cli-reference/user-manager/user/generate-voucher.md) `386e1cbeeaca`
-- [/user-manager/user/group](docs/cli-reference/user-manager/user/group.md) `a35be7bffcf9`
+- [/user-manager/user/group](docs/cli-reference/user-manager/user/group.md) `02ad803a3948`
 - [/user-manager/user/monitor](docs/cli-reference/user-manager/user/monitor.md) `e0ef024ba1bf`
 - [/user](docs/cli-reference/user.md) `5cf8ebbb38b0`
 - [/user/aaa](docs/cli-reference/user/aaa.md) `56bc134b8afd`
@@ -1158,7 +1161,7 @@ Pages failed: 0
 - [/zerotier/interface](docs/cli-reference/zerotier/interface.md) `60f970a40438`
 - [/zerotier/peer](docs/cli-reference/zerotier/peer.md) `b0a980eca26b`
 - [/zerotier/peer/hint](docs/cli-reference/zerotier/peer/hint.md) `e7651d2f1df5`
-- [Container](docs/containers.md) `5993a09ecbe1`
+- [Container](docs/containers.md) `1882cf7e85be`
 - [Apps](docs/containers/apps.md) `691145163a2d`
 - [List of available Apps](docs/containers/apps/available-apps.md) `b8d97c9264da`
 - [Pair Claire with Home Assistant on hAP beÂ³ Media](docs/containers/user-guides/claire-homeassistant.md) `fa1f01ea8765`
@@ -1182,7 +1185,7 @@ Pages failed: 0
 - [Diagnostics and Monitoring](docs/diagnostics-monitoring-and-troubleshooting.md) `33cff6ba0fed`
 - [Bandwidth test](docs/diagnostics-monitoring-and-troubleshooting/bandwidth-test.md) `0db5fcd82074`
 - [Detect Internet](docs/diagnostics-monitoring-and-troubleshooting/detect-internet.md) `0bd628a65463`
-- [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `bc239bf6e8ef`
+- [Downgrading RouterOS](docs/diagnostics-monitoring-and-troubleshooting/downgrading-routeros.md) `fc29ca413711`
 - [DNS update](docs/diagnostics-monitoring-and-troubleshooting/dynamic-dns.md) `cc242fcb4e80`
 - [Flood Ping](docs/diagnostics-monitoring-and-troubleshooting/flood-ping.md) `cb86487966c0`
 - [Graphing](docs/diagnostics-monitoring-and-troubleshooting/graphing.md) `9ca78f4af62b`
@@ -1238,17 +1241,17 @@ Pages failed: 0
 - [Building Advanced Firewall](docs/firewall-and-quality-of-service/user-guides/building-advanced-firewall.md) `80f69ebf1ebf`
 - [Connection rate](docs/firewall-and-quality-of-service/user-guides/connection-rate.md) `39ad19731ca3`
 - [DDoS protection](docs/firewall-and-quality-of-service/user-guides/ddos-protection.md) `8095f2d4b529`
-- [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ef84d8501cc1`
+- [Port knocking](docs/firewall-and-quality-of-service/user-guides/port-knocking.md) `ccddbaad2f80`
 - [Getting Started](docs/getting-started.md) `2de4665c77fe`
-- [Configuration Management](docs/getting-started/configuration-management.md) `fb28142f83ae`
-- [Backup](docs/getting-started/configuration-management/backup.md) `8a4092bb7dec`
+- [Configuration Management](docs/getting-started/configuration-management.md) `56a476c8d7fd`
+- [Backup](docs/getting-started/configuration-management/backup.md) `67d94b5d459e`
 - [Default Configuration Passwords](docs/getting-started/configuration-management/default-configuration-passwords.md) `ee72052ed4f1`
-- [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `997b72127106`
-- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `8020e76a21b6`
-- [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `9c4de7e302e9`
+- [Default configurations](docs/getting-started/configuration-management/default-configurations.md) `f6f588ab4a96`
+- [List of menus with sensitive parameters](docs/getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md) `df375e05922e`
+- [RouterOS configuration reset](docs/getting-started/configuration-management/routeros-configuration-reset.md) `60d393c0baf8`
 - [First Time Configuration](docs/getting-started/first-time-configuration.md) `4285d02ab78d`
 - [Installation and Upgrade](docs/getting-started/installation-and-upgrade.md) `c7e3eaaaea09`
-- [CHR: Installation](docs/getting-started/installation-and-upgrade/install/chr-installation.md) `0660f15b38dc`
+- [CHR: Installation](docs/getting-started/installation-and-upgrade/install/chr-installation.md) `2540a9148985`
 - [CHR: AWS Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/aws.md) `e38dec1c2072`
 - [CHR: VMWare ESXi Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/esxi.md) `8ac030d14217`
 - [CHR: Hetzner Cloud Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/hetzner.md) `4e11782a105f`
@@ -1259,12 +1262,12 @@ Pages failed: 0
 - [CHR: Vultr Installation](docs/getting-started/installation-and-upgrade/install/chr-installation/vultr.md) `7a0daae9db28`
 - [x86 Installation](docs/getting-started/installation-and-upgrade/install/x86-installation.md) `104ce80ee421`
 - [Netinstall](docs/getting-started/installation-and-upgrade/netinstall.md) `f6e39420cea3`
-- [Netinstall for Linux](docs/getting-started/installation-and-upgrade/netinstall/netinstall-linux.md) `59581b941367`
+- [Netinstall for Linux](docs/getting-started/installation-and-upgrade/netinstall/netinstall-linux.md) `cfc6053b2f03`
 - [Netinstall package](docs/getting-started/installation-and-upgrade/netinstall/netinstall-package.md) `83d76c780e49`
-- [Netinstall for Windows](docs/getting-started/installation-and-upgrade/netinstall/netinstall-windows.md) `6cdd02503856`
-- [Packages](docs/getting-started/installation-and-upgrade/packages.md) `a87ae6145041`
+- [Netinstall for Windows](docs/getting-started/installation-and-upgrade/netinstall/netinstall-windows.md) `6dc11695b70a`
+- [Packages](docs/getting-started/installation-and-upgrade/packages.md) `666bccb9de1e`
 - [RouterBOOT](docs/getting-started/installation-and-upgrade/routerboot.md) `4421c390ae2b`
-- [Upgrade](docs/getting-started/installation-and-upgrade/upgrade.md) `78c36ae79290`
+- [Upgrade](docs/getting-started/installation-and-upgrade/upgrade.md) `ed8cf7bb7c59`
 - [Manual Network Setup (No Default Configuration)](docs/getting-started/manual-network-setup.md) `b81f9c607125`
 - [Networking Fundamentals](docs/getting-started/networking-fundamentals.md) `917b5ac55299`
 - [IPv6 Addresses](docs/getting-started/networking-fundamentals/ipv6-addresses.md) `94be12b6cde0`
@@ -1275,7 +1278,7 @@ Pages failed: 0
 - [MikroTik Hardware Licensing](docs/getting-started/routeros-licensing/mikrotik-hardware.md) `e49cea0c6f0b`
 - [x86 Licensing](docs/getting-started/routeros-licensing/x86.md) `6a05ba586215`
 - [Securing your router](docs/getting-started/securing-your-router.md) `5e461c6914db`
-- [Software Specifications](docs/getting-started/software-specifications.md) `2c9f2d329c32`
+- [Software Specifications](docs/getting-started/software-specifications.md) `7959c9095d45`
 - [Feature support based on architecture](docs/getting-started/software-specifications/feature-support-based-on-architecture.md) `6f63c766792f`
 - [Supout.rif](docs/getting-started/supout-rif.md) `b97bf397987a`
 - [Upgrading to v7](docs/getting-started/upgrading-to-v7.md) `3e3209da4a7f`
@@ -1297,12 +1300,12 @@ Pages failed: 0
 - [High Availability Solutions](docs/high-availability-solutions.md) `cb0e33a4fe00`
 - [Bonding](docs/high-availability-solutions/bonding.md) `d41a76ab3e50`
 - [Load Balancing](docs/high-availability-solutions/load-balancing.md) `7f1afe690374`
-- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `df58c5fad7c7`
-- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `b8d51ab2d59c`
+- [Failover (WAN Backup)](docs/high-availability-solutions/load-balancing/failover-wan-backup.md) `3a8e16dba741`
+- [Per connection classifier](docs/high-availability-solutions/load-balancing/per-connection-classifier.md) `6ac024407a66`
 - [Multi-chassis Link Aggregation Group](docs/high-availability-solutions/multi-chassis-link-aggregation-group.md) `f70db174fccb`
 - [Bonding Examples](docs/high-availability-solutions/user-guides/bonding-examples.md) `79c3b33ebbc4`
 - [VRRP Configuration Examples](docs/high-availability-solutions/user-guides/vrrp-configuration-examples.md) `567ce371eb6a`
-- [VRRP](docs/high-availability-solutions/vrrp.md) `669d48f4fa40`
+- [VRRP](docs/high-availability-solutions/vrrp.md) `65ef60738521`
 - [Internet of Things](docs/internet-of-things.md) `345029d5fceb`
 - [Bluetooth](docs/internet-of-things/bluetooth.md) `d699afba1d02`
 - [MikroTik Beacon Manager](docs/internet-of-things/bluetooth/mikrotik-beacon-manager.md) `d2eb11a878b9`
@@ -1333,22 +1336,22 @@ Pages failed: 0
 - [Wiliot](docs/internet-of-things/wiliot.md) `5352c1b01bbe`
 - [Introduction](docs/introduction.md) `3953044df5d5`
 - [Management Tools](docs/management-tools.md) `b5508836446b`
-- [Branding](docs/management-tools/branding.md) `e3b80dad14bd`
+- [Branding](docs/management-tools/branding.md) `21183a562f7d`
 - [CMR](docs/management-tools/cmr.md) `d5eeb823d1c7`
 - [CMR-Client](docs/management-tools/cmr/client.md) `69b99e59fd00`
-- [Console](docs/management-tools/console.md) `b4f58eb08f8e`
-- [Dude](docs/management-tools/dude.md) `b29b19f874f5`
-- [FlashFig](docs/management-tools/flashfig.md) `f83af5ebf665`
+- [Console](docs/management-tools/console.md) `18e3be2a2073`
+- [Dude](docs/management-tools/dude.md) `4b42a1e53db5`
+- [FlashFig](docs/management-tools/flashfig.md) `505e5a9ec06b`
 - [MAC server](docs/management-tools/mac-server.md) `d2d84ca5b3ab`
 - [MikroTik mobile app](docs/management-tools/mikrotik-mobile-app.md) `e80dd37a4295`
 - [Quick Set](docs/management-tools/quick-set.md) `691889c660bc`
 - [RoMON](docs/management-tools/romon.md) `8eab6f0e2235`
-- [Serial Console](docs/management-tools/serial-console.md) `f62b1c107455`
+- [Serial Console](docs/management-tools/serial-console.md) `c46a4075068a`
 - [SSH](docs/management-tools/ssh.md) `1920f1c04d0f`
-- [TR-069](docs/management-tools/tr-069.md) `9f640e1394de`
-- [WebFig](docs/management-tools/webfig.md) `5b357eb3424b`
+- [TR-069](docs/management-tools/tr-069.md) `81cf08e33b85`
+- [WebFig](docs/management-tools/webfig.md) `8ef7926191c4`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `26d91e042f7e`
-- [WinBox](docs/management-tools/winbox.md) `f4c6590336aa`
+- [WinBox](docs/management-tools/winbox.md) `e8b6cae38dcb`
 - [Mobile Networking](docs/mobile-networking.md) `57faec629ff5`
 - [BG77 modem AT commands](docs/mobile-networking/bg77-modem-at-commands.md) `9a1290367d49`
 - [WWAN and GNSS priority automatization](docs/mobile-networking/bg77-modem-at-commands/wwan-and-gnss-priority-automatization.md) `5dbf2cee94a0`
@@ -1373,7 +1376,7 @@ Pages failed: 0
 - [DHCP Relay](docs/network-management/dhcp/relay.md) `7f6cbaaa73d8`
 - [DHCP Server](docs/network-management/dhcp/server.md) `614a49a7386d`
 - [DNS](docs/network-management/dns.md) `68e6af0386e7`
-- [Openflow](docs/network-management/openflow.md) `66930df30509`
+- [OpenFlow](docs/network-management/openflow.md) `1c9101182783`
 - [Proxy](docs/network-management/proxy.md) `9a6f70829eef`
 - [Reverse Proxy](docs/network-management/proxy/reverse-proxy.md) `f635359bb90f`
 - [Web Proxy](docs/network-management/proxy/web-proxy.md) `c18bde24b066`
@@ -1401,7 +1404,7 @@ Pages failed: 0
 - [System Information and Utilities](docs/system-information-and-utilities.md) `caef2ea86a02`
 - [Clock](docs/system-information-and-utilities/clock.md) `002bee56629c`
 - [Device mode](docs/system-information-and-utilities/device-mode.md) `aa925f309c58`
-- [Email](docs/system-information-and-utilities/e-mail.md) `9a48fcce472e`
+- [Email](docs/system-information-and-utilities/e-mail.md) `933114d59bf0`
 - [Fetch](docs/system-information-and-utilities/fetch.md) `e89233b353ab`
 - [Files](docs/system-information-and-utilities/files.md) `7099fe2d1c68`
 - [Identity](docs/system-information-and-utilities/identity.md) `8406769474c7`
@@ -1437,12 +1440,12 @@ Pages failed: 0
 - [Unicast routing protocols](docs/user-guides/routing-and-networking-protocols/unicast.md) `3797cce0f171`
 - [BFD](docs/user-guides/routing-and-networking-protocols/unicast/bfd.md) `5a56348ad18f`
 - [BGP](docs/user-guides/routing-and-networking-protocols/unicast/bgp.md) `ed7536e2f509`
-- [FAQ](docs/user-guides/routing-and-networking-protocols/unicast/bgp/faq.md) `c11a80757e76`
+- [FAQ](docs/user-guides/routing-and-networking-protocols/unicast/bgp/faq.md) `6f391a61ff4d`
 - [Nexthop Selection](docs/user-guides/routing-and-networking-protocols/unicast/bgp/nexthop-selection.md) `6c9215f28770`
 - [Peering Sessions](docs/user-guides/routing-and-networking-protocols/unicast/bgp/peering-sessions.md) `3e1d1f670bd3`
 - [Route Leak Prevention](docs/user-guides/routing-and-networking-protocols/unicast/bgp/route-leak-prevention.md) `06c810956201`
 - [Understanding BGP](docs/user-guides/routing-and-networking-protocols/unicast/bgp/understanding-bgp.md) `a582d7ee7746`
-- [EVPN](docs/user-guides/routing-and-networking-protocols/unicast/evpn.md) `e91a7144e05f`
+- [EVPN](docs/user-guides/routing-and-networking-protocols/unicast/evpn.md) `db5edeef35e3`
 - [IS-IS](docs/user-guides/routing-and-networking-protocols/unicast/is-is.md) `62c2c7e3c4df`
 - [OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf.md) `f12eec7d2b69`
 - [Areas and Virtual Links](docs/user-guides/routing-and-networking-protocols/unicast/ospf/areas-and-virtual-links.md) `d0343a0d0cf1`
@@ -1505,7 +1508,7 @@ Pages failed: 0
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
 - [Wi-Fi](docs/wireless/wifi.md) `4ecf4efb0545`
-- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `ed8faf248f48`
+- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `d33b3a5b60eb`
 - [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
 - [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `ad5c094bb37b`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `ab2adb710f4b`
@@ -1710,6 +1713,16 @@ Pages failed: 0
 - [Quick Guide - CCR2004-1G-2XS-PCIe](hardware/quick-guide-ccr2004-1g-2xs-pcie.md) `105ec98ae29d`
 - [Quick Guide - CCR2116-12G-4S+](hardware/quick-guide-ccr2116-12g-4s-plus.md) `efcd80fa216f`
 - [Quick Guide - CCR2216-1G-12XS-2XQ](hardware/quick-guide-ccr2216-1g-12xs-2xq.md) `70f50a692cfd`
+- [Quick Guide - Chateau 5G ax](hardware/quick-guide-chateau-5g-ax.md) `4ac289933860`
+- [Quick Guide - Chateau 5G R16](hardware/quick-guide-chateau-5g-r16.md) `05f46babb0d8`
+- [Quick Guide - Chateau 5G](hardware/quick-guide-chateau-5g.md) `73f23eb0af0c`
+- [Quick Guide - Chateau LTE18 ax](hardware/quick-guide-chateau-lte18-ax.md) `61e5f4d50dfa`
+- [Quick Guide - Chateau LTE6 ax](hardware/quick-guide-chateau-lte6-ax.md) `aca8c656b4e0`
+- [Quick Guide - Chateau LTE6-US (US version)](hardware/quick-guide-chateau-lte6-us-us-version.md) `c8c65015fffc`
+- [Quick Guide - CRS106-1C-5S](hardware/quick-guide-crs106-1c-5s.md) `963d6ce57079`
+- [Quick Guide - CRS112-8P-4S-IN](hardware/quick-guide-crs112-8p-4s-in.md) `4415d60ed592`
+- [Quick Guide - CRS305-1G-4S+OUT](hardware/quick-guide-crs305-1g-4s-plus-out.md) `cfcf529ce8db`
+- [Quick Guide - CRS310-1G-5S-4S+IN](hardware/quick-guide-crs310-1g-5s-4s-plus-in.md) `366e69aba14c`
 - [Quick Guide G3](hardware/quick-guide-g3.md) `250f870b0fd6`
 - [R11e-LR2](hardware/r11e-lr2.md) `5039049c9207`
 - [R11e-LR8](hardware/r11e-lr8.md) `999e1d4f18a4`
@@ -1777,3 +1790,7 @@ Pages failed: 0
 - [Wireless Wire Dish](hardware/wireless-wire-dish.md) `69127e27342d`
 - [Woobm-USB](hardware/woobm-usb.md) `90a7c6a71c07`
 - [wsAP ac lite](hardware/wsap-ac-lite.md) `0589c5252ed0`
+
+## Removed pages
+
+- `docs/cli-reference/iot/lora/send.md`
