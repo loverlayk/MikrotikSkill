@@ -10,7 +10,7 @@ This section covers RouterOS container support, including container configuratio
 
 **Packages required:** `container`
 
-A container is MikroTik's implementation of Linux containers, allowing users to run containerized environments within RouterOS. The container feature works in the latest MikroTik RouterOS v7.x version. Containers are compatible with images from Docker Hub, GCR, Quay, or other providers, as well as those built on other devices, using the same formats supported by these providers. While RouterOS uses different syntax compared to Docker, it still achieves similar functionality.
+A container is MikroTik's implementation of Linux containers, allowing users to run containerized environments within RouterOS. Containers are compatible with images from Docker Hub, GCR, Quay, or other providers, as well as those built on other devices, using the same formats supported by these providers. While RouterOS uses different syntax compared to Docker, it still achieves similar functionality.
 
 ## Disclaimer
 
@@ -42,7 +42,7 @@ Before you add the first container:
 1. Install the `container` package, see [Installing packages](../getting-started/installation-and-upgrade/packages#install-a-package-from-the-router).
 2. Enable containers in device-mode, where they are off by default:
 
-   ```ros
+   ```routeros
    /system/device-mode/update container=yes
    ```
 
@@ -55,210 +55,14 @@ Before you add the first container:
 
 :::
 
-**Sub-menu:** `/container`
-
-## Properties
-
-| Property | Description |
-| :-- | :-- |
-| **restart-interval** (*string*; Default: ) | Specify an interval at which Container will be restarted on Container failure. Example: 10s |
-| **cmd** (*string*; Default: ) | The main purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable, or they can omit the executable, in which case you must specify an ENTRYPOINT instruction as well. |
-| **comment** (*string*; Default: ) | Short description |
-| **dns** (*string*; Default: ) | If the container needs different DNS, it can be configured here |
-| **domain-name** (*string*; Default: ) | Sets the container's domain name |
-| **entrypoint** (*string*; Default: ) | An ENTRYPOINT allows you to specify an executable to run when starting the container. Example: `/bin/sh` |
-| **envlist** (*string*; Default: ) | List of environmental variables (configured under *`/container/envs`* ) to be used with the container |
-| **file** (*string*; Default: ) | A container \*tar.gz tarball if the container is imported from a file |
-| **hostname** (*string*; Default: ) | Assigning a hostname to a container helps in identifying and managing the container more easily |
-| **interface** (*string*; Default: ) | veth interface to be used with the container |
-| **logging** (*string*; Default: ) | if set to yes, all container-generated output will be shown in the RouterOS log |
-| **start-on-boot** (*string*; Default: ) | if set to yes, the container will be started automatically on device start-up. |
-| **mountlists** (*string*; Default: ) | mounts from /container/mounts/ sub-menu to be used with this container |
-| **mount** (*string*; Default: ) | specify a directory to be used as a mount |
-| **remote-image** (*string*; Default: ) | the container image name to be installed if an external registry is used (configured under `/container/config/set` registry-url=...) |
-| **root-dir** (*string*; Default: ) | used to save container store outside main memory |
-| **stop-signal** (*string*; Default: 15) | defines which Linux signal is sent to terminate the container if it is still running after 10 seconds. Different signals may allow graceful shutdown, immediate termination, or trigger application-specific actions |
-| **workdir** (*string*; Default: ) | the working directory for cmd entrypoint |
-| **devices** (*string*; Default: ) | passes through a physical device to the container |
-| **cpu-list** (*string*; Default: ) | specifies which CPU cores the container is allowed to run on |
-| **user** (*string*; Default: ) | sets the user and group the container process runs as before execution. |
-| **memory-high** (*int*; Default: ) | "Soft" RAM usage limit in bytes for a specific container. If  usage goes over the high boundary, the processes are throttled and put under reclaim pressure. |
-| **memory-max** (*int*; Default: ) | Max RAM usage limit in bytes per container (The container process will be terminated if the memory-max value is smaller than the container memory-current) starting 7.23, this parameter cannot be set lower than 1MB, to avoid a situation where the container is terminated too early in the startup process |
-| **swap-max** (*int*; Default: ) | Maximum amount of swap space (in bytes) that the container may use. Requires swap to be enabled on the device (see [Swap space](../hardware/disks/index.md)). |
-| **stop-time** (*string*; Default: ) | Time limit for the container to stop gracefully before the stop-signal is sent. |
-| **tmpfs** (*string*; Default: ) | Temporary filesystem mount points for the container. Format: `size@dir`, e.g., `64M@/tmp`. |
-| **layer-dir** (*string*; Default: ) | Directory for storing container image layers, used for shared layer storage between containers. |
-| **shm-size** (*int*; Default: ) | Size of the `/dev/shm` shared memory filesystem in bytes for the container. |
-| **default-dns** (*string*; Default: ) | Default DNS servers inherited from the system `/ip/dns` configuration. |
-| **hosts** (*string*; Default: ) | Custom hostname-to-IP address mappings for the container. Format: `host=ip`. |
-| **restart-policy** (*string*; Default: ) | Defines the restart policy for the container: `no` (never restart), `on-failure` (restart only on non-zero exit code), or `always` (always restart). |
-| **restart-max-count** (*int*; Default: ) | Maximum number of restart attempts allowed within the restart-interval time frame. |
-| **stop-on-unhealthy** (*string*; Default: ) | If set to `yes`, the container will be automatically stopped when the healthcheck status becomes unhealthy. |
-
-:::warning
-By default the container uses the same DNS as configured in the `/ip/dns` sub-menu. If no DNS is configured here and the container's `dns` parameter is not specified, the container will not start!
-:::
-
-### Menu specific commands
-
-| Property | Description |
-| :-- | :-- |
-| **update** | Updates the container image. Automatically pulls from container repository and extracts it, replacing the original image. |
-| **kill** | Kills the specified running container. |
-| **restart** | Restarts the specified running container. |
-| **repull** | Re-pulls/extracts the container image. |
-| **shell** | Enters the container shell of a running container. |
-| **run** | Starts the container and enters its shell. Useful if container shuts down after running. |
-| **save** | Saves the container image as a tar archive with root-dir content and ROS-specific parameters. See [Saving a container](#saving-a-container). |
-
-## Container configuration
-
-**Sub-menu:** `/container/config`
-
-| Property | Description |
-| :-- | :-- |
-| **registry-url** | external registry url from where the container will be downloaded (default: `https://lscr.io/`) |
-| **tmpdir** | container extraction directory |
-| **layer-dir** | directory for storing container image layers, used for shared layer storage between containers |
-| **memory-high** | Global "soft" RAM usage limit in bytes for a specific container. If  usage goes over the high boundary, the processes are throttled and put under reclaim pressure. |
-| **memory-max** | Global max RAM usage limit in bytes per container (The container process will be terminated if the memory-max value is smaller than the container memory-current) starting 7.23, this parameter cannot be set lower than 1MB, to avoid a situation where the container is terminated too early in the startup process |
-| **swap-max** (*int*; Default: ) | Global default for the maximum amount of swap space (in bytes) per container. Individual containers can override this with their own `swap-max` setting. Requires swap to be enabled on the device (see [Swap space](../hardware/disks/index.md)). |
-| **username** | Specifies the username for authentication (starting from ROS 7.8) |
-| **password** *[sensitive](../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | Specifies the password for authentication (starting from ROS 7.8) |
-
-### Read-only properties
-
-| Property | Description |
-| :-- | :-- |
-| **assumed-registry-url** | Automatically detected registry URL. |
-| **memory-current** | Current total memory usage of all containers in bytes. |
-
-## Saving a container
-
-The **save** command under the `/container` menu writes the container image as a valid OCI archive which can be imported in podman, docker environments or RouterOS.
-
-Save by default writes all filesystem layers including root-dir, but keeps does not include it in the OCI format. It writes a special ros-container.json within the tarball with additional information specified in RouterOS, including root-dir layer info, envlists etc. ros-container.json will be used when importing into ROS containers - in docker or podman it will be ignored.
-
-Saving with the **commit** parameter will add root-dir layer to OCI archive format or change original image config. Importing image in podman or docker saved without **commit** will not show changes made in ROS container entry like specified environment values, entrypoints, files in root-dir and any other changes.
-
-The root directory layer together with additional parameters specified in ROS container entry can be saved (commited) to OCI image for importing in podman or docker using the **commit** parameter.
-
-### Command syntax
-
-```routeros
-/container/save <container> file=<archive> [name=<name>] [commit]
-```
-
-### Parameters
-
-| Parameter | Description |
-| :-- | :-- |
-| **file** | Path to save archive as |
-| **name** | Set image name to save as |
-| **commit** | Commit changes to OCI archive |
-
-### Save and re-import
-
-This example shows how to save a container with root-dir content, remove it, and re-add it from the saved file.
-
-For the example let's add a simple container:
-
-```routeros
-/container/add name=alpine remote-image=alpine interface=veth1 check-certificate=no
-```
-
-Modify the container:
-
-```routeros
-/container/run alpine
-/ # apk add python3
-...
-/ # cat <<EOF > main.py
-> import os
-> import sys
-> ...
-> EOF
-/ # exit
-```
-
-Set container entrypoint, cmd etc:
-
-```routeros
-/container/set alpine entrypoint="python main.py" cmd="foo bar" env=FOO=1,BAR=2 envlists=foo,bar
-```
-
-Run the modified container and verify env vars:
-
-```routeros
-/container/run 0
->>> os.environ
-environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME': '/root', 'HOSTNAME': 'CHR', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'SPAM': 'spam12', 'TERM': 'xterm', 'TZ': 'manual'})
->>> exit()
-```
-
-Save the container with root directory content (keep OCI image intact):
-
-```routeros
-/container/save 0 file=out.tar
-```
-
-This save action adds root-dir content to archive together with some ROS container parameters like env, envlists etc. This does not change original image config parameters.
-
-Remove the container and add it back from the saved file:
-
-```routeros
-/container/remove 0
-/container/add file=out.tar interface=veth1
-```
-
-Run the re-imported container and verify env vars again:
-
-```routeros
-/container/run 0
->>> os.environ
-environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME': '/root', 'HOSTNAME': 'CHR', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'SPAM': 'spam12', 'TERM': 'xterm', 'TZ': 'manual'})
->>> exit()
-```
-
-### Commit changes to OCI
-
-Save the container image and *commit* changes to OCI image:
-
-```routeros
-/container/save 0 file=out.tar commit
-```
-
-Commited images adds root-dir content as another layer and sets entrypoint, cmd etc. values as standard container image parameters. This changed image can be loaded in podman or docker systems.
-
-Loading the saved container in podman:
-
-```shell
-$ podman image load < out.tar
-Getting image source signatures
-Copying blob 2db82ee6251c done
-Copying blob b1928d1de551 done
-Copying config 3dc8d32889 done
-Writing manifest to image destination
-Loaded image: localhost/alpine:latest
-```
-
-Running the loaded image:
-
-```shell
-$ podman run -it --rm localhost/alpine:latest
->>> os.environ
-environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME': '/root', 'HOSTNAME': 'CHR', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'SPAM': 'spam12', 'TERM': 'xterm', 'TZ': 'manual'})
->>> exit()
-```
-
 ## Examples
 
 ### Running Pi-hole
 
 #### Prerequisites
 
-   1. RouterOS device with RouterOS v7.4beta or later and **installed Container package -** [How to install packages](../getting-started/installation-and-upgrade/packages.md)
-   2. Physical access to a device to enable container mode - will be explained down below
+   1. RouterOS device with the **container package installed** - [How to install packages](../getting-started/installation-and-upgrade/packages.md)
+   2. Physical access to the device to enable container mode (step 1)
    3. Attached HDD, SSD or USB drive for storage - formatted with a filesystem supported by RouterOS - [How to format/manage disks](../hardware/disks/index.md)
 
 #### Steps to run Pi-hole
@@ -281,7 +85,7 @@ environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME'
    :::info
    The following configuration is equivalent to "bridge" networking mode in other Container engines such as Docker. It is possible to create a "host" equivalent configuration as well.
 
-   **Important:** One veth interface can be used for many Containers. You can create multiple veth interfaces to create [isolated](./index.md#isolated-containers) networks for different Containers.
+   **Important:** One veth interface can be used for many Containers. You can create multiple veth interfaces to create isolated networks (see Isolated Containers) for different Containers.
    :::
 3. Create a new [bridge](../bridging-and-switching/index.md) that is going to be used for your Containers and assign the same IP address that was used for the veth interface's gateway:  
 
@@ -333,13 +137,13 @@ environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME'
 9. Add a Container:  
 
    ```routeros
-   /container/add remote-image=pihole/pihole interface=veth1 root-dir=disk1/images/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlist=ENV_PIHOLE name=pihole
+   /container/add remote-image=pihole/pihole interface=veth1 root-dir=disk1/images/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlists=ENV_PIHOLE name=pihole
    ```
 
    :::tip
    If you wish to see container output in `/log/print`  , then add `logging=yes`  when creating a Container, root-dir should point to an external drive. It's not recommended to use internal storage for Containers.
 
-   **Important:** There are multiple ways you can get a Container image, check the [Adding a Container image](./index.md#adding-a-container-image) section if you need an alternative way of adding a Container image.
+   **Important:** There are multiple ways you can get a Container image, check the Adding a Container image section if you need an alternative way of adding a Container image.
 
    **Important:** Adding a Container will start downloading or extracting it, the Container itself will not be started after it has been added, you need to start it manually for the first time after it has been downloaded/extracted.
    :::
@@ -357,35 +161,35 @@ environ({'BAR': '2', 'BAR2': 'this is bar 2', 'EGGS': 'e33s', 'FOO': '1', 'HOME'
 
 12. Create a port forwarding for your Container:  
 
-    ```ros
+    ```routeros
     /ip/firewall/nat
     add action=dst-nat chain=dstnat dst-address=192.168.88.1 dst-port=80 protocol=tcp to-addresses=172.17.0.2 to-ports=80
     ```
 
 13. You should be able to access the Pi-hole web panel by navigating to `http://192.168.88.1/admin/`  in your web browser.
-14. To start using Pi-hole on your devices, change their DNS configuration to use `192.168.88.1` as your DNS server.
+14. To start using Pi-hole on your devices, forward DNS to the container as well (UDP and TCP port 53 to `172.17.0.2`), or set the container address as the DNS server of your devices.
 
 ### Adding a Container image
 
-There are multiple ways you can get a Container image running on your RouterOS device. Check the examples below.
+There are multiple ways you can get a Container image running on your RouterOS device.
 
 #### Option A: Get an image from an external library
 
 Set registry-url (for downloading containers from the Docker registry)  and set extract directory (tmpdir) to the attached USB media:
 
-```ros
+```routeros
 /container/config/set registry-url=https://registry-1.docker.io tmpdir=disk1/tmp
 ```
 
 pull an image:
 
-```ros
-/container/add remote-image=pihole/pihole interface=veth1 root-dir=disk1/images/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlist=ENV_PIHOLE name=pihole
+```routeros
+/container/add remote-image=pihole/pihole interface=veth1 root-dir=disk1/images/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlists=ENV_PIHOLE name=pihole
 ```
 
 The image will be automatically pulled and extracted to root-dir. Status can be checked by using
 
-```ros
+```routeros
 /container/print
 ```
 
@@ -395,7 +199,7 @@ You can use your PC running either Docker or Podman to download your required co
 
 1. Download your required image based on the architecture of your RouterOS device.  
 
-   ```routeros
+   ```bash
    #For ARM64
    podman pull --arch=arm64 docker.io/pihole/pihole
 
@@ -408,14 +212,14 @@ You can use your PC running either Docker or Podman to download your required co
 
 2. Save the container image to an archive.  
 
-   ```routeros
+   ```bash
    podman save pihole > pihole.tar
    ```
 
 3. Upload the archive to your RouterOS device, for example:  
 
-   ```routeros
-   rsync -av pihole.tar admin@192.168.88.1:/data/disk1/
+   ```bash
+   scp pihole.tar admin@192.168.88.1:disk1/
    ```
 
    :::tip
@@ -424,7 +228,7 @@ You can use your PC running either Docker or Podman to download your required co
 4. Create a Container on your RouterOS device using the uploaded container image archive file.  
 
    ```routeros
-   /container/add file=disk1/pihole.tar interface=veth1 root-dir=disk1/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlist=ENV_PIHOLE name=pihole
+   /container/add file=disk1/pihole.tar interface=veth1 root-dir=disk1/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlists=ENV_PIHOLE name=pihole
    ```
 
 #### Option C: Build an image on PC
@@ -433,14 +237,14 @@ You can build your own Containers and use them on your RouterOS device. While yo
 
 1. Get source files for your required Container image, for example by using git.  
 
-   ```routeros
+   ```bash
    git clone https://github.com/pi-hole/docker-pi-hole.git
    cd docker-pi-hole
    ```
 
 2. Build the Container image by specifying the Dockerfile or Containerfile and the target architecture.  
 
-   ```routeros
+   ```bash
    #For ARM64
    podman build --platform linux/arm64 --tag pihole -f ./src/Dockerfile
 
@@ -451,16 +255,18 @@ You can build your own Containers and use them on your RouterOS device. While yo
    podman build --platform linux/amd64 --tag pihole -f ./src/Dockerfile
    ```
 
-3. Save the container image to an archive.  
+   Use a recent Podman version. The Pi-hole Dockerfile uses `ADD --link`, which Podman 4.9 (for example, the version in Ubuntu 24.04) refuses: `ADD only supports the --chmod=<permissions> and the --chown=<uid:gid> flag`. A successful build ends with `Successfully tagged localhost/pihole:latest`.
 
-   ```routeros
+3. Save the container image to an archive. If the build failed, this command saves an older image with the same name, for example one pulled in Option B, so check the build output first.  
+
+   ```bash
    podman save pihole > pihole.tar
    ```
 
 4. Upload the archive to your RouterOS device, for example.  
 
-   ```routeros
-   rsync -av pihole.tar admin@192.168.88.1:/data/disk1/
+   ```bash
+   scp pihole.tar admin@192.168.88.1:disk1/
    ```
 
    :::tip
@@ -469,7 +275,7 @@ You can build your own Containers and use them on your RouterOS device. While yo
 5. Create a Container on your RouterOS device using the uploaded container image archive file.  
 
    ```routeros
-   /container/add file=disk1/pihole.tar interface=veth1 root-dir=disk1/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlist=ENV_PIHOLE name=pihole
+   /container/add file=disk1/pihole.tar interface=veth1 root-dir=disk1/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlists=ENV_PIHOLE name=pihole
    ```
 
 ##### Alternative: Using Docker to build Container images
@@ -496,23 +302,23 @@ If not - install extra architectures:
 docker run --privileged --rm tonistiigi/binfmt --install all
 ```
 
-Pull or create your project with Dockerfile included  and build, extract image (adjust --platform if needed):
+Get the project with its Dockerfile, build the image and save it to an archive (adjust `--platform` if needed). The Pi-hole Dockerfile is in the `src` folder:
 
 ```bash
 git clone https://github.com/pi-hole/docker-pi-hole.git
 cd docker-pi-hole
-docker buildx build  --no-cache --platform arm64 --output=type=docker -t pihole .
+docker buildx build --no-cache --platform arm64 --output=type=docker -t pihole -f src/Dockerfile src
 docker save pihole > pihole.tar
 ```
 
-Upload *pihole.tar* to your RouterOS device.
+Upload `pihole.tar` to your RouterOS device, for example to `disk1/`.
 
 Images and objects on the Linux system can be `pruned`
 
 Create a container from the tar image
 
-```ros
-/container/add file=pihole.tar interface=veth1 mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlist=ENV_PIHOLE name=pihole
+```routeros
+/container/add file=disk1/pihole.tar interface=veth1 root-dir=disk1/pihole mountlists=MOUNT_PIHOLE_PIHOLE,MOUNT_PIHOLE_DNSMASQD envlists=ENV_PIHOLE name=pihole
 ```
 
 ### Networking examples
@@ -544,7 +350,7 @@ For example, a database Container needs to communicate with a web application Co
   /container/envs/add list=ENV_POSTGRES key=PGDATA value="/var/lib/postgresql/data/pgdata"
   /container/envs/add list=ENV_POSTGRES key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
   /container/mounts/add list=MOUNT_POSTGRES src=disk1/volumes/postgres/data dst=/var/lib/postgresql/data
-  /container/add remote-image=postgres:15 interface=veth1 root-dir=disk1/images/postgres mountlists=MOUNT_POSTGRES envlist=ENV_POSTGRES name=postgres start-on-boot=yes logging=yes
+  /container/add remote-image=postgres:15 interface=veth1 root-dir=disk1/images/postgres mountlists=MOUNT_POSTGRES envlists=ENV_POSTGRES name=postgres start-on-boot=yes logging=yes
   ```
 
 - The webapp Container configuration:  
@@ -577,6 +383,19 @@ In this networking setup, you have multiple Containers and you want to make sure
   add action=dst-nat chain=dstnat dst-address=192.168.88.1 dst-port=82 protocol=tcp to-addresses=172.18.0.2 to-ports=80
   ```
 
+- The router routes between its two container subnets, so separate bridges alone do not isolate the
+  containers. Drop the traffic between the subnets:
+
+  ```routeros
+  /ip/firewall/filter
+  add chain=forward action=drop src-address=172.17.0.0/24 \
+      dst-address=172.18.0.0/24 comment="isolate containers1 from containers2"
+  add chain=forward action=drop src-address=172.18.0.0/24 \
+      dst-address=172.17.0.0/24 comment="isolate containers2 from containers1"
+  ```
+
+  Place the rules before any rule that accepts forwarded traffic between these subnets.
+
 - The first and second database container configurations.  
 
   ```routeros
@@ -586,7 +405,7 @@ In this networking setup, you have multiple Containers and you want to make sure
   /container/envs/add list=ENV_POSTGRES1 key=PGDATA value="/var/lib/postgresql/data/pgdata"
   /container/envs/add list=ENV_POSTGRES1 key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
   /container/mounts/add list=MOUNT_POSTGRES1 src=disk1/volumes/postgres1/data dst=/var/lib/postgresql/data
-  /container/add remote-image=postgres:15 interface=veth1 root-dir=disk1/images/postgres1 mountlists=MOUNT_POSTGRES1 envlist=ENV_POSTGRES1 name=postgres1 start-on-boot=yes logging=yes
+  /container/add remote-image=postgres:15 interface=veth1 root-dir=disk1/images/postgres1 mountlists=MOUNT_POSTGRES1 envlists=ENV_POSTGRES1 name=postgres1 start-on-boot=yes logging=yes
   ```
 
   ```routeros
@@ -596,7 +415,7 @@ In this networking setup, you have multiple Containers and you want to make sure
   /container/envs/add list=ENV_POSTGRES2 key=PGDATA value="/var/lib/postgresql/data/pgdata"
   /container/envs/add list=ENV_POSTGRES2 key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
   /container/mounts/add list=MOUNT_POSTGRES2 src=disk1/volumes/postgres2/data dst=/var/lib/postgresql/data
-  /container/add remote-image=postgres:15 interface=veth2 root-dir=disk1/images/postgres2 mountlists=MOUNT_POSTGRES2 envlist=ENV_POSTGRES2 name=postgres2 start-on-boot=yes logging=yes
+  /container/add remote-image=postgres:15 interface=veth2 root-dir=disk1/images/postgres2 mountlists=MOUNT_POSTGRES2 envlists=ENV_POSTGRES2 name=postgres2 start-on-boot=yes logging=yes
   ```
 
 - The first and second webapp container configurations.  
@@ -609,7 +428,7 @@ In this networking setup, you have multiple Containers and you want to make sure
   /container/add remote-image=dpage/pgadmin4 interface=veth2 root-dir=disk1/images/pgadmin2 name=pgadmin2 start-on-boot=yes logging=yes
   ```
 
-In this example, `pgadmin1` is able to reach `postgres1`, but is not able to reach `postgres2`. Similarly, `pgadmin2` is able to reach `postgres2`, but is not able to reach `postgres1`.
+With the drop rules, `pgadmin1` is able to reach `postgres1`, but is not able to reach `postgres2`. Similarly, `pgadmin2` is able to reach `postgres2`, but is not able to reach `postgres1`.
 
 #### Container in Layer2 network
 
@@ -642,7 +461,7 @@ In this example, `pgadmin` Container does not need port forwarding, but all othe
 
 ### IPv4 and IPv6 for Container
 
-In this networking setup your Container will be able to communicate over IPv4 and IPv6. The solution is based on the [Bridge with NAT](./index.md#bridge-with-nat) networking setup.
+In this networking setup your Container will be able to communicate over IPv4 and IPv6. The solution is based on the Bridge with NAT networking setup.
 
 - The network configuration.  
 
@@ -668,24 +487,146 @@ In this networking setup your Container will be able to communicate over IPv4 an
   /container/add remote-image=nginx interface=veth1 root-dir=disk1/images/nginx name=nginx start-on-boot=yes logging=yes
   ```
 
+## Container settings
+
+All properties of a container, its status flags and the read-only values are in the
+[`/container` CLI reference](../cli-reference/container/). The settings for all containers
+(registry, extraction directory, global memory limits) are in
+[`/container/config`](../cli-reference/container/config), environment variable lists in
+[`/container/envs`](../cli-reference/container/envs) and mount lists in
+[`/container/mounts`](../cli-reference/container/mounts).
+
+By default, the container uses the DNS servers of the router (`/ip/dns`). If the router has no DNS
+server and the container has no `dns` setting, the container does not start.
+
+Changing a setting of a running container with `set`, even only its name or comment, restarts the
+container.
+
+Besides `add`, `set`, `start` and `stop`, the `/container` menu has these commands:
+
+- `shell` - opens a shell in a running container.
+- `run` - starts the container and opens its shell.
+- `restart`, `kill` - restart or kill a running container.
+- `repull`, `update` - download and extract the image again.
+- `save` - saves the container as an image archive (see Saving a container).
+
+## Registry
+
+Without `registry-url` in `/container/config`, images are downloaded from Docker Hub
+(`assumed-registry-url: docker.io`). Set `registry-url` to use another registry, and `username` and
+`password` if the registry needs them. Set `tmpdir` to a directory on an attached disk, where the
+downloaded images are extracted.
+
+## Saving a container
+
+The **save** command under the `/container` menu writes the container image as a valid OCI archive which can be imported in podman, docker environments or RouterOS. The command returns at once and writes the archive in the background; wait until the file in `/file/print` stops growing before you copy it.
+
+Save by default writes all filesystem layers including root-dir, but does not include root-dir in the OCI format. It writes a special ros-container.json within the tarball with additional information specified in RouterOS, including root-dir layer info, envlists etc. ros-container.json will be used when importing into ROS containers - in docker or podman it will be ignored.
+
+Saving with the **commit** parameter will add root-dir layer to OCI archive format or change original image config. Importing image in podman or docker saved without **commit** will not show changes made in ROS container entry like specified environment values, entrypoints, files in root-dir and any other changes.
+
+The root directory layer together with additional parameters specified in ROS container entry can be saved (commited) to OCI image for importing in podman or docker using the **commit** parameter.
+
+### Command syntax
+
+```routeros
+/container/save <container> file=<archive> [name=<name>] [commit]
+```
+
+For all parameters, see [`/container/save`](../cli-reference/container/save).
+
+### Save and re-import
+
+This example saves a container together with the content of its root directory, removes it, and adds it back from the saved file.
+
+Add a container:
+
+```routeros
+/container/add name=alpine remote-image=alpine interface=veth1 root-dir=disk1/alpine logging=yes
+```
+
+Change the container: install Python and add a small program. Open the container with `/container/run` and run the commands in its shell:
+
+```text
+/container/run alpine
+/ # apk add python3
+/ # cat <<EOF > /main.py
+> import os, sys
+> print(sys.argv[1:], os.environ.get("FOO"), os.environ.get("BAR"), os.environ.get("SPAM"))
+> EOF
+/ # exit
+```
+
+Set the entrypoint, the arguments and the environment variables, and start the container:
+
+```routeros
+/container/envs/add list=spam key=SPAM value=spam12
+/container/set alpine entrypoint="python main.py" cmd="foo bar" env=FOO=1,BAR=2 envlists=spam
+/container/start alpine
+```
+
+The program writes its arguments and the variables to the container log:
+
+```text
+container,info,debug alpine: ['foo', 'bar'] 1 2 spam12
+```
+
+Save the container with the content of its root directory (the OCI image stays unchanged):
+
+```routeros
+/container/save alpine file=disk1/out.tar
+```
+
+The archive also contains the RouterOS container settings, such as `entrypoint`, `cmd`, `env` and `envlists`. Wait until the size of `disk1/out.tar` in `/file/print` stops growing.
+
+Remove the container and add it back from the saved file:
+
+```routeros
+/container/remove alpine
+/container/add file=disk1/out.tar interface=veth1 root-dir=disk1/alpine2 name=alpine logging=yes
+/container/start alpine
+```
+
+The re-added container has the installed Python, the program and the settings:
+
+```text
+container,info,debug alpine: *** started python main.py foo bar
+container,info,debug alpine: ['foo', 'bar'] 1 2 spam12
+```
+
+### Commit changes to OCI
+
+Save the container and commit the changes to the OCI image:
+
+```routeros
+/container/save alpine file=disk1/out-commit.tar commit
+```
+
+A committed image has the root directory content as another layer, and the entrypoint, cmd and environment variables as standard image settings. RouterOS also adds the `TZ` variable. The image can be loaded in Podman or Docker:
+
+```shell
+$ podman image load < out-commit.tar
+...
+Writing manifest to image destination
+Loaded image: localhost/alpine:latest
+$ podman run --rm localhost/alpine:latest
+['foo', 'bar'] 1 2 spam12
+```
+
 ## Healthcheck
 
-Starting RouterOS 7.23 healthcheck support has been implemented in RouterOS.
 Healthcheck is a mechanism that helps verify that the application within the container is running correctly.
 
 Healthchecks rely on standard exit codes. The command used for the healthcheck should return 0 when the application is healthy and a non-zero exit code when it is unhealthy.
 
 In most cases, on containers running a web interface, a simple HTTP GET request to localhost is enough to verify if the application is responding properly.
 
-| Property | Description |
-| :-- | :-- |
-| **healthcheck-cmd** (*string*; *Default*:)| command used for healthcheck |
-| **healthcheck-interval** (*time*; *Default*: 00:00:30)| time interval in format HH:MM:SS |
-| **healthcheck-retries** (*int*; *Default*: 3)| in the case of a failed check - number of retries before container application is considered unhealthy|
-| **healthcheck-start-interval** (*time*; *Default*: 00:00:05)| time between healthchecks in the start period |
-| **healthcheck-start-period** (*time*; *Default*: 00:00:00) | provides time for the container to start. any failures within the start period will not be added to the retries counter|
-| **healthcheck-status** (*string*)| current health status of container. displays the current status of the application within the container as well as the output from the probe|
-| **healthcheck-timeout** (*time*; *Default*: 00:00:30)| if healthcheck probing takes longer than the specified period, the check will count as a fail |
+Without `healthcheck-cmd`, the container uses the healthcheck defined in the image, if any
+(`default-healthcheck-cmd` in `/container/print detail`). While the first check has not passed,
+the container has the `C` (starting with healthcheck) flag; then `H` (healthy) or `U` (unhealthy).
+With `stop-on-unhealthy=yes`, an unhealthy container is stopped. The timing settings
+(`healthcheck-interval`, `-timeout`, `-retries`, `-start-period`, `-start-interval`) are described in
+the [CLI reference](../cli-reference/container/).
 
 ### Healthcheck example
 
@@ -697,7 +638,7 @@ To set up the E-mail tool. Please refer to our [E-mail documentation page](../sy
 
 1. Check your container name
 
-    ```ros
+    ```text
     [admin@ROSE] > container print 
     Flags: S - STOPPED, R - RUNNING
     Columns: NAME, ROOT-DIR, INTERFACE, MEMORY-CURRENT, CPU-USAGE, CONTAINER-SIZE, DATA-SIZE, TAG
@@ -707,14 +648,14 @@ To set up the E-mail tool. Please refer to our [E-mail documentation page](../sy
 
 2. After a container has been created, we can enable healthcheck on it by setting the healthcheck command. For this specific container. We can increase the healthcheck-interval as well as specify a start-period as HomeAssistant is a heavy container and may start slower on some devices.
 
-    ```ros
+    ```routeros
     /container/set home-assistant healthcheck-cmd="curl -f http://localhost:8123" healthcheck-interval="00:01:00" healthcheck-start-period="00:02:00"
     ```
 
     If successful and the container starts - you should see the container running with the "Healthy" status.
     Additionally, the healthcheck-status field is populated with the current status of the container as well as the output from the curl command.
 
-    ```ros
+    ```text
     [admin@ROSE] > container print proplist=name,healthcheck-status
     Flags: S - STOPPED, R - RUNNING, H - HEALTHY
     Columns: NAME, HEALTHCHECK-STATUS
@@ -728,7 +669,7 @@ As an extra step, you can create a script that polls the container status and se
 
 1. Create the script:
 
-    ```ros
+    ```routeros
     /system script
     add name=unhealthy-container-alert source="
     :global lastState\
@@ -758,7 +699,7 @@ As an extra step, you can create a script that polls the container status and se
 
 2. Create the scheduler:
 
-    ```ros
+    ```routeros
     /system scheduler
     add interval=2m name=container-healthcheck-alert on-event="/system/script/run unhealthy-container-alert"
     ```
@@ -782,9 +723,9 @@ Defines the maximum amount of swap space (in bytes) that a container may use. Wo
 ## Tips and tricks
 
 - Containers use up a lot of disk space. USB/SATA, NVMe attached media is highly recommended. For devices with USB ports - USB to SATA adapters can be used with 2.5" drives - for extra storage and faster file operations.
-- For starting containers after a router reboot use the start-on-boot option (starting from 7.6beta6):
+- For starting containers after a router reboot use the start-on-boot option:
 
-  ```ros
+  ```text
   /container/print
     0 name="2e679415-2edd-4300-8fab-a779ec267058" tag="test_arm64:latest" os="linux" arch="arm" interface=veth2 
       root-dir=disk1/alpine mountlists="" dns="" logging=yes start-on-boot=yes status=running 
@@ -794,19 +735,19 @@ Defines the maximum amount of swap space (in bytes) that a container may use. Wo
 
 - It is possible to get to a **running** container shell:
 
-  ```ros
+  ```routeros
   /container/shell 0
   ```
 
 - It's possible to set the container timeout in seconds, otherwise it will stay open indefinitely:
 
-  ```ros
+  ```routeros
   /container/shell 0 timeout=120
   ```
 
 - Enable logging to get output from the container:
 
-  ```ros
+  ```routeros
   /container/set 0 logging=yes
   ```
 
@@ -822,23 +763,23 @@ Defines the maximum amount of swap space (in bytes) that a container may use. Wo
   /container/shell nextcloud user=www-data cmd="php /var/www/html/cron.php" no-sh
   ```
 
-- Starting from version 7.11beta5 multiple addresses and ipv6 addresses can be added:
+- A veth interface can have several addresses, also IPv6 addresses:
 
-  ```ros
+  ```routeros
   /interface/veth/add address=172.17.0.3/16,fd8d:5ad2:24:2::2/64 gateway=172.17.0.1 gateway6=fd8d:5ad2:24:2::1
   ```
 
 - Active running /dev/ nodes to container:
 
-  ```shell
+  ```text
   /dev/full	/dev/null	/dev/random		/dev/tty	/dev/urandom	/dev/zero	/dev/console	/dev/net/tun	/dev/kvm	/dev/fuse
   ```
 
-- Using the `Devices` parameter, it is possible to allow the serial terminal to be exposed to the container.
+- Using the `devices` parameter, it is possible to allow the serial terminal to be exposed to the container.
 
-```ros
-/container/set your-container devices=serial0:""
-```
+  ```routeros
+  /container/set your-container devices=serial0:""
+  ```
 
 :::info
 To allow the container to use the serial console port, you must first free the serial console used by RouterOS under `/system/console`

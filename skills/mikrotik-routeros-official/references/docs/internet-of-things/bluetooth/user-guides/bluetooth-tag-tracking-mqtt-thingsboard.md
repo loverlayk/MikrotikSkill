@@ -77,7 +77,7 @@ Check the guide over [here](../../mqtt/mqtt-and-thingsboard-configuration.md) to
 :::tip
 This example will showcase an [access-token](../../mqtt/mqtt-and-thingsboard-configuration.md#access-token-scenario-1) scenario for simplicity reasons, but you can use other available options as well. For the production environment, it is suggested to use SSL-MQTT, as non-SSL-MQTT can be easily packet captured and inspected.
 
-To understand how to implement SSL-MQTT communication on the instance that is run with the [container](../../../containers/index.md), check the guide linked [here](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md) ([Enabling HTTPS and SSL MQTT](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md#enabling-https-and-ssl-mqtt) section).
+To understand how to implement SSL-MQTT communication on the instance that is run with the [container](../../../containers/index.md), check the guide linked [here](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md) ([HTTPS and MQTT over TLS](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md#https-and-mqtt-over-tls) section).
 :::
 
 Create 2 KNOTs under the ThingsBoard GUI and make them "gateways".
@@ -399,7 +399,7 @@ Check the guide over [here](../../mqtt/mqtt-and-thingsboard-configuration.md) to
 :::tip
 This example will showcase the [access-token](../../mqtt/mqtt-and-thingsboard-configuration.md#access-token-scenario-1) scenario for simplicity reasons, but you can use other available options as well. For the production environment, it is suggested to use SSL-MQTT, as non-SSL-MQTT can be easily packet captured and inspected.
 
-To understand how to implement SSL-MQTT communication on the instance that is run with the [container](../../../containers/index.md), check the guide linked [here](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md) ([Enabling HTTPS and SSL MQTT](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md#enabling-https-and-ssl-mqtt) section).
+To understand how to implement SSL-MQTT communication on the instance that is run with the [container](../../../containers/index.md), check the guide linked [here](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md) ([HTTPS and MQTT over TLS](../../../containers/user-guides/container-thingsboard-mqtt-http-server.md#https-and-mqtt-over-tls) section).
 :::
 
 Create 3 KNOTs under the ThingsBoard GUI and make them "gateways".

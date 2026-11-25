@@ -5,10 +5,10 @@
 # Btrfs subvolumes and snapshots
 
 :::info
-This feature requires the [Storage](../) package.
+This feature requires the `rose-storage` package; see [Storage](../).
 :::
 
-## Creating subvolumes
+## Create subvolumes
 
 The main benefit of creating subvolumes is to organize data on your Btrfs main (root) subvolume. Consider subvolumes as folders with features of a partition, while still sharing the total disk space between all subvolumes. You can later use these subvolumes for much more advanced tasks and it is recommended to create subvolumes when you have large amounts of different types of data, especially data that requires frequent backups. Follow the guide to set up a few example subvolumes:
 
@@ -67,7 +67,7 @@ Subvolumes are most useful when used together with snapshots. Be sure to check o
 
 8. You can now access these subvolumes as `/BtrfsDisk/Documents` and `/BtrfsDisk/Photos`.
 
-## Creating snapshots
+## Create snapshots
 
 Snapshots are a space efficient way to create backups for your data. By creating a snapshot you save the current state of your data which you can later access.
 
@@ -83,111 +83,63 @@ While you can create snapshots of a root subvolume, it is recommended to create 
 
 :::
 
-1. Create subvolumes (or use the root subvolume, see above) and put data inside these subvolumes, for example:  
+1. Create subvolumes (or use the root subvolume, see above) and put data in them, for example `BtrfsDisk/Documents/document1.txt` and `BtrfsDisk/Photos/photo1.jpg`.
 
-   ```routeros
-   [admin@MikroTik] > /file/print 
-    # NAME   
-    0 BtrfsDisk
-    1 BtrfsDisk/Documents
-    2 BtrfsDisk/Photos 
-    3 BtrfsDisk/Documents/document1.txt
-    4 BtrfsDisk/Photos/photo1.jpg
-   ```
-
-2. In this example, we have created `/BtrfsDisk/Documents` and `/BtrfsDisk/Photos/` subvolumes and you can view them with:  
-
-   ```routeros
-   /disk/btrfs/subvolume/print
-   ```
-
-3. In order to make snapshots more organized, create a new subvolume called `Snapshots`:  
+2. To keep the snapshots organized, create a subvolume called `Snapshots`:  
 
    ```routeros
    /disk/btrfs/subvolume/add name=Snapshots fs=BtrfsDisk
    ```
 
-4. Create a snapshot for `Documents` and `Photos`:  
+3. Create read-only snapshots of `Documents` and `Photos`:  
 
    ```routeros
-   /disk/btrfs/subvolume/add read-only=yes parent=Documents fs=BtrfsDisk  name=Snapshots/Documents-22012025
-   /disk/btrfs/subvolume/add read-only=yes parent=Photos fs=BtrfsDisk  name=Snapshots/Photos-22012025
+   /disk/btrfs/subvolume/add read-only=yes parent=Documents fs=BtrfsDisk \
+       name=Snapshots/Documents-22012025
+   /disk/btrfs/subvolume/add read-only=yes parent=Photos fs=BtrfsDisk \
+       name=Snapshots/Photos-22012025
    ```
 
-5. You should now have new subvolumes that are read-only and contain your files:  
+   The snapshots contain the files that the subvolumes had at that time. Files that you add later, for example `document2.txt` and `photo2.jpg`, appear only in the subvolumes.
+
+4. Create new snapshots:  
 
    ```routeros
-   [admin@MikroTik] > /file/print 
-    # NAME      
-    0 BtrfsDisk
-    1 BtrfsDisk/Documents
-    2 BtrfsDisk/Photos
-    3 BtrfsDisk/Snapshots
-    4 BtrfsDisk/Documents/document1.txt
-    5 BtrfsDisk/Photos/photo1.jpg
-    6 BtrfsDisk/Snapshots/Documents-22012025
-    7 BtrfsDisk/Snapshots/Photos-22012025
-    8 BtrfsDisk/Snapshots/Documents-22012025/document1.txt
-    9 BtrfsDisk/Snapshots/Photos-22012025/photo1.jpg
+   /disk/btrfs/subvolume/add read-only=yes parent=Documents fs=BtrfsDisk \
+       name=Snapshots/Documents-23012025
+   /disk/btrfs/subvolume/add read-only=yes parent=Photos fs=BtrfsDisk \
+       name=Snapshots/Photos-23012025
    ```
 
-6. For testing purposes, you can add more data to your subvolumes and you should notice that newly added files do not appear in the snapshots, but only in the subvolumes:  
+   Each subvolume now has two snapshots: one with the older files, and one with the older and the newer files (`/file/print where name~"^BtrfsDisk"`):  
 
-   ```routeros
-   [admin@infra1.mikrotikls.lv] > /file/print 
-    # NAME   
-    0 BtrfsDisk
-    1 BtrfsDisk/Documents
-    2 BtrfsDisk/Photos
-    3 BtrfsDisk/Snapshots
-    4 BtrfsDisk/Documents/document1.txt
-    5 BtrfsDisk/Documents/document2.txt
-    6 BtrfsDisk/Photos/photo1.jpg
-    7 BtrfsDisk/Photos/photo2.jpg 
-    8 BtrfsDisk/Snapshots/Photos-22012025
-    9 BtrfsDisk/Snapshots/Documents-22012025
-   10 BtrfsDisk/Snapshots/Documents-22012025/document1.txt
-   11 BtrfsDisk/Snapshots/Photos-22012025/photo1.jpg
-   ```
-
-7. You can now create a new snapshot:  
-
-   ```routeros
-   /disk/btrfs/subvolume/add read-only=yes parent=Documents fs=BtrfsDisk  name=Snapshots/Documents-23012025 
-   /disk/btrfs/subvolume/add read-only=yes parent=Photos fs=BtrfsDisk  name=Snapshots/Photos-23012025 
-   ```
-
-8. After a new snapshot, you will have 2 snapshots for each subvolume. One contains older files and another one contains older and newer files:  
-
-   ```routeros
-   [admin@MikroTik] > /file/print 
-    # NAME   
-    0 BtrfsDisk
-    1 BtrfsDisk/Documents
-    2 BtrfsDisk/Photos
-    3 BtrfsDisk/Snapshots
-    4 BtrfsDisk/Documents/document1.txt
-    5 BtrfsDisk/Documents/document2.txt
-    6 BtrfsDisk/Photos/photo1.jpg
-    7 BtrfsDisk/Photos/photo2.jpg
-    8 BtrfsDisk/Snapshots/Photos-22012025
-    9 BtrfsDisk/Snapshots/Documents-22012025
-   10 BtrfsDisk/Snapshots/Documents-23012025
-   11 BtrfsDisk/Snapshots/Photos-23012025
-   12 BtrfsDisk/Snapshots/Documents-22012025/document1.txt 
-   13 BtrfsDisk/Snapshots/Documents-23012025/document1.txt
-   14 BtrfsDisk/Snapshots/Documents-23012025/document2.txt
-   15 BtrfsDisk/Snapshots/Photos-22012025/photo1.jpg
-   16 BtrfsDisk/Snapshots/Photos-23012025/photo1.jpg
-   17 BtrfsDisk/Snapshots/Photos-23012025/photo2.jpg
+   ```text
+    # NAME                                                
+    2 BtrfsDisk                                           
+    3 BtrfsDisk/Documents                                 
+    4 BtrfsDisk/Photos                                    
+    5 BtrfsDisk/Snapshots                                 
+    6 BtrfsDisk/Documents/document1.txt                   
+    7 BtrfsDisk/Documents/document2.txt                   
+    8 BtrfsDisk/Photos/photo1.jpg                         
+    9 BtrfsDisk/Photos/photo2.jpg                         
+   10 BtrfsDisk/Snapshots/Documents-22012025              
+   11 BtrfsDisk/Snapshots/Photos-22012025                 
+   12 BtrfsDisk/Snapshots/Documents-23012025              
+   13 BtrfsDisk/Snapshots/Photos-23012025                 
+   14 BtrfsDisk/Snapshots/Documents-22012025/document1.txt
+   15 BtrfsDisk/Snapshots/Documents-23012025/document1.txt
+   16 BtrfsDisk/Snapshots/Documents-23012025/document2.txt
+   17 BtrfsDisk/Snapshots/Photos-22012025/photo1.jpg      
+   18 BtrfsDisk/Snapshots/Photos-23012025/photo1.jpg      
+   19 BtrfsDisk/Snapshots/Photos-23012025/photo2.jpg
    ```
 
    :::note
-
    Multiple snapshots do not create multiple copies of each file, but if a file has been deleted and it still exists in a snapshot, then the deleted file will take up space. If a file exists in multiple snapshots, then it will take up space for only 1 file.
-
    :::
-9. In case you don't need an older snapshot, you can delete it:  
+
+5. Delete a snapshot that you no longer need. `name` is the last part of the full name, without `Snapshots/`:  
 
    ```routeros
    /disk/btrfs/subvolume/remove [find where name=Documents-22012025]
@@ -196,91 +148,37 @@ While you can create snapshots of a root subvolume, it is recommended to create 
 
 ## Transfer your snapshots
 
-Btrfs allows you to easily send a snapshot between two devices that are using Btrfs with [`/disk/btrfs/transfer`](../../cli-reference/disk/btrfs/transfer) on both sides: a `send` entry on the sender and a `receive` entry on the receiver. In this example we will use two RouterOS devices running the Storage package. The RouterOS device containing snapshots that need to be backed up is going to be called `RouterA` and the RouterOS device that is going to receive backups is going to be called `RouterB`.
+[`/disk/btrfs/transfer`](../../cli-reference/disk/btrfs/transfer) sends a read-only snapshot as a stream and receives it on another Btrfs file system. In this example, `RouterA` (10.99.0.1) has the snapshots, and `RouterB` (10.99.0.2) keeps the backups on a Btrfs file system labelled `BackupBtrfsDisk`.
 
-:::info
+### Between RouterOS devices
 
-This guide only shows an example of how to use Btrfs transfer between RouterOS devices, but you can transfer snapshots between RouterOS and Linux devices as well. If you require such functionality, then make sure to check the documentation of your Linux distribution on how to use Btrfs transfer on it.
+Send the snapshot to a file, copy the file to the other router, and receive it there.
 
-:::
-
-:::tip
-
-This guide will use the SSH host key for an SSH user key on the same RouterOS device. If you wish to use your own key for the SSH user, then you can use these commands on a Linux computer and later import the key pair under `/user/ssh-keys` :  
-
-```routeros
-openssl genpkey -outform PEM -out btrfstransfer_key.pem -algorithm ED25519
-openssl pkey -in btrfstransfer_key.pem -pubout -out btrfstransfer_key_pub.pem
-```
-
-:::
-
-1. OPTIONAL: Increase the security level of your SSH server, run the following commands on `RouterA` and `RouterB` :  
+1. On `RouterA`, send the snapshot `Documents-23012025` to a file. `send-subvolumes` takes the snapshot name, not its path:  
 
    ```routeros
-   /ip/ssh/set host-key-type=ed25519 strong-crypto=yes
-   /ip/ssh/regenerate-host-key
+   /disk/btrfs/transfer/add type=send fs=BtrfsDisk \
+       send-subvolumes=Documents-23012025 file=BtrfsDisk/doc.send
    ```
 
-   :::warning
+   When the stream is written, the entry in `/disk/btrfs/transfer/print detail` has `status="done"` and the size in `bytes`.
 
-   Regenerating the host key will create an error message next time you try to connect to the RouterOS device using SSH. You will need to adjust your SSH client's configuration (usually in `~/.ssh/known_hosts` ) to trust the new host key.
-
-   :::
-2. On `RouterA` export the SSH private and public key:  
+2. Copy the file to `RouterB`, for example with [`/file/sync`](../rsync.md), and remove the sync entry afterwards:  
 
    ```routeros
-   /ip/ssh/export-host-key key-file-prefix=admin
+   /file/sync/add local-path=BtrfsDisk/doc.send remote-address=10.99.0.2 \
+       remote-path=BackupBtrfsDisk/doc.send user=admin mode=upload
    ```
 
-3. On `RouterA` import the SSH private key for user `admin` :  
+3. On `RouterB`, receive the snapshot from the file:  
 
    ```routeros
-   /user/ssh-keys/private/import private-key-file=admin_ed25519.pem user=admin
+   /disk/btrfs/transfer/add fs=BackupBtrfsDisk type=receive \
+       file=BackupBtrfsDisk/doc.send
    ```
 
-4. Upload the SSH public key from `RouterA` to `RouterB` :  
+   The snapshot appears as a read-only subvolume at the top of the file system, `BackupBtrfsDisk/Documents-23012025`, with its files.
 
-   ```routeros
-   /file/sync/add local-path=admin_ed25519_pub.pem remote-address=RouterB user=admin mode=upload
-   /file/sync/remove [find where local-path=admin_ed25519_pub.pem]
-   ```
+### Send over SSH to a Linux host
 
-5. On `RouterB` create a new user, for example `btrfstransfer`  and set a secure password for it:  
-
-   ```routeros
-   /user/add name=btrfstransfer group=write
-   ```
-
-   :::warning
-
-   While the password is not going to be used for the Btrfs transfer feature, you still need to use a secure password to prevent unauthorized access to your device.
-
-   :::
-6. On `RouterB` import the uploaded SSH public key and set it for user `btrfstransfer` :  
-
-   ```routeros
-   /user/ssh-keys/import public-key-file=admin_ed25519_pub.pem user=btrfstransfer
-   ```
-
-7. On `RouterA` set up type `send` :  
-
-   ```routeros
-   /disk/btrfs/transfer/add type=send fs=BtrfsDisk ssh-address=RouterB send-subvolumes=Documents-23012025 ssh-user=btrfstransfer ssh-receive-mount=BackupBtrfsDisk/Snapshots
-   ```
-
-   Where:  
-   - `BtrfsDisk` is the Btrfs disk label found under `/disk/btrfs/filesystem/print` on `RouterA`.
-   - `Documents-23012025` is the snapshot name (not the path).
-   - `btrfstransfer` is the SSH user on `RouterB`.
-   - `BackupBtrfsDisk` is the Btrfs disk label found under `/disk/btrfs/filesystem/print` on `RouterB`.
-   - `Snapshots` is the subvolume for your snapshots under `BackupBtrfsDisk`.
-8. On `RouterB` set up type `receive` :  
-
-   ```routeros
-   /disk/btrfs/transfer/add fs=BackupBtrfsDisk type=receive file=BackupBtrfsDisk/Snapshots
-   ```
-
-   Where:  
-   - `BackupBtrfsDisk` is the Btrfs disk label found under `/disk/btrfs/filesystem/print` on `RouterB`
-   - `BackupBtrfsDisk/Snapshots` is the mount path for `Snapshots` subvolume.
+With `ssh-address`, `ssh-user` and `ssh-receive-mount` instead of `file`, the router connects to a remote host over SSH and runs a `btrfs` command there to receive the stream. The receiver must therefore be a host with the Btrfs tools, such as a Linux server; a RouterOS router cannot receive over SSH. The router authenticates with the private key imported for its user in [`/user/ssh-keys/private`](../../cli-reference/user/ssh-keys/private/private.md), and the remote host key must be trusted in [`/ip/ssh/known-hosts`](../../management-tools/ssh.md#verify-remote-host-keys); check the result on the receiving host.

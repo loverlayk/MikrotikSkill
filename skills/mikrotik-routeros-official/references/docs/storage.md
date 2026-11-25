@@ -14,6 +14,6 @@ While regular drives are supported, for reliability purposes we recommend using 
 
 :::
 
-The **Storage package** (shown as `rose-storage` under `/system/package/print`) adds data-center functionality to RouterOS - disk monitoring with S.M.A.R.T., the Btrfs and XFS file systems, RAID, rsync, iSCSI, NVMe over TCP, NFS, and an SMB client. It is currently supported on **arm, arm64, x86** and **tile** platforms.
+The **Storage package** (shown as `rose-storage` under `/system/package/print`) adds data-center functionality to RouterOS: disk monitoring with S.M.A.R.T., the Btrfs and XFS file systems, RAID, encrypted disks, file synchronization (`/file/sync`), iSCSI, NVMe over TCP, and NFS. It is available for the **arm, arm64, x86** and **tile** platforms.
 
-The built-in SMB **server** and DLNA media server are part of the base system and do not require the Storage package - see the [SMB](./smb) and [DLNA Media Server](./dlna) pages.
+The SMB server and client, SSHFS, and the DLNA media server are part of the base system and do not require the Storage package - see the [SMB](./smb), [SSHFS](./sshfs) and [DLNA Media Server](./dlna) pages.

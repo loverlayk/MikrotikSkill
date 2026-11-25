@@ -1,254 +1,228 @@
-# Container - freeradius server
+# Container - FreeRADIUS server
 
-> This page introduces the container feature in MikroTik RouterOS for running servers like RADIUS within the router, detailing setup steps including container mode activation, networking configuration, and image...
+> Run a FreeRADIUS server in a RouterOS container, add a RADIUS client and a user, and log in to the router with that user.
 
-# Container - freeradius server
+# Container - FreeRADIUS server
 
 ## Introduction
 
-The introduction of the container feature into RouterOS made it possible to run all kinds of servers for all sorts of tasks inside the router. This is especially relevant for people who want to reduce the number of devices in their network. Instead of running a server on a separate device/machine, why not run it inside the router?
+With containers, RouterOS can run servers that would otherwise need a separate device or machine on your network.
 
-[Radius](../../authentication-authorization-accounting/radius.md) is short for Remote Authentication Dial-In User Service. RouterOS has a RADIUS client feature that can authenticate for HotSpot, [PPP](../../mobile-networking/ppp.md), [PPPoE](../../virtual-private-networks/pppoe/index.md), [PPTP](../../virtual-private-networks/pptp.md), [L2TP](../../virtual-private-networks/l2tp/index.md), and ISDN connections. Basically, this feature allows you to connect RouterOS to a Radius Server, and then, utilize the user database from the server for client authentication.
+[RADIUS](../../authentication-authorization-accounting/radius.md) (Remote Authentication Dial-In User Service) lets RouterOS check user names and passwords against a central server, for example for [PPP](../../mobile-networking/ppp.md), [PPPoE](../../virtual-private-networks/pppoe/index.md), [L2TP](../../virtual-private-networks/l2tp/index.md), HotSpot and router logins. This guide runs the [FreeRADIUS](https://www.freeradius.org/) server in a container on the router, adds one user, and logs in to the router with it.
 
-In our example, we will showcase the **[freeradius/freeradius-server](https://hub.docker.com/r/freeradius/freeradius-server/tags)** image installation.
+The image is [freeradius/freeradius-server on Docker Hub](https://hub.docker.com/r/freeradius/freeradius-server). Check its [tags](https://hub.docker.com/r/freeradius/freeradius-server/tags) for the architectures it is available for; the `alpine` tags are smaller and use other configuration paths than this guide.
 
 ## Summary
 
-**Sub-menu:** `/container`
+Read the [container](../) guide first, especially the [disclaimer](../#disclaimer) and the [requirements](../#requirements): the `container` package must be installed and containers enabled in device-mode.
 
-***Note**:* The **container** package is required.
-
-Make sure to study our [container](../) guide before proceeding with the configuration. Make sure to check the [disclaimer](../#disclaimer) and [requirements](../#requirements) sections to understand all the risks and necessary steps you might be required to do.
-
-At the time when the guide was published, the image was available for Linux/**amd64** OS/architecture **only** (usable by CHR and x86 devices). For arm64 devices you will need to make your own container from the [FreeRADIUS source](https://github.com/FreeRADIUS/freeradius-server). For both arm64 and arm32 devices, you can also use **[freeradius/freeradius-server-dev](https://hub.docker.com/r/freeradius/freeradius-dev)** image **at your own risk** (as it is an "experimental/development" version of the image).
-
-To help you set up a CHR in a [Virtual Box](https://www.virtualbox.org/), please check our [YouTube tutorial](https://www.youtube.com/watch?v=oHXkaHkSVVo), or [Make your own x86 router](https://www.youtube.com/watch?v=JpccW9tYOkQ).
+The image takes about 90 MB to download and more after extraction, so this example extracts it to an external disk, `disk1`.
 
 :::warning
-This guide demonstrates a basic example! The tests were performed in a local environment! This guide is meant for basic RADIUS "testing" purposes! Not all "freeradius" feature were tested!
+
+This guide shows a basic configuration for testing. See the [FreeRADIUS documentation](https://www.freeradius.org/documentation/) for other options. Before using the server in production, use strong secrets and passwords, and run the server without debug mode.
+
 :::
 
-## Configuration
-
-### Container mode
-
-Enable container mode:
-
-```ros
-/system/device-mode/update container=yes
-```
-
-You will need to confirm the device-mode with a cold reboot if using the container on X86.
+## Container configuration
 
 ### Networking
 
-Add veth interface for the container:
+Add a veth interface for the container:
 
-```ros
-/interface/veth/add name=veth3 address=172.17.0.2/24 gateway=172.17.0.1
+```routeros
+/interface/veth/add name=veth3 address=172.20.0.2/24 gateway=172.20.0.1
 ```
 
-Create a bridge for the container, assign an IP network to it, and add veth to the bridge:
+Create a bridge for the container, give it an address, and add the veth interface to it:
 
-```ros
-/interface/bridge/add name=dockerfreeradius
-/ip/address/add address=172.17.0.1/24 interface=dockerfreeradius
-/interface/bridge/port/add bridge=dockerfreeradius interface=veth3
+```routeros
+/interface/bridge/add name=freeradius
+/ip/address/add address=172.20.0.1/24 interface=freeradius
+/interface/bridge/port/add bridge=freeradius interface=veth3
 ```
 
-Setup NAT for outgoing traffic if required:
+The router sends its RADIUS requests to the server from the bridge address, `172.20.0.1`.
 
-```ros
-/ip/firewall/nat/add chain=srcnat action=masquerade src-address=172.17.0.0/24
+If the container needs internet access, add NAT for its outgoing traffic:
+
+```routeros
+/ip/firewall/nat/add chain=srcnat action=masquerade src-address=172.20.0.0/24
 ```
 
-### Getting image
+### Image
 
-To simplify the configuration, we will get the image from an external library, but you can also import it via the [.tar](../#option-b-import-image-from-pc) file.
+This example downloads the image from Docker Hub (see [Registry](../#registry)); you can also import it from a [.tar](../#option-b-import-image-from-pc) file. Set the directory where the downloaded image is extracted:
 
-Make sure that you have "Registry URL" set accordingly, limit RAM usage (if necessary), and set up a directory for the image:
-
-```ros
-/container/config/set registry-url=https://registry-1.docker.io tmpdir=pull
+```routeros
+/container/config/set tmpdir=disk1/pull
 ```
 
-Pull the image with the help of the command:
+Add the container:
 
-```ros
-/container/add remote-image=freeradius/freeradius-server:latest interface=veth3 root-dir=freeradius logging=yes cmd="-X"
+```routeros
+/container/add remote-image=freeradius/freeradius-server:latest \
+    interface=veth3 root-dir=disk1/freeradius logging=yes cmd="-X" \
+    name=freeradius
 ```
 
-where `cmd="-X"` enables debug logging (per the "freeradius" documentation).
+`cmd="-X"` starts FreeRADIUS in debug mode: it writes every request and its result to the log, which helps while you set up the server.
 
-After running the command, RouterOS should start "extracting" the package. Check "File System" for newly created folders and monitor container status with the command `/container/print`.
+RouterOS downloads and extracts the image. Check the progress with `/container/print`; when the extraction is done, the container status is `stopped`.
 
-### Starting the container
+### Start the container
 
-After you make sure that the container has been added and the status has changed to `status=stopped` after using `/container/print`, you can initiate it:
-
-```ros
-/container/start 0
+```routeros
+/container/start [find where name=freeradius]
 ```
 
-### Altering the server's configuration files
-
-To access the server's configuration files (**clients.conf** and **authorize**), we will need to use the SFTP (file transfer over SSH) protocol, so make sure that SSH [service](../../system-information-and-utilities/services.md) is enabled.
-
-Open your command terminal ("CMD", as Administrator, for Windows users, or "Linux Shell or Command Terminal" for Linux users) and navigate to the directory where you want to download the configuration files. For example, to the "radius" folder on your "Desktop":
-
-```powershell
-C:\WINDOWS\system32>cd C:\Users\Administrator\Desktop\radius
- 
-C:\Users\Administrator\Desktop\radius>
-```
-
-Initiate SFTP to the device's IP address:
-
-```powershell
-C:\Users\Administrator\Desktop\radius>sftp admin@10.55.8.53
-admin@10.55.8.53's password:
-Connected to 10.55.8.53.
-sftp>
-```
-
-Go to the server's configuration file folder (use the `dir` or `ls` command to see the content of the folder you are in and the `cd` command to go to the folder of our choice).
-
-The first file, "clients.conf", allows you to define RADIUS clients. Per the "freeradius" documentation, it should be under the `/etc/freeradius` directory...so, navigate there and use the `get` command to download it:
-
-```powershell
-sftp> dir
-freeradius          pub                     pull                    skins                   
-sftp> cd freeradius/etc/freeradius
-sftp> dir
-README.rst          certs               clients.conf        dictionary          experimental.conf   hints               
-huntgroups          mods-available      mods-config         mods-enabled        panic.gdb           policy.d            
-proxy.conf          radiusd.conf        sites-available     sites-enabled       templates.conf      trigger.conf        
-users
-sftp> get clients.conf
-Fetching /freeradius/etc/freeradius/clients.conf to clients.conf
-/freeradius/etc/freeradius/clients.conf                                               100% 8323     1.2MB/s   00:00
-```
-
-Open "**clients.conf**" via your preferred text editor (Notepad or any other). You can study the file to see all the options that you have (additionally, check [freeradius.org](https://wiki.freeradius.org/config/Configuration-files)). This example shows a basic setup, so we will just overwrite the whole file with the lines shown below:
+With container logging enabled, the [log](../../diagnostics-monitoring-and-troubleshooting/log/index.md) shows the server start (`/log/print where topics~"container"`, some lines left out):
 
 ```text
-client new {
-    ipaddr = 0.0.0.0/0
-    secret = client_password
+2026-11-24 07:11:43 container,info,debug freeradius: FreeRADIUS Version 3.2.10 
+ 2026-11-24 07:11:44 container,info,debug freeradius: Listening on auth address * port 1812 bound to server default
+ 2026-11-24 07:11:44 container,info,debug freeradius: Listening on acct address * port 1813 bound to server default
+ 2026-11-24 07:11:44 container,info,debug freeradius: Ready to process requests
+```
+
+## Server configuration
+
+The server's configuration files are in the container's root directory, under `disk1/freeradius/etc/freeradius`. Download them with SFTP (the SSH [service](../../system-information-and-utilities/services.md) must be enabled), edit them, and upload them back. This guide changes two files:
+
+- `clients.conf` - the RADIUS clients (devices such as the router) that may send requests to the server;
+- `mods-config/files/authorize` - the users.
+
+Download both files:
+
+```shell
+sftp admin@192.168.88.1
+sftp> cd disk1/freeradius/etc/freeradius
+sftp> ls
+README.rst          certs               clients.conf        dictionary          
+experimental.conf   hints               huntgroups          mods-available      
+mods-config         mods-enabled        panic.gdb           policy.d            
+proxy.conf          radiusd.conf        sites-available     sites-enabled       
+templates.conf      trigger.conf        users               
+sftp> get clients.conf
+sftp> cd mods-config/files
+sftp> get authorize
+sftp> exit
+```
+
+### Clients
+
+`clients.conf` comes with many commented examples; see the [FreeRADIUS documentation](https://wiki.freeradius.org/config/Configuration-files) for all options. For this example, replace its content with:
+
+```text
+client router {
+    ipaddr = 172.20.0.1
+    secret = Example-secret-1
 }
 ```
 
-where we indicate that our radius client can connect using any possible IP address (**ipaddr=0.0.0.0/0** ensures that, but you also can change it to the actual ip address/mask of your radius client if you need to do so) and that our secret is "client\_password" (you can change it to any other secret).
+- `ipaddr` - the address that the router sends its requests from, the bridge address. The server ignores requests from addresses that are not listed.
+- `secret` - the shared secret, which must match the `secret` of the RADIUS entry on the router. Use a long random string.
 
-Save the file/overwrite it.
+### Users
 
-The second file, "authorize", allows you to set up users. Per the "freeradius" documentation, it should be under `/etc/freeradius/mods-config/files`. Go there and `get` the file:
-
-```powershell
-sftp> dir
-freeradius          pub                     pull                    skins                    
-sftp> cd freeradius/etc/freeradius/mods-config/files
-sftp> dir
-accounting  authorize   dhcp        pre-proxy
-sftp> get authorize
-Fetching /freeradius/etc/freeradius/mods-config/files/authorize to authorize
-/freeradius/etc/freeradius/mods-config/files/authorize                                100% 6594     1.1MB/s   00:00
-```
-
-Open "**authorize**" via your preferred text editor (notepad or any other). This example shows a basic setup, so we will just uncomment (remove the "#" symbol from) the line shown below (leave the rest of the configuration/lines as they are):
+In `authorize`, find the commented line for the user `bob`:
 
 ```text
-bob	Cleartext-Password := "hello"
+#bob	Cleartext-Password := "hello"
 ```
 
-which creates a username "bob" and sets the password to "hello" (you can change the username and password).
+Remove the `#` and set a password; leave the other lines as they are:
 
-Save the file/overwrite it.
+```text
+bob	Cleartext-Password := "Example-pass-1"
+```
 
-Upload both files back to overwrite the default files with the help of the `put` command:
+This adds the user `bob`. To add more users, add more lines in the same format.
 
-```powershell
-sftp> dir
-freeradius          pub                     pull                    skins      
-sftp> cd freeradius/etc/freeradius
-sftp> dir
-README.rst          certs               clients.conf        dictionary          experimental.conf   hints               
-huntgroups          mods-available      mods-config         mods-enabled        panic.gdb           policy.d            
-proxy.conf          radiusd.conf        sites-available     sites-enabled       templates.conf      trigger.conf        
-users
+### Upload the files
+
+Upload both files to the folders that you downloaded them from:
+
+```shell
+sftp admin@192.168.88.1
+sftp> cd disk1/freeradius/etc/freeradius
 sftp> put clients.conf
-Uploading clients.conf to /freeradius/etc/freeradius/clients.conf
-clients.conf                                                                          100%   67    22.3KB/s   00:00
 sftp> cd mods-config/files
-sftp> dir
-accounting  authorize   dhcp        pre-proxy
 sftp> put authorize
-Uploading authorize to /freeradius/etc/freeradius/mods-config/files/authorize
-authorize                                                                             100% 6626     1.6MB/s   00:00
+sftp> exit
 ```
 
-Restart the container:
+Restart the container to load the new configuration:
 
-```ros
-/container/stop 0
-/container/start 0
+```routeros
+/container/restart [find where name=freeradius]
 ```
 
-Make sure to wait for the container to stop (`status=stopped` should be shown after using the `/container/print` command) before initiating it again.
+## Log in with a RADIUS user
 
-## Result verification
+Add the server to the router's RADIUS client, for router logins, with the secret from `clients.conf`:
 
-In RouterOS, add a new RADIUS client configuration:
-
-```ros
-/radius/add service=login address=172.17.0.2 secret="client_password"
+```routeros
+/radius/add service=login address=172.20.0.2 secret="Example-secret-1"
 ```
 
-, where the `address` is the IP address of the veth3 interface, `secret` is the secret that we configured in the **clients.conf** file and `service` is the allowed service that you wish to use.
+Let router logins use RADIUS:
 
-Allow "login" with RADIUS users via the command:
-
-```ros
+```routeros
 /user/aaa/set use-radius=yes
 ```
 
-We have allowed the "login" service for RADIUS and we can test it using an ssh/winbox/webfig connection. For the SSH test, issue the command (where you need to indicate the device's management IP and input bob's password "hello" after):
+Log in to the router as `bob` with SSH, WinBox or WebFig. To test from the router's own terminal, connect with SSH to one of the router's addresses; the first time, confirm the host key, then enter bob's password:
 
-```ros
-/system/ssh 10.55.8.53 user=bob
+```routeros
+/system/ssh 172.20.0.1 user=bob
 ```
 
-You should be able to verify that the terminal user changed from "admin@MikroTik" to "bob@MikroTik":
+In bob's session, list the sessions that RADIUS authenticated:
 
-```ros
-[admin@MikroTik] > /system/ssh 10.55.8.53 user=bob
-password:hello                                                                                                                                                                 
- 
-
-  MMM      MMM       KKK                          TTTTTTTTTTT      KKK
-  MMMM    MMMM       KKK                          TTTTTTTTTTT      KKK
-  MMM MMMM MMM  III  KKK  KKK  RRRRRR     OOOOOO      TTT     III  KKK  KKK
-  MMM  MM  MMM  III  KKKKK     RRR  RRR  OOO  OOO     TTT     III  KKKKK
-  MMM      MMM  III  KKK KKK   RRRRRR    OOO  OOO     TTT     III  KKK KKK
-  MMM      MMM  III  KKK  KKK  RRR  RRR   OOOOOO      TTT     III  KKK  KKK
-
-  MikroTik RouterOS 7.8alpha173 (c) 1999-2023       https://www.mikrotik.com/
-
-Press F1 for help
-  
-[bob@MikroTik] > 
+```routeros
+/user/active/print proplist=name,via,group where radius
 ```
 
-If you issue the command `/user/active/print`:
-
-```ros
-/user/active/print
+```text
 Flags: R - RADIUS
-Columns: WHEN, NAME, ADDRESS, VIA
-#   WHEN                  NAME   ADDRESS     VIA    
-0   2023-02-16 16:31:21  admin  xx.xx.xx.xx  winbox 
-1   2023-02-16 16:38:46  admin  xx.xx.xx.xx  console
-2 R 2023-02-16 16:38:53  bob    10.55.8.53  ssh  
+Columns: NAME, VIA, GROUP
+#   NAME  VIA  GROUP
+0 R bob   ssh  read 
 ```
 
-you will be able to verify that a new user "bob" is "active" and has a flag "R" assigned, which indicates it is a RADIUS user.
+The `R` flag shows that RADIUS authenticated the session. `bob` has the group `read`, the `default-group` of `/user/aaa`, because the server does not send a group for this user. See [Log in to the router with RADIUS accounts](../../authentication-authorization-accounting/radius.md#log-in-to-the-router-with-radius-accounts) for how to set the group on the server, and what to keep in mind when RADIUS accounts can log in to the router.
+
+The container log shows the request and the answer:
+
+```text
+2026-11-24 07:12:37 container,info,debug freeradius: (0) Received Access-Request Id 0 from 172.20.0.1:37287 to 172.20.0.2:1812 length 152
+2026-11-24 07:12:37 container,info,debug freeradius: (0) Sent Access-Accept Id 0 from 172.20.0.2:1812 to 172.20.0.1:37287 length 197
+```
+
+## Troubleshooting
+
+With `cmd="-X"`, the container log shows why the server rejects or ignores a request.
+
+The router's address is not in `clients.conf`; the server does not answer, and the login fails after the RADIUS timeout:
+
+```text
+ 2026-11-24 07:22:15 container,info,debug freeradius: Ignoring request to auth address * port 1812 bound to server default from unknown client 172.20.0.1 port 51256 proto udp
+```
+
+The `secret` on the router does not match `clients.conf`; the server does not answer, and `/radius/monitor` counts timeouts:
+
+```text
+ 2026-11-24 07:12:49 container,info,debug freeradius: Dropping packet without response because of error: Received packet from 172.20.0.1 with invalid Message-Authenticator!  (Shared secret is incorrect.) (from client router)
+```
+
+The password is wrong; the server rejects the login:
+
+```text
+ 2026-11-24 07:12:55 container,info,debug freeradius: (7) mschap: ERROR: MS-CHAP2-Response is incorrect
+ 2026-11-24 07:12:56 container,info,debug freeradius: (7) Sent Access-Reject Id 5 from 172.20.0.2:1812 to 172.20.0.1:52158 length 121
+```
+
+For more checks on the router side, see [Check and troubleshoot](../../authentication-authorization-accounting/radius.md#check-and-troubleshoot) on the RADIUS page.
+
+For the commands used in this guide, see [`/container`](../../cli-reference/container/container.md), [`/container/config`](../../cli-reference/container/config), [`/radius`](../../cli-reference/radius/radius.md) and [`/user/aaa`](../../cli-reference/user/aaa).

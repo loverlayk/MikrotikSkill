@@ -6,7 +6,7 @@
 
 Similar to other feature-rich filesystems, Btrfs needs periodic maintenance. This page covers the routine tasks relevant to Btrfs.
 
-## Periodic scrubbing
+## Scrub periodically
 
 In a RAID array, your data is stored on multiple disks or multiple disks contain information how to reassemble the data. Without RAID your disks in rare events might corrupt a few bytes of your data and you might not even notice that the data has been corrupted. With RAID arrays your data is compared with other copies of data (or checked on assembly) when you read a file and will alert you that data is corrupted. With [regular RAID](../raid/) and, for example, in RAID1 configuration the RAID array is not able to tell which copy of the file is correct. It will only inform you that the data corruption has been detected. With Btrfs RAID you are not only able to detect the data corruption, but you are also able to distinguish which copy of the file is the correct one by using checksums and restore it automatically.
 
@@ -22,7 +22,7 @@ The interval of how often to run scrubbing is going to depend on each use case. 
 
 - Summary: Used to detect and correct data corruption
 - Recommended interval: 1 week
-- [Working example](./raid#creating-btrfs-raid-check)
+- [Working example](./raid#monitor-the-array-with-the-braid-scripts)
 
 Example command:
 
@@ -31,13 +31,13 @@ Example command:
 /disk/btrfs/filesystem/scrub-start 0
 ```
 
-You can also cancel scrubbing using the following command:
+Cancel a running scrub with:
 
 ```routeros
-/disk/btrfs/filesystem/scrub-cancel
+/disk/btrfs/filesystem/scrub-cancel 0
 ```
 
-## Periodic balance
+## Balance periodically
 
 In Btrfs data is stored in allocated chunks, which then allow storing your data in blocks. Over time due to various data activities, the chunks can become partially full and distributed between many chunks in a suboptimal way. Balancing a Btrfs file system means re-arranging the data in these chunks and restoring the unallocated space. As a result you can restore lost usable free space and performance of the Btrfs file system. This is somewhat similar to a defragmentation operation on other file systems.
 
@@ -48,7 +48,7 @@ In case you want to run balancing commands separately, you should use `data-usag
 - Summary: Used to restore free space and improve performance.
 - Recommended interval: twice a month.
 - Recommended `data-usage`: 50.
-- [Working example](./raid#creating-btrfs-raid-check).
+- [Working example](./raid#monitor-the-array-with-the-braid-scripts).
 
 Example command:
 
@@ -57,41 +57,28 @@ Example command:
 /disk/btrfs/filesystem/balance-start data-usage=50 0
 ```
 
-You can also cancel balance using the following command:
+Cancel a running balance with:
 
 ```routeros
-/disk/btrfs/filesystem/balance-cancel
+/disk/btrfs/filesystem/balance-cancel 0
 ```
 
-## Periodic snapshots
+## Take periodic snapshots
 
-Snapshots can be used to save changes of your files at a set interval. Snapshots are most useful when you have a reliable interval at which data is copied so you can always revert your data to a previous state. Below you can find a ready-to-use script that creates periodic snapshots:
+Snapshots can be used to save changes of your files at a set interval. Snapshots are most useful when you have a reliable interval at which data is copied so you can always revert your data to a previous state. The following scripts create read-only snapshots of every subvolume of every Btrfs file system once a day (`BraidSnapshotStart`, skipped when the file system is more than 80% used) and delete snapshots that are older than 10 days or exceed 10 per subvolume (`BraidSnapshotCleanUpStart`). The snapshots are stored in the `@snapshots` subvolume, which must exist on each file system:
+
+```routeros
+/disk/btrfs/subvolume/add name=@snapshots fs=BtrfsDisk
+```
+
+The scripts:
 
 ```routeros
 /system/scheduler
 add interval=1d name=BraidSnapshotStartCall on-event=BraidSnapshotStart policy=ftp,read,write,policy,test,sniff start-date=1970-01-01 start-time=23:15:00
 add interval=1d name=BraidSnapshotCleanUpStartCall on-event=BraidSnapshotCleanUpStart policy=ftp,read,write,policy,test,sniff start-date=1970-01-01 start-time=23:00:00
-add interval=3m name=SystemBackupStartCall on-event=SystemBackupStart policy=ftp,read,write,policy,test,sniff start-time=startup
 
 /system/script
-add dont-require-permissions=no name=SystemBackupStart owner=admin policy=ftp,read,write,policy,test,sniff source=":global systembackupstatuscheck;\
-    \n:global systembackupdirectoryname; \
-    \n:local sysadmin;\
-    \n\
-    \n:set \$sysadmin ( \$sysadmin \"servername@domain.tld\" );\
-    \n:set \$systembackupdirectoryname (\$systembackupdirectoryname \"Braid17-20/@system-backup/\");\
-    \n\
-    \n if (\$systembackupstatuscheck != \"started\") do={\
-    \n         :set \$systembackupstatuscheck (\$systembackupstatuscheck \"started\");\
-    \n               :local datentime ([/system/clock/get date].\"-\".[/system/clock/get time]);\
-    \n               :local servername ([/system/identity/get name]);\
-    \n               /system/backup/save name=\"\$systembackupdirectoryname\$servername-\$datentime\";\
-    \n\
-    \n        :set \$systembackupstatuscheck (\$systembackupstatuscheck \"done\");\
-    \n} else={\
-    \n         /log/info message=\"ERROR: Cannot create  \$systembackupdirectoryname\$servername-\$datentime. Set manually :set systembackupstatuscheck (systembackupstatuscheck \\\"done\\\");\";\
-    \n}\
-    \n"
 add dont-require-permissions=no name=BraidSnapshotStart owner=admin policy=ftp,read,write,policy,test,sniff source=":global btrfssnapshotstatuscheck;\
     \n:global snapshotdirectoryname; \
     \n:local maxusedspace;\
@@ -165,18 +152,14 @@ add dont-require-permissions=no name=BraidSnapshotCleanUpStart owner=admin polic
     \n"
 ```
 
-## Free space
+## Keep free space
 
 In Btrfs, due to how data is stored in chunks, it is important to make sure there is enough free space in order for not just regular maintenance tasks to run properly, but also for the performance of the file system to be optimal. To make sure your Btrfs file system is working properly, consider checking that there is enough free space on your Btrfs file system. An optimal value of free space is 10%, but you should not allow your Btrfs file system to fill up to 5% free space.
 
 - Summary: Do not allow the Btrfs file system to be full.
 - Recommended free space: 5-10%.
 
-## Example command
-
-```routeros
-/disk/btrfs/filesystem/print
-```
+Check the used space of each disk in the `spaces` column of `/disk/btrfs/filesystem/print`.
 
 :::tip
 

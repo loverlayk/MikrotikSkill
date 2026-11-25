@@ -16,7 +16,7 @@ Columns: INTERFACE, ADDRESS4, ADDRESS6, MAC-ADDRESS
    bridge
 ```
 
-The neighbor list keeps entries while the device announces itself. A device announces its presence every 30 seconds (the default `discover-interval`); when announcements stop, the entry is dropped after it ages out. The `lldpRemTable` SNMP table contains the same LLDP-discovered entries as `/ip/neighbor/lldp`; entries discovered only by CDP or MNDP are not part of the SNMP LLDP-MIB.
+The neighbor list keeps entries while the device announces itself. A device announces its presence every 30 seconds (the default `discover-interval`); when announcements stop, the entry is dropped after it ages out. Each protocol is tracked on its own: when a neighbor stops announcing over one protocol but continues over another, `discovered-by` drops the silent protocol and the entry stays while at least one protocol is still heard. The `lldpRemTable` SNMP table contains the same LLDP-discovered entries as `/ip/neighbor/lldp`; entries discovered only by CDP or MNDP are not part of the SNMP LLDP-MIB.
 
 ## View and configure discovery in WinBox
 
@@ -123,6 +123,8 @@ Depending on RouterOS configuration, different type-length-values (TLVs) can be 
 ## Technical details
 
 - Devices announce every `discover-interval` (30s by default); on the receiving side an entry is removed when no announcement arrives in time. CDP and LLDP announcements carry a TTL of `(discover-interval * 4) + 1`.
+- MNDP sends an IPv6 announcement alongside the IPv4 one whenever IPv6 is enabled. An interface does not need an IPv6 address of its own to send it, so a bridge or bonding slave port still announces over IPv6 when only the master has an address.
+- The announcement is sent from the address of the top master interface (the outermost bridge or bonding), preferring a link-local address, then a global one, then the unspecified address `::`. The IPv6-Address TLV carries only valid unicast addresses of that master, and none when it has no such address. IP-in-IP (IPIP) tunnels do not send MNDP over IPv6.
 - The announcement contents and optional TLVs are controlled by the [`/ip/neighbor/discovery-settings`](../cli-reference/ip/neighbor/discovery-settings) parameters, including PoE TLVs (`lldp-poe-power`, `lldp-poe-in-power`) and DCBX (`lldp-dcbx`).
 - `dying-gasp` sends a discovery packet with TTL=0 before a graceful reboot, shutdown or upgrade so neighbors remove the entry immediately.
 - `add-dns-entries` creates dynamic DNS entries for discovered neighbors by identity; see [DNS](../network-management/dns).

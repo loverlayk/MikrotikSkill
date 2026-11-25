@@ -8,7 +8,7 @@
 
 **Quick Set** brings the main settings for a home router together on one page. In WinBox, connect to the router and select **Quick Set** in the left menu. Quick Set is also available in the router's web interface at its IP address, usually `192.168.88.1` in the default configuration.
 
-Quickset is available for all devices that have some sort of default configuration from the factory. Devices that do not have a configuration must be configured by hand. The most popular and recommended mode is the HomeAP (or HomeAP dual, depending on the device). This Quickset mode provides the simplest terminology and the most common options for the home user.
+Quick Set is available for all devices that have some sort of default configuration from the factory. Devices that do not have a configuration must be configured by hand. The most popular and recommended mode is the HomeAP (or HomeAP dual, depending on the device). This Quick Set mode provides the simplest terminology and the most common options for the home user.
 
 Use Quick Set for the initial setup of a router with its default configuration. If you have already changed the configuration in other WinBox menus or WebFig, continue in those menus instead: Quick Set can overwrite settings that were configured manually.
 
@@ -31,7 +31,7 @@ The screenshots show an existing router configuration, not factory defaults. Net
 
 ## Modes
 
-Depending on the router model, different Quickset modes are available from the Quickset dropdown menu:
+Depending on the router model, different Quick Set modes are available from the Quick Set dropdown menu:
 
 - **CAP**: Controlled Access Point, an AP device that is managed by a centralized [CAPsMAN](../wireless/abgn/capsman) server. Only use if you have already set up a CAPsMAN server.
 - **CPE**: Client device, which connects to an Access Point (AP) device. Provides an option to scan for AP devices in your area.
@@ -112,18 +112,22 @@ Leave **Reset Configuration** alone during ordinary setup: it resets the router 
 
 ## FAQ
 
-### Q: How is Quickset different from the Webfig tab, where a bunch of new menus appear?
+### Q: How is Quick Set different from the Webfig tab, where a bunch of new menus appear?
 
-A: QuickSet is for new users who only need their device up and running in no time. It provides the most commonly used options in one place. If you need more options, do not use any QuickSet settings at all; select "Webfig" to open the advanced configuration interface. The full functionality is unlocked.
+A: Quick Set is for new users who only need their device up and running in no time. It provides the most commonly used options in one place. If you need more options, do not use any Quick Set settings at all; select "Webfig" to open the advanced configuration interface. The full functionality is unlocked.
 
-### Q: Can I use Quickset and Webfig together?
+### Q: Can I use Quick Set and Webfig together?
 
-A: If you are going to use Quickset, use only Quickset and vice versa. While settings that are not conflicting can be configured this way, it is not recommended to mix up these menus. What is the difference between Router and Bridge mode? Bridge mode adds all interfaces to the bridge, allowing forwarding of Layer2 packets (acts as a hub/switch). In Router mode, packets are forwarded in Layer3 by using IP addresses and IP routes (acts as a router).
+A: If you are going to use Quick Set, use only Quick Set and vice versa. While settings that are not conflicting can be configured this way, it is not recommended to mix up these menus.
+
+### Q: What is the difference between Router and Bridge mode?
+
+A: Bridge mode adds all interfaces to the bridge, allowing forwarding of Layer2 packets (acts as a hub/switch). In Router mode, packets are forwarded in Layer3 by using IP addresses and IP routes (acts as a router).
 
 ### Q: In HomeAP mode, should the 2GHz and 5GHz network names be the same, or different?
 
 A: If you prefer that all your client devices, like TVs, phones, game consoles, automatically select the best preferred network, set the names identical. If you want to force a client device to use the faster 5GHz 802.11ac connection, set the names unique.
 
-### Q: Can I create an AP without security settings - no password or connect to such AP while using QuickSet?
+### Q: Can I create an AP without security settings - no password or connect to such AP while using Quick Set?
 
-A: QuickSet uses WPA2 pre-shared key by default. This means that the minimal password length is 8 symbols and the device can only connect to a WPA2 secured AP or serve as an AP itself. For configurations with no security settings, you need to configure them manually by using WinBox, Webfig, or console.
+A: Quick Set uses WPA2 pre-shared key by default. This means that the minimal password length is 8 symbols and the device can only connect to a WPA2 secured AP or serve as an AP itself. For configurations with no security settings, you need to configure them manually by using WinBox, Webfig, or console.

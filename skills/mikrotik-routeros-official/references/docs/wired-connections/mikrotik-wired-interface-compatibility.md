@@ -314,7 +314,7 @@ The negotiated speed is highly dependent on the quality and length of the cables
 **Important:** S+RJ10 to S+RJ10 will always negotiate to the highest possible rate.
 :::
 
-The latest revision of S+RJ10 contains "/r2" by the end of the serial number. It comes with the following improvements:
+The revision of S+RJ10 that contains "/r2" at the end of the serial number comes with the following improvements:
 
 - Jumbo frames up to 10218 Bytes at 2.5G, 5G and 10G speeds.
 - Actual link speed reporting.
@@ -328,6 +328,12 @@ The latest revision of S+RJ10 contains "/r2" by the end of the serial number. It
 | 1000Mbps | 1504 |
 | 100Mbps | 1504 |
 | 10Mbps | 1504 |
+
+The latest revision of S+RJ10 contains "/r3" at the end of the serial number. It comes with the following improvements:
+
+- Lower power consumption, 1.5 W max.
+- 10GBASE-T, 100 m link.
+- Jumbo frames support on all advertised speeds.
 
 ### CRS312-4C+8XG
 

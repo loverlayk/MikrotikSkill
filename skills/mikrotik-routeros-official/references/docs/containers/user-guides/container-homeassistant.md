@@ -1,126 +1,123 @@
 # Container - HomeAssistant
 
-> This page introduces the container feature in MikroTik RouterOS, enabling users to run servers like HomeAssistant directly on the router. It provides step-by-step instructions for enabling container mode, configuring...
+> Run Home Assistant in a RouterOS container: network, configuration mount, time zone, image download, first start and resource use.
 
 # Container - HomeAssistant
 
-The introduction of the **container** feature in RouterOS made it possible to run a wide variety of servers directly on the router. This is especially valuable for users who want to minimize the number of devices in their network. Instead of deploying a server on a separate machine, you can now host it inside the router itself.
+## Introduction
 
-In this guide we will demonstrate how to install and run a **Home‑Assistant** server on RouterOS.
+With containers, RouterOS can run servers that would otherwise need a separate device or machine on your network.
 
-Home‑Assistant is a popular platform for collecting data from numerous sensors and offers extensive support for a wide range of **integrations**.
+[Home Assistant](https://www.home-assistant.io/) is a home automation platform: it collects data from sensors and controls devices through a large number of integrations. This guide runs Home Assistant in a container on the router and opens its web interface.
+
+The image is [homeassistant/home-assistant on Docker Hub](https://hub.docker.com/r/homeassistant/home-assistant). Check its [tags](https://hub.docker.com/r/homeassistant/home-assistant/tags) for the architectures it is available for; at the time of writing, these are ARM64 and AMD64 (CHR and x86).
 
 ## Summary
 
-Before proceeding with the configuration, ensure that you have studied our [container](../) guide. Additionally, review the [disclaimer](../#disclaimer) and [requirements](../#requirements) section to understand all associated risks and any necessary steps you may need to take.
+Read the [container](../) guide first, especially the [disclaimer](../#disclaimer) and the [requirements](../#requirements): the `container` package must be installed and containers enabled in device-mode.
 
-You can find supported architectures in the [link](https://hub.docker.com/r/homeassistant/home-assistant/tags).
-
-At the time this guide was published, the **home-assistant** image was available for ARM64 and AMD64 (CHR and x86) devices.
-
-Based on the information from the [Home Assistant website](https://www.home-assistant.io/installation/linux/), the recommended requirements are:
-
-- 2 GB RAM
-- 32 GB Storage
-
-But we will try to run it on lower spec device.
+Home Assistant needs more resources than most containers. The image takes about 650 MiB to download and about 2.3 GiB after extraction; keep about 3 GB free on the disk for the installation. This example extracts it to an external disk, `disk1`. When it runs without integrations, it uses about 500 MB of RAM (see [Resources](#resources)).
 
 ## Container configuration
 
-**Sub-menu:** `/container`
-
-***note**:* The **container** package is required.
-
-### Container mode
-
-Enable container mode:
-
-```ros
-/system/device-mode/update container=yes
-```
-
-You will need to confirm the device-mode with a press of the reset button, or a cold reboot, if using a container on X86.
-
 ### Networking
 
-Add veth interface:
+Add a veth interface for the container:
 
-```ros
-/interface/veth/add name=veth2 address=172.19.0.2/24 gateway=172.19.0.1
+```routeros
+/interface/veth/add name=veth4 address=172.21.0.2/24 gateway=172.21.0.1
 ```
 
-Create a bridge for the container and add the veth interface to it:
+Create a bridge for the container, give it an address, and add the veth interface to it:
 
-```ros
+```routeros
 /interface/bridge/add name=ha
-/ip/address/add address=172.19.0.1/24 interface=ha
-/interface/bridge/port/add bridge=ha interface=veth2
+/ip/address/add address=172.21.0.1/24 interface=ha
+/interface/bridge/port/add bridge=ha interface=veth4
 ```
 
-Forward TCP 8123 for home-assistant management (where 192.168.88.1 is the device's LAN IP address) if NAT is required (optional):
+Home Assistant uses internet services, for example to check for alerts. Add NAT for its outgoing traffic:
 
-```ros
-/ip/firewall/nat/add action=dst-nat chain=dstnat dst-address=192.168.88.1 dst-port=8123 protocol=tcp to-addresses=172.19.0.2 to-ports=8123
+```routeros
+/ip/firewall/nat/add chain=srcnat action=masquerade src-address=172.21.0.0/24
 ```
 
-### Environment variables and mounts
+Without this rule, Home Assistant still starts and serves its web interface, but the log shows errors such as `Cannot connect to host alerts.home-assistant.io:443`.
 
-Per the home-assistant documentation, define mounts for the configuration files (where `/usb1` is our external USB storage folder):
+### Configuration mount and time zone
 
-```ros
-/container/mounts/add dst=/config list=ha_config src=/usb1/ha_config
+Home Assistant keeps its configuration in the `/config` folder. Mount a folder on the disk there, so that the configuration is kept when the container is removed or updated:
+
+```routeros
+/container/mounts/add list=ha_config src=disk1/ha_config dst=/config
 ```
 
-Create an environment variable for home-assistant:
+Set the time zone with the `TZ` environment variable; use your own [time zone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones):
 
-```ros
-/container/envs/add key=TZ list=ha_env value=America/Los_Angeles
+```routeros
+/container/envs/add list=ha_env key=TZ value=America/Los_Angeles
 ```
 
-### Getting image
+### Image
 
-To simplify the configuration, we will get the images from an external library.
+This example downloads the image from Docker Hub (see [Registry](../#registry)); you can also import it from a [.tar](../#option-b-import-image-from-pc) file. Set the directory where the downloaded image is extracted:
 
-Make sure that you have "Registry URL" set accordingly, limit RAM usage (if necessary), and set up a directory for the images:
-
-```ros
-/container/config/set registry-url=https://registry-1.docker.io tmpdir=/usb1/pull
+```routeros
+/container/config/set tmpdir=disk1/pull
 ```
 
-Pull the home-assistant image and wait for it to be extracted:
+Add the container:
 
-```ros
-/container/add remote-image=homeassistant/home-assistant:latest interface=veth2 root-dir=/usb1/ha mountlists=ha_config envlists=ha_env logging=yes
+```routeros
+/container/add remote-image=homeassistant/home-assistant:latest \
+    interface=veth4 root-dir=disk1/ha mountlists=ha_config \
+    envlists=ha_env logging=yes name=homeassistant
 ```
 
-After running the command, RouterOS should start "extracting" the package. Check "File System" for newly created folders and monitor container status with the command `/container/print`.
+RouterOS downloads and extracts the image, which takes several minutes. Check the progress with `/container/print`; when the extraction is done, the container status is `stopped`.
 
-### Starting the container
+### Start the container
 
-After you make sure that the container has been added and the status has changed to `status=stopped` after using `/container/print` → you can initiate it:
-
-```ros
-/container/start 0
+```routeros
+/container/start [find where name=homeassistant]
 ```
 
-### Home-Assistant setup
+On the first start, Home Assistant creates its configuration files in `disk1/ha_config`. It takes a few minutes before the web interface answers.
 
-Open your preferred web browser and access the Home-Assistant management portal by specifying the management port ":8123":
+## Home Assistant setup
 
-![](./img/container-homeassistant-01.webp)
+Open the web interface in a browser at `http://172.21.0.2:8123`. Devices in the router's LAN reach the container network through the router.
 
-Proceed with the setup. More information is explained in the [Home-Assistant onboarding guide](https://www.home-assistant.io/getting-started/onboarding/).
+To open it at the router's LAN address instead, forward TCP port 8123 to the container (`192.168.88.1` is the router's LAN address):
+
+```routeros
+/ip/firewall/nat/add chain=dstnat action=dst-nat dst-address=192.168.88.1 \
+    dst-port=8123 protocol=tcp to-addresses=172.21.0.2 to-ports=8123
+```
+
+Then open `http://192.168.88.1:8123`.
+
+The first page starts the onboarding:
+
+![Home Assistant onboarding page](./img/container-homeassistant-01.webp)
+
+Create the owner account and continue as described in the [Home Assistant onboarding guide](https://www.home-assistant.io/getting-started/onboarding/).
 
 ## Resources
 
-Just running **Home Assistant** (without any load/traffic) takes up ~300-400 MB of RAM:
+The [Home Assistant website](https://www.home-assistant.io/installation/linux/) lists 2 GB of RAM and two CPU cores as the minimum for running Home Assistant in a virtual machine. In a container, Home Assistant without integrations uses about 500 MB of RAM. Check the container's memory use with `/container/print`:
 
-```ros
-/system/resource/print
-                   uptime: 4m27s
-                  version: 7.13.3 (stable)
-               build-time: 2024-01-24 13:16:46
-         factory-software: 7.10
-              free-memory: 143.0MiB
-             total-memory: 448.0MiB
+```routeros
+/container/print proplist=name,memory-current,container-size where name=homeassistant
 ```
+
+```text
+Flags: R - RUNNING
+Columns: NAME, MEMORY-CURRENT, CONTAINER-SIZE
+#   NAME           MEMORY-CURRENT  CONTAINER-SIZE
+0 R homeassistant  478.2MiB        2318.3MiB     
+```
+
+To limit the container's memory, set `memory-high` or `memory-max` (see [Memory](../#memory)).
+
+For the commands used in this guide, see [`/container`](../../cli-reference/container/container.md), [`/container/config`](../../cli-reference/container/config), [`/container/mounts`](../../cli-reference/container/mounts) and [`/container/envs`](../../cli-reference/container/envs).

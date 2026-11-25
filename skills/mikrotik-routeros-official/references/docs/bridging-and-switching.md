@@ -290,37 +290,7 @@ In case you want to assign Simple Queues or global Queue Trees to traffic that i
 
 The Port submenu is used to add interfaces in a particular bridge.
 
-**Sub-menu:** `/interface/bridge/port`
-
-| Property | Description |
-| :-- | :-- |
-| **auto-isolate** (*yes \| no*; Default: **no**) | When enabled, it prevents a port from moving from discarding state into forwarding state if no BPDUs are received from the neighboring bridge. The port will change into a forwarding state only when a BPDU is received. This property only has an effect when `protocol-mode` is set to `rstp` or `mstp` and `edge` is set to `no`. |
-| **bpdu-guard** (*yes \| no*; Default: **no**) | Enables or disables the BPDU Guard feature on a port. This feature puts the port in a disabled role if it receives a BPDU and requires the port to be manually disabled and enabled if a BPDU is received. It should be used to prevent a bridge from BPDU-related attacks. This property has no effect when `protocol-mode` is set to `none`. |
-| **bridge** (*name*; Default: **none**) | The bridge interface where the respective interface is grouped. |
-| **broadcast-flood** (*yes \| no*; Default: **yes**) | When enabled, the bridge floods broadcast traffic to all bridge egress ports. When disabled, the bridge drops broadcast traffic on egress ports. It can be used to filter all broadcast traffic on an egress port. Broadcast traffic is considered as traffic that uses **FF:FF:FF:FF:FF:FF** as the destination MAC address. Such traffic is crucial for many protocols such as DHCP, ARP, NDP, BOOTP (Netinstall), and others. This option does not limit traffic flood to the CPU. |
-| **edge** (*auto \| no \| no-discover \| yes \| yes-discover*; Default: **auto**) | Set a port as an edge port or a non-edge port, or enable edge discovery. Edge ports are connected to a LAN that has no other bridges attached. An edge port will skip the learning and the listening states in STP and will transition directly to the forwarding state. This reduces the STP initialization time. If the port is configured to discover an edge port, then as soon as the bridge detects a BPDU coming to an edge port, the port becomes a non-edge port. This property has no effect when `protocol-mode` is set to `none`.<code>no</code> - non-edge port with disabled discovery. It will participate in learning and listening states in STP. It will not transition to the forwarding state until it exchanges BPDUs and reaches agreement with the connected bridge. If no BPDU is received, the port may remain in a non-forwarding state indefinitely.<code>no-discover</code> - non-edge port with enabled discovery. It will participate in learning and listening states in STP. A port can become an edge port if no BPDU is received.<code>yes</code> - edge port without discovery. It will transition directly to forwarding state.<code>yes-discover</code> - edge port with enabled discovery. It will transition directly to forwarding state.<code>auto</code> - same as <code>no-discover</code>, but will additionally detect if a bridge port is a Wireless interface with disabled bridge-mode. Such an interface will be automatically set as an edge port without discovery. |
-| **fast-leave** (*yes \| no*; Default: **no**) | Enables the IGMP/MLD fast leave feature on the bridge port. The bridge will stop forwarding multicast traffic to a bridge port when an IGMP/MLD leave message is received. This property only has an effect when `igmp-snooping` is set to `yes`. |
-| **frame-types** (*admit-all \| admit-only-untagged-and-priority-tagged \| admit-only-vlan-tagged*; Default: **admit-all**) | Specifies allowed ingress frame types on a bridge port. This property only has an effect when `vlan-filtering` is set to `yes`. |
-| **ingress-filtering** (*yes \| no*; Default: **yes**) | Enables or disables VLAN ingress filtering, which checks if the ingress port is a member of the received VLAN ID in the bridge VLAN table. Should be used with `frame-types` to specify if the ingress traffic should be tagged or untagged. This property only has an effect when `vlan-filtering` is set to `yes`. The setting is enabled by default since RouterOS v7. |
-| **learn** (*auto \| no \| yes*; Default: **auto**) | Changes MAC learning behavior on a bridge port<code>yes</code> - enables MAC learning<code>no</code> - disables MAC learning<code>auto</code> - detects if the bridge port is a Wireless interface and uses a Wireless registration table instead of MAC learning, will use the Wireless registration table if the Wireless interface is set to one of <code>ap-bridge</code>, <code>bridge</code>, <code>wds-slave</code> mode and bridge mode for the Wireless interface is disabled. |
-| **multicast-router** (*disabled \| permanent \| temporary-query*; Default: **temporary-query**) | A multicast router port is a port where a multicast router or querier is connected. On this port, unregistered multicast streams and IGMP/MLD membership reports will be sent. This setting changes the state of the multicast router for bridge ports. This property can be used to send IGMP/MLD membership reports to certain bridge ports for further multicast routing or proxying. This property only has an effect when `igmp-snooping` is set to `yes`.<code>disabled</code> - disabled multicast router state on the bridge port. Unregistered multicast and IGMP/MLD membership reports are not sent to the bridge port regardless of what is connected to it.<code>permanent</code> - enabled multicast router state on the bridge port. Unregistered multicast and IGMP/MLD membership reports are sent to the bridge port regardless of what is connected to it.<code>temporary-query</code> - automatically detect multicast router state on the bridge port using IGMP/MLD queries. |
-| **horizon** (*integer 0..429496729*; Default: **none**) | Use split horizon bridging to prevent bridging loops. Set the same value for a group of ports, to prevent them from sending data to ports with the same horizon value. Split horizon is a software feature that disables hardware offloading. |
-| **hw** (*yes \| no*; Default: **yes**) | Allows enabling or disabling [hardware offloading](index.md#bridge-hardware-offloading) on interfaces capable of HW offloading. For software interfaces like [EoIP](../virtual-private-networks/eoip.md) or [VLAN](./vlan.md), this setting is ignored and has no effect. Certain bridge or port functions can automatically disable HW offloading, use the `print` command to see whether the "H" flag is active. |
-| **internal-path-cost** (*integer: 1..200000000*; Default: ) | Path cost to the interface for MSTI0 inside a region. If not manually configured, the bridge automatically determines the internal-path-cost based on the interface speed and the `port-cost-mode` setting. To revert to the automatic determination and remove any manually applied value, simply use an exclamation mark before the `internal-path-cost` property. This property only has an effect when `protocol-mode` is set to `mstp`.  `/interface/bridge/port/set [find interface=sfp28-1] !internal-path-cost`  Use [port monitor](index.md#bridge-port-monitoring) to observe the applied internal-path-cost.  |
-| **interface** (*name*; Default: **none**) | Name of the interface or interface list. |
-| **path-cost** (*integer: 1..200000000*; Default: ) | Path cost to the interface, used by STP and RSTP to determine the best path, and used by MSTP to determine the best path between regions. If not manually configured, the bridge automatically determines the path-cost based on the interface speed and the `port-cost-mode` setting. To revert to the automatic determination and remove any manually applied value, simply use an exclamation mark before the `path-cost` property. This property has no effect when `protocol-mode` is set to `none`.  `/interface/bridge/port/set [find interface=sfp28-1] !path-cost`  Use [port monitor](index.md#bridge-port-monitoring) to observe the applied path-cost.  |
-| **point-to-point** (*auto \| yes \| no*; Default: **auto**) | Specifies if a bridge port is connected to a bridge using a point-to-point link for faster convergence in case of failure. By setting this property to `yes`, you are forcing the link to be a point-to-point link, which will skip the checking mechanism, which detects and waits for BPDUs from other devices on this single link. By setting this property to `no`, you are expecting that a link can receive BPDUs from multiple devices. By setting the property to `yes`, you are significantly improving (R/M)STP convergence time. In general, you should only set this property to `no` if it is possible that another device can be connected to a link. This is mostly relevant to Wireless mediums and Ethernet hubs. If the Ethernet link is full-duplex, `auto` enables point-to-point functionality. This property has no effect when `protocol-mode` is set to `none`. |
-| **priority** (*0x00 \| 0x10 \| 0x20 \| 0x30 \| 0x40 \| 0x50 \| 0x60 \| 0x70 \| 0x80 \| 0x90 \| 0xa0 \| 0xb0 \| 0xc0 \| 0xd0 \| 0xe0 \| 0xf0*; Default: **0x80**) | The priority of the interface, used by STP to determine the root port, used by MSTP to determine the root port between regions. Must be set in steps of 16 (0x10). |
-| **pvid** (*integer 1..4094*; Default: **1**) | Port VLAN ID (pvid) specifies which VLAN the untagged ingress traffic is assigned to. This property only has an effect when `vlan-filtering` is set to `yes`. |
-| **restricted-role** (*yes \| no*; Default: **no**) | Enables or disables the restricted role on a port. When enabled, it prevents the port from becoming the root port for the CIST or any MSTI, regardless of its best spanning tree priority vector. Such a port will be selected as an Alternate Port (discarding state) and remains so as long as it continues to receive superior BPDUs. It will automatically transition to the forwarding state when it no longer detects a superior root path. Network administrators may enable this setting to safeguard against external bridges influencing the active spanning tree, a feature also known as root-guard or root-protection. This property has an effect when `protocol-mode` is set to `stp`, `rstp`, or `mstp` (support for STP and RSTP is available since RouterOS v7.14). |
-| **restricted-tcn** (*yes \| no*; Default: **no**) | Enables or disables topology change notification (TCN) handling on a port. When enabled, it causes the port not to propagate received topology change notifications to other ports, and any changes caused by the port itself do not result in topology change notification to other ports. This parameter is disabled by default. It can be set by a network administrator to prevent external bridges from causing MAC address flushing in the local network. This property has an effect when `protocol-mode` is set to `stp`, `rstp`, or `mstp` (support for STP and RSTP is available since RouterOS v7.14). |
-| **tag-stacking** (*yes \| no*; Default: **no**) | Forces all packets to be treated as untagged packets. Packets on the ingress port will be tagged with another VLAN tag regardless of whether a VLAN tag already exists. Packets will be tagged with a VLAN ID that matches the `pvid`value and will use EtherType that is specified in `ether-type`. This property only has an effect when `vlan-filtering` is set to `yes`. |
-| **trusted** (*yes \| no*; Default: **no**) | When enabled, it allows forwarding DHCP packets towards the DHCP server through this port. Mainly used to prevent unauthorized servers from providing malicious information for users. This property only has an effect when `dhcp-snooping` is set to `yes`. |
-| **trusted-arp** (*yes \| no*; Default: **no**) | When enabled, ARP packets arriving on this port are forwarded without validation against the DHCP snooping binding database. When disabled, ARP packets arriving on this port are validated against the DHCP snooping binding database and packets whose sender MAC–IP pair does not match a binding entry are dropped. This property only has an effect when `arp-inspection` is set to `yes`. |
-| **trusted-dhcpv6** (*yes \| no*; Default: **no**) | When enabled, it allows forwarding DHCPv6 packets towards the DHCP server through this port. Mainly used to prevent unauthorized servers from providing malicious information for users. This property only has an effect when `dhcpv6-snooping` is set to `yes`. |
-| **trusted-ra** (*yes \| no*; Default: **no**) | Specifies whether the port is permitted to forward IPv6 Router Advertisement messages; set to **yes** for ports connected to legitimate routers and **no** to block unauthorized sources. This property only has an effect when `ra-guard` is set to `yes`. |
-| **unknown-multicast-flood** (*yes \| no*; Default: **yes**) | Changes the multicast flood option on the bridge port and only controls the egress traffic. When enabled, the bridge allows flooding multicast packets to the specified bridge port, but when disabled, the bridge restricts multicast traffic from being flooded to the specified bridge port. The setting affects all multicast traffic. This includes non-IP, IPv4, IPv6 and the link-local multicast ranges (e.g. 224.0.0.0/24 and ff02::1).  Note that when `igmp-snooping` is enabled and an IGMP/MLD querier is detected, the bridge will automatically restrict unknown IP multicast from being flooded, so the setting is not mandatory for IGMP/MLD snooping setups.  When using this setting together with `igmp-snooping`, the only multicast traffic that is allowed on the bridge port is the known multicast from the MDB table. |
-| **unknown-unicast-flood** (*yes \| no*; Default: **yes**) | Changes the unknown unicast flood option on the bridge port and only controls the egress traffic. When enabled, the bridge allows flooding unknown unicast packets to the specified bridge port, but when disabled, the bridge restricts unknown unicast traffic from being flooded to the specified bridge port.  If a MAC address is not learned in the host table, then the traffic is considered unknown unicast traffic and will be flooded to all ports. MAC address is learned as soon as a packet on a bridge port is received and the source MAC address is added to the bridge host table. Since it is required for the bridge to receive at least one packet on the bridge port to learn the MAC address, it is recommended to use static bridge host entries to avoid packets being dropped until the MAC address has been learned. |
+For all bridge port properties, their defaults and their values, see the [bridge port CLI reference](../cli-reference/interface/bridge/port/).
 
 :::info
 RouterOS can handle a maximum of 1024 bridged interfaces per bridge; this limit is fixed and cannot be modified. If you try to add more interfaces as bridge ports, it may lead to unpredictable behavior.
@@ -491,41 +461,7 @@ Columns: BRIDGE, VLAN-IDS, CURRENT-TAGGED, CURRENT-UNTAGGED
 
 To monitor the current status of bridge ports, use the `monitor` command.
 
-**Sub-menu:** `/interface/bridge/port/monitor`
-
-| Property | Description |
-| :-- | :-- |
-| **actual-path-cost** (*integer: 1..200000000*) | Shows the actual port path-cost. Either manually applied or automatically determined based on the interface speed and the `port-cost-mode` setting. |
-| **declared-vlan-ids** (*integer 1..4094*) | VLANs declared by the interface via [MVRP Protocol](./index.md#mvrp). |
-| **designated-bridge-id** (*priority.MAC address*) | Shows the designated bridge identifier, as determined from the port's priority vector. |
-| **designated-cost** (*integer*) | Shows the designated root-path-cost, as determined from the port's priority vector. |
-| **designated-internal-cost** (*integer*) | Shows the designated internal-root-path-cost, as determined from the port's priority vector. |
-| **designated-message-age**(*time)* | Shows the designated message age, as determined from the port's priority vector. |
-| **designated-max-age** (*time)* | Shows the designated max age, as determined from the port's priority vector. The BPDU packet can pass as many bridges as specified in the `max-message-age` parameter. |
-| **designated-port-id** (*priority*.*integer*) | Shows the designated port identifier, as determined from the port's priority vector. |
-| **designated-remaining-hops** (*integer*) | Shows the designated remaining hops, as determined from the port's priority vector. Number of hops that a packet is allowed to traverse before reaching its destination. |
-| **discard-transitions** (*integer*) | Counter, registering how often port transitions into discarding state. |
-| **edge-port** (*yes \| no*) | Whether the port is an edge port or not. |
-| **edge-port-discovery** (*yes \| no*) | Whether the port is set to automatically detect edge ports. |
-| **external-fdb** (*yes \| no*) | Whether the registration table is used instead of a forwarding database. |
-| **forwarding** (*yes \| no*) | Shows if the port is not blocked by (R/M)STP. |
-| **forward-transitions** (*integer*) | Counter, registering how often port transitions into forwarding state |
-| **host-moves** (*integer*) | Counter, registering how often a host's MAC address was moved to this port. |
-| **hw-offload-group** (*switchX*) | Switch chip used by the port. |
-| **interface** (*name*) | Interface name. |
-| **last-topology-change** (*time)* | Last topology change timer, records time since the last change. |
-| **learning** (*yes \| no*) | Shows whether the port is capable of learning MAC addresses. |
-| **multicast-router** (*yes \| no*) | Shows if a multicast router is detected on the port. Monitoring value appears only when `igmp-snooping` is enabled. |
-| **registered-vlan-ids** (*integer 1..4094*) | VLANs where the interface is registered via [MVRP Protocol](./index.md#mvrp). |
-| **port-id** (*priority*.*integer*) | In Spanning Tree Protocol each port has a unique Port Identifier. Priority[hex] + port number. |
-| **point-to-point-port** (*yes \| no*) | Whether the port is connected to a bridge port using full-duplex (yes) or half-duplex (no). |
-| **role** (*designated \| root-port \| alternate \| backup \| disabled*) | (R/M)STP algorithm assigned port role: <code>disabled-port</code> - disabled or inactive port.<code>root-port</code> - port that is facing towards the root bridge and has the best (lowest cost) path to the root bridge. Only one root port is elected per bridge (except the root bridge itself).<code>alternative-port</code> - port that is facing towards the root bridge, but is not going to forward traffic. Port provides a backup path to the root bridge if the current root port fails.<code>designated-port</code> - port that is facing away from the root bridge and forwards traffic away from the root bridge to downstream devices.<code>backup-port</code> - port that is facing away from the root bridge, but is going to forward traffic. Port that serves as a backup for a designated port on the same segment. In RouterOS, the **role** monitoring property displays RSTP roles, such as `alternate-port` and `backup-port`, even when STP mode is enabled. While this is technically incorrect, it does not affect the operation of STP. This is because STP treats all blocked ports the same, without differentiating their purpose (e.g., as potential backup paths). The displayed roles are simply a reflection of RSTP functionality and have no practical impact when STP is in use. See more details on [STP and RSTP page](./user-guides/spanning-tree-protocol.md#stp-and-rstp). |
-| **root-path-cost** (*integer*) | The total cost of the path to the root-bridge. |
-| **sending-rstp** (*yes \| no*) | Whether the port is using RSTP or MSTP BPDU types. A port will transit to STP type when RSTP/MSTP enabled port receives an STP BPDU. This setting **does not** indicate whether the BPDUs are actually sent. |
-| **status** (*in-bridge \| inactive*) | Port status:<code>in-bridge</code> - port is enabled<code>inactive</code> - port is disabled. |
-| **tx-rx-bpdu** (*integer*) | Sent/received bpdu messages counter. |
-| **tx-rx-tc** (*integer*) | Topology change messages transmitted/received. |
-| **topology-changes** (*integer*) | Topology change counter. |
+For all monitored port fields and their meanings, see the [bridge port monitor CLI reference](../cli-reference/interface/bridge/port/monitor).
 
 ```ros
 [admin@MikroTik] /interface/bridge/port/monitor [find interface=ether1] 
@@ -565,18 +501,7 @@ To monitor the current status of bridge ports, use the `monitor` command.
 
 The hosts table displays MAC addresses that have been learned on a bridge interface. This table also shows various flags that provide additional information about each host entry. Access the hosts table through the `/interface/bridge/host` submenu.
 
-**Sub-menu:** `/interface/bridge/host`
-
-| Property | Description |
-| :-- | :-- |
-| **bridge** (*read-only: name*) | The bridge to which the host entry belongs |
-| **disabled** (*read-only: flag*) | Indicates whether the static host entry is disabled |
-| **dynamic** (*read-only: flag*) | Indicates whether the host was dynamically learned |
-| **external** (*read-only: flag*) | Indicates whether the host was learned from an external table, such as a switch chip or Wireless registration table. Static host entries added on hardware-offloaded bridge ports do not display this flag |
-| **invalid** (*read-only: flag*) | Indicates whether the host entry is invalid. This flag may appear for statically configured hosts on an interface that has been removed |
-| **local** (*read-only: flag*) | Indicates whether the host entry was created from the bridge itself, which displays all local interfaces |
-| **mac-address** (*read-only: MAC address*) | The MAC address of the host |
-| **on-interface** (*read-only: name*) | The bridge port to which the host is connected |
+For all host table properties, flags, and their descriptions, see the [bridge host CLI reference](../cli-reference/interface/bridge/host).
 
 ### Monitoring
 
@@ -590,31 +515,23 @@ Flags: X - disabled, I - invalid, D - dynamic, L - local, E - external
 1   D   B8:69:F4:C9:EE:D8      ether2                  bridge1
 2   DL  CC:2D:E0:E4:B3:38      bridge1                 bridge1
 3   DL  CC:2D:E0:E4:B3:39      ether2                  bridge1
+4   DE  AA:BB:CC:00:00:09      ether2                  bridge1
 ```
 
 The output shows:
 
 - **D** flag: Dynamically learned MAC addresses
 - **DL** flag: Local interface MAC addresses (the bridge itself and its ports interfaces)
+- **DE** flag: Dynamically learned MAC addresses that were also learned from an external table, such as the switch chip or a Wireless registration table
 - **VID**: VLAN ID associated with the host entry
 - **ON-INTERFACE**: The bridge port where the host was learned
 - **BRIDGE**: The bridge interface the host belongs to
 
 ### Static Entries
 
-The bridge host table supports static MAC address entries configuration. Static entries is useful in two primary scenarios: directing specific traffic through a designated port, and securing device resources by disabling dynamic MAC learning while relying solely on pre-configured static entries.
+The bridge host table supports static MAC address entries configuration. Static entries are useful in two primary scenarios: directing specific traffic through a designated port, and securing device resources by disabling dynamic MAC learning while relying solely on pre-configured static entries.
 
-The following table lists all configurable parameters for static MAC address entries:
-
-**Sub-menu:** `/interface/bridge/host`
-
-| Property | Description |
-| :-- | :-- |
-| **bridge** (*name*; Default: **none**) | The bridge interface to which the MAC address is assigned. |
-| **disabled** (*yes \| no*; Default: **no**) | Enables or disables the static MAC address entry. |
-| **interface** (*name*; Default: **none**) | Name of the interface where the MAC address traffic is forwarded. |
-| **mac-address** (*MAC address*; Default: ) | The MAC address to be added to the host table statically. |
-| **vid** (*integer: 1..4094*; Default: ) | VLAN ID associated with the static MAC address entry. |
+For all configurable parameters and their defaults, see the [bridge host CLI reference](../cli-reference/interface/bridge/host).
 
 **Example:** To forward all traffic destined for MAC address **4C:5E:0C:4D:12:43** exclusively through **ether2**, use the following command:
 
@@ -990,14 +907,7 @@ Improperly configured bridge VLAN filtering can cause security issues. Ensure yo
 
 Each bridge port has multiple VLAN-related settings that control untagged VLAN membership, VLAN tagging and untagging behavior, and packet filtering based on VLAN tag presence.
 
-**Sub-menu:** `/interface/bridge/port`
-
-| Property | Description |
-| :-- | :-- |
-| **frame-types** (*admit-all* | *admit-only-untagged-and-priority-tagged* | *admit-only-vlan-tagged*; Default: **admit-all**) | Specifies allowed ingress frame types on a bridge port. This property only has an effect when `vlan-filtering` is set to `yes`. |
-| **ingress-filtering** (*yes* | *no*; Default: **yes**) | Enables or disables VLAN ingress filtering, which checks if the ingress port is a member of the received VLAN ID in the bridge VLAN table. Should be used with `frame-types` to specify if the ingress traffic should be tagged or untagged. This property only has an effect when `vlan-filtering` is set to `yes`. The setting is enabled by default since RouterOS v7. |
-| **pvid** (*integer: 1..4094*; Default: **1**) | Port VLAN ID (pvid) specifies which VLAN the untagged ingress traffic is assigned to. This property only has an effect when `vlan-filtering` is set to `yes`. |
-| **tag-stacking** (*yes* | *no*; Default: **no**) | Forces all packets to be treated as untagged packets. Packets on the ingress port will be tagged with another VLAN tag regardless of whether a VLAN tag already exists; packets will be tagged with a VLAN ID that matches the `pvid` value and will use EtherType that is specified in `ether-type`. This property only has an effect when `vlan-filtering` is set to `yes`. |
+The VLAN-related port settings `frame-types`, `ingress-filtering`, `pvid` and `tag-stacking` are described in the [bridge port CLI reference](../cli-reference/interface/bridge/port/).
 
 ### Bridge host table
 
@@ -1420,14 +1330,7 @@ The point-to-point ports speed up the process of registration (or leaving). Manu
 | :-- | :-- |
 | **mvrp** (*yes* \| *no*; Default: **no**) | Enables MVRP for bridge. It ensures that the MAC address 01:80:C2:00:00:21 is trapped and not forwarded. The `vlan-filtering` must be enabled. |
 
-**Sub-menu:** `/interface/bridge/port`
-
-The port menu enables control over the applicant and registrar settings on a per-port basis.
-
-| Property | Description |
-| :-- | :-- |
-| **mvrp-applicant-state** (*non-participant \| normal-participant;* Default: **normal-participant**) | MVRP applicant options: non-participant - port does not send any MRP messages;normal-participant - port participates normally in MRP exchanges. |
-| **mvrp-registrar-state** (*fixed \| normal*; Default: **normal**) | MVRP registrar options: fixed - port ignores all MRP messages, and remains Registered (IN) in all configured vlans.normal - port receives MRP messages and handles them according to the standard. |
+The port menu controls the applicant and registrar settings on a per-port basis. The `mvrp-applicant-state` and `mvrp-registrar-state` properties are described in the [bridge port CLI reference](../cli-reference/interface/bridge/port/), and their monitoring fields in the [bridge port monitor CLI reference](../cli-reference/interface/bridge/port/monitor).
 
 To monitor the currently declared and registered VLAN IDs, use the `monitor` command.
 
@@ -1435,7 +1338,7 @@ To monitor the currently declared and registered VLAN IDs, use the `monitor` com
 [admin@MikroTik] > /interface/bridge/port/monitor [find interface=sfp-sfpplus1]
             interface: sfp-sfpplus1
                status: in-bridge
-          port-number: 1
+              port-id: 0x80.1
                  role: designated-port
             edge-port: no
   edge-port-discovery: yes
@@ -1658,6 +1561,12 @@ Enable IP Source Guard:
 
 ```ros
 /interface/bridge/set [find name="bridge1"] ip-source-guard=yes
+```
+
+To exempt a single access port from IP Source Guard while still rejecting DHCP server messages received on it, set `trusted-ipsg` instead of `trusted`:
+
+```ros
+/interface/bridge/port/set [find interface=ether5] trusted-ipsg=yes
 ```
 
 :::warning

@@ -333,7 +333,7 @@ With a private registry, add one more mount:
 
 ### RKE2 container
 
-The command starts the NTP daemon, the device manager, and then the RKE2 server:
+The command starts the NTP daemon, the device manager, and then the RKE2 server. `cmd` is a list with commas between its items: `/bin/bash`, `-c` and the script. `bash` gets the script as one argument, spaces included (see `cmd` in [`/container`](../../cli-reference/container/container.md)):
 
 ```ros
 /container/add \
@@ -353,7 +353,7 @@ healthcheck-retries=10 \
 healthcheck-start-interval="00:00:20" \
 healthcheck-start-period="00:03:00" \
 entrypoint="" \
-cmd="/bin/bash -c \"\
+cmd="/bin/bash,-c,\
   /usr/sbin/ntpd -c /mnt/rke2-ntp.conf && \
   /usr/lib/systemd/systemd-udevd --daemon && udevadm trigger --wait-daemon=20 && \
   /bin/rke2 server \
@@ -368,7 +368,7 @@ cmd="/bin/bash -c \"\
   --tls-san=rke2.k8s \
   --node-name=rke2.k8s \
   --ingress-controller=none \
-  --data-dir=/var/lib/rancher/rke2\"" \
+  --data-dir=/var/lib/rancher/rke2" \
 mountlists=RKE2_DATA,RKE2_ETC,RKE2_NTP_CONFIG \
 hostname=rke2.k8s
 ```

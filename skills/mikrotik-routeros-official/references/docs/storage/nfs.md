@@ -5,34 +5,40 @@
 # NFS
 
 :::info
-This feature requires the [Storage](./index.md) package.
+This feature requires the `rose-storage` package; see [Storage](./index.md).
 :::
 
-NFS allows sharing local directories over a network. RouterOS currently supports NFS v4-only mode.
+NFS shares the router's disks over the network, and mounts NFS shares of other devices as disks. The RouterOS NFS server supports NFS version 4 only; clients that use version 3 cannot mount it.
 
 :::warning
-
-NFS uses port TCP/2049. If the port is not available, in `/disk print detail` you will see the state stuck at `nfs-state="mounting"`.
-
+NFS uses TCP port 2049. If the port is not reachable, the NFS disk on the client is not mounted, and `state` in `/disk/print detail` shows the error, for example `state="Connection refused"`.
 :::
 
 ## Configuration example
 
-Host: enable NFS sharing of a mounted disk.
+On the host, enable NFS sharing of a mounted disk:
 
-```ros
-/disk/set pcie1-nvme1 nfs-sharing=yes
+```routeros
+/disk/set pcie1 nfs-sharing=yes
 ```
 
-Client: add a device of `type=nfs` that mounts the share.
+The host exports one tree, `/`, with a folder for each shared disk, named after the disk's mount point.
 
-```ros
+On a RouterOS client, add a disk of `type=nfs`. Without `nfs-share`, it mounts the whole tree, as the slot `nfs-<address>-`:
+
+```routeros
 /disk/add type=nfs nfs-address=192.168.1.1
 ```
 
-Linux client:
+With `nfs-share`, it mounts only the folder of one shared disk, as the slot `nfs-<address>-<share>`:
+
+```routeros
+/disk/add type=nfs nfs-address=192.168.1.1 nfs-share=pcie1
+```
+
+On a Linux client, mount the tree with NFS version 4:
 
 ```bash
 mkdir /mnt/files
-mount -t nfs 192.168.1.1:/ /mnt/files
+mount -t nfs4 192.168.1.1:/ /mnt/files
 ```

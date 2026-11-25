@@ -44,7 +44,7 @@ The number of neighbor entries is limited to (total RAM in megabytes) * 16 per i
 <ArgTableRow arg="system-description" typ="string">System description reported by the Link Layer Discovery Protocol (LLDP).</ArgTableRow>
 <ArgTableRow arg="system-caps" typ="ubit (other, repeater, bridge, wlan-ap, router, telephone, docsis-cable-device, station-only)">System capabilities reported by LLDP.</ArgTableRow>
 <ArgTableRow arg="system-caps-enabled" typ="ubit (other, repeater, bridge, wlan-ap, router, telephone, docsis-cable-device, station-only)">Enabled system capabilities reported by LLDP.</ArgTableRow>
-<ArgTableRow arg="discovered-by" typ="ubit (cdp, lldp, mndp)">Discovery protocols through which the neighbor was discovered.</ArgTableRow>
+<ArgTableRow arg="discovered-by" typ="ubit (cdp, lldp, mndp)">Discovery protocols through which the neighbor was discovered. A protocol is listed only while the neighbor still announces itself over it.</ArgTableRow>
 <ArgTableRow arg="running" typ="multi { array-id, cap: string
- }" unset="1">List of features running on the neighbor device. Currently lists only the CAPsMAN feature.</ArgTableRow>
+ }" unset="1">List of features running on the neighbor device, such as CAPsMAN or CMR. Shown from the MNDP announcement, so it disappears when the neighbor stops announcing over MNDP.</ArgTableRow>
 </ArgTable>

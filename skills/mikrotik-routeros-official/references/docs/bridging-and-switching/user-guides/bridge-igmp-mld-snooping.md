@@ -47,13 +47,7 @@ This section describes the IGMP and MLD snooping bridge configuration options.
 | **startup-query-count** (*integer: 0..4294967295*; Default: **2**) | Specifies how many times general IGMP/MLD queries must be sent when the bridge interface is enabled or active querier times out. This property only has an effect when `igmp-snooping` and `multicast-querier` are set to `yes`. |
 | **startup-query-interval** (*time*; Default: **31s250ms**) | Specifies the interval between startup general IGMP/MLD queries. This property only has an effect when `igmp-snooping` and `multicast-querier` are set to `yes`. |
 
-**Sub-menu:** `/interface/bridge/port`
-
-| Property | Description |
-| :-- | :-- |
-| **fast-leave** (*yes \| no*; Default: **no**) | Enables IGMP/MLD fast leave feature on the bridge port. The bridge will stop forwarding multicast traffic to a bridge port when an IGMP/MLD leave message is received. This property only has an effect when `igmp-snooping` is set to `yes`. |
-| **multicast-router** (*disabled \| permanent \| temporary-query*; Default: **temporary-query**) | A multicast router port is a port where a multicast router or querier is connected. On this port, unregistered multicast streams and IGMP/MLD membership reports will be sent. This setting changes the state of the multicast router for bridge ports. This property can be used to send IGMP/MLD membership reports and multicast streams to certain bridge ports for further multicast routing or proxying. This property only has an effect when `igmp-snooping` is set to `yes`.<code>disabled</code> - disabled multicast router state on the bridge port. Unregistered multicast streams and IGMP/MLD membership reports are not sent to the bridge port regardless of what is connected to it.<code>permanent</code> - enabled multicast router state on the bridge port. Unregistered multicast and IGMP/MLD membership reports are sent to the bridge port regardless of what is connected to it.<code>temporary-query</code> - automatically detect multicast router state on the bridge port using IGMP/MLD queries. |
-| **unknown-multicast-flood** (*yes \| no*; Default: **yes**) | Changes the multicast flood option on the bridge port. It only controls the egress traffic. When enabled, the bridge allows flooding multicast packets to the specified bridge port, but when disabled, the bridge restricts multicast traffic from being flooded to the specified bridge port. The setting affects all multicast traffic. This includes non-IP, IPv4, IPv6, and the link-local multicast ranges (e.g. 224.0.0.0/24 and ff02::1).  Note that when `igmp-snooping` is enabled and an IGMP/MLD querier is detected, the bridge will automatically restrict unknown IP multicast from being flooded, so the setting is not mandatory for IGMP/MLD snooping setups.  When using this setting together with `igmp-snooping`, the only multicast traffic that is allowed on the bridge port is the known multicast from the MDB table. |
+The `fast-leave`, `multicast-router` and `unknown-multicast-flood` properties are described in the [bridge port CLI reference](../../cli-reference/interface/bridge/port/).
 
 **Sub-menu:** `/interface/bridge/mdb`
 
@@ -128,17 +122,13 @@ To monitor the current status of a bridge interface, use the `monitor` command.
 
 To monitor the current status of bridge ports, use the `monitor` command.
 
-**Sub-menu:** `/interface/bridge/port`
-
-| Property | Description |
-| :-- | :-- |
-| **multicast-router** (*yes \| no*) | Shows if a multicast router is detected on the port. Monitoring value appears only when `igmp-snooping` is enabled. |
+The `multicast-router` field is described in the [bridge port monitor CLI reference](../../cli-reference/interface/bridge/port/monitor).
 
 ```ros
 [admin@MikroTik] > /interface/bridge/port/monitor [find]
               interface: ether2          ether3          ether4
                  status: in-bridge       in-bridge       in-bridge
-            port-number: 1               2               3
+            port-id: 0x80.1             0x80.2          0x80.3
                    role: designated-port designated-port designated-port
               edge-port: no              yes             yes
     edge-port-discovery: yes             yes             yes

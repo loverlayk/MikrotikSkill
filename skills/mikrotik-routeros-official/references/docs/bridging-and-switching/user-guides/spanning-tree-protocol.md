@@ -69,10 +69,10 @@ You can check the STP status of a bridge port by using the `/interface/bridge/po
    designated-internal-cost: 0                  
          designated-port-id: 0x80.1             
   designated-remaining-hops: 20                 
-                 bpdu-tx-rx: 3/7791             
+                 tx-rx-bpdu: 3/7791             
         discard-transitions: 0                  
         forward-transitions: 1                  
-                   tc-tx-rx: 2/2                
+                   tx-rx-tc: 2/2                
            topology-changes: 1                  
        last-topology-change: 4h19m43s           
                  host-moves: 0                  
@@ -85,7 +85,7 @@ You can check the STP status of a bridge port by using the `/interface/bridge/po
                              200-203     
 ```
 
-Note that `root-bridge-id` consists of the bridge priority and the bridge's MAC address; for non-root bridges the root bridge will be shown as `designated-bridge`.
+Note that `root-bridge-id` consists of the bridge priority and the bridge's MAC address; for non-root bridges the root bridge will be shown as `designated-bridge-id`.
 
 :::warning
 When using bridges that are set to use 802.1Q as EtherType, they will send out BPDUs to 01:80:C2:00:00:00, which are used by MSTP, RSTP, and STP. When using 802.1ad as the bridge VLAN protocol, the BPDUs are not compatible with 802.1Q bridges and they are sent to 01:80:C2:00:00:08. (R/M)STP will not function properly if there are different bridge VLAN protocols across the Layer2 network.
@@ -108,6 +108,8 @@ In RSTP the disabled, listening, and blocking port states are replaced with just
 - **Forwarding** - port participates in traffic forwarding and is learning MAC addresses and is receiving BPDUs (forwarding=yes).
 - **Learning** - port does not participate in traffic forwarding but is learning MAC addresses (learning=yes).
 - **Discarding** - port does not participate in traffic forwarding and is not learning MAC addresses and is receiving BPDUs (forwarding=no).
+
+A port that spanning tree blocks is marked with the comment `blocked by stp` in both `/interface` and `/interface/bridge/port`. The comment is not shown while the link is down.
 
 In STP ports are primarily categorized by states (e.g., Forwarding, Listening, Learning, Blocking, Disabled). Port behavior is determined dynamically based on the spanning tree algorithm but without explicitly assigning roles. The logic of forwarding or blocking traffic is derived from the calculation of Root Bridge, Root Ports, and Designated Ports, but these are considered part of the spanning tree topology rather than formalized port roles. RSTP explicitly defines port roles and introduces the concept of backup paths, which are explicitly represented through the Alternate Port and Backup Port roles. These roles did not exist in STP because STP treated blocked ports generically, without distinguishing their function as potential backups.
 
@@ -177,7 +179,7 @@ First, when the device considers which of its ports to elect as the root port, i
 Root path cost: all bridges have a Root Path Cost. The root bridge has a root path cost of 0. For all other Bridges, it is the sum of the Port Path Costs on the least-cost path to the Root Bridge. You can modify the local port path cost under `/interface/bridge/port`.
 The bridge identifier is a combination of "bridge priority" and "bridge MAC", configurable under `/interface/bridge`.
 
-Bridge port ID is a combination of "unique ID" and "bridge port priority". The unique ID is automatically assigned to the bridge port upon adding it to the bridge. It cannot be edited. It can be seen in WinBox under the "Bridge Port" "Port Number" column, or with `/interface/bridge/port/monitor`, as `port-number`.
+Bridge port ID is a combination of "unique ID" and "bridge port priority". The unique ID is automatically assigned to the bridge port upon adding it to the bridge. It cannot be edited. It can be seen in WinBox under the "Bridge Port" "Port ID" column, or with `/interface/bridge/port/monitor`, as `port-id`.
 
 :::tip Understanding STP Port Election
 Make sure you apply path cost and priority to the correct ports:
@@ -418,14 +420,14 @@ It is also possible to monitor a certain MST Override entry. This is useful to d
 ```ros
 /interface/bridge/port/mst-override/monitor 1
                       port: ether3
-                    status: active
+                    status: in-bridge
                 identifier: 2
                    port-id: 0x80.1     
                       role: alternate-port
                   learning: no
                 forwarding: no
    internal-root-path-cost: 15
-         designated-bridge: 0x1002.6C:3B:6B:7B:F9:08
+         designated-bridge-id: 0x1002.6C:3B:6B:7B:F9:08
   designated-internal-cost: 0
         designated-port-id: 0x80.1  
  designated-remaining-hops: 20                      

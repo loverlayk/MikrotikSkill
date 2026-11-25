@@ -36,11 +36,11 @@ The wizard sets the media path to `<disk>/media` and the download path to `<disk
 
 ### Select the LAN bridge
 
-Select the bridge that represents your LAN. Apps with `network=lan` attach their VETH interface to this bridge. Some apps use the LAN for autodiscovery.
+Select the bridge that represents your LAN. Apps with `network=lan` attach their VETH interface to this bridge and get their address from the DHCP server of the LAN, so the LAN needs a DHCP server. Some apps use the LAN for autodiscovery.
 
 ### Set the router IP
 
-Select the IP address at which clients reach the router. Apps use this address in generated URLs and port-forwarding rules, so set it before you enable apps. An app enabled without it stays in `status=waiting for router ip to be configured`.
+Select the IP address at which clients reach the router. Apps use this address in generated URLs and port-forwarding rules, so set it before you enable apps. When `router-ip` is not set, `/app/settings/print` shows `assumed-router-ip`, the address that RouterOS uses instead, for example the address of the LAN bridge. An app enabled without any router IP stays in `status=waiting for router ip to be configured`.
 
 ### Review the settings
 
@@ -67,7 +67,7 @@ The first enable pulls and extracts the images, creates the network, and starts 
 
 While the app starts, `status` shows `downloading/extracting` or `starting`. When the app runs, `status` is empty, flag `R` appears, and `ui-url` contains the access URL.
 
-With `use-https=yes`, RouterOS creates a reverse proxy rule and uses the app certificate from `/app/settings`. The URL uses the cloud hostname. With `use-https=no`, the URL is `http://<router-ip>:<port>`. An app with a port named `web` gets a UI URL. See [Container apps](../../network-management/proxy/reverse-proxy#container-apps) for the reverse proxy details.
+With `use-https=yes`, RouterOS creates a reverse proxy rule and uses the app certificate from `/app/settings`. The URL uses the cloud hostname. Without a working app certificate, an app with `use-https=yes` stays in `status=wait for reverse proxy`; set `use-https=no` on the app to use plain HTTP instead. With `use-https=no`, the URL is `http://<router-ip>:<port>`. An app with a port named `web` gets a UI URL. See [Container apps](../../network-management/proxy/reverse-proxy#container-apps) for the reverse proxy details.
 
 ## Manage apps
 
@@ -82,7 +82,7 @@ With `use-https=yes`, RouterOS creates a reverse proxy rule and uses the app cer
 
 `app print` can show different columns depending on the terminal width. Use `print detail` or `proplist` to read a specific field.
 
-`status` is empty while the app is running. During startup or after a failure it can show values such as `waiting for router ip to be configured`, `downloading/extracting`, or `starting`.
+`status` is empty while the app is running. During startup or after a failure it can show values such as `waiting for router ip to be configured`, `wait for reverse proxy`, `downloading/extracting`, or `starting`.
 
 ### Update, restart, and stop apps
 
@@ -93,7 +93,7 @@ With `use-https=yes`, RouterOS creates a reverse proxy rule and uses the app cer
 /app/enable <app>
 ```
 
-`/app/update` pulls the app images again, extracts them, and restarts the app. `/app/restart` stops and starts the containers without pulling images.
+`/app/update` pulls the app images again, extracts them, and restarts the app; when the image has not changed, the log shows `skip importing same version` and the existing image is started. `/app/restart` stops and starts the containers without pulling images. `/app/disable` stops the containers and keeps them and the app data.
 
 Set `auto-update=yes` on an app to check for a new image when the app starts after a reboot. The global `auto-update` setting in `/app/settings` provides the default for installed apps. When the image has not changed, RouterOS skips the import and starts the existing image.
 
@@ -493,7 +493,8 @@ An enabled app creates the following objects:
 - For an internal network, the `internal` bridge, the `172.18.0.1/24` address, and a source NAT masquerade rule.
 - One destination NAT rule for each mapped port.
 - A reverse proxy rule for the `web` port when `use-https=yes`.
-- One container per service, named `app-<app>-<service>`.
+- One container per service. The container of an app with one service is named `app-<app>`.
+- A swap file, `<disk>/swap` (about 1 GiB), added in `/disk` as a file disk with `swap=yes` when the first app is enabled.
 
 Storage paths on the selected disk:
 

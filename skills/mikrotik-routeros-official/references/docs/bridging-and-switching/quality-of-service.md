@@ -490,7 +490,7 @@ A Layer 2 loop or a broadcast storm can saturate the CPU with data traffic and m
 
 Replace `ether1` with the port where management traffic enters the switch. Use `copy-to-cpu=yes` instead of `redirect-to-cpu=yes` when the packet must also be forwarded to its destination.
 
-You can use the same rule structure to prioritize dynamic routing protocol traffic, such as OSPF or BGP. `cpu-high-priority=yes` has no effect without `redirect-to-cpu=yes` or `copy-to-cpu=yes`.
+You can use the same rule structure to prioritize dynamic routing protocol traffic, such as OSPF or BGP. `cpu-high-priority=yes` requires `redirect-to-cpu=yes` or `copy-to-cpu=yes` in the same rule, otherwise RouterOS rejects the rule.
 
 ## Hardware Resources
 

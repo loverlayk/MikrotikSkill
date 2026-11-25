@@ -1,10 +1,10 @@
-# Setting a hot spare disk
+# Set a hot spare disk
 
 > This page explains how to configure a hot spare disk for a RAID array in RouterOS, enabling automatic rebuild on disk failure by assigning a spare disk to the RAID setup.
 
-# Setting a hot spare disk
+# Set a hot spare disk
 
-It's possible to assign a hot spare disk for your RAID array. In case of a disk failure - the rebuild immediately begins on the assigned spare disk. The spare is a member of the array configured with `raid-role=spare` on it.
+A hot spare is a disk that waits in the array for a member to fail. When a member fails, the rebuild starts on the spare at once. The spare is a member of the array with `raid-role=spare`.
 
 Add the RAID array with the desired number of disks:
 
@@ -12,7 +12,7 @@ Add the RAID array with the desired number of disks:
 /disk/add raid-device-count=4 raid-type=5 type=raid slot=raid5
 ```
 
-Then add the disks, as well as the spare, to the RAID. In this case we will add `nvme5` as the spare:
+Add the disks and the spare to the array. In this example, `nvme5` is the spare:
 
 ```ros
 /disk/set raid-master=raid5 raid-role=0 nvme1
@@ -22,3 +22,5 @@ Then add the disks, as well as the spare, to the RAID. In this case we will add 
 
 /disk/set raid-master=raid5 raid-role=spare nvme5
 ```
+
+When a member fails, the spare takes its `raid-role`, and the failed disk gets the `f` (`raid-member-failed`) flag and the role `spare`. During the rebuild, `state` of the array shows its progress, for example `degraded by 1, clean, sync:recover, recovery = 97.4%`, and `clean` when it is done. To put a new disk in place of the failed one, see [Replace a failed disk](./index.md#replace-a-failed-disk).

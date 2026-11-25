@@ -8,7 +8,7 @@ NVIDIA DGX Spark is a desktop AI computer with 128 GB of memory. Connect several
 
 A MikroTik switch configured as on this page runs a model across several units as fast as direct cables between the units, and adds what direct cables cannot. Every unit reaches every other unit through one high-speed cable, so you can add units or split them into separate model servers without recabling. The same network can distribute model files, carry other transfers while the model runs, and connect the units to a storage server or router if you leave ports available.
 
-This page helps you choose the number of units and a switch, and shows what performance to expect. It then walks through two four-unit setups: a CRS504 at 100 Gbit/s per unit and a CRS804 at 200 Gbit/s per unit. Both lead to the same practical example: DeepSeek V4.1 Flash as a coding assistant for a small team, with the source code kept in the office.
+This page helps you choose the number of units and a switch, and shows what performance to expect. It then walks through two four-unit setups: a CRS504 at 100 Gbit/s per unit and a CRS804 at 200 Gbit/s per unit. Both lead to the same practical example: DeepSeek V4.1 Flash as a coding assistant for a small team, with the source code kept in the office. A later section shows a faster model server for the same example, with a more complex setup.
 
 ## Plan the cluster
 
@@ -44,7 +44,7 @@ The examples on this page use four units on a CRS504 or CRS804. The table lists 
 | CRS804-4DDQ-hRM | 4 × 400G QSFP56-DD | 4, or 8 with 400G to 2 × 200G breakout cables | 200 Gbit/s |
 | CRS812-8DS-2DQ-2DDQ-RM | 2 × 400G QSFP56-DD, 2 × 200G QSFP56 | 6, with breakout cables on the 400G ports | 200 Gbit/s |
 
-- **Text generation:** the model examples on this page run at similar speeds at 100 and 200 Gbit/s. A faster network link does not by itself mean faster answers.
+- **Text generation:** the walkthrough's model server runs at similar speeds at 100 and 200 Gbit/s. A faster network link does not by itself mean faster answers. The faster [spark-ds41f](#faster-deepseek-v41-flash-with-spark-ds41f) server reads long prompts about 13% faster at 200 Gbit/s, and serves 16 requests at the same time 8 to 13% faster.
 - **Network capacity:** a 200 Gbit/s link gives twice the capacity for model loading, storage traffic and long prompts. How much faster a task finishes depends on the workload. NVIDIA's switched DGX Spark setup specifies 200 Gbit/s per unit.
 - **Other devices:** count a port for a storage server or a link to another switch. Four units use all four QSFP ports of a CRS504.
 - **Cables:** one QSFP cable from each unit to the switch, at the speed of the switch port (see [Cables and links](#cables-and-links)). The breakout options in the table split one 400 Gbit/s switch port into two 200 Gbit/s connections, one per unit. Also allow for each unit's separate Ethernet connection to the office network and access to the switch's management port.
@@ -750,6 +750,149 @@ These working sessions start with 36,000 tokens of instructions and source code 
 - Two long prompts that arrive together take longer: 2 to 3.5 minutes each for 130,000 to 240,000 tokens.
 - A new session that starts while the server reads two long prompts waits 40 to 65 s for its first token. A turn of a session in progress waits 5 to 7 s.
 
+## Faster DeepSeek V4.1 Flash with spark-ds41f
+
+[spark-ds41f](https://github.com/christopherowen/spark-ds41f) is an open-source project that tunes vLLM for DeepSeek V4.1 Flash on DGX Spark units: its own GPU kernels, larger prompt batches, and an RDMA data exchange over both interfaces of each unit's port. On the same four units and switches, it reads long prompts 2.5 to 3 times faster than the walkthrough's server and generates text about a fifth faster. It suits a team that wants the most from its units and accepts a more complex setup:
+
+- **No ready-made image:** you build the image on unit 1 from source and copy it to the other units. The build downloads pinned components from GitHub, PyPI, NVIDIA and download.pytorch.org.
+- **Changes to every unit:** one user account with passwordless SSH and `sudo` on all four units, and units that start without a desktop session.
+- **Frequent releases:** the project publishes a new release every few days. This section uses release 1122 (commit `945d95d0`). For another release, check its setup guide for changes.
+
+The project's [setup guide](https://github.com/christopherowen/spark-ds41f/blob/main/docs/setup.md) describes every stage, how to check it and how to undo it. Follow it with the choices in this section. The units keep the network configuration of the CRS504 or CRS804 section.
+
+### Configure spark-ds41f for the switch
+
+The project calls four units on a switch the `tp4-switched` shape. On unit 1, in the project folder `~/projects/spark-ds41f`, describe the units in `config/nodes-switched.local.json`. List both interfaces of each unit's port as rails, each in its own subnet, as in the address table of this page. Set `ssh_user` to the account you use on all four units, `management_ip` to each unit's address on the office network, and `roce_gid_index` to the RoCE v2 IPv4 index that `show_gids` prints:
+
+```json
+{
+  "schema_version": 1,
+  "ssh_user": "spark",
+  "nodes": [
+    {"name": "spark1", "rank": 0, "head": true, "management_ip": "192.168.88.21",
+     "management_interface": "enP7s7", "roce_gid_index": 3,
+     "roce_hcas": ["rocep1s0f0", "roceP2p1s0f0"],
+     "roce_subnets": {"rocep1s0f0": "192.168.100.0/24", "roceP2p1s0f0": "192.168.101.0/24"}},
+    {"name": "spark2", "rank": 1, "head": false, "management_ip": "192.168.88.22",
+     "management_interface": "enP7s7", "roce_gid_index": 3,
+     "roce_hcas": ["rocep1s0f0", "roceP2p1s0f0"],
+     "roce_subnets": {"rocep1s0f0": "192.168.100.0/24", "roceP2p1s0f0": "192.168.101.0/24"}},
+    {"name": "spark3", "rank": 2, "head": false, "management_ip": "192.168.88.23",
+     "management_interface": "enP7s7", "roce_gid_index": 3,
+     "roce_hcas": ["rocep1s0f0", "roceP2p1s0f0"],
+     "roce_subnets": {"rocep1s0f0": "192.168.100.0/24", "roceP2p1s0f0": "192.168.101.0/24"}},
+    {"name": "spark4", "rank": 3, "head": false, "management_ip": "192.168.88.24",
+     "management_interface": "enP7s7", "roce_gid_index": 3,
+     "roce_hcas": ["rocep1s0f0", "roceP2p1s0f0"],
+     "roce_subnets": {"rocep1s0f0": "192.168.100.0/24", "roceP2p1s0f0": "192.168.101.0/24"}}
+  ]
+}
+```
+
+The project connects to every unit by its `name`, with SSH from unit 1. On unit 1, add the names to `~/.ssh/config`, and check that each one logs in without a password, unit 1 included:
+
+```bash
+cat >> ~/.ssh/config <<'EOF'
+Host spark1
+  HostName 192.168.88.21
+Host spark2
+  HostName 192.168.88.22
+Host spark3
+  HostName 192.168.88.23
+Host spark4
+  HostName 192.168.88.24
+EOF
+for h in spark1 spark2 spark3 spark4; do ssh $h hostname; done
+```
+
+The project's recipe marks its RDMA traffic with IP traffic class 106 (DSCP 26), the class that the CRS804 example keeps lossless. The CRS504 example needs no change for it.
+
+The project qualifies its switched shapes on a kernel with 64 KiB memory pages and its own memory-saver module (stage 2 of its guide). On the stock DGX OS kernel, start the same shape from an overlay. The overlay also leaves out a second, steered variant of the model, which needs a file from a gated repository. Save it as `config/switch-4k.local.json`:
+
+```json
+{
+  "notes": "tp4-switched on the stock 4 KiB kernel, without the steered second model",
+  "extends": {"config": "config/cluster.json", "shape": "tp4-switched"},
+  "set": {"host": {"kernel": {"release": "7.0.0-1025-nvidia", "page_size": 4096, "memory_saver_required": false}}},
+  "unset": ["glp"]
+}
+```
+
+Set `release` to the kernel that `uname -r` prints on your units.
+
+The server answers without an API key. To require the key of the walkthrough, add a second overlay. Its server checks readiness at `/health`, because `/v1/models` then needs the key:
+
+```bash
+cd ~/projects/spark-ds41f
+umask 077
+cat > config/endpoint.local.json <<EOF
+{
+  "extends": {"config": "config/switch-4k.local.json"},
+  "set": {
+    "environment": {"VLLM_API_KEY": "$(cat ~/dgx-spark.key)"},
+    "deployment": {"ready_url": "http://127.0.0.1:8000/health"}
+  }
+}
+EOF
+```
+
+The project reads these files on every unit. Copy them to the same folder on the other units:
+
+```bash
+for u in 192.168.100.22 192.168.100.23 192.168.100.24; do
+  ssh $u mkdir -p projects/spark-ds41f/config
+  scp config/nodes-switched.local.json config/switch-4k.local.json \
+      config/endpoint.local.json $u:projects/spark-ds41f/config/
+done
+```
+
+Stage 5 of the project's guide downloads the model again, 476 GiB on every unit. If the units hold the walkthrough's copy, link its files into the cache the project uses instead. The model files are the same; the project expects them under its pinned revision. Run on every unit:
+
+```bash
+SRC=/opt/models/DeepSeek-V4.1-Flash-1017
+REV=1bae0e1088993b9b82de08f59de5be5a34e42170
+HUB=~/.cache/huggingface/hub/models--deepseek-ai--DeepSeek-V4.1-Flash-1017
+mkdir -p $HUB/snapshots/$REV $HUB/refs
+echo -n $REV > $HUB/refs/main
+cd $SRC
+find . -type d -not -path "./.cache*" -exec mkdir -p "$HUB/snapshots/$REV/{}" \;
+find . -type f -not -path "./.cache/*" -not -name chat_template.jinja \
+    -exec ln {} "$HUB/snapshots/$REV/{}" \;
+```
+
+The links take no disk space. They need the model folder and the home folder on the same file system, as on DGX OS.
+
+Stop the walkthrough's server as described in [Keep the server running](#keep-the-server-running), and start this one on unit 1:
+
+```bash
+cd ~/projects/spark-ds41f
+bin/spark --cluster-config config/endpoint.local.json cluster start --apply
+```
+
+The command checks the units first and does not start if a check fails. `bin/spark doctor` prints a command that fixes each failed check. The first start compiles the project's GPU code and takes about 20 minutes. Later starts take about 2 minutes. To stop the server, run the same command with `cluster stop --apply`.
+
+The server answers at the same address and port, with the same model name and key. Clients such as Pi work without a change. The server also accepts the thinking efforts `medium` and `minimal`.
+
+### Speed with spark-ds41f
+
+The following examples use the same tests as the walkthrough's results, on the CRS504 and the CRS804:
+
+| | Walkthrough server | spark-ds41f |
+| :-- | --: | --: |
+| Speed per user, 1 / 2 / 4 / 8 users | 75–80 / 56–58 / 40 / 26 tok/s | 97–99 / 70–71 / 47–49 / 32–33 tok/s |
+| First token, 1 to 8 users | 0.3–1.1 s | 0.24–0.41 s |
+| Prompt reading | 3,400 tok/s | 9,000–9,250 tok/s at 100 Gbit/s, 10,000–10,500 tok/s at 200 Gbit/s |
+| First token of a new 125,000-token prompt | 38 s | 12–14 s |
+| Working session of one user, complete answer, median, thinking on / off | 18–19 s / 4–7 s | 13 s / 3.5–3.7 s |
+| Working session, first token, first turn / later turns | 9–10 s / 1.0 s | 3.5–6 s / 0.5–0.6 s |
+| Two new prompts of 130,000 to 240,000 tokens at the same time, first token | 2 to 3.5 minutes | 15 to 51 s |
+| Speed of the other users while the server reads them | 33–47% | about 10% |
+
+- **Long prompts finish sooner and slow the others more.** The server reads a long prompt in large batches, so the other users' replies slow to about a tenth while it reads, for 15 to 50 s. The walkthrough's server keeps them at a third or more for two minutes or longer.
+- **The server serves more at once:** up to 32 requests, with contexts up to 1,048,576 tokens.
+- **Link speed shows.** While the server reads a long prompt, each unit sends about 25 Gbit/s to the others on average, in bursts. On 200 Gbit/s links it reads long prompts about 13% faster than on 100 Gbit/s links, and with 16 requests at the same time it generates text 8 to 13% faster. With one to eight users, both link speeds give the same speed.
+- **The CRS804 settings carry the bursts.** All units send at once while the server reads a prompt. On the CRS804, ECN slows the senders and PFC pauses them when needed, and no packets are lost.
+
 ## Troubleshoot
 
 - **A switch port shows `status: no-link`:** check that the monitor output shows `sfp-module-present: yes`, and that the cable is in the unit's first QSFP port: `ip -br link` on the unit shows `NO-CARRIER` on the interfaces of the port without a cable. If the cable is in the other port (`enp1s0f1np1`), move it. If a 100 Gbit/s link still does not come up, set the link speed of the switch port by hand: `/interface/ethernet/set qsfp28-1-1 auto-negotiation=no speed=100G-baseCR4`. Keep auto-negotiation on for the 200 Gbit/s links of the CRS804.
@@ -820,6 +963,7 @@ With these settings, long prompts are read at a similar speed at 100 and 200 Gbi
 
 ### DeepSeek V4.1 Flash on four units
 
+- **Precision:** the checkpoint is DeepSeek's own release, as published. The routed experts are in FP4 with a scale for every 32 values, the other weights in FP8, and a few small tensors in BF16. Neither model server on this page quantizes it further.
 - **Memory:** each unit keeps 74 GiB of the model's weights in GPU memory. The model's lookup tables, 203 GB, stay on disk, and each unit reads them from its own copy. That is why every unit stores the whole checkpoint.
 - **Two units cannot hold the model:** without the lookup tables its weights are 307 GB, more than the 256 GB of two units.
 - **Speculative decoding:** in each step, the draft model proposes 5 tokens and the model keeps the ones it agrees with, 3 to 4 on average. One user gets about 23 steps per second. Without the draft model, the same server generates 44 tok/s for one user.

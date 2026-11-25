@@ -5,10 +5,10 @@
 # Btrfs
 
 :::info
-This feature requires the [Storage](../) package.
+This feature requires the `rose-storage` package; see [Storage](../).
 :::
 
-Btrfs is a feature-rich copy-on-write file system. It is the default file system for some popular Linux distributions such as [Fedora](https://en.wikipedia.org/wiki/Fedora_Linux) and is used by many large companies such as. Over the years it has proven itself to be stable and more flexible than other popular file systems. The most significant features are:
+Btrfs is a feature-rich copy-on-write file system. It is the default file system of some popular Linux distributions, such as [Fedora](https://en.wikipedia.org/wiki/Fedora_Linux). The most significant features are:
 
 - Bitrot protection (when used in Btrfs-RAID mode).
 - Subvolumes.
@@ -35,6 +35,6 @@ The Btrfs functionality lives under three menus:
 
 ## See also
 
-- [Btrfs RAID](./raid) - RAID1 and RAID10 setups, disk replacement, and the BraidHealthCheck script.
+- [Btrfs RAID](./raid) - RAID1 and RAID10 setups, disk replacement, and the Braid check scripts.
 - [Btrfs subvolumes and snapshots](./snapshots) - creating subvolumes, taking snapshots, transferring snapshots between devices.
 - [Btrfs maintenance](./maintenance) - periodic scrubbing, balancing, automated snapshot rotation, and free-space management.

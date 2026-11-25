@@ -5,36 +5,40 @@
 # Encrypted storage (dm-crypt)
 
 :::info
-This feature requires the [Storage](./index.md) package.
+This feature requires the `rose-storage` package; see [Storage](./index.md).
 :::
 
-RouterOS supports transparent block device encryption with `dm-crypt`. Add a disk item with `type=crypted` and point `crypted-backend` at the drive or partition to encrypt; decryption is done with `encryption-key`.
+RouterOS supports transparent block device encryption with `dm-crypt`. Add a disk item with `type=crypted` and point `crypted-backend` at the drive or partition to encrypt; decryption is done with `encryption-key`. The data written to the backend disk is encrypted, and the backend disk gets the `c` (encrypted) flag in `/disk/print`.
+
+RouterOS keeps the key in its configuration and opens the encrypted device at startup without any input. The encryption therefore protects the data on a disk that is removed from the router, not on a router that is taken together with its disks. `/disk/export` hides the key; `/disk/export show-sensitive` shows it.
 
 ## Examples
 
-### Simple crypted file system
+### Encrypted file system on a disk
 
-To create an encrypted file system:
+Create the encrypted device on `usb1`. All data on the disk is lost:
 
-```ros
-/disk/add crypted-backend=usb1 encryption-key=<secret_key> slot=crypted-usb1 type=crypted
+```routeros
+/disk/add crypted-backend=usb1 encryption-key=<secret_key> \
+    slot=crypted-usb1 type=crypted
 ```
 
-After it's created, format the file system and it's ready to go:
+Format the encrypted device:
 
-```ros
+```routeros
 /disk/format crypted-usb1 file-system=ext4
 ```
 
-### Crypted RAID1 array with integrity check
+### Encrypted RAID 1 array
 
-Create a RAID1 array and put an encrypted file system on top of it:
+Create a RAID 1 array and put an encrypted file system on top of it:
 
 ```routeros
 /disk/add raid-device-count=2 raid-type=1 slot=raid1 type=raid
 /disk/set nvme3 raid-master=raid1 raid-role=0
 /disk/set nvme4 raid-master=raid1 raid-role=1
-/disk/add crypted-backend=raid1 encryption-key=<secret_key> slot=crypted-raid1 type=crypted
+/disk/add crypted-backend=raid1 encryption-key=<secret_key> \
+    slot=crypted-raid1 type=crypted
 ```
 
 Format the encrypted device to Btrfs:

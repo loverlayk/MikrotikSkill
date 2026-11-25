@@ -64,6 +64,8 @@ When a device authenticates, the state changes to `authorized` and the device is
 
 An authorized port accepts all traffic that it receives. If the port is connected to a shared medium with several devices, all of them have access after one of them authenticates. Dynamic switch rules can limit the port to the MAC address of the authenticated device.
 
+While the port waits for authentication, its bridge port is inactive and both `/interface` and `/interface/bridge/port` show the comment `blocked by dot1x`. The comment is not shown while the link is down, the same as for a port that spanning tree blocks.
+
 ## Assign a VLAN from RADIUS
 
 The RADIUS server can put the port of a device into a VLAN. The port must be in a bridge with VLAN filtering. On a router that already has a bridge, read [Bridge VLAN table](../bridging-and-switching/user-guides/bridge-vlan-table) before you turn VLAN filtering on: a wrong order of the steps can cut your access to the router.

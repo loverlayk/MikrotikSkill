@@ -881,7 +881,7 @@ Then switch ACL rules are modified (e.g. added, removed, disabled, enabled, or m
 | Property | Description |
 | :-- | :-- |
 | **copy-to-cpu** (*no \| yes*; Default: **no**) | Clones the matching packet and sends it to the CPU. |
-| **cpu-high-priority** (*no \| yes*; Default: **no**) | Sends the matching packets to the CPU high-priority queue (`queue1`). Only applies together with `redirect-to-cpu=yes` or `copy-to-cpu=yes`. See [To CPU QoS](./quality-of-service.md#to-cpu-qos). |
+| **cpu-high-priority** (*no \| yes*; Default: **no**) | Sends the matching packets to the CPU high-priority queue (`queue1`). Requires `redirect-to-cpu=yes` or `copy-to-cpu=yes` in the same rule. See [To CPU QoS](./quality-of-service.md#to-cpu-qos). |
 | **disabled** (*yes \| no*; Default: **no**) | Enables or disables the ACL entry. |
 | **dscp** (*0..63*) | Matching the DSCP field of the packet (only applies to IPv4 packets). |
 | **dst-address** (*IP address/Mask*) | Matching destination IPv4 address and mask. If `mac-protocol=arp` is specified, matches the destination IP in ARP packets. Without `mac-protocol`, matches only IPv4 packets. |
@@ -914,11 +914,14 @@ Then switch ACL rules are modified (e.g. added, removed, disabled, enabled, or m
 
 - copy-to-cpu
 - redirect-to-cpu
+- cpu-high-priority
 - mirror
 - new-dst-ports (can be used to drop packets)
 - new-vlan-id
-- new-vlan-priority
+- new-vlan-priority (legacy, use new-qos-profile instead)
 - new-vrf
+- new-qos-profile
+- keep-qos-fields
 - rate
 
 ### Layer2 condition parameters
@@ -978,6 +981,8 @@ Use the `reset-counters` command to clear the counters of selected rules, or `re
 ```ros
 [admin@MikroTik] > /interface/ethernet/switch/rule/reset-counters 0
 ```
+
+WinBox shows the same counters in the **Statistics** tab of a rule window, together with the byte and packet rate graphs. The **Reset Counters** and **Reset All Counters** commands are in the rule window. Switches that do not count ACL traffic do not show the counters or the reset commands.
 
 ## Port Security
 

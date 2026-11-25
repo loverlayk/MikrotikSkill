@@ -89,7 +89,7 @@ This table shows the *max-l2mtu* supported by Mikrotik RouterBoards (available i
 | **CRS518-16XS-2XQ** | ether1:2028; sfp28-1 - sfp28-16:10218; qsfp28-1-1 - qsfp28-2-4:10218 |
 | **CRS812-8DS-2DQ-2DDQ-RM** | ether1-ether2:9586; qsfp56-1-1 - qsfp56-2-4:9570; qsfp56-dd-1-1 - qsfp56-dd-2-8:9570; sfp56-1 - sfp56-8:9570 |
 | **CSS610-8G-2S+, CSS610-8P-2S+** | ether1-ether8:10218; sfp-sfpplus1-sfp-sfpplus2:10218 |
-| **D52G-5HacD2HnD (hAP ac²)** | ether1-ether5:9124 |
+| **D52G-5HacD2HnD (hAP ac²)** | ether1-ether5:9214 |
 | **C52iG-5HaxD2HaxD (hAP ax[^2])** | ether1-ether5:9214 |
 | **C53UiG+5HPaxD2HPaxD (hAP ax[^3])** | ether1-ether5:9214 |
 | **L41G-2axD (hAP ax lite)** | ether1-ether4:2026 |
@@ -124,6 +124,8 @@ All wireless interfaces in RouterOS (including Nstreme2) support 2290 byte L2MTU
 :::danger
 L2MTU configuration changes trigger all interface reloads (link down/link up) due to necessary internal processes.  
 It is recommended to configure L2MTU with caution by keeping in mind that it can cause short interruption to connected devices.
+
+A larger L2MTU also increases the memory each received frame reserves. On low-memory boards such as the hAP ac² and cAP ac, setting the L2MTU to 9000 or above on the interfaces can take tens of megabytes and end in an out-of-memory reboot. Size the L2MTU to the frames the network carries, and check free memory with `/system/resource/print` after the change on low-memory devices.
 
 :::
 

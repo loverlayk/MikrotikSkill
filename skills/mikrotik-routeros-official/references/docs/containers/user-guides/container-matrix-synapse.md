@@ -1,162 +1,136 @@
 # Container - Matrix (Synapse)
 
-> This page documents setting up a Synapse Matrix server as a container on MikroTik RouterOS, covering prerequisites like container network configuration and PostgreSQL environment setup for secure federated...
+> Run a Synapse Matrix server with a PostgreSQL database in RouterOS containers, register a user, and add a Discord bridge.
 
 # Container - Matrix (Synapse)
 
-Matrix is a decentralized communication protocol. Each Matrix server operates independently, maintaining its own set of users and defining its own rules and policies.
+## Introduction
 
-### Hosting Your Own Matrix Server
+[Matrix](https://matrix.org/) is a decentralized communication protocol. Each Matrix server operates independently, with its own users, rules and policies. With containers, you can host your own Matrix server on a RouterOS device and keep full control over your communication.
 
-You can host your own Matrix server directly on a RouterOS device using Containers. This allows you to maintain full control over your communication infrastructure.
+- **Federation** - Matrix servers connect to each other, so that users on different servers can communicate securely without a central authority.
+- **Bridges** - a bridge relays messages between Matrix and another chat platform, such as WhatsApp, Discord, Signal or Telegram. With bridges, you can use one Matrix client, such as [Element](https://element.io/), to talk to users on several platforms.
 
-### Federation
+This guide sets up [Synapse](https://element-hq.github.io/synapse/latest/), one of several Matrix servers, with a PostgreSQL database, and then adds a Discord bridge. Each of them runs in its own container.
 
-Matrix servers can connect through federation to create a unified communication network. This enables users on different Matrix servers to communicate with each other securely, without requiring a central authority.
+## Summary
 
-### Bridging to Other Platforms
+Read the [container](../) guide first, especially the [disclaimer](../#disclaimer) and the [requirements](../#requirements): the `container` package must be installed and containers enabled in device-mode.
 
-Matrix supports bridging to relay messages from other chat platforms, including:
+All containers in this guide use the veth interface `veth1` (`172.17.0.2/24`) with NAT from the container guide's [Bridge with NAT](../#bridge-with-nat) example; create it first. Containers on the same veth interface share its address, so each service listens on its own port:
 
-- WhatsApp
-- Discord
-- Signal
-- Telegram
-- And many other platforms
+| Container | Port |
+| --- | --- |
+| `postgresql_synapse` | 5433 |
+| `synapse` | 8008 |
+| `postgresql_discord` | 5434 |
+| `synapse_discord` | 29334 |
 
-By using Matrix bridges, you can consolidate communication from multiple platforms into a single application, such as [Element](https://element.io/). This allows you to communicate with users across different platforms through one unified interface.
+The images are downloaded from their registries (see [Registry](../#registry)) and extracted to an external disk, `disk1`; set the directory for the downloads:
 
-# Setting Up a Synapse Matrix Server on RouterOS
+```routeros
+/container/config/set tmpdir=disk1/pull
+```
 
-This guide explains how to set up Synapse, one of several available Matrix servers on your MikroTik RouterOS device using containers.
+:::warning
 
-:::info
-
-Before proceeding, ensure you have created a Container network. For instructions, refer to the [Container network documentation](../#networking-examples).
+The passwords in this guide are examples; use your own long random passwords. Consult the [Synapse documentation](https://element-hq.github.io/synapse/latest/) for the latest configuration options and best practices, as configuration procedures can change with newer versions.
 
 :::
 
----
+## Synapse server
 
-## Prerequisites
+### PostgreSQL database
 
-- A RouterOS device with container support
-- An existing container network configured
-- Sufficient storage space for the database and Synapse data
-
----
-
-## Step 1: Create PostgreSQL Container Environment Variables
-
-Configure the environment variables list for the PostgreSQL container:
+Create the environment variables for the PostgreSQL container:
 
 ```routeros
 /container/envs/add list=postgres_synapse_envs key=POSTGRES_DB value="synapse"
-/container/envs/add list=postgres_synapse_envs key=POSTGRES_PASSWORD value="<POSTGRES_PASSWORD_HERE>"
+/container/envs/add list=postgres_synapse_envs key=POSTGRES_PASSWORD value="Example-db-pass-1"
 /container/envs/add list=postgres_synapse_envs key=POSTGRES_USER value="synapse_user"
 /container/envs/add list=postgres_synapse_envs key=PGDATA value="/var/lib/postgresql/data/pgdata"
 /container/envs/add list=postgres_synapse_envs key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
 /container/envs/add list=postgres_synapse_envs key=PGPORT value=5433
 ```
 
-:::note
+Synapse needs a database with `UTF8` encoding and the `C` collation, which `POSTGRES_INITDB_ARGS` sets when the database is created. `PGPORT` moves PostgreSQL to port 5433, so that it does not clash with other containers on `veth1`, such as the PostgreSQL example in the container guide (port 5432).
 
-Replace `<POSTGRES_PASSWORD_HERE>` with your desired PostgreSQL password.
-
-:::
-
----
-
-## Step 2: Create PostgreSQL Container Mount
-
-Create a mount point to persist the PostgreSQL data on your RouterOS device:
+Create a mount, so that the database is kept on the disk:
 
 ```routeros
 /container/mounts/add list=synapse_postgres_data src=disk1/synapse-postgres-data dst=/var/lib/postgresql/data
 ```
 
----
-
-## Step 3: Create the PostgreSQL Container
-
-Launch the PostgreSQL container using the configuration from the previous steps:
+Add the PostgreSQL container:
 
 ```routeros
-/container/add remote-image=postgres:17.2-alpine interface=veth1 root-dir=disk1/postgres-17.2-synapse mountlists=synapse_postgres_data envlists=postgres_synapse_envs name=postgresql_synapse
+/container/add remote-image=postgres:17.2-alpine interface=veth1 \
+    root-dir=disk1/postgres-17.2-synapse mountlists=synapse_postgres_data \
+    envlists=postgres_synapse_envs logging=yes name=postgresql_synapse
 ```
 
----
+### Synapse container
 
-## Step 4: Create Synapse Container Environment Variables
-
-Configure the environment variables for the Synapse container:
+Create the environment variables for the Synapse container:
 
 ```routeros
 /container/envs/add list=synapse_envs key=SYNAPSE_CONFIG_DIR value="/data"
 /container/envs/add list=synapse_envs key=SYNAPSE_CONFIG_PATH value="/data/homeserver.yaml"
-/container/envs/add list=synapse_envs key=SYNAPSE_SERVER_NAME value="test.mt.lv"
-/container/envs/add list=synapse_envs key=SYNAPSE_REPORT_STATS value="yes"
+/container/envs/add list=synapse_envs key=SYNAPSE_SERVER_NAME value="matrix.example.com"
+/container/envs/add list=synapse_envs key=SYNAPSE_REPORT_STATS value="no"
 ```
 
-:::note
+- `SYNAPSE_SERVER_NAME` - your server's domain name. It becomes part of every user ID (`@alice:matrix.example.com`) and cannot be changed later.
+- `SYNAPSE_REPORT_STATS` - `yes` sends anonymous usage statistics to the Synapse developers.
 
-Replace `test.mt.lv` with your actual server domain name.
-
-:::
-
----
-
-## Step 5: Create Synapse Container Mount
-
-Create a mount point to persist Synapse data on your RouterOS device:
+Create a mount for the Synapse configuration and data:
 
 ```routeros
 /container/mounts/add list=synapse_data src=disk1/synapse-data dst=/data
 ```
 
----
-
-## Step 6: Generate Initial Synapse Configuration
-
-Create and run a Synapse container to generate the required configuration files. The container runs with the `generate` command to create initial configuration:
+Add the Synapse container with the `generate` command, which creates the configuration files:
 
 ```routeros
-/container/add remote-image=matrixdotorg/synapse:latest interface=veth1 cmd="generate" root-dir=disk1/synapse mountlists=synapse_data envlists=synapse_envs name=synapse
+/container/add remote-image=matrixdotorg/synapse:latest interface=veth1 \
+    cmd="generate" root-dir=disk1/synapse mountlists=synapse_data \
+    envlists=synapse_envs logging=yes name=synapse
 ```
 
----
+RouterOS downloads and extracts both images. Check the progress with `/container/print`; when the extraction is done, the container status is `stopped`.
 
-## Step 7: Initialize Configuration Files
+### Generate the configuration
 
-Start and then stop the Synapse container to allow it to generate the necessary configuration files:
+Start the Synapse container:
 
 ```routeros
 /container/start [find where name=synapse]
-/container/stop [find where name=synapse]
 ```
 
----
+It creates the configuration files in `disk1/synapse-data` and stops by itself. This takes a few minutes; the log shows when it is done:
 
-## Step 8: Remove the Generate Command
+```text
+container,info,debug synapse: Generating config file /data/homeserver.yaml
+container,info,debug synapse: Generating signing key file /data/matrix.example.com.signing.key
+container,info,debug synapse: A config file has been generated in '/data/homeserver.yaml' for server name 'matrix.example.com'. Please review this file and customise it to your needs.
+```
 
-Clear the command parameter from the Synapse container so it runs in normal mode:
+Clear the command, so that the container runs the server from now on:
 
 ```routeros
 /container/set [find where name=synapse] cmd=""
 ```
 
----
+### Configure the database
 
-## Step 9: Configure Database Connection
-
-Connect to your RouterOS device using an SFTP client (such as WinSCP on Windows) and edit the generated configuration file at `disk1/synapse-data/homeserver.yaml`. Update the database section with the following settings:
+Download `disk1/synapse-data/homeserver.yaml` with an SFTP client, such as `sftp` or WinSCP (the SSH [service](../../system-information-and-utilities/services.md) must be enabled). Replace its `database` section, which uses SQLite, with:
 
 ```yaml
 database:
   name: psycopg2
   args:
     user: synapse_user
-    password: <POSTGRES_PASSWORD_HERE>
+    password: Example-db-pass-1
     dbname: synapse
     host: 172.17.0.2
     port: 5433
@@ -167,163 +141,153 @@ database:
     keepalives_count: 3     # optional
 ```
 
-:::info
+`password` is the `POSTGRES_PASSWORD` from the PostgreSQL environment variables. Upload the file back to the same place.
 
-Replace `<POSTGRES_PASSWORD_HERE>` with the password you set in Step 1.
+### Start the server
 
-:::
-
----
-
-## Step 10: Start the PostgreSQL Container
-
-Start the PostgreSQL container to prepare the database:
+Start PostgreSQL first, then Synapse:
 
 ```routeros
 /container/start [find where name=postgresql_synapse]
-```
-
----
-
-## Step 11: Start the Synapse Container
-
-Start the Synapse container to run your Matrix server:
-
-```routeros
 /container/start [find where name=synapse]
 ```
 
----
+When Synapse is ready, the router can reach its client API:
 
-## Step 12: Register a Matrix User
+```routeros
+/tool/fetch url=http://172.17.0.2:8008/_matrix/client/versions output=user
+```
 
-Enter the Synapse container's shell and register a new user:
+The `code` in the output is `200`.
+
+### Register a user
+
+Open a shell in the Synapse container:
 
 ```routeros
 /container/shell [find where name=synapse]
 ```
 
-Once inside the container, run:
+In the shell, register a user, answer the questions, and leave the shell:
 
+```shell
+# register_new_matrix_user -c /data/homeserver.yaml
+New user localpart [root]: alice
+Password: 
+Confirm password: 
+Make admin [no]: yes
+Sending registration request...
+Success!
+# exit
 ```
-register_new_matrix_user -c /data/homeserver.yaml
-```
 
-Follow the prompts to create your admin user account.
+The user ID is `@alice:matrix.example.com`.
 
----
+### Access the server
 
-## Step 13: Access Your Matrix Server
+Synapse listens on HTTP port 8008. Devices in the router's LAN can reach it at `http://172.17.0.2:8008`. Matrix clients on the internet and federation with other Matrix servers need HTTPS on your server's domain name; see the [HAProxy](./container-haproxy.md) guide for a reverse proxy with HTTPS, with `172.17.0.2:8008` as the backend, and the Synapse documentation for the federation settings.
 
-Your Synapse Matrix server is now running. Access it using your RouterOS device's IP address or domain name.
-
----
-
-:::warning
-
-Always consult the official Synapse documentation for the latest configuration options and best practices, as configuration procedures may change with newer versions.
-
-:::
-
-### Discord bridge
+## Discord bridge
 
 :::tip
 
-The example below is for configuring a Discord bridge, but the procedure for other types of [bridges](https://matrix.org/ecosystem/bridges/) is very similar. Check the official documentation of your desired [bridge](https://matrix.org/ecosystem/bridges/) for more information.
+This example adds the [mautrix-discord](https://docs.mau.fi/bridges/go/discord/index.html) bridge; other [bridges](https://matrix.org/ecosystem/bridges/) are set up in a similar way. Check the documentation of your bridge for more information.
 
 :::
 
-1. Create PostgreSQL Discord bridge Container environment variables:  
+The bridge has its own PostgreSQL database. Create its environment variables:
 
-   ```routeros
-   /container/envs/add list=postgres_discord_envs key=POSTGRES_DB value="synapse-discord"
-   /container/envs/add list=postgres_discord_envs key=POSTGRES_PASSWORD value="<POSTGRE_BRIDGE_PASSWORD_HERE>"
-   /container/envs/add list=postgres_discord_envs key=POSTGRES_USER value="synapse_discord"
-   /container/envs/add list=postgres_discord_envs key=PGDATA value="/var/lib/postgresql/data/pgdata"
-   /container/envs/add list=postgres_discord_envs key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
-    /container/envs/add list=postgres_discord_envs key=PGPORT value=5434
-   ```
+```routeros
+/container/envs/add list=postgres_discord_envs key=POSTGRES_DB value="synapse-discord"
+/container/envs/add list=postgres_discord_envs key=POSTGRES_PASSWORD value="Example-db-pass-2"
+/container/envs/add list=postgres_discord_envs key=POSTGRES_USER value="synapse_discord"
+/container/envs/add list=postgres_discord_envs key=PGDATA value="/var/lib/postgresql/data/pgdata"
+/container/envs/add list=postgres_discord_envs key=POSTGRES_INITDB_ARGS value="--encoding='UTF8' --lc-collate='C' --lc-ctype='C'"
+/container/envs/add list=postgres_discord_envs key=PGPORT value=5434
+```
 
-2. Create PostgreSQL Discord bridge Container mounts:  
+Create the mounts for the database and for the bridge configuration:
 
-   ```routeros
-   /container/mounts/add list=discord_postgres_data src=disk1/discord-postgres-data dst=/var/lib/postgresql/data
-   ```
+```routeros
+/container/mounts/add list=discord_postgres_data src=disk1/discord-postgres-data dst=/var/lib/postgresql/data
+/container/mounts/add list=synapse_discord_data src=disk1/synapse-discord-data dst=/data
+```
 
-3. Create a PostgreSQL Container for Discord bridge:  
+Add the PostgreSQL container and the bridge container. The bridge image comes from the bridge developers' own registry, `dock.mau.dev`:
 
-   ```routeros
-   /container/add remote-image=postgres:17.2-alpine interface=veth1 root-dir=disk1/postgres-17.2-discord mountlists=discord_postgres_data envlists=postgres_discord_envs name=postgresql_discord
-   ```
+```routeros
+/container/add remote-image=postgres:17.2-alpine interface=veth1 \
+    root-dir=disk1/postgres-17.2-discord mountlists=discord_postgres_data \
+    envlists=postgres_discord_envs logging=yes name=postgresql_discord
+/container/add remote-image=dock.mau.dev/mautrix/discord:latest interface=veth1 \
+    root-dir=disk1/synapse-discord mountlists=synapse_discord_data \
+    restart-policy=on-failure logging=yes name=synapse_discord
+```
 
-4. Follow the guide for [HAProxy](./container-haproxy.md) Container and set up a reverse proxy for port `8080`
-5. Create Discord bridge Container mount points:  
+`restart-policy=on-failure` restarts the bridge when it exits with an error, for example when it starts before its database is ready.
 
-   ```routeros
-   /container/mounts/add list=synapse_discord_data src=disk1/synapse-discord-data dst=/data
-   ```
+When both are extracted, start the bridge once. It creates `disk1/synapse-discord-data/config.yaml` and stops:
 
-6. Create a Discord Bridge Container:  
+```routeros
+/container/start [find where name=synapse_discord]
+```
 
-   ```routeros
-   /container/add remote-image=litetex/mau.mautrix.discord:latest interface=veth1 root-dir=disk1/synapse-discord mountlists=synapse_discord_data name=synapse_discord
-   ```
+Download `config.yaml` with SFTP and change these settings; keep the rest of the file as it is:
 
-7. Start and stop the Discord bridge Container to generate files:  
+```yaml
+homeserver:
+    address: http://172.17.0.2:8008
+    domain: matrix.example.com
+    async_media: true
 
-   ```routeros
-   /container/start [find where name=synapse_discord]
-   /container/stop [find where name=synapse_discord]
-   ```
+appservice:
+    database:
+        type: postgres
+        uri: postgres://synapse_discord:Example-db-pass-2@172.17.0.2:5434/synapse-discord?sslmode=disable
 
-8. Connect to your RouterOS device using an SFTP client (for example, WinSCP when using Microsoft Windows) and adjust the file `disk1/synapse-discord/config.yaml` :  
+bridge:
+    encryption:
+        allow: true
+    permissions:
+        "*": relay
+        "matrix.example.com": user
+        "@alice:matrix.example.com": admin
+```
 
-   ```yaml
-    homeserver
-        address: http://172.17.0.2:8008
-        domain: test.mt.lv
-       software: standard
-       async_media: true
-       
-   appservice
-       address: leave default
-       hostname: leave default
-       port: leave default
-       database:
-           type: postgres
-           uri: postgres://synapse_discord:<POSTGRE_DISCORD_PASSWORD_HERE>@172.17.0.2:5434/synapse-discord?sslmode=disable
-   bridge:
-       encryption:
-           allow: true
-       permissions:
-           "*": relay
-           "@your_admin_user1:test.mt.lv": admin
-           "@your_admin_user2:test.mt.lv": admin
-   ```
+- `homeserver` - where the bridge reaches Synapse, and your server name.
+- `appservice` - `database` is the bridge's PostgreSQL database, with the password and port from its environment variables. Keep the default `address`, `hostname` and `port`: Synapse reaches the bridge at `localhost:29334`, which works because both containers use `veth1`.
+- `bridge` - `permissions` sets who can use the bridge: everyone as relay, the users of your server as users, and `alice` as admin.
 
-9. Start and stop the Discord bridge Container again:  
+Upload `config.yaml` back, start the bridge's database, and start the bridge again. It creates the registration file `disk1/synapse-discord-data/registration.yaml` and stops:
 
-   ```routeros
-   /container/start [find where name=synapse_discord]
-   /container/stop [find where name=synapse_discord]
-   ```
+```routeros
+/container/start [find where name=postgresql_discord]
+/container/start [find where name=synapse_discord]
+```
 
-10. Download the file `disk1/synapse-discord/registration.yaml`  and upload it as a file `disk1/synapse-data/mautrix-discord-registration.yaml`
-11. Connect to your RouterOS device using an SFTP client (for example, WinSCP when using Microsoft Windows) and add the following lines to `disk1/synapse-data/homeserver.yaml`:  
+Download `registration.yaml` and upload it to the Synapse data folder as `disk1/synapse-data/mautrix-discord-registration.yaml`. Then add these lines at the end of `disk1/synapse-data/homeserver.yaml`:
 
-     ```yaml
-     ...
-     app_service_config_files:
-     - /data/mautrix-discord-registration.yaml
-     ```
+```yaml
+app_service_config_files:
+  - /data/mautrix-discord-registration.yaml
+```
 
-12. Start the Synapse and Discord bridge Containers:  
+Restart Synapse and start the bridge:
 
-     ```routeros
-    /container/start [find where name=postgresql_discord]
-    /container/start [find where name=synapse_discord]
-    /container/start [find where name=postgresql_synapse]
-    /container/start [find where name=synapse]
-    ```
+```routeros
+/container/restart [find where name=synapse]
+/container/start [find where name=synapse_discord]
+```
 
-13. Your Matrix server should now have a new user called "Discord bridge bot". Follow the official documentation to create bridged rooms.
+The log shows `Bridge started!`, and your Matrix server has a new user, `@discordbot:matrix.example.com`, with the name "Discord bridge bot". Follow the [bridge documentation](https://docs.mau.fi/bridges/go/discord/index.html) to log in to Discord and create bridged rooms.
+
+Containers start with the router only when they have `start-on-boot=yes`. When you start them by hand, for example after a reboot, start the databases first:
+
+```routeros
+/container/start [find where name=postgresql_synapse]
+/container/start [find where name=postgresql_discord]
+/container/start [find where name=synapse]
+/container/start [find where name=synapse_discord]
+```
+
+For the commands used in this guide, see [`/container`](../../cli-reference/container/container.md), [`/container/config`](../../cli-reference/container/config), [`/container/mounts`](../../cli-reference/container/mounts) and [`/container/envs`](../../cli-reference/container/envs).

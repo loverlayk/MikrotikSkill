@@ -42,9 +42,9 @@ Now you're ready to create and configure the PostgreSQL container instance. This
 /container/add remote-image=postgres:15 interface=veth1 root-dir=disk1/images/postgres mountlists=MOUNT_POSTGRES envlists=ENV_POSTGRES name=postgres start-on-boot=yes logging=yes
 ```
 
-:::warning
+:::note
 
-You can specify a different version for PostgreSQL by changing the `postgres:15` value to any other available PostgreSQL version tag.
+To run a different PostgreSQL version, replace `postgres:15` with another PostgreSQL image tag.
 
 :::
 
@@ -56,7 +56,7 @@ With all configuration complete, you're now ready to initiate the PostgreSQL con
 /container/start [find where name=postgres]
 ```
 
-Once started, PostgreSQL will automatically create the initial database and user based on the environment variables you configured. The container will automatically start on system boot if you have configured it to do so.
+On the first start, PostgreSQL creates the initial database and user from the environment variables. When the log shows `database system is ready to accept connections`, PostgreSQL accepts connections on port 5432 of the container's address (`172.17.0.2` in the [Bridge with NAT](../#bridge-with-nat) example). Because of `start-on-boot=yes`, the container also starts when the router boots.
 
 ## Advanced: PostgreSQL with pgAdmin
 
@@ -97,29 +97,31 @@ Now you're ready to create and configure the pgAdmin container instance. This co
 /container/add remote-image=dpage/pgadmin4 envlists=ENV_PGADMIN mountlists=MOUNT_PGADMIN_CONFIG,MOUNT_PGADMIN_DATA interface=veth1 logging=yes name=pgadmin root-dir=disk1/images/pgadmin start-on-boot=yes user=0:0
 ```
 
-This command specifies the official pgAdmin4 Docker image from Docker Hub, applies your previously defined environment variable list and mount point list, assigns the container to the `veth1` virtual ethernet interface, enables logging for troubleshooting purposes, names the container "pgadmin" for easy identification, stores the container image files in the designated disk location, configures the container to start automatically whenever the router boots, and runs the container with root user privileges.
+This command specifies the official pgAdmin4 Docker image from Docker Hub, applies your previously defined environment variable list and mount point list, assigns the container to the `veth1` virtual ethernet interface (the same interface as the PostgreSQL container, so both containers share its address), enables logging for troubleshooting purposes, names the container "pgadmin" for easy identification, stores the container image files in the designated disk location, configures the container to start automatically whenever the router boots, and runs the container with root user privileges.
 
-### Step 4: Disable the Webfig Service
+### Step 4: Start the pgAdmin Container
 
-As pgAdmin operates as a web-based application and by default listens on HTTP port 80, it conflicts with RouterOS's built-in WebFig web interface which also uses port 80. To prevent this port conflict and ensure pgAdmin functions properly, you must disable the WebFig service.
-
-```routeros
-/ip/service
-set www disabled=yes
-```
-
-:::tip
-
-You have an alternative approach if you prefer to keep WebFig accessible: simply modify the `PGADMIN_LISTEN_PORT` environment variable to use a different port number—such as 8080 or 8888—instead of the default port 80. This allows both services to run simultaneously without conflict.
-
-:::
-
-### Step 5: Start the pgAdmin Container
-
-With all configuration complete, you're now ready to initiate the pgAdmin container. Starting the container will launch the pgAdmin web application, which will become accessible through your web browser.
+With all configuration complete, you're now ready to initiate the pgAdmin container. Starting the container will launch the pgAdmin web application.
 
 ```routeros
 /container/start [find where name=pgadmin]
 ```
 
-Once started, you can access the pgAdmin web interface by navigating to your router's IP address in a web browser. Use the email address and password you configured in Step 2 to authenticate and begin managing your PostgreSQL databases servers.
+On the first start, pgAdmin sets up its own database before it opens the web interface, which can take a few minutes on a slow device. Until then, connections to the container's port 80 are refused.
+
+### Step 5: Open the pgAdmin Web Interface
+
+pgAdmin listens on port 80 of the container's address, not of the router, so it does not conflict with WebFig, and the `www` service can stay enabled. From a host that has a route to the container network, open `http://172.17.0.2/`.
+
+To reach pgAdmin through the router's address instead, forward a free router port to the container. This rule forwards port 8080 for connections that arrive on the `LAN` interface list, so pgAdmin is not exposed on the WAN side:
+
+```routeros
+/ip/firewall/nat
+add chain=dstnat action=dst-nat protocol=tcp dst-port=8080 \
+    in-interface-list=LAN to-addresses=172.17.0.2 to-ports=80 \
+    comment=pgadmin
+```
+
+Open `http://192.168.88.1:8080/` and log in with the email address and password from Step 2. To manage the database, register a server with host `172.17.0.2`, port `5432`, and the `POSTGRES_USER` and `POSTGRES_PASSWORD` values of the PostgreSQL container.
+
+For the container commands used in this guide, see [`/container`](../../cli-reference/container/container.md), [`/container/envs`](../../cli-reference/container/envs) and [`/container/mounts`](../../cli-reference/container/mounts).

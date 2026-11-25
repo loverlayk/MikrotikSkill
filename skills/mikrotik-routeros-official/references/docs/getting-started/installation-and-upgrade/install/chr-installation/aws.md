@@ -1,10 +1,14 @@
 # CHR: AWS Installation
 
-> This page guides users through deploying MikroTik CHR on Amazon Web Services (AWS) by importing a raw disk image as an AMI and launching an EC2 instance.
+> Deploy MikroTik CHR on Amazon Web Services (AWS): launch it from the AWS Marketplace with a key pair, or import the raw disk image as an AMI and launch an EC2 instance from it.
 
 # CHR: AWS Installation
 
-Amazon Web Services (AWS) does not offer MikroTik CHR directly in the Marketplace. To deploy CHR on AWS, you import the raw disk image as an Amazon Machine Image (AMI) and then launch an EC2 instance from it.
+There are two ways to deploy CHR on Amazon Web Services (AWS):
+
+- Launch it from the AWS Marketplace listing (see the end of this page). This is the quickest way.
+- Import the raw disk image as an Amazon Machine Image (AMI) and launch an EC2 instance from it, as
+  described in the following steps. Use this to run a RouterOS version of your choice.
 
 ## Prerequisites
 
@@ -20,7 +24,7 @@ The IAM user or role must have the `vmimport` service role configured. See the [
 
 1. Navigate to the [MikroTik download page](https://mikrotik.com/download).
 2. Locate the latest Stable **CHR raw disk image** (`.img` file) for your target architecture.
-3. Download and extract the archive.
+3. Download and extract the archive (`chr-<version>.img.zip`).
 
 ## Step 2: Upload the image to S3
 
@@ -100,7 +104,7 @@ Ensure your security group allows SSH (port 22) and WinBox (port 8291) access fr
 
 1. Connect via SSH using the instance's public IP:
 
-   ```ros
+   ```bash
    ssh admin@INSTANCE_PUBLIC_IP
    ```
 
@@ -137,7 +141,8 @@ You can deploy CHR directly from the AWS Marketplace without manually importing 
 
 ## Connecting to the Marketplace instance
 
-SSH access on port 22 is available immediately by using the downloaded key pair:
+SSH access on port 22 is available immediately by using the downloaded key pair. The key is
+installed as an SSH key of the `admin` user (`/user/ssh-keys/print`), and the license level is free:
 
 ```bash
 ssh -i /path/to/keypair.pem admin@INSTANCE_PUBLIC_IP

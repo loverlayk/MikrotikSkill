@@ -60,7 +60,7 @@
 <ArgTableRow arg="flow-label" typ="num">Matching IPv6 flow label.</ArgTableRow>
 <ArgTableRow arg="copy-to-cpu" typ="bool">Clones the matching packet and sends it to the CPU.</ArgTableRow>
 <ArgTableRow arg="redirect-to-cpu" typ="bool">Changes the destination port of a matching packet to the switch CPU.</ArgTableRow>
-<ArgTableRow arg="cpu-high-priority" typ="bool" syscap="crs_prestera">Send packets to the high-priority CPU queue</ArgTableRow>
+<ArgTableRow arg="cpu-high-priority" typ="bool" syscap="crs_prestera">Send packets to the high-priority CPU queue. Requires `copy-to-cpu=yes` or `redirect-to-cpu=yes` in the same rule.</ArgTableRow>
 <ArgTableRow arg="mirror" typ="bool" syscap="switch-mirror-prestera">Clones the matching packet and sends it to the `mirror-target` port.</ArgTableRow>
 <ArgTableRow arg="new-dst-ports" typ="multi { array-id, port: alt { port: enum
 , bond: iface_enum

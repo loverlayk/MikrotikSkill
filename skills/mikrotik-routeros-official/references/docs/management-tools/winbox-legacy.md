@@ -1,11 +1,11 @@
 # WinBox v3 (Legacy)
 
-> WinBox v3 is a GUI utility for administering MikroTik RouterOS with Linux/macOS support via Wine. This legacy page covers the Wine-based WinBox v3 — use WinBox v4 for a native cross-platform experience.
+> WinBox v3 is the legacy GUI utility for administering MikroTik RouterOS: a native Windows program that runs on Linux and macOS with Wine. Use WinBox v4 for a native cross-platform application.
 
 # WinBox v3 (Legacy)
 
 :::warning
-This page documents the legacy WinBox v3 (Wine-based) application. MikroTik now provides **WinBox v4**, a native cross-platform application for Windows, Linux, and macOS. See the [WinBox v4 documentation](./winbox.md) for the current version.
+This page documents the legacy WinBox v3 application, a Windows program that runs on Linux and macOS only with Wine. MikroTik now provides **WinBox v4**, a native cross-platform application for Windows, Linux, and macOS. See the [WinBox v4 documentation](./winbox.md) for the current version.
 
 :::
 
@@ -27,7 +27,7 @@ WinBox loader can be downloaded from the [MikroTik download page](https://www.mi
 
 When you open the WinBox loader for the first time, the simple mode layout is used:
 
-![](./img/winbox-01.webp)
+![WinBox loader in simple mode with Connect To, Login and Password fields and the Neighbors list](./img/winbox-01.webp)
 
 To connect to the router, enter the IP or MAC address of the router, specify the username and password (if any) and select the **Connect** button. You can also enter the port number after the IP address, separating them with a colon, like this 192.168.88.1:9999. The port can be changed in the RouterOS **services** menu.
 
@@ -38,7 +38,7 @@ It is recommended to use an IP address whenever possible. A MAC session uses net
 
 You can also use neighbor discovery to list available routers. Use the **Neighbors** tab:
 
-![](./img/winbox-02.webp)
+![WinBox loader Neighbors tab with the Refresh button and a list of discovered routers](./img/winbox-02.webp)
 
 From the list of discovered routers, you can select the IP or MAC address column to connect to that router. If you select the IP address then the IP is used to connect, but if you select the MAC Address then the MAC address is used to connect to the router.
 
@@ -78,7 +78,7 @@ Neighbor discovery shows also devices that are not compatible with WinBox, like 
 
 Additional WinBox loader parameters are revealed when an **advanced mode** is enabled with *Tools → Advanced Mode:*
 
-![](./img/winbox-03.webp)
+![WinBox loader in advanced mode with extra Session, Note, Group and RoMON Agent fields](./img/winbox-03.webp)
 
 #### Buttons/check-boxes and Other Fields
 
@@ -105,35 +105,31 @@ The Managed routers list is encrypted, but it can still be loaded with another W
 
 It is possible to use the command line to pass connect to, user, password and session ("workspace" for WinBox 4) parameters automatically:
 
-```
+```text
 winbox.exe [<connect-to> [<login> [<password>]] <session|workspace>]
-
 ```
 
 For example (with no password):
 
-```
+```text
 winbox.exe 10.5.101.1 admin "" "<own>"
-
 ```
 
-This connects to the router 10.5.101.1 with user "admin" without a password and use session|workspace "```<own>```".
+This connects to the router 10.5.101.1 with user "admin" without a password and use session|workspace `<own>`.
 
 It is possible to use the command line to pass the connect to, user, and password parameters automatically to connect to the router through RoMON. In this case, RoMON Agent must be saved on the Managed routers list so WinBox knows the user and password for this device:
 
-```
+```text
 winbox.exe --romon [<romon-agent> [<connect-to> [<login> [<password>]]] <session|workspace>]
-
 ```
 
 For example (with no password):
 
-```
+```text
 winbox.exe --romon 10.5.101.1 D4:CA:6D:E1:B5:7D admin "" "<own>"
-
 ```
 
-Connects to the router D4:CA:6D:E1:B5:7D, through 10.5.101.1 by using RoMON Agent with user "admin" without a password and apply session|workspace called "```<own>```".
+Connects to the router D4:CA:6D:E1:B5:7D, through 10.5.101.1 by using RoMON Agent with user "admin" without a password and apply session|workspace `<own>`.
 
 ### IPv6 connectivity
 
@@ -170,13 +166,12 @@ The WinBox interface has been designed to be intuitive for most of the users. Th
 - The menu bar on the left - list of all available menus and sub-menus. This list changes depending on what packages are installed. For example, if the IPv6 package is disabled, then the **IPv6** menu and all its sub-menus are not displayed.
 - Work area - an area where all menu windows are opened.
 
-![](./img/winbox-04.webp)
+![WinBox main window with labelled title bar, undo/redo, menu bar, work area and secure mode indicator](./img/winbox-04.webp)
 
 The title bar shows information to identify with which router the WinBox session is opened. Information is displayed in the following format:
 
-```
+```text
 [username]@[Router's IP or MAC] ( [RouterID] ) - WinBox [ROS version] on [RB model] ([platform])
-
 ```
 
 From the screenshot, we can see that user **krisjanis** is logged into the router with IPv4/IPv6 address **[fe80::4e5e:cff:fef6:c0ab%3]**. Router's ID is **3C18-Krisjanis\_GW**, currently installed RouterOS version is **v6.36rc6**, RouterBoard is **CCR1036-12G-4S** and platform is **tile**.
@@ -200,7 +195,7 @@ On the right side is located:
 
 WinBox has an MDI interface meaning that all menu configuration (child) windows are attached to the main (parent) WinBox window and are shown in the work area.
 
-![](./img/winbox-05.webp)
+![WinBox work area with Route List and Interface List child windows open](./img/winbox-05.webp)
 
 Child windows can not be dragged out of the working area. In the screenshot, the **Interface** window is dragged out of the visible working area and a horizontal scroll bar appeared at the bottom. If any window is outside the visible work area boundaries the vertical and/or horizontal scrollbars appear.
 
@@ -208,16 +203,16 @@ Child windows can not be dragged out of the working area. In the screenshot, the
 
 Each child window has its own toolbar. Most of the windows have the same set of toolbar buttons:
 
-- ![](./img/winbox-06.webp) **Add** - add a new item to the list.
-- ![](./img/winbox-07.webp) **Remove** - remove the selected item from the list.
-- ![](./img/winbox-enable.png) **Enable** - enable the selected item (the same as **enable** command from console).
-- ![](./img/winbox-disable.png) **Disable** - disable the selected item (the same as **disable** command from console).
-- ![](./img/winbox-comment.png) **Comment** - add or edit a comment.
-- ![](./img/winbox-sort.png)  **Sort** - allows you to sort out items depending on various parameters.  [Sorting out displayed items](#sorting-out-displayed-items)
+- ![Add button (red plus sign)](./img/winbox-06.webp) **Add** - add a new item to the list.
+- ![Remove button (minus sign)](./img/winbox-07.webp) **Remove** - remove the selected item from the list.
+- ![Enable button (blue check mark)](./img/winbox-enable.png) **Enable** - enable the selected item (the same as **enable** command from console).
+- ![Disable button (red cross)](./img/winbox-disable.png) **Disable** - disable the selected item (the same as **disable** command from console).
+- ![Comment button (yellow note)](./img/winbox-comment.png) **Comment** - add or edit a comment.
+- ![Sort button (funnel)](./img/winbox-sort.png)  **Sort** - allows you to sort out items depending on various parameters.  [Sorting out displayed items](#sorting-out-displayed-items)
 
 Almost all windows have a quick search input field on the right side of the toolbar. Any text entered in this field is searched through all the items and highlighted as illustrated in the following screenshot.
 
-![](./img/winbox-08.webp)
+![WinBox Route List with quick search text highlighted in matching routes and the routing table drop-down open](./img/winbox-08.webp)
 
 Notice that on the right side next to the quick find input field there is a drop-down box. For the currently opened (IP Route) window, this drop-down box allows to quickly sort out items by routing tables. For example, if the **main** is selected, then only routes from the main routing table are listed.
 A similar drop-down box is also in all firewall windows to quickly sort out rules by chains.
@@ -226,7 +221,7 @@ A similar drop-down box is also in all firewall windows to quickly sort out rule
 
 Almost every window has a **Sort** button. When selecting this button, several options appear as illustrated in the following screenshot.
 
-![](./img/winbox-09.webp)
+![WinBox Route List filter bar with numbered callouts filtering Dst. Address in 10.0.0.0/8](./img/winbox-09.webp)
 
 The example shows how to quickly filter out routes that are in the 10.0.0.0/8 range:
 
@@ -259,7 +254,7 @@ WinBox allows you to customize displayed columns for each individual window. For
 - Select the little arrow button (**1**) on the right side of the column titles or right-click on the route list.
 - From the pop-up menu move to **Show Columns** (**2**) and from the sub-menu pick the desired column, in our case select **BGP AS Path** (**3**).
 
-![](./img/winbox-10.webp)
+![WinBox Route List context menu with Show Columns submenu listing available columns](./img/winbox-10.webp)
 
 Changes made to the window layout are saved and the next time WinBox is opened the same column order and size are applied.
 
@@ -269,7 +264,7 @@ It is also possible to enable **Detail mode**. In this mode all parameters are d
 
 To enable detail mode, right-click on the item list and from the popup menu pick **Detail mode**
 
-![](./img/winbox-11.webp)
+![WinBox OSPF Neighbors list in detail mode with Detail Mode selected in the context menu](./img/winbox-11.webp)
 
 #### Category view
 
@@ -277,7 +272,7 @@ It is possible to list items by categories. In this mode, all items are grouped 
 
 To enable Category view, right-click on the item list and from the popup menu pick **Show Categories**.
 
-![](./img/winbox-12.webp)
+![WinBox OSPF LSA list grouped by type with Show Categories selected in the context menu](./img/winbox-12.webp)
 
 ### Drag & Drop
 
@@ -292,7 +287,7 @@ Drag & Drop works if WinBox is running on Linux using wine4. Drag and drop betwe
 
 WinBox can be used as a tool to monitor the traffic of every interface, queue, or firewall rule in real-time. The following screenshot shows Ethernet traffic monitoring graphs.
 
-![](./img/winbox-13.webp)
+![WinBox interface Traffic tab with Tx/Rx rate counters and live traffic graphs](./img/winbox-13.webp)
 
 ### Item copy
 
@@ -300,19 +295,19 @@ This shows how easy it is to copy an item in WinBox. In this example, use the CO
 
 This image shows us the initial state. As you see, DR indicates "D" which means Dynamic:
 
-![](./img/winbox-14.webp)
+![WinBox PPP Interface list with a dynamic PPPoE server binding marked DR](./img/winbox-14.webp)
 
 Double-click on the interface and select COPY:
 
-![](./img/winbox-15.webp)
+![WinBox PPPoE server binding interface window with the Copy button highlighted](./img/winbox-15.webp)
 
 A new interface window appears, and a new name is created automatically (in this case pppoe-in1).
 
-![](./img/winbox-16.webp)
+![WinBox New Interface window with the auto-generated name pppoe-in1 and the OK button highlighted](./img/winbox-16.webp)
 
 After this Down/Up event this interface is Static:
 
-![](./img/winbox-17.webp)
+![WinBox PPP Interface list showing the copied pppoe-in1 interface as static and running (R)](./img/winbox-17.webp)
 
 ## Transferring Settings
 
@@ -343,24 +338,7 @@ After this Down/Up event this interface is Static:
 
 ## WinBox v4 Keyboard Shortcuts
 
-| Shortcut | Description |
-| :-- | :-- |
-| <kbd>Control</kbd>+<kbd>E</kbd> | Enables a selected setting |
-| <kbd>Control</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Disables a selected setting |
-| <kbd>Control/CMD</kbd>+<kbd>+</kbd> | Zoom in WinBox |
-| <kbd>Control/CMD</kbd>+<kbd>-</kbd> | Zoom out WinBox |
-| <kbd>Control/CMD</kbd>+<kbd>0</kbd> | Reset zoom |
-| <kbd>Control</kbd>+<kbd>Tab</kbd> | Choose next tab |
-| <kbd>Control</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Choose previous tab |
-| <kbd>Tab</kbd> | Choose next control |
-| <kbd>Shift</kbd>+<kbd>Tab</kbd> | Choose previous control |
-| <kbd>Space</kbd> | Select focused control |
-| <kbd>Control</kbd>+<kbd>F4</kbd> or <kbd>Alt</kbd>/<kbd>Cmd</kbd>+<kbd>W</kbd> | Close window |
-| <kbd>Alt</kbd>+<kbd>A</kbd> / <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> | Focus previous window |
-| <kbd>Alt</kbd>/<kbd>Cmd</kbd>+<kbd>S</kbd> | Focus next window |
-| <kbd>Delete</kbd> | Delete entry from the list |
-| <kbd>Alt</kbd>/<kbd>Cmd</kbd>+<kbd>Opt</kbd>+<kbd>F</kbd> | Global menu search |
-| <kbd>Alt</kbd>/<kbd>Cmd</kbd>+<kbd>T</kbd> | Open a new Terminal window |
+See [Keyboard Shortcuts](./winbox.md#keyboard-shortcuts) on the WinBox v4 page.
 
 ## Troubleshooting
 

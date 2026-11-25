@@ -4,7 +4,7 @@
 
 # SMB
 
-RouterOS includes a built-in **SMB server** for sharing folders of the router with network clients. In addition, the [Storage package](./) adds an **SMB client** that lets RouterOS mount remote SMB shares as disks.
+RouterOS includes an **SMB server** for sharing folders of the router with network clients, and an **SMB client** that mounts remote SMB shares as disks. Both are part of the base system; the [Storage package](./) is not needed.
 
 ## SMB server
 
@@ -30,79 +30,75 @@ The server starts on its own once the first share is added (`enabled=auto` is th
 
 **Sub-menu:** `/ip/smb/users`
 
-[`/ip/smb/users`](../cli-reference/ip/smb/users) sets up the users that can access the router's SMB shares. Each user has a name, a password, and a `read-only` restriction (default: yes) that applies across all shares. A default `guest` user is created automatically and is disabled by default.
+[`/ip/smb/users`](../cli-reference/ip/smb/users) sets up the users that can access the router's SMB shares. Each user has a name, a password, and a `read-only` restriction (default: yes) that applies across all shares. A default `guest` user is created automatically; it has read-only access to the shares without a password. Disable it unless anyone in the network may read the shares.
 
 ### Example
 
-To make the RouterOS folder available through the SMB service follow these steps:
+To make a folder of the router available through SMB:
 
-- Create a user.
+1. Create a user:
 
-```ros
-/ip/smb/users/add read-only=no name=mtuser password=mtpasswd
-```
+   ```routeros
+   /ip/smb/users/add read-only=no name=mtuser password=mtpasswd
+   ```
 
-- add shared folder.
+2. Create the folder and the share. When the folder exists, clients can open the share:
 
-```ros
-/ip/smb/shares/add directory=backup name=backup
-```
+   ```routeros
+   /file/add name=backup type=directory
+   /ip/smb/shares/add directory=backup name=backup
+   ```
 
-- enable SMB service:
+3. Disable the `guest` user, so that only `mtuser` can open the share:
 
-```ros
-#this step is optional, as the default is "enabled=auto"
-/ip/smb/set enabled=yes
-```
+   ```routeros
+   /ip/smb/users/disable guest
+   ```
 
-Now check for results:
+The server starts when the first share is added (`enabled=auto`); `/ip/smb/set enabled=yes` starts it in any case. Check the settings:
 
-- Check general service settings.
-
-```ros
+```text
 /ip/smb/print
-      enabled: yes
-        status: enabled
-        domain: MSHOME
-       comment: MikrotikSMB
-    interfaces: all
+     enabled: auto       
+      status: enabled    
+      domain: MSHOME     
+     comment: MikrotikSMB
+  interfaces: all
 ```
 
-- SMB user settings
-
-```ros
+```text
 /ip/smb/users/print
 Flags: X - DISABLED; * - DEFAULT; r - READ-ONLY
-Columns: NAME, PASSWORD
-#     NAME    PASSWORD
-0 X*r guest          
-1     mtuser  mtpasswd
+Columns: NAME
+#     NAME  
+0 X*r guest 
+1     mtuser
 ```
 
-- And finally SMB shares settings.
+The default share `pub` is disabled:
 
-```ros
+```text
 /ip/smb/shares/print
 Flags: X - DISABLED; * - DEFAULT
 Columns: NAME, DIRECTORY, REQUIRE-ENCRYPTION
 #    NAME    DIRECTORY  REQUIRE-ENCRYPTION
-;;; default share
-0 X* pub     /pub       no               
-1    backup  backup     no
+0 X* pub     /pub       no                
+1    backup  /backup    no
 ```
 
-Now, additional configuration changes can be done, like disabling the default user and share, etc.
+A Linux client connects with, for example, `smbclient //192.168.88.1/backup -U mtuser`. SMB1 clients cannot connect.
 
 ## SMB client
 
-**Sub-menu:** `/disk` **Packages required:** [Storage package](./)
+**Sub-menu:** `/disk`
 
-The Storage package adds an SMB client that mounts a remote SMB share as a local disk on the router. The package currently supports SMB2.1, SMB3.0, and SMB3.1.1 dialects (SMB1 is not supported due to security vulnerabilities).
+The SMB client mounts a remote SMB share as a disk on the router. It supports the SMB2.1, SMB3.0, and SMB3.1.1 dialects; SMB1 is not supported.
 
 ### Configuration example
 
-```ros
-/disk/add smb-address=10.155.145.11 smb-share=share1 smb-user=user smb-password=password type=smb
+```routeros
+/disk/add type=smb smb-address=10.0.2.2 smb-share=share1 \
+    smb-user=smbu smb-password=<password>
 ```
 
-The mounted share then appears as a disk in `/file` and can be managed like any other disk.
+The share is mounted as `smb-<address>-<share>`, here `smb-10-0-2-2-share1`, and its files appear in `/file` like the files of any other disk.

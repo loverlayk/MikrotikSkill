@@ -5,75 +5,83 @@
 # RAID
 
 :::info
-This feature requires the [Storage](../index.md) package.
+This feature requires the `rose-storage` package; see [Storage](../index.md).
 :::
 
-RAID (Redundant Array of Independent Disks) technology allows storing data on multiple drives - improving data transfer performance, data protection or both by combining them into logical units.
+RAID (Redundant Array of Independent Disks) stores data on multiple drives and combines them into one logical disk, for better performance, better protection against disk failures, or both.
 
-In the case of a RAID disk failure, a rebuild begins automatically once the failed drive is replaced.
-
-RouterOS supports software RAID levels 0, 1, 4, 5, 6, linear, and nested RAID.
+RouterOS supports software RAID levels 0, 1, 4, 5, 6, linear, and nested RAID (a RAID array made of other RAID arrays). When a member of a redundant array fails, the array keeps working in a degraded state. With a [hot spare](./hot-spare.md), the rebuild starts on the spare at once; otherwise, [replace the failed disk](#replace-a-failed-disk).
 
 <DocCardList />
 
-## Configuration example (RAID6)
+## Create a RAID 6 array
 
-This is an example on how to configure RAID. It will be the same procedure for most RAID types
+The same procedure applies to the other RAID types. This example creates a RAID 6 array of six disks, `nvme1` to `nvme6`. All data on the disks is lost.
 
-Create the RAID block device (in this example, RAID 6)
+Create the RAID block device:
 
-```ros
-add raid-device-count=20 raid-type=6 slot=raid1 type=raid
+```routeros
+/disk/add type=raid slot=raid6 raid-type=6 raid-device-count=6
 ```
 
-Add drives to this raid
+Add the disks to the array. `raid-role` is the position of each disk in the array, starting from 0:
 
-```ros
-set nvme1 raid-master=raid1 raid-role=0
-set nvme2 raid-master=raid1 raid-role=1
-set nvme3 raid-master=raid1 raid-role=2
-set nvme4 raid-master=raid1 raid-role=3
-set nvme5 raid-master=raid1 raid-role=4
-set nvme6 raid-master=raid1 raid-role=5
-set nvme7 raid-master=raid1 raid-role=6
-set nvme8 raid-master=raid1 raid-role=7
-set nvme9 raid-master=raid1 raid-role=8
-set nvme10 raid-master=raid1 raid-role=9
-set nvme11 raid-master=raid1 raid-role=10
-set nvme12 raid-master=raid1 raid-role=11
-set nvme13 raid-master=raid1 raid-role=12
-set nvme14 raid-master=raid1 raid-role=13
-set nvme15 raid-master=raid1 raid-role=14
-set nvme16 raid-master=raid1 raid-role=15
-set nvme17 raid-master=raid1 raid-role=16
-set nvme18 raid-master=raid1 raid-role=17
-set nvme19 raid-master=raid1 raid-role=18
-set nvme20 raid-master=raid1 raid-role=19
-
+```routeros
+/disk/set nvme1 raid-master=raid6 raid-role=0
+/disk/set nvme2 raid-master=raid6 raid-role=1
+/disk/set nvme3 raid-master=raid6 raid-role=2
+/disk/set nvme4 raid-master=raid6 raid-role=3
+/disk/set nvme5 raid-master=raid6 raid-role=4
+/disk/set nvme6 raid-master=raid6 raid-role=5
 ```
 
-Format the RAID block device
+Format the RAID block device:
 
-```ros
-/disk> format raid1 file-system=ext4 
+```routeros
+/disk/format raid6 file-system=ext4
 ```
 
-And the result should look similar to this
+Check the array with `/disk/print detail where slot=raid6`:
 
-```ros
-21 BM        type=raid slot="raid1" slot-default="" parent=none uuid="f457bc79-7408-489b-8850-85923e900452" fs=ext4 model="RAID6 2-parity-disks" 
-             size=17 283 541 893 120 free=17 283 538 190 336 raid-type=6 raid-device-count=20 raid-max-component-size=none raid-chunk-size=1M raid-master=none 
-             raid-state="clean" nvme-tcp-export=no iscsi-export=no nfs-sharing=no smb-sharing=no media-sharing=no media-interface=none 
-
+```text
+7 BM type=raid slot="raid6" slot-default="" parent="" fs-label="raid6-fs"
+     fs-uuid="3ffda391-66ff-40f1-8837-e716898d8a45" fs=ext4
+     model="RAID6 2-parity-disks" size=8 585 740 288 free=8 346 079 232
+     total-inodes=524 288 free-inodes=524 277 use=0% mount-point="raid6"
+     mount-filesystem=yes mount-read-only=no compress=no sector-size=512
+     raid-type=6 raid-device-count=6 raid-max-component-size=none
+     raid-chunk-size=1M raid-master=none state="active"
+     raid-uuid="9aea18da-07061d4e-fbd0175e-7ab46c87" nvme-tcp-export=no
+     iscsi-export=no nfs-sharing=no smb-sharing=no media-sharing=no
+     media-interface=none swap=no
 ```
+
+`state` shows the condition of the array, for example `active` or `clean`, `degraded by 1` when a member is missing, and the progress of a rebuild (`sync:recover, recovery = 76.6%`).
 
 :::warning
 Avoid using multiple partitions on a single physical disk in multiple RAID arrays. Using the same physical disk in multiple RAID arrays can result in low performance.
 :::
 
-## Example: RAID check
+## Replace a failed disk
 
-It is extremely important to monitor your RAID array for failures. There are multiple ways to do it, but the simplest way is to create a script that sends an e-mail whenever a RAID member has failed. You can use the following script as a working example:
+A failed member has the `f` (`raid-member-failed`) flag in `/disk/print`. To replace a member that has not failed, for example a disk that reports errors, mark it as failed first:
+
+```routeros
+/disk/set nvme3 raid-member-failed=yes
+```
+
+Remove the failed disk from the array, and add the new disk with the same `raid-role`:
+
+```routeros
+/disk/set nvme3 raid-master=none
+/disk/set nvme7 raid-master=raid6 raid-role=2
+```
+
+The rebuild starts at once; `state` shows its progress and returns to `clean` when it is done. A role that a failed disk still holds cannot be given to another disk: `failure: already have device with raid-role=2 in this raid`.
+
+## Monitor the array
+
+Monitor the array for failures. This script checks every 30 seconds for members with the `raid-member-failed` flag, writes `ERROR: RAID has failed!` to the log and sends an e-mail:
 
 ```routeros
 /system/scheduler
@@ -144,7 +152,7 @@ Block-level data is striped evenly over the available disks. It can be recovered
 
 ![RAID 6 diagram: block-level striping with double distributed parity](./img/raid-05.webp)
 
-### RAID Linear
+### RAID linear
 
 Data is appended over multiple disks combining them into a single large disk. Provides no redundancy and is limited to the single disk read/write speed.
 
@@ -156,57 +164,48 @@ Combination of multiple RAID configurations into another RAID. For example RAID 
 
 ![Nested RAID diagram: RAID 1+0 combining mirroring and striping](./img/raid-07.webp)
 
-### Configuration example
+### Create a nested RAID 10 array
 
-In this example I'm using 10 SSD drives and configuring in RAID (RAID 1+0)
+RAID 10 is a RAID 0 array made of RAID 1 arrays. This example uses four disks, `nvme1` to `nvme4`, in two mirrors.
 
-Create a RAID 0 block
+Create the RAID 0 array, and the two RAID 1 arrays as its members:
 
-```ros
-add raid-device-count=5 raid-type=0 slot=raid10 type=raid
+```routeros
+/disk/add type=raid slot=raid10 raid-type=0 raid-device-count=2
+/disk/add type=raid slot=mirror1 raid-type=1 raid-device-count=2 \
+    raid-master=raid10 raid-role=0
+/disk/add type=raid slot=mirror2 raid-type=1 raid-device-count=2 \
+    raid-master=raid10 raid-role=1
 ```
 
-Create five RAID 1 blocks, each containing 2 devices and add them to set the master-raid to the previously created RAID 0 block (name=raid10)
+Add the disks to the mirrors:
 
-```ros
-add raid-device-count=2 raid-master=raid10 raid-role=0 raid-type=1 slot=raid0 type=raid
-add raid-device-count=2 raid-master=raid10 raid-role=1 raid-type=1 slot=raid1 type=raid
-add raid-device-count=2 raid-master=raid10 raid-role=2 raid-type=1 slot=raid2 type=raid
-add raid-device-count=2 raid-master=raid10 raid-role=3 raid-type=1 slot=raid3 type=raid
-add raid-device-count=2 raid-master=raid10 raid-role=4 raid-type=1 slot=raid4 type=raid
+```routeros
+/disk/set nvme1 raid-master=mirror1 raid-role=0
+/disk/set nvme2 raid-master=mirror1 raid-role=1
+/disk/set nvme3 raid-master=mirror2 raid-role=0
+/disk/set nvme4 raid-master=mirror2 raid-role=1
 ```
 
-Add drives to each RAID block
+Format the RAID 10 array:
 
-```ros
-set nvme1 raid-master=raid0 raid-role=0
-set nvme3 raid-master=raid1 raid-role=0
-set nvme5 raid-master=raid2 raid-role=0
-set nvme7 raid-master=raid3 raid-role=0
-set nvme9 raid-master=raid4 raid-role=0
-
-set nvme2 raid-master=raid0 raid-role=1
-set nvme4 raid-master=raid1 raid-role=1
-set nvme6 raid-master=raid2 raid-role=1
-set nvme8 raid-master=raid3 raid-role=1
-set nvme10 raid-master=raid4 raid-role=1
-
+```routeros
+/disk/format raid10 file-system=ext4
 ```
 
-After this format, the raid10 block
+The array has the size of two disks (`/disk/print detail where slot=raid10`):
 
-```ros
-format raid10 file-system=ext4 
+```text
+6 BM type=raid slot="raid10" slot-default="" parent="" fs-label="raid10-fs"
+     fs-uuid="9efc2ffb-bd5e-4020-bf9d-0fdd23cf1147" fs=ext4
+     model="RAID0 striped" size=4 290 772 992 free=4 139 458 560
+     total-inodes=262 144 free-inodes=262 133 use=0% mount-point="raid10"
+     mount-filesystem=yes mount-read-only=no compress=no sector-size=512
+     raid-type=0 raid-device-count=2 raid-max-component-size=none
+     raid-chunk-size=1M raid-master=none state="clean"
+     raid-uuid="04cbbdec-baab5216-8ad762b2-2b74d214" nvme-tcp-export=no
+     iscsi-export=no nfs-sharing=no smb-sharing=no media-sharing=no
+     media-interface=none swap=no
 ```
 
-After formatting you should see the free space and use the block
-
-```ros
-23 BM        type=raid slot="raid10" slot-default="" parent=none uuid="ec3344f4-1662-49ab-b899-db1aaa217b0f" fs=ext4 model="RAID0 striped" size=9 601 967 652 864 
-             free=9 597 901 369 344 raid-type=0 raid-device-count=5 raid-max-component-size=none raid-master=none raid-state="clean" nvme-tcp-export=no 
-             iscsi-export=no nfs-sharing=no smb-sharing=no media-sharing=no media-interface=none 
-```
-
-Based on this configuration you can modify the RAID 10 configuration to fit as many storage devices as you require.
-
-Similarly it is possible to create other nested RAID configurations, keeping the same principle as showcased in the example.
+For more disks, add more mirrors to the RAID 0 array. Other nested RAID types are built in the same way.
