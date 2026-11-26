@@ -27,9 +27,14 @@ PCC does not work together with HotSpot: HotSpot uses a web proxy, which uses on
 
 ## Balance two internet links
 
-![A router with a LAN and two links to two internet providers](./img/per-connection-classifier-01.webp)
-
 In this example the router has two provider interfaces, `ether_ISP1` with the address 10.10.4.100/24 and the gateway 10.10.4.1, and `ether_ISP2` with 10.10.5.100/24 and the gateway 10.10.5.1. The LAN interface `ether_LAN` has 192.168.100.1/24. On a router with the default configuration, use your interface names: the LAN interface is `bridge`, and the second provider port must first be removed from the bridge (`/interface/bridge/port/remove [find interface=ether2]`).
+
+```mermaid
+graph TB
+    isp1["ISP1 gateway10.10.4.1"] ---|"ether_ISP110.10.4.100/24"| r["Router"]
+    isp2["ISP2 gateway10.10.5.1"] ---|"ether_ISP210.10.5.100/24"| r
+    r ---|"ether_LAN192.168.100.1/24"| lan["LAN192.168.100.0/24"]
+```
 
 ```ros
 /ip/address
@@ -67,6 +72,8 @@ The rule in the `output` chain does the same for the connections of the router i
 
 ### Classify the connections of the LAN
 
+The mangle rules below identify the new connections of the LAN and divide them between the two providers:
+
 ```ros
 /ip/firewall/mangle
 add chain=prerouting action=mark-connection \
@@ -81,46 +88,22 @@ add chain=prerouting action=mark-connection \
     new-connection-mark=ISP2
 ```
 
-- The rules match the first packet of each new connection without a mark, and put the connection into one of two groups by its source and destination address. The connection mark then stays with all packets of the connection.
+- `connection-mark=no-mark` selects only the connections that do not belong to a group yet, and `connection-state=new` keeps the match to the start of the connection. The classification therefore runs once, on its first packets, and never again for the packets that follow; the mark belongs to all packets of the connection.
+- `per-connection-classifier` puts the connection into one of two groups by its source and destination address.
 - `dst-address-type=!local` leaves out packets for the router itself.
 - The rules are in the `prerouting` chain, because the routing mark must be set before the routing decision. A connection that is marked first in the `forward` chain leaves with its first packet through the main table: connections of one packet, such as DNS requests, would always use the main table, and the other packets of a TCP connection would leave through another provider than the first one.
-
-### Classify the connections of the router
-
-```ros
-/ip/firewall/mangle
-add chain=input action=mark-connection connection-state=new \
-    in-interface=ether_ISP1 new-connection-mark=ISP1
-add chain=input action=mark-connection connection-state=new \
-    in-interface=ether_ISP2 new-connection-mark=ISP2
-add chain=output action=mark-connection \
-    connection-mark=no-mark connection-state=new \
-    per-connection-classifier=both-addresses:2/0 \
-    new-connection-mark=ISP1
-add chain=output action=mark-connection \
-    connection-mark=no-mark connection-state=new \
-    per-connection-classifier=both-addresses:2/1 \
-    new-connection-mark=ISP2
-```
-
-- The `input` rules are for connections that come to the router from the internet, for example to a VPN server on the router. The mark remembers the interface that the connection came in on, so the answers leave through the same interface from the same public address. A router that accepts connections from the LAN only does not need them.
-- The `output` rules put the connections that the router itself starts into the same two groups. Packets of the router do not pass the `prerouting` chain, so these rules are in `output`.
 
 ### Change the connection marks into routing marks
 
 ```ros
 /ip/firewall/mangle
-add chain=output action=mark-routing connection-mark=ISP1 \
-    new-routing-mark=ISP1_table
 add chain=prerouting action=mark-routing connection-mark=ISP1 \
     in-interface=ether_LAN new-routing-mark=ISP1_table
-add chain=output action=mark-routing connection-mark=ISP2 \
-    new-routing-mark=ISP2_table
 add chain=prerouting action=mark-routing connection-mark=ISP2 \
     in-interface=ether_LAN new-routing-mark=ISP2_table
 ```
 
-`mark-routing` works only in the `prerouting` and `output` chains. The `prerouting` rules have `in-interface=ether_LAN`, so that packets that arrive from the providers follow the normal routing decision: only the traffic to the internet needs the routing marks.
+`mark-routing` works only in the `prerouting` and `output` chains. The `prerouting` rules have `in-interface=ether_LAN`, so that packets that arrive from the providers follow the normal routing decision: traffic that only the main routing table can reach would otherwise leave the route lookup inside a provider table. The connections of the router convert their marks in the `output` chain (the section below); without them, the two rules above are all the example needs.
 
 ### Routes
 
@@ -140,7 +123,16 @@ The routes of the main table need `check-gateway=ping` too. Without it, the rout
 
 ### NAT
 
-With the default configuration, add both provider interfaces to the `WAN` interface list: its masquerade rule and its firewall then cover both, and the two rules below are not needed. The FastTrack rule of the default configuration can stay: connections keep the provider of their group with it.
+With the default configuration, add both provider interfaces to the `WAN` interface list: its masquerade rule and its firewall then cover both, and the two rules below are not needed.
+
+The default fasttrack rule needs one change. Packets of a fasttracked connection travel through the fast path, which looks up the route before the routing marks take effect: the marked connections would leave through the main routing table, and their packets would follow whatever the main table decides instead of the provider of their group. Add `connection-mark=no-mark`, so the rule keeps fasttracking the unmarked connections and stops covering the marked ones:
+
+```ros
+/ip/firewall/filter
+set [find comment="defconf: fasttrack"] connection-mark=no-mark
+```
+
+The marked connections then skip fasttrack and keep their `prerouting` `mark-routing` rules; the unmarked connections keep fasttrack and their place in the main table.
 
 Without the default configuration, add a masquerade rule for each interface. The routing decision is made by now. The NAT rules only set the source address of the packets: 10.10.4.100 for those that leave through `ether_ISP1` and 10.10.5.100 for `ether_ISP2`.
 
@@ -157,6 +149,35 @@ add chain=srcnat action=masquerade out-interface=ether_ISP2
 - `/ip/firewall/connection/print` shows the mark of each connection in `connection-mark`.
 
 With `both-addresses`, all connections between one device and one server use the same provider. Different servers can use different providers, so a test to a single server always shows the same link.
+
+## Connections of the router
+
+The example above moves the connections between the LAN and the internet. The router also has connections of its own: the answers to the connections that come to the router from the internet, for example to a VPN server, and the connections that the router starts. This section is optional: a router that only serves the LAN users and runs no services at all can leave these rules out.
+
+```ros
+/ip/firewall/mangle
+add chain=input action=mark-connection connection-state=new \
+    in-interface=ether_ISP1 new-connection-mark=ISP1
+add chain=input action=mark-connection connection-state=new \
+    in-interface=ether_ISP2 new-connection-mark=ISP2
+add chain=output action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    per-connection-classifier=both-addresses:2/0 \
+    new-connection-mark=ISP1
+add chain=output action=mark-connection \
+    connection-mark=no-mark connection-state=new \
+    per-connection-classifier=both-addresses:2/1 \
+    new-connection-mark=ISP2
+add chain=output action=mark-routing connection-mark=ISP1 \
+    new-routing-mark=ISP1_table
+add chain=output action=mark-routing connection-mark=ISP2 \
+    new-routing-mark=ISP2_table
+```
+
+- The `input` rules do not use the classifier: the mark remembers the interface that the connection came in on, so its answers leave through the same interface from the same public address.
+- The `output` rules split the connections that the router starts into the two groups by the classifier, and `mark-routing` converts their marks in the `output` chain, because packets of the router do not pass `prerouting`.
+
+Port-forwarded connections come in from the outside, on one provider interface. A `chain=forward` rule with `in-interface=ether_ISP1` marks the whole connection from its first packet on. That mark is set one chain later than a `prerouting` rule would set it, which does not change the outcome here: the routing decision for the inbound packet happens before the forward chain anyway, and from the first reply on, the `prerouting` `mark-routing` rules see the mark of the connection. The same fasttrack change from the NAT section applies to these connections: without it, their fasttracked packets would skip `prerouting` and leave through the main table.
 
 ## Failover with more than two links
 

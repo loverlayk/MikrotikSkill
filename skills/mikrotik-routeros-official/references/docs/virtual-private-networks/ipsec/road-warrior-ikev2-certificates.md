@@ -6,9 +6,14 @@
 
 A road warrior is a remote device, such as a laptop, a phone or a small router, that connects to the office from any place on the internet. This page sets up a RouterOS IKEv2 server that authenticates the clients with certificates, and the clients for RouterOS and other systems.
 
-![A remote client connects through the internet to the office router and reaches the networks behind it](./img/ipsec-06.webp)
+In the examples, the office router has the public address 203.0.113.1 and the network 10.1.202.0/24 behind it. The clients get addresses from 192.168.77.0/24:
 
-In the examples, the office router has the public address 203.0.113.1 and the network 10.1.202.0/24 behind it. The clients get addresses from 192.168.77.0/24.
+```mermaid
+graph LR
+    c1["Laptop or phoneaddress from 192.168.77.0/24"] ---|"IKEv2 over the internet"| s["Office routerpublic 203.0.113.1"]
+    c2["RouterOS clientaddress from 192.168.77.0/24"] ---|"IKEv2 over the internet"| s
+    s --- lan["Office network10.1.202.0/24"]
+```
 
 To let users log in with a user name and a password in place of a certificate for each device, see [Road warrior with EAP and User Manager](road-warrior-ikev2-eap).
 
@@ -230,9 +235,14 @@ Flags: T - TEMPLATE; D - DYNAMIC, A - ACTIVE; * - DEFAULT
 
 The dynamic policy matches only packets from the address that the server gave, 192.168.77.254 in this example. The devices of the network behind the client router have other addresses, so their packets do not match. The address from the server can change, so a static source NAT rule does not help.
 
-RouterOS can add the source NAT rule dynamically. Put the local networks into an address list and name the list in the mode config:
+```mermaid
+graph LR
+    lan2["Branch network10.1.101.0/24"] --- c["Office2 (client)public 203.0.113.2192.168.77.254 from the serversource NAT 10.1.101.0/24 to 192.168.77.254"]
+    c ---|"IPsec tunnel"| s["Office1 (server)public 203.0.113.1"]
+    s --- lan1["Office network10.1.202.0/24"]
+```
 
-![The devices behind the client router reach the office through the tunnel with the address that the server gave](./img/ipsec-07.webp)
+RouterOS can add the source NAT rule dynamically. Put the local networks into an address list and name the list in the mode config:
 
 ```ros
 /ip/firewall/address-list/add address=10.1.101.0/24 list=local

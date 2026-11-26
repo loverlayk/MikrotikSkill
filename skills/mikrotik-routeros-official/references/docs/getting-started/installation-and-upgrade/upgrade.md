@@ -17,7 +17,9 @@ RouterOS versions are released in several "release chains": Long term, Stable, T
 - **Testing**: Released every few weeks, undergoes only basic internal testing, and should not be used in production.
 - **Development**: Released when necessary. Includes raw changes and is available for software enthusiasts for testing new features.
 
-![Diagram of the release chains: development (alpha), beta and release candidates, stable and long-term, and how versions move between them](./img/upgrade-01.webp)
+The diagram labels the Testing chain **Beta**: it carries the beta and release candidate (rc) versions.
+
+![Diagram of the release chains: Development (alpha versions), Beta (beta and rc versions, the Testing chain), Stable and Long-term, and how versions move between them](./img/upgrade-01.webp)
 
 ## Standard upgrade
 
@@ -213,7 +215,7 @@ You can upgrade one or multiple MikroTik routers within your local network by us
 
 - Choose packages and select **Download**. After download completes, reboot the device.
 
-![WinBox Local Update Packages tab with packages selected for download](./img/upgrade-08.webp)
+![WinBox Local Update Packages tab with the routeros package in the status downloaded, and the File List with the downloaded package file](./img/upgrade-08.webp)
 
 - Use `/system/package/local-update/refresh` to automate this in your scripts. The Fetch tool can be used to download packages from our web page, for example:
 

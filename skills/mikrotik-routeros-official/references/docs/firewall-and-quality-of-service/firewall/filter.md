@@ -10,9 +10,18 @@ Filter rules are in the `/ip/firewall/filter` menu for IPv4 and in the `/ipv6/fi
 
 ## Chains and rule order
 
-The filter has three predefined chains that cannot be deleted:
+The filter has three predefined chains that cannot be deleted. After the routing decision, a packet passes the input or the forward chain, and a packet that the router sends passes the output chain:
 
-![Packet flow chains with the filter marked: filter input follows mangle input, filter forward follows mangle forward, filter output follows mangle output](./img/filter-01.webp)
+```mermaid
+graph LR
+    in(["In-interface"]) --> pre["Preroutingraw, connection tracking,mangle, dst-nat"] --> rd{"Routingdecision"}
+    rd -->|"for the router"| mi["Mangle input"] --> fi["Filter input"] --> proc["Routerprocesses"]
+    rd -->|"through the router"| mf["Mangle forward"] --> ff["Filter forward"] --> post["Postroutingmangle, src-nat, queues"]
+    proc --> mo["Raw output, connectiontracking, mangle output"] --> fo["Filter output"] --> post
+    post --> out(["Out-interface"])
+```
+
+[Packet flow in RouterOS](../packet-flow-in-routeros#chains) shows all the steps of each chain in their order.
 
 - **input** - processes packets that enter the router and have one of the addresses of the router as their destination. Packets that pass through the router are not processed by the rules of the input chain.
 - **forward** - processes packets that pass through the router.

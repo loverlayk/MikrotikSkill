@@ -271,7 +271,15 @@ address, not to the MAC address of a physical interface.
 
 ### Router states
 
-![VRRP state transitions between Init, Backup and Master](./img/vrrp-03.webp)
+```mermaid
+stateDiagram-v2
+    direction LR
+    Init --> Backup: instance starts
+    Backup --> Master: master down, priority 0 or preemption
+    Master --> Backup: higher priority advertisement
+    Backup --> Init: shutdown
+    Master --> Init: shutdown
+```
 
 The protocol defines three states:
 

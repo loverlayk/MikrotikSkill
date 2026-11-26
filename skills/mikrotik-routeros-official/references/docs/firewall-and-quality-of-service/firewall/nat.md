@@ -84,7 +84,15 @@ Hosts behind NAT do not have true end-to-end connectivity. Protocols that need a
 
 ## Destination NAT
 
-![An office network 10.0.0.0/24 with a PC 10.0.0.2 and a server 10.0.0.3 behind a gateway, 10.0.0.1 on bridge1 and the public address 172.16.16.1 on ether1; a home PC with the public address 192.168.88.1 reaches the gateway over the internet](./img/nat-02.webp)
+The office has a PC and a server behind the gateway. The administrator connects from a home PC on the internet. The examples use 172.16.16.1 and 192.168.88.1 in place of public addresses:
+
+```mermaid
+graph LR
+    pc["Office PC10.0.0.2/24"] --- gw
+    srv["Office server10.0.0.3/24, SSH"] --- gw
+    gw["Gatewaybridge1 10.0.0.1/24ether1 172.16.16.1"] --- net(("Internet"))
+    net --- home["Home PC192.168.88.1"]
+```
 
 Destination NAT, often called port forwarding, makes a host of the local network reachable from the internet. In this example the administrator wants to reach the SSH service of the office server 10.0.0.3 from home. The rule translates connections to TCP port 22 of the public address 172.16.16.1 to the server:
 

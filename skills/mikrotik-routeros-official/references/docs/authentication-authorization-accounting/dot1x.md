@@ -10,8 +10,6 @@ Dot1X is the RouterOS implementation of IEEE 802.1X, port-based network access c
 - The authenticator is the switch or router with the port. RouterOS can be an authenticator: `/interface/dot1x/server`.
 - The authentication server is a [RADIUS](radius) server that checks the credentials. RouterOS can be one with the [User Manager](user-manager) package.
 
-![A supplicant connects to a port of the authenticator, and the authenticator asks the RADIUS server](./img/dot1x-01.webp)
-
 :::note
 Dot1X is not available on SMIPS devices (hAP lite, hAP lite TC and hAP mini).
 :::
@@ -78,6 +76,10 @@ The RADIUS server can put the port of a device into a VLAN. The port must be in 
 ```
 
 `ether1` is the uplink and carries VLAN 12 tagged.
+
+With more ports, the RADIUS server can put each device into its own VLAN. In this diagram, Supplicant 1 on ether12 gets VLAN 12 and Supplicant 2 on ether2 gets VLAN 2, and the uplink ether1 carries both VLANs tagged. The example on this page configures one port, ether2, for VLAN 12.
+
+![Authenticator with Supplicant 1 on ether12 in untagged VLAN 12, Supplicant 2 on ether2 in untagged VLAN 2, ether1 uplink with VLAN 12 and VLAN 2 tagged, and the authentication server 10.1.2.3](./img/dot1x-01.webp)
 
 The server sends the VLAN in three attributes of the Access-Accept. In the `users` file of FreeRADIUS:
 

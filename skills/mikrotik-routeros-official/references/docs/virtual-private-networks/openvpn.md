@@ -10,7 +10,14 @@ OpenVPN is a VPN protocol that uses TLS. Clients exist for Linux, Windows, macOS
 - It runs over TCP or UDP, on port 1194 by default, with IPv4 and IPv6.
 - The users and their settings are in the PPP user database or on a RADIUS server: see [PPP AAA](../authentication-authorization-accounting/ppp-aaa).
 
-![Two remote clients connect to the office router and reach a host and a network behind it](./img/openvpn-01.webp)
+In the examples, the office router has the public address 203.0.113.1, the address 10.0.0.1 inside the tunnels and the office network 192.168.88.0/24. The clients get addresses from the pool 10.0.0.10-10.0.0.100:
+
+```mermaid
+graph LR
+    c1["RouterOS clientovpn-office"] ---|"OpenVPN, UDP 1194"| s["Office routerpublic 203.0.113.1tunnel 10.0.0.1"]
+    c2["Laptop or phone.ovpn file"] ---|"OpenVPN, UDP 1194"| s
+    s --- lan["Office network192.168.88.0/24"]
+```
 
 ## Limitations
 

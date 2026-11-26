@@ -12,7 +12,18 @@ The Secure Socket Tunneling Protocol (SSTP) carries a PPP link inside a TLS sess
 
 A connection is made in four steps:
 
-![The four steps of an SSTP connection between a client and a server](./img/sstp-01.webp)
+```mermaid
+sequenceDiagram
+    participant C as SSTP client
+    participant S as SSTP server
+    C->>S: 1. TCP connection to port 443
+    C->>S: 2. TLS handshake
+    S->>C: server certificate
+    C->>S: 3. SSTP control packets inside HTTPS
+    S->>C: SSTP connection set up
+    C->>S: 4. PPP: authentication and addresses
+    Note over C,S: PPP traffic flows over SSTP
+```
 
 1. The client opens a TCP connection to the server, to port 443 by default.
 2. TLS starts, and the client checks the certificate of the server if it is set to do so.
@@ -21,7 +32,12 @@ A connection is made in four steps:
 
 ## Set up a server and a client
 
-![An SSTP client connects to an SSTP server over the internet](./img/sstp-02.webp)
+In this example, the server has the public address 203.0.113.1 and the address 10.0.0.1 inside the tunnels:
+
+```mermaid
+graph LR
+    c["SSTP clientpublic 203.0.113.2tunnel 10.0.0.99"] ---|"SSTP over HTTPSTCP 443"| s["SSTP serverpublic 203.0.113.1tunnel 10.0.0.1"]
+```
 
 On the server, add a pool, a profile and a user, and enable the SSTP server:
 

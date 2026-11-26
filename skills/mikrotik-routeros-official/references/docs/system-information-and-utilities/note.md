@@ -35,7 +35,7 @@ Open **System > Note**:
 1. Choose when the note appears with **Show At Login** and **Show At CLI Login**. **Show At Login** displays it after login; **Show At CLI Login** also displays it before the Telnet login prompt.
 2. Enter the message in **Note**, then select **OK**. For example, record the router's purpose and the maintenance contact. The text area accepts multiple lines.
 
-![WinBox System Note dialog with login display options and the Note text area](./img/note-winbox.webp)
+![WinBox System Note dialog with Show At Login selected and a two-line note](./img/note-winbox.webp)
 
 ## Show the note before login
 

@@ -14,7 +14,7 @@ The RouterOS bridge implementation supports IGMP versions 1, 2, and 3, as well a
 Source-specific multicast forwarding is not supported for IGMPv3 and MLDv2.
 :::
 
-![IGMP Configuration Diagram](./img/bridge-igmp-mld-snooping-01.webp)
+![IGMP/MLD querier router sends queries through a snooping bridge to three clients, which answer with membership reports (join, leave)](./img/bridge-igmp-mld-snooping-01.webp)
 
 The bridge processes IGMP/MLD messages only when `igmp-snooping` is enabled. Additionally, the bridge must have an active IPv6 address to process MLD packets. Initially, the bridge does not restrict any multicast traffic and floods all multicast packets. Once an IGMP/MLD querier is detected—by receiving an IGMP/MLD query message (either from an external multicast router or locally from the bridge interface with `multicast-querier` enabled)—the bridge begins restricting unknown IP multicast traffic and forwards only known multicast streams from the Multicast Database (MDB). IGMP and MLD querier detection operate independently; detecting an IGMP querier does not affect IPv6 multicast forwarding, and vice versa. Querier detection also does not restrict the forwarding of non-IP and link-local multicast groups, such as 224.0.0.0/24 and ff02::1.
 
@@ -151,7 +151,7 @@ Below are described the most common configuration examples. Some examples are us
 
 The first example consists only of a single IGMP snooping bridge, a single multicast source device, and a couple of multicast client devices. See a network scheme below.
 
-![IGMP Basic Setup Diagram](./img/bridge-igmp-mld-snooping-02.webp)
+![IGMP snooping bridge with a multicast server on ether2 and IGMP clients on ether3, ether4 and ether5](./img/bridge-igmp-mld-snooping-02.webp)
 
 First, create a bridge interface with enabled IGMP snooping. In this example, there is no active IGMP querier (no multicast router or proxy), so a local IGMP querier must be enabled on the same bridge. This can be done with a `multicast-querier` setting. If there is no active IGMP querier in the LAN, the unregistered IP multicast will be flooded and multicast entries will always timeout from the multicast database.
 
@@ -176,7 +176,7 @@ The basic IGMP snooping configuration is finished. Use "`/interface/bridge/mdb/p
 
 The second example adds some complexity. There are two IGMP snooping bridges and we need to isolate the multicast traffic on a different VLAN. See a network scheme below.
 
-![IGMP VLAN Setup Diagram](./img/bridge-igmp-mld-snooping-03.webp)
+![Two IGMP snooping bridges linked on sfp-sfpplus1, Bridge1 is the querier, multicast server and IGMP clients in untagged VLAN 10, PC1 and PC2 in VLAN 20, the link carries VLAN 10 untagged and VLANs 20 and 99 tagged](./img/bridge-igmp-mld-snooping-03.webp)
 
 First, create a bridge on both devices and add the needed interfaces as bridge ports. To change the untagged VLAN for a bridge port, use the `pvid` setting. Bridge1 will be acting as an IGMP querier. Below are the configuration commands for Bridge1:
 

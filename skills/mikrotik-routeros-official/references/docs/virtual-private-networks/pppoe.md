@@ -11,8 +11,6 @@ Point-to-Point Protocol over Ethernet (PPPoE, [RFC 2516](https://tools.ietf.org/
 
 Both work on any layer 2 interface: Ethernet, wireless, VLAN, EoIP and others. The users of a PPPoE server and their settings are in the PPP user database or on a RADIUS server: see [PPP AAA](../../authentication-authorization-accounting/ppp-aaa).
 
-![A PPPoE client connects to a PPPoE server over an Ethernet network](./img/pppoe-network-topology.jpg)
-
 ## Connect to an internet provider
 
 Add a PPPoE client on the interface that is connected to the provider, with the user name and the password that the provider gave you:
@@ -128,6 +126,18 @@ PPPoE has two phases: discovery and session.
 ### Discovery
 
 In the discovery phase the client finds a server. After four packets, both sides know the session ID and the MAC address of the other side, which together identify the session:
+
+```mermaid
+sequenceDiagram
+    participant C as PPPoE client
+    participant S as PPPoE server
+    C->>S: PADI (broadcast)
+    S->>C: PADO
+    C->>S: PADR
+    S->>C: PADS (session ID)
+    Note over C,S: Session phase: PPP (LCP, authentication, IPCP)
+    C-->>S: PADT (either side ends the session)
+```
 
 1. **PADI (Active Discovery Initiation).** The client sends a PADI packet to the broadcast address. The packet has the service name, if one is set on the client.
 2. **PADO (Active Discovery Offer).** A server that has the requested service answers with a PADO packet to the address of the client. If the PADI has no service name, the PADO lists the services of the server.

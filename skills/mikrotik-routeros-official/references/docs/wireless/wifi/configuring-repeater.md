@@ -58,7 +58,7 @@ Because we will be changing Wi-Fi and port-related configurations, it is advised
 
 In our example, we want to use wifi2 (2.4 GHz) as a "station" interface, while having wifi1 (5 GHz) broadcast repeater's own SSID (and also, potentially re-broadcast router's SSID over 2.4 GHz as well):
 
-![](./img/configuring-repeater-01.webp)
+![Main router with SSIDs router.ssid.2 and router.ssid.5, and a repeater that connects to router.ssid.2 on wifi2 and re-broadcasts router.ssid.5 on wifi1 and router.ssid.2 on a virtual interface](./img/configuring-repeater-01.webp)
 
 Overall configuration:
 

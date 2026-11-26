@@ -67,7 +67,7 @@ In WinBox, open **System > Clock** and use the **Time** tab:
 1. Clear **Time Zone Autodetect**, then choose **Time Zone Name**, for example `Europe/Riga`. Select **OK** to save the selection. Leave autodetection selected if you want the cloud service to choose the zone instead.
 2. Check the read-only **GMT Offset** and **DST Active** fields to see the offset and daylight saving state in effect.
 
-![WinBox Clock Time tab with time zone and clock status settings](./img/clock-winbox.webp)
+![WinBox Clock Time tab with Time Zone Autodetect cleared, Time Zone Name Europe/Riga and the GMT Offset](./img/clock-winbox.webp)
 
 The **Time** and **Date** fields are for manual clock changes; use the NTP client for ongoing synchronization.
 

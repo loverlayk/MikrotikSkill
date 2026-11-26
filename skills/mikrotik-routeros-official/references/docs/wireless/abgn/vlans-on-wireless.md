@@ -10,7 +10,7 @@ VLANs provide the possibility to isolate devices into different Layer2 segments 
 
 ## Example
 
-![](./img/vlans-on-wireless-01.webp)
+![R1 ether1 carries VLAN 111 and VLAN 222 to R2 ether2, and R2 sends VLAN 111 untagged on wlan1 to R3 and VLAN 222 untagged on wlan2 to R4](./img/vlans-on-wireless-01.webp)
 
 [Bridge VLAN Filtering](../../bridging-and-switching/index.md#bridge-vlan-filtering) provides VLAN aware Layer2 forwarding and VLAN tag modifications within the bridge.
 

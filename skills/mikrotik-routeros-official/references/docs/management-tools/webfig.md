@@ -125,7 +125,7 @@ The certificate is renewed automatically once 80% of its validity period has ela
 
 The **Terminal** (Command Line Interface, CLI) in WebFig is available in the top-right corner. It provides the same functionality as the New Terminal in the WinBox interface.
 
-![WebFig Terminal](./img/webfig-terminal_01.png)
+![WebFig Terminal with the RouterOS banner and the output of /system/resource/print](./img/webfig-terminal_01.png)
 
 ## Skins
 
@@ -152,10 +152,10 @@ To remove **Design Skin** from the menu, disable the `policy` and `sensitive` pe
 ![Skin Designer list of menus with check boxes and the Type, Title, Read-only, Note and Limit columns](./img/webfig-design-skin_02.png)
 
 - **Add field limits** - restricts allowed values in the detailed view:
-  - **Numeric intervals (..)** - defines allowed ranges, for example `1..10` for numeric fields such as **MTU**.
+  - **Numeric intervals (..)** - defines allowed ranges, for example `1280..1500` for the **MTU** field of an Ethernet interface.
   - **Field prefix limits** - restricts allowed prefixes for text-based fields. A trailing `$` enforces exact prefix matching. For example, `station$` limits values to **station** only.
 
-  ![Skin Designer row with a value in the Limit column](./img/webfig-design-skin_03.png)
+  ![Skin Designer rows of the Ethernet interface, General tab, with the limit 1280..1500 on the MTU field](./img/webfig-design-skin_03.png)
 
 - **Add tab** - inserts a labeled section divider before a field.
 - **Add separator** - inserts a horizontal separator before a field.
@@ -174,15 +174,17 @@ Restrictions applied to combo-box fields also limit the available dropdown optio
 
 ### Skin Design Example
 
-To restrict a user to specific services, add a limit to the RADIUS Service field.
+To restrict a user to specific services, add a limit to the RADIUS Service field. Without a skin, the **New RADIUS Server** window offers all services:
 
 ![New RADIUS Server window with all Service check boxes available](./img/webfig-01.webp)
 
-The resulting configuration allows only the services specified in the **Limit** field.
+In the Skin Designer, open **RADIUS**, **RADIUS Server**, **General**, and enter the allowed services in the **Limit** column of the **Service** row, here `ppp,dhcp,login,wireless`:
 
-![Skin Designer rows of the RADIUS menu with a limit on the Service field](./img/webfig-02.webp)
+![Skin Designer rows of RADIUS Server, General tab, with the limit ppp,dhcp,login,wireless on the Service field](./img/webfig-02.webp)
 
-![New RADIUS Server window that offers only the services allowed by the limit](./img/webfig-03.webp)
+A user with this skin sees only the services in the limit:
+
+![New RADIUS Server window that offers only ppp, login, wireless and dhcp](./img/webfig-03.webp)
 
 ### Customizing skins
 

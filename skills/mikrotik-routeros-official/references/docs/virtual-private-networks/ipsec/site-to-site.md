@@ -6,9 +6,16 @@
 
 A site-to-site tunnel connects the local networks of two offices over the internet. Each router encrypts the traffic for the other network and sends it to the other router. This page shows a tunnel between two routers with static public addresses, and a GRE tunnel over IPsec for an office without a static address.
 
-![Two office routers connected through the internet, each with its own local network](./img/ipsec-04.webp)
+In the examples, Office 1 has the public address 203.0.113.1 and the network 10.1.202.0/24. Office 2 has 203.0.113.2 and 10.1.101.0/24:
 
-In the examples, Office 1 has the public address 203.0.113.1 and the network 10.1.202.0/24. Office 2 has 203.0.113.2 and 10.1.101.0/24. The two offices must have different networks: if both use 192.168.88.0/24, change one of them first.
+```mermaid
+graph LR
+    lan1["Office 1 network10.1.202.0/24"] --- r1["Office 1public 203.0.113.1"]
+    r1 ---|"IPsec tunnel over the internet"| r2["Office 2public 203.0.113.2"]
+    r2 --- lan2["Office 2 network10.1.101.0/24"]
+```
+
+The two offices must have different networks: if both use 192.168.88.0/24, change one of them first.
 
 ## Connect two offices
 
@@ -150,7 +157,14 @@ The default configuration already accepts forwarded traffic that comes out of or
 
 A GRE tunnel over IPsec gives each router an interface for the other office. You can then use routes, and the traffic of the tunnel needs no IPsec policy for each pair of networks. In this example only the server office needs an address that the other one can find: a static address, or a DNS name such as the one of [IP Cloud](../../network-management/cloud/).
 
-![Two routers with a GRE tunnel between loopback addresses, protected by IPsec](./img/ipsec-05.webp)
+In this example Office 1 is the server and Office 2 the client:
+
+```mermaid
+graph LR
+    lan1["Office 1 network10.1.202.0/24"] --- r1["Office 1 (server)203.0.113.1 or a DNS nameloopback 192.168.99.1gre-tunnel1 172.16.1.1/30"]
+    r1 ---|"GRE tunnel inside IPsec192.168.99.1 to 192.168.99.2"| r2["Office 2 (client)any address192.168.99.2 from mode configgre-tunnel1 172.16.1.2/30"]
+    r2 --- lan2["Office 2 network10.1.101.0/24"]
+```
 
 The server gives the client the address 192.168.99.2 with mode config. The GRE tunnel runs between this address and the address 192.168.99.1 of the server, and IPsec protects exactly this pair of addresses.
 

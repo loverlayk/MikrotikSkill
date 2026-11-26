@@ -14,7 +14,7 @@ To reset RouterOS to its factory defaults (including removing the current passwo
 4. Watch the LEDs. One of the LEDs (typically the USR/User LED) will begin flashing.
 5. Release the reset button when the LED starts flashing.
 
-![Reset button](./img/reset-button_01.png)
+![Back panel of a router with the Reset button between the Power and User LEDs](./img/reset-button_01.png)
 
 The device will reboot with the default configuration.
 
@@ -71,7 +71,7 @@ Older RouterBOARD models are also fitted with a reset jumper hole. Some devices 
 
 Short the reset jumper using a metal screwdriver and boot the board until the configuration is cleared:
 
-![Circuit board with an arrow to the reset jumper hole: hold a metal object in it while the board boots](./img/reset_hole_01.jpg) ![Screwdriver shorting the reset jumper hole on a circuit board](./img/reset_hole_02.jpg)
+![Circuit board with an arrow to the reset jumper hole](./img/reset_hole_01.jpg) ![Screwdriver shorting the reset jumper hole on a circuit board](./img/reset_hole_02.jpg)
 
 ### Jumper reset for older models
 

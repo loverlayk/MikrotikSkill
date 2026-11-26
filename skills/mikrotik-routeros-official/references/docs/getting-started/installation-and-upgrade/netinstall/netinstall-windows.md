@@ -60,24 +60,24 @@ The tool requires the target device to be booted in BOOTP mode in order to be de
 
     - Open **Start** and select **Settings**.
 
-    ![](./img/netinstall_win10_01.png)
+    ![Windows Start menu with arrows to the Start button and the Settings gear](./img/netinstall_win10_01.png)
 
     - Go to **Network & Internet** and select **Change adapter options**.
 
-    ![](./img/netinstall_win10_02.png)
-    ![](./img/netinstall_win10_02_2.png)
+    ![Windows Settings with an arrow to Network & Internet](./img/netinstall_win10_02.png)
+    ![Network & Internet Status page with an arrow to Change adapter options](./img/netinstall_win10_02_2.png)
 
     - Right-click on your **Ethernet** interface and select **Properties**.
 
-    ![](./img/netinstall_win10_03.png)
+    ![Network Connections with the context menu of the Ethernet adapter and an arrow to Properties](./img/netinstall_win10_03.png)
 
     - Select **Internet Protocol Version 4 (TCP/IPv4)** and click **Properties**.
 
-    ![](./img/netinstall_win10_04.png)
+    ![Ethernet Properties with Internet Protocol Version 4 (TCP/IPv4) selected](./img/netinstall_win10_04.png)
 
-    - Check **Use the following IP address** and configure: IP address `192.168.88.1`, Subnet mask `255.255.255.0`.
+    - Check **Use the following IP address** and configure: IP address `192.168.88.2`, Subnet mask `255.255.255.0`. Netinstall does not need the default gateway and DNS server, the screenshot sets them to `192.168.88.1`, but they can stay empty.
 
-    ![](./img/netinstall_win10_05.png)
+    ![IPv4 Properties with the static address 192.168.88.2/24, gateway and DNS server 192.168.88.1](./img/netinstall_win10_05.png)
 
 :::tip
 Netinstall can also run on a local network. In such case you could skip setting a static IP address, but it is highly recommended that you set a static IP address if you are not familiar with Netinstall.
@@ -87,8 +87,8 @@ Netinstall can also run on a local network. In such case you could skip setting 
 
 1. Extract the Netinstall `.zip` file to a convenient location.
 
-   ![](./img/netinstall_win10_06.png)
-   ![](./img/netinstall_win10_07.png)
+   ![File Explorer Downloads folder with the context menu of the Netinstall zip file and an arrow to Extract All](./img/netinstall_win10_06.png)
+   ![Extract Compressed Folders dialog with the destination folder and an arrow to Extract](./img/netinstall_win10_07.png)
 
 2. Ensure your Ethernet interface is connected and launch `Netinstall.exe`.
    :::danger
@@ -99,13 +99,15 @@ Netinstall can also run on a local network. In such case you could skip setting 
 
 3. Allow access for Netinstall in the **Public** network when prompted.
 
-   ![](./img/netinstall_win10_08.png)
+   ![Windows Defender Firewall alert for netinstall.exe with Public networks selected and an arrow to Allow access](./img/netinstall_win10_08.png)
 
-4. Configure the **Net booting** settings:
+4. Select **Net booting** and configure the settings:
+   - Select **Boot Server enabled**.
    - Set the **Client IP** address (must be unique and not used by any other device in your network, including your computer).
    - Use an IP address from the same subnet as your computer's static IP but different from the computer's address.
+   - Press **OK**.
 
-   ![](./img/netinstall_win10_09.png)
+   ![Netinstall with the Network Booting Settings dialog: Boot Server enabled and Client IP address 192.168.88.3](./img/netinstall_win10_09.png)
 
 ## Connect the Device
 
@@ -125,15 +127,15 @@ Netinstall can also run on a local network. In such case you could skip setting 
 
 2. Select the device and click **Browse**. Navigate to your RouterOS packages location and press **OK**.
 
-   ![](./img/netinstall_64_02.png)
+   ![Netinstall with the device selected, the Browse button and the routeros and wifi-qcom packages selected in the list](./img/netinstall_64_02.png)
 
 3. The **"Keep old configuration"** process downloads the configuration database from the router, reinstalls the router (including disk formatting), and uploads the configuration back. This process applies only to the configuration itself and does not affect files, including databases like User Manager database, Dude database, and others.
 
-   ![](./img/netinstall_64_041.png)
+   ![Netinstall with Keep old configuration selected for the device](./img/netinstall_64_041.png)
 
 4. The **"Keep branding"** option allows you to retain the device's already installed branding package without reinstalling it using Netinstall.
 
-   ![](./img/netinstall_64_05.png)
+   ![Netinstall with Keep branding selected for the device](./img/netinstall_64_05.png)
 
    :::tip
    When using the **Configure script** option, it is recommended to introduce a [delay](../../configuration-management/index.md#startup-delay) before configuration execution.
@@ -141,11 +143,11 @@ Netinstall can also run on a local network. In such case you could skip setting 
 
 5. Select your desired RouterOS packages and press **Install**.
 
-   ![](./img/netinstall_64_03.png)
+   ![Netinstall with the device and two packages selected and the Install button marked](./img/netinstall_64_03.png)
 
 6. Wait for the installation to complete. Depending on the Netinstall version and device, a manual reboot may be required.
 
-   ![](./img/netinstall_64_04.png)
+   ![Netinstall with the device status Done and the message Installation finished successfully](./img/netinstall_64_04.png)
    :::warning
    If you downloaded RouterOS packages for multiple architectures, Netinstall will only display the appropriate architecture packages for your device after selecting it. Unsupported packages will not appear in the window.
 

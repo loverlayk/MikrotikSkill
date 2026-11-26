@@ -24,12 +24,12 @@ Store the commands as a script, then add an entry that runs it every day at 03:0
 After you create the `nightly-backup` script, configure its schedule in WinBox under **System > Scheduler > New**:
 
 1. Set **Name** to `nightly-backup`, choose the **Start Date**, set **Start Time** to `03:00:00`, and set **Interval** to `1d` for a daily run. Leave **Days** unset to allow every day.
-2. Review **Policy** and select the permissions the task requires. The screenshot shows the new-entry defaults; use the Permissions section to choose the appropriate permissions for your script.
+2. Review **Policy** and select the permissions the task requires. A new entry has all policies selected.
 3. Enter `nightly-backup` in **On Event**, leave **Enabled** selected, and select **OK**. **On Event** can also hold commands directly.
 
-![WinBox new Scheduler entry with schedule fields, Policy permissions, and On Event commands](./img/scheduler-winbox.webp)
+![WinBox Scheduler entry nightly-backup with Start Time 03:00:00, Interval 1d, the Policy check boxes and nightly-backup in On Event](./img/scheduler-winbox.webp)
 
-After saving, check **Next Run** in the Scheduler list and use **Run Count** to see whether the entry has run. The screenshot shows a new entry before the example values are entered.
+After saving, check **Next Run** in the Scheduler list and use **Run Count** to see whether the entry has run.
 
 When `start-date` is not given, the entry starts on the day it is added. `next-run` shows when it runs next, and `run-count` counts the runs since the last startup:
 

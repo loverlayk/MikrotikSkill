@@ -45,19 +45,19 @@ Each run replaces the file of the previous day. After the run you need, download
 
 ### WinBox
 
-The screenshots show WinBox 3. Select **Make Supout.rif** in the main menu, then select **Start** in the window that opens. The window shows the file name and the progress in **Created**.
+Select **Make Supout.rif** in the main menu, then select **Start** in the window that opens. The window shows the file name and the progress in **Created**. **Stop** cancels the file while it is being created.
 
-![WinBox main menu with Make Supout.rif highlighted and the Make it! window with the file name supout.rif, the progress 42% and the Start button](./img/supout-rif-02.webp)
+![WinBox main menu with Make Supout.rif and the Make it! window with the file name supout.rif, the progress 15% and the Stop button](./img/supout-rif-02.webp)
 
-When the file is ready, it is listed in **Files**. Right-click it and select **Download**, or drag the file to your desktop. In WinBox 4, download it from **Files** (see [Manage files in WinBox](../system-information-and-utilities/files#manage-files-in-winbox)).
+When the file is ready, it is listed in **Files**. Right-click it and select **Download...**, or select it and select **Download...** under **Actions** (see [Manage files in WinBox](../system-information-and-utilities/files#manage-files-in-winbox)).
 
-![WinBox File List with supout.rif selected and Download highlighted in the right-click menu](./img/supout-rif-01.webp)
+![WinBox Files list with supout.rif selected and the right-click menu with Download](./img/supout-rif-01.webp)
 
 ### WebFig
 
-The screenshot shows an older WebFig. Select **Make Supout.rif** in the menu. Then open **Files** and select **Download** next to `supout.rif`.
+Select **Make Supout.rif** in the menu. Then open **Files**, select `supout.rif` and select **Download** under **Actions**.
 
-![WebFig Files page with Make Supout.rif highlighted in the menu and the Download button next to supout.rif](./img/supout-rif-03.webp)
+![WebFig Files page with supout.rif selected, Download under Actions and Make Supout.rif in the menu](./img/supout-rif-03.webp)
 
 ## Download the file
 

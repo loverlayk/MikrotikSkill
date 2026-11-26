@@ -48,7 +48,7 @@ There was no packet loss, but 630 **(39,1%) packets had 1-step delay**, and the 
 
 It is also possible to choose the middle way when the queue uses both of these queuing aspects (shaping and scheduling). The `default-small` queue type, which simple queues and queue trees use by default, is `pfifo` with a queue size of 10 packets.
 
-![Default-small queue type drops some packets and delays others](./img/queue-size-04.webp)
+![Bar chart of the packets that the default-small queue sends in each of the 25 steps: at most 100, with 10 delayed packets in steps 5, 6, 7, 14, 15, 17, 19 and 20](./img/queue-size-04.svg)
 
 There were 320 **(19,9%) packets dropped** and 80 **(5,0%) packets had 1 step delay**.
 

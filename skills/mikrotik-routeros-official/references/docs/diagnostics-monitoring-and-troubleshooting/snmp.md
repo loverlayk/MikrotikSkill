@@ -8,7 +8,7 @@ Simple Network Management Protocol (SNMP) is an Internet-standard protocol used 
 
 The agent is disabled until you turn it on. Enable it with `/snmp/set enabled=yes`; the router then answers SNMP queries on UDP port 161. By default a single community, `public`, can read anything, so restrict it before you put the router on an untrusted network.
 
-![SNMP traffic graph rendered by The Dude (RRDtool), showing download traffic for a router interface](./img/snmp-01.webp)
+![RRDtool graph of the download traffic of a router interface, polled over SNMP](./img/snmp-01.webp)
 
 :::tip
 Enabling SNMP is enough to start monitoring: the router answers on UDP port 161 and the default `public` community has read access to everything, so a collector on the same network can read the router immediately. That also means the configuration is open to anyone on that network, so restrict or delete `public` ([Restrict a community](#restrict-a-community)) before the router goes live.
@@ -237,7 +237,7 @@ iso.3.6.1.4.1.14988.1.1.8.1.1.2.1 = STRING: "status-report"
 iso.3.6.1.4.1.14988.1.1.8.1.1.3.1 = INTEGER: 0
 ```
 
-The same script can also be started with a SET to `1.3.6.1.4.1.14988.1.1.8.1.1.3.<N>`. The value written is irrelevant â€” a `0` runs it exactly as any other value does:
+The same script can also be started with a SET to `1.3.6.1.4.1.14988.1.1.8.1.1.3.<N>`. The value written is irrelevant — a `0` runs it exactly as any other value does:
 
 ```bash
 snmpset -v2c -c monit-admin 192.0.2.1 1.3.6.1.4.1.14988.1.1.8.1.1.3.1 s 1

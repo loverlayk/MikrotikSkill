@@ -39,8 +39,12 @@ The CAPsMAN setup consists of defining configuration templates, which will then 
 
 On the central device, which will be your CAPsMAN server, create a new "Configuration" template with only the basic settings (network name, country, the local LAN bridge interface, the wireless password):
 
-![WinBox CAPsMAN Configurations tab: new configuration with name, SSID and country set](./img/ap-controller-capsman-02.webp)Add a new configuration profile:
+![WinBox CAPsMAN Configurations tab: new configuration with name, SSID and country set](./img/ap-controller-capsman-02.webp)
+
+In the same configuration, select the bridge on the **Datapath** tab and set the security and the passphrase on the **Security** tab:
+
 ![WinBox new CAPs configuration, Datapath tab with the bridge selected](./img/ap-controller-capsman-03.webp)
+
 ![WinBox new CAPs configuration, Security tab with WPA PSK, WPA2 PSK and a passphrase set](./img/ap-controller-capsman-04.webp)
 
 Then create a new "Provisioning" rule, which will assign the created configuration template to the CAP devices:

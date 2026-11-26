@@ -6,7 +6,11 @@
 
 With EAP, the users of an IKEv2 server log in with a user name and a password. The router passes the authentication to a RADIUS server. This page uses [User Manager](../../authentication-authorization-accounting/user-manager), the RADIUS server of RouterOS, on the same router. The computers and phones of the users need no client certificate, and their built-in IKEv2 clients work.
 
-![A remote client connects through the internet to the office router and reaches the networks behind it](./img/ipsec-06.webp)
+```mermaid
+graph LR
+    c["Laptop or phoneuser1, built-in IKEv2 clientaddress from 192.168.77.0/24"] ---|"IKEv2 with EAP over the internet"| s["Office routerDNS name, Let's Encrypt certificateUser Manager on the same router"]
+    s --- net["Office network and the internet"]
+```
 
 ## What you need
 

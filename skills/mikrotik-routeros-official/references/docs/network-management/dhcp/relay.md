@@ -24,7 +24,13 @@ A RouterOS DHCP server shows these values in the lease (`active-agent-circuit-id
 
 In this example, one router, DHCP-Server, gives out addresses for two networks, 192.168.1.0/24 and 192.168.2.0/24, which are behind another router, DHCP-Relay.
 
-![DHCP-Server (public 10.1.0.2, local 192.168.0.1) connected to DHCP-Relay (192.168.0.2), which serves 192.168.1.0/24 on Local1 (192.168.1.1) and 192.168.2.0/24 on Local2 (192.168.2.1)](./img/relay-01.webp)
+```mermaid
+graph TB
+    net(("Internet")) ---|"Public10.1.0.2/24"| srv["DHCP-Server"]
+    srv ---|"To-DHCP-Relay 192.168.0.1/24To-DHCP-Server 192.168.0.2/24"| rel["DHCP-Relay"]
+    rel ---|"Local1192.168.1.1/24"| l1["Clients192.168.1.0/24"]
+    rel ---|"Local2192.168.2.1/24"| l2["Clients192.168.2.0/24"]
+```
 
 The routers have these addresses. On DHCP-Server:
 

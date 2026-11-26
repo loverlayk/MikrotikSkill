@@ -98,11 +98,11 @@ Columns: NAME, VERSION, BUILD-TIME, SIZE
 ```
 
 In WinBox, the same steps are in **System → Packages**: **Check for Updates**, select the
-package, **Enable**, **Apply Changes**.
+package, **Enable**, **Apply Changes**. The screenshots enable the `lora` package, the steps are the same for `iot`.
 
 | Package list | After loading the list with "Check for updates" | Enabling a package | Selecting "Apply Changes" |
 | :--- | :--- | :--- | :--- |
-| [![WinBox Packages window with the installed packages](img/packages1.png)](img/packages1.png) | [![WinBox Packages window listing available packages with the X and A flags](img/packages2.png)](img/packages2.png) | [![WinBox Packages window with a package scheduled for install](img/packages3.png)](img/packages3.png) | [![WinBox asking to apply the changes and reboot](img/packages4.png)](img/packages4.png) |
+| [![WinBox Packages window with the installed packages](img/packages1.png)](img/packages1.png) | [![WinBox Packages window listing available packages with the X and A flags](img/packages2.png)](img/packages2.png) | [![WinBox Packages window with the lora package scheduled for install](img/packages3.png)](img/packages3.png) | [![WinBox asking to apply the changes and reboot](img/packages4.png)](img/packages4.png) |
 
 ## Install a package from a file
 

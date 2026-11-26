@@ -133,7 +133,7 @@ On a device with a small flash storage, every rule with `store-on-disk=yes` adds
 
 WinBox shows the same graphs. Open **Tools > Graphing**, select the **Interface Graphs**, **Queue Graphs** or **Resource Graphs** tab, and open an entry. Select **Daily**, **Weekly**, **Monthly**, or **Yearly** in the graph window to change the time range. Drag the window edge to enlarge the graph.
 
-![WinBox Graphing window with Resource Graphs selected and an enlarged Memory graph window showing the Daily, Weekly, Monthly and Yearly tabs; no samples have been collected](./img/graphing-02.webp)
+![WinBox Interface Graph window for ether1, Daily tab, with the Rx and Tx traffic of the last hours and the current values](./img/graphing-02.webp)
 
 ## Troubleshoot the graphs
 

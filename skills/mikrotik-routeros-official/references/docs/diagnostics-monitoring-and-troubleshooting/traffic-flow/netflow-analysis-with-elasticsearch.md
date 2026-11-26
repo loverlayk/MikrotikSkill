@@ -13,7 +13,13 @@ There are many possible configurations that can be made with Elasticsearch, but 
 - A Fleet Server (10.0.0.3) stores the data in [Elasticsearch](https://www.elastic.co/elasticsearch) (10.0.0.4).
 - [Kibana](https://www.elastic.co/kibana) (10.0.0.5) retrieves data from Elasticsearch (10.0.0.4), analyzes it and allows you to search the data.
 
-![NetFlow topology diagram](./img/netflow-analysis-with-elasticsearch-01.webp)
+```mermaid
+graph LR
+    ros["RouterOS10.0.0.1"] -->|"NetFlow"| agent["NetFlow integration10.0.0.2"]
+    agent --> fleet["Fleet Server10.0.0.3"]
+    fleet --> es["Elasticsearch10.0.0.4"]
+    kib["Kibana10.0.0.5"] -->|"queries"| es
+```
 
 :::info
 This guide will not use [Logstash](https://www.elastic.co/logstash) as a part of analyzing NetFlow data; it has been replaced by a Fleet Server.
@@ -101,6 +107,8 @@ The NetFlow Records integration provides some useful assets that can be used to 
 3. Search the Dashboards and find "NetFlow"
 
 You should now see multiple NetFlow Dashboards. For example, try opening the "[Logs Netflow] Overview". If your NetFlow data is properly ingested, then you should now see graphs that summarize your traffic.
+
+![Kibana [Logs Netflow] dashboard with pie charts of IP versions, autonomous systems and top countries by bytes](./img/netflow-analysis-with-elasticsearch-01.webp)
 
 Another useful Dashboard is the "[Logs Netflow] Flow records", which shows you exact NetFlow records. A very useful feature is the filtering option (the + button on top), that allows you to add filters to NetFlow data, for example, you can filter the records to show only a single IP address:
 

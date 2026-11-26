@@ -20,8 +20,8 @@ The numbered callouts show the main areas of **Home AP Dual**:
 2. **Wireless** - Set the network names and Wi-Fi password.
 3. **Internet** - Choose how the router receives its internet address.
 4. **Local Network** - Review the LAN address, DHCP server, and NAT settings.
-5. **System** - Open the update or router password dialog.
-6. **OK / Apply** - Save the configuration after you review it. **OK** also closes the window; **Cancel** closes it without applying unsaved changes.
+5. **System** - Check for updates, reboot, reset the configuration or set the router password.
+6. **OK** - Save the configuration after you review it and close the window. **Apply** saves without closing the window, and **Cancel** closes it without applying unsaved changes.
 
 ![WinBox Quick Set overview with numbered callouts for the mode, wireless settings, internet settings, local network, system controls, and save buttons](./img/quick-set-winbox-overview.webp)
 
@@ -53,7 +53,7 @@ Start with the two controls marked in the screenshot:
 1. Enter the name your devices should see in **Network Name**. For example, use `Home` for both radios, or `Home` and `Home-5GHz` to distinguish them.
 2. Enter your Wi-Fi password in **WiFi Password**. This is the password phones and computers use to join the network; it is separate from the router's administrator password in **System**.
 
-![WinBox Quick Set wireless settings with arrows to the network name fields and WiFi Password; the existing names and password are hidden](./img/quick-set-winbox-wireless.webp)
+![WinBox Quick Set wireless settings with arrows to the 2GHz Network Name and WiFi Password, the existing names and password are hidden](./img/quick-set-winbox-wireless.webp)
 
 Changing the network name or password disconnects Wi-Fi clients when you apply the configuration. For initial setup, connect your computer to a LAN port with an Ethernet cable so you can finish the configuration without losing the Wi-Fi connection.
 

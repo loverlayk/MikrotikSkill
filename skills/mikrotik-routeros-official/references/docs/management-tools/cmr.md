@@ -260,7 +260,7 @@ The `labels` argument accepts the same label syntax as the rest of CMR, so `labe
 
 The same live view is shown in the WebFig GUI:
 
-<center>![](../img/cmr_dashboard.webp)</center>
+<center>![CMR dashboard: devices online and paired, CPU, memory and disk use of each device, bandwidth graph, active alerts, available updates and traffic by protocol](../img/cmr_dashboard.webp)</center>
 
 <center>**The image shows the CMR dashboard in the WebFig GUI.**</center>
 
@@ -300,9 +300,9 @@ Each argument sets one property of the rule:
 - `fail-policy=continue` skips a failed device and continues with the rest. Without `fail-policy`, a rule uses `stop`. The third fail policy is `continue-order`.
 - `schedule-time="00:00:00"` triggers this rule every day at midnight. `schedule-time` is a time with an optional weekday, for example `14:00:00` (every day at 14:00) or `00:00:00@sat` (every Saturday at midnight). Multiple times are comma-separated, for example `00:00:00@sat,00:00:00@sun`. Separate the weekday with `@`: with a space, for example `"14:00 sat"`, the weekday is dropped and the rule runs every day.
 
-<center>![](../img/cmr_upgrade_rule_nightly.webp)</center>
+<center>![The nightly upgrade rule: labels all, channel stable, Auto Install Time 00:00:00, strategy sequential, fail policy continue](../img/cmr_upgrade_rule_nightly.webp)</center>
 
-<center>**The image shows the nightly rule as configured in the WinBox GUI.**</center>
+<center>**The image shows the nightly rule as configured in the WinBox GUI. The GUI calls `schedule-time` Auto Install Time.**</center>
 
 A weekly rule is created the same way. For example, this rule upgrades two label groups every Saturday at 14:00 and stops on the first failure:
 
@@ -314,7 +314,7 @@ A weekly rule is created the same way. For example, this rule upgrades two label
 - `order=Group1,Group2` sets the label groups and the order in which they are processed.
 - `fail-policy=stop` stops the whole upgrade when a device fails. In this example, a failed device in `Group1` stops the upgrade, and `Group2` is not upgraded.
 
-<center>![](../img/cmr_upgrade_rule_weekly.webp)</center>
+<center>![The weekly upgrade rule: labels and order Group1 and Group2, channel stable, Auto Install Time 14:00:00 on Saturday, strategy parallel, fail policy stop](../img/cmr_upgrade_rule_weekly.webp)</center>
 
 <center>**The image shows the weekly rule as configured in the WinBox GUI.**</center>
 
@@ -586,7 +586,7 @@ For example, create a layout for one site, add the devices with the `office` lab
 
 The topology in the screenshot below is stored as one layout, with a node for each device and a link between the connected ones:
 
-<center>![](../img/cmr_topology_example.webp)</center>
+<center>![A layout with a floor plan as the background: a CRS354, an RB5009, two hAP devices and a cAP ac with links between them, and a link to another layout](../img/cmr_topology_example.webp)</center>
 <center>**The image shows an example network topology in the WebFig GUI.**</center>
 
 ```ros
@@ -673,12 +673,6 @@ The network appears in the list. The settings of a group have dotted names. In t
    labels=Group2 ssid="Office" security.encryption=ccmp
    .authentication-types=wpa2-psk vlan-id=10
 ```
-
-{/* Screenshot placeholder — add `../img/cmr_wifi_network.webp` when the WinBox screenshot is available:
-<center>![](../img/cmr_wifi_network.webp)</center>
-<center>**The image shows the WiFi network as configured in the WinBox GUI.**</center>
-
-*/}
 
 The arguments of a network mirror the [`/interface/wifi`](../../wireless/wifi) network:
 
@@ -793,3 +787,83 @@ Removing or disabling a rule removes the ports and VLAN entries that CMR manages
 :::warning
 Provisioning replaces the bridge port configuration of the selected ports with the VLAN settings of the rule, and on a device without an enabled bridge it moves them into the managed `cmr-bridge`. This can disconnect the port's current traffic and cut the device's management access if a management or uplink port is selected. The `port-labels` argument is required, so a rule always names the ports it changes, but a rule with no `labels` still applies those ports to all connected devices, including the CMR controller itself; applying such a rule can disconnect the whole fleet and the controller's own management access. Keep the device selection explicit too. Disabling or removing a rule restores the previous configuration, provided the device is still reachable from the controller; a rule that also configures the device's own uplink can cut that link, and the managed configuration is then kept until the CMR connection to the device is re-established, for example by re-enabling the CMR client.
 :::
+
+## Back up and replace the server
+
+Clients are paired with the CMR identity of the server, not with its address or hardware. This identity is the server's `local-id`. The server creates it when CMR is enabled and keeps it in its configuration. The `ids` value of a paired device ends with the first half of the server's `local-id`. A replacement server with the same `local-id` and the same device list takes over the paired clients, and no client needs to be paired again.
+
+A binary backup made with [`/system/backup`](../../getting-started/configuration-management/backup) does not keep `local-id` when it is restored on another device: the replacement server creates a new one, and its clients stay `paired,disconnected`. Save the CMR configuration with `export show-sensitive` instead. A plain `export` leaves out `local-id`. Keep the file as safely as other files that contain passwords.
+
+### Prepare for a replacement
+
+A client tries the server addresses in its own `controller-addresses` and connects to an address that answers. To let the clients reach a replacement server at another address, add that address on every client in advance. The following command sets it from the server on all paired clients, here for a server at `192.168.88.1` and a spare server at another site with the address `10.0.0.2`:
+
+```ros
+[admin@MikroTik] > /cmr/device/run-script [find where !controller] \
+    script="/cmr/client/set controller-addresses=192.168.88.1,10.0.0.2"
+Columns: DEVICE, STATUS
+DEVICE                    STATUS 
+Office-AP1@192.168.88.10  running
+
+Columns: DEVICE, STATUS
+DEVICE                    STATUS 
+Office-AP1@192.168.88.10  success
+```
+
+Then save the CMR configuration to a file and copy the file off the server:
+
+```ros
+[admin@MikroTik] > /cmr/export show-sensitive file=cmr-server
+```
+
+The file contains the `/cmr` settings with `local-id`, the device list with the labels, and the other `/cmr` configuration, for example the alert rules. It holds the devices that were paired when it was made, so export it again after you pair new devices or change the CMR configuration.
+
+### Replace the server
+
+1. On the replacement device, install the `cmr` package and configure the address that the clients know, for example `10.0.0.2`.
+2. Copy `cmr-server.rsc` to the replacement device and import it:
+
+   ```ros
+   [admin@MikroTik] > /import file-name=cmr-server.rsc
+   Script file loaded and executed successfully
+   ```
+
+3. Check that the clients connect. They show the **C** flag, with their labels:
+
+   ```ros
+   [admin@MikroTik] > /cmr/device/print
+   Flags: L - CONTROLLER, C - CONNECTED
+   Columns: IDENTITY, BOARD, VERSION, LABELS, UPTIME, ADDRESS, CHANNEL, UPGRADE-RULE
+   #   IDENTITY    BOARD  VERSION  LABELS  UPTIME  ADDRESS    CHANNEL  UPGRADE-RULE
+   0 L CMR-2       CHR    7.x              2m41s              stable   default
+   1 C Office-AP1  CHR    7.x      office  4m18s   10.0.0.10  stable   default
+   ```
+
+   On a client, `/cmr/client/print` shows the replacement server:
+
+   ```ros
+   [admin@Office-AP1] > /cmr/client/print
+                  enabled: yes
+     controller-addresses: 192.168.88.1
+                           10.0.0.2
+                   status: paired,connected
+      controller-identity: CMR-2
+       controller-address: 10.0.0.2
+   ```
+
+### Replace the server without the saved local-id
+
+A server without the saved `local-id`, for example one restored from a binary backup on another device, has a new identity. Its clients stay `paired,disconnected`, and their old entries in `/cmr/device` are marked **I** (inactive). Each client must be paired again as a new device:
+
+1. On each client, remove the old pairing:
+
+   ```ros
+   [admin@Office-AP1] > /cmr/client/forget
+   ```
+
+2. On the server, pair the clients as described in the Pairing section, and set their labels again.
+3. Remove the old entries on the server:
+
+   ```ros
+   [admin@MikroTik] > /cmr/device/remove [find where inactive]
+   ```

@@ -336,7 +336,7 @@ PFC frames appear only under congestion, for example when two hosts send to a th
 
 On a working configuration, `tx-pause` grows on the ports of the sending hosts, and `tx-drop-queue3-packet` and `rx-fcs-error` stay at 0 on all ports.
 
-For complete switch and host configurations for a cluster of NVIDIA DGX Spark units, with PFC and with 802.3x flow control, see [NVIDIA DGX Spark clusters](./user-guides/nvidia-dgx-spark).
+For complete switch and host configurations for a cluster of NVIDIA DGX Spark units, with and without PFC, see [NVIDIA DGX Spark clusters](./user-guides/nvidia-dgx-spark).
 
 ## QoS Marking
 
@@ -650,7 +650,15 @@ When congestion occurs on an egress port, PFC is triggered on the ingress port. 
 RouterOS implements a 1:1 mapping between traffic classes and Tx queues. Packets with traffic class 0 are enqueued in queue0, TC1 in queue1, and so on up to TC7 in queue7. Therefore, the terms "traffic class" and "Tx queue" are used interchangeably throughout this documentation.
 :::
 
-When selecting pause and resume thresholds, account for the delay in transmitting and processing PFC frames. For example, device A experiences congestion at time T, sends a PFC pause frame to device B, and B processes the frame and stops transmitting at time T+D. During the delta time D, device B continues sending traffic. If device A has configured the pause threshold to 100%, it has no free buffers available, and packets may drop, which is unacceptable for lossless traffic classes. Setting a lower pause threshold, such as 80%, sends a PFC pause frame while still retaining free memory to absorb traffic during the delta time D. The same principle applies to the resume threshold. Setting it to 0% keeps the device idle during the delta time, reducing overall throughput.
+When selecting pause and resume thresholds, account for the delay in transmitting and processing PFC frames. For example, device A experiences congestion at time T, sends a PFC pause frame to device B, and B processes the frame and stops transmitting at time T+D. During the delta time D, device B continues sending traffic, and device A needs free buffers to absorb it. A pause threshold of 100% leaves none, and packets drop, which is unacceptable for lossless traffic classes. The resume threshold is the distance below the pause threshold at which a paused port can send again. A resume threshold equal to the pause threshold lets the port send again only when its packets have left the buffer, so the congested port idles during the delta time D, reducing throughput.
+
+Each pause threshold applies to one ingress port. The switch also limits the fill level of the whole lossless buffer pool. When the pool reaches this global limit, the switch pauses all ports with a PFC profile at the same time (global XOFF), including ports that send nothing to the congested port. The global XOFF is a last resort against packet drops. Choose thresholds that keep the pool below the global limit, so that the switch pauses only the ports that send to a congested port:
+
+- On switch chips without **Dynamic Buffers** (see the QoS Device Support table), the per-port limits do not scale with the number of congested ports, so RouterOS sets a conservative global limit to prevent buffer overflow. Keep each pause threshold below 50% of the pool, preferably at 25% or less.
+- On switch chips with **Dynamic Buffers**, the per-port limits shrink as more ports congest, and the global XOFF triggers only at a much higher pool fill level.
+- The buffer use of ports that congest at the same time adds up. For example, two ports with a 50% pause threshold that hold 40% of the pool each stay below their own threshold, but together they fill 80% of the pool and trigger the global XOFF. Lower the thresholds when several such ports can congest at the same time.
+
+The default thresholds, `auto`, are chosen to work in most configurations. Thresholds and ECN tuned for one kind of traffic work better for that traffic: for RDMA between NVIDIA DGX Spark units, see [NVIDIA DGX Spark clusters](./user-guides/nvidia-dgx-spark).
 
 PFC receive requires setting the egress rate for all associated queues to calculate pause time, even if it matches the wire speed. For example, if PFC runs on traffic class 3, the assigned ports require the `egress-rate-queue3` setting.
 

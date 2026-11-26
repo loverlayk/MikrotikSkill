@@ -18,7 +18,7 @@ Currently, is NOT supported for Atheros 802.11ac chips (e.g. QCA98xx, IPQ-4018).
 
 ### Spectral History
 
-![](./img/spectral-scan-01.webp)
+![Spectral history output with colour-coded signal levels per frequency from 2183 to 2541 MHz](./img/spectral-scan-01.webp)
 
 ```ros
 /interface/wireless/spectral-history <wireless interface name> 
@@ -42,7 +42,7 @@ Plots a spectrogram. Legend and frequency ruler are printed every 24 lines. Numb
 
 ### Spectral Scan
 
-![](./img/spectral-scan-02.webp)
+![Terminal with spectral-scan output for wlan2, a dBm value and a text graph per frequency](./img/spectral-scan-02.webp)
 
 ```ros
  /interface/wireless/spectral-scan <wireless interface name> 
@@ -70,8 +70,8 @@ The Dude is a free network monitoring and management program by MikroTik. You [c
 
 The Dude has a built-in capability to run graphical Spectral Scan from any of your RouterOS devices with a supported wireless card. Simply select this device in your Dude map, right click and choose Tools -> Spectral Scan.
 
-![](./img/spectral-scan-03.webp)
+![The Dude device context menu with Tools > Spectral Scan highlighted](./img/spectral-scan-03.webp)
 
 This will bring up the Spectral Scan GUI with various options and different view modes:
 
-![](./img/spectral-scan-04.webp)
+![The Dude Spectral Scan window for an hAP ac with waterfall, usage and signal graphs for the 2.4 GHz band](./img/spectral-scan-04.webp)

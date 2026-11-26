@@ -489,9 +489,14 @@ Columns: DST-ADDRESS, GATEWAY, DISTANCE
 
 ### The Simplest MPLS VPN Setup
 
-![](img/l3vpn-simple.png)
+In this example, a rudimentary [MPLS](./mpls/index.md) backbone (consisting of two Provider Edge (PE) routers PE1 and PE2) is created and configured to forward traffic between Customer Edge (CE) routers CE1 and CE2 belonging to the *cust-one* VPN. The links CE1-PE1 and PE2-CE2 are in the *cust-one* VRF:
 
-In this example, a rudimentary [MPLS](./mpls/index.md) backbone (consisting of two Provider Edge (PE) routers PE1 and PE2) is created and configured to forward traffic between Customer Edge (CE) routers CE1 and CE2 belonging to the *cust-one* VPN.
+```mermaid
+graph LR
+    ce1["CE110.1.1.1"] ---|"cust-one10.1.1.0/24"| pe1["PE110.1.1.2, 10.2.2.2loopback 10.5.5.2"]
+    pe1 ---|"MPLS backbone10.2.2.0/24"| pe2["PE2 (Cisco)10.2.2.3, 10.3.3.3loopback 10.5.5.3"]
+    pe2 ---|"cust-one10.3.3.0/24"| ce2["CE210.3.3.4"]
+```
 
 **CE1 Router**
 
@@ -690,9 +695,15 @@ round-trip min/avg/max = 13/14.5/18 ms
 
 ### A More Complicated Setup (Changes Only)
 
-![](img/l3vpn-two-customers.png)
+As opposed to the simplest setup, this example has two customers: cust-one and cust-two. The CE1 router of cust-two connects to PE2 in the *cust-two* VRF:
 
-As opposed to the simplest setup, this example has two customers: cust-one and cust-two.
+```mermaid
+graph LR
+    ce1["CE1, cust-one10.1.1.1"] ---|"cust-one10.1.1.0/24"| pe1["PE110.1.1.2, 10.2.2.2loopback 10.5.5.2"]
+    pe1 ---|"MPLS backbone10.2.2.0/24"| pe2["PE2 (Cisco)10.2.2.3, 10.3.3.3, 10.4.4.3loopback 10.5.5.3"]
+    pe2 ---|"cust-one10.3.3.0/24"| ce2["CE2, cust-one10.3.3.4"]
+    pe2 ---|"cust-two10.4.4.0/24"| ce1b["CE1, cust-two10.4.4.5"]
+```
 
 Two VPNs are configured for them — cust-one and cust-two — and all routes are exchanged between them (this is also called "route leaking").
 
@@ -714,9 +725,9 @@ This is not the most typical setup, because routes are usually not exchanged bet
 **CE1 Router, *cust-two***
 
 ```ros
-/ip/address/add address=10.4.4.5 interface=ether1
-/ip/route/add dst-address=10.1.1.0/24 gateway=10.3.3.3
-/ip/route/add dst-address=10.3.3.0/24 gateway=10.3.3.3
+/ip/address/add address=10.4.4.5/24 interface=ether1
+/ip/route/add dst-address=10.1.1.0/24 gateway=10.4.4.3
+/ip/route/add dst-address=10.3.3.0/24 gateway=10.4.4.3
 ```
 
 **PE1 Router**

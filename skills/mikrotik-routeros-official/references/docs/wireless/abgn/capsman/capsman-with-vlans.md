@@ -12,7 +12,7 @@ In this example, we are going to assign all our Wireless clients to **VLAN10**, 
 
 ## Using Local Forwarding Mode
 
-![](./img/capsman-with-vlans-01.webp)
+![CAPsMAN router ether1 connected to a switch with PC10 on ether4, PC20 on ether5 and CAP_1 and CAP_2 on ether2 and ether3, each CAP with SSIDs WiFi_WORK and WiFi_GUEST](./img/capsman-with-vlans-01.webp)
 
 In Local Forwarding Mode, the CAPsMAN router is distributing the configuration across all CAPs that are being provisioned by the CAPsMAN router. In Local Forwarding Mode, traffic is not required to be sent to the CAPsMAN router, but rather it can be sent to a different router without involving the CAPsMAN router when forwarding traffic. This mode allows you to tag traffic with a certain VLAN ID before it is sent to your network from your wireless client, which adds the possibility to use a switch to limit certain VLAN IDs to certain ports. In Local Forwarding Mode, traffic is not encapsulated with a special CAPsMAN header, which can only be removed by a CAPsMAN router.
 
@@ -131,7 +131,7 @@ That is it! Connect Wireless clients to your APs and check connectivity.
 
 ## Using CAPsMAN Forwarding Mode
 
-![](./img/capsman-with-vlans-02.webp)
+![CAPsMAN router with PC10 on ether1, PC20 on ether2 and CAP_1 and CAP_2 on ether3 and ether4, each CAP with SSIDs WiFi_WORK and WiFi_GUEST](./img/capsman-with-vlans-02.webp)
 
 In CAPsMAN Forwarding Mode all traffic that is coming from a CAP is encapsulated with a special CAPsMAN header, which can only be removed by a CAPsMAN router. This means that a switch will not be able to distinguish the VLAN ID set by the CAP since the VLAN tag is also going to be encapsulated. This mode limits the possibility to divert traffic in Layer2 networks, but gives you the possibility to forward traffic from each CAP over Layer3 networks for a distant CAPsMAN router to process the traffic. This mode is useful when you want to control multiple CAPs in remote locations, but want to use a central gateway.
 

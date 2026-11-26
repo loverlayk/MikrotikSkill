@@ -173,8 +173,6 @@ Sidebar contains a list of all available menus and sub-menus. This list changes 
 
 The Work area is the central part of the WinBox window where all internal (child) windows are displayed.
 
-![WinBox work area section](./img/new_winbox_10_workarea.webp)
-
 ### Working with Child Windows
 
 WinBox has an MDI interface meaning that all menu configuration (child) windows are attached to the main (parent) WinBox window and are shown in the work area.

@@ -132,7 +132,7 @@ On the first start, ThingsBoard creates its database and loads the system data, 
 
 Open the web interface in a browser: from the LAN at `http://172.22.0.2:9090`, or at `http://192.168.88.1:9090` through the dst-nat rule:
 
-![ThingsBoard login page](./img/container-thingsboard-mqtt-http-server-01.webp)
+![ThingsBoard login page with the Username (email) and Password fields and the Login button](./img/container-thingsboard-mqtt-http-server-01.webp)
 
 The default users (user name / password) are:
 
@@ -145,15 +145,17 @@ Change their passwords before you use the server for anything other than testing
 
 Log in as the tenant administrator and create a device. In the **Devices** menu, select **+** (Add device) and choose **Add new device**:
 
-![ThingsBoard Devices menu](./img/container-thingsboard-mqtt-http-server-02.webp)
+![ThingsBoard Devices list with the + menu open, offering Add new device and Import device](./img/container-thingsboard-mqtt-http-server-02.webp)
+
+The list in the screenshot already has devices from earlier tests. On a new installation it has only the demo devices.
 
 Name it and select **Add**:
 
-![ThingsBoard Add device dialog](./img/container-thingsboard-mqtt-http-server-03.webp)
+![ThingsBoard Add new device dialog with the device name](./img/container-thingsboard-mqtt-http-server-03.webp)
 
 Select the new device and open **Manage credentials**. Copy the access token, or enter your own; this example uses `YOUR_TOKEN`:
 
-![ThingsBoard device credentials](./img/container-thingsboard-mqtt-http-server-04.webp)
+![ThingsBoard device credentials dialog with the access token](./img/container-thingsboard-mqtt-http-server-04.webp)
 
 On the router, add ThingsBoard as an [MQTT broker](../../internet-of-things/mqtt/index.md), with the access token as the user name:
 
@@ -169,7 +171,7 @@ Publish a test message in JSON format:
 
 The device's **Latest telemetry** tab shows the value:
 
-![ThingsBoard Latest telemetry tab](./img/container-thingsboard-mqtt-http-server-05.webp)
+![ThingsBoard device CHR, Latest telemetry tab with the key test and the value 123](./img/container-thingsboard-mqtt-http-server-05.webp)
 
 ## HTTPS and MQTT over TLS
 
@@ -247,9 +249,7 @@ If ThingsBoard cannot load the certificate or the key, the container stops, and 
 
 ### Confirm HTTPS access
 
-Open `https://192.168.88.1:9090` (the address from the dst-nat rule) in a browser:
-
-![ThingsBoard login page over HTTPS](./img/container-thingsboard-mqtt-http-server-06.webp)
+Open `https://192.168.88.1:9090` (the address from the dst-nat rule) in a browser. The same login page as in [Management access](#management-access) opens, now over HTTPS.
 
 :::info
 
@@ -277,9 +277,7 @@ Publish a test message:
 /iot/mqtt/publish broker="tbssl" topic="v1/devices/me/telemetry" message="{\"test\":\"123\"}"
 ```
 
-The device's **Latest telemetry** tab shows the value:
-
-![ThingsBoard Latest telemetry tab after MQTT over TLS](./img/container-thingsboard-mqtt-http-server-07.webp)
+The device's **Latest telemetry** tab shows the value with a new update time, the same as in the [MQTT test](#mqtt-test).
 
 #### From another device
 

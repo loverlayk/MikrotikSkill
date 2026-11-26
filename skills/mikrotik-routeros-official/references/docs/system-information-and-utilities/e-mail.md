@@ -40,7 +40,7 @@ In WinBox, open **Tools > Email** to configure the SMTP connection:
 2. Enter the sender address in **From**. Use the **+** controls to set **User** and **Password** if the server requires authentication.
 3. Review **Certificate Verification** for a TLS connection and select **OK** to save the configuration. Use the server settings in the CLI reference for the verification options and certificate requirements.
 
-![WinBox Email Settings dialog for the SMTP connection](./img/email-settings-winbox.webp)
+![WinBox Email Settings dialog with the default values: Server 0.0.0.0, Port 25, TLS no, VRF main, empty From, User and Password not set](./img/email-settings-winbox.webp)
 
 ## Send a message
 
@@ -65,7 +65,7 @@ To send a message in WinBox, open **Tools > Email** and select **Send Email** in
 1. Set **To** and **Subject**. Use **Cc** for additional recipients and **From** to override the configured sender when required.
 2. Enter the message in **Body**. Use the **+** control beside **Files** to attach a file already stored on the router.
 
-![WinBox Send Email dialog with recipient, subject, body, and attachments](./img/email-send-winbox.webp)
+![WinBox Send Email dialog before it is filled in: Server, TLS and Certificate Verification fields, empty To, CC, From, Subject and Body, and the Files control](./img/email-send-winbox.webp)
 
 Review the SMTP settings and recipients, then select **Send Email** to transmit the message. **Cancel** closes the dialog without sending it. Check **Last Status** in Email Settings if delivery fails.
 

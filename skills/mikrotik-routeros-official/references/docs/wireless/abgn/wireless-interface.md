@@ -857,7 +857,7 @@ When an interface is in AP mode, default management protection key (configured i
                                                         allowed  disabled  required  
 ```
 
-![](./img/wireless-interface-01.webp)
+![Security Profile default with the Management Protection field highlighted](./img/wireless-interface-01.webp)
 
 ### Operation details
 
@@ -1042,13 +1042,13 @@ This tool monitors surrounding frequency usage, and displays which devices occup
 
 **Sub-menu:** `/interface/wireless/snooper`
 
-![](./img/wireless-interface-02.webp)
+![wlan1 interface window with the Wireless Snooper and Snooper buttons highlighted](./img/wireless-interface-02.webp)
 
-![](./img/wireless-interface-03.webp)
+![Wireless Snooper window listing frequencies, networks and stations with signal and traffic share](./img/wireless-interface-03.webp)
 
 ### Settings
 
-![](./img/wireless-interface-04.webp)
+![Wireless Snooper Settings with Multiple Channels selected and Channel Time 200 ms](./img/wireless-interface-04.webp)
 
 ## Spectral scan
 

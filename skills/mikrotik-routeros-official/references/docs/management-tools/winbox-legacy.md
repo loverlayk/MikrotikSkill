@@ -86,8 +86,8 @@ Buttons/check-boxes
 
 - **Browse** - Browse file directory for some specific session.
 - **Keep Password** - If unchecked, the password is not saved to the list.
-- **Secure mode** - If checked, WinBox uses DH-2048 for key exchange and modified and hardened RC4-drop3072 encryption to secure the session.
 - **Autosave session** - Saves sessions automatically for devices to which connections are made.
+- **Open In New Window** - Opens the router in a new window and keeps the loader open, so that you can connect to more routers.
 
 Fields:
 
@@ -251,8 +251,8 @@ By default, WinBox shows the most commonly used parameters. However, sometimes i
 
 WinBox allows you to customize displayed columns for each individual window. For example, to add the BGP AS path column:
 
-- Select the little arrow button (**1**) on the right side of the column titles or right-click on the route list.
-- From the pop-up menu move to **Show Columns** (**2**) and from the sub-menu pick the desired column, in our case select **BGP AS Path** (**3**).
+- Select the little arrow button on the right side of the column titles or right-click on the route list.
+- From the pop-up menu move to **Show Columns** and from the sub-menu pick the desired column, in our case **BGP AS Path**. Columns with a check mark are already shown.
 
 ![WinBox Route List context menu with Show Columns submenu listing available columns](./img/winbox-10.webp)
 

@@ -120,24 +120,23 @@ AWS does not assign a public IP by default. Ensure your instance has a public IP
 You can deploy CHR directly from the AWS Marketplace without manually importing disk images.
 
 1. Open the [MikroTik Cloud Hosted Router](https://aws.amazon.com/marketplace/pp/prodview-sf5gn6js6av54?sr=0-1&ref_=beagle&applicationId=AWSMPContessa) listing on AWS Marketplace.
-2. Subscribe to **Cloud Hosted Router**.
-3. Select **Launch** and choose the desired launch method.
 
-   ![CHR AWS launch configuration](img/chr-aws-launch-01.webp)
+   ![The Cloud Hosted Router listing on AWS Marketplace, sold by MikroTik, with the View purchase options button](img/chr-on-aws.webp)
 
-4. Create or select a [Security Group](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html). The default configuration provides reasonable security for the router.
+2. Select **View purchase options** and subscribe to **Cloud Hosted Router**.
+3. In the EC2 console, create a key pair in the region where the router will run, and download it. You need this key pair to authenticate via SSH.
 
-   ![CHR AWS security group](img/chr-aws-launch-02.webp)
+   ![The EC2 Key pairs page with no key pairs and the Create key pair button](img/keypair-01.webp)
+   ![The Create key pair form with the name CHR_key_pair, the type ED25519 and the .pem format](img/keypair-02.webp)
+   ![The key pair CHR_key_pair in the list after it was created](img/keypair-03.webp)
 
-5. Create and download a key pair. You need this key pair to authenticate via SSH.
+4. Select **Launch** on the listing. Choose the launch method, the region, the instance type, the VPC and the subnet. Create or select a [Security Group](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html); the default configuration provides reasonable security for the router. Select the key pair from step 3.
 
-   ![Create key pair step 1](img/keypair-01.webp)
-   ![Create key pair step 2](img/keypair-02.webp)
-   ![Create key pair step 3](img/keypair-03.webp)
+   ![The Launch Cloud Hosted Router form with One-click launch, the region, the instance type t3.nano, the VPC, the subnet, the security group CHR and the key pair CHR_key_pair](img/chr-aws-launch-01.webp)
 
-6. Review the instance configuration and select **Launch Instance**.
+5. Select **Launch**. AWS starts the instance and shows a summary with its instance ID.
 
-   ![CHR instance on EC2](img/chr-on-aws.webp)
+   ![The summary after the launch, with the instance ID, the AMI, the region, the instance type, the security group and the key pair](img/chr-aws-launch-02.webp)
 
 ## Connecting to the Marketplace instance
 

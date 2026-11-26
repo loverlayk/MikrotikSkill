@@ -214,7 +214,13 @@ These commands create the queues of Example 1. Each next example changes the que
 
 ### Example 1: Usual case
 
-![Queue structure and rates of example 1](./img/htb-hierarchical-token-bucket-02.webp)
+```mermaid
+graph TD
+    q1["Queue01parent=ether1max-limit=10M"] --> q2["Queue02parent=Queue01limit-at=4M max-limit=10M"]
+    q1 --> Queue03["Queue03parent=Queue01limit-at=6M max-limit=10Mpriority=1receives 6 Mbit/s"]
+    q2 --> Queue04["Queue04parent=Queue02limit-at=2M max-limit=10Mpriority=3receives 2 Mbit/s"]
+    q2 --> Queue05["Queue05parent=Queue02limit-at=2M max-limit=10Mpriority=5receives 2 Mbit/s"]
+```
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=4Mbps max-limit=10Mbps
@@ -247,7 +253,13 @@ The `rate` of each queue, in bits per second, shows the distribution while the t
 
 ### Example 2: Usual case with max-limit
 
-![Queue structure and rates of example 2](./img/htb-hierarchical-token-bucket-03.webp)
+```mermaid
+graph TD
+    q1["Queue01parent=ether1max-limit=10M"] --> q2["Queue02parent=Queue01limit-at=4M max-limit=10M"]
+    q1 --> Queue03["Queue03parent=Queue01limit-at=2M max-limit=10Mpriority=3receives 2 Mbit/s"]
+    q2 --> Queue04["Queue04parent=Queue02limit-at=2M max-limit=10Mpriority=1receives 6 Mbit/s"]
+    q2 --> Queue05["Queue05parent=Queue02limit-at=2M max-limit=10Mpriority=5receives 2 Mbit/s"]
+```
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=4Mbps max-limit=10Mbps
@@ -271,7 +283,13 @@ After satisfying all `limit-at` values, HTB gives the remaining throughput to th
 
 ### Example 3: Inner queue limit-at
 
-![Queue structure and rates of example 3](./img/htb-hierarchical-token-bucket-04.webp)
+```mermaid
+graph TD
+    q1["Queue01parent=ether1max-limit=10M"] --> q2["Queue02parent=Queue01limit-at=8M max-limit=10M"]
+    q1 --> Queue03["Queue03parent=Queue01limit-at=2M max-limit=10Mpriority=1receives 2 Mbit/s"]
+    q2 --> Queue04["Queue04parent=Queue02limit-at=2M max-limit=10Mpriority=3receives 6 Mbit/s"]
+    q2 --> Queue05["Queue05parent=Queue02limit-at=2M max-limit=10Mpriority=5receives 2 Mbit/s"]
+```
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=8Mbps max-limit=10Mbps
@@ -296,7 +314,13 @@ After satisfying all `limit-at` values, HTB gives throughput to the queue with t
 
 ### Example 4: Leaf queue limit-at
 
-![Queue structure and rates of example 4](./img/htb-hierarchical-token-bucket-05.webp)
+```mermaid
+graph TD
+    q1["Queue01parent=ether1max-limit=10M"] --> q2["Queue02parent=Queue01limit-at=4M max-limit=10M"]
+    q1 --> Queue03["Queue03parent=Queue01limit-at=6M max-limit=10Mpriority=1receives ~3 Mbit/s"]
+    q2 --> Queue04["Queue04parent=Queue02limit-at=2M max-limit=10Mpriority=3receives ~1 Mbit/s"]
+    q2 --> Queue05["Queue05parent=Queue02limit-at=12M max-limit=15Mpriority=5receives ~6 Mbit/s"]
+```
 
 - **Queue01** limit-at=0Mbps max-limit=10Mbps
 - **Queue02** limit-at=4Mbps max-limit=10Mbps

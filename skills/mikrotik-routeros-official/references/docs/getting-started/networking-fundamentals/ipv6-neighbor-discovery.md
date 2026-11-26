@@ -97,9 +97,11 @@ RFC 4861 defines five ND message types: Router Solicitation (RS), Router Adver
 
 Host‑to‑host NS/NA between end devices is handled automatically by the host stack and is not controlled by the [`/ipv6/nd`](../../cli-reference/ipv6/nd) menu. Redirect generation is optional and disabled by default (`redirect=no`).
 
+A router advertisement carries more than the prefix. Besides the prefix, the message carries the hop limit, the managed address and other configuration flags, the router lifetime and preference, the reachable time and retransmit timer, the source link-layer address, the MTU, the DNS servers and the NAT64 prefix. All of them are set per interface in [`/ipv6/nd`](../../cli-reference/ipv6/nd), and the advertised prefixes in [`/ipv6/nd/prefix`](../../cli-reference/ipv6/nd/prefix).
+
 ## Examples
 
-#### Stateless autoconfiguration example
+### Stateless autoconfiguration example
 
 ```ros
 [admin@MikroTik] > ipv6 address print
@@ -133,6 +135,45 @@ valid_lft forever preferred_lft forever
 ```
 
 The host has received the *2001:db8::/64* prefix from the router and configured an address with it.
+
+### Address taken from a pool
+
+When the address on the advertising interface is built from a pool, the dynamic
+`/ipv6/nd/prefix` entry takes its lifetimes from that address, and the address takes them
+from the pool. The advertised value is the lower of the remaining address lifetime and the
+lifetime in `/ipv6/nd/prefix/default`, so a shorter default shortens the advertisement,
+and a shorter delegated prefix shortens it too. Hosts then deprecate the prefix together
+with the delegated prefix, so they do not keep using an address whose prefix is gone.
+
+The pool in this example holds a prefix delegated by the ISP. The router takes the LAN
+prefix from the pool and advertises it on the bridge that carries the local network:
+
+```ros
+/ipv6/dhcp-client/add interface=ether1 request=prefix \
+    pool-name=isp-pool pool-prefix-length=64
+/ipv6/address/add address=::1/64 interface=bridge-lan \
+    from-pool=isp-pool advertise=yes
+```
+
+```ros
+[admin@MikroTik] > /ipv6/address/print
+Flags: X - disabled, I - invalid, D - dynamic, G - global, L - link-local
+#   ADDRESS               FROM-POOL  INTERFACE   ADVERTISE
+0 G 2001:db8:7501::1/64   isp-pool   bridge-lan  yes
+
+[admin@MikroTik] > /ipv6/nd/prefix/print
+Flags: X - disabled, I - invalid, D - dynamic
+0 D prefix=2001:db8:7501::/64 interface=bridge-lan on-link=yes autonomous=yes
+    valid-lifetime=1d23h59m38s preferred-lifetime=1d19h11m38s
+```
+
+The advertised lifetimes count down in real time, separately, each by its own remaining
+time. How the preferred lifetime relates to the valid one depends on what the DHCPv6 server
+that issued the prefix sent: a RouterOS DHCPv6 server offers a preferred lifetime of 90% of
+the lease time, while another server may offer something else, and the advertisement passes
+on whatever arrived.
+
+### Advertising DNS servers
 
 You can also redistribute [DNS](../../network-management/dns) server information by using RADVD:
 

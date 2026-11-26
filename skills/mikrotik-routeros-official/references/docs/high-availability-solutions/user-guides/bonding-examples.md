@@ -8,11 +8,17 @@
 
 Two routers are connected with two separate IP links, for example two wireless links. This example joins the two links into one, to use the capacity of both and to keep the connection when one fails.
 
-![Two routers connected with two wireless links, with an EoIP tunnel over each link and a bonding interface over the tunnels](./img/bonding-examples-01.webp)
-
 Bonding works on layer 2 (Ethernet) interfaces only, so each link first gets an [EoIP](../../virtual-private-networks/eoip) tunnel. The bond then uses the two tunnels.
 
-In the example the first link has the network 10.0.1.0/24 and the second 10.2.2.0/24. R1 has the addresses 10.0.1.2 and 10.2.2.2, and R2 has 10.0.1.1 and 10.2.2.1.
+In the example the first link has the network 10.0.1.0/24 and the second 10.2.2.0/24. R1 has the addresses 10.0.1.2 and 10.2.2.2, and R2 has 10.0.1.1 and 10.2.2.1:
+
+```mermaid
+graph LR
+    r1["R1bond1 192.168.0.1/24"] ---|"link 1, 10.0.1.0/2410.0.1.2 to 10.0.1.1eoip-tunnel1, tunnel-id 1"| r2["R2bond1 192.168.0.2/24"]
+    r1 ---|"link 2, 10.2.2.0/2410.2.2.2 to 10.2.2.1eoip-tunnel2, tunnel-id 2"| r2
+```
+
+On each router, `bond1` uses `eoip-tunnel1` and `eoip-tunnel2` as its slaves.
 
 ### Configuration
 

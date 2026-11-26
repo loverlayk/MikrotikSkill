@@ -33,7 +33,7 @@ The ARP entry disappears some time after the computer is switched off, so keep t
 Open **Tools > WoL**:
 
 1. Enter the target device's **MAC Address**. The screenshot uses the address from the command example.
-2. In **Interface**, select the interface through which the computer is reachable, for example `bridge` in the default configuration. The screenshot shows `ether1`.
+2. In **Interface**, select the interface through which the computer is reachable, for example `bridge` in the default configuration.
 
 ![WinBox Wake on LAN dialog with target MAC Address and outgoing Interface](./img/wake-on-lan-winbox.webp)
 

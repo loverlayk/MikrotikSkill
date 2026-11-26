@@ -15,7 +15,13 @@ L2TP runs over IPv4 and IPv6. It uses UDP port 1701 for both the control and the
 L2TP does not encrypt the traffic. Use it with IPsec when the tunnel crosses a network that you do not trust.
 :::
 
-![An L2TP client connects to an L2TP server over the internet](./img/l2tp-01.webp)
+In the examples, the server has the public address 203.0.113.1 and the address 10.0.0.1 inside the tunnels. A client gets an address from the pool 10.0.0.10-10.0.0.100:
+
+```mermaid
+graph LR
+    c["L2TP clientpublic 203.0.113.2tunnel 10.0.0.100"] ---|"L2TP tunnel over the internetUDP 1701"| s["L2TP serverpublic 203.0.113.1tunnel 10.0.0.1"]
+    s --- lan["Office network192.168.88.0/24"]
+```
 
 ## Set up a server and a client
 

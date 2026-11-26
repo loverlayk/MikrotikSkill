@@ -119,7 +119,7 @@ Orion Wifi uses RADIUS over TLS (RadSec) to ensure end-to-end encryption of AAA 
 
 1) Import RadSec certificates you have downloaded from Orion:
 
-Drag and drop the certificate in WinBox, and then use the import function for it, which can be found under `/system/certificates` in WinBox. The command line equivalent is:
+Drag and drop the certificate in WinBox, and then use the import function for it, which can be found under **System > Certificates** in WinBox. The command line equivalent is:
 
 ```
 /certificate/import file-name=bw.radsec.cacert.pem passphrase=""
@@ -127,19 +127,19 @@ Drag and drop the certificate in WinBox, and then use the import function for it
 /certificate/import file-name=key.pem passphrase=""
 ```
 
-![](./img/interworking-profiles-01.webp)
+![WinBox File List with bw.radsec.cacert.pem, the System > Certificates menu and the certificate Import dialog](./img/interworking-profiles-01.webp)
 
-![](./img/interworking-profiles-02.webp)
+![Certificate Import dialog with cert.pem selected](./img/interworking-profiles-02.webp)
 
-![](./img/interworking-profiles-03.webp)
+![Certificate Import dialog with key.pem selected](./img/interworking-profiles-03.webp)
 
 Once certificates are imported, they should look like this:
 
-![](./img/interworking-profiles-04.webp)
+![Certificates list with the trusted bw.radsec CA certificate and cert.pem_0 with its private key](./img/interworking-profiles-04.webp)
 
 1) Configure the Radius client:
 
-![](./img/interworking-profiles-05.webp)
+![New RADIUS Server for the wireless service with address 216.239.32.91, protocol radsec, timeout 1500 ms and certificate cert.pem_0](./img/interworking-profiles-05.webp)
 
 Command line equivalent:
 
@@ -149,11 +149,11 @@ Command line equivalent:
 
 1) Create a wireless security profile that performs 802.1x authentication:
 
-![](./img/interworking-profiles-06.webp)
+![New Security Profile dot1x_profile with dynamic keys, WPA2 EAP, aes ccm ciphers and management protection allowed](./img/interworking-profiles-06.webp)
 
-![](./img/interworking-profiles-07.webp)
+![RADIUS tab of the dot1x_profile security profile with EAP Accounting selected](./img/interworking-profiles-07.webp)
 
-![](./img/interworking-profiles-08.webp)
+![EAP tab of the dot1x_profile security profile with EAP method passthrough](./img/interworking-profiles-08.webp)
 
 The Command line equivalent is:
 
@@ -163,7 +163,7 @@ The Command line equivalent is:
 
 1) The next step is configuring the wireless interface and assigning the created security profile. Press “Advanced mode” to see all the options:
 
-![](./img/interworking-profiles-09.webp)
+![wlan1 Wireless tab in AP bridge mode with SSID MikroTik and security profile dot1x_profile](./img/interworking-profiles-09.webp)
 
 The command line equivalent is:
 
@@ -175,11 +175,11 @@ Make sure the correct country profile is configured. In this example, we are usi
 
 1) Configure interworking settings (hotspot 2.0):
 
-![](./img/interworking-profiles-10.webp)
+![New Interworking Profile Orion_MikroTik with network type public chargeable, venue business unspecified and Internet selected](./img/interworking-profiles-10.webp)
 
-![](./img/interworking-profiles-11.webp)
+![ANQP tab with domain and realm orion.area120.com, IPv4 public, three roaming OIs and venue name Orion:eng](./img/interworking-profiles-11.webp)
 
-![](./img/interworking-profiles-12.webp)
+![Hotspot 2.0 tab with Hotspot 2.0 and DGAF selected, operator name Orion:eng, WAN downlink and uplink 50 and WAN status up](./img/interworking-profiles-12.webp)
 
 Command line equivalent:
 
@@ -193,7 +193,7 @@ Pay special attention to "wan-downlink" and "wan-uplink", in this scenario the v
 
 1) Assign the interworking profile to the interface:
 
-![](./img/interworking-profiles-13.webp)
+![wlan1 Wireless tab with the interworking profile Orion_MikroTik](./img/interworking-profiles-13.webp)
 
 The command-line equivalent is:
 
@@ -215,7 +215,7 @@ Orion Wifi uses RADIUS over TLS (RadSec) to ensure end-to-end encryption of AAA 
 
 1) Configure the Radius client that points to radsecproxy:
 
-![](./img/interworking-profiles-14.webp)
+![New RADIUS Server for the wireless service with address 192.168.88.233, protocol udp and timeout 1500 ms](./img/interworking-profiles-14.webp)
 
 The command line equivalent is:
 
@@ -227,11 +227,11 @@ The secret should match the one configured on the radsecproxy. In this example, 
 
 1) Create a wireless security profile that would perform 802.1x authentication:
 
-![](./img/interworking-profiles-06.webp)
+![New Security Profile dot1x_profile with dynamic keys, WPA2 EAP, aes ccm ciphers and management protection allowed](./img/interworking-profiles-06.webp)
 
-![](./img/interworking-profiles-07.webp)
+![RADIUS tab of the dot1x_profile security profile with EAP Accounting selected](./img/interworking-profiles-07.webp)
 
-![](./img/interworking-profiles-08.webp)
+![EAP tab of the dot1x_profile security profile with EAP method passthrough](./img/interworking-profiles-08.webp)
 
 The Command line equivalent is:
 
@@ -241,7 +241,7 @@ The Command line equivalent is:
 
 1) The next step is configuring the wireless interface and assigning the created security profile. Press “Advanced mode” to see all the options:
 
-![](./img/interworking-profiles-09.webp)
+![wlan1 Wireless tab in AP bridge mode with SSID MikroTik and security profile dot1x_profile](./img/interworking-profiles-09.webp)
 
 The command line equivalent is:
 
@@ -253,11 +253,11 @@ Make sure the correct country profile is configured. In this example, we are usi
 
 1) Configure interworking settings (hotspot 2.0):
 
-![](./img/interworking-profiles-10.webp)
+![New Interworking Profile Orion_MikroTik with network type public chargeable, venue business unspecified and Internet selected](./img/interworking-profiles-10.webp)
 
-![](./img/ANQP_1.png)
+![ANQP tab with domain and realm orion.area120.com, IPv4 public, three roaming OIs and venue name Orion:eng](./img/interworking-profiles-11.webp)
 
-![](./img/interworking-profiles-12.webp)
+![Hotspot 2.0 tab with Hotspot 2.0 and DGAF selected, operator name Orion:eng, WAN downlink and uplink 50 and WAN status up](./img/interworking-profiles-12.webp)
 
 Command line equivalent:
 
@@ -271,7 +271,7 @@ Be sure to specify some value in "wan-downlink" and "wan-uplink", in this scenar
 
 1) Assign the interworking profile to the interface:
 
-![](./img/interworking-profiles-13.webp)
+![wlan1 Wireless tab with the interworking profile Orion_MikroTik](./img/interworking-profiles-13.webp)
 
 This step can also be done with the following command:
 
@@ -286,10 +286,10 @@ Note: NAS-id that's used by Orion to differentiate networks is equal to system i
 ## Troubleshooting
 
 To check the status of RADIUS messages, you can use the radius menu.  
-![](./img/interworking-profiles-15.webp)  
+![RADIUS server 216.239.32.91 Status tab with request, accept, reject and timeout counters](./img/interworking-profiles-15.webp)  
 Or alternatively, via the command line, run `/radius/monitor X`, X being the numerical ID. You can see the IDs with `/radius/print`.  
 For more information, additional logging can be configured under `/system/logging/add topics=radius,debug,packet`. You can view results under [`/log`](../../diagnostics-monitoring-and-troubleshooting/log/index.md).
 
 To view active wireless connections check the wireless registration table `/interface/wireless/registration-table/print`:
 
-![](./img/interworking-profiles-16.webp)
+![Wireless Registration table with one client connected to wlan1](./img/interworking-profiles-16.webp)

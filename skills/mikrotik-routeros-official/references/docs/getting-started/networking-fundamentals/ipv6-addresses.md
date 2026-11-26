@@ -91,6 +91,20 @@ A link-local address is also required for IPv6 Neighbor Discovery processes.
 If the interface is set as a bridge port, an interface-specific link-local address is removed leaving only the bridge link-local address
 :::
 
+#### Manual Link-local Address
+
+To replace the automatically generated link-local address on an interface with a fixed address, add a manual `fe80::/64` address with `auto-link-local=no`. With the default `auto-link-local=yes`, the manual address is added in addition to the automatic one.
+
+For example, two routers run an IPv6 routing protocol over link-local addresses on `vlan10`. Give each router a fixed address, such as `fe80::1/64` and `fe80::2/64`, so the peering configuration stays the same when the hardware is replaced. On the first router:
+
+```ros
+/ipv6/address/add address=fe80::1/64 interface=vlan10 auto-link-local=no
+```
+
+The `/ipv6/address/print` output then shows the manual address with the `L` flag and no dynamic `DL` entry for `vlan10`. Update any configuration that refers to the old automatic address. Remove the manual address to restore the automatic one.
+
+To disable automatic link-local generation on all non-VPN interfaces, set [`disable-link-local-address`](../../cli-reference/ipv6/settings#ipv6-settings) in `/ipv6/settings`. Use this when you assign a manual link-local address to every interface.
+
 ### Unique Local Address
 
 Unique Local Address (ULA) is reserved for local use in the home and enterprise environments not routed in public address space and is equivalent to IPv4 private address ranges.

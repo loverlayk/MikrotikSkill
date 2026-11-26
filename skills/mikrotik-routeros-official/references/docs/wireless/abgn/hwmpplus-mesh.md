@@ -65,7 +65,7 @@ HWMPplus is not supported on  [Wifi](../wifi/index.md) interfaces, but can be us
 
 ## Example
 
-![](./img/hwmpplus-mesh-01.webp)
+![Routers A, B, C and D linked by WDS in a ring, with their MAC addresses and IP addresses 10.4.0.1 to 10.4.0.4, and a client connected to Router A](./img/hwmpplus-mesh-01.webp)
 
 This example uses static WDS links that are dynamically added as mesh ports when they become active. Two different frequencies are used: one for AP interconnections, and one for client connections to APs, so the AP must have at least two wireless interfaces. Of course, the same frequency for all connections also could be used, but that might not work as well because of potential interference issues.
 
@@ -197,10 +197,11 @@ ADDRESS TIME STATUS
 
 Router A wants to discover a path to C:
 
-![](./img/hwmpplus-mesh-02.webp)  
+![Router A floods a PREQ message through the mesh to find a path to Router C](./img/hwmpplus-mesh-02.webp)  
 
 Router C sends a unicast response to A:
-![](./img/hwmpplus-mesh-03.webp)
+
+![Router C sends a unicast PREP message back to Router A through Router B](./img/hwmpplus-mesh-03.webp)
 
 In reactive mode, HWMP+ is very much like AODV (Ad-hoc On-demand Distance Vector). All paths are discovered on-demand, by flooding Path Request (PREQ) messages in the network. The destination node or some router that has a path to the destination will reply with a Path Response (PREP). Note that if the destination address belongs to a client, the AP this client is connected to will serve as a proxy for him (i.e. reply to PREQs on his behalf).
 
@@ -210,10 +211,11 @@ This mode is best suited for mobile networks, and/or when most of the communicat
 
 The root announces itself by flooding RANN:
 
-![](./img/hwmpplus-mesh-04.webp)  
+![The portal floods a RANN message to all mesh routers](./img/hwmpplus-mesh-04.webp)  
 
 Internal nodes respond with PREGs:
-![](./img/hwmpplus-mesh-05.webp)  
+
+![The internal mesh routers send PREG messages back to the portal](./img/hwmpplus-mesh-05.webp)  
 
 In proactive mode, there are some routers configured as portals. In general, being a portal means that the router has interfaces to some other network, i.e. it is an entry/exit point to the mesh network.
 
@@ -226,10 +228,12 @@ A proactive mode is best suited when most of the traffic goes between internal m
 ### Topology change detection
 
 Data flow path:
-![](./img/hwmpplus-mesh-06.webp)
+
+![Data flowing along a path of four mesh routers](./img/hwmpplus-mesh-06.webp)
 
 After the link disappears, an error is propagated upstream:
-![](./img/hwmpplus-mesh-07.webp)  
+
+![A broken link on the data path and a PERR message sent upstream to the data source](./img/hwmpplus-mesh-07.webp)  
 
 HWMP+ uses a Path Error (PERR) message to notify that a link has disappeared. The message is propagated to all upstream nodes up to the data source. The source on PERR reception restarts the path discovery process.
 
@@ -303,7 +307,7 @@ We all know that it's easy to make problematic layer-2 bridging or routing setup
 ### Problematic example 1: Ethernet switch inside a mesh
 
 *Router A is outside the mesh; all the rest of the routers are inside. For routers B, C, D, all interfaces are added as mesh ports*:
-![](./img/hwmpplus-mesh-08.webp)
+![Router A outside the mesh connected through an Ethernet switch to Routers B and D, which are in the mesh with Router C](./img/hwmpplus-mesh-08.webp)
 
 Router A will not be able to communicate reliably with router C. The problem manifests itself when D is the designated router for Ethernet; if B takes this role, everything is OK. The main cause of the problem is MAC address learning on the Ethernet switch.
 
@@ -331,7 +335,7 @@ Also note that there will be no problem, if either:
 
 *Consider this (invalid) setup example*...*Routers A and B are inside the mesh, router C is outside. For routers A and B all interfaces are added as mesh ports:*
 
-![](./img/hwmpplus-mesh-09.webp)
+![Router A and Router B in the mesh over WDS, and Router B wlan2 in station mode connected to Router C wlan1 in AP mode](./img/hwmpplus-mesh-09.webp)
 
 It is not possible to bridge wlan1 and wlan2 on router B now. The reason for this is pretty obvious if you understand how WDS works. For WDS communications four address frames are used. This is because for wireless multihop forwarding you need to know the addresses of the intermediate hops, as well as the original sender and final receiver. In contrast, non-WDS 802.11 communication includes only three MAC addresses in a frame. That's why it's not possible to do multi-hop forwarding in station mode.
 

@@ -281,7 +281,7 @@ add action=accept disabled=no mac-address=22:F9:70:E5:D2:8E interface=wifi1 pass
 
 The `/interface/wifi/frequency-scan wifi1` command provides information about RF conditions on available channels that can be obtained by running the frequency-scan command. Used to approximate the spectrum usage, it can be useful to find less crowded frequencies.
 
-![](./img/wifi-scan.png)
+![Freq. Usage window for wifi1 with networks, load, noise floor and signal per channel](./img/wifi-scan.png)
 
 :::info
 Running a frequency scan will disconnect all connected clients, or if the interface is in station mode, it will disconnect from the AP.
@@ -292,7 +292,7 @@ Running a frequency scan will disconnect all connected clients, or if the interf
 The `/interface/wifi/scan` command will scan for access points and print out information about any APs it detects. It doesn't show the frequency usage, per channel, but it will reveal all access points that are transmitting. You can use the "connect" button to initiate a connection to a specific AP.
 
 The scan command takes all the same parameters as the frequency-scan command.
-![](./img/wifi-scan-command.png)
+![Scan window for wifi1 listing two access points with SSID, channel, security and signal](./img/wifi-scan-command.png)
 
 ## Sniffer
 
@@ -301,7 +301,7 @@ The command continuously prints out information on received packets and can save
 
 The sniffer will operate on whichever channel is configured for the chosen interface.
 
-![](./img/wifi-sniffer.png)
+![Sniffer window for wifi1 listing captured frames with addresses, size, type and SSID](./img/wifi-sniffer.png)
 
 ## Spectral scan
 
@@ -315,7 +315,7 @@ Spectral scan is supported only by the wifi-qcom driver; it is not supported by 
 /interface/wifi/spectral-scan <wifi interface name>
 ```
 
-![](./img/wifi-spectral-scan.png)
+![Spectral scan output for wifi1 from 5180 to 5805 MHz with magnitude, peak and a text graph per frequency](./img/wifi-spectral-scan.png)
 
 This command continuously monitors spectral data. This command uses the same data source as `spectral-history`, and shares many parameters.
 
@@ -347,7 +347,7 @@ Possible types of classified interference:
 /interface/wifi/spectral-history <wifi interface name>
 ```
 
-![](./img/wifi-spectral-history.png)
+![Spectral history output for wifi1 from 5180 to 5800 MHz with colour-coded signal levels per frequency](./img/wifi-spectral-history.png)
 
 Plots a spectrogram. Power values that fall in different ranges are printed as different colored characters with the same foreground and background color, so it is possible to copy and paste the terminal output of this command.
 
@@ -415,7 +415,7 @@ If we take hAP ax <sup>2</sup>, as an example, we can see that the number of cha
 
 `/interface/wifi/registration-table/` displays a list of connected wireless clients and detailed information about them.
 
-![](./img/wifi-reg-table.png)
+![Registration tab with one client on wifi1, SSID hAPax5, VLAN 10 and its rates](./img/wifi-reg-table.png)
 
 ### De-authentication
 

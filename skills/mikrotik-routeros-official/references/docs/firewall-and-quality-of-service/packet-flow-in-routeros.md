@@ -211,7 +211,17 @@ Two more cases apply with `use-ip-firewall` enabled:
 
 On the previous topic, we solely discussed software bridging that requires the main CPU processing to forward packets through the correct bridge port. Most of the MikroTik devices are equipped with dedicated switching hardware, the so-called switch chip or switch ASIC. This allows us to offload some of the bridging functions, like packet forwarding between bridge ports or packet filtering, to this specialized hardware chip without consuming any CPU resources. In RouterOS, we have named this function Bridge Hardware (HW) Offloading. Different MikroTik devices might have different switch chips and each chip has a different set of features available, so make sure to visit this article to get more details - [Bridge Hardware Offloading](../bridging-and-switching/index.md#bridge-hardware-offloading).
 
-![Overall packet flow diagram with the path of a hardware offloaded packet: from the physical in-interface through the switching decision directly to the physical out-interface](./img/packet-flow-in-routeros-18.webp)
+A packet that the switch chip forwards from one hardware offloaded port to another does not reach the CPU. The firewall, the queues and the rest of the packet flow on this page do not see it:
+
+```mermaid
+graph LR
+    pin(["Physical in-interface"]) --> hw{"In-interfacehardware offloaded?"}
+    hw -->|"yes"| sw["Switching decisionin the switch chip"]
+    sw -->|"to another port"| pout(["Physical out-interface"])
+    sw -->|"to the CPU"| cpu["Packet flow in the CPU(overall diagram)"]
+    hw -->|"no"| cpu
+    cpu --> pout
+```
 
 :::warning
 Interface HTB will not work correctly when the out-interface is hardware offloaded and the bridge Fast Path is not active.
@@ -471,7 +481,14 @@ The packet may go Half-FastPath by switching from FastPath to SlowPath, but not 
 
 Fasttrack can be decoded as Fast Path + Connection Tracking. It allows marking connections as "fast-tracked", marking packets that belong to a fast-tracked connection will be sent the fast-path way. The connection table entry for such a connection now will have a fast-tracked flag.
 
-![Diagram of the routing forward FastPath: connection tracking checks whether the connection is FastTracked, and a FastTracked packet takes the FastPath](./img/packet-flow-in-routeros-32.webp)
+```mermaid
+graph LR
+    in(["In-interface"]) --> ct{"Connection tracking:connection FastTracked?"}
+    ct -->|"yes"| fp["FastPathskips the firewall, the queueswith parent=global and the simple queues"]
+    ct -->|"no"| sp["Slow pathall the chains: mangle, NAT,filter, queues"]
+    fp --> out(["Out-interface"])
+    sp --> out
+```
 
 :::warning
 FastTrack packets bypass firewall, connection tracking, simple queues, queue tree with parent=global, ip traffic-flow, IPSec, hotspot universal client, VRF assignment, so it is up to the administrator to make sure FastTrack does not interfere with other configuration!
@@ -498,7 +515,9 @@ add chain=forward action=accept \
 
 Notice that the first rule marks established/related connections as fast-tracked, the second rule is still required to accept packets belonging to those connections. The reason for this is that, as was mentioned earlier, some random packets from fast-tracked connections are still sent through the slow pathway and only UDP and TCP are fast-tracked, but we still want to accept packets for other protocols.
 
-![WinBox Filter Rules list with the dynamic rule "special dummy rule to show fasttrack counters" above the fasttrack-connection rule and the accept rule](./img/packet-flow-in-routeros-33.webp)![WinBox Mangle list with three dynamic dummy rules for fasttrack counters, in the prerouting, forward and postrouting chains](./img/packet-flow-in-routeros-34.webp)
+![WinBox Filter Rules list with the dynamic rule "special dummy rule to show fasttrack counters" above the fasttrack-connection rule and the accept rule](./img/packet-flow-in-routeros-33.webp)
+
+![WinBox Mangle list with three dynamic dummy rules for fasttrack counters, in the prerouting, forward and postrouting chains](./img/packet-flow-in-routeros-34.webp)
 
 After adding the "FastTrack" rule, a special dummy rule appeared at the top of the list. This is not an actual rule, it is for visual information showing that some of the traffic is traveling FastPath and will not reach other firewall rules.
 

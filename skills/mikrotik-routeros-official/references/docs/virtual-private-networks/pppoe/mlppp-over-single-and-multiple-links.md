@@ -37,7 +37,15 @@ A PPPoE client can use several physical links to one provider as a single connec
 
 RouterOS supports this as a client only. A RouterOS PPPoE server does not join several links.
 
-![A router is connected to the internet provider with two links](./img/mlppp-over-single-and-multiple-links-01.webp)
+In this example the router has two links to the provider, on ether1 and ether2. The PPPoE client pppoe-out1 uses both as one connection:
+
+```mermaid
+graph LR
+    lan["LAN"] --- r["RouterPPPoE client pppoe-out1over ether1 and ether2"]
+    r ---|"ether1, link 1"| isp["ProviderPPPoE serverwith MLPPP"]
+    r ---|"ether2, link 2"| isp
+    isp --- net(("Internet"))
+```
 
 Name all the interfaces in `interface` of the client:
 

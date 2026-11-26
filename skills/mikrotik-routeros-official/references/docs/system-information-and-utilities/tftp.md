@@ -30,9 +30,9 @@ To configure a rule in WinBox, open **IP > TFTP** and select **New**:
 2. Set **Req. Filename** to the requested-name pattern and **Real Filename** to the file or folder on the router. For the folder example, set **Real Filename** to `tftp` and use the pattern from the command.
 3. Leave **Allow** and **Read Only** selected to serve files without accepting uploads. Review the address restriction and pattern before selecting **OK**, which creates the enabled rule.
 
-![WinBox new TFTP rule with address, filename, and access settings](./img/tftp-winbox.webp)
+![WinBox TFTP rule for 192.168.88.0/24 with the Req. Filename pattern, Real Filename tftp, Allow and Read Only](./img/tftp-winbox.webp)
 
-The screenshot shows the blank new-rule dialog. Fill in the restrictions before saving it; an unrestricted rule can expose router files. Use **Files** to upload the files you intend to serve.
+Fill in the restrictions before saving a rule. An unrestricted rule can expose router files. Use **Files** to upload the files you intend to serve.
 
 To give every client the same file whatever it asks for, set `req-filename=".*"` and a file as `real-filename`. Use this only for clients that fetch a single file; a boot loader that fetches more files after the first gets the same file again:
 

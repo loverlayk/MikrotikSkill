@@ -45,10 +45,10 @@ The default `aggregated-size` of 1500 bytes is the size that packing tries to re
 
 In WinBox, open **IP > Packing** and select **New**:
 
-1. Choose the link interface in **Interface**, such as `ether1` on Router-A. The screenshot shows a new rule before the interface is selected.
+1. Choose the link interface in **Interface**, such as `ether1` on Router-A.
 2. Set **Packing**, **Unpacking**, and **Aggregated Size** to match the traffic direction and the settings on the other router. For Router-A in the example, use `simple`, `none`, and `1500`, then select **OK**.
 
-![WinBox new IP Packing rule](./img/ip-packing-winbox.webp)
+![WinBox IP Packing rule on ether1 with Packing simple, Unpacking none and Aggregated Size 1500](./img/ip-packing-winbox.webp)
 
 ## Check that packing works
 

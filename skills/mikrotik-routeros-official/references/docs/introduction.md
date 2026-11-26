@@ -41,7 +41,20 @@ Two separate sections track how things change over time:
 - **[Docs Changes](/changelog)** — dated summaries of what changed in the manual, with links to the affected pages. Check here to see what was added, corrected, or reorganized since your last visit.
 - **[Product news](/blog)** — MikroTik product announcements and newsletters.
 
-## Reporting mistakes and suggesting improvements
+## Getting support
+
+MikroTik handles help requests in a set order, from self-service resources to a ticket with the support team. Work through the steps until the problem is solved.
+
+1. **Contact the seller.** If you did not buy the device directly from MikroTik, ask your distributor first. The distributor provides support and handles warranty claims for the hardware it sells.
+2. **Check the documentation.** Most questions about a menu, a property, or a working configuration are already answered in this manual, including the [CLI Reference](./cli-reference/) and the configuration examples in each topic section.
+3. **Search the community.** The [MikroTik forum](https://forum.mikrotik.com/) often describes the same problem and its solution.
+4. **Update RouterOS.** Reproduce the problem on the latest RouterOS version before you open a ticket. The issue may already be corrected.
+5. **Describe the setup and capture diagnostics.** Write a short description of the network setup and the steps to reproduce the problem. Create a [support output file](./getting-started/supout-rif) (`supout.rif`) while the problem is present. The file holds the configuration, logs, process state, and crash data the support team needs.
+6. **Submit the request.** Open a ticket in the [MikroTik support system](https://help.mikrotik.com/servicedesk/servicedesk), or send the description and the `supout.rif` to [support@mikrotik.com](mailto:support@mikrotik.com). Sign up for a support system account to keep a history of your requests. If you have already exchanged email with support, use the password recovery on the login page to claim the account.
+
+[MikroTik Certified Consultants](https://mikrotik.com/consultants) provide immediate personal help with design and troubleshooting. They are independent specialists, not MikroTik employees, and their services are paid.
+
+For a suspected hardware fault, run the checks in [Try before RMA](./hardware/try-before-rma) first. If the device still fails, start a warranty claim through your seller or the RMA system in your [mikrotik.com](https://mikrotik.com) account, and send the `supout.rif` with the request. Report security vulnerabilities through `security@mikrotik.com`, not the ordinary support flow.
 
 If you find an error, an outdated instruction, or a gap in a page, tell us. Send an email to [support@mikrotik.com](mailto:support@mikrotik.com) with the address of the page and a short description of the problem. Include the exact wording you expected to see when you can, because it makes the correction faster. Clear reports about a single page are the most effective way to improve the manual for everyone.
 

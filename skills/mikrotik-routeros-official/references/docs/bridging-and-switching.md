@@ -6,7 +6,7 @@
 
 ---
 
-![Bridge diagram](./img/index-01.webp)
+![Station A on LAN 1 and Station B on LAN 2, joined by a bridge device whose bridge connects MAC 1 and MAC 2 below the IP layer](./img/index-01.webp)
 
 Ethernet-like networks (Ethernet, Ethernet over IP, IEEE 802.11 in ap-bridge or bridge mode, WDS, VLAN) can be connected together using MAC bridges. The bridge feature allows the interconnection of hosts connected to separate LANs (using EoIP, geographically distributed networks can be bridged as well if any kind of IP network interconnection exists between them) as if they were attached to a single LAN. As bridges are transparent, they do not appear in the traceroute list, and no utility can make a distinction between a host working in one LAN and a host working in another LAN if these LANs are bridged. However, depending on the way the LANs are interconnected, latency and data rate between hosts may vary.
 
@@ -639,7 +639,7 @@ Columns: GROUP, VID, ON-PORTS, BRIDGE
 
 It is possible to switch multiple ports together if a device has a built-in switch chip. While a bridge is a software feature that will consume CPU's resources, the bridge hardware offloading will allow you to use the built-in switch chip to forward packets at wire speed. This allows you to achieve higher throughput if configured correctly.
 
-![HWoffloading_diagram](./img/index-02.webp)
+![RouterBOARD with ether1-ether5 connected to the switch logic, and routing, bridging, firewall and QoS in the CPU above it](./img/index-02.webp)
 
 A packet that is received by one of the ports always passes through the switch logic first. Switch logic decides which ports the packet should be going to - usually based on the destination MAC address. Hardware-forwarded packets will not be visible to RouterOS (only statistics will show that a packet has passed through). This is because the packet was already processed by the switch chip and never reached the CPU.
 
@@ -925,7 +925,7 @@ Flags: X - disabled, I - invalid, D - dynamic, L - local, E - external
 
 This section demonstrates how to configure a basic VLAN setup with one trunk port and multiple access ports. The trunk port (ether2) carries tagged VLAN traffic between switches or to a router, while access ports (ether6, ether7, ether8) connect to end devices and use untagged VLAN traffic.
 
-![access_ports](./img/index-03.webp)
+![Switch with trunk port ether2 carrying VLAN 200, 300 and 400 tagged, and access ports ether6, ether7 and ether8 untagged in VLAN 200, 300 and 400](./img/index-03.webp)
 
 #### Step 1: Create the Bridge Interface
 
@@ -977,7 +977,7 @@ As an optional security measure, you can set the bridge to reject untagged traff
 
 ### VLAN Example - Trunk and Hybrid Ports
 
-![hybrid_ports](./img/index-04.webp)
+![Switch with trunk port ether2 carrying VLAN 200, 300 and 400 tagged, and hybrid ports ether6, ether7 and ether8, each untagged in one VLAN and tagged in the other two](./img/index-04.webp)
 
 Create a bridge with disabled `vlan-filtering` to avoid losing access to the router before VLANs are completely configured. If you need management access to the bridge, see the [Management access configuration](index.md#management-access-configuration) section.
 
@@ -1023,7 +1023,7 @@ You don't have to add access ports as untagged ports, because they will be added
 
 ### VLAN Example - InterVLAN Routing by Bridge
 
-![vlan_routing](./img/index-05.webp)
+![Switch with access ports ether6, ether7 and ether8 untagged in VLAN 200, 300 and 400, and bridge1 tagged in all three VLANs with the addresses 20.0.0.1/24, 30.0.0.1/24 and 40.0.0.1/24](./img/index-05.webp)
 
 Create a bridge with disabled `vlan-filtering` to avoid losing access to the router before VLANs are completely configured.  If you need management access to the bridge, see the [Management access configuration](index.md#management-access-configuration) section.
 
@@ -1207,7 +1207,7 @@ If the connection to the router/switch through an IP address is not required, th
 
 Since RouterOS v6.43 the RouterOS bridge is IEEE 802.1ad compliant and it is possible to filter VLAN IDs based on Service VLAN ID (0x88a8) rather than Customer VLAN ID (0x8100). The same principles can be applied as with IEEE 802.1Q VLAN filtering (the same setup examples can be used). Below is a topology for a common **Provider bridge**:
 
-![Provider_bridge](./img/index-06.webp)
+![SW1 and SW2 connected on ether3 with SVID 200 and SVID 300, R1 and R3 on ether1 in SVID 200, R2 and R4 on ether2 in SVID 300](./img/index-06.webp)
 
 In this example, **R1**, **R2**, **R3,** and **R4** might be sending any VLAN tagged traffic by 802.1Q (CVID), but **SW1** and **SW2** need to isolate traffic between routers in a way that **R1** is able to communicate only with **R3**, and **R2** is only able to communicate with **R4**. To do so, you can tag all ingress traffic with an SVID and only allow these VLANs on certain ports. Start by enabling the service tag 0x88a8, introduced by `802.1ad`, on the bridge. Use these commands on **SW1** and **SW2**:
 
@@ -1261,7 +1261,7 @@ Devices with switch chip Marvell-98DX3257 (e.g. CRS354 series) do not support VL
 
 Since RouterOS v6.43 it is possible to forcefully add a new VLAN tag over any existing VLAN tags. This feature can be used to achieve a CVID stacking setup, where a CVID (0x8100) tag is added before an existing CVID tag. This type of setup is very similar to the Provider bridge setup. To achieve the same setup but with multiple CVID tags (CVID stacking) we can use the same topology:
 
-![Tag_stacking](./img/index-07.webp)
+![SW1 and SW2 connected on ether3 with CVID 200 and CVID 300, R1 and R3 on ether1 in CVID 200, R2 and R4 on ether2 in CVID 300](./img/index-07.webp)
 
 In this example **R1**, **R2**, **R3,** and **R4** might be sending any VLAN tagged traffic, it can be 802.1ad, 802.1Q or any other type of traffic, but **SW1** and **SW2** need to isolate traffic between routers in a way that **R1** is able to communicate only with **R3**, and **R2** is only able to communicate with **R4**. To do so, you can tag all ingress traffic with a new CVID tag and only allow these VLANs on certain ports. Start by selecting the proper EtherType, use these commands on **SW1** and **SW2**:
 
@@ -1320,7 +1320,7 @@ As noted before, MVRP is only active on ports that are forwarding. In the case o
 
 The point-to-point ports speed up the process of registration (or leaving). Manually configuring `point-to-point=yes` can be advantageous for non-Ethernet interfaces.
 
-![MVRP](./img/index-08.webp)
+![MVRP declarations (D) and registrations (R) between endpoints A to D and bridges X and Y](./img/index-08.webp)
 
 #### Property Reference
 
@@ -1462,7 +1462,7 @@ DHCP Snooping and DHCP Option 82 are supported by bridge. The DHCP Snooping is a
 
 By default, DHCP snooping applies to all VLANs of the bridge. When `vlan-filtering` is enabled, the `dhcp-snooping-vlan-ids` property limits it to the listed VLAN IDs. DHCP messages in other VLANs are forwarded without snooping, including DHCP server messages received on untrusted ports.
 
-![Dhcp_snooping](./img/index-09.webp)
+![DHCP snooping: SW1 and SW2 add option 82 and forward the DHCP Offer from the server on trusted ports, SW2 drops the Offer of a rogue DHCP server on untrusted ether3](./img/index-09.webp)
 
 In this example, SW1 and SW2 are DHCP Snooping and Option 82-enabled devices. Both switches carry client traffic in VLAN 10.
 
@@ -1573,10 +1573,6 @@ To exempt a single access port from IP Source Guard while still rejecting DHCP s
 IP Source Guard blocks RouterOS MAC access features on untrusted ports. When you enable it, MAC Telnet, MAC WinBox and MAC ping through the bridge stop working, because their packets carry source address `0.0.0.0` and do not match a DHCP snooping binding entry.
 :::
 
-:::danger
-The DHCP snooping binding table is cleared whenever the bridge interface configuration is changed, including enabling the `arp-inspection` or `ip-source-guard` features. As a result, IPv4 and ARP traffic on untrusted ports is interrupted until clients obtain or renew their DHCP leases. To repopulate the binding table more quickly, disable and re-enable the untrusted Ethernet interfaces or reboot the switch.
-:::
-
 Print the bridge host table to verify that DHCP bindings are being learned:
 
 ```ros
@@ -1631,13 +1627,25 @@ IPv6 allows a more granular approach as well as flexibility with the DHCPv6 Rela
 
 The RA guard feature is intended for discarding IPv6 packets containing router advertisement (RA) messages arriving on bridge ports specified by the user as untrusted ones, thereby allowing one to prevent potential rogue RA message-based attacks or accidental network misconfiguration. When enabled, it is possible to set each bridge port either as trusted or untrusted (by default all the bridge ports are set as RA untrusted).
 
-Here are the network scheme and core principle behind IPv6 RA Guard (Router Advertisement Guard).
+In this example, the gateway router is connected to ether1 of an access switch, and hosts are connected to ether2-ether4. Only ether1 is trusted. If a rogue router or an attacker on ether4 sends RAs, the switch drops them, and the hosts keep the gateway router as their IPv6 gateway:
 
-![RAguard](./img/index-10.webp)
+```mermaid
+graph TB
+    gw["Gateway routersends the valid RAs"] ---|"ether1, trusted-ra=yesRAs are forwarded"| sw["Access switchbridge1 with ra-guard=yes"]
+    sw ---|"ether2, untrusted"| h1["Host PC 1"]
+    sw ---|"ether3, untrusted"| h2["Host PC 2"]
+    sw ---|"ether4, untrustedRAs are dropped"| rogue["Rogue routersends RAs"]
+```
 
-|  |
-| :-- |
-| `#Layer 2 Access Switch - enabling RA guard on the main bridge``/interface/bridge``add name=bridge``/interface/bridge``set [find where name="bridge"] ra-guard=yes``/interface/bridge/port``add bridge=bridge interface=etherUplink Trusted RA=yes``add bridge=bridge interface=etherX``add bridge=bridge interface=etherY``add bridge=bridge interface=etherZ` |
+Enable RA guard on the bridge and mark the uplink port to the gateway router as trusted:
+
+```ros
+/interface/bridge/add name=bridge1 ra-guard=yes
+/interface/bridge/port/add bridge=bridge1 interface=ether1 trusted-ra=yes
+/interface/bridge/port/add bridge=bridge1 interface=ether2
+/interface/bridge/port/add bridge=bridge1 interface=ether3
+/interface/bridge/port/add bridge=bridge1 interface=ether4
+```
 
 ### The Problem: Why is this needed?
 
@@ -1648,8 +1656,6 @@ Router Advertisements (Type 134): Routers broadcast these messages to tell hosts
 The Threat: If a user accidentally connects a consumer router (like a home Wi-Fi router) or a malicious actor launches a tool (like `Rogue RA`) on an access port, that device will start broadcasting RAs.
 
 The Result: Other hosts on the network will auto-configure their IPv6 addresses based on the rogue device and set the rogue device as their default gateway. This causes a Man-in-the-Middle attack or a complete denial of service.
-
-Here is the network scheme and the core principle behind IPv6 RA Guard (Router Advertisement Guard).
 
 ### The Core Principle: "Trust vs. Untrust"
 

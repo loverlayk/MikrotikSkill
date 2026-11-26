@@ -226,7 +226,7 @@ The server can end a session with a Disconnect-Request and change a running sess
 /radius/incoming/set accept=yes
 ```
 
-The router listens on UDP port 3799; `port` changes it, and `vrf` selects the VRF in which the router listens. The server signs the request with the shared secret of its `/radius` entry.
+The router listens on UDP port 3799; `port` changes it, and `vrf` selects the VRF in which the router listens. The router checks a request with the shared secret of the `/radius` entry whose address is the source address of the request. It does not answer requests from other addresses.
 
 The default firewall drops these requests when the server is on the WAN side. Accept the port from the address of the server, before the default drop rule:
 
@@ -278,10 +278,14 @@ Received Disconnect-ACK Id 18 from 192.0.2.1:3799 to 192.0.2.10:34758 length 38
 
 - A PPP session is found by `User-Name` or by `Acct-Session-Id`.
 - A HotSpot session is found by `Framed-IP-Address`, the address of the device.
+- A DHCP lease is found by `Acct-Session-Id`.
+- The router login (`/user/aaa`) does not support these requests. The router answers with CoA-NAK or Disconnect-NAK.
 - When no session matches, the router answers with CoA-NAK or Disconnect-NAK.
 - The router does not answer a request with a wrong secret. `/radius/incoming/monitor` counts it in `bad-requests`.
 
 RouterOS doesn't support POD (Packet of Disconnect), an older way to end a session.
+
+[User Manager](user-manager) sends these requests itself, for example when the plan of a connected user changes.
 
 ## Encrypt the connection with RadSec
 
@@ -326,17 +330,20 @@ When the server is [User Manager](user-manager) on another router, set the serve
 
 ```ros
 [admin@MikroTik] > /radius/monitor [find address=192.0.2.10] once
-           pending: 0
-          requests: 3
-           accepts: 3
-           rejects: 0
-           resends: 0
-          timeouts: 0
-       bad-replies: 0
-  last-request-rtt: 10ms
+               pending: 0
+              requests: 3
+               accepts: 1
+               rejects: 0
+            challenges: 0
+  accounting-responses: 2
+         other-replies: 0
+               resends: 0
+              timeouts: 0
+           bad-replies: 0
+      last-request-rtt: 10ms
 ```
 
-- `accepts` counts the accepted logins and the accounting answers.
+- `accepts` counts the accepted logins, and `accounting-responses` counts the answers to accounting requests.
 - `rejects` counts the logins that the server refused.
 - `resends` and `timeouts` count requests without an answer.
 - `bad-replies` counts answers that failed the check of the shared secret or of the Message-Authenticator.
@@ -371,6 +378,10 @@ An entry is used for a request when all of these match:
 - `domain` is empty or equals the domain of the user name. The domain is the part before `\` or after `@`.
 
 A user who logs in as `EXAMPLE\alice` is sent to the server as `alice`, with `EXAMPLE` in the MS-CHAP-Domain attribute. A user who logs in as `alice@example.org` is sent with the complete name, and `example.org` in MS-CHAP-Domain.
+
+Put the entries with a `domain` before the entries with an empty `domain`. When the server of the first matching entry refuses the user, the router does not ask the next entry. [User Manager](user-manager) has an example that sends the users of a partner realm to the server of the partner.
+
+A HotSpot server profile with `radius-default-domain` sends its users to the entry with the same `domain`. The user name is sent without the domain, and the domain is in MS-CHAP-Domain.
 
 `realm` sets the Mikrotik-Realm attribute in the Access-Requests of the entry. Without `realm`, the attribute has the domain of the user name, and it is not sent when the name has no domain.
 

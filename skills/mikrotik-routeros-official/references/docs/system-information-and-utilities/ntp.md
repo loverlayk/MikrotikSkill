@@ -63,7 +63,7 @@ In WinBox, open **System > NTP Server**:
 1. Select **Enabled** and select **OK** to allow clients to query the router's time. Configure the NTP client separately so the router has a synchronized source.
 2. Review **Use Local Clock** and **Local Clock Stratum** before enabling a fallback to the router's unsynchronized clock. Leave **Use Local Clock** cleared when you require an external time source.
 
-![WinBox NTP Server dialog with local clock fallback settings](./img/ntp-server-winbox.webp)
+![WinBox NTP Server dialog with Enabled selected and the local clock fallback settings](./img/ntp-server-winbox.webp)
 
 The server then distributes the router's own synchronized time. With `broadcast=yes`, the time is additionally sent to the addresses in `broadcast-addresses`; `multicast=yes` distributes it over multicast; `manycast=yes` takes part in manycast discovery.
 

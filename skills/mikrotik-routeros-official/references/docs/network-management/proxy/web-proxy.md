@@ -180,7 +180,20 @@ This creates `webproxy/error.html`. Edit the file or replace it with your own HT
 
 The proxy stores the plain HTTP content it fetches and sends it to the next client that requests the same URL, without fetching it from the server again. The cache is on by default when the proxy runs, and it is in RAM.
 
-![Without a cached copy, the proxy fetches the file from the web server and sends it to the user; with a cached copy, it answers the user from the cache](./img/web-proxy-01.webp)
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant P as Web proxy
+    participant S as Web server
+    Note over P: No cached copy
+    U->>P: Request
+    P->>S: Request
+    S->>P: Response
+    P->>U: Response, stored in the cache
+    Note over P: Cached copy
+    U->>P: Request
+    P->>U: Response from the cache
+```
 
 The proxy stores a response when all of these are true:
 

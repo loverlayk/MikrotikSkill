@@ -38,7 +38,9 @@ The client will try to download two 4MB (32Mb) blocks of data, the first downloa
 
 ### Burst-time=16s
 
-![Actual rate and average rate of the first download, seconds 0 to 15, with burst-time=16s](./img/queue-burst-01.webp)![Actual rate and average rate of the second download, seconds 16 to 31, with burst-time=16s](./img/queue-burst-02.webp)
+The chart is drawn from the values in the table below.
+
+![Actual rate and average rate of both downloads with burst-time=16s: 4 Mbit/s until second 6 and 2 Mbit/s until second 10, then 2 Mbit/s from second 17, 4 Mbit/s from second 19 to 22 and 2 Mbit/s until second 28. The average rate rises to 2 Mbit/s and falls below the 1500 kbit/s threshold at second 19.](./img/queue-burst-16s.svg)
 
 As we can see as soon as the client requested bandwidth it was able to get 4Mbps burst for 6 seconds. This is the longest possible burst with given values *(longest-burst-time = burst-threshold \* burst-time / burst-limit)*. As soon as the burst runs out, the rest of the data will be downloaded with 2Mbps. This way, a block of data was downloaded in 10 seconds - without burst, it would take 16 seconds. Burst has 7 seconds to recharge before the next download will start.
 
@@ -83,7 +85,9 @@ The average rate is calculated every 1/16 of burst time so in this case 1s.
 
 ### Burst-time=8s
 
-![Actual rate and average rate of the first download, seconds 0 to 15, with burst-time=8s](./img/queue-burst-03.webp)![Actual rate and average rate of the second download, seconds 16 to 31, with burst-time=8s](./img/queue-burst-04.webp)
+The chart is drawn from the values in the table below.
+
+![Actual rate and average rate of both downloads with burst-time=8s: 4 Mbit/s for the first 3 seconds of the first download and from second 17.5 to 19 of the second download, 2 Mbit/s for the rest of each download](./img/queue-burst-8s.svg)
 
 If we decrease burst-time to 8 seconds - we are able to see that in this case, bursts are only at the beginning of downloads. The average rate is calculated every 1/16th of burst time, so in this case every 0.5 seconds.
 

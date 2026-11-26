@@ -55,7 +55,12 @@ Be aware of the text editor's treatment of CR/LF characters and test that the co
 - Run FlashFig.
 - Prepare *Config* and/or *Mode* script **.rsc** file/s. *Config* and/or *Mode* script file is a [regular/import file](../getting-started/configuration-management#import-a-configuration), it accepts valid MikroTik RouterOS CLI commands. You can create a .rsc file with any plain-text editor, such as Notepad, Notepad++ or TextEdit in plain-text mode. Word processors such as Microsoft Word add formatting that RouterOS cannot read.
 
-![Notepad with a config.rsc file that adds a DHCP client on ether1 and sets the system identity](img/editor_1.png)
+For example, a `config.rsc` file that adds a DHCP client on ether1 and sets the system identity:
+
+```ros
+/ip/dhcp-client/add interface=ether1
+/system/identity/set name="Router"
+```
 
 - Assign **Boot Client Address**, which should be an address within *the same subnet as that configured on the computer's Ethernet interface*.
 

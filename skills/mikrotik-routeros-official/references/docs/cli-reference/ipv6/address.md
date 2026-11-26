@@ -36,7 +36,14 @@ Specify how to acquire prefix from pool, if `from-pool` parameter is set.
 <ArgTableRow arg="eui-64" typ="bool">Whether to calculate EUI-64 address and use it as last 64 bits of the IPv6 address.</ArgTableRow>
 <ArgTableRow arg="advertise" typ="bool">Whether to enable stateless address configuration. The prefix of that address is automatically advertised three times to hosts using ICMPv6 protocol. The option is set by default for addresses with prefix length 64. If address is removed or changed, then old prefix will be deprecated by automatically advertising the old prefix with lifetime set to `0s` three times to hosts using ICMPv6 protocol.</ArgTableRow>
 <ArgTableRow arg="no-dad" typ="bool">If enabled (yes) - disables Duplicate Address Detection (DAD) for IPv6 addresses on an interface. This can be useful in scenarios where you want to assign static IPv6 addresses to devices and avoid the delay caused by DAD.</ArgTableRow>
-<ArgTableRow arg="auto-link-local" typ="bool">If you want to manually add a link‑local address to an interface, this setting lets you override the automatically generated IPv6 link‑local address.</ArgTableRow>
+<ArgTableRow arg="auto-link-local" typ="bool">
+Controls whether the automatically generated link-local address remains on the interface when a manual link-local address is added. Default: `yes`.
+
+- `yes` - Add the manual link-local address in addition to the automatically generated one.
+- `no` - Use the manual link-local address instead of the automatically generated one. Removing the manual address restores the automatic one.
+
+The property is shown on every IPv6 address, but only manual link-local (`fe80::/64`) addresses use it. Setting `no` on a global or unique local address fails with "selected address is not link local".
+</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

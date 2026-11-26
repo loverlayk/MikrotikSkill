@@ -37,9 +37,9 @@ The first test runs about 3 seconds after the probe is added or enabled (the def
  2026-10-09 09:57:10 script,info Ping to 8.8.8.8 successful
 ```
 
-The same probe in WinBox (**Tools > Netwatch**):
+The same probe in WinBox (**Tools > Netwatch**). The scripts are on the **Up** and **Down** tabs of the probe:
 
-![Simple Netwatch probe for 8.8.8.8 with up and down scripts in WinBox](img/netwatch_01_simple_probe_example.webp)
+![Up tab of the simple Netwatch probe for 8.8.8.8 in WinBox with the up script](img/netwatch_01_simple_probe_example.webp)
 
 ## ICMP probe
 
@@ -77,7 +77,7 @@ Thresholds have defaults even when you set none (for example `thr-avg=100ms`), s
 
 The same probe in WinBox:
 
-![ICMP Netwatch probe with thr-avg threshold in WinBox](img/netwatch_02_ICMP_probe_example.webp)
+![Host tab of the ICMP Netwatch probe for 8.8.8.8 in WinBox with Thr. Avg set to 10 ms](img/netwatch_02_ICMP_probe_example.webp)
 
 ## TCP-conn probe
 
@@ -123,7 +123,7 @@ The probe goes down because mikrotik.com answers a redirect (302), which is outs
 
 The same probe in WinBox:
 
-![HTTP-GET Netwatch probe in WinBox](img/netwatch_04_httpget_probe_example.webp)
+![Up tab of the HTTP-GET Netwatch probe for 159.148.172.205 in WinBox with the up script](img/netwatch_04_httpget_probe_example.webp)
 
 ## HTTPS-GET probe
 
