@@ -141,7 +141,7 @@ An IKEv2 server can pass the EAP authentication of its clients to RADIUS. [IPsec
 On the server, Framed-IP-Address gives the client a fixed address in place of one from the pool:
 
 ```text
-bob Cleartext-Password := "Example-pass-3"
+mario Cleartext-Password := "Example-pass-3"
 	Framed-IP-Address = 10.10.10.50
 ```
 
@@ -151,8 +151,8 @@ A client that logs in with EAP-MSCHAPv2 is listed with its user name and the add
 [admin@MikroTik] > /ip/ipsec/active-peers/print
 Flags: R - RESPONDER
 Columns: ID, STATE, UPTIME, PH2-TOTAL, REMOTE-ADDRESS, DYNAMIC-ADDRESS
-#   ID   STATE        UPTIME  PH2-TOTAL  REMOTE-ADDRESS  DYNAMIC-ADDRESS
-0 R bob  established  9s              1  192.0.2.50      10.10.10.50
+#   ID     STATE        UPTIME  PH2-TOTAL  REMOTE-ADDRESS  DYNAMIC-ADDRESS
+0 R mario  established  9s              1  192.0.2.50      10.10.10.50
 ```
 
 ## Authenticate Dot1X clients
@@ -226,7 +226,7 @@ The server can end a session with a Disconnect-Request and change a running sess
 /radius/incoming/set accept=yes
 ```
 
-The router listens on UDP port 3799; `port` changes it, and `vrf` selects the VRF in which the router listens. The router checks a request with the shared secret of the `/radius` entry whose address is the source address of the request. It does not answer requests from other addresses.
+The router listens on UDP port 3799; `port` changes it, and `vrf` selects the VRF in which the router listens. The router checks a request with the shared secret of the first `/radius` entry whose address is the source address of the request. It does not answer requests from other addresses. A server with an entry can change and disconnect every session of the router, also the sessions of users that another server authenticated.
 
 The default firewall drops these requests when the server is on the WAN side. Accept the port from the address of the server, before the default drop rule:
 
@@ -276,16 +276,111 @@ Received Disconnect-ACK Id 18 from 192.0.2.1:3799 to 192.0.2.10:34758 length 38
 	Message-Authenticator = 0x15c3ee3b3b79a6f8b4fd44b83b46bb1a
 ```
 
-- A PPP session is found by `User-Name` or by `Acct-Session-Id`.
+- A PPP session is found by `User-Name` or by `Acct-Session-Id`. When the user has several sessions, a request with only `User-Name` changes or disconnects one of them. Send `Acct-Session-Id` to select the session.
 - A HotSpot session is found by `Framed-IP-Address`, the address of the device.
 - A DHCP lease is found by `Acct-Session-Id`.
 - The router login (`/user/aaa`) does not support these requests. The router answers with CoA-NAK or Disconnect-NAK.
 - When no session matches, the router answers with CoA-NAK or Disconnect-NAK.
 - The router does not answer a request with a wrong secret. `/radius/incoming/monitor` counts it in `bad-requests`.
 
-RouterOS doesn't support POD (Packet of Disconnect), an older way to end a session.
+Some vendors call the Disconnect-Request a Packet of Disconnect (PoD).
+
+With RadSec, the requests come inside the TLS connection to the server, not to `port` of `/radius/incoming`.
 
 [User Manager](user-manager) sends these requests itself, for example when the plan of a connected user changes.
+
+### Send the requests from FreeRADIUS
+
+FreeRADIUS can send these requests itself when it processes the accounting of the router. This example slows down a PPP user who downloads more than 3 GB in a session, and disconnects the session of a PPP user whose account is blocked. The requests find the session by User-Name and Acct-Session-Id, as PPP sessions are found. The router must send interim updates: the users get `Acct-Interim-Interval` from the server, or set `interim-update` on the router. The router entry uses `protocol=udp`.
+
+The users of the example:
+
+```text
+mario Cleartext-Password := "Example-pass-4"
+	Mikrotik-Rate-Limit = "10M/20M",
+	Acct-Interim-Interval = 60
+
+luigi Auth-Type := Reject
+	Reply-Message = "Account blocked"
+```
+
+Put these entries at the top of the `users` file (`mods-config/files/authorize`), before the `DEFAULT` entries.
+
+Add the router as a CoA server, for example in the file `sites-enabled/coa-routers`. `ipaddr` is the address of the router that sends the accounting, and FreeRADIUS sends the requests to this server. The secret is the secret of the `/radius` entry on the router:
+
+```text
+home_server router1-coa {
+	type = coa
+	ipaddr = 192.0.2.1
+	port = 3799
+	secret = Example-secret-1
+	coa {
+		irt = 2
+		mrt = 16
+		mrc = 5
+		mrd = 30
+	}
+}
+```
+
+The router answers only requests that come from the address of its `/radius` entry. When the server has several addresses, add `src_ipaddr = 192.0.2.10` to the `home_server`.
+
+Add the policies in `policy.d/mikrotik-coa`:
+
+```text
+mikrotik_fair_use {
+	if (&Acct-Status-Type == Interim-Update && &Acct-Output-Octets > 3000000000) {
+		update coa {
+			&User-Name := &User-Name
+			&Acct-Session-Id := &Acct-Session-Id
+			&Mikrotik-Rate-Limit := "1M/2M"
+		}
+	}
+}
+mikrotik_blocked {
+	if (&Acct-Status-Type == Interim-Update && &User-Name == "luigi") {
+		update disconnect {
+			&User-Name := &User-Name
+			&Acct-Session-Id := &Acct-Session-Id
+		}
+	}
+}
+```
+
+Call them at the start of the `accounting` section in `sites-enabled/default`, and restart FreeRADIUS:
+
+```text
+accounting {
+	mikrotik_fair_use
+	mikrotik_blocked
+	...
+```
+
+At the first interim update over the limit, the router gets the CoA and changes the queue of the user. The user stays connected:
+
+```ros
+[admin@MikroTik] > /queue/simple/print where name="<pppoe-mario>"
+Flags: D - DYNAMIC
+0 D name="<pppoe-mario>" target=<pppoe-mario> parent=none packet-marks=""
+    priority=8/8 queue=default-small/default-small limit-at=1M/2M
+    max-limit=1M/2M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
+    bucket-size=0.1/0.1
+```
+
+The counters of the router, reset with `/radius/incoming/reset-counters` before the test:
+
+```ros
+[admin@MikroTik] > /radius/incoming/monitor once
+      requests: 1
+  bad-requests: 0
+          acks: 1
+          naks: 0
+```
+
+- `freeradius -X` shows each request and the answer of the router, for example `Received CoA-ACK`.
+- The fair use policy sends the CoA again at every interim update over the limit, and the router applies the same speed again.
+- Acct-Output-Octets restarts after 4 GiB. For higher limits, also check Acct-Output-Gigawords.
+- Block an account by adding its `Auth-Type := Reject` entry and its name in `mikrotik_blocked`. A session that is open at that time is disconnected at its next interim update, and the entry refuses the next logins. Without the entry, the client logs in again at once.
 
 ## Encrypt the connection with RadSec
 
@@ -323,6 +418,8 @@ When the server is [User Manager](user-manager) on another router, set the serve
 /user-manager/router/add name=router1 address=192.0.2.1 \
     protocol=radsec
 ```
+
+User Manager accepts the connection only when the client certificate of the router has the address of the router entry, for example `subject-alt-name=IP:192.0.2.1`. With another name, the log of User Manager has `ssl: name verification failed`, and the router shows `status="ssl: bad certificate (6)"`.
 
 ## Check and troubleshoot
 
@@ -381,9 +478,9 @@ A user who logs in as `EXAMPLE\alice` is sent to the server as `alice`, with `EX
 
 Put the entries with a `domain` before the entries with an empty `domain`. When the server of the first matching entry refuses the user, the router does not ask the next entry. [User Manager](user-manager) has an example that sends the users of a partner realm to the server of the partner.
 
-A HotSpot server profile with `radius-default-domain` sends its users to the entry with the same `domain`. The user name is sent without the domain, and the domain is in MS-CHAP-Domain.
+A HotSpot server profile with `radius-default-domain` sends all logins of the profile to the entry with the same `domain`, also names that have another domain. The name is sent as the user typed it, and the default domain is in MS-CHAP-Domain and Mikrotik-Realm.
 
-`realm` sets the Mikrotik-Realm attribute in the Access-Requests of the entry. Without `realm`, the attribute has the domain of the user name, and it is not sent when the name has no domain.
+`realm` sets the Mikrotik-Realm attribute in the Access-Requests of the entry. Without `realm`, the attribute has the domain of the user name, or the `radius-default-domain` of a HotSpot profile. It is not sent when there is no domain.
 
 `src-address` sets the source address of the packets. The same address is sent as NAS-IP-Address.
 

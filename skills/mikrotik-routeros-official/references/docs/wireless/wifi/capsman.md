@@ -158,6 +158,8 @@ The only difference between the non-MLO and MLO CAP scenarios is that an MLO CAP
 
 :::
 
+To help clients move between the access points of a CAPsMAN network, add a steering profile: see [Steering clients between access points](./configuring-steering).
+
 ### CAPsMAN - CAP VLAN configuration example
 
 In this example, we will assign VLAN10 to our main SSID, and will add VLAN20 for the guest network, ether5 from CAPsMAN is connected to CAP.

@@ -141,6 +141,79 @@ Columns: ADDRESS, MAC-ADDRESS, SERVER, STATUS, LAST-SEEN
 0 D 192.168.88.252  D4:CA:6D:11:22:33  defconf  bound   0s
 ```
 
+### Detect a rogue DHCP server
+
+A device with its own DHCP server, such as a home router someone plugs into the LAN, answers DHCP requests too. Clients that take its offer get their address, gateway and DNS servers from that device instead of from your router. A DHCP alert finds such a server: it logs DHCP replies from servers that are not on its list of valid servers, and runs a script. The alert only reports the server, it does not stop it.
+
+This example watches `ether2`, the interface your DHCP server runs on. Do not add the alert on an interface where the router is a DHCP client, as described in the Alerts section.
+
+1. Create the script the alert runs. It writes a warning to the log for each unknown server that an enabled alert lists, with the interface and the MAC address of the server:
+
+   ```ros
+   /system/script/add name=rogue-dhcp policy=read source={
+     :foreach a in=[/ip/dhcp-server/alert/find where disabled=no] do={
+       :local rogue [/ip/dhcp-server/alert/get $a unknown-server]
+       :if ([:len $rogue] > 0) do={
+         :local iface [/ip/dhcp-server/alert/get $a interface]
+         :local text ("unknown dhcp server on " . $iface . ": " \
+           . [:tostr $rogue])
+         :log warning $text
+       }
+     }
+   }
+   ```
+
+   To get an email message too, configure [email](../../system-information-and-utilities/e-mail) and add this line to the script after the `:log` line:
+
+   ```ros
+   /tool/e-mail/send to=it@example.com subject="Rogue DHCP" body=$text
+   ```
+
+2. Add the alert on `ether2`. The router's own DHCP server answers from the MAC address of `ether2`, so that address is the valid server:
+
+   ```ros
+   /ip/dhcp-server/alert/add interface=ether2 on-alert=rogue-dhcp \
+       valid-server=[/interface/ethernet/get ether2 mac-address] \
+       disabled=no
+   ```
+
+The alert sends its own DHCPDISCOVER about once a minute, so it finds a rogue server even when no client asks for an address. While the rogue server keeps answering, the alert and the script repeat after `alert-timeout` (1 hour by default).
+
+To check the alert, connect a device with a DHCP server to the network on `ether2`, for example a second router. Within about a minute, the log shows the alert with the MAC address and IP address of the unknown server, and the message of the script:
+
+```ros
+/log/print where message~"^(dhcp alert|unknown dhcp server)"
+```
+
+```text
+ 2026-11-27 07:54:03 dhcp,critical,error dhcp alert on ether2: discovered unknown dhcp server, mac 52:54:00:77:02:02, ip 10.77.0.254
+ 2026-11-27 07:54:04 script,warning unknown dhcp server on ether2: 52:54:00:77:02:02
+```
+
+The alert lists the MAC address in `unknown-server`. `valid-server` is the MAC address of `ether2`:
+
+```ros
+/ip/dhcp-server/alert/print detail
+```
+
+```text
+0  interface=ether2 valid-server=52:54:00:77:02:07 on-alert=rogue-dhcp
+   alert-timeout=1h unknown-server=52:54:00:77:02:02
+```
+
+Disconnect the test device after the check. To check again without waiting for `alert-timeout`, clear the detected servers:
+
+```ros
+/ip/dhcp-server/alert/reset-alert [find interface=ether2]
+```
+
+If the network has another legitimate DHCP server, the alert reports it too. Add its MAC address from the log line to `valid-server`, after the MAC address of `ether2`:
+
+```ros
+/ip/dhcp-server/alert/set [find interface=ether2] \
+    valid-server=52:54:00:77:02:07,52:54:00:77:02:02
+```
+
 ## Properties
 
 All properties of the DHCP server are described in the [`/ip/dhcp-server`](../../cli-reference/ip/dhcp-server/) CLI reference. The following behavior needs more explanation.

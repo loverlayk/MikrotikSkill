@@ -18,6 +18,7 @@ RouterOS has several ways to connect networks and remote users over another netw
 | Carry Ethernet frames between two sites | [EoIP](eoip), or L2TP Ether on the [L2TP](l2tp/) page |
 | Carry IPv6 over an IPv4 network | [6to4](6to4) |
 | Join a ZeroTier network | [ZeroTier](zerotier) |
+| Host your own ZeroTier network on a router | [Self-hosted ZeroTier controller](zerotier-controller) |
 
 [PPTP](pptp) is an old protocol with weak encryption. Use it only for devices that have nothing else.
 

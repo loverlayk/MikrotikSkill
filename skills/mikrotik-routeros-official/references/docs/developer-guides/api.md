@@ -261,6 +261,133 @@ Note the distinction between the tag and an argument named `tag`: the tag is an 
       - If a property appears in `.proplist` but is absent from an item, that item does not have the property value (`?name` evaluates to false for that item).
       - If `.proplist` is absent, all properties are included as requested by the `print` command, even those with slow access time (such as file contents and performance counters). Therefore, use of `.proplist` is encouraged. Omitting `.proplist` may incur a high performance penalty if the `=detail=` argument is set.
 
+### JSON replies
+
+A reply normally carries every value as a string, and a property that holds several values arrives as one comma-separated string. The console joins the values before it writes the reply, so the string keeps no boundaries between them. An array of two objects, `[{end:100},{end:40,start:77}]`, arrives as `array=end=100;end=40;start=77`, and nothing in that string says where one object ends and the next begins. The array cannot be restored from it.
+
+A request that sets `.json` receives the values as JSON types instead of strings, and a property that holds several values arrives as an array.
+
+#### Many values in one property
+
+The `policy` property of a user group holds several values. Without `.json` it arrives as one comma-separated string. The request is three words, and the reply follows:
+
+```text
+/user/group/print
+=.proplist=name,policy
+?name=read
+```
+
+```text
+!re
+=name=read
+=policy=local,telnet,ssh,reboot,read,test,winbox,password,web,sniff,sensitive,api,romon,rest-api,!ftp,!write,!policy
+!done
+```
+
+To change the reply, add a fourth word, `=.json=`, to the same request:
+
+```text
+/user/group/print
+=.proplist=name,policy
+?name=read
+=.json=
+```
+
+```text
+!re
+=.json=[{"name":"read","policy":["local","telnet","ssh","reboot","read","test","winbox","password","web","sniff","sensitive","api","romon","rest-api","!ftp","!write","!policy"]}]
+!done
+```
+
+The property is now an array, and every value in it is separate.
+
+#### Numbers instead of strings
+
+The `cpu-count` and `total-memory` properties are numbers, but a reply normally writes them as strings. `/system/resource/print` returns one record rather than a list, so the reply is a `!re` sentence with one property per line:
+
+```text
+/system/resource/print
+=.proplist=architecture-name,cpu-count,total-memory
+```
+
+```text
+!re
+=architecture-name=x86_64
+=cpu-count=2
+=total-memory=1073741824
+!done
+```
+
+Add `=.json=` to the request and the record becomes one JSON object, with the numbers no longer quoted:
+
+```text
+/system/resource/print
+=.proplist=architecture-name,cpu-count,total-memory
+=.json=
+```
+
+```text
+!re
+=.json={"architecture-name":"x86_64","cpu-count":2,"total-memory":1073741824}
+!done
+```
+
+#### One sentence for the whole result
+
+With `.json`, the whole result of a command arrives in a single `!re` sentence, not one sentence per record. A command with many records keeps that shape. On a test router, a list of 100 address list entries came back as 100 `!re` sentences without `.json`, and as one `!re` sentence holding an array of 100 entries with it.
+
+The number of records does not change the number of sentences, so a client that reads `.json` reads the property, parses it, and does not expect further `!re` sentences for the same command.
+
+#### Options
+
+`.json` takes no value. An empty string, `1`, `true` and `yes` all turn it on, and `no` leaves it off. `.json.options` takes a comma-separated list of options:
+
+| Option | Effect |
+|--------|--------|
+| `pretty` | Indents the reply with four spaces |
+| `time-as-duration` | Writes a time that otherwise arrives as a date string as a duration, `1d00:00:00` instead of `1970-01-02 00:00:00` |
+| `no-string-conversion` | Keeps a value that is held as a string a string. Without it, a value that looks like a number is written as a number |
+
+The attribute is `.json`, with a leading dot, like `.proplist`. Its option values take no prefix of any kind. The value is `pretty`, not `json.pretty` and not `.json.pretty`. Both of those are refused with the detail `invalid json options`.
+
+The console's `:serialize` command uses the other spelling for these options, `json.pretty` and `json.no-string-conversion`, so a value copied from a `:serialize` line does not work in `.json.options`. The two surfaces differ:
+
+```text
+=.json.options=pretty             works
+=.json.options=json.pretty        refused, invalid json options
+```
+
+```text
+:serialize value=$v to=json options=json.pretty     works
+:serialize value=$v to=json options=pretty          refused, syntax error
+```
+
+In the console the bare name fails as a syntax error, because the CLI parses the option list from a fixed set of names. Over the API the prefixed name parses, reaches the console, and is refused with `invalid json options`.
+
+With `pretty`, the same object arrives indented inside the one sentence:
+
+```text
+!re
+=.json={
+    "architecture-name": "x86_64",
+    "cpu-count": 2,
+    "total-memory": 1073741824
+}
+!done
+```
+
+`time-as-duration` changes a time that the console writes as a date. A DNS entry with `ttl=1d` arrives as `"ttl":"1970-01-02 00:00:00"` without the option and as `"ttl":"1d00:00:00"` with it.
+
+`no-string-conversion` matters only for a property that the console holds as a string but that looks like a number. A VLAN ID is one such value: for VLAN 100, `.json` alone writes `[100.000000]` and the option writes `["100"]`. The number of decimals depends on the value. A property that is a number already, such as `mtu`, is written as a number either way.
+
+#### Which commands convert
+
+`.json` works for a command that returns records or data: `print`, `getall`, `monitor-traffic` and `/tool/ping`. It does nothing for a command that returns its result in the `ret` property of the `!done` sentence. `/ip/firewall/address-list/add` with `.json` still answers `!done` with `=ret=` and the new item ID, and `print` with `count-only` still answers `=ret=` and a count. Such commands accept the attribute without an error, so a client must not rely on `.json` there.
+
+A command that returns one record rather than a list gives one JSON object instead of an array, as `/system/resource/print` does. `monitor-traffic` also gives one object, not an array.
+
+The [REST API](../rest-api) reaches the same console API, so the same attributes go in the request body and give the same types.
+
 ### Queries
 
 The `print` and `getall` commands accept query words that limit the set of returned sentences.

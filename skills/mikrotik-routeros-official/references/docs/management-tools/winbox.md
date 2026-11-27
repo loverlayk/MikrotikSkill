@@ -54,6 +54,56 @@ Download WinBox from the [MikroTik download page](https://mikrotik.com/download/
 Extract the ZIP archive contents into a self-contained subfolder that contains no other files. This is required for the self-update feature to work correctly and applies to the Windows and Linux versions of WinBox.
 :::
 
+## Command line
+
+WinBox v4 can be started from a shell with the connection details supplied as positional arguments. The command line is a convenience for launching the GUI, not an automation interface, and there is no headless mode.
+
+```text
+Usage: WinBox [options] connect-to username password workspace
+```
+
+The executable name depends on the platform: `WinBox.exe` on Windows, `./WinBox` on Linux, and `/Applications/WinBox.app/Contents/MacOS/WinBox` on macOS.
+
+**Options:**
+
+| Option | Description |
+| :-- | :-- |
+| `-h`, `--help` | Display help for the command line options. |
+| `--help-all` | Display help including generic Qt options. These options do not affect login. |
+| `-v`, `--version` | Display version information. |
+| `--force-update` | Update without comparing versions, so WinBox updates to the latest available version. |
+
+**Arguments:**
+
+| Argument | Description |
+| :-- | :-- |
+| `connect-to` | Address: IPv4, MAC, [IPv6], or hostname, with an optional `:port`. |
+| `username` | Login user. |
+| `password` | Password. Use `""` for an empty password. |
+| `workspace` | Workspace name. |
+
+The arguments are positional in this order: address, username, password, workspace. You can supply fewer arguments in the same order. Because the workspace is the fourth position, it can be set only when the password position is filled. Use `""` for an account with no password.
+
+When the address, username, and password are supplied, WinBox attempts the connection. When only the address is supplied, WinBox selects the device in the login interface and waits for **Connect**.
+
+Examples:
+
+```shell
+./WinBox 192.168.88.1 admin 'S3cret!pass'
+./WinBox 192.168.88.1 admin "" myworkspace
+./WinBox 192.168.88.1:8291 admin 'S3cret!pass'
+WinBox.exe 192.168.88.1 admin "S3cret!pass"
+/Applications/WinBox.app/Contents/MacOS/WinBox 192.168.88.1 admin 'S3cret!pass'
+```
+
+Quote the password when it contains characters the shell interprets, for example `$`, `!`, spaces, `?`, or `&`.
+
+:::warning
+Credentials passed on the command line appear in the shell history and in the process list. Prefer a saved entry with **with password** enabled, and protect the saved list with **Set file password**.
+:::
+
+WinBox v4 has no dedicated `--connect` or auto-login switch, and no `--romon` command-line option. The `--romon` form belongs to WinBox v3. To connect through RoMON in v4, select a **RoMON Agent** in the login interface.
+
 ## Login interface
 
 This section covers the login interface. It is the first thing you will see when launching the WinBox application. From here you can connect to the RouterOS device manually using the login section, or use saved credentials from the **Saved** tab. For more convenient discovery of devices in the L2 network connected to the PC running WinBox, the **Neighbors** tab can be used.

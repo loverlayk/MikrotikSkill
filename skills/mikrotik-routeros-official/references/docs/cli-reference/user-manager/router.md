@@ -19,5 +19,5 @@ Routers (NAS) that can send requests to User Manager.
 <ArgTableRow arg="address" typ="address (flags=46/)" mandatory="1">IPv4 or IPv6 address that the requests of the router come from.</ArgTableRow>
 <ArgTableRow arg="protocol" typ="enum (udp | radsec)">`udp` or `radsec` (RADIUS over TLS, TCP port 2083). Default: `udp`.</ArgTableRow>
 <ArgTableRow arg="shared-secret" typ="string">Shared secret. The RADIUS client of the router must have the same.</ArgTableRow>
-<ArgTableRow arg="coa-port" typ="num">UDP port of the router for disconnect and Change of Authorization requests. Default: 3799.</ArgTableRow>
+<ArgTableRow arg="coa-port" typ="num">UDP port of the router for disconnect and Change of Authorization requests. Set the `port` of `/radius/incoming` of the router. Not used with `protocol=radsec`: the requests go inside the TLS connection. Default: 3799.</ArgTableRow>
 </ArgTable>

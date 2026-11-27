@@ -13,7 +13,7 @@ User Manager is a RADIUS server that runs on RouterOS. It keeps one user databas
 
 ![PPPoE, DHCP and VPN servers, wireless access points, 802.1X switches and HotSpot routers send RADIUS requests to User Manager](./img/user-manager-01.webp)
 
-The examples use two routers. User Manager runs on the router 172.31.30.195. The router 172.31.30.25 is an L2TP server and sends its users to User Manager. A router that asks a RADIUS server is called a NAS (network access server).
+The examples use two routers. User Manager runs on the router 172.31.30.195. The router 172.31.30.25 is an L2TP and PPPoE server and sends its users to User Manager. A router that asks a RADIUS server is called a NAS (network access server).
 
 ## Add a router and a user
 
@@ -23,7 +23,7 @@ On the User Manager router, enable User Manager, add the NAS with a shared secre
 /user-manager/set enabled=yes
 /user-manager/router/add name=vpn-server address=172.31.30.25 \
     shared-secret=Radius-Secret-1
-/user-manager/user/add name=alice password=Alice-Pass-1
+/user-manager/user/add name=mario password=Mario-Pass-1
 ```
 
 On the NAS, add User Manager as the RADIUS server with the same secret and let PPP use RADIUS:
@@ -36,15 +36,31 @@ On the NAS, add User Manager as the RADIUS server with the same secret and let P
 
 - `/radius/incoming/set accept=yes` lets User Manager change and disconnect a session. User Manager needs it to enforce limits, to change plans and to close sessions. If the NAS listens on another `port` in `/radius/incoming`, set the same port in `coa-port` of the router entry.
 - `interim-update` makes the NAS send the counters of a session every minute. User Manager checks the limits when it receives the counters.
-- User Manager listens on UDP ports 1812 (authentication) and 1813 (accounting). The firewall of the User Manager router must accept them from the NAS, and the firewall of the NAS must accept UDP port 3799 from User Manager.
+- User Manager listens on UDP ports 1812 (authentication) and 1813 (accounting). The firewall of the User Manager router must accept them from the NAS, and the firewall of the NAS must accept the `port` of `/radius/incoming` (default 3799) from User Manager.
 
-When alice connects to the L2TP server, the session appears in User Manager:
+The default firewall of a home or office router drops these packets on the WAN side. Accept them before the default drop rule. On the User Manager router:
+
+```ros
+/ip/firewall/filter/add chain=input action=accept protocol=udp \
+    dst-port=1812,1813 src-address=172.31.30.25 comment="RADIUS from NAS" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+```
+
+On the NAS:
+
+```ros
+/ip/firewall/filter/add chain=input action=accept protocol=udp \
+    dst-port=3799 src-address=172.31.30.195 comment="RADIUS CoA" \
+    place-before=[find comment="defconf: drop all not coming from LAN"]
+```
+
+When mario connects to the L2TP server, the session appears in User Manager:
 
 ```ros
 [admin@MikroTik] > /user-manager/session/print detail
 Flags: A - ACTIVE
-0  A user=alice acct-session-id="81100080" nas-port-type=virtual
-     nas-ip-address=172.31.30.25 nas-identifier="cmr-remote"
+0  A user=mario acct-session-id="81100080" nas-port-type=virtual
+     nas-ip-address=172.31.30.25 nas-identifier="nas1"
      calling-station-id="172.31.30.195" user-address=10.0.0.99 status=start
      started=2026-11-19 13:25:28 uptime=0s download=0 upload=0
      last-accounting-packet=2026-11-19 13:25:28
@@ -69,14 +85,14 @@ Sessions are listed only when the NAS sends accounting. `/user-manager/router/mo
 
 User Manager can also serve the router it runs on. Add a router entry and a `/radius` entry with the address 127.0.0.1. The L2TP/IPsec example near the end of this page is a complete configuration of this kind.
 
-The connection to a NAS can be encrypted with RadSec: see [RADIUS](radius).
+The connection to a NAS can be encrypted with RadSec: see [RADIUS](radius). With RadSec, User Manager sends the change and disconnect requests inside the TLS connection, and `coa-port` is not used.
 
 ## Send RADIUS attributes to the NAS
 
 User Manager adds the attributes of a user to the Access-Accept message. The NAS applies them to the session. This user always gets the address 10.0.0.5:
 
 ```ros
-/user-manager/user/set [find name=alice] \
+/user-manager/user/set [find name=mario] \
     attributes=Framed-IP-Address:10.0.0.5
 ```
 
@@ -85,7 +101,7 @@ A user with a fixed address can have one session only, so keep `shared-users=1`.
 `/user-manager/user/monitor` shows the attributes that the user gets:
 
 ```ros
-[admin@MikroTik] > /user-manager/user/monitor [find name=alice] once
+[admin@MikroTik] > /user-manager/user/monitor [find name=mario] once
          total-uptime: 31s                                             
        total-download: 469                                             
          total-upload: 1901                                            
@@ -97,9 +113,11 @@ A user with a fixed address can have one session only, so keep `shared-users=1`.
 Several attributes are separated with commas:
 
 ```ros
-/user-manager/user/set [find name=alice] \
+/user-manager/user/set [find name=mario] \
     attributes=Mikrotik-Address-List:vpn-users,Acct-Interim-Interval:120
 ```
+
+This replaces the earlier attributes of the user.
 
 `/user-manager/attribute` has the attributes that User Manager knows, and the list of predefined attributes is at the end of this page. To send another attribute, add it with its number first:
 
@@ -117,7 +135,7 @@ A group gives the same attributes to many users and sets the authentication meth
 ```ros
 /user-manager/user/group/add name=branch outer-auths=mschap2,chap \
     attributes=Framed-Pool:branch-pool
-/user-manager/user/set [find name=alice] group=branch
+/user-manager/user/set [find name=mario] group=branch
 ```
 
 - A new group has no authentication methods. Set `outer-auths`, or the users of the group cannot log in.
@@ -138,7 +156,7 @@ The parts are:
 - A profile limitation (`/user-manager/profile-limitation`) connects a limitation to a profile for the given days and time of day.
 - A user profile (`/user-manager/user-profile`) gives a profile to a user.
 
-This example gives alice a 30-day plan with 5 Mbps upload and 10 Mbps download:
+This example gives mario a 30-day plan with 5 Mbps upload and 10 Mbps download:
 
 ```ros
 /user-manager/set use-profiles=yes
@@ -147,7 +165,7 @@ This example gives alice a 30-day plan with 5 Mbps upload and 10 Mbps download:
 /user-manager/profile/add name=home name-for-users="Home 10M" \
     validity=30d
 /user-manager/profile-limitation/add profile=home limitation=10M
-/user-manager/user-profile/add user=alice profile=home
+/user-manager/user-profile/add user=mario profile=home
 ```
 
 The `rx` values limit what the NAS receives from the user (upload), and the `tx` values limit what it sends to the user (download). User Manager sends the speed in the Mikrotik-Rate-Limit attribute, and at the next login the NAS creates a queue for the user:
@@ -155,7 +173,7 @@ The `rx` values limit what the NAS receives from the user (upload), and the `tx`
 ```ros
 [admin@MikroTik] > /queue/simple/print
 Flags: D - DYNAMIC
-0 D name="<l2tp-alice>" target=<l2tp-alice> parent=none packet-marks=""
+0 D name="<l2tp-mario>" target=<l2tp-mario> parent=none packet-marks=""
     priority=8/8 queue=default-small/default-small limit-at=5M/10M
     max-limit=5M/10M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
     bucket-size=0.1/0.1
@@ -167,7 +185,7 @@ The user profile shows the state of the plan and when it ends:
 
 ```ros
 [admin@MikroTik] > /user-manager/user-profile/print detail
-0  user=alice profile=home state=running-active end-time=2026-12-19 13:29:46
+0  user=mario profile=home state=running-active end-time=2026-12-26 08:56:06
 ```
 
 | State | Meaning |
@@ -186,13 +204,13 @@ The IPsec service of RouterOS does not apply rate limits.
 `download-limit`, `upload-limit`, `transfer-limit` (download and upload together) and `uptime-limit` set how much a user can use:
 
 ```ros
-/user-manager/limitation/set [find name=10M] transfer-limit=5M \
+/user-manager/limitation/set [find name=10M] transfer-limit=50G \
     uptime-limit=10h
 ```
 
 - The limits count all sessions of the user together, not each session.
 - User Manager checks the limits when the NAS sends the counters of a session, and when a limitation changes. The NAS must send accounting with interim updates, and it must accept disconnect requests (`/radius/incoming/set accept=yes`).
-- When a limit is reached, User Manager disconnects the session. The session has `terminate-cause=um-limits-reached`, and the next logins are refused.
+- When a limit is reached and the user has no other profile, User Manager disconnects the session. The session has `terminate-cause=um-limits-reached`, and the next logins are refused. When the user has another profile, the user stays connected and gets that profile, as the next section shows.
 - `reset-counters-interval` clears the counters of the users every hour, day, week or month, counted from `reset-counters-start-time`.
 
 ### Validity
@@ -212,7 +230,7 @@ When the validity time is over, User Manager disconnects the session and the sta
 ### Several profiles and limitations
 
 - A user can have several profiles, and uses one at a time. When the profile is over, or its limits are reached, the user gets the next one. `/user-manager/user-profile/activate-user-profile` makes a profile the active one at once.
-- To slow a user down after a traffic limit and not cut the user off, give the user two profiles: the first with the limit, the second with a lower speed and no limit. When the limit is reached the session is disconnected, and the next login uses the second profile.
+- To slow a user down after a traffic limit and not cut the user off, give the user two profiles: the first with the limit, the second with a lower speed and no limit. When the limit is reached, User Manager makes the second profile active and sends its speed to the NAS in a CoA request. The user stays connected.
 - A profile can have several limitations for different days and hours. This gives the full speed during the day and a lower speed at night:
 
 ```ros
@@ -229,7 +247,7 @@ When the validity time is over, User Manager disconnects the session and the sta
 
 User Manager changes a running session with a Change of Authorization (CoA) request to the NAS, and the user stays connected. The NAS must accept these requests (`/radius/incoming/set accept=yes`). The examples in this section use a PPPoE server as the NAS.
 
-This moves alice from the `home` profile to a faster profile at once:
+This moves mario from the `home` profile to a faster profile at once:
 
 ```ros
 /user-manager/limitation/add name=50M rate-limit-rx=10M \
@@ -237,17 +255,17 @@ This moves alice from the `home` profile to a faster profile at once:
 /user-manager/profile/add name=fast name-for-users="Fast 50M" \
     validity=30d
 /user-manager/profile-limitation/add profile=fast limitation=50M
-/user-manager/user-profile/add user=alice profile=fast
+/user-manager/user-profile/add user=mario profile=fast
 /user-manager/user-profile/activate-user-profile \
-    [find user=alice profile=fast]
+    [find user=mario profile=fast]
 ```
 
-The NAS changes the queue of alice and counts the request:
+The NAS replaces the queue of mario, so the queue gets a new number, and counts the request:
 
 ```ros
-[admin@MikroTik] > /queue/simple/print
+[admin@MikroTik] > /queue/simple/print where dynamic
 Flags: D - DYNAMIC
-0 D name="<pppoe-alice>" target=<pppoe-alice> parent=none packet-marks=""
+1 D name="<pppoe-mario>" target=<pppoe-mario> parent=none packet-marks=""
     priority=8/8 queue=default-small/default-small limit-at=10M/50M
     max-limit=10M/50M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
     bucket-size=0.1/0.1
@@ -265,15 +283,15 @@ The new profile is active. The old profile keeps the state `running`:
 
 ```ros
 [admin@MikroTik] > /user-manager/user-profile/print detail
-0  user=alice profile=home state=running end-time=2026-12-26 08:29:19
+0  user=mario profile=home state=running end-time=2026-12-26 08:56:06
  
-1  user=alice profile=fast state=running-active end-time=2026-12-26 08:29:32
+1  user=mario profile=fast state=running-active end-time=2026-12-26 08:56:26
 ```
 
 The old profile can be removed. The user stays connected:
 
 ```ros
-/user-manager/user-profile/remove [find user=alice profile=home]
+/user-manager/user-profile/remove [find user=mario profile=home]
 ```
 
 A change of a limitation reaches every connected user who has it. This raises the speed of the `fast` plan:
@@ -286,17 +304,19 @@ A change of a limitation reaches every connected user who has it. This raises th
 ```ros
 [admin@MikroTik] > /queue/simple/print where dynamic
 Flags: D - DYNAMIC
-4 D name="<pppoe-alice>" target=<pppoe-alice> parent=none packet-marks=""
+2 D name="<pppoe-mario>" target=<pppoe-mario> parent=none packet-marks=""
     priority=8/8 queue=default-small/default-small limit-at=20M/100M
     max-limit=20M/100M burst-limit=0/0 burst-threshold=0/0 burst-time=0s/0s
     bucket-size=0.1/0.1
 ```
 
+The counters of the NAS add up, so `requests` and `acks` grow by one:
+
 ```ros
 [admin@MikroTik] > /radius/incoming/monitor once
-      requests: 1
+      requests: 2
   bad-requests: 0
-          acks: 1
+          acks: 2
           naks: 0
 ```
 
@@ -307,7 +327,8 @@ Flags: D - DYNAMIC
 | The speed of a limitation (`rate-limit-rx`, `rate-limit-tx` and the burst, priority and minimum values) | CoA with the new Mikrotik-Rate-Limit |
 | A limitation added to or removed from the active profile | CoA |
 | `/user-manager/user-profile/activate-user-profile` | CoA |
-| A traffic or time limit that the user has already used up | Disconnect |
+| A traffic or time limit is reached, and the user has another profile | CoA with the speed of the next profile |
+| A traffic or time limit is reached, and the user has no other profile | Disconnect |
 | The user is disabled or removed | Disconnect |
 | The user profile in use is removed, and the user has no other profile | Disconnect |
 | `/user-manager/session/close-session` | Disconnect |
@@ -319,32 +340,26 @@ Flags: D - DYNAMIC
 
 ### When the NAS does not answer
 
-User Manager sends a request three times, five seconds apart. When the NAS does not answer, User Manager closes the session in its own list. The user stays connected on the NAS with the old settings:
-
-```ros
-[admin@MikroTik] > /user-manager/session/print detail where user=alice
-0  user=alice acct-session-id="8120003f" nas-port-type=ethernet
-   nas-port-id="coa-ppp" nas-ip-address=172.31.30.25
-   nas-identifier="cmr-remote" calling-station-id="AE:A1:E4:2C:59:51"
-   user-address=10.97.1.199 status=start,interim started=2026-11-26 08:29:20
-   ended=2026-11-26 08:30:57 terminate-cause=um-limits-changed uptime=1m
-   download=418 upload=1906 last-accounting-packet=2026-11-26 08:30:20
-```
-
-`terminate-cause=um-limits-changed` (after a CoA) or `um-admin-request` (after `close-session`) for a session that is still active on the NAS shows this case. User Manager ignores the accounting of the session from then on, so it does not check the limits of the session. Check:
+User Manager sends a request three times, five seconds apart. When the NAS does not answer, the change does not reach the user: the user stays connected on the NAS with the old settings. `/user-manager/router/monitor` does not count an ACK or a NAK for the request. Check:
 
 - `accept=yes` in `/radius/incoming` of the NAS, and the same port in `port` there and in `coa-port` of the router entry. The default is 3799.
 - The firewall of the NAS accepts UDP on that port from User Manager.
-- The NAS has User Manager in `/radius` with the address that the requests come from. The NAS checks a request with the secret of the `/radius` entry whose address is the source address of the request, and does not answer requests from other addresses.
+- The NAS has User Manager in `/radius` with the address that the requests come from. The NAS checks a request with the secret of the first `/radius` entry whose address is the source address of the request, and does not answer requests from other addresses.
+- User Manager sends the requests from the address that its routing selects for the NAS. When the User Manager router has several addresses, make sure the route to the NAS uses the address that the NAS has in `/radius`.
 
-Disconnect the user on the NAS to start a new session that User Manager follows.
+Then disconnect the user on the NAS. A PPP client connects again by itself, and a HotSpot user logs in again on the login page. The new session gets the current settings:
+
+```ros
+/ppp/active/remove [find name=mario]
+/ip/hotspot/active/remove [find user=mario]
+```
 
 ## Limit simultaneous sessions
 
 `shared-users` of a user sets how many sessions the user can have at the same time. The default is 1.
 
 ```ros
-/user-manager/user/set [find name=alice] shared-users=2
+/user-manager/user/set [find name=mario] shared-users=2
 ```
 
 When the user is at the limit and logs in again, User Manager refuses the new login and disconnects the oldest session of the user. The next attempt of the new device is then accepted. The NAS must accept disconnect requests for this.
@@ -356,30 +371,36 @@ When the user is at the limit and logs in again, User Manager refuses the new lo
 `caller-id` of a user is compared with the Calling-Station-Id attribute of the request. For an L2TP user this is the address that the user connects from, for a PPPoE user and some other services it is a MAC address. A login from another address is refused.
 
 ```ros
-/user-manager/user/set [find name=alice] caller-id=192.0.2.20
+/user-manager/user/set [find name=mario] caller-id=192.0.2.20
+```
+
+To remove the restriction, clear the value:
+
+```ros
+/user-manager/user/set [find name=mario] caller-id=""
 ```
 
 ## User names with a domain
 
-User Manager compares the complete user name. A user who logs in as `dave@example.net` must have this name in User Manager:
+User Manager compares the complete user name. A user who logs in as `luigi@example.net` must have this name in User Manager:
 
 ```ros
-/user-manager/user/add name=dave@example.net password=Dave-Pass-1
-/user-manager/user-profile/add user=dave@example.net profile=home
+/user-manager/user/add name=luigi@example.net password=Luigi-Pass-1
+/user-manager/user-profile/add user=luigi@example.net profile=home
 ```
 
 ```ros
 [admin@MikroTik] > /user-manager/session/print where active
 Flags: A - ACTIVE
-1  A user=dave@example.net acct-session-id="81200043" nas-port-type=ethernet
-     nas-port-id="coa-ppp" nas-ip-address=172.31.30.25
-     nas-identifier="cmr-remote" calling-station-id="AE:A1:E4:2C:59:51"
-     user-address=10.97.1.198 status=start started=2026-11-26 08:31:47
-     uptime=0s download=0 upload=0 last-accounting-packet=2026-11-26 08:31:47
+4  A user=luigi@example.net acct-session-id="81300024" nas-port-type=ethernet
+     nas-port-id="access" nas-ip-address=172.31.30.25 nas-identifier="nas1"
+     calling-station-id="F6:34:B6:38:23:90" user-address=10.0.0.196
+     status=start started=2026-11-26 09:06:52 uptime=0s download=0 upload=0
+     last-accounting-packet=2026-11-26 09:06:52
 ```
 
-- A login as `alice@example.net` is refused when only `alice` exists. The log has `username doesn't exist`.
-- A RouterOS NAS sends a name in the form `EXAMPLE\alice` as `alice`, with `EXAMPLE` in the MS-CHAP-Domain attribute. User Manager then checks the user `alice`.
+- A login as `mario@example.net` is refused when only `mario` exists. The log has `username doesn't exist`.
+- A RouterOS NAS sends a name in the form `EXAMPLE\mario` as `mario`, with `EXAMPLE` in the MS-CHAP-Domain attribute. User Manager then checks the user `mario`. `EXAMPLE\mario` and `OTHER\mario` are both the user `mario` in User Manager.
 
 ## Send the users of another realm to another server
 
@@ -401,24 +422,24 @@ Columns: SERVICE, DOMAIN, ADDRESS
 1 ppp                       172.31.30.195
 ```
 
-The user `eve@partner.example` logs in through the server of the partner:
+The user `mario@partner.example` logs in through the server of the partner. The partner server gets the complete name, with the domain:
 
 ```ros
-[admin@MikroTik] > /ppp/active/print
+[admin@MikroTik] > /ppp/active/print where name=mario@partner.example
 Flags: R - RADIUS
 Columns: NAME, SERVICE, CALLER-ID, ADDRESS, UPTIME
-#   NAME                 SERVICE  CALLER-ID          ADDRESS      UPTIME
-0 R eve@partner.example  pppoe    AE:A1:E4:2C:59:51  10.97.1.197  8s
+#   NAME                   SERVICE  CALLER-ID          ADDRESS     UPTIME
+1 R mario@partner.example  pppoe    3A:64:9B:7C:74:6B  10.0.0.195  9s
 ```
 
 ```ros
 [admin@MikroTik] > /radius/monitor [find domain=partner.example] once
                pending: 0
-              requests: 2
+              requests: 3
                accepts: 1
                rejects: 0
             challenges: 0
-  accounting-responses: 1
+  accounting-responses: 2
          other-replies: 0
                resends: 0
               timeouts: 0
@@ -426,21 +447,29 @@ Columns: NAME, SERVICE, CALLER-ID, ADDRESS, UPTIME
       last-request-rtt: 10ms
 ```
 
-- The partner server must have the NAS as a client with the same secret. It can also change and disconnect the sessions of its users.
+- The partner server must have the NAS as a client with the same secret.
+- The accounting of the session goes to the same entry as the login.
+- When the server of the partner does not answer, the NAS asks the next matching entry. The User Manager entry then gets the request with the complete name, and the user can log in only when User Manager has a user with this name.
+- Add the entry on every NAS that the users of the partner connect to. User Manager does not forward requests to other servers.
 - `realm` of a `/radius` entry sets the Mikrotik-Realm attribute in its requests, for example to tell the partner which network the user comes from. The user name does not change. User Manager does not use the attribute.
-- For HotSpot, `radius-default-domain` of the HotSpot server profile sends all users of the profile to the entry with the same `domain`. The user name is sent without the domain.
+- For HotSpot, `radius-default-domain` of the HotSpot server profile sends all logins of the profile to the entry with the same `domain`, also names with another domain. The name is sent as the user typed it, and MS-CHAP-Domain and Mikrotik-Realm have the default domain.
+
+:::warning
+The NAS accepts change and disconnect requests from every server in `/radius`, for every session. The server of the partner can also change and disconnect the sessions of the users of User Manager. Add only servers that you trust.
+:::
 
 ## Use one-time passwords
 
 With `otp-secret`, a user must add a time-based one-time password (TOTP) to the password. The code has six digits and changes every 30 seconds.
 
 ```ros
-/user-manager/user/add name=bob password=Bob-Pass-1 \
+/user-manager/user/add name=luigi password=Luigi-Pass-2 \
     otp-secret=JBSWY3DPEHPK3PXP
+/user-manager/user-profile/add user=luigi profile=home
 ```
 
 - `otp-secret` is the key in Base32 format, as authenticator applications such as Google Authenticator use it. Enter the same key in the application.
-- The user types the password and the code together. When the application shows 620872, bob logs in with `Bob-Pass-1620872`.
+- The user types the password and the code together. When the application shows 620872, luigi logs in with `Luigi-Pass-2620872`.
 - The password alone is refused, and a code works for one login only.
 - The codes depend on the time. Set the [clock](../system-information-and-utilities/clock) of the User Manager router correctly, for example with an NTP client.
 
@@ -456,6 +485,7 @@ Add the router to User Manager and add a user. The Mikrotik-Group attribute sets
     shared-secret=Radius-Secret-2
 /user-manager/user/add name=carol password=Carol-Pass-1 \
     otp-secret=JBSWY3DPEHPK3PXP attributes=Mikrotik-Group:full
+/user-manager/user-profile/add user=carol profile=home
 ```
 
 Let the router login use RADIUS:
@@ -505,7 +535,7 @@ The files are written to `um5files/PRIVATE/GENERATED/vouchers` with `gen_` befor
 
 ```text
 Login,Password
-"alice","Alice-Pass-1"
+"mario","Mario-Pass-1"
 "rriieu","s3W4t9kt"
 "ysdlre","syCVSvKO"
 "vqbnad","OGs4Ca7C"
@@ -554,7 +584,7 @@ The report is written to `um5files/PRIVATE/GENERATED/reports/gen_report_default.
 To disconnect a user, close the session. The NAS must accept disconnect requests:
 
 ```ros
-/user-manager/session/close-session [find user=alice active]
+/user-manager/session/close-session [find user=mario active]
 ```
 
 `/user-manager/user/monitor` shows the totals of a user, and `/user-manager/router/reset-counters` clears the counters of a router.
@@ -631,7 +661,7 @@ The command converts the users, profiles, user profiles, limitations, profile li
 
 ## L2TP/IPsec server with User Manager on the same router
 
-In this example one router is the L2TP/IPsec server and runs User Manager for its users.
+In this example one router is the L2TP/IPsec server and runs User Manager for its users. It is a separate router with a new configuration, not the routers of the earlier examples.
 
 ![Two clients connect over the internet to the router with L2TP/IPsec tunnels](./img/user-manager-08.webp)
 
@@ -672,11 +702,11 @@ User Manager writes the reason to the log when the `manager` topic is logged:
 /system/logging/add topics=manager action=memory
 ```
 
-The log of the User Manager router then has a line for each refused request, for example `rejected for user: <alice> no valid profile for this user`. Read it with `/log/print where topics~"manager"`.
+The log of the User Manager router then has a line for each refused request, for example `rejected for user: <guest1> no valid profile for this user`. Read it with `/log/print where topics~"manager"`.
 
 | Reason in the log | What to check |
 | :-- | :-- |
-| `username doesn't exist` | The name is not in `/user-manager/user`. A name with a domain, such as `dave@example.net`, must be added with the domain. |
+| `username doesn't exist` | The name is not in `/user-manager/user`. A name with a domain, such as `luigi@example.net`, must be added with the domain. |
 | `Username or Password wrong.` | The name and the password. A user with `otp-secret` must add the current code to the password. |
 | `OTP already used` | The code of a one-time password works for one login. Wait for the next code. |
 | `no valid profile for this user` | `use-profiles=yes` is set and the user has no profile, or the validity of the profile is over. |
@@ -784,3 +814,4 @@ Values of Tunnel-Medium-Type:
 - [PPP AAA](ppp-aaa)
 - [Dot1X](dot1x)
 - [Enterprise wireless security with User Manager](../wireless/user-guides/enterprise-wireless-security-user)
+- [Enterprise Wi-Fi and MAC authentication with User Manager](../wireless/wifi/configuring-enterprise-and-mac-authentication)

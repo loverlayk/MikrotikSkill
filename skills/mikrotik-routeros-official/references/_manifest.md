@@ -1,9 +1,9 @@
 # MikroTik RouterOS Official Manual — Sync Manifest
 
 Source: https://manual.mikrotik.com/llms.txt
-Index SHA-256: `796feae89bd1c9b9c51fd96991c80d685563517b86542ba882f48b2bfc219639`
-Pages in current index: 1832
-Pages changed/written: 109
+Index SHA-256: `e790c78ff1aeb961c03bf919ec1f3a81b0ab9903be46857b117f8e702837ee7d`
+Pages in current index: 1887
+Pages changed/written: 90
 Pages removed: 0
 Pages failed: 0
 
@@ -13,8 +13,8 @@ Pages failed: 0
 - [HotSpot - Captive portal](docs/authentication-authorization-accounting/hotspot-captive-portal.md) `22ddbfbe3c00`
 - [Hotspot customisation](docs/authentication-authorization-accounting/hotspot-captive-portal/hotspot-customisation.md) `dfd3c1dda6f7`
 - [PPP AAA](docs/authentication-authorization-accounting/ppp-aaa.md) `49a49d7e96fc`
-- [RADIUS](docs/authentication-authorization-accounting/radius.md) `a72b5e68f0eb`
-- [User Manager](docs/authentication-authorization-accounting/user-manager.md) `09243759e13d`
+- [RADIUS](docs/authentication-authorization-accounting/radius.md) `20d9d7506e1b`
+- [User Manager](docs/authentication-authorization-accounting/user-manager.md) `c88238f7d0da`
 - [User](docs/authentication-authorization-accounting/user.md) `814cf3ee0a6c`
 - [Bridging and Switching](docs/bridging-and-switching.md) `4975a5be58d3`
 - [L3 Hardware Offloading](docs/bridging-and-switching/l3-hardware-offloading.md) `5791fa40eb2d`
@@ -41,7 +41,7 @@ Pages failed: 0
 - [Wireless VLAN Trunk](docs/bridging-and-switching/user-guides/wireless-vlan-trunk.md) `ca5b1f0cac99`
 - [WMM and VLAN priority](docs/bridging-and-switching/user-guides/wmm-and-vlan-priority.md) `ae443add1044`
 - [VLAN](docs/bridging-and-switching/vlan.md) `670eea913665`
-- [VXLAN](docs/bridging-and-switching/vxlan.md) `b7c6bb57d329`
+- [VXLAN](docs/bridging-and-switching/vxlan.md) `49c77d3eff0b`
 - [/address-flags](docs/cli-reference.md) `8049423092b3`
 - [/app](docs/cli-reference/app.md) `7391a7b8a073`
 - [/app/check-update](docs/cli-reference/app/check-update.md) `0fe2eb18e406`
@@ -252,8 +252,8 @@ Pages failed: 0
 - [/interface/dot1x/server](docs/cli-reference/interface/dot1x/server.md) `03027a1c294e`
 - [/interface/dot1x/server/active](docs/cli-reference/interface/dot1x/server/active.md) `1a8cb5bb6bcf`
 - [/interface/dot1x/server/state](docs/cli-reference/interface/dot1x/server/state.md) `997e1fa76e26`
-- [/interface/eoip](docs/cli-reference/interface/eoip.md) `11336c25dd57`
-- [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `17e94191801b`
+- [/interface/eoip](docs/cli-reference/interface/eoip.md) `293dc75b8362`
+- [/interface/eoipv6](docs/cli-reference/interface/eoipv6.md) `9063111f0e09`
 - [/interface/ethernet](docs/cli-reference/interface/ethernet.md) `9f1fbfdde76c`
 - [/interface/ethernet/blink](docs/cli-reference/interface/ethernet/blink.md) `f982fa71b065`
 - [/interface/ethernet/cable-test](docs/cli-reference/interface/ethernet/cable-test.md) `09be9a785a62`
@@ -314,8 +314,8 @@ Pages failed: 0
 - [/interface/ethernet/switch/unicast-fdb](docs/cli-reference/interface/ethernet/switch/unicast-fdb.md) `ef572be7f6df`
 - [/interface/ethernet/switch/unicast-fdb/flush](docs/cli-reference/interface/ethernet/switch/unicast-fdb/flush.md) `5bfa1d31cc21`
 - [/interface/ethernet/switch/vlan](docs/cli-reference/interface/ethernet/switch/vlan.md) `0a4e9ba6938f`
-- [/interface/gre](docs/cli-reference/interface/gre.md) `f01f1cf1f90f`
-- [/interface/gre6](docs/cli-reference/interface/gre6.md) `81b205ff749c`
+- [/interface/gre](docs/cli-reference/interface/gre.md) `a14559c65310`
+- [/interface/gre6](docs/cli-reference/interface/gre6.md) `b5351f7e2f85`
 - [/interface/ipip](docs/cli-reference/interface/ipip.md) `98a9449500b4`
 - [/interface/ipipv6](docs/cli-reference/interface/ipipv6.md) `2f7516a0a4ba`
 - [/interface/l2tp-client](docs/cli-reference/interface/l2tp-client.md) `9d6970e77104`
@@ -402,7 +402,7 @@ Pages failed: 0
 - [/interface/vpls](docs/cli-reference/interface/vpls.md) `b51b597ecf6b`
 - [/interface/vpls/monitor](docs/cli-reference/interface/vpls/monitor.md) `9b57bb6933b7`
 - [/interface/vrrp](docs/cli-reference/interface/vrrp.md) `3f37781dc343`
-- [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `c50515460365`
+- [/interface/vxlan](docs/cli-reference/interface/vxlan.md) `fad487f7caf8`
 - [/interface/vxlan/fdb](docs/cli-reference/interface/vxlan/fdb.md) `d5849fc6dbb3`
 - [/interface/vxlan/vteps](docs/cli-reference/interface/vxlan/vteps.md) `28cb523fc9e5`
 - [/interface/w60g](docs/cli-reference/interface/w60g.md) `8d1e15c36739`
@@ -636,7 +636,7 @@ Pages failed: 0
 - [/ip/hotspot/host](docs/cli-reference/ip/hotspot/host.md) `511750740798`
 - [/ip/hotspot/host/make-binding](docs/cli-reference/ip/hotspot/host/make-binding.md) `56f4a9eb7838`
 - [/ip/hotspot/ip-binding](docs/cli-reference/ip/hotspot/ip-binding.md) `33d8ccea253f`
-- [/ip/hotspot/profile](docs/cli-reference/ip/hotspot/profile.md) `a1040e8402e7`
+- [/ip/hotspot/profile](docs/cli-reference/ip/hotspot/profile.md) `d83b353818b3`
 - [/ip/hotspot/reset-html](docs/cli-reference/ip/hotspot/reset-html.md) `a606a26f84d6`
 - [/ip/hotspot/service-port](docs/cli-reference/ip/hotspot/service-port.md) `a061542bb357`
 - [/ip/hotspot/setup](docs/cli-reference/ip/hotspot/setup.md) `48d9240cce7c`
@@ -829,7 +829,7 @@ Pages failed: 0
 - [/queue/type](docs/cli-reference/queue/type.md) `c1e89430e17f`
 - [/quit](docs/cli-reference/quit.md) `dce55e7a1e7e`
 - [/radius](docs/cli-reference/radius.md) `a3c0e3073ba1`
-- [/radius/incoming](docs/cli-reference/radius/incoming.md) `0b6b7f554e33`
+- [/radius/incoming](docs/cli-reference/radius/incoming.md) `2d5918847934`
 - [/radius/incoming/monitor](docs/cli-reference/radius/incoming/monitor.md) `667e6317eefd`
 - [/radius/incoming/reset-counters](docs/cli-reference/radius/incoming/reset-counters.md) `9cf682f51823`
 - [/radius/monitor](docs/cli-reference/radius/monitor.md) `6b95d079f581`
@@ -978,12 +978,12 @@ Pages failed: 0
 - [/system/package/downgrade](docs/cli-reference/system/package/downgrade.md) `f244a2d97506`
 - [/system/package/enable](docs/cli-reference/system/package/enable.md) `fe3c3b9b4be6`
 - [/system/package/local-update](docs/cli-reference/system/package/local-update.md) `01751ead949c`
-- [/system/package/local-update/download-all](docs/cli-reference/system/package/local-update/download-all.md) `fdf7e129f8b4`
+- [/system/package/local-update/download-all](docs/cli-reference/system/package/local-update/download-all.md) `9657efb7656e`
 - [/system/package/local-update/download](docs/cli-reference/system/package/local-update/download.md) `a0a739658eae`
-- [/system/package/local-update/mirror](docs/cli-reference/system/package/local-update/mirror.md) `c3add4a21480`
-- [/system/package/local-update/mirror/force-check](docs/cli-reference/system/package/local-update/mirror/force-check.md) `d545c1519799`
+- [/system/package/local-update/mirror](docs/cli-reference/system/package/local-update/mirror.md) `1c1b3fffb7f4`
+- [/system/package/local-update/mirror/force-check](docs/cli-reference/system/package/local-update/mirror/force-check.md) `a90b81fe964b`
 - [/system/package/local-update/refresh](docs/cli-reference/system/package/local-update/refresh.md) `c12bc5a1cbde`
-- [/system/package/local-update/update-package-source](docs/cli-reference/system/package/local-update/update-package-source.md) `1c64c8db1b1e`
+- [/system/package/local-update/update-package-source](docs/cli-reference/system/package/local-update/update-package-source.md) `899ed20c61ea`
 - [/system/package/uninstall](docs/cli-reference/system/package/uninstall.md) `e2c6b5d35803`
 - [/system/package/unschedule](docs/cli-reference/system/package/unschedule.md) `59c9d422cc23`
 - [/system/package/update](docs/cli-reference/system/package/update.md) `ae2fcde2ee7f`
@@ -1074,7 +1074,7 @@ Pages failed: 0
 - [/tool/mac-server/ping](docs/cli-reference/tool/mac-server/ping.md) `9061dd693936`
 - [/tool/mac-server/sessions](docs/cli-reference/tool/mac-server/sessions.md) `40890a5f1282`
 - [/tool/mac-telnet](docs/cli-reference/tool/mac-telnet.md) `3f22130478b2`
-- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `991fa0fb4b93`
+- [/tool/netwatch](docs/cli-reference/tool/netwatch.md) `a3b33fc82572`
 - [/tool/ping-speed](docs/cli-reference/tool/ping-speed.md) `a9642af639ea`
 - [/tool/ping](docs/cli-reference/tool/ping.md) `863cbc1bab4f`
 - [/tool/profile](docs/cli-reference/tool/profile.md) `5bcb9eadbffd`
@@ -1133,7 +1133,7 @@ Pages failed: 0
 - [/user-manager/payment](docs/cli-reference/user-manager/payment.md) `e72195608fd3`
 - [/user-manager/profile-limitation](docs/cli-reference/user-manager/profile-limitation.md) `784ebe006e1e`
 - [/user-manager/profile](docs/cli-reference/user-manager/profile.md) `3526dd1f0399`
-- [/user-manager/router](docs/cli-reference/user-manager/router.md) `9d1a3b4f341a`
+- [/user-manager/router](docs/cli-reference/user-manager/router.md) `081d5555704a`
 - [/user-manager/router/monitor](docs/cli-reference/user-manager/router/monitor.md) `85250b999250`
 - [/user-manager/router/reset-counters](docs/cli-reference/user-manager/router/reset-counters.md) `6a83d91b76a7`
 - [/user-manager/session](docs/cli-reference/user-manager/session.md) `5dd4f3bbfb8c`
@@ -1155,9 +1155,9 @@ Pages failed: 0
 - [/user/ssh-keys/import](docs/cli-reference/user/ssh-keys/import.md) `59a016593824`
 - [/user/ssh-keys/private](docs/cli-reference/user/ssh-keys/private.md) `8906370a3e2c`
 - [/user/ssh-keys/private/import](docs/cli-reference/user/ssh-keys/private/import.md) `5458de277e9c`
-- [/zerotier](docs/cli-reference/zerotier.md) `c29193bf230c`
-- [/zerotier/controller](docs/cli-reference/zerotier/controller.md) `232d45ccd320`
-- [/zerotier/controller/member](docs/cli-reference/zerotier/controller/member.md) `eb6133ccb8bc`
+- [/zerotier](docs/cli-reference/zerotier.md) `d25c6db5323a`
+- [/zerotier/controller](docs/cli-reference/zerotier/controller.md) `ee714d1aae79`
+- [/zerotier/controller/member](docs/cli-reference/zerotier/controller/member.md) `9224f8c490a7`
 - [/zerotier/interface](docs/cli-reference/zerotier/interface.md) `60f970a40438`
 - [/zerotier/peer](docs/cli-reference/zerotier/peer.md) `b0a980eca26b`
 - [/zerotier/peer/hint](docs/cli-reference/zerotier/peer/hint.md) `e7651d2f1df5`
@@ -1175,9 +1175,9 @@ Pages failed: 0
 - [Container - ThingsBoard MQTT/HTTP server](docs/containers/user-guides/container-thingsboard-mqtt-http-server.md) `6f454257a061`
 - [VETH](docs/containers/veth.md) `188f661131f7`
 - [Developer Guides](docs/developer-guides.md) `e69d65dac54c`
-- [API](docs/developer-guides/api.md) `40f0f636b33a`
+- [API](docs/developer-guides/api.md) `e90a1f42c740`
 - [Python3 Example](docs/developer-guides/api/python3-example.md) `e056b7f9eda6`
-- [REST API](docs/developer-guides/rest-api.md) `091712b19384`
+- [REST API](docs/developer-guides/rest-api.md) `973f791592b1`
 - [Scripting](docs/developer-guides/scripting.md) `26b6093ef447`
 - [Console inspect](docs/developer-guides/scripting/console-inspect.md) `5de9990159ed`
 - [Scripting examples](docs/developer-guides/scripting/scripting-examples.md) `87a15948365a`
@@ -1195,7 +1195,7 @@ Pages failed: 0
 - [Log](docs/diagnostics-monitoring-and-troubleshooting/log.md) `abb0d81ca615`
 - [CEF with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/cef-with-elasticsearch.md) `bd664c964077`
 - [Syslog with Elasticsearch](docs/diagnostics-monitoring-and-troubleshooting/log/syslog-with-elasticsearch.md) `a168d6ee93e2`
-- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `1b9734424ce9`
+- [Netwatch](docs/diagnostics-monitoring-and-troubleshooting/netwatch.md) `8db0872d2fe9`
 - [Packet Sniffer](docs/diagnostics-monitoring-and-troubleshooting/packet-sniffer.md) `c6623cb4de42`
 - [Ping](docs/diagnostics-monitoring-and-troubleshooting/ping.md) `8ceaf3e2dc6d`
 - [Profiler](docs/diagnostics-monitoring-and-troubleshooting/profiler.md) `c53f192eea99`
@@ -1220,7 +1220,7 @@ Pages failed: 0
 - [RAW](docs/firewall-and-quality-of-service/firewall/raw.md) `9e5bdde0f9b3`
 - [Kid Control](docs/firewall-and-quality-of-service/kid-control.md) `2e7ff454645a`
 - [NAT-PMP](docs/firewall-and-quality-of-service/nat-pmp.md) `83e91fef935d`
-- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `edd48970e6cf`
+- [Packet Flow in RouterOS](docs/firewall-and-quality-of-service/packet-flow-in-routeros.md) `d878f573ed85`
 - [Queues](docs/firewall-and-quality-of-service/queues.md) `6f47b5d9643c`
 - [HTB (Hierarchical Token Bucket)](docs/firewall-and-quality-of-service/queues/htb-hierarchical-token-bucket.md) `7f9b6fd2acdf`
 - [PCQ example](docs/firewall-and-quality-of-service/queues/pcq-example.md) `e007b267005f`
@@ -1265,9 +1265,9 @@ Pages failed: 0
 - [Netinstall for Linux](docs/getting-started/installation-and-upgrade/netinstall/netinstall-linux.md) `cfc6053b2f03`
 - [Netinstall package](docs/getting-started/installation-and-upgrade/netinstall/netinstall-package.md) `83d76c780e49`
 - [Netinstall for Windows](docs/getting-started/installation-and-upgrade/netinstall/netinstall-windows.md) `421f7a5465e8`
-- [Packages](docs/getting-started/installation-and-upgrade/packages.md) `04a32557270f`
+- [Packages](docs/getting-started/installation-and-upgrade/packages.md) `94a84735f02e`
 - [RouterBOOT](docs/getting-started/installation-and-upgrade/routerboot.md) `4421c390ae2b`
-- [Upgrade](docs/getting-started/installation-and-upgrade/upgrade.md) `be686591268b`
+- [Upgrade](docs/getting-started/installation-and-upgrade/upgrade.md) `a7c6dad62db1`
 - [Manual Network Setup (No Default Configuration)](docs/getting-started/manual-network-setup.md) `b81f9c607125`
 - [Networking Fundamentals](docs/getting-started/networking-fundamentals.md) `917b5ac55299`
 - [IPv6 Addresses](docs/getting-started/networking-fundamentals/ipv6-addresses.md) `f867db77e373`
@@ -1351,7 +1351,7 @@ Pages failed: 0
 - [TR-069](docs/management-tools/tr-069.md) `81cf08e33b85`
 - [WebFig](docs/management-tools/webfig.md) `9a9f9c7728c5`
 - [WinBox v3 (Legacy)](docs/management-tools/winbox-legacy.md) `e14eb8b27dd1`
-- [WinBox](docs/management-tools/winbox.md) `7edd97cf812a`
+- [WinBox](docs/management-tools/winbox.md) `f9d4526735a0`
 - [Mobile Networking](docs/mobile-networking.md) `57faec629ff5`
 - [BG77 modem AT commands](docs/mobile-networking/bg77-modem-at-commands.md) `9a1290367d49`
 - [WWAN and GNSS priority automatization](docs/mobile-networking/bg77-modem-at-commands/wwan-and-gnss-priority-automatization.md) `5dbf2cee94a0`
@@ -1374,7 +1374,7 @@ Pages failed: 0
 - [DHCPv6 Client](docs/network-management/dhcp/dhcpv6-client.md) `7503645537b8`
 - [DHCPv6 Server](docs/network-management/dhcp/dhcpv6-server.md) `c389b3aea07c`
 - [DHCP Relay](docs/network-management/dhcp/relay.md) `37f71db53f72`
-- [DHCP Server](docs/network-management/dhcp/server.md) `614a49a7386d`
+- [DHCP Server](docs/network-management/dhcp/server.md) `cf1066d76d9e`
 - [DNS](docs/network-management/dns.md) `68e6af0386e7`
 - [OpenFlow](docs/network-management/openflow.md) `1c9101182783`
 - [Proxy](docs/network-management/proxy.md) `9a6f70829eef`
@@ -1455,11 +1455,11 @@ Pages failed: 0
 - [Understanding OSPF](docs/user-guides/routing-and-networking-protocols/unicast/ospf/understanding-ospf.md) `85551c60d0dc`
 - [RIP](docs/user-guides/routing-and-networking-protocols/unicast/rip.md) `cdfb0e3cc272`
 - [RPKI](docs/user-guides/routing-and-networking-protocols/unicast/rpki.md) `8985d50209a9`
-- [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `7f42c70ff889`
-- [Virtual Private Networks](docs/virtual-private-networks.md) `8d8065af7f6c`
+- [VRF](docs/user-guides/routing-and-networking-protocols/vrf.md) `f73f51782db6`
+- [Virtual Private Networks](docs/virtual-private-networks.md) `9be5673d87e8`
 - [6to4](docs/virtual-private-networks/6to4.md) `910f30192248`
-- [EoIP](docs/virtual-private-networks/eoip.md) `9d2bf92faaec`
-- [GRE](docs/virtual-private-networks/gre.md) `7bd2a35e6191`
+- [EoIP](docs/virtual-private-networks/eoip.md) `b857959f3e6d`
+- [GRE](docs/virtual-private-networks/gre.md) `c4603c5028e2`
 - [IPIP](docs/virtual-private-networks/ipip.md) `41297150b5c6`
 - [IPsec](docs/virtual-private-networks/ipsec.md) `74db890f8e59`
 - [Firewall and routing for IPsec](docs/virtual-private-networks/ipsec/firewall-and-routing.md) `9df2c40d2cd6`
@@ -1479,7 +1479,8 @@ Pages failed: 0
 - [PPTP](docs/virtual-private-networks/pptp.md) `3582192f410d`
 - [SSTP](docs/virtual-private-networks/sstp.md) `93a5de6889eb`
 - [WireGuard](docs/virtual-private-networks/wireguard.md) `dae1f955b845`
-- [ZeroTier](docs/virtual-private-networks/zerotier.md) `690c5a15399b`
+- [Self-hosted ZeroTier controller on a hAP axÂ³](docs/virtual-private-networks/zerotier-controller.md) `91cb27168689`
+- [ZeroTier](docs/virtual-private-networks/zerotier.md) `69ca2961000e`
 - [Wired Connections](docs/wired-connections.md) `5e4863bfb3b0`
 - [Ethernet](docs/wired-connections/ethernet.md) `76e955bc0597`
 - [MikroTik wired interface compatibility](docs/wired-connections/mikrotik-wired-interface-compatibility.md) `159b25cd461a`
@@ -1497,7 +1498,7 @@ Pages failed: 0
 - [Wireless Interface](docs/wireless/abgn/wireless-interface.md) `297a5ca722b0`
 - [Wireless Troubleshooting](docs/wireless/abgn/wireless-troubleshooting.md) `8ff4b7750c81`
 - [Case studies](docs/wireless/user-guides.md) `1d0504001873`
-- [Enterprise wireless security with User Manager v5](docs/wireless/user-guides/enterprise-wireless-security-user.md) `cb6ba6701922`
+- [Enterprise wireless security with User Manager v5](docs/wireless/user-guides/enterprise-wireless-security-user.md) `ba03815ac5db`
 - [Wireless Station Modes](docs/wireless/user-guides/wireless-station-modes.md) `bb21b77476d2`
 - [W60G](docs/wireless/w60g.md) `d25db07f3d8f`
 - [Distance guide](docs/wireless/w60g/distance-guide.md) `4d75e2d4b661`
@@ -1507,13 +1508,16 @@ Pages failed: 0
 - [PtP CLI example](docs/wireless/w60g/ptp-cli-example.md) `6d4129b1d34f`
 - [PtP GUI example](docs/wireless/w60g/ptp-gui-example.md) `50f986be775a`
 - [Wi-Fi 5 (802.11ac)](docs/wireless/wifi-ac.md) `638f2bdf1206`
-- [Wi-Fi](docs/wireless/wifi.md) `4227f9528803`
-- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `d33b3a5b60eb`
+- [Wi-Fi](docs/wireless/wifi.md) `5a290af4408e`
+- [WiFi CAPsMAN](docs/wireless/wifi/capsman.md) `25152118fd81`
 - [Configuring EasyMesh](docs/wireless/wifi/configuring-easymesh.md) `767369a9fa58`
+- [Enterprise Wi-Fi and MAC authentication with User Manager](docs/wireless/wifi/configuring-enterprise-and-mac-authentication.md) `6732e30da546`
 - [Configuring MeshPoint](docs/wireless/wifi/configuring-meshpoint.md) `ad5c094bb37b`
 - [Configuring outdoor CPE to AP links](docs/wireless/wifi/configuring-outdoor-cpe-to-ap-links.md) `1835f1d488a8`
+- [Per-device passphrases and VLANs on one SSID](docs/wireless/wifi/configuring-ppsk.md) `610d619d5aeb`
 - [Configuring a wireless repeater](docs/wireless/wifi/configuring-repeater.md) `5e4c7dee3cb5`
 - [Configuring standalone access point](docs/wireless/wifi/configuring-standalone-access-point.md) `9e5590ad5cfe`
+- [Steering clients between access points](docs/wireless/wifi/configuring-steering.md) `148c46806a39`
 - [Interworking for WiFi6](docs/wireless/wifi/interworking-for-wifi6.md) `91b5e01a4356`
 - [Hardware Guides](hardware.md) `864892387386`
 - [APA-1](hardware/apa-1.md) `0f832ea870f6`
@@ -1773,6 +1777,57 @@ Pages failed: 0
 - [Quick Guide G7 - BaseBox 2](hardware/quick-guide-g7-basebox-2.md) `7460f11f0796`
 - [Quick Guide G8-a - Cube Lite60](hardware/quick-guide-g8-a-cube-lite60.md) `53324bf60209`
 - [Quick Guide G8-b - wAP 60G series](hardware/quick-guide-g8-b-wap-60g-series.md) `3cc2027c4b7b`
+- [Quick Guide G8-c - LHG 60G series](hardware/quick-guide-g8-c-lhg-60g-series.md) `bc39571fb8e8`
+- [Quick Guide G9-a](hardware/quick-guide-g9-a.md) `f2e85fc8e897`
+- [Quick Guide G9-b](hardware/quick-guide-g9-b.md) `ebd0e8a7e93a`
+- [Quick Guide - GPEN21](hardware/quick-guide-gpen21.md) `ea48f64f97f4`
+- [Quick Guide GrooveA 52](hardware/quick-guide-groovea-52.md) `2d0ac973819d`
+- [Quick Guide - hAP acÂ³](hardware/quick-guide-hap-ac-3.md) `f428313368ea`
+- [Quick Guide - hAP ac](hardware/quick-guide-hap-ac.md) `6d066cb71ae7`
+- [Quick Guide - hAP axÂ³](hardware/quick-guide-hap-ax-3.md) `6f28d31fc511`
+- [Quick Guide - hAP ax lite LTE6](hardware/quick-guide-hap-ax-lite-lte6.md) `c7f46158bf4b`
+- [Quick Guide - hAP ax lite](hardware/quick-guide-hap-ax-lite.md) `4da58b974644`
+- [Quick Guide - hAP axÂ²](hardware/quick-guide-hap-ax.md) `859e615d6cef`
+- [Quick Guide - hEX](hardware/quick-guide-hex.md) `898caa548b16`
+- [Quick Guide - KNOT LR8 kit](hardware/quick-guide-knot-lr8-kit.md) `8318d7654811`
+- [Quick Guide - KNOT LR9 kit](hardware/quick-guide-knot-lr9-kit.md) `cff0ef8daa12`
+- [Quick Guide - KNOT (r5)](hardware/quick-guide-knot-r5.md) `a3321677b989`
+- [Quick Guide - L009UiGS-2HaxD-IN](hardware/quick-guide-l009uigs-2haxd-in.md) `284209d971af`
+- [Quick Guide - L009UiGS-RM](hardware/quick-guide-l009uigs-rm.md) `45d900e23db7`
+- [Quick Guide - L23UGSR-5HaxD2HaxD](hardware/quick-guide-l23ugsr-5haxd2haxd.md) `7d3104a4709b`
+- [Quick Guide - LDF LTE6 kit](hardware/quick-guide-ldf-lte6-kit.md) `0464b5fdc5f6`
+- [Quick Guide - LHGG LTE6 kit](hardware/quick-guide-lhgg-lte6-kit.md) `a7249ad48637`
+- [Quick Guide - LHGGM&EG18-EA](hardware/quick-guide-lhggm-and-eg18-ea.md) `1f0c309a1ee2`
+- [Quick Guide - LtAP LR8 LTE kit](hardware/quick-guide-ltap-lr8-lte-kit.md) `47ab28caa994`
+- [Quick Guide - LtAP LR8 LTE6 kit](hardware/quick-guide-ltap-lr8-lte6-kit.md) `cadb31bf8f58`
+- [Quick Guide - LtAP LR9 LTE kit](hardware/quick-guide-ltap-lr9-lte-kit.md) `f098d9d05539`
+- [Quick Guide - LtAP series](hardware/quick-guide-ltap-series.md) `80ac68d392ea`
+- [Quick Guide - mANTBox 2 12s](hardware/quick-guide-mantbox-2-12s.md) `22b3ca074d82`
+- [Quick Guide - mANTBox 5 Series](hardware/quick-guide-mantbox-5-series.md) `827baeb378e2`
+- [Quick Guide - mANTBox 52 15s](hardware/quick-guide-mantbox-52-15s.md) `979c77185a66`
+- [Quick Guide - NetBox 5](hardware/quick-guide-netbox-5.md) `d8077380ee1c`
+- [Quick Guide - netFiber 9](hardware/quick-guide-netfiber-9.md) `60eddc70f24b`
+- [Quick Guide - NetMetal 5 series](hardware/quick-guide-netmetal-5-series.md) `6af4b39fd4e1`
+- [Quick Guide - NetMetal acÂ²](hardware/quick-guide-netmetal-ac.md) `a6fe2336e38b`
+- [Quick Guide - nRAY series](hardware/quick-guide-nray-series.md) `3190c83acb32`
+- [Quick Guide - PWR-LINE AP series](hardware/quick-guide-pwr-line-ap-series.md) `ba65bd3a5d54`
+- [Quick Guide - R11e-LR2](hardware/quick-guide-r11e-lr2.md) `280f54893e3b`
+- [Quick Guide - R11eL-EC200A-EU](hardware/quick-guide-r11el-ec200a-eu.md) `92de9ce7cf51`
+- [Quick Guide - R11eL-FG621-EA](hardware/quick-guide-r11el-fg621-ea.md) `e4bb6dd84eaf`
+- [Quick Guide - RB4011iGS+5HacQ2HnD-IN](hardware/quick-guide-rb4011igs-plus-5hacq2hnd-in.md) `5d1089c8534a`
+- [Quick Guide - RB5009UG+S+IN](hardware/quick-guide-rb5009ug-plus-s-plus-in.md) `28cae53ae62c`
+- [Quick Guide - RB5009UPr+S+IN](hardware/quick-guide-rb5009upr-plus-s-plus-in.md) `dade986e363e`
+- [Quick Guide - RB5009UPr+S+OUT](hardware/quick-guide-rb5009upr-plus-s-plus-out.md) `d85a31e65186`
+- [Quick Guide - RB912UAG-2HPnD](hardware/quick-guide-rb912uag-2hpnd.md) `bbd4675a15c3`
+- [Quick Guide - RB960PGS-PB (PowerBox Pro)](hardware/quick-guide-rb960pgs-pb-powerbox-pro.md) `a2443360920e`
+- [Quick Guide - RBFTC11](hardware/quick-guide-rbftc11.md) `325ad854bf16`
+- [Quick Guide RBmAPL-2nD](hardware/quick-guide-rbmapl-2nd.md) `d1bc3d7343ca`
+- [Quick Guide - SXT LTE6 kit-US](hardware/quick-guide-sxt-lte6-kit-us.md) `d77f13acda0f`
+- [Quick Guide - TG-BT5-IN](hardware/quick-guide-tg-bt5-in.md) `dfc85b154de4`
+- [Quick Guide - TG-BT5-OUT](hardware/quick-guide-tg-bt5-out.md) `f4ed98bb5c4e`
+- [Quick Guide - wAP ac series](hardware/quick-guide-wap-ac-series.md) `186b7ad12e92`
+- [Quick Guide - wAP LR2 kit](hardware/quick-guide-wap-lr2-kit.md) `22b413ec2fce`
+- [Quick Guide - wAP R ac series](hardware/quick-guide-wap-r-ac-series.md) `7f8859923915`
 - [R11e-LR2](hardware/r11e-lr2.md) `5039049c9207`
 - [R11e-LR8](hardware/r11e-lr8.md) `999e1d4f18a4`
 - [R11e-LR8G](hardware/r11e-lr8g.md) `465dcd7f18a8`

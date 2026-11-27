@@ -15,7 +15,7 @@ Six probe types are available:
 - **https-get** - like `http-get`, but over HTTPS.
 - **dns** - sends a DNS query and checks that the requested record is returned.
 
-Every probe needs a `host`: an IP address, a DNS name, an address with a VRF suffix (`192.0.2.1@vrf1`), or a link-local IPv6 address with an interface (`fe80::1%ether1`).
+Every probe needs a `host`. For `simple`, `icmp`, `tcp-conn`, `http-get` and `https-get` probes it is an IP address, a DNS name, an address with a VRF suffix (`192.0.2.1@vrf1`), or a link-local IPv6 address with an interface (`fe80::1%ether1`). For a `dns` probe, `host` is the domain name to resolve.
 
 ## Simple probe
 
@@ -152,6 +152,8 @@ The same probe in WinBox:
 ## DNS probe
 
 The `dns` probe type resolves the `host` name and checks that the requested `record-type` (A, AAAA, MX or NS) is returned. With `dns-server` you can choose which server to query; otherwise the servers configured in [`/ip/dns`](../network-management/dns) are used. The results are stored in the read-only `ip`, `ip6`, `mail-servers` and `name-servers` values.
+
+`dns-server` takes a plain IPv4 or IPv6 address and does not accept a VRF suffix such as `8.8.8.8@vrf1`. A VRF suffix on the `host` name does not help either: the query's VRF comes from the upstream server, not from `host` or `dns-server`. To query a server inside a VRF, add the VRF-qualified address to the upstream servers in [`/ip/dns`](../network-management/dns#vrf) and leave `dns-server` unset. The probe then uses the router's resolver with those upstream servers. That changes the upstream servers for all of the router's DNS lookups, not only for this probe. With `dns-server` set, the query follows the main routing table.
 
 Resolve mikrotik.com with Google's public DNS server and log the address:
 

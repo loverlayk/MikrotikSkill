@@ -18,7 +18,7 @@
 <ArgTableRow arg="name" typ="string">Name of the tunnel.</ArgTableRow>
 <ArgTableRow arg="mtu" typ="num">Layer3 maximum transmission unit of the tunnel. Default: `auto` — the router subtracts the 24-byte GRE/IP overhead from the outgoing interface MTU (actual-mtu is 1476 on a 1500-byte interface).</ArgTableRow>
 <ArgTableRow arg="local-address" typ="ipAddr">IP address used for the local tunnel end. If set to 0.0.0.0, the IP address of the outgoing interface is used.</ArgTableRow>
-<ArgTableRow arg="remote-address" typ="address (flags=4Dv)" mandatory="1">IP address of the remote tunnel end.</ArgTableRow>
+<ArgTableRow arg="remote-address" typ="address (flags=4Dv)" mandatory="1">IP address or DNS name of the remote tunnel end. With a DNS name, the router resolves the name and shows the address in `current-remote-address`.</ArgTableRow>
 <ArgTableRow arg="keepalive" typ="super { keepalive-interval: time [1 .. ]
 , [keepalive-retries] [ ,num [1 .. ]]
  }">
@@ -39,5 +39,5 @@ Whether to include the DF bit in related packets. Default: `no` — `yes` is rej
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="actual-mtu" typ="num">Actual maximum transmission unit of the tunnel.</ArgTableRow>
-<ArgTableRow arg="current-remote-address" typ="ipAddr">Current IP address of the remote end.</ArgTableRow>
+<ArgTableRow arg="current-remote-address" typ="ipAddr">IP address the tunnel sends to. When `remote-address` is a DNS name, this is the address the name resolved to.</ArgTableRow>
 </ArgTable>

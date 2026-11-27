@@ -1,6 +1,6 @@
 # zerotier
 
-> The ZeroTier network hypervisor is a self-contained network virtualization engine that implements an Ethernet virtualization layer
+> The ZeroTier network hypervisor is a self-contained network virtualization engine that implements an Ethernet virtualization layer on top of a peer-to-peer network. To host your own network, see Self-hosted ZeroTier...
 
 -----------
 
@@ -8,7 +8,7 @@
 **Package:** zerotier
 **Type:** Directory
 
-The [ZeroTier](../../virtual-private-networks/zerotier.md) network hypervisor is a self-contained network virtualization engine that implements an Ethernet virtualization layer
+The [ZeroTier](../../virtual-private-networks/zerotier.md) network hypervisor is a self-contained network virtualization engine that implements an Ethernet virtualization layer on top of a peer-to-peer network. To host your own network, see [Self-hosted ZeroTier controller on a hAP ax³](../../virtual-private-networks/zerotier-controller).
 
 <ArgTable c1="Flag" c2="Name" c3="Description">
 <ArgTableRow arg="X" typ="disabled">Whether an item is disabled.</ArgTableRow>
@@ -20,7 +20,7 @@ The [ZeroTier](../../virtual-private-networks/zerotier.md) network hypervisor is
 <ArgTableRow arg="name" typ="string">Instance name.</ArgTableRow>
 <ArgTableRow arg="disabled" typ="bool">Whether an item is disabled.</ArgTableRow>
 <ArgTableRow arg="port" typ="num">Port number the instance listens to.</ArgTableRow>
-<ArgTableRow arg="identity" typ="string">Instance 40-bit unique address.</ArgTableRow>
+<ArgTableRow arg="identity" typ="string">Identity of the instance: its ZeroTier address (the first ten characters), the public key and the secret key. `/export` leaves it out and `/export show-sensitive` includes it. `identity.public` shows the identity without the secret key.</ArgTableRow>
 <ArgTableRow arg="interfaces" typ="multi { array-id, interface: iface_enum
  }">List of interfaces used to discover ZeroTier peers with ARP and IP type connections.</ArgTableRow>
 <ArgTableRow arg="route-distance" typ="num">Route distance for routes obtained from planet/moon servers.</ArgTableRow>

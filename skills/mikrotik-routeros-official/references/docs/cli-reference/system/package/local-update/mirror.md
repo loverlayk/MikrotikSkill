@@ -17,8 +17,8 @@ You can mirror packages (for all architectures) from your main local package ser
 <ArgTableRow arg="secondary-server" typ="alt { ipv6: ip6Addr
 , ip: ipAddr
  }">IP address of the secondary local package server.</ArgTableRow>
-<ArgTableRow arg="check-interval" typ="time">Time interval at which the device checks the local package server for new package availability. If a new package is located, the package download begins. Only downloads the packages that are not already present on the device.</ArgTableRow>
-<ArgTableRow arg="user" typ="string">Username for accessing the local package server.</ArgTableRow>
+<ArgTableRow arg="check-interval" typ="time">Time interval at which the device checks the local package server for new package availability. If a new package is located, the package download begins. Only downloads the packages that are not already present on the device. Minimum 5 minutes. Default: `1d`.</ArgTableRow>
+<ArgTableRow arg="user" typ="string">Username for accessing the local package server. On the server, the user's group needs the `read`, `winbox` and `ftp` policies.</ArgTableRow>
 <ArgTableRow arg="password" typ="string">Password for accessing the local package server.</ArgTableRow>
 </ArgTable>
 

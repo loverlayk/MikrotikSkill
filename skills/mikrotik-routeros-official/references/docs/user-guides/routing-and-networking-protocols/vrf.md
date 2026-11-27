@@ -107,7 +107,7 @@ Below is the list of supported services.
 | **[IP Services](../../system-information-and-utilities/services.md)** | + | VRF is supported for `telnet`, `www`, `ssh`, `www-ssl`, `api`, `winbox`, `api-ssl` services. The `ftp` service does not support changing the VRF.`/ip/service/set telnet vrf=vrf1` |
 | **[L2TP Client](../../virtual-private-networks/l2tp/index.md)** | + | `/interface/l2tp-client add connect-to=192.168.88.1@vrf1 name=l2tp-out1 user=l2tp-client` |
 | **[MPLS](./mpls/index.md)** | + | `/mpls/ldp/add vrf=vrf1` |
-| **[Netwatch](../../diagnostics-monitoring-and-troubleshooting/netwatch.md)** | + | `/tool/netwatch/add host=192.168.88.1@vrf1` |
+| **[Netwatch](../../diagnostics-monitoring-and-troubleshooting/netwatch.md)** | + | `/tool/netwatch/add host=192.168.88.1@vrf1`The probe target accepts `@vrf`. The `dns` probe's `dns-server` field does not. Use a VRF-qualified upstream server in `/ip/dns`. |
 | **[NTP](../../system-information-and-utilities/ntp.md)** | + | `/system/ntp/client/set vrf=vrf1``/system/ntp/server/set vrf=vrf1` |
 | **[OSPF](./unicast/ospf/index.md)** | + | `/routing/ospf/instance add disabled=no name=ospf-instance-1 vrf=vrf1` |
 | **[ping](../../diagnostics-monitoring-and-troubleshooting/ping.md)** | + | `/ping 192.168.88.1 vrf=vrf1` |

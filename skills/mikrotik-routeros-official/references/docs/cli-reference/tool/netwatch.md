@@ -15,7 +15,7 @@ Monitor network hosts with simple, ICMP, TCP, HTTP, HTTPS and DNS probes, and ru
 
 <ArgTable c1="Argument" c2="Type" c3="Description">
 <ArgTableRow arg="name" typ="string">The name of the Netwatch probe; named probes are identified by it in log lines (unnamed probes log their type and host instead).</ArgTableRow>
-<ArgTableRow arg="host" typ="address (flags=46viD)" mandatory="1">The IP address or domain name of the server to be probed. Accepts an address with a VRF suffix (`192.0.2.1@vrf1`) and a link-local IPv6 address with an interface suffix (`fe80::1%ether1`). See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
+<ArgTableRow arg="host" typ="address (flags=46viD)" mandatory="1">The IP address or domain name of the server to be probed. Accepts an address with a VRF suffix (`192.0.2.1@vrf1`) and a link-local IPv6 address with an interface suffix (`fe80::1%ether1`). For a `dns` probe this is the domain name to resolve. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
 <ArgTableRow arg="type" typ="enum (simple | icmp | tcp-conn | http-get | https-get | dns)">
 Type of the probe (default value: **"simple"**) :
 - simple - simplified ICMP probe, with fewer options than "ICMP" type, used for backward compatibility with the older Netwatch version
@@ -62,7 +62,7 @@ Type of the probe (default value: **"simple"**) :
 <ArgTableRow arg="check-certificate" typ="bool" unset="1">Enables trust chain validation from the local certificate store. This parameter is specific to the [**HTTPS-GET**](../../diagnostics-monitoring-and-troubleshooting/netwatch#https-get-probe) probe type. (default value: **no**)</ArgTableRow>
 <ArgTableRow arg="sni" typ="string" unset="1"></ArgTableRow>
 <ArgTableRow arg="record-type" typ="enum (A | AAAA | MX | NS)" unset="1">Record type that will be used for DNS probe. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. (default value: **A**)</ArgTableRow>
-<ArgTableRow arg="dns-server" typ="address (flags=46)" unset="1">The DNS server that the probe should send its requests to; if not specified, it will use the value from `/ip/dns`. The probe is paced by its own `timeout`, not by the `query-server-timeout` of `/ip/dns`. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
+<ArgTableRow arg="dns-server" typ="address (flags=46)" unset="1">The DNS server that the probe should send its requests to. If not specified, it will use the value from `/ip/dns`. The value is a plain IPv4 or IPv6 address and does not accept a VRF suffix. To query a server inside a VRF, configure it as a VRF-qualified upstream server in `/ip/dns` and leave `dns-server` unset. When set, the query follows the main routing table. The probe is paced by its own `timeout`, not by the `query-server-timeout` of `/ip/dns`. This parameter is specific to the [**DNS**](../../diagnostics-monitoring-and-troubleshooting/netwatch#dns-probe) probe type. See [address flags](../../cli-reference/#address-flags)</ArgTableRow>
 <ArgTableRow arg="thr-resolve-time" typ="time" unset="1"></ArgTableRow>
 </ArgTable>
 

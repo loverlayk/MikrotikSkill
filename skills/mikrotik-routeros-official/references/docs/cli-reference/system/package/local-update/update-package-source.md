@@ -13,6 +13,6 @@ The server from which to get the package is defined in this list.
 <ArgTableRow arg="address" typ="alt { ipv6: ip6Addr
 , ip: ipAddr
  }" mandatory="1">IP address of the local package server.</ArgTableRow>
-<ArgTableRow arg="user" typ="string" mandatory="1">Username for accessing the local package server.</ArgTableRow>
+<ArgTableRow arg="user" typ="string" mandatory="1">Username for accessing the local package server. On the server, the user's group needs the `read`, `winbox` and `ftp` policies.</ArgTableRow>
 <ArgTableRow arg="password" typ="string" mandatory="1">Password for accessing the local package server.</ArgTableRow>
 </ArgTable>

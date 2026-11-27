@@ -215,7 +215,7 @@ curl --cacert rest-ca.crt -u admin -X DELETE \
 
 ### Values
 
-- Replies encode every value as a string, also numbers and booleans (`"true"`, `"false"`).
+- A reply that carries records or data is JSON, but every value inside it is a string, also numbers and booleans (`"true"`, `"false"`). A request that sets `.json` keeps the types instead, as described in [JSON format](#json-format).
 - Requests can send values as strings or as JSON numbers and booleans: `"disabled":"yes"` and `"disabled":true` do the same.
 - A command flag without a value, such as `once`, `compact` or `as-string`, takes an empty string: `"once":""`.
 - The console's unnamed argument, such as the interface in `/interface/ethernet/monitor ether2`, is `numbers`: `{"numbers":"ether2","once":""}`.
@@ -601,9 +601,27 @@ The log records REST logins in the `account` topic: `user monitoring logged in f
 
 The router broadly follows the ECMA-404 JSON standard:
 
-- Replies encode every value as a string, even when the property holds a number or a boolean.
+- A reply that carries records or data is JSON, but every value inside it is a string, even when the property holds a number or a boolean.
+- A property that holds several values arrives as one comma-separated string, with no boundaries between the values.
 - A JSON number in a request can be octal (leading `0`, `010` is 8) or hexadecimal (`0x` prefix). A number with an exponent (`2e0`) is refused with `Failed to parse json`.
 - A number sent as a string is read the way the console reads it: `"5"` is 5 and `"0x4"` is 4.
+
+To keep the types in a reply, add `.json` to the request body. A number then arrives as a number, and a property that holds several values as an array:
+
+```bash
+curl --cacert rest-ca.crt -u monitoring -X POST \
+    https://192.168.88.1/rest/interface/print \
+    -H "Content-Type: application/json" \
+    --data '{".proplist":"name,mtu,disabled",".json":""}'
+```
+
+```json
+[{"disabled":false,"mtu":1500,"name":"ether1"},{"disabled":false,"mtu":65536,"name":"lo"}]
+```
+
+Without `.json` the same reply reads `[{"disabled":"false","mtu":"1500","name":"ether1"},{"disabled":"false","mtu":"65536","name":"lo"}]`.
+
+The [API](api#json-replies) page explains the attribute, its options, and which commands honor it. Over REST it goes in the request body and needs a command that returns records, so the URL ends in the command name. `GET` cannot set it: `GET /rest/interface?.json=` returns `[]`. `POST /rest/ip/address` answers `no such command`, where `POST /rest/ip/address/print` works.
 
 ### HTTP
 

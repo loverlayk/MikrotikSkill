@@ -130,6 +130,70 @@ From the station router, a ping to the AP router's bridge address crosses the tu
 /ping 10.1.1.10
 ```
 
+## Example: bridge two sites over IPv6
+
+This example bridges the LANs of two sites that have IPv6-only internet connections, for example when the ISP gives no public IPv4 address. The tunnel runs over IPv6 (`/interface/eoipv6`) and carries the IPv4 LAN `192.168.88.0/24`, so both sites share one Layer 2 network.
+
+Both routers run the default configuration. Each router has a global IPv6 address that the other site can reach: **2001:db8:1::1** at Site1 and **2001:db8:2::1** at Site2. Check the addresses with `/ipv6/address/print` and substitute your own.
+
+Create the tunnel on the Site1 router and add it to the LAN bridge:
+
+```ros
+/interface/eoipv6/add name=eoip-site2 local-address=2001:db8:1::1 \
+    remote-address=2001:db8:2::1 tunnel-id=10
+/interface/bridge/port/add bridge=bridge interface=eoip-site2
+```
+
+On the Site2 router, turn off the default DHCP server and move the router to another address of the same subnet first. After the bridge joins the two LANs, the Site1 router is the only DHCP server and gateway:
+
+```ros
+/ip/dhcp-server/disable [find interface=bridge]
+/ip/address/set [find address="192.168.88.1/24"] address=192.168.88.2/24
+```
+
+Then create the matching tunnel on the Site2 router. The `tunnel-id` is the same on both ends and each `remote-address` points at the other router:
+
+```ros
+/interface/eoipv6/add name=eoip-site1 local-address=2001:db8:2::1 \
+    remote-address=2001:db8:1::1 tunnel-id=10
+/interface/bridge/port/add bridge=bridge interface=eoip-site1
+```
+
+The default firewall needs no change. Both ends send keepalives, and the firewall accepts the packets of the remote end as replies to the connection that the router itself started.
+
+Check the tunnel on the Site1 router. The `R` flag shows that the remote end answers, and `actual-mtu` is 1444 on a 1500-byte path:
+
+```ros
+/interface/eoipv6/print where name=eoip-site2
+```
+
+```text
+Flags: R - RUNNING
+0 R name="eoip-site2" mtu=auto actual-mtu=1444 l2mtu=65535
+    mac-address=FE:72:17:C2:ED:9D arp=enabled arp-timeout=auto arp-accept=no
+    loop-protect=default loop-protect-status=off loop-protect-send-interval=5s
+    loop-protect-disable-time=5m local-address=2001:db8:1::1
+    remote-address=2001:db8:2::1 tunnel-id=10 keepalive=10s,10 dscp=inherit
+    clamp-tcp-mss=yes dont-fragment=no
+```
+
+Then ping the Site2 router's LAN address from the Site1 router. The ping crosses the tunnel:
+
+```ros
+/ping 192.168.88.2 count=3
+```
+
+```text
+  SEQ HOST                                     SIZE TTL TIME       STATUS      
+    0 192.168.88.2                               56  64 465us     
+    1 192.168.88.2                               56  64 309us     
+    2 192.168.88.2                               56  64 389us     
+    sent=3 received=3 packet-loss=0% min-rtt=309us avg-rtt=387us 
+   max-rtt=465us 
+```
+
+If the ISP can change a site's IPv6 address, set `remote-address` to a DNS name with an AAAA record that follows the address. The router resolves the name, shows the address in `current-remote-address`, and follows the record when it changes. `remote-address` of `/interface/eoip` takes a DNS name too.
+
 ## Troubleshooting
 
 - **The tunnel has no running flag.** The remote end has not answered: check with `/ping <remote-address>` that the tunnel endpoint is reachable, that the tunnel exists on both routers, and that `local-address` is set correctly. The running flag appears only after the remote end responds. A common cause is mismatched `tunnel-id` values on the two ends, because keepalives with a different id are dropped: check the `tunnel-id` on both routers (`/interface/eoip/print`, valid values 0 to 65535) and make them match. Also check that nothing filters IP protocol 47 (GRE), or IP protocol 97 for EoIPv6, between the endpoints and that the tunnel traffic is not NAT-ed.

@@ -123,6 +123,8 @@ Broadcast, unknown-unicast and multicast (BUM) traffic needs replication:
 - **Unicast head-end replication** sends one copy to every static remote VTEP. This is the default when no multicast `group` is configured.
 - **Multicast underlay** sends BUM traffic to the configured multicast `group`. Set both `group` and `interface`; either property without the other is rejected.
 
+The `interface` property does two things. The router joins the group on that interface, and VXLAN sends the outer packets out through it, whatever the underlay route to the group points at. A loopback interface cannot carry those packets off the router, so an interface that reaches the multicast receivers is required even when `local-address` is a loopback address.
+
 For example, this interface uses multicast group `239.255.10.30` on the underlay interface:
 
 ```ros

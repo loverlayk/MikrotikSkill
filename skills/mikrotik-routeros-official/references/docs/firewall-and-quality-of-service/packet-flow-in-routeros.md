@@ -227,7 +227,7 @@ graph LR
 Interface HTB will not work correctly when the out-interface is hardware offloaded and the bridge Fast Path is not active.
 :::
 
-![Switch diagram: a packet from the physical in-interface goes to the switching decision if the in-interface is hardware offloaded, and from there to the physical out-interface or to the switch-cpu port. A packet from the switch-cpu port goes to the switching decision if the out-interface is hardware offloaded](./img/packet-flow-in-routeros-19.webp)
+![Switch diagram: a packet from the physical in-interface goes to the switching decision if the in-interface is hardware offloaded, and from there to the physical out-interface or to the switch-cpu port. A packet from the switch-cpu port goes to the switching decision if the out-interface is hardware offloaded](./img/packet-flow-in-routeros-switch.svg#gh-light-mode-only)![Switch diagram: a packet from the physical in-interface goes to the switching decision if the in-interface is hardware offloaded, and from there to the physical out-interface or to the switch-cpu port. A packet from the switch-cpu port goes to the switching decision if the out-interface is hardware offloaded](./img/packet-flow-in-routeros-switch_dark.svg#gh-dark-mode-only)
 
 - **Switching decision** - widely depends on the switch model. This block controls all the switching-related tasks, like host learning, packet forwarding, filtering, VLAN tagging/untagging, etc. Certain switch configurations can alter the packet flow.
 - **switch-cpu port** - a special purpose switch port for communication between the main CPU and other switch ports. Note that the switch-cpu port does not show up anywhere on RouterOS except for the switch menu. None of the software-related configurations (e.g. interface-list) can be applied to this port. Packets that reach the CPU are automatically associated with the physical in-interface.
@@ -245,7 +245,7 @@ We will further discuss a packet flow when bridge hardware offloading is enabled
 1. The switch checks whether the in-interface is a hardware offloaded interface.
 2. The switch runs a packet through the switch host table to make a forwarding decision. If the switch finds a match for the destination MAC address, the packet is sent out through the physical interface. A packet that ends up being flooded (e.g. broadcast, multicast, unknown unicast traffic) gets multiplied and sent out to every hardware offloaded switch port.
 
-![Switch diagram with the switch forward path: physical in-interface, hardware offload check, switching decision, physical out-interface](./img/packet-flow-in-routeros-20.webp)
+![Switch diagram with the switch forward path: physical in-interface, hardware offload check, switching decision, physical out-interface](./img/packet-flow-in-routeros-switch-forward.svg#gh-light-mode-only)![Switch diagram with the switch forward path: physical in-interface, hardware offload check, switching decision, physical out-interface](./img/packet-flow-in-routeros-switch-forward_dark.svg#gh-dark-mode-only)
 
 ### Switch to CPU Input
 
@@ -263,7 +263,7 @@ See the packet walkthrough when an in-interface is hardware offloaded:
 2. Runs a packet through the switch host table to make a forwarding decision. In case any of the above-mentioned points are true, the packet gets forwarded to the switch-cpu port.
 3. The packet exits through the switch-cpu port and it will be further processed by the RouterOS packet flow.
 
-![Switch diagram with the path to the CPU: physical in-interface, hardware offload check, switching decision, switch-cpu port](./img/packet-flow-in-routeros-21.webp)
+![Switch diagram with the path to the CPU: physical in-interface, hardware offload check, switching decision, switch-cpu port](./img/packet-flow-in-routeros-switch-to-cpu.svg#gh-light-mode-only)![Switch diagram with the path to the CPU: physical in-interface, hardware offload check, switching decision, switch-cpu port](./img/packet-flow-in-routeros-switch-to-cpu_dark.svg#gh-dark-mode-only)
 
 :::warning
 Any received packet that was flooded by the switch chip will not get flooded again by the software bridge to the same HW offloaded switch group. This prevents the formation of duplicate packets.
@@ -277,7 +277,7 @@ This process takes place when a packet exits the RouterOS software processing an
 2. The switch checks whether the out-interface is a hardware offloaded interface.
 3. The switch runs a packet through the switch host table to make a forwarding decision. If the switch finds a match for the destination MAC address, the packet is sent out through the physical interface. A packet that ends up being flooded (e.g. broadcast, multicast, unknown unicast traffic) gets multiplied and sent out to every hardware offloaded switch port.
 
-![Switch diagram with the path from the CPU: switch-cpu port, hardware offload check of the out-interface, switching decision, physical out-interface](./img/packet-flow-in-routeros-22.webp)
+![Switch diagram with the path from the CPU: switch-cpu port, hardware offload check of the out-interface, switching decision, physical out-interface](./img/packet-flow-in-routeros-switch-from-cpu.svg#gh-light-mode-only)![Switch diagram with the path from the CPU: switch-cpu port, hardware offload check of the out-interface, switching decision, physical out-interface](./img/packet-flow-in-routeros-switch-from-cpu_dark.svg#gh-dark-mode-only)
 
 :::warning
 A software bridge that sends a flooded packet through HW offloaded interfaces will only send a single packet copy per HW offloaded switch group rather than per HW offloaded interface. The actual flooding will be done by the switch chip; this prevents the formation of duplicate packets.

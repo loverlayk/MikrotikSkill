@@ -246,6 +246,8 @@ The access list has two kinds of parameters - [filtering](#access-list), and [ac
 
 Implemented through the **query-radius** action, MAC address authentication is a way to implement a centralized whitelist of client MAC addresses using a RADIUS server.
 
+For a tested configuration with User Manager on a CAPsMAN network, see [Enterprise Wi-Fi and MAC authentication with User Manager](./configuring-enterprise-and-mac-authentication).
+
 When a client device tries to associate with an AP, which is configured to perform MAC address authentication, the AP will send an access-request message to a RADIUS server with the device's MAC address as the user name and an empty password. If the RADIUS server answers with access-accept to such a request, the AP proceeds with whatever regular authentication procedure (passphrase or EAP authentication) is configured for the interface.
 
 ### Access rule examples
@@ -611,6 +613,8 @@ Parameters relating to authentication.
 `/interface/wifi/security/multi-passphrase`
 
 `multi-passphrase` allows the use of PPSK - private pre-shared keys.
+
+For a tested configuration with a passphrase per group of devices and a VLAN per passphrase, see [Per-device passphrases and VLANs on one SSID](./configuring-ppsk).
 It can be used by creating an access list entry and setting `multi-passphrase-group` name, or by assigning the group to a security profile that the interface uses.
 
 The total limit of supported passphrases is 10000. The limit is shared between all interfaces. When the interface has an associated multi-passphrase group, upon being enabled it will start caching all passphrases from the specified group. While caching is taking place, the authentication will be slower. Once caching is completed, there will be no perceptible added delay due to the use of a multi-passphrase group.
@@ -628,17 +632,15 @@ multi-passphrase is not supported for the WPA3-PSK authentication type.
 | **group** (*string*) | assigning the group to a security profile or an access list will enable use of all passphrases defined under it |
 | **passphrase** (*string of up to 63 characters*) *[sensitive](../../getting-started/configuration-management/list-of-menus-with-sensitive-parameters.md)* | The passphrase to use for PSK authentication types. Multiple users can use the same passphrase.  Not compatible with WPA3-PSK. |
 | **vlan-id** (*integer 0..4095*; default: **none**) | vlan-id that will be assigned to clients using this passphrase   ⚠️ **Caution:** Devices, which do not support VLAN offloading (such as HaLow or wifi-qcom-ac APs) will refuse connection to clients assigned a vlan-id. |
-| **expires** (*date and time*; "YYYY-MM-DD HH:SS") | The expiration date and time for the passphrase specified in this entry doesn't affect the whole group. Once the date is reached, existing clients using this passphrase will be disconnected, and new clients will not be able to connect using it. If not set, the passphrase can be used indefinitely. |
+| **expires** (*date and time*; "YYYY-MM-DD HH:MM:SS") | The expiration date and time for the passphrase specified in this entry doesn't affect the whole group. Once the date is reached, existing clients using this passphrase will be disconnected, and new clients will not be able to connect using it. If not set, the passphrase can be used indefinitely. |
 | **isolation** (*yes* \| *no*; default: **no**) | Determines whether the client device using this passphrase is isolated from other clients on the AP. Traffic from an isolated client will not be forwarded to other clients and unicast traffic from a non-isolated client will not be forwarded to an isolated one. |
 | **disabled** (*yes* \| *no*; default: **no**) |  |
 
 ### Steering properties
 
-:::info
-Unsolicited 802.11v BSS transition management request functionality is supported starting with 7.21.
-:::
-
 Properties in this category govern mechanisms for advertising potential roaming candidates to client devices.
+
+For a tested CAPsMAN configuration with a steering profile, see [Steering clients between access points](./configuring-steering).
 
 | Property | Description |
 | :-- | :-- |

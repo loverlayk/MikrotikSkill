@@ -23,7 +23,7 @@
 <ArgTableRow arg="authorized" typ="bool">Whether the member is authorized to join the network.</ArgTableRow>
 <ArgTableRow arg="bridge" typ="bool">Whether the member acts as a bridge.</ArgTableRow>
 <ArgTableRow arg="ip-address" typ="multi { array-id, addr: address (flags=46)
- }">IP address assigned to the member.</ArgTableRow>
+ }">IP address assigned to the member. A member without it gets an address from `ip-range` of the network when it is authorized.</ArgTableRow>
 </ArgTable>
 
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">

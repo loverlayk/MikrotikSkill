@@ -136,7 +136,7 @@ If you need to skip some specific package upgrade or a package file is no longer
 
 #### Using WinBox
 
-Choose your system type and download the upgrade package. Connect to your router with WinBox. Select the downloaded file with your mouse and drag it to the Files menu. If some files are already present, make sure to put the package in the root menu, not inside the hotspot folder! The upload will start.
+Choose your system type and download the upgrade package. Connect to your router with WinBox. Select the downloaded file with your mouse and drag it to the Files menu, or select **Upload...** in the Files menu and choose the file. If some files are already present, make sure to put the package in the root menu, not inside the hotspot folder! The upload will start.
 
 ![WinBox File List with a RouterOS package upload in progress](./img/upgrade-02.webp)
 
@@ -186,39 +186,102 @@ newer package system-<version> is already installed` when the uploaded package i
 installed one (to install an older version, see [Packages](./packages)). The uploaded files are
 removed after the reboot.
 
-## RouterOS local upgrade
+## Upgrade several routers from a local source
 
-You can upgrade one or multiple MikroTik routers within your local network by using [`/system/package/local-update`](../../cli-reference/system/package/local-update/local-update.md) tool on one device which has all needed packages. Here is a simple example with 3 routers (the same method works on networks with any number of routers):
+Routers can download RouterOS packages from another RouterOS router in the local network instead of the MikroTik download server. The router that holds the packages is the package source. The other routers log in to it with a user name and password through the WinBox service, and each router downloads the packages of its own architecture. This is configured in [`/system/package/local-update`](../../cli-reference/system/package/local-update).
 
-- Place needed packages under the Files menu, on your main router:
+The example has routers in the LAN 192.168.88.0/24: the main router 192.168.88.1 holds the packages, an optional mirror 192.168.88.2 copies them, and the routers to upgrade use one of the two as their source. The same steps work with any number of routers.
+
+### Prepare the main router
+
+Upload the package files of the new version to the Files of the main router: the `routeros` package for every architecture in your network, and the extra packages that the routers have installed. The files are on the [download page](https://mikrotik.com/download), and `/tool/fetch` downloads them directly, for example from `https://download.mikrotik.com/routeros/<version>/routeros-<version>-arm64.npk`.
 
 ![WinBox Files menu on the main router with the RouterOS packages](./img/upgrade-03.webp)
 
-**Optional:** you can set a mirror device between the main ones. If not needed, skip this step:
+Add a user for the routers that download the packages. Its group needs the `read`, `winbox` and `ftp` policies:
 
-- Choose Local Package Sources and enable Mirror device. Set Primary Server (10.155.136.50) where the packages are located. The Check Interval **minimum** setting can be set to 00:07:12, at which the device will connect by using WinBox to a main device and check for packages.  
-  If new packages are available, it will begin to download. The download process is slow and may require some time when many files are used. In case of some failures, download will resume on next Check.
+```ros
+/user/group/add name=package-source policy=read,winbox,ftp
+/user/add name=packages group=package-source password="Packages-Pass-1"
+```
+
+### Add a mirror
+
+A mirror is optional. It copies all packages of the main router, for all architectures, into its `packs` folder, and other routers can use it as their source. Use a mirror, for example, at a remote site, so the routers there download from a router at the same site. On the mirror router:
+
+```ros
+/system/package/local-update/mirror/set enabled=yes \
+    primary-server=192.168.88.1 user=packages password="Packages-Pass-1"
+/system/package/local-update/mirror/force-check
+```
+
+The mirror checks the main router every `check-interval` (default 1 day, minimum 5 minutes) and downloads the packages. `force-check` starts a check now. Check that the packages arrived:
+
+```ros
+/file/print where name~"^packs/"
+```
+
+```text
+Columns: NAME, TYPE, SIZE, LAST-MODIFIED
+# NAME                             TYPE     SIZE      LAST-MODIFIED      
+0 packs/routeros-7.25.2.npk        package  20.0MiB   2026-11-26 15:45:18
+1 packs/user-manager-7.25.2.npk    package  408.1KiB  2026-11-26 15:45:18
+2 packs/routeros-7.25.2.npk-arm64  package  13.3MiB   2026-11-26 15:45:19
+```
+
+The packages of other architectures have the architecture name after the file extension, such as `.npk-arm64`.
 
 ![WinBox Local Package Sources tab with the Upgrade Mirror dialog: enabled, primary server, check interval, user and password](./img/upgrade-04.webp)
 
-- A new `packs` folder is created, where the mirror device will store packages:
-
 ![WinBox Files menu of the mirror device with the packs folder](./img/upgrade-05.webp)
 
-- Add a new package source on the device which will be updated, in this example we use mirror device 10.155.136.71:
+### Upgrade a router
+
+On each router to upgrade, add the main router as its package source, or the mirror (192.168.88.2), and read the list of packages from it:
+
+```ros
+/system/package/local-update/update-package-source/add \
+    address=192.168.88.1 user=packages password="Packages-Pass-1"
+/system/package/local-update/refresh
+```
+
+The list shows the packages of the source that match the router's architecture:
+
+```ros
+/system/package/local-update/print
+```
+
+```text
+Columns: SOURCE, NAME, VERSION, STATUS
+#  SOURCE        NAME          VERSION  STATUS   
+0  192.168.88.1  routeros      7.25.2   available
+1  192.168.88.1  user-manager  7.25.2   available
+```
 
 ![WinBox Package Source dialog with the address, user and password of the mirror device](./img/upgrade-06.webp)
 
-- When you select **Refresh** in the Local Update packages tab, the device in WinBox will connect to the source and check if there are new packages.
-
 ![WinBox Local Update Packages tab after Refresh, listing the packages of the source](./img/upgrade-07.webp)
 
-- Choose packages and select **Download**. After download completes, reboot the device.
+Download the newer version of the packages that are installed on the router, and reboot after the download:
 
-![WinBox Local Update Packages tab with the routeros package in the status downloaded, and the File List with the downloaded package file](./img/upgrade-08.webp)
-
-- Use `/system/package/local-update/refresh` to automate this in your scripts. The Fetch tool can be used to download packages from our web page, for example:
-
-```routeros
-/tool/fetch url=https://download.mikrotik.com/routeros/7.25.2/routeros-7.25.2-arm.npk
+```ros
+/system/package/local-update/download-all reboot-after-download=yes
 ```
+
+`download-all` downloads only the packages that the router has installed. Here `user-manager` stays on the source. A beta version is downloaded only with `download-beta=yes`. To download single packages instead, use `/system/package/local-update/download` with the packages, for example `[find name=routeros]`, and reboot the router afterwards.
+
+![WinBox Local Update Packages tab with the iot package in the status downloaded](./img/upgrade-08.webp)
+
+After the reboot, check the installed version:
+
+```ros
+/system/package/print
+```
+
+```text
+Columns: NAME, VERSION, BUILD-TIME, SIZE
+# NAME      VERSION  BUILD-TIME           SIZE   
+0 routeros  7.25.2   2026-11-20 11:11:10  20.0MiB
+```
+
+`refresh` and `download-all` are commands, so a script can run them, for example from the [scheduler](../../system-information-and-utilities/scheduler).

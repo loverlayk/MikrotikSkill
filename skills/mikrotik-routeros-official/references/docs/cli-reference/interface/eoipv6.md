@@ -19,7 +19,7 @@
 <ArgTableRow arg="mtu" typ="num">Layer3 maximum transmission unit. Default: `auto` — the router subtracts the EoIP/IPv6 overhead from the path MTU (actual-mtu is 1444 on a 1500-byte path).</ArgTableRow>
 <ArgTableRow arg="mac-address" typ="macAddr">Media Access Control number of an interface. Any value is accepted; the auto-generated address is a locally administered one. IANA allows free use of the range from 00:00:5E:80:00:00 to 00:00:5E:FF:FF:FF (private unicast).</ArgTableRow>
 <ArgTableRow arg="local-address" typ="ip6Addr">Source address of the tunnel packets, local to the router. Default — the address of the interface used to reach the remote end.</ArgTableRow>
-<ArgTableRow arg="remote-address" typ="address (flags=6Dvi)" mandatory="1">IPv6 address of the remote end of the EoIP tunnel.</ArgTableRow>
+<ArgTableRow arg="remote-address" typ="address (flags=6Dvi)" mandatory="1">IPv6 address or DNS name of the remote end of the EoIP tunnel. With a DNS name, the router resolves the name (AAAA record), shows the address in `current-remote-address`, and follows the record when it changes.</ArgTableRow>
 <ArgTableRow arg="tunnel-id" typ="num" mandatory="1">Unique tunnel identifier, which must match the other side of the tunnel.</ArgTableRow>
 <ArgTableRow arg="keepalive" typ="super { keepalive-interval: time [1 .. ]
 , [keepalive-retries] [ ,num [1 .. ]]
@@ -50,7 +50,7 @@ Whether to include the DF bit in related packets. Default: `no`.
 <ArgTable c1="Read-only Argument" c2="Type" c3="Description">
 <ArgTableRow arg="actual-mtu" typ="num">Actual maximum transmission unit of the tunnel.</ArgTableRow>
 <ArgTableRow arg="l2mtu" typ="num">[Layer2 maximum transmission unit](../../hardware/mtu-in-routeros.md). Not configurable for EoIP; reports 65535.</ArgTableRow>
-<ArgTableRow arg="current-remote-address" typ="ip6Addr">Current IPv6 address of the remote end.</ArgTableRow>
+<ArgTableRow arg="current-remote-address" typ="ip6Addr">IPv6 address the tunnel sends to. When `remote-address` is a DNS name, this is the address the name resolved to.</ArgTableRow>
 <ArgTableRow arg="loop-protect-status" typ="enum (off | on | disabled) { off:1, on:2, disabled:3 }">
 Loop protection status:
 - `on` - loop protect is enabled and the interface is sending and listening for loop protect packets
